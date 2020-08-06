@@ -8,6 +8,7 @@
     <Company />
     <Description>Clothes Store</Description>
     <Copyright>Ivan Rubilnik</Copyright>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
