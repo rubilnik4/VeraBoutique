@@ -26,5 +26,4 @@ namespace VeraButik.Models.Implementations.Clothes.Parameters
         /// </summary>
         public string Color { get; }
     }
-    }
 }
