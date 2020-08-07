@@ -37,6 +37,7 @@ namespace VeraButik
             }
 
             app.UseHttpsRedirection();
+            app.UseHsts();
 
             app.UseRouting();
 

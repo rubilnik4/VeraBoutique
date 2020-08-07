@@ -7,9 +7,12 @@ services:
       context: .
       dockerfile: VeraButik/Dockerfile
     ports:
-     - "5000:5000"
+      - "5000:5000"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     depends_on:
-     - "postgres"
+      - "postgres"
 
   postgres:
     container_name: 'postgres'
