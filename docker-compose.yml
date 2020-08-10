@@ -2,10 +2,10 @@ version: '3.4'
 
 services:
   verabutik:
-    image: ${DOCKER_REGISTRY-}verabutik
+    image: ${DOCKER_REGISTRY-}veraboutique
     build:
       context: .
-      dockerfile: VeraButik/Dockerfile
+      dockerfile: BoutiqueMVC/Dockerfile
     ports:
       - "5000:5000"
     volumes:
@@ -17,6 +17,9 @@ services:
   postgres:
     container_name: 'postgres'
     image: postgres:latest
+    #build:
+      #context: .
+      #dockerfile: BoutiqueDAL/Dockerfile
     ports:
      - "5434:5432"
     environment:

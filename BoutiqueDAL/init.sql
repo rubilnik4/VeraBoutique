@@ -1,0 +1,2 @@
+﻿CREATE USER docker;
+CREATE DATABASE docker;

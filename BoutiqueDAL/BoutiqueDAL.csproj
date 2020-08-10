@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <Authors>Ivan Rubilnik</Authors>
+    <Product>VeraBoutique</Product>
+    <Description>Data access layer for Vera-Boutique application</Description>
+    <AssemblyName>BoutiqueDAL</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\.dockerignore" Link=".dockerignore">
+      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
+  </ItemGroup>
+
+</Project>
