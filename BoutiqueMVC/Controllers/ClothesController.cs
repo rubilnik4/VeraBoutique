@@ -28,15 +28,15 @@ namespace BoutiqueMVC.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
             var collectionSex = new List<SexEntity>()
             {
                 new SexEntity(){Name = "Мужчина", Type = SexType.Male}
             };
-            _clothesUploadService.UploadSexTypes(collectionSex);
-            
-            return new string[] { "value1", "value2" };
+            await _clothesUploadService.UploadSexTypes(collectionSex);
+
+            return Ok(new string[] { "value1", "value2" });
         }
 
         [HttpGet("{id}")]

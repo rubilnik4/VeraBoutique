@@ -18,14 +18,14 @@ namespace BoutiqueMVC
         {
             Configuration = configuration;
         }
-        
+
         /// <summary>
         /// Регистрация зависимостей
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            NHibernateInjection.ConfigureServices(services);
+            NHibernateInjection.ConfigureServices(services, Configuration.GetConnectionString("DefaultConnection"));
         }
 
         /// <summary>

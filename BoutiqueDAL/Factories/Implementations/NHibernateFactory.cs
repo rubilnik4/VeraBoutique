@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BoutiqueDAL.Entities.Clothes;
+using BoutiqueDAL.Mappings.Clothes;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
@@ -21,39 +22,47 @@ namespace BoutiqueDAL.Factories.Implementations
         /// <summary>
         /// Фабрика для создания сессии
         /// </summary>
-        public static ISessionFactory SessionFactory
+        public static ISessionFactory SessionFactory(string connectionString)
         {
-            get
+            try
             {
-                try
-                {
-                    var session = PostgresConfigurationFactory().BuildSessionFactory();
-                    return session;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-               
+                var session = PostgresConfigurationFactory(connectionString).BuildSessionFactory();
+                return session;
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
         }
-           
+
 
         /// <summary>
         /// Параметры для подключения базы данных SqLite
         /// </summary>
-        private static FluentConfiguration PostgresConfigurationFactory()
+        private static FluentConfiguration PostgresConfigurationFactory(string connectionString)
         {
+            //var session = Fluently.Configure().
+            //Database(PostgreSQLConfiguration.Standard.ConnectionString(connectionString)).
+            //Mappings(m => m.FluentMappings.AddFromAssemblyOf<SexMap>());
+
+            //return session;
             var session = Fluently.Configure().
-            Database(PostgreSQLConfiguration.Standard.ConnectionString(c => c.Host("localhost").
-                                                                              Port(5434).
+            Database(PostgreSQLConfiguration.Standard.ConnectionString(c => c.Host("postgres").
+                                                                              Port(5432).
                                                                               Database("postgres").
                                                                               Username("postgres").
-                                                                              Password("postgres")));
-
+                                                                              Password("postgres"))).
+            Mappings(m => m.FluentMappings.AddFromAssemblyOf<SexMap>()).
+            ExposeConfiguration(c =>
+            {
+                var schema = new SchemaUpdate(c);
+                schema.Execute(false, true);
+            });
             return session;
         }
-            
+
     }
 }

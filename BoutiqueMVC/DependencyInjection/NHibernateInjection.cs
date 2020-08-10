@@ -16,9 +16,9 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Добавить зависимости NHibernate к сервисам
         /// </summary>
-        public static IServiceCollection ConfigureServices(IServiceCollection services)
+        public static IServiceCollection ConfigureServices(IServiceCollection services, string connvectionString)
         {
-            services.AddSingleton<ISessionFactory>(serviceProvider => NHibernateFactoryManager.SessionFactory);
+            services.AddSingleton<ISessionFactory>(serviceProvider => NHibernateFactoryManager.SessionFactory(connvectionString));
             services.AddTransient<IUnitOfWork>(serviceProvider =>
             {
                 var session = serviceProvider.GetService<ISessionFactory>();
