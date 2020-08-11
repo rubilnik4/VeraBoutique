@@ -1,3 +1,4 @@
+using System;
 using BoutiqueMVC.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +26,7 @@ namespace BoutiqueMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            NHibernateInjection.ConfigureServices(services, Configuration.GetConnectionString("DefaultConnection"));
+            NHibernateInjection.ConfigureServices(services);
         }
 
         /// <summary>

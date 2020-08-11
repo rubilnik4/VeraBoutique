@@ -5,24 +5,26 @@ services:
     image: ${DOCKER_REGISTRY-}veraboutique
     build:
       context: .
-      dockerfile: BoutiqueMVC/Dockerfile
+      dockerfile: BoutiqueMVC/Dockerfile    
+    env_file:
+      -  postgres.env
     ports:
       - "5000:5000"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro  
     depends_on:
       - "postgres"
+    restart: unless-stopped
 
   postgres:
     container_name: 'postgres'
     image: postgres:latest
     ports:
      - "5432:5432"
+    env_file:
+      -  postgres.env
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=notice
       - database-data:/var/lib/postgresql/data/
     restart: unless-stopped
 
