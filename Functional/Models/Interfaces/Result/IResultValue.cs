@@ -7,37 +7,17 @@ namespace Functional.Models.Interfaces.Result
     /// <summary>
     /// Базовый вариант ответа со значением
     /// </summary>
-    public interface IResultValue<out TValue>
+    public interface IResultValue<out TValue>: IResultError
     {
         /// <summary>
-        /// Список значений
+        /// Значение
         /// </summary>
-        [MaybeNull]
+        [AllowNull]
         TValue Value { get; }
-
-        /// <summary>
-        /// Список ошибок
-        /// </summary>
-        IReadOnlyList<IErrorResult> Errors { get; }
-
-        /// <summary>
-        /// Присутствуют ли ошибки
-        /// </summary>
-        bool HasErrors { get; }
-
-        /// <summary>
-        /// Отсутствие ошибок
-        /// </summary>
-        bool OkStatus { get; }
 
         /// <summary>
         /// Добавить ошибку
         /// </summary>      
-        IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors);
-
-        /// <summary>
-        /// Преобразовать в результирующий тип
-        /// </summary>
-        IResultError ToResult();
+        new IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors);
     }
 }

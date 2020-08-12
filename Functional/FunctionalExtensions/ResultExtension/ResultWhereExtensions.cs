@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.FunctionalExtensions.ResultExtension
@@ -22,9 +23,9 @@ namespace Functional.FunctionalExtensions.ResultExtension
 
             return predicate(@this.Value) ?
                    okFunc.Invoke(@this.Value).
-                          Map(okResult => new ResultValue<TValueOut>(okResult, @this.Errors)) :
+                          Map(okResult => new ResultValue<TValueOut>(okResult)) :
                    badFunc.Invoke(@this.Value).
-                           Map(badResult => new ResultValue<TValueOut>(@this.Errors.Union(badResult)));
+                          Map(badResult => new ResultValue<TValueOut>(@this.Errors.Union(badResult)));
         }
 
         /// <summary>
@@ -32,12 +33,8 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// </summary>      
         public static IResultValue<TValueOut> ResultOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                Func<TValueIn, TValueOut> okFunc,
-                                                                               Func<IReadOnlyList<IErrorCommon>, TValueOut> badFunc)
+                                                                               Func<IReadOnlyList<IErrorResult>, TValueOut> badFunc)
         {
-            if (okFunc == null) throw new ArgumentNullException(nameof(okFunc));
-            if (badFunc == null) throw new ArgumentNullException(nameof(badFunc));
-            if (@this == null) throw new ArgumentNullException(nameof(@this));
-
             return @this.OkStatus ?
                    okFunc.Invoke(@this.Value).
                           Map(okResult => new ResultValue<TValueOut>(okResult, @this.Errors)) :

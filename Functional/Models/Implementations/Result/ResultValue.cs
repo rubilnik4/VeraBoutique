@@ -8,78 +8,37 @@ using Functional.Models.Interfaces.Result;
 namespace Functional.Models.Implementations.Result
 {
     /// <summary>
-    /// Базовый вариант ответа со значением
+    /// Базовый вариант ответа со значением типа класс
     /// </summary>
-    public class ResultValue<TValue> : IResultValue<TValue> where TValue : notnull
+    public class ResultValue<TValue> : ResultError, IResultValue<TValue>
     {
         public ResultValue(IErrorResult error)
             : this(error.AsEnumerable()) { }
 
         public ResultValue(IEnumerable<IErrorResult> errors)
+            : this(default, errors)
+        { }
+
+        public ResultValue(TValue value)
+            : this(value, Enumerable.Empty<IErrorResult>())
+        { }
+
+        protected ResultValue([AllowNull] TValue value, IEnumerable<IErrorResult> errors)
+            : base(errors)
         {
-            var errorCollection = errors?.ToList() ?? throw new ArgumentNullException(nameof(errors));
-            if (!ValidateCollection(errorCollection)) throw new NullReferenceException(nameof(errors));
-
-            Value = default;
-            Errors = errorCollection;
-        }
-
-        public ResultValue(TValue value, IErrorResult? errorNull = null)
-          : this(value, Enumerable.Empty<IErrorResult>(), errorNull) { }
-
-        public ResultValue(TValue value, IEnumerable<IErrorResult> errors, IErrorResult? errorNull = null)
-            : this(errors)
-        {
-            Errors = value switch
-            {
-                null when errorNull != null => Errors.Concat(errorNull).ToList(),
-                null => throw new ArgumentNullException(nameof(value)),
-                _ => Errors
-            };
-
             Value = value;
         }
 
         /// <summary>
-        /// Список значений
+        /// Значение
         /// </summary>
-        [MaybeNull]
-        public TValue Value { get; protected set; }
-
-        /// <summary>
-        /// Список ошибок
-        /// </summary>
-        public IReadOnlyList<IErrorResult> Errors { get; protected set; }
-
-        /// <summary>
-        /// Присутствуют ли ошибки
-        /// </summary>
-        public bool HasErrors => Errors.Any();
-
-        /// <summary>
-        /// Отсутствие ошибок
-        /// </summary>
-        public bool OkStatus => !HasErrors;
+        [AllowNull]
+        public TValue Value { get; }
 
         /// <summary>
         /// Добавить ошибку
         /// </summary>      
-        public IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors) =>
-            errors != null ?
-            Value.WhereContinue(value => value != null,
-                okFunc: value => new ResultValue<TValue>(value, Errors.Union(errors)),
-                badFunc: value => new ResultValue<TValue>(Errors.Union(errors))) :
-            this;
-
-        /// <summary>
-        /// Преобразовать в результирующий тип
-        /// </summary>
-        public IResultError ToResult() => new ResultError(Errors);
-
-        /// <summary>
-        /// Проверить ошибки на корректность
-        /// </summary>      
-        protected static bool ValidateCollection<T>(IEnumerable<T> collection) =>
-            collection?.All(t => t != null) == true;
+        public new IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors) =>
+            new ResultValue<TValue>(Value, base.ConcatErrors(errors).Errors);
     }
 }
