@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.FunctionalExtensions;
+using Functional.FunctionalExtensions.ResultExtension;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.Models.Implementations.Result
 {
     /// <summary>
-    /// Базовый вариант ответа со значением типа класс
+    /// Базовый вариант ответа со значением
     /// </summary>
     public class ResultValue<TValue> : ResultError, IResultValue<TValue>
     {
@@ -26,6 +27,8 @@ namespace Functional.Models.Implementations.Result
         protected ResultValue([AllowNull] TValue value, IEnumerable<IErrorResult> errors)
             : base(errors)
         {
+            if (value == null && !Errors.Any()) throw new ArgumentNullException(nameof(errors));
+
             Value = value;
         }
 
@@ -39,6 +42,9 @@ namespace Functional.Models.Implementations.Result
         /// Добавить ошибку
         /// </summary>      
         public new IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors) =>
-            new ResultValue<TValue>(Value, base.ConcatErrors(errors).Errors);
+            base.ConcatErrors(errors).
+            ResultOkBad(
+                okFunc: () => new ResultValue<TValue>(Value),
+                badFunc: errorsResult => new ResultValue<TValue>(errorsResult));
     }
 }

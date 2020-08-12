@@ -2,6 +2,9 @@
 
 namespace Functional.Models.Interfaces.Result
 {
+    /// <summary>
+    /// Базовый вариант ответа
+    /// </summary>
     public interface IResultError
     {
         /// <summary>
@@ -27,6 +30,6 @@ namespace Functional.Models.Interfaces.Result
         /// <summary>
         /// Преобразовать в результирующий ответ со значением
         /// </summary>
-        IResultValue<TValue> ToResultValue<TValue>() where TValue : class;
+        IResultValue<TValue> ToResultValue<TValue>(TValue value) where TValue : notnull;
     }
 }

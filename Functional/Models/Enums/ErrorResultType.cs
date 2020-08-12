@@ -5,6 +5,6 @@
     /// </summary>
     public enum ErrorResultType
     {
-        
+        Unknown,
     }
 }

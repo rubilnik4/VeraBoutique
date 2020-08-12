@@ -5,9 +5,9 @@ using Functional.Models.Interfaces.Result;
 namespace Functional.FunctionalExtensions.ResultExtension
 {
     /// <summary>
-    /// Действие над внутренним типом результирующего ответа
+    /// Действие над внутренним типом результирующего ответа со значением
     /// </summary>
-    public static class ResultVoidExtensions
+    public static class ResultValueVoidExtensions
     {
         /// <summary>
         /// Выполнить действие, вернуть результирующий ответ

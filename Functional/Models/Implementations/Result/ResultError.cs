@@ -5,6 +5,9 @@ using Functional.Models.Interfaces.Result;
 
 namespace Functional.Models.Implementations.Result
 {
+    /// <summary>
+    /// Базовый вариант ответа
+    /// </summary>
     public class ResultError : IResultError
     {
         public ResultError()
@@ -43,7 +46,9 @@ namespace Functional.Models.Implementations.Result
         /// <summary>
         /// Преобразовать в результирующий ответ со значением
         /// </summary>
-        public IResultValue<TValue> ToResultValue<TValue>() where TValue : class =>
-            new ResultValue<TValue>(Errors);
+        public IResultValue<TValue> ToResultValue<TValue>(TValue value) where TValue : notnull =>
+            OkStatus 
+                ? new ResultValue<TValue>(value) 
+                : new ResultValue<TValue>(Errors);
     }
 }

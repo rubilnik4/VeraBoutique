@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 
 namespace Functional.Models.Interfaces.Result
 {
@@ -23,6 +24,11 @@ namespace Functional.Models.Interfaces.Result
         /// Исключение
         /// </summary>
         Exception? Exception { get; }
+
+        /// <summary>
+        /// Преобразовать в ответ
+        /// </summary>      
+        IResultError ToResult();
 
         /// <summary>
         /// Преобразовать в ответ с вложенным типом
