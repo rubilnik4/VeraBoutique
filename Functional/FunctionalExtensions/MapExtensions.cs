@@ -12,15 +12,5 @@ namespace Functional.FunctionalExtensions
         /// </summary>       
         public static TResult Map<TSource, TResult>(this TSource @this, Func<TSource, TResult> func) =>
             func(@this);
-
-        /// <summary>
-        /// Выполнить действие, вернуть тот же тип
-        /// </summary>       
-        public static T Void<T>(this T @this, Action<T> action)
-        {
-            if (action == null) throw new ArgumentNullException(nameof(action));
-            action.Invoke(@this);
-            return @this;
-        }
     }
 }
