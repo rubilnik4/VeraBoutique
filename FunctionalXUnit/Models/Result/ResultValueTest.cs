@@ -3,7 +3,7 @@ using Functional.Models.Interfaces.Result;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeData;
+using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
 
 namespace FunctionalXUnit.Models.Result
 {

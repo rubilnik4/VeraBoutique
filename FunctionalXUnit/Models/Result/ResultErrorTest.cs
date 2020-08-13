@@ -2,7 +2,7 @@
 using Functional.Models.Interfaces.Result;
 using System.Linq;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeData;
+using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
 
 namespace FunctionalXUnit.Models.Result
 {
@@ -67,34 +67,6 @@ namespace FunctionalXUnit.Models.Result
             Assert.True(resultErrorConcatted.HasErrors);
             Assert.Equal(2, resultErrorConcatted.Errors.Count);
             Assert.True(errorToConcat.Equals(resultErrorConcatted.Errors.Last()));
-        }
-
-        /// <summary>
-        /// Преобразование в результирующий ответ со значением без ошибки
-        /// </summary>
-        [Fact] 
-        public void ToResultValue_OkStatus()
-        {
-            var resultError = new ResultError();
-
-            var resultValue = resultError.ToResultValue("OK");
-
-            Assert.True(resultValue.OkStatus);
-        }
-
-        /// <summary>
-        /// Преобразование в результирующий ответ со значением с одной ошибкой
-        /// </summary>
-        [Fact]
-        public void ToResultValue_HasOneError()
-        {
-            var error = CreateErrorTest();
-            var resultError = new ResultError(error);
-
-            var resultValue = resultError.ToResultValue("OK");
-
-            Assert.True(resultValue.HasErrors);
-            Assert.True(error.Equals(resultValue.Errors.Last()));
         }
     }
 }

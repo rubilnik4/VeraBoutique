@@ -15,7 +15,7 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// </summary>
         public static IResultValue<Func<TOut>> ResultCurryOkBind<TIn1, TOut>(this IResultValue<Func<TIn1, TOut>> @this,
                                                                              IResultValue<TIn1> arg1) =>
-            arg1.OkStatus
+            @this.OkStatus && arg1.OkStatus
                 ? new ResultValue<Func<TOut>>(@this.Value.Curry(arg1.Value))
                 : new ResultValue<Func<TOut>>(@this.Errors.Concat(arg1.Errors));
 
@@ -24,7 +24,7 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// </summary>
         public static IResultValue<Func<TIn2, TOut>> ResultCurryOkBind<TIn1, TIn2, TOut>(this IResultValue<Func<TIn1, TIn2, TOut>> @this,
                                                                                          IResultValue<TIn1> arg1) =>
-            arg1.OkStatus
+            @this.OkStatus && arg1.OkStatus
                 ? new ResultValue<Func<TIn2, TOut>>(@this.Value.Curry(arg1.Value))
                 : new ResultValue<Func<TIn2, TOut>>(@this.Errors.Concat(arg1.Errors));
     }

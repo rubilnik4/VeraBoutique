@@ -26,10 +26,5 @@ namespace Functional.Models.Interfaces.Result
         /// Добавить ошибку
         /// </summary>      
         IResultError ConcatErrors(IEnumerable<IErrorResult> errors);
-
-        /// <summary>
-        /// Преобразовать в результирующий ответ со значением
-        /// </summary>
-        IResultValue<TValue> ToResultValue<TValue>(TValue value) where TValue : notnull;
     }
 }

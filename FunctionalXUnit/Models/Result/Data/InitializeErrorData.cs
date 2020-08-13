@@ -8,7 +8,7 @@ namespace FunctionalXUnit.Models.Result.Data
     /// <summary>
     /// Инициализация объектов для тестирования
     /// </summary>
-    public static class InitializeData
+    public static class InitializeErrorData
     {
         /// <summary>
         /// Создать тестовый экземпляр ошибки

@@ -42,13 +42,5 @@ namespace Functional.Models.Implementations.Result
         /// </summary>      
         public IResultError ConcatErrors(IEnumerable<IErrorResult> errors) =>
             new ResultError(Errors.Union(errors));
-
-        /// <summary>
-        /// Преобразовать в результирующий ответ со значением
-        /// </summary>
-        public IResultValue<TValue> ToResultValue<TValue>(TValue value) where TValue : notnull =>
-            OkStatus 
-                ? new ResultValue<TValue>(value) 
-                : new ResultValue<TValue>(Errors);
     }
 }

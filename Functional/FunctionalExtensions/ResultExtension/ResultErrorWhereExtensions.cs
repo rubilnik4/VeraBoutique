@@ -11,13 +11,12 @@ namespace Functional.FunctionalExtensions.ResultExtension
     public static class ResultErrorWhereExtensions
     {
         /// <summary>
-        /// Выполнение положительного или негативного условия в результирующем ответе
+        /// Преобразовать в результирующий ответ со значением
         /// </summary>      
-        public static TValueOut ResultOkBad<TValueOut>(this IResultError @this,
-                                                       Func<TValueOut> okFunc,
-                                                       Func<IReadOnlyList<IErrorResult>, TValueOut> badFunc) =>
+        public static IResultValue<TValueOut> ToResultValue<TValueOut>(this IResultError @this,
+                                                                       Func<TValueOut> okFunc) =>
             @this.OkStatus
-                ? okFunc.Invoke()
-                : badFunc.Invoke(@this.Errors);
+                ? new ResultValue<TValueOut>(okFunc.Invoke())
+                : new ResultValue<TValueOut>(@this.Errors);
     }
 }

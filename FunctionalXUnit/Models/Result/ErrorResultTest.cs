@@ -4,7 +4,7 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeData;
+using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
 
 namespace FunctionalXUnit.Models.Result
 {

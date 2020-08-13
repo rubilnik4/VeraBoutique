@@ -43,8 +43,6 @@ namespace Functional.Models.Implementations.Result
         /// </summary>      
         public new IResultValue<TValue> ConcatErrors(IEnumerable<IErrorResult> errors) =>
             base.ConcatErrors(errors).
-            ResultOkBad(
-                okFunc: () => new ResultValue<TValue>(Value),
-                badFunc: errorsResult => new ResultValue<TValue>(errorsResult));
+            ToResultValue(() => Value);
     }
 }
