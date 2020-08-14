@@ -1,5 +1,7 @@
 ﻿using System;
 using Functional.FunctionalExtensions;
+using FunctionalXUnit.Models.Mocks.Interfaces;
+using Moq;
 using Xunit;
 
 namespace FunctionalXUnit.Models.FunctionalExtensions
@@ -15,14 +17,13 @@ namespace FunctionalXUnit.Models.FunctionalExtensions
         [Fact]
         public void Void_CounterAddOne()
         {
-            const string test = "test";
-            int counter = 0;
-            void ActionCounter() => counter += 1;
+            const int initialNumber = 1;
+            var voidObjectMock = new Mock<IVoidObject>();
 
-            string testAfterVoid = test.Void(_ => ActionCounter());
+            int numberAfterVoid = initialNumber.Void(number => voidObjectMock.Object.TestNumberVoid(number));
 
-            Assert.True(testAfterVoid.Equals(test));
-            Assert.Equal(1, counter);
+            Assert.Equal(initialNumber, numberAfterVoid);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
         }
     }
 }

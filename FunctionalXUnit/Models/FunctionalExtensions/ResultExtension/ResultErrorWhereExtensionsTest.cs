@@ -1,9 +1,8 @@
 ﻿using Functional.FunctionalExtensions.ResultExtension;
 using Functional.Models.Implementations.Result;
-using FunctionalXUnit.Models.Result.Data;
 using System.Linq;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
+using static FunctionalXUnit.Models.Data.ErrorData;
 
 namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
 {

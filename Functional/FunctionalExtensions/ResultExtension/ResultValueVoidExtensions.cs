@@ -12,9 +12,9 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// <summary>
         /// Выполнить действие, вернуть результирующий ответ
         /// </summary>      
-        public static IResultValue<TValue> ResultVoid<TValue>(this IResultValue<TValue> @this, Action<TValue> action)
+        public static IResultValue<TValue> ResultVoid<TValue>(this IResultValue<TValue> @this, Action action)
         {
-            action.Invoke(@this.Value);
+            action.Invoke();
             return @this;
         }
 
@@ -30,7 +30,8 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// <summary>
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
-        public static IResultValue<TValue> ResultVoidBad<TValue>(this IResultValue<TValue> @this, Action<IReadOnlyList<IErrorResult>> action)
+        public static IResultValue<TValue> ResultVoidBad<TValue>(this IResultValue<TValue> @this, 
+                                                                 Action<IReadOnlyList<IErrorResult>> action)
         {
             if (@this.HasErrors) action.Invoke(@this.Errors);
             return @this;

@@ -2,7 +2,7 @@
 using Functional.Models.Interfaces.Result;
 using System.Linq;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
+using static FunctionalXUnit.Models.Data.ErrorData;
 
 namespace FunctionalXUnit.Models.Result
 {

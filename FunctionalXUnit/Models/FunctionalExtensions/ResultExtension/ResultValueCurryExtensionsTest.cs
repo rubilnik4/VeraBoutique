@@ -5,7 +5,7 @@ using Functional.FunctionalExtensions.ResultExtension;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Xunit;
-using static FunctionalXUnit.Models.Result.Data.InitializeErrorData;
+using static FunctionalXUnit.Models.Data.ErrorData;
 
 namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
 {
