@@ -5,7 +5,7 @@ using Functional.Models.Interfaces.Result;
 namespace Functional.FunctionalExtensions.ResultExtension
 {
     /// <summary>
-    /// Обработка условий для результирующего ответа со значением
+    /// Обработка условий для результирующего ответа со значением в обертке
     /// </summary>
     public static class ResultValueWhereRawExtensions
     {
@@ -17,5 +17,14 @@ namespace Functional.FunctionalExtensions.ResultExtension
             @this.OkStatus
                 ? okFunc.Invoke(@this)
                 : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение негативного условия результирующего ответа или возвращение положительного в результирующем ответе в обертке
+        /// </summary>   
+        public static IResultValue<TValue> ResultValueBadRaw<TValue>(this IResultValue<TValue> @this,
+                                                                     Func<IResultValue<TValue>, IResultValue<TValue>> okFunc) =>
+            @this.OkStatus
+                ? new ResultValue<TValue>(@this.Value)
+                : okFunc.Invoke(@this);
     }
 }

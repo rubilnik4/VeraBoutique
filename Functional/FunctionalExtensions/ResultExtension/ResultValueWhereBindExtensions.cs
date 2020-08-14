@@ -6,7 +6,7 @@ using Functional.Models.Interfaces.Result;
 namespace Functional.FunctionalExtensions.ResultExtension
 {
     /// <summary>
-    /// Обработка условий для результирующего ответа со значением
+    /// Обработка условий для результирующего связывающего ответа со значением
     /// </summary>
     public static class ResultValueWhereBindExtensions
     {

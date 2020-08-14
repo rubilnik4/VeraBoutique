@@ -27,9 +27,9 @@ namespace Functional.FunctionalExtensions.ResultExtension
         /// <summary>
         /// Выполнение положительного или негативного условия в результирующем ответе
         /// </summary>      
-        public static IResultValue<TValueOut> ResultOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
-                                                                               Func<TValueIn, TValueOut> okFunc,
-                                                                               Func<IReadOnlyList<IErrorResult>, TValueOut> badFunc) =>
+        public static IResultValue<TValueOut> ResultValueOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                    Func<TValueIn, TValueOut> okFunc,
+                                                                                    Func<IReadOnlyList<IErrorResult>, TValueOut> badFunc) =>
             @this.OkStatus
                 ? new ResultValue<TValueOut>(okFunc.Invoke(@this.Value))
                 : new ResultValue<TValueOut>(badFunc.Invoke(@this.Errors));
