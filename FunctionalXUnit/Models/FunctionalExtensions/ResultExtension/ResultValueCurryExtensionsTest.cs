@@ -93,7 +93,7 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddOkStatus_TwoArguments()
         {
-            var resultValueFunc = new ResultValue<Func<int, int, string>>(IntPlusIntToString);
+            var resultValueFunc = new ResultValue<Func<int, int, string>>(AggregateTwoToString);
             var resultArgument = new ResultValue<int>(2);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
@@ -109,7 +109,7 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddBadStatus_TwoArguments()
         {
-            var resultValueFunc = new ResultValue<Func<int, int, string>>(IntPlusIntToString);
+            var resultValueFunc = new ResultValue<Func<int, int, string>>(AggregateTwoToString);
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
@@ -159,6 +159,78 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
         }
 
         /// <summary>
+        /// Преобразование результирующего ответа с функцией высшего порядка для двух аргументов.
+        /// Ответ без ошибки. Аргумент без ошибки
+        /// </summary>
+        [Fact]
+        public void ResultCurryOkBind_OkStatus_AddOkStatus_ThreeArguments()
+        {
+            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateTwoToString);
+            var resultArgument = new ResultValue<int>(2);
+
+            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+
+            Assert.True(resultOut.OkStatus);
+            Assert.Equal("6", resultOut.Value.Invoke(2, 2));
+        }
+
+        /// <summary>
+        /// Преобразование результирующего ответа с функцией высшего порядка для двух аргументов.
+        /// Ответ без ошибки. Аргумент с ошибкой
+        /// </summary>
+        [Fact]
+        public void ResultCurryOkBind_OkStatus_AddBadStatus_ThreeArguments()
+        {
+            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateThreeToString);
+            var errorArgument = CreateErrorTest();
+            var resultArgument = new ResultValue<int>(errorArgument);
+
+            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+
+            Assert.True(resultOut.HasErrors);
+            Assert.Single(resultOut.Errors);
+            Assert.True(errorArgument.Equals(resultOut.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Преобразование результирующего ответа с функцией высшего порядка для двух аргументов.
+        /// Ответ с ошибкой. Аргумент без ошибки
+        /// </summary>
+        [Fact]
+        public void ResultCurryOkBind_BadStatus_AddOkStatus_ThreeArguments()
+        {
+            var errorFunc = CreateErrorTest();
+            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(errorFunc);
+            var resultArgument = new ResultValue<int>(2);
+
+            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+
+            Assert.True(resultOut.HasErrors);
+            Assert.Single(resultOut.Errors);
+            Assert.True(errorFunc.Equals(resultOut.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Преобразование результирующего ответа с функцией высшего порядка для двух аргументов.
+        /// Ответ с ошибкой. Аргумент с ошибкой
+        /// </summary>
+        [Fact]
+        public void ResultCurryOkBind_BadStatus_AddBadStatus_ThreeArguments()
+        {
+            var errorFunc = CreateErrorTest();
+            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(errorFunc);
+            var errorArgument = CreateErrorTest();
+            var resultArgument = new ResultValue<int>(errorArgument);
+
+            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+
+            Assert.True(resultOut.HasErrors);
+            Assert.Equal(2, resultOut.Errors.Count);
+            Assert.True(errorFunc.Equals(resultOut.Errors.First()));
+            Assert.True(errorArgument.Equals(resultOut.Errors.Last()));
+        }
+
+        /// <summary>
         /// Преобразовать число в строку
         /// </summary>
         private static string IntToString(int number) => number.ToString();
@@ -166,6 +238,11 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
         /// <summary>
         /// Сложить два числа и преобразовать в строку
         /// </summary>
-        private static string IntPlusIntToString(int first, int second) => (first + second).ToString();
+        private static string AggregateTwoToString(int first, int second) => (first + second).ToString();
+
+        /// <summary>
+        /// Сложить три числа и преобразовать в строку
+        /// </summary>
+        private static string AggregateThreeToString(int first, int second, int third) => (first + second + third).ToString();
     }
 }

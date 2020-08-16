@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueDAL\BoutiqueDAL.csproj" />
+    <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
 

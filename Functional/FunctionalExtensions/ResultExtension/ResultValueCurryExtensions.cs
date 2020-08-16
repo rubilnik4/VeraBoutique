@@ -27,5 +27,14 @@ namespace Functional.FunctionalExtensions.ResultExtension
             @this.OkStatus && arg1.OkStatus
                 ? new ResultValue<Func<TIn2, TOut>>(@this.Value.Curry(arg1.Value))
                 : new ResultValue<Func<TIn2, TOut>>(@this.Errors.Concat(arg1.Errors));
+
+        /// <summary>
+        /// Преобразование результирующего ответа с функцией высшего порядка для трех аргументов
+        /// </summary>
+        public static IResultValue<Func<TIn2, TIn3, TOut>> ResultCurryOkBind<TIn1, TIn2, TIn3, TOut>(this IResultValue<Func<TIn1, TIn2, TIn3, TOut>> @this,
+                                                                                                     IResultValue<TIn1> arg1) =>
+            @this.OkStatus && arg1.OkStatus
+                ? new ResultValue<Func<TIn2, TIn3, TOut>>(@this.Value.Curry(arg1.Value))
+                : new ResultValue<Func<TIn2, TIn3, TOut>>(@this.Errors.Concat(arg1.Errors));
     }
 }

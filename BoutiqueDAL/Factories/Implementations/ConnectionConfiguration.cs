@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoutiqueCommon.Models.Implementation.Connection;
+using System;
 
 namespace BoutiqueDAL.Factories.Implementations
 {
@@ -7,6 +8,10 @@ namespace BoutiqueDAL.Factories.Implementations
     /// </summary>
     public class ConnectionConfiguration
     {
+        public ConnectionConfiguration(HostConnection hostConnection, string database, Autorisation autorisation)
+            : this(hostConnection.Host, hostConnection.Port, database, autorisation.Username, autorisation.Password)
+        { }
+
         public ConnectionConfiguration(string host, int port, string database, string username, string password)
         {
             if (port <= 0) throw new ArgumentOutOfRangeException(nameof(port));
@@ -42,5 +47,10 @@ namespace BoutiqueDAL.Factories.Implementations
         /// Пароль
         /// </summary>
         public string Password { get; }
+
+        /// <summary>
+        /// Проверка имени базы
+        /// </summary>
+        public static bool IsDatabaseValid(string? database) => !String.IsNullOrWhiteSpace(database);
     }
 }
