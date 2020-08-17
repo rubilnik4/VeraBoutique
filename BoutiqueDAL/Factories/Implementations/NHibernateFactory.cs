@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
 using BoutiqueDAL.Entities.Clothes;
+using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Mappings.Clothes;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Functional.FunctionalExtensions.ResultExtension;
+using Functional.Models.Interfaces.Result;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 
@@ -12,23 +15,35 @@ namespace BoutiqueDAL.Factories.Implementations
     /// <summary>
     /// Фабрика для создания сессии подключения к БД
     /// </summary>
-    public static class NHibernateFactoryManager
+    public class NHibernateFactory: IDatabaseFactory
     {
+        /// <summary>
+        /// Параметры подключения к базе данных
+        /// </summary>
+        private readonly IResultValue<DatabaseConnection> _databaseConnection;
+
+        public NHibernateFactory(IResultValue<DatabaseConnection> databaseConnection)
+        {
+            _databaseConnection = databaseConnection;
+        }
+
         /// <summary>
         /// Фабрика для создания сессии
         /// </summary>
-        private static ISessionFactory? _sessionFactory;
+        private IResultValue<ISessionFactory>? _sessionFactory;
 
         /// <summary>
         /// Получить фабрику для создания сессии
         /// </summary>
-        public static ISessionFactory SessionFactory(ConnectionConfiguration connectionConfiguration) =>
-            _sessionFactory ??= PostgresConfigurationFactory(connectionConfiguration).BuildSessionFactory();
+        public IResultValue<ISessionFactory> SessionFactory =>
+            _sessionFactory ??=
+                _databaseConnection.
+                ResultValueOk(connection => PostgresConfigurationFactory(connection).BuildSessionFactory());
 
         /// <summary>
         /// Параметры для подключения базы данных SqLite
         /// </summary>
-        private static FluentConfiguration PostgresConfigurationFactory(ConnectionConfiguration connectionConfiguration) =>
+        private static FluentConfiguration PostgresConfigurationFactory(DatabaseConnection connectionConfiguration) =>
             Fluently.Configure().
             Database(PostgreSQLConfiguration.Standard.
                      ConnectionString(c => c.Host(connectionConfiguration.Host).

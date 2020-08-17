@@ -6,13 +6,13 @@ namespace BoutiqueDAL.Factories.Implementations
     /// <summary>
     /// Параметры подключения к базе данных
     /// </summary>
-    public class ConnectionConfiguration
+    public class DatabaseConnection
     {
-        public ConnectionConfiguration(HostConnection hostConnection, string database, Autorisation autorisation)
-            : this(hostConnection.Host, hostConnection.Port, database, autorisation.Username, autorisation.Password)
+        public DatabaseConnection(HostConnection hostConnection, string database, Authorization authorization)
+            : this(hostConnection.Host, hostConnection.Port, database, authorization.Username, authorization.Password)
         { }
 
-        public ConnectionConfiguration(string host, int port, string database, string username, string password)
+        public DatabaseConnection(string host, int port, string database, string username, string password)
         {
             if (port <= 0) throw new ArgumentOutOfRangeException(nameof(port));
 

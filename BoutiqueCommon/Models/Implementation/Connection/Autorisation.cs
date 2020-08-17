@@ -5,9 +5,9 @@ namespace BoutiqueCommon.Models.Implementation.Connection
     /// <summary>
     /// Параметры авторизации
     /// </summary>
-    public class Autorisation
+    public class Authorization
     {
-        public Autorisation(string username, string password)
+        public Authorization(string username, string password)
         {
             if (String.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username));
             if (String.IsNullOrWhiteSpace(password)) throw new ArgumentNullException(nameof(password));

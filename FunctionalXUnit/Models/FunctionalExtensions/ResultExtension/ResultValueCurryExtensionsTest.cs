@@ -165,7 +165,7 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddOkStatus_ThreeArguments()
         {
-            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateTwoToString);
+            var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateThreeToString);
             var resultArgument = new ResultValue<int>(2);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);

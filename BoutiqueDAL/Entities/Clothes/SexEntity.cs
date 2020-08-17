@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Enums;
+﻿using System;
+using BoutiqueCommon.Models.Enums;
 using BoutiqueDAL.Entities.Base;
 
 namespace BoutiqueDAL.Entities.Clothes
@@ -21,6 +22,6 @@ namespace BoutiqueDAL.Entities.Clothes
         /// <summary>
         /// Наименование
         /// </summary>
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } = String.Empty;
     }
 }
