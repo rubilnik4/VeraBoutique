@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Mappings.Clothes;
 using FluentNHibernate.Cfg;

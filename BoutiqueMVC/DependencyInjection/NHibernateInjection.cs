@@ -5,6 +5,7 @@ using BoutiqueDAL.Factories.Implementations;
 using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Services.Implementations;
 using BoutiqueDAL.Services.Interfaces;
+using Functional.FunctionalExtensions.ResultExtension;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 
@@ -20,8 +21,9 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static IServiceCollection ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDatabaseFactory>(serviceProvider => NHibernateFactory.SessionFactory(PostgresConnectionFactory.PostgresConfiguration));
-            services.AddTransient<IUnitOfWork>(serviceProvider => new UnitOfWork(serviceProvider.GetService<ISessionFactory>()));
+            services.AddSingleton<IDatabaseFactory>(serviceProvider => new NHibernateFactory(PostgresConnectionFactory.PostgresConfiguration));
+            services.AddTransient<IUnitOfWork>(serviceProvider => new UnitOfWork(serviceProvider.GetService<IDatabaseFactory>().SessionFactory.
+                                                                                 ResultValueOk(sessionFactory => sessionFactory.OpenSession())));
             services.AddTransient<IClothesUploadService>(serviceProvider => new ClothesUploadService(serviceProvider.GetService<IUnitOfWork>));
 
             return services;

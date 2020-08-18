@@ -16,36 +16,6 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
     public class ResultValueVoidExtensionsTest
     {
         /// <summary>
-        /// Проверка выполнения действия при результирующем ответе без ошибок
-        /// </summary>
-        [Fact]
-        public void ResultVoid_Ok_CallVoid()
-        {
-            var resultOk = new ResultValue<string>("test");
-            var voidObjectMock = new Mock<IVoidObject>();
-           
-            var resultAfterVoid = resultOk.ResultVoid(voidObjectMock.Object.TestVoid);
-
-            Assert.True(resultAfterVoid.Equals(resultOk));
-            voidObjectMock.Verify(voidObject => voidObject.TestVoid(), Times.Once);
-        }
-
-        /// <summary>
-        /// Проверка выполнения действия при результирующем ответе с ошибкой
-        /// </summary>
-        [Fact]
-        public void ResultVoid_Bad_CallVoid()
-        {
-            var resultBad = new ResultValue<string>(CreateErrorTest());
-            var voidObjectMock = new Mock<IVoidObject>();
-
-            var resultAfterVoid = resultBad.ResultVoid(voidObjectMock.Object.TestVoid);
-
-            Assert.True(resultAfterVoid.Equals(resultBad));
-            voidObjectMock.Verify(voidObject => voidObject.TestVoid(), Times.Once);
-        }
-
-        /// <summary>
         /// Проверка выполнения действия при результирующем ответе без ошибок с положительным условием
         /// </summary>
         [Fact]
@@ -106,6 +76,81 @@ namespace FunctionalXUnit.Models.FunctionalExtensions.ResultExtension
 
             Assert.True(resultAfterVoid.Equals(resultOk));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(errorsInitial.Count), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка выполнения действия при результирующем ответе с положительным условием предиката без ошибок с положительным условием
+        /// </summary>
+        [Fact]
+        public void ResultVoidOkWhere_Ok_OkPredicate_CallVoid()
+        {
+            const int initialNumber = 1;
+            var resultOk = new ResultValue<int>(initialNumber);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = 
+                resultOk.
+                ResultVoidOkWhere(number => number > 0, 
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.True(resultAfterVoid.Equals(resultOk));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка выполнения действия при результирующем ответе с отрицательным условием предиката без ошибок с положительным условием
+        /// </summary>
+        [Fact]
+        public void ResultVoidOkWhere_Ok_BadPredicate_NotCallVoid()
+        {
+            const int initialNumber = 1;
+            var resultOk = new ResultValue<int>(initialNumber);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid =
+                resultOk.
+                ResultVoidOkWhere(number => number > 2,
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.True(resultAfterVoid.Equals(resultOk));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Never);
+        }
+
+        /// <summary>
+        /// Проверка выполнения действия при результирующем ответе с положительным условием предиката без ошибок с отрицательным условием
+        /// </summary>
+        [Fact]
+        public void ResultVoidOkWhere_Bad_OkPredicate_NotCallVoid()
+        {
+            var resultOk = new ResultValue<int>(CreateErrorTest());
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid =
+                resultOk.
+                ResultVoidOkWhere(number => number == 0,
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.True(resultAfterVoid.Equals(resultOk));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
+        }
+
+
+        /// <summary>
+        /// Проверка выполнения действия при результирующем ответе с отрицательным условием предиката с ошибкой с отрицательным условием
+        /// </summary>
+        [Fact]
+        public void ResultVoidOkWhere_Bad_BadPredicate_NotCallVoid()
+        {
+            var resultOk = new ResultValue<int>(CreateErrorTest());
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = 
+                resultOk.
+                ResultVoidOkWhere(number => number > 2,
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.True(resultAfterVoid.Equals(resultOk));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
         }
     }
 }

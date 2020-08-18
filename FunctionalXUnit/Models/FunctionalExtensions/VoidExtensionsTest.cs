@@ -25,5 +25,41 @@ namespace FunctionalXUnit.Models.FunctionalExtensions
             Assert.Equal(initialNumber, numberAfterVoid);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
         }
+
+        /// <summary>
+        /// Проверка выполнения действия при положительном условии
+        /// </summary>
+        [Fact]
+        public void VoidOk_CounterAddOne()
+        {
+            const int initialNumber = 1;
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            int numberAfterVoid = 
+                initialNumber.
+                VoidOk(number => number > 0, 
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.Equal(initialNumber, numberAfterVoid);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка невыполнения действия при отрицательном условии
+        /// </summary>
+        [Fact]
+        public void VoidOk_CounterAddNone()
+        {
+            const int initialNumber = 1;
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            int numberAfterVoid =
+                initialNumber.
+                VoidOk(number => number < 0,
+                    action: number => voidObjectMock.Object.TestNumberVoid(number));
+
+            Assert.Equal(initialNumber, numberAfterVoid);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Never);
+        }
     }
 }

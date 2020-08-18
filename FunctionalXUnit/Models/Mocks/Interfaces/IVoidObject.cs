@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Tasks;
+
 namespace FunctionalXUnit.Models.Mocks.Interfaces
 {
     /// <summary>
@@ -15,5 +17,10 @@ namespace FunctionalXUnit.Models.Mocks.Interfaces
         /// Тестовый метод с числовым параметром
         /// </summary>
         void TestNumberVoid(int number);
+
+        /// <summary>
+        /// Тестовый асинхронный метод с числовым параметром
+        /// </summary>
+        Task TestNumberVoidAsync(int number);
     }
 }

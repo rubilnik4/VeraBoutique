@@ -3,6 +3,8 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Interfaces;
+using Functional.FunctionalExtensions.ResultExtension;
+using Functional.Models.Interfaces.Result;
 using NHibernate;
 
 namespace BoutiqueDAL.Factories.Implementations
@@ -12,72 +14,60 @@ namespace BoutiqueDAL.Factories.Implementations
     /// </summary>
     public sealed class UnitOfWork : IUnitOfWork
     {
+        public UnitOfWork(IResultValue<ISession> session)
+        {
+            Session = session;
+            _transaction = BeginTransaction(session);
+        }
+
         /// <summary>
         /// Сессия для подключения к базе
         /// </summary>
-        public ISession Session { get; }
-
-        public UnitOfWork(ISessionFactory sessionFactory)
-        {
-            Session = sessionFactory.OpenSession();
-            BeginTransaction();
-        }
+        public IResultValue<ISession> Session { get; }
 
         /// <summary>
         /// Открываемая транзакция
         /// </summary>
-        private ITransaction? _transaction;
+        private readonly IResultValue<ITransaction> _transaction;
 
         /// <summary>
         /// Открыть транзакцию
         /// </summary>
-        private void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted) =>
-            _transaction = Session.BeginTransaction(isolationLevel);
+        private static IResultValue<ITransaction> BeginTransaction(IResultValue<ISession> sessionResult) =>
+            sessionResult.ResultValueOk(session => session.BeginTransaction(IsolationLevel.ReadCommitted));
 
         /// <summary>
         /// Подтвердить транзакцию
         /// </summary>
-        public void Commit()
-        {
-            if (_transaction != null && _transaction.IsActive)
-            {
-                _transaction.Commit();
-            }
-        }
+        public void Commit() =>
+            _transaction?.
+            ResultVoidOkWhere(transaction => transaction?.IsActive == true,
+                action: transaction => transaction.Commit());
 
         /// <summary>
         /// Подтвердить транзакцию асинхронно
         /// </summary>
-        public async Task CommitAsync(CancellationToken cancellationToken = default)
-        {
-            if (_transaction != null && _transaction.IsActive)
-            {
-                await _transaction.CommitAsync(cancellationToken);
-            }
-        }
+        public async Task CommitAsync(CancellationToken cancellationToken = default) =>
+            await _transaction.
+            ResultVoidOkWhereAsync(transaction => transaction?.IsActive == true,
+                action: transaction => transaction.CommitAsync(cancellationToken));
 
         /// <summary>
         /// Откатить транзакцию
         /// </summary>
-        public void Rollback()
-        {
-            if (_transaction != null && _transaction.IsActive)
-            {
-                _transaction.Rollback();
-            }
-        }
+        public void Rollback() =>
+            _transaction?.
+            ResultVoidOkWhere(transaction => transaction?.IsActive == true,
+                action: transaction => transaction.Rollback());
 
         /// <summary>
         /// Откатить транзакцию асинхронно
         /// </summary>
-        public async Task RollbackAsync(CancellationToken cancellationToken = default)
-        {
-            if (_transaction != null && _transaction.IsActive)
-            {
-                await _transaction.RollbackAsync(cancellationToken);
-            }
-        }
-
+        public async Task RollbackAsync(CancellationToken cancellationToken = default) =>
+            await _transaction.
+            ResultVoidOkWhereAsync(transaction => transaction?.IsActive == true,
+                action: transaction => transaction.RollbackAsync(cancellationToken));
+      
         #region IDisposable Support
         private bool _disposedValue;
 
@@ -90,8 +80,8 @@ namespace BoutiqueDAL.Factories.Implementations
 
             }
 
-            _transaction?.Dispose();
-            Session?.Dispose();
+            _transaction?.ResultVoidOk(transaction => transaction.Dispose());
+            Session?.ResultVoidOk(session => session.Dispose());
 
             _disposedValue = true;
         }

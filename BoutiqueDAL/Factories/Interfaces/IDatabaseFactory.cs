@@ -1,5 +1,4 @@
-﻿using BoutiqueDAL.Factories.Implementations;
-using Functional.Models.Interfaces.Result;
+﻿using Functional.Models.Interfaces.Result;
 using NHibernate;
 
 namespace BoutiqueDAL.Factories.Interfaces
@@ -12,6 +11,6 @@ namespace BoutiqueDAL.Factories.Interfaces
         /// <summary>
         /// Получить фабрику для создания сессии
         /// </summary>
-        public IResultValue<ISessionFactory> SessionFactory
+        public IResultValue<ISessionFactory> SessionFactory { get; }
     }
 }

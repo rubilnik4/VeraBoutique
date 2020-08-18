@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Functional.Models.Interfaces.Result;
 using NHibernate;
 
 namespace BoutiqueDAL.Factories.Interfaces
@@ -13,7 +14,7 @@ namespace BoutiqueDAL.Factories.Interfaces
         /// <summary>
         /// Сессия для подключения к базе
         /// </summary>
-        ISession Session { get; }
+        IResultValue<ISession> Session { get; }
 
         /// <summary>
         /// Подтвердить транзакцию
