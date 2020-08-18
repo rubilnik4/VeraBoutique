@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueDAL.Entities.Clothes;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Services.Interfaces
 {
@@ -12,6 +13,6 @@ namespace BoutiqueDAL.Services.Interfaces
         /// <summary>
         /// Загрузить пол в базу данных
         /// </summary>
-        Task UploadSexTypes(IReadOnlyList<SexEntity> sexTypes);
+        Task<IResultError> UploadSexTypes(IReadOnlyList<SexEntity> sexTypes);
     }
 }

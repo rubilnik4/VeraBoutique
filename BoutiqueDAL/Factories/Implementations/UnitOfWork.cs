@@ -3,6 +3,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Interfaces;
+using Functional.FunctionalExtensions;
 using Functional.FunctionalExtensions.ResultExtension;
 using Functional.Models.Interfaces.Result;
 using NHibernate;
@@ -67,7 +68,15 @@ namespace BoutiqueDAL.Factories.Implementations
             await _transaction.
             ResultVoidOkWhereAsync(transaction => transaction?.IsActive == true,
                 action: transaction => transaction.RollbackAsync(cancellationToken));
-      
+
+        /// <summary>
+        /// Подтвердить транзакцию асинхронно и закрыть объект
+        /// </summary>
+        public async Task<IResultValue<TValue>> UseAndCommitAsync<TValue>(Func<ISession, TValue> func) =>
+            await Session.ResultValueOk(func.Invoke).
+            VoidAsync(_ => CommitAsync()).
+            Void(_ => Dispose());
+
         #region IDisposable Support
         private bool _disposedValue;
 
