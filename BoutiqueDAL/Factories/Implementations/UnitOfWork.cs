@@ -4,7 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Interfaces;
 using Functional.FunctionalExtensions;
-using Functional.FunctionalExtensions.ResultExtension;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Interfaces.Result;
 using NHibernate;
 
@@ -70,11 +73,18 @@ namespace BoutiqueDAL.Factories.Implementations
                 action: transaction => transaction.RollbackAsync(cancellationToken));
 
         /// <summary>
+        /// Использовать класс-обертку и закрыть
+        /// </summary>
+        public async Task<IResultValue<TValue>> Use<TValue>(Func<ISession, Task<TValue>> func) =>
+            await Session.ResultValueOkAsync(func.Invoke).
+            Void(_ => Dispose());
+
+        /// <summary>
         /// Подтвердить транзакцию асинхронно и закрыть объект
         /// </summary>
-        public async Task<IResultValue<TValue>> UseAndCommitAsync<TValue>(Func<ISession, TValue> func) =>
-            await Session.ResultValueOk(func.Invoke).
-            VoidAsync(_ => CommitAsync()).
+        public async Task<IResultValue<TValue>> UseAndCommitAsync<TValue>(Func<ISession, Task<TValue>> func) =>
+            await Session.ResultValueOkAsync(func.Invoke).
+            VoidBindAsync(_ => CommitAsync()).
             Void(_ => Dispose());
 
         #region IDisposable Support

@@ -4,7 +4,7 @@ using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Mappings.Clothes;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using Functional.FunctionalExtensions.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Interfaces.Result;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
@@ -50,7 +50,7 @@ namespace BoutiqueDAL.Factories.Implementations
                                              Database(connectionConfiguration.Database).
                                              Username(connectionConfiguration.Username).
                                              Password(connectionConfiguration.Password))).
-            Mappings(m => m.FluentMappings.AddFromAssemblyOf<SexMap>()).
+            Mappings(m => m.FluentMappings.AddFromAssemblyOf<GenderMap>()).
             ExposeConfiguration(c =>
             {
                 var schema = new SchemaUpdate(c);

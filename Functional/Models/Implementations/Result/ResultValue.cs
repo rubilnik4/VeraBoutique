@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.FunctionalExtensions;
-using Functional.FunctionalExtensions.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.Models.Implementations.Result

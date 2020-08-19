@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using BoutiqueMVC.Models.Implementations.Clothes.Parameters;
+using BoutiqueMVC.Models.Interfaces.Clothes;
 using VeraBoutique.Models.Implementations.Clothes.Parameters;
-using VeraBoutique.Models.Interfaces.Clothes;
 
-namespace VeraBoutique.Models.Implementations.Clothes
+namespace BoutiqueMVC.Models.Implementations.Clothes
 {
     /// <summary>
     /// Базовый класс одежды
     /// </summary>
     public class Clothes : IClothes
     {
-        public Clothes(CategorisationClothes categorisation, InformationClothes information,
+        public Clothes(CategorizationClothes categorization, InformationClothes information,
                        AttributesClothes attributes, Pricing pricing, IReadOnlyList<byte> image)
         {
-            Categorisation = categorisation;
+            Categorization = categorization;
             Information = information;
             Attributes = attributes;
             Pricing = pricing;
@@ -22,7 +23,7 @@ namespace VeraBoutique.Models.Implementations.Clothes
         /// <summary>
         /// Категории и тип одежды
         /// </summary>
-        public CategorisationClothes Categorisation { get; }
+        public CategorizationClothes Categorization { get; }
 
         /// <summary>
         /// Описание

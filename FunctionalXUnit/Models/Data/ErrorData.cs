@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -25,5 +26,23 @@ namespace FunctionalXUnit.Models.Data
                 CreateErrorTest(),
                 CreateErrorTest(),
             };
+
+        /// <summary>
+        /// Создать тестовый экземпляр множества ошибок
+        /// </summary>
+        public static IEnumerable<IErrorResult> CreateErrorEnumerableTwoTest() =>
+            CreateErrorListTwoTest();
+
+        /// <summary>
+        /// Создать тестовый экземпляр ошибки в задаче
+        /// </summary>
+        public static Task<IErrorResult> CreateErrorTestTask() =>
+            Task.FromResult(CreateErrorTest());
+
+        /// <summary>
+        /// Создать тестовый экземпляр списка ошибок
+        /// </summary>
+        public static Task<IEnumerable<IErrorResult>> CreateErrorListTwoTestTask() =>
+            Task.FromResult(CreateErrorEnumerableTwoTest());
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using BoutiqueCommon.Models.Implementation.Connection;
 using Functional.FunctionalExtensions;
-using Functional.FunctionalExtensions.ResultExtension;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using BoutiqueMVC.Models.Implementations.Clothes.Parameters;
 using VeraBoutique.Models.Implementations.Clothes.Parameters;
 
-namespace VeraBoutique.Models.Interfaces.Clothes
+namespace BoutiqueMVC.Models.Interfaces.Clothes
 {
     /// <summary>
     /// Базовый класс одежды
@@ -11,7 +12,7 @@ namespace VeraBoutique.Models.Interfaces.Clothes
         /// <summary>
         /// Категории и тип одежды
         /// </summary>
-        CategorisationClothes Categorisation { get; }
+        CategorizationClothes Categorization { get; }
 
         /// <summary>
         /// Описание

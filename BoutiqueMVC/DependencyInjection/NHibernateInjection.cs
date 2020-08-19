@@ -3,9 +3,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using BoutiqueDAL.Factories.Implementations;
 using BoutiqueDAL.Factories.Interfaces;
-using BoutiqueDAL.Services.Implementations;
-using BoutiqueDAL.Services.Interfaces;
-using Functional.FunctionalExtensions.ResultExtension;
+using BoutiqueDAL.Infrastructure.Implementations.Services;
+using BoutiqueDAL.Infrastructure.Interfaces.Services;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 
@@ -24,7 +24,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddSingleton<IDatabaseFactory>(serviceProvider => new NHibernateFactory(PostgresConnectionFactory.PostgresConfiguration));
             services.AddTransient<IUnitOfWork>(serviceProvider => new UnitOfWork(serviceProvider.GetService<IDatabaseFactory>().SessionFactory.
                                                                                  ResultValueOk(sessionFactory => sessionFactory.OpenSession())));
-            services.AddTransient<IClothesUploadService>(serviceProvider => new ClothesUploadService(serviceProvider.GetService<IUnitOfWork>));
+            services.AddTransient<IClothesService>(serviceProvider => new ClothesService(serviceProvider.GetService<IUnitOfWork>));
 
             return services;
         }
