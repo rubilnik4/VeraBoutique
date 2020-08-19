@@ -9,6 +9,7 @@ using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using NHibernate.Linq;
@@ -33,18 +34,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        public async Task<IResultValue<List<Gender>>> GetGenders() =>
+        public async Task<IResultCollection<Gender>> GetGenders() =>
             await _getUnitOfWork.Invoke().
-            Use(session => session.Query<GenderEntity>().ToListAsync().
-                                   MapBindAsync(genders => genders.Select(GenderEntityConverter.FromEntity).ToList()));
+            UseFunc(session => session.Query<GenderEntity>().ToListAsync().
+                               MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity))).
+            ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        public async Task<IResultError> UploadGenders(IReadOnlyList<GenderEntity> genders) =>
+        public async Task<IResultError> UploadGenders(IEnumerable<Gender> genders) =>
             await _getUnitOfWork.Invoke().
-            UseAndCommitAsync(session => genders.Select(gender => session.SaveOrUpdateAsync(gender)).
-                                                  WaitAll()).
-            Map(tt =>  tt);
+            UseActionAndCommitAsync(session => genders.
+                                               Select(GenderEntityConverter.ToEntity).
+                                               Select(gender => session.SaveOrUpdateAsync(gender)).
+                                               WaitAll());
     }
 }

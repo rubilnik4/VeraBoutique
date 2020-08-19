@@ -73,16 +73,31 @@ namespace BoutiqueDAL.Factories.Implementations
                 action: transaction => transaction.RollbackAsync(cancellationToken));
 
         /// <summary>
-        /// Использовать класс-обертку и закрыть
+        /// Использовать класс-обертку, выполнить действие и закрыть
         /// </summary>
-        public async Task<IResultValue<TValue>> Use<TValue>(Func<ISession, Task<TValue>> func) =>
+        public async Task<IResultError> UseAction<TValue>(Func<ISession, Task> action) =>
+            await Session.ResultVoidOkAsync(action.Invoke).
+            Void(_ => Dispose());
+
+        /// <summary>
+        /// Использовать класс-обертку, вернуть значение и закрыть
+        /// </summary>
+        public async Task<IResultValue<TValue>> UseFunc<TValue>(Func<ISession, Task<TValue>> func) =>
             await Session.ResultValueOkAsync(func.Invoke).
             Void(_ => Dispose());
 
         /// <summary>
         /// Подтвердить транзакцию асинхронно и закрыть объект
         /// </summary>
-        public async Task<IResultValue<TValue>> UseAndCommitAsync<TValue>(Func<ISession, Task<TValue>> func) =>
+        public async Task<IResultError> UseActionAndCommitAsync(Func<ISession, Task> action) =>
+            await Session.ResultVoidOkAsync(action.Invoke).
+            VoidBindAsync(_ => CommitAsync()).
+            Void(_ => Dispose());
+
+        /// <summary>
+        /// Подтвердить транзакцию асинхронно и закрыть объект
+        /// </summary>
+        public async Task<IResultValue<TValue>> UseFuncAndCommitAsync<TValue>(Func<ISession, Task<TValue>> func) =>
             await Session.ResultValueOkAsync(func.Invoke).
             VoidBindAsync(_ => CommitAsync()).
             Void(_ => Dispose());

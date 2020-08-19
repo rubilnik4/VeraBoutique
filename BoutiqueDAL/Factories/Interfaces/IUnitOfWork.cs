@@ -37,13 +37,23 @@ namespace BoutiqueDAL.Factories.Interfaces
         Task RollbackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Использовать класс-обертку, выполнить действие и закрыть
+        /// </summary>
+        Task<IResultError> UseAction<TValue>(Func<ISession, Task> action);
+
+        /// <summary>
         /// Использовать класс-обертку и закрыть
         /// </summary>
-        Task<IResultValue<TValue>> Use<TValue>(Func<ISession, Task<TValue>> func);
+        Task <IResultValue<TValue>> UseFunc<TValue>(Func<ISession, Task<TValue>> func);
 
         /// <summary>
         /// Подтвердить транзакцию асинхронно и закрыть объект
         /// </summary>
-        Task<IResultValue<TValue>> UseAndCommitAsync<TValue>(Func<ISession, Task<TValue>> func);
+        Task<IResultError> UseActionAndCommitAsync(Func<ISession, Task> action);
+
+        /// <summary>
+        /// Подтвердить транзакцию асинхронно и закрыть объект
+        /// </summary>
+        Task<IResultValue<TValue>> UseFuncAndCommitAsync<TValue>(Func<ISession, Task<TValue>> func);
     }
 }

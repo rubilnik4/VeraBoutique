@@ -1,0 +1,27 @@
+﻿using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Async;
+using FunctionalXUnit.Mocks.Implementation;
+using Xunit;
+
+namespace FunctionalXUnit.FunctionalExtensions.Async
+{
+    /// <summary>
+    /// Методы расширения для преобразования типов для объекта-задачи. Тесты
+    /// </summary>
+    public class MapTaskAsyncExtensionsTest
+    {
+        /// <summary>
+        /// Проверка преобразования типа-задачи с помощью функции. Из числа в строку
+        /// </summary>
+        [Fact]
+        public async Task MapTaskAsync_IntToString()
+        {
+            const int numberInitial = 2;
+            var numberTask = Task.FromResult(numberInitial);
+
+            string stringFromNumber = await numberTask.MapTaskAsync(number => number.ToString());
+
+            Assert.Equal(numberInitial.ToString(), stringFromNumber);
+        }
+    }
+}

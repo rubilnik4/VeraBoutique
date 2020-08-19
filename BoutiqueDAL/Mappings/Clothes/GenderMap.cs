@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Mappings.Clothes
         public GenderMap()
         {
             Id(x => x.Id).GeneratedBy.Identity();
-            Map(x => x.ClothesType).CustomType<GenderType>().Not.Nullable();
+            Map(x => x.GenderType).CustomType<GenderType>().Not.Nullable();
             Map(x => x.Name).Not.Nullable();
         }
     }

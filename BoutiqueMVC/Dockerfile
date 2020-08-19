@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["VeraButik/BoutiqueMVC.csproj", "VeraButik/"]
-RUN dotnet restore "VeraButik/BoutiqueMVC.csproj"
+COPY ["VeraBoutique/BoutiqueMVC.csproj", "VeraBoutique/"]
+RUN dotnet restore "VeraBoutique/BoutiqueMVC.csproj"
 COPY . .
-WORKDIR "/src/VeraButik"
+WORKDIR "/src/VeraBoutique"
 RUN dotnet build "BoutiqueMVC.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -19,4 +19,4 @@ RUN dotnet publish "BoutiqueMVC.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "VeraButik.dll"]
+ENTRYPOINT ["dotnet", "VeraBoutique.dll"]

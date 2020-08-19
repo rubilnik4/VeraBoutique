@@ -32,19 +32,17 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// Получить типы полов для одежды
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            _clothesService.
-           // return Ok(new string[] { "value1", "value2" });
-        }
+        public async Task<IActionResult> Get() =>
+            Ok(await _clothesService.GetGenders());
+      
 
-        /// <summary>
-        /// Записать типы полов для одежды
-        /// </summary>
-        [HttpPost]
-        public Task Post([FromBody] GenderType genderType)
-        {
+        ///// <summary>
+        ///// Записать типы полов для одежды
+        ///// </summary>
+        //[HttpPost]
+        //public Task Post([FromBody] GenderType genderType)
+        //{
 
-        }
+        //}
     }
 }
