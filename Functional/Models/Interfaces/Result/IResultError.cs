@@ -10,7 +10,7 @@ namespace Functional.Models.Interfaces.Result
         /// <summary>
         /// Список ошибок
         /// </summary>
-        IReadOnlyList<IErrorResult> Errors { get; }
+        IReadOnlyCollection<IErrorResult> Errors { get; }
 
         /// <summary>
         /// Присутствуют ли ошибки

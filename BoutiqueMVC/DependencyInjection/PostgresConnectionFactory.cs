@@ -1,6 +1,6 @@
 ﻿using System;
 using BoutiqueDAL.Factories.Implementations;
-
+using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.Models.Interfaces.Result;
 namespace BoutiqueMVC.DependencyInjection
 {

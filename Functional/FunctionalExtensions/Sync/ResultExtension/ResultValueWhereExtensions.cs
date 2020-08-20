@@ -28,7 +28,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension
         /// </summary>      
         public static IResultValue<TValueOut> ResultValueOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                     Func<TValueIn, TValueOut> okFunc,
-                                                                                    Func<IReadOnlyList<IErrorResult>, TValueOut> badFunc) =>
+                                                                                    Func<IReadOnlyCollection<IErrorResult>, TValueOut> badFunc) =>
             @this.OkStatus
                 ? new ResultValue<TValueOut>(okFunc.Invoke(@this.Value))
                 : new ResultValue<TValueOut>(badFunc.Invoke(@this.Errors));
@@ -46,7 +46,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension
         /// Выполнение негативного условия или возвращение положительного условия в результирующем ответе
         /// </summary>   
         public static IResultValue<TValue> ResultValueBad<TValue>(this IResultValue<TValue> @this,
-                                                                  Func<IReadOnlyList<IErrorResult>, TValue> badFunc) =>
+                                                                  Func<IReadOnlyCollection<IErrorResult>, TValue> badFunc) =>
 
             @this.OkStatus
                 ? @this

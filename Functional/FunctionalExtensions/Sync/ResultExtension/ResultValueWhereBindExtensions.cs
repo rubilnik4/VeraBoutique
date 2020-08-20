@@ -23,7 +23,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension
         /// Выполнение негативного условия результирующего ответа или возвращение положительного в результирующем ответе
         /// </summary>   
         public static IResultValue<TValue> ResultValueBadBind<TValue>(this IResultValue<TValue> @this,
-                                                                      Func<IReadOnlyList<IErrorResult>, IResultValue<TValue>> badFunc) =>
+                                                                      Func<IReadOnlyCollection<IErrorResult>, IResultValue<TValue>> badFunc) =>
             @this.OkStatus
                 ? @this
                 : badFunc.Invoke(@this.Errors);

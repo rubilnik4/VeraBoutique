@@ -4,7 +4,7 @@ using BoutiqueDAL.Entities.Clothes;
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters
 {
     /// <summary>
-    /// Преобразования модели типа пола в модель базы данных
+    /// Преобразования модели типа пола и модель базы данных
     /// </summary>
     public static class GenderEntityConverter
     {

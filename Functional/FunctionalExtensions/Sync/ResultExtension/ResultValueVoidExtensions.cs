@@ -21,7 +21,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
         public static IResultValue<TValue> ResultVoidBad<TValue>(this IResultValue<TValue> @this,
-                                                                 Action<IReadOnlyList<IErrorResult>> action) =>
+                                                                 Action<IReadOnlyCollection<IErrorResult>> action) =>
             @this.
             VoidOk(_ => @this.HasErrors,
                 action: _ => action.Invoke(@this.Errors));

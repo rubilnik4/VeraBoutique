@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
+using Functional.FunctionalExtensions.Async;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +34,8 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get() =>
-            Ok(await _clothesService.GetGenders());
+            await _clothesService.GetGenders().
+            MapTaskAsync(genders => Ok(genders.Value));
       
 
         ///// <summary>

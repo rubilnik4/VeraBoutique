@@ -29,7 +29,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
         /// </summary>      
         public static async Task<IResultValue<TValueOut>> ResultValueOkBadAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                                      Func<TValueIn, Task<TValueOut>> okFunc,
-                                                                                                     Func<IReadOnlyList<IErrorResult>, Task<TValueOut>> badFunc) =>
+                                                                                                     Func<IReadOnlyCollection<IErrorResult>, Task<TValueOut>> badFunc) =>
             @this.OkStatus
                 ? new ResultValue<TValueOut>(await okFunc.Invoke(@this.Value))
                 : new ResultValue<TValueOut>(await badFunc.Invoke(@this.Errors));
@@ -47,7 +47,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
         /// Выполнение негативного условия или возвращение положительного условия в результирующем ответе
         /// </summary>   
         public static async Task<IResultValue<TValue>> ResultValueBadAsync<TValue>(this IResultValue<TValue> @this,
-                                                                              Func<IReadOnlyList<IErrorResult>, Task<TValue>> badFunc) =>
+                                                                              Func<IReadOnlyCollection<IErrorResult>, Task<TValue>> badFunc) =>
 
             @this.OkStatus
                 ? @this

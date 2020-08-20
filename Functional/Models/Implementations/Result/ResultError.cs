@@ -19,13 +19,13 @@ namespace Functional.Models.Implementations.Result
 
         public ResultError(IEnumerable<IErrorResult> errors)
         {
-            Errors = errors.ToList();
+            Errors = errors.ToList().AsReadOnly();
         }
 
         /// <summary>
         /// Список ошибок
         /// </summary>
-        public IReadOnlyList<IErrorResult> Errors { get; }
+        public IReadOnlyCollection<IErrorResult> Errors { get; }
 
         /// <summary>
         /// Присутствуют ли ошибки

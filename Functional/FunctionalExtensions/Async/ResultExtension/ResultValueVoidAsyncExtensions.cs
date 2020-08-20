@@ -23,7 +23,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
         public static async Task<IResultValue<TValue>> ResultVoidBadAsync<TValue>(this IResultValue<TValue> @this,
-                                                                                  Func<IReadOnlyList<IErrorResult>, Task> action) =>
+                                                                                  Func<IReadOnlyCollection<IErrorResult>, Task> action) =>
             await @this.
             VoidOkAsync(_ => @this.HasErrors,
                 action: _ => action.Invoke(@this.Errors));

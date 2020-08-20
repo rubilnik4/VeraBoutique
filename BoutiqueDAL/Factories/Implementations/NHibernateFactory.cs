@@ -2,6 +2,7 @@
 using System.IO;
 using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Mappings.Clothes;
+using BoutiqueDAL.Models.Implementations.Connection;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Functional.FunctionalExtensions.Sync.ResultExtension;

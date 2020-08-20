@@ -1,5 +1,5 @@
 ﻿using System;
-using BoutiqueCommon.Models.Implementation.Connection;
+using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.FunctionalExtensions;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
@@ -15,11 +15,11 @@ namespace BoutiqueDAL.Factories.Implementations
     public static class DatabaseConnectionFactory
     {
         /// <summary>
-        /// Получить параметры подключения к базе из переменных окружения
+        /// Получить параметры подключения к базе
         /// </summary>
         public static IResultValue<DatabaseConnection> GetDatabaseConfiguration(IResultValue<HostConnection> hostConnection,
-                                                                                             IResultValue<string> database,
-                                                                                             IResultValue<Authorization> authorization) =>
+                                                                                IResultValue<string> database,
+                                                                                IResultValue<Authorization> authorization) =>
             new ResultValue<Func<HostConnection, string, Authorization, DatabaseConnection>>(
                     (hostConnectionIn, databaseIn, authorizationIn) => new DatabaseConnection(hostConnectionIn, databaseIn, authorizationIn)).
             ResultCurryOkBind(hostConnection).
