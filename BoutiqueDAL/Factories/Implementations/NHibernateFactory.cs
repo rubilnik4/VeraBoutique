@@ -15,16 +15,16 @@ namespace BoutiqueDAL.Factories.Implementations
     /// <summary>
     /// Фабрика для создания сессии подключения к БД
     /// </summary>
-    public class NHibernateFactory: IDatabaseFactory
+    public class NHibernateFactory : IDatabaseFactory
     {
         /// <summary>
-        /// Параметры подключения к базе данных
+        /// Параметры для подключения базы
         /// </summary>
-        private readonly IResultValue<DatabaseConnection> _databaseConnection;
+        private readonly IResultValue<FluentConfiguration> _fluentConfiguration;
 
-        public NHibernateFactory(IResultValue<DatabaseConnection> databaseConnection)
+        public NHibernateFactory(IResultValue<FluentConfiguration> fluentConfiguration)
         {
-            _databaseConnection = databaseConnection;
+            _fluentConfiguration = fluentConfiguration;
         }
 
         /// <summary>
@@ -37,25 +37,43 @@ namespace BoutiqueDAL.Factories.Implementations
         /// </summary>
         public IResultValue<ISessionFactory> SessionFactory =>
             _sessionFactory ??=
-                _databaseConnection.
-                ResultValueOk(connection => PostgresConfigurationFactory(connection).BuildSessionFactory());
+                _fluentConfiguration.ResultValueOk(configuration => configuration.BuildSessionFactory());
 
         /// <summary>
-        /// Параметры для подключения базы данных SqLite
+        /// Параметры для подключения базы данных postgres
         /// </summary>
-        private static FluentConfiguration PostgresConfigurationFactory(DatabaseConnection connectionConfiguration) =>
+        public static IResultValue<FluentConfiguration> PostgresConfiguration(IResultValue<DatabaseConnection> databaseConnection) =>
+            databaseConnection.ResultValueOk(PostgresConfiguration);
+
+        /// <summary>
+        /// Параметры для подключения базы данных postgres
+        /// </summary>
+        public static FluentConfiguration PostgresConfiguration(DatabaseConnection databaseConnection) =>
             Fluently.Configure().
             Database(PostgreSQLConfiguration.Standard.
-                     ConnectionString(c => c.Host(connectionConfiguration.Host).
-                                             Port(connectionConfiguration.Port).
-                                             Database(connectionConfiguration.Database).
-                                             Username(connectionConfiguration.Username).
-                                             Password(connectionConfiguration.Password))).
+                     ConnectionString(c => c.Host(databaseConnection.Host).
+                                             Port(databaseConnection.Port).
+                                             Database(databaseConnection.Database).
+                                             Username(databaseConnection.Username).
+                                             Password(databaseConnection.Password))).
             Mappings(m => m.FluentMappings.AddFromAssemblyOf<GenderMap>()).
             ExposeConfiguration(c =>
             {
                 var schema = new SchemaUpdate(c);
                 schema.Execute(false, true);
             });
+
+        /// <summary>
+        /// Параметры для подключения базы данных sqlite в памяти
+        /// </summary>
+        public static FluentConfiguration SqliteMemoryConfiguration() =>
+            Fluently.Configure().
+                Database(SQLiteConfiguration.Standard.InMemory()).
+                Mappings(m => m.FluentMappings.AddFromAssemblyOf<GenderMap>()).
+                ExposeConfiguration(c =>
+                {
+                    var schema = new SchemaUpdate(c);
+                    schema.Execute(false, true);
+                });
     }
 }

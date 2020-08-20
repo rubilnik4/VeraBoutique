@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Implementation.Clothes;
-using BoutiqueDAL.Entities.Clothes;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services
 {
     /// <summary>
-    /// Сервис загрузки данных в базу для категорий одежды
+    /// Сервис загрузки данных в базу для типа пола одежды
     /// </summary>
-    public interface IClothesService
+    public interface IGenderService
     {
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных

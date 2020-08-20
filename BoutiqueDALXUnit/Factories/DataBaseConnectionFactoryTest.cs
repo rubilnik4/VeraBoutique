@@ -124,7 +124,7 @@ namespace BoutiqueDALXUnit.Factories
             var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
             var database = new ResultValue<string>(ConnectionData.DatabaseOk);
 
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConfiguration(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             var databaseConnectionAssert = new DatabaseConnection(hostConnection.Value, database.Value, authorization.Value);
             Assert.True(databaseConnection.OkStatus);
@@ -141,7 +141,7 @@ namespace BoutiqueDALXUnit.Factories
             var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
             var database = new ResultValue<string>(ConnectionData.DatabaseOk);
 
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConfiguration(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.IncorrectDatabaseConnection);
@@ -157,7 +157,7 @@ namespace BoutiqueDALXUnit.Factories
             var authorization = new ResultValue<Authorization>(ConnectionData.ErrorConnection);
             var database = new ResultValue<string>(ConnectionData.DatabaseOk);
 
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConfiguration(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.IncorrectDatabaseConnection);
@@ -173,7 +173,7 @@ namespace BoutiqueDALXUnit.Factories
             var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
             var database = new ResultValue<string>(ConnectionData.ErrorConnection);
 
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConfiguration(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.IncorrectDatabaseConnection);

@@ -21,10 +21,12 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static IServiceCollection ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDatabaseFactory>(serviceProvider => new NHibernateFactory(PostgresConnectionFactory.PostgresConfiguration));
+            var postgresConfiguration = NHibernateFactory.PostgresConfiguration(PostgresConnectionFactory.PostgresConnection);
+            services.AddSingleton<IDatabaseFactory>(serviceProvider => new NHibernateFactory(postgresConfiguration));
+
             services.AddTransient<IUnitOfWork>(serviceProvider => new UnitOfWork(serviceProvider.GetService<IDatabaseFactory>().SessionFactory.
                                                                                  ResultValueOk(sessionFactory => sessionFactory.OpenSession())));
-            services.AddTransient<IClothesService>(serviceProvider => new ClothesService(serviceProvider.GetService<IUnitOfWork>));
+            services.AddTransient<IGenderService>(serviceProvider => new BoutiqueDAL.Infrastructure.Implementations.Services.GenderService(serviceProvider.GetService<IUnitOfWork>));
 
             return services;
         }

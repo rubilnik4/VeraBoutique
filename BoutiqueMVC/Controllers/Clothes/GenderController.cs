@@ -22,11 +22,11 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// <summary>
         /// Сервис загрузки данных в базу для категорий одежды
         /// </summary>
-        private readonly IClothesService _clothesService;
+        private readonly IGenderService _genderService;
 
-        public GenderController(IClothesService clothesService)
+        public GenderController(IGenderService genderService)
         {
-            _clothesService = clothesService;
+            _genderService = genderService;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get() =>
-            await _clothesService.GetGenders().
+            await _genderService.GetGenders().
             MapTaskAsync(genders => Ok(genders.Value));
       
 

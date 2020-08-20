@@ -1,6 +1,5 @@
 ﻿using System;
 using BoutiqueDAL.Models.Implementations.Connection;
-using Functional.FunctionalExtensions;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Enums;
@@ -17,7 +16,7 @@ namespace BoutiqueDAL.Factories.Implementations
         /// <summary>
         /// Получить параметры подключения к базе
         /// </summary>
-        public static IResultValue<DatabaseConnection> GetDatabaseConfiguration(IResultValue<HostConnection> hostConnection,
+        public static IResultValue<DatabaseConnection> GetDatabaseConnection(IResultValue<HostConnection> hostConnection,
                                                                                 IResultValue<string> database,
                                                                                 IResultValue<Authorization> authorization) =>
             new ResultValue<Func<HostConnection, string, Authorization, DatabaseConnection>>(

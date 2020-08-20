@@ -10,23 +10,22 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
-using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using NHibernate.Linq;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services
 {
     /// <summary>
-    /// Сервис загрузки данных в базу для категорий одежды
+    /// Сервис загрузки данных в базу для типа пола одежды
     /// </summary>
-    public class ClothesService : IClothesService
+    public class GenderService : IGenderService
     {
         /// <summary>
         /// Получить обертку управления транзакциями
         /// </summary>
         private readonly Func<IUnitOfWork> _getUnitOfWork;
 
-        public ClothesService(Func<IUnitOfWork> getUnitOfWork)
+        public GenderService(Func<IUnitOfWork> getUnitOfWork)
         {
             _getUnitOfWork = getUnitOfWork;
         }
@@ -36,8 +35,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task<IResultCollection<Gender>> GetGenders() =>
             await _getUnitOfWork.Invoke().
-            UseFunc(session => session.Query<GenderEntity>().ToListAsync().
-                               MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity))).
+            UseFuncAsync(session => session.Query<GenderEntity>().ToListAsync().
+                                    MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity))).
             ToResultCollectionTaskAsync();
 
         /// <summary>

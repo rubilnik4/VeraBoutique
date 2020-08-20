@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Interfaces;
-using Functional.FunctionalExtensions;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.FunctionalExtensions.Sync;
@@ -75,14 +74,14 @@ namespace BoutiqueDAL.Factories.Implementations
         /// <summary>
         /// Использовать класс-обертку, выполнить действие и закрыть
         /// </summary>
-        public async Task<IResultError> UseAction<TValue>(Func<ISession, Task> action) =>
+        public async Task<IResultError> UseActionAsync(Func<ISession, Task> action) =>
             await Session.ResultVoidOkAsync(action.Invoke).
             Void(_ => Dispose());
 
         /// <summary>
         /// Использовать класс-обертку, вернуть значение и закрыть
         /// </summary>
-        public async Task<IResultValue<TValue>> UseFunc<TValue>(Func<ISession, Task<TValue>> func) =>
+        public async Task<IResultValue<TValue>> UseFuncAsync<TValue>(Func<ISession, Task<TValue>> func) =>
             await Session.ResultValueOkAsync(func.Invoke).
             Void(_ => Dispose());
 

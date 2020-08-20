@@ -39,12 +39,12 @@ namespace BoutiqueDAL.Factories.Interfaces
         /// <summary>
         /// Использовать класс-обертку, выполнить действие и закрыть
         /// </summary>
-        Task<IResultError> UseAction<TValue>(Func<ISession, Task> action);
+        Task<IResultError> UseActionAsync(Func<ISession, Task> action);
 
         /// <summary>
         /// Использовать класс-обертку и закрыть
         /// </summary>
-        Task <IResultValue<TValue>> UseFunc<TValue>(Func<ISession, Task<TValue>> func);
+        Task <IResultValue<TValue>> UseFuncAsync<TValue>(Func<ISession, Task<TValue>> func);
 
         /// <summary>
         /// Подтвердить транзакцию асинхронно и закрыть объект

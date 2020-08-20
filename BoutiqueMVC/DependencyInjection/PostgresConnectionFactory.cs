@@ -12,10 +12,10 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Получить параметры подключения к базе из переменных окружения
         /// </summary>
-        public static IResultValue<DatabaseConnection> PostgresConfiguration =>
-            DatabaseConnectionFactory.GetDatabaseConfiguration(DatabaseConnectionFactory.GetHostConnection(Host, Port),
-                                                               DatabaseConnectionFactory.GetDatabase(Database),
-                                                               DatabaseConnectionFactory.GetAuthorization(Username, Password));
+        public static IResultValue<DatabaseConnection> PostgresConnection =>
+            DatabaseConnectionFactory.GetDatabaseConnection(DatabaseConnectionFactory.GetHostConnection(Host, Port),
+                                                            DatabaseConnectionFactory.GetDatabase(Database),
+                                                            DatabaseConnectionFactory.GetAuthorization(Username, Password));
     
         /// <summary>
         /// Имя сервера
