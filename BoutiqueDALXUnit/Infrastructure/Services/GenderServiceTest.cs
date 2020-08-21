@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using System.Linq;
+using NHibernate;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services
 {
@@ -23,10 +24,19 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         public async Task UploadGenders_EqualReturn()
         {
             var genders = GetGenders();
-            var genderService = new GenderService(GetUnitOfWork);
+            var factory = new DatabaseScope();
+            var session = new ResultValue<ISession>(factory.OpenSession());
+            var genderService = new GenderService(() => new UnitOfWork(session));
+            
 
             await genderService.UploadGenders(genders);
-            var gendersFromDatabase = await genderService.GetGenders();
+            factory.Dispose();
+
+            var factoryRead = new DatabaseScope();
+            var sessionRead = new ResultValue<ISession>(factoryRead.OpenSession());
+            var genderServiceRead = new GenderService(() => new UnitOfWork(sessionRead));
+            var gendersFromDatabase = await genderServiceRead.GetGenders();
+            factoryRead.Dispose();
 
             Assert.True(gendersFromDatabase.OkStatus);
             Assert.True(gendersFromDatabase.Value.SequenceEqual(genders));

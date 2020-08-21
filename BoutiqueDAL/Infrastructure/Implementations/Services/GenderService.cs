@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Antlr.Runtime.Misc;
 using BoutiqueCommon.Extensions.TaskExtensions;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Entities.Clothes;
+using BoutiqueDAL.Factories.Implementations;
 using BoutiqueDAL.Factories.Interfaces;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.Models.Interfaces.Result;
-using NHibernate.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services
 {
@@ -23,21 +23,24 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// <summary>
         /// Получить обертку управления транзакциями
         /// </summary>
-        private readonly Func<IUnitOfWork> _getUnitOfWork;
+        private readonly BoutiqueDatabase _boutiqueDatabase;
 
-        public GenderService(Func<IUnitOfWork> getUnitOfWork)
+        public GenderService()
         {
-            _getUnitOfWork = getUnitOfWork;
+            _boutiqueDatabase = new BoutiqueDatabase();
         }
 
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
         public async Task<IResultCollection<Gender>> GetGenders() =>
-            await _getUnitOfWork.Invoke().
-            UseFuncAsync(session => session.Query<GenderEntity>().ToListAsync().
-                                    MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity))).
+            await _boutiqueDatabase.Genders.ToListAsync().
+            MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity)).
             ToResultCollectionTaskAsync();
+            //await _getUnitOfWork.Invoke().
+            //UseFuncAsync(session => session.Query<GenderEntity>().ToListAsync().
+            //                        MapTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity))).
+            //ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных

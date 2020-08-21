@@ -11,14 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
-    <PackageReference Include="NHibernate.Extensions.NpgSql" Version="3.1.7" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Factories\Interfaces\" />
   </ItemGroup>
 
 </Project>
