@@ -26,9 +26,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         private readonly BoutiqueDatabase _boutiqueDatabase;
 
-        public GenderService()
+        public GenderService(BoutiqueDatabase boutiqueDatabase)
         {
-            _boutiqueDatabase = new BoutiqueDatabase();
+            _boutiqueDatabase = boutiqueDatabase;
         }
 
         /// <summary>
@@ -43,6 +43,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task UploadGenders(IEnumerable<Gender> genders) =>
             await genders.Select(GenderEntityConverter.ToEntity).
-            VoidAsync(genderEntitties => _boutiqueDatabase.Genders.AddRangeAsync(genderEntitties));
+            VoidAsync(genderEntitties => _boutiqueDatabase.Genders.AddRangeAsync(genderEntitties)).
+            VoidBindAsync(_ => _boutiqueDatabase.SaveChangesAsync());
     }
 }

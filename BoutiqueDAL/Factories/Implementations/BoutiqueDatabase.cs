@@ -1,15 +1,17 @@
 ﻿using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BoutiqueDAL.Factories.Implementations
 {
     public class BoutiqueDatabase : DbContext
     {
-        public DbSet<GenderEntity> Genders { get; set; }
+        public BoutiqueDatabase(DbContextOptions<BoutiqueDatabase> options)
+            : base(options)
+        { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-            optionsBuilder.UseNpgsql("Host=postgres;Port=5432;Database=Boutique;Username=postgres;Password=postgres");
+        public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

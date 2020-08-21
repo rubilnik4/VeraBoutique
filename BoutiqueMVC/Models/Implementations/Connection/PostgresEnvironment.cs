@@ -1,4 +1,4 @@
-﻿namespace BoutiqueMVC.DependencyInjection
+﻿namespace BoutiqueMVC.Models.Implementations.Connection
 {
     /// <summary>
     /// Параметры подключения postgres в окружении

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async;
@@ -33,10 +34,20 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// Получить типы полов для одежды
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get() =>
-            await _genderService.GetGenders().
-            MapTaskAsync(genders => Ok(genders));
-      
+        public async Task<IActionResult> Get()
+
+        {
+            var genders = new List<Gender>()
+            {
+                new Gender(GenderType.Female, "Женшина"),
+                new Gender(GenderType.Female, "Мушина"),
+            };
+            await _genderService.UploadGenders(genders);
+            return Ok("ok");
+        }
+        //await _genderService.GetGenders().
+        //MapTaskAsync(genders => Ok(genders));
+
 
         ///// <summary>
         ///// Записать типы полов для одежды

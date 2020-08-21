@@ -1,7 +1,9 @@
 using System;
+using BoutiqueDAL.Factories.Implementations;
 using BoutiqueMVC.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +28,7 @@ namespace BoutiqueMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            DatabaseInjection.InjectPostgres(services);
         }
 
         /// <summary>
@@ -49,6 +52,11 @@ namespace BoutiqueMVC
             {
                 endpoints.MapControllers();
             });
+
+
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            var context = serviceScope.ServiceProvider;
+            DatabaseInjection.UpdateSchema(serviceScope.ServiceProvider);
         }
     }
 }

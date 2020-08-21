@@ -1,8 +1,10 @@
 ﻿using System;
 using BoutiqueDAL.Factories.Implementations;
 using BoutiqueDAL.Models.Implementations.Connection;
+using BoutiqueMVC.Models.Implementations.Connection;
 using Functional.Models.Interfaces.Result;
-namespace BoutiqueMVC.DependencyInjection
+
+namespace BoutiqueMVC.Factories.Implementation
 {
     /// <summary>
     /// Параметры подключения базы Postgres
