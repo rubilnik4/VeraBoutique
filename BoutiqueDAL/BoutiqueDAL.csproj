@@ -11,16 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Factories\Interfaces\**" />
+    <EmbeddedResource Remove="Factories\Interfaces\**" />
+    <None Remove="Factories\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Factories\Interfaces\" />
   </ItemGroup>
 
 </Project>
