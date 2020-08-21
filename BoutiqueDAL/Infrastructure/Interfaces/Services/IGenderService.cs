@@ -13,11 +13,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        Task<IResultCollection<Gender>> GetGenders();
+        Task<IReadOnlyCollection<Gender>> GetGenders();
 
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        Task <IResultError> UploadGenders(IEnumerable<Gender> genders);
+        Task UploadGenders(IEnumerable<Gender> genders);
     }
 }

@@ -26,7 +26,6 @@ namespace BoutiqueMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            NHibernateInjection.ConfigureServices(services);
         }
 
         /// <summary>

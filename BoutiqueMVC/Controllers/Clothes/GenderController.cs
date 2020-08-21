@@ -35,7 +35,7 @@ namespace BoutiqueMVC.Controllers.Clothes
         [HttpGet]
         public async Task<IActionResult> Get() =>
             await _genderService.GetGenders().
-            MapTaskAsync(genders => Ok(genders.Value));
+            MapTaskAsync(genders => Ok(genders));
       
 
         ///// <summary>
