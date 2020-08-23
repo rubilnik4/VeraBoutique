@@ -11,12 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Factories\Interfaces\**" />
-    <EmbeddedResource Remove="Factories\Interfaces\**" />
-    <None Remove="Factories\Interfaces\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
 

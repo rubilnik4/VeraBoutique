@@ -18,6 +18,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectPostgres (IServiceCollection services)
         {
+            
+           
             var postgresConnection = PostgresConnectionFactory.PostgresConnection.Value;
             string connection = $"Host={postgresConnection.Host};Port={postgresConnection.Port};Database={postgresConnection.Database};Username={postgresConnection.Username};Password={postgresConnection.Password}";
             services.AddDbContext<BoutiqueDatabase>(options => options.UseNpgsql(connection));
@@ -30,8 +32,15 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void UpdateSchema(IServiceProvider serviceProvider)
         {
+            var builder = new DbContextOptionsBuilder();
+            var bb = builder.UseNpgsql("");
+
+            var db = new BoutiqueDatabase(bb.Options);
+
             var boutiqueDatabase = serviceProvider.GetService<BoutiqueDatabase>();
             boutiqueDatabase.Database.EnsureCreated();
+
+
         }
     }
 }

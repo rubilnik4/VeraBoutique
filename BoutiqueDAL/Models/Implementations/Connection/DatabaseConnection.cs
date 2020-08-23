@@ -52,6 +52,11 @@ namespace BoutiqueDAL.Models.Implementations.Connection
         public string Password => Authorization.Password;
 
         /// <summary>
+        /// Строка подключения к базе
+        /// </summary>
+        public string ConnectionString => $"Host={Host};Port={Port};Database={Database};Username={Username};Password={Password}";
+
+        /// <summary>
         /// Проверка имени базы
         /// </summary>
         public static bool IsDatabaseValid(string? database) => !String.IsNullOrWhiteSpace(database);

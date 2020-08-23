@@ -7,7 +7,7 @@ namespace BoutiqueDAL.Factories.Implementations
 {
     public class BoutiqueDatabase : DbContext
     {
-        public BoutiqueDatabase(DbContextOptions<BoutiqueDatabase> options)
+        public BoutiqueDatabase(DbContextOptions options)
             : base(options)
         { }
 

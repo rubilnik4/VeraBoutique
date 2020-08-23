@@ -55,7 +55,6 @@ namespace BoutiqueMVC
 
 
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            var context = serviceScope.ServiceProvider;
             DatabaseInjection.UpdateSchema(serviceScope.ServiceProvider);
         }
     }
