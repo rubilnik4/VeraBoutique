@@ -1,9 +1,8 @@
 ﻿using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
 
-namespace BoutiqueDAL.Factories.Implementations
+namespace BoutiqueDAL.Factories.Implementations.Database
 {
     public class BoutiqueDatabase : DbContext
     {

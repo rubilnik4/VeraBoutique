@@ -6,7 +6,7 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Factories.Implementations
+namespace BoutiqueDAL.Factories.Implementations.Database
 {
     /// <summary>
     /// Фабрика создания подключения базы данных

@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueDAL.Factories.Implementations;
+using BoutiqueDAL.Factories.Implementations.Database;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueMVC.Models.Implementations.Connection;
 using Functional.Models.Interfaces.Result;

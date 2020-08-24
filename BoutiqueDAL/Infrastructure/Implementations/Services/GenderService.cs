@@ -6,6 +6,7 @@ using BoutiqueCommon.Extensions.TaskExtensions;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Implementations;
+using BoutiqueDAL.Factories.Implementations.Database;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async;
