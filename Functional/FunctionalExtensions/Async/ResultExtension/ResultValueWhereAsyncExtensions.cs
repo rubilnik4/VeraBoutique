@@ -12,7 +12,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
     public static class ResultValueWhereAsyncExtensions
     {
         /// <summary>
-        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе
+        /// Выполнение асинхронного условия или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>      
         public static async Task<IResultValue<TValueOut>> ResultValueContinueAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                                         Func<TValueIn, bool> predicate,
@@ -25,7 +25,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
              : new ResultValue<TValueOut>(@this.Errors);
 
         /// <summary>
-        /// Выполнение положительного или негативного условия в результирующем ответе
+        /// Выполнение асинхронного положительного или негативного условия в результирующем ответе
         /// </summary>      
         public static async Task<IResultValue<TValueOut>> ResultValueOkBadAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                                      Func<TValueIn, Task<TValueOut>> okFunc,
@@ -35,7 +35,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
                 : new ResultValue<TValueOut>(await badFunc.Invoke(@this.Errors));
 
         /// <summary>
-        /// Выполнение положительного условия или возвращение предыдущей ошибки в результирующем ответе
+        /// Выполнение асинхронного положительного условия или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueOkAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                              Func<TValueIn, Task<TValueOut>> okFunc) =>
@@ -44,10 +44,10 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
                 : new ResultValue<TValueOut>(@this.Errors);
 
         /// <summary>
-        /// Выполнение негативного условия или возвращение положительного условия в результирующем ответе
+        /// Выполнение асинхронного негативного условия или возвращение положительного условия в результирующем ответе
         /// </summary>   
         public static async Task<IResultValue<TValue>> ResultValueBadAsync<TValue>(this IResultValue<TValue> @this,
-                                                                              Func<IReadOnlyCollection<IErrorResult>, Task<TValue>> badFunc) =>
+                                                                                   Func<IReadOnlyCollection<IErrorResult>, Task<TValue>> badFunc) =>
 
             @this.OkStatus
                 ? @this

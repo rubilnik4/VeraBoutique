@@ -1,6 +1,6 @@
 ﻿using System;
-using BoutiqueDAL.Factories.Implementations;
-using BoutiqueDAL.Factories.Implementations.Database;
+using BoutiqueDAL.Factories.Implementations.Database.Boutique;
+using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueMVC.Factories.Implementation;
@@ -19,13 +19,14 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectPostgres (IServiceCollection services)
         {
-            
-           
-            var postgresConnection = PostgresConnectionFactory.PostgresConnection.Value;
-            string connection = $"Host={postgresConnection.Host};Port={postgresConnection.Port};Database={postgresConnection.Database};Username={postgresConnection.Username};Password={postgresConnection.Password}";
-            services.AddDbContext<BoutiqueDatabase>(options => options.UseNpgsql(connection));
 
-            services.AddTransient<IGenderService, GenderService>();
+
+            //var postgresConnection = PostgresConnectionFactory.PostgresConnection.Value;
+            //string connection = $"Host={postgresConnection.Host};Port={postgresConnection.Port};Database={postgresConnection.Database};Username={postgresConnection.Username};Password={postgresConnection.Password}";
+            //services.AddDbContext<BoutiqueEntityDatabase>(options => options.UseNpgsql(connection));
+
+            services.AddTransient<IBoutiqueDatabase>(serviceProvider => new BoutiqueEntityDatabase());
+            services.AddTransient<IGenderService>(serviceProvider => new GenderService(serviceProvider.GetService<IBoutiqueDatabase>()));
         }
 
         /// <summary>
@@ -33,15 +34,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void UpdateSchema(IServiceProvider serviceProvider)
         {
-            var builder = new DbContextOptionsBuilder();
-            var bb = builder.UseNpgsql("");
-
-            var db = new BoutiqueDatabase(bb.Options);
-
-            var boutiqueDatabase = serviceProvider.GetService<BoutiqueDatabase>();
+            var boutiqueDatabase = serviceProvider.GetService<BoutiqueEntityDatabase>();
             boutiqueDatabase.Database.EnsureCreated();
-
-
         }
     }
 }

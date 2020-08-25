@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using BoutiqueDAL.Factories.Implementations;
-using BoutiqueDAL.Factories.Implementations.Database;
+using BoutiqueDAL.Factories.Implementations.Database.Base;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using Functional.Models.Enums;

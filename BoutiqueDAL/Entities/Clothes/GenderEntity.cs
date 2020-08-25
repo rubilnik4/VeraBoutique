@@ -18,11 +18,11 @@ namespace BoutiqueDAL.Entities.Clothes
         /// <summary>
         /// Тип
         /// </summary>
-        public virtual GenderType GenderType { get; set; }
+        public GenderType GenderType { get; set; }
 
         /// <summary>
         /// Наименование
         /// </summary>
-        public virtual string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = String.Empty;
     }
 }
