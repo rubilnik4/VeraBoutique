@@ -35,7 +35,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension
         /// Выполнение положительного условия или возвращение предыдущей ошибки в результирующем ответе задачи-объекта
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueOkTaskAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
-                                                                                                  Func<TValueIn, TValueOut> okFunc) =>
+                                                                                                      Func<TValueIn, TValueOut> okFunc) =>
             await @this.
             MapTaskAsync(awaitedThis => awaitedThis.ResultValueOk(okFunc));
 

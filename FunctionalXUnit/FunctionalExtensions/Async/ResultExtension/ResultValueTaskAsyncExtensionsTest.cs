@@ -13,7 +13,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
     /// <summary>
     /// Методы расширения для результирующего ответа со значением. Тесты
     /// </summary>
-    public class ResultValueAsyncExtensionsTest
+    public class ResultValueTaskAsyncExtensionsTest
     {
         /// <summary>
         /// Вернуть результирующий ответ задачи-объекта с коллекцией без ошибок

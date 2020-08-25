@@ -110,10 +110,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Выполнение асинхронного негативного условия в результирующем ответе с ошибкой
         /// </summary>      
         [Fact]
-        public async Task ResultValueOkBad_Bad_ReturnNewValueByErrors()
+        public async Task ResultValueOkBadAsync_Bad_ReturnNewValueByErrors()
         {
-            var errorInitial = CreateErrorTest();
-            var resultValue = new ResultValue<int>(errorInitial);
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
 
             var resultAfterWhere =
                 await resultValue.ResultValueOkBadAsync(
@@ -121,7 +121,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
                     badFunc: errors => AsyncFunctions.IntToStringAsync(errors.Count));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultValue.Errors.Count.ToString(), resultAfterWhere.Value);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
         }
 
         /// <summary>

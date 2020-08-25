@@ -11,7 +11,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension
     public static class ResultValueExtensions
     {
         /// <summary>
-        /// Преобразовать в результирующий ответ с  коллекцией
+        /// Преобразовать в результирующий ответ со значением в коллекцию
         /// </summary>      
         public static IResultCollection<TValue> ToResultCollection<TValue>(this IResultValue<IEnumerable<TValue>> @this) =>
             @this.OkStatus

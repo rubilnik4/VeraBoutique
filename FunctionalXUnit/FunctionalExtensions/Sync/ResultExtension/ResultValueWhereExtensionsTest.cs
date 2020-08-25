@@ -24,7 +24,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
             var resultAfterWhere =
                 resultValue.ResultValueContinue(number => true,
                                                 okFunc: number => number.ToString(),
-                                                badFunc: _ => CreateErrorTest());
+                                                badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
@@ -109,8 +109,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         [Fact]
         public void ResultValueOkBad_Bad_ReturnNewValueByErrors()
         {
-            var errorInitial = CreateErrorTest();
-            var resultValue = new ResultValue<int>(errorInitial);
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
 
             var resultAfterWhere =
                 resultValue.ResultValueOkBad(
@@ -118,7 +118,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
                     badFunc: errors => errors.Count.ToString());
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultValue.Errors.Count.ToString(), resultAfterWhere.Value);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
         }
 
         /// <summary>
