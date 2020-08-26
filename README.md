@@ -1,1 +1,1 @@
-VeraButik
+VeraBoutique
