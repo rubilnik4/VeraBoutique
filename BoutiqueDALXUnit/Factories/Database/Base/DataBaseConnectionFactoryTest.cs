@@ -5,10 +5,9 @@ using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using Xunit;
 
-namespace BoutiqueDALXUnit.Factories
+namespace BoutiqueDALXUnit.Factories.Database.Base
 {
     /// <summary>
     /// Фабрика создания подключения базы данных. Тесты

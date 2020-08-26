@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueCommonXUnit", "Bout
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueDALXUnit", "BoutiqueDALXUnit\BoutiqueDALXUnit.csproj", "{9DDB0704-0CA3-4866-B677-1325C72FA370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoutiqueEF", "BoutiqueEF\BoutiqueEF.csproj", "{42E907EB-E42A-4E21-9DFC-DC792834367A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{9DDB0704-0CA3-4866-B677-1325C72FA370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DDB0704-0CA3-4866-B677-1325C72FA370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DDB0704-0CA3-4866-B677-1325C72FA370}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42E907EB-E42A-4E21-9DFC-DC792834367A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42E907EB-E42A-4E21-9DFC-DC792834367A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42E907EB-E42A-4E21-9DFC-DC792834367A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42E907EB-E42A-4E21-9DFC-DC792834367A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,7 +76,6 @@ Global
 		{C9A7D085-06A5-4EA4-A3FC-CDE85BF81DEF} = {82156968-523F-4F4D-A788-D38E117BDB0C}
 		{C8A4318A-67D6-49BC-8E8F-284D07932DD6} = {82156968-523F-4F4D-A788-D38E117BDB0C}
 		{9DDB0704-0CA3-4866-B677-1325C72FA370} = {694ABC82-BD55-4764-BE97-C9C041654DC6}
-		{42E907EB-E42A-4E21-9DFC-DC792834367A} = {694ABC82-BD55-4764-BE97-C9C041654DC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38407E74-3FF2-4D14-B6C5-841F048A0832}

@@ -3,7 +3,6 @@ using BoutiqueDAL.Factories.Implementations.Database.Boutique;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
-using BoutiqueMVC.Factories.Implementation;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Microsoft.Extensions.DependencyInjection;

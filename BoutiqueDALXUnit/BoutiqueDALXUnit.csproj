@@ -20,7 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\BoutiqueDAL\BoutiqueDAL.csproj" />
-    <ProjectReference Include="..\BoutiqueEF\BoutiqueEF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 
 </Project>

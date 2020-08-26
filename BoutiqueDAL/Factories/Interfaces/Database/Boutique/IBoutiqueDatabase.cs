@@ -8,6 +8,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Boutique
     /// </summary>
     public interface IBoutiqueDatabase : IDatabase
     {
-        IDatabaseTable<GenderEntity> Genders { get; }
+        IDatabaseTable<GenderEntity> GendersTable { get; }
     }
 }

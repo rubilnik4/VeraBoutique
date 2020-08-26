@@ -18,10 +18,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
         public static GenderEntity ToEntity(Gender gender) =>
-            new GenderEntity()
-            {
-                GenderType = gender.GenderType,
-                Name = gender.Name
-            };
+            new GenderEntity(gender.GenderType, gender.Name);
     }
 }
