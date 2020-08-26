@@ -1,4 +1,5 @@
-﻿using Functional.FunctionalExtensions.Sync.ResultExtension;
+﻿using System.Linq;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
@@ -25,6 +26,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
             var resultAfterVoid = resultOk.ResultVoidOk(number => voidObjectMock.Object.TestNumberVoid(number));
 
             Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.Equal(initialNumber, resultAfterVoid.Value);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
         }
 
@@ -34,12 +36,14 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         [Fact]
         public void ResultVoidOk_Bad_NotCallVoid()
         {
-            var resultOk = new ResultValue<int>(CreateErrorTest());
+            var initialError = CreateErrorTest();
+            var resultError = new ResultValue<int>(initialError);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = resultOk.ResultVoidOk(number => voidObjectMock.Object.TestNumberVoid(number));
+            var resultAfterVoid = resultError.ResultVoidOk(number => voidObjectMock.Object.TestNumberVoid(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.True(resultAfterVoid.Equals(resultError));
+            Assert.True(resultAfterVoid.Errors.Last().Equals(initialError));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
         }
 
@@ -50,12 +54,13 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         public void ResultVoidBad_Ok_NotCallVoid()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultOk = new ResultValue<int>(errorsInitial);
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = resultOk.ResultVoidBad(errors => voidObjectMock.Object.TestNumberVoid(errors.Count));
+            var resultAfterVoid = resultError.ResultVoidBad(errors => voidObjectMock.Object.TestNumberVoid(errors.Count));
 
-            Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.True(resultAfterVoid.Equals(resultError));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
         }
 
@@ -66,12 +71,13 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         public void ResultVoidBad_Bad_CallVoid()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultOk = new ResultValue<int>(errorsInitial);
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = resultOk.ResultVoidBad(errors => voidObjectMock.Object.TestNumberVoid(errors.Count));
+            var resultAfterVoid = resultError.ResultVoidBad(errors => voidObjectMock.Object.TestNumberVoid(errors.Count));
 
-            Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.True(resultAfterVoid.Equals(resultError));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(errorsInitial.Count), Times.Once);
         }
 
@@ -91,6 +97,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
                     action: number => voidObjectMock.Object.TestNumberVoid(number));
 
             Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.Equal(initialNumber, resultAfterVoid.Value);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
         }
 
@@ -110,6 +117,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
                     action: number => voidObjectMock.Object.TestNumberVoid(number));
 
             Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.Equal(initialNumber, resultAfterVoid.Value);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Never);
         }
 
@@ -119,15 +127,17 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         [Fact]
         public void ResultVoidOkWhere_Bad_OkPredicate_NotCallVoid()
         {
-            var resultOk = new ResultValue<int>(CreateErrorTest());
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid =
-                resultOk.
+                resultError.
                 ResultVoidOkWhere(number => number == 0,
                     action: number => voidObjectMock.Object.TestNumberVoid(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.True(resultAfterVoid.Equals(resultError));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
         }
 
@@ -138,15 +148,17 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         [Fact]
         public void ResultVoidOkWhere_Bad_BadPredicate_NotCallVoid()
         {
-            var resultOk = new ResultValue<int>(CreateErrorTest());
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid = 
-                resultOk.
+                resultError.
                 ResultVoidOkWhere(number => number > 2,
                     action: number => voidObjectMock.Object.TestNumberVoid(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOk));
+            Assert.True(resultAfterVoid.Equals(resultError));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(0), Times.Never);
         }
     }

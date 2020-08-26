@@ -34,28 +34,25 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// Получить типы полов для одежды
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get() =>
+            await _genderService.GetGenders().
+            MapTaskAsync(genders => Ok(genders.Value.Count));
 
+
+
+        /// <summary>
+        /// Записать типы полов для одежды
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] GenderType genderType)
         {
             var genders = new List<Gender>()
             {
                 new Gender(GenderType.Female, "Женшина"),
-                new Gender(GenderType.Female, "Мушина"),
+                new Gender(GenderType.Male, "Мушина"),
             };
             await _genderService.UploadGenders(genders);
             return Ok("ok");
         }
-        //await _genderService.GetGenders().
-        //MapTaskAsync(genders => Ok(genders));
-
-
-        ///// <summary>
-        ///// Записать типы полов для одежды
-        ///// </summary>
-        //[HttpPost]
-        //public Task Post([FromBody] GenderType genderType)
-        //{
-
-        //}
     }
 }

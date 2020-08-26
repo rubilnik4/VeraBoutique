@@ -11,5 +11,10 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// Сохранить изменения в базе асинхронно
         /// </summary>
         Task SaveChangesAsync();
+
+        /// <summary>
+        /// Обновить схемы базы данных
+        /// </summary>
+        void UpdateSchema();
     }
 }

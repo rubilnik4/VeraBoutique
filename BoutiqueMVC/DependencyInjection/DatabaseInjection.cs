@@ -4,8 +4,10 @@ using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueMVC.Factories.Implementation;
-using Microsoft.EntityFrameworkCore;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Microsoft.Extensions.DependencyInjection;
+using static BoutiqueMVC.Factories.Implementation.PostgresConnectionFactory;
 
 namespace BoutiqueMVC.DependencyInjection
 {
@@ -19,23 +21,23 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectPostgres (IServiceCollection services)
         {
-
-
-            //var postgresConnection = PostgresConnectionFactory.PostgresConnection.Value;
-            //string connection = $"Host={postgresConnection.Host};Port={postgresConnection.Port};Database={postgresConnection.Database};Username={postgresConnection.Username};Password={postgresConnection.Password}";
-            //services.AddDbContext<BoutiqueEntityDatabase>(options => options.UseNpgsql(connection));
-
-            services.AddTransient<IBoutiqueDatabase>(serviceProvider => new BoutiqueEntityDatabase());
-            services.AddTransient<IGenderService>(serviceProvider => new GenderService(serviceProvider.GetService<IBoutiqueDatabase>()));
+            services.AddTransient<IBoutiqueDatabaseFactory>(serviceProvider => new BoutiqueDatabaseFactory(PostgresConnection));
+            services.AddTransient(GetGenderService);
         }
 
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public static void UpdateSchema(IServiceProvider serviceProvider)
-        {
-            var boutiqueDatabase = serviceProvider.GetService<BoutiqueEntityDatabase>();
-            boutiqueDatabase.Database.EnsureCreated();
-        }
+        public static void UpdateSchema(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabaseFactory>().BoutiqueDatabase.
+            ResultVoidOk(boutiqueDatabase => boutiqueDatabase.UpdateSchema());
+      
+
+        /// <summary>
+        /// Получить сервис для типа пола одежды
+        /// </summary>
+        private static IGenderService GetGenderService(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabaseFactory>().BoutiqueDatabase.
+            Map(boutiqueDatabase => new GenderService(boutiqueDatabase));
     }
 }

@@ -33,6 +33,11 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         public async Task SaveChangesAsync() => await base.SaveChangesAsync();
 
         /// <summary>
+        /// Обновить схемы базы данных
+        /// </summary>
+        public void UpdateSchema() => base.Database.EnsureCreated();
+
+        /// <summary>
         /// Записать схемы базы данных
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

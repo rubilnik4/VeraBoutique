@@ -17,8 +17,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// Получить параметры подключения к базе
         /// </summary>
         public static IResultValue<DatabaseConnection> GetDatabaseConnection(IResultValue<HostConnection> hostConnection,
-                                                                                IResultValue<string> database,
-                                                                                IResultValue<Authorization> authorization) =>
+                                                                             IResultValue<string> database,
+                                                                             IResultValue<Authorization> authorization) =>
             new ResultValue<Func<HostConnection, string, Authorization, DatabaseConnection>>(
                     (hostConnectionIn, databaseIn, authorizationIn) => new DatabaseConnection(hostConnectionIn, databaseIn, authorizationIn)).
             ResultCurryOkBind(hostConnection).

@@ -2,16 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Implementation.Clothes;
-using BoutiqueDAL.Factories.Interfaces.Database.Base;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
-using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.Models.Interfaces.Result;
-using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services
 {
@@ -37,14 +33,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
             await _boutiqueDatabase.
             ResultValueOkAsync(boutiqueDatabase => boutiqueDatabase.Genders.ToListAsync()).
             ResultValueOkTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity).ToList().AsReadOnly()).
-            MapTaskAsync(resultGenders => resultGenders.ToResultCollection());
+            ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
         public async Task UploadGenders(IEnumerable<Gender> genders) =>
-            await genders.Select(GenderEntityConverter.ToEntity).
-            VoidAsync(genderEntities => _boutiqueDatabase.
-                                        ResultVoidOkAsync(boutiqueDatabase => boutiqueDatabase.Genders.AddRangeAsync(genderEntities)));
+            await _boutiqueDatabase.
+            ResultVoidOkAsync(boutiqueDatabase => boutiqueDatabase.Genders.
+                                                  AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity))).
+            ResultVoidOkBindAsync(boutiqueDatabase => boutiqueDatabase.SaveChangesAsync());
     }
 }

@@ -11,6 +11,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Boutique
         /// <summary>
         /// Получить базу данных магазина
         /// </summary>
-        IResultValue<IDatabase> BoutiqueDatabase { get; }
+        IResultValue<IBoutiqueDatabase> BoutiqueDatabase { get; }
     }
 }

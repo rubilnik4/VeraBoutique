@@ -25,12 +25,12 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// <summary>
         /// База данных магазина
         /// </summary>
-        private IResultValue<IDatabase>? _boutiqueDatabase;
+        private IResultValue<IBoutiqueDatabase>? _boutiqueDatabase;
 
         /// <summary>
         /// Получить базу данных магазина
         /// </summary>
-        public IResultValue<IDatabase> BoutiqueDatabase =>
+        public IResultValue<IBoutiqueDatabase> BoutiqueDatabase =>
             _boutiqueDatabase ??=
             _databaseConnection.
             ResultValueOk(connection => new DbContextOptionsBuilder().UseNpgsql(connection.ConnectionString)).

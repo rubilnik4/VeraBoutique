@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension;
@@ -19,7 +20,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Вернуть результирующий ответ задачи-объекта с коллекцией без ошибок
         /// </summary>      
         [Fact]
-        public async Task ToResultCollectionTaskAsync_OkStatus()
+        public async Task ToResultCollectionTaskAsync_Enumerable_OkStatus()
         {
             var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
             var resultNoError = Task.FromResult((IResultValue<IEnumerable<int>>)new ResultValue<IEnumerable<int>>(collection));
@@ -34,10 +35,72 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Вернуть результирующий ответ задачи-объекта со значением с ошибкой
         /// </summary>      
         [Fact]
-        public async Task ToResultCollectionTaskAsync_HasErrors()
+        public async Task ToResultCollectionTaskAsync_Enumerable_HasErrors()
         {
             var error = CreateErrorTest();
             var resultHasError = Task.FromResult((IResultValue<IEnumerable<int>>)new ResultValue<IEnumerable<int>>(error));
+
+            var resultValue = await resultHasError.ToResultCollectionTaskAsync();
+
+            Assert.True(resultValue.HasErrors);
+            Assert.Single(resultValue.Errors);
+            Assert.True(error.Equals(resultValue.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ задачи-объекта с коллекцией без ошибок
+        /// </summary>      
+        [Fact]
+        public async Task ToResultCollectionTaskAsync_IReadOnlyCollection_OkStatus()
+        {
+            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
+            var resultNoError = Task.FromResult((IResultValue<IReadOnlyCollection<int>>)new ResultValue<IReadOnlyCollection<int>>(collection));
+
+            var resultValue = await resultNoError.ToResultCollectionTaskAsync();
+
+            Assert.True(resultValue.OkStatus);
+            Assert.True(collection.SequenceEqual(resultValue.Value));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ задачи-объекта со значением с ошибкой
+        /// </summary>      
+        [Fact]
+        public async Task ToResultCollectionTaskAsync_IReadOnlyCollection_HasErrors()
+        {
+            var error = CreateErrorTest();
+            var resultHasError = Task.FromResult((IResultValue<IReadOnlyCollection<int>>)new ResultValue<IReadOnlyCollection<int>>(error));
+
+            var resultValue = await resultHasError.ToResultCollectionTaskAsync();
+
+            Assert.True(resultValue.HasErrors);
+            Assert.Single(resultValue.Errors);
+            Assert.True(error.Equals(resultValue.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ задачи-объекта с коллекцией без ошибок
+        /// </summary>      
+        [Fact]
+        public async Task ToResultCollectionTaskAsync_ReadOnlyCollection_OkStatus()
+        {
+            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
+            var resultNoError = Task.FromResult((IResultValue<ReadOnlyCollection<int>>)new ResultValue<ReadOnlyCollection<int>>(collection));
+
+            var resultValue = await resultNoError.ToResultCollectionTaskAsync();
+
+            Assert.True(resultValue.OkStatus);
+            Assert.True(collection.SequenceEqual(resultValue.Value));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ задачи-объекта со значением с ошибкой
+        /// </summary>      
+        [Fact]
+        public async Task ToResultCollectionTaskAsync_ReadOnlyCollection_HasErrors()
+        {
+            var error = CreateErrorTest();
+            var resultHasError = Task.FromResult((IResultValue<ReadOnlyCollection<int>>)new ResultValue<ReadOnlyCollection<int>>(error));
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 
