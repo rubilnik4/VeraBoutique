@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Functional.Models.Interfaces.Result;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
     /// Методы расширения для результирующего ответа задачи-объекта

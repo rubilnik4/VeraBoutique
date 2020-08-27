@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;

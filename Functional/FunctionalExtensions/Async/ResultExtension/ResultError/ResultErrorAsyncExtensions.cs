@@ -2,7 +2,7 @@
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
 {
     /// <summary>
     /// Асинхронные методы расширения для результирующего ответа

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Sync.ResultExtension
+namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
     /// <summary>
     /// Действие над внутренним типом результирующего ответа со значением

@@ -3,7 +3,7 @@ using System.Linq;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Sync.ResultExtension
+namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
     /// <summary>
     /// Преобразование внутреннего типа результирующего ответа со значением для функций высшего порядка

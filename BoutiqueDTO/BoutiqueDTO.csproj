@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Ivan Rubilnik</Authors>
+    <Copyright>Ivan Rubilnik</Copyright>
+    <Description>Data transfer models</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
+    <ProjectReference Include="..\Functional\Functional.csproj" />
+  </ItemGroup>
+
+</Project>

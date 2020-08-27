@@ -41,7 +41,6 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// </summary>
         public void UpdateSchema()
         {
-            base.Database.EnsureDeleted();
             base.Database.EnsureCreated();
         }
 

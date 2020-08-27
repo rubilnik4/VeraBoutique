@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
     /// Асинхронное действие над внутренним типом результирующего ответа со значением

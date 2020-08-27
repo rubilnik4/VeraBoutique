@@ -4,6 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Authors>Ivan Rubilnik</Authors>
+
+    <Company>Ivan Rubilnik</Company>
+
+    <Copyright>Ivan Rubilnik</Copyright>
+
+    <Description>Functional library tests</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.FunctionalExtensions;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.Models.Implementations.Result

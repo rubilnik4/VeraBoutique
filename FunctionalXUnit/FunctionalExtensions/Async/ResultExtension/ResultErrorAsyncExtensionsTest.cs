@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Xunit;

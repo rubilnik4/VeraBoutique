@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;

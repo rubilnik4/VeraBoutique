@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
     /// Обработка условий для асинхронного результирующего ответа со значением

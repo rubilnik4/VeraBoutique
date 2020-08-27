@@ -8,6 +8,7 @@
     <Product>VeraBoutique</Product>
     <Description>Data access layer for Vera-Boutique application</Description>
     <AssemblyName>BoutiqueDAL</AssemblyName>
+    <Copyright>Ivan Rubilnik</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

@@ -18,7 +18,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Boutique
         public async Task Test()
         {
             var boutiqueDatabase = GetBoutiqueDatabase();
-            var genders = EntityData.GetGenders();
+            var genders = EntityData.GetGenderEntities();
 
             await boutiqueDatabase.Genders.AddRangeAsync(genders);
             await boutiqueDatabase.SaveChangesAsync();

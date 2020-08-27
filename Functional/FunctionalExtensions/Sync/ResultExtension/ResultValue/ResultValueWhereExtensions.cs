@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Sync.ResultExtension
+namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
     /// <summary>
     /// Обработка условий для результирующего ответа со значением

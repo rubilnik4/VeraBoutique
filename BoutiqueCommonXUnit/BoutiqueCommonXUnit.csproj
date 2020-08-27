@@ -4,6 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Product>VeraBoutique</Product>
+
+    <Company>Ivan Rubilnik</Company>
+
+    <Authors>Ivan Rubilnik</Authors>
+
+    <Copyright>Ivan Rubilnik</Copyright>
+
+    <Description>Common library tests</Description>
   </PropertyGroup>
 
   <ItemGroup>

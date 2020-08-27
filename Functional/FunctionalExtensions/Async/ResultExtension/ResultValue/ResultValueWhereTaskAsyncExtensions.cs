@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
     /// Обработка условий для результирующего ответа со значением задачей-объектом

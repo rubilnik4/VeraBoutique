@@ -1,8 +1,7 @@
-﻿using System;
-using Functional.Models.Implementations.Result;
+﻿using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Sync.ResultExtension
+namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
 {
     /// <summary>
     /// Методы расширения для результирующего ответа

@@ -5,6 +5,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Microsoft.Extensions.DependencyInjection;
 using static BoutiqueMVC.Factories.Implementation.PostgresConnectionFactory;
 

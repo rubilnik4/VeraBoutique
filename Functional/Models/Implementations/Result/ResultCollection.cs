@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 
 namespace Functional.Models.Implementations.Result
 {
@@ -32,5 +33,10 @@ namespace Functional.Models.Implementations.Result
         /// </summary>      
         public new IResultCollection<TValue> ConcatErrors(IEnumerable<IErrorResult> errors) =>
             base.ConcatErrors(errors).ToResultCollection();
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ со значением
+        /// </summary>
+        public IResultValue<IReadOnlyCollection<TValue>> ToResultValue => this;
     }
 }

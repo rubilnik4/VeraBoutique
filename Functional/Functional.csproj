@@ -7,6 +7,8 @@
     <Company />
     <Product>Functional Library</Product>
     <Description>Functional Library</Description>
+    <PackageId>Functional</PackageId>
+    <Copyright>Ivan Rubilnik</Copyright>
   </PropertyGroup>
 
 </Project>

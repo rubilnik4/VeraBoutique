@@ -5,8 +5,9 @@
     <Nullable>enable</Nullable>
     <Authors>Ivan Rubilnik</Authors>
     <Company />
-    <Product>BoutiqueCommon</Product>
+    <Product>VeraBoutique</Product>
     <Description>Common library for Vera-Boutique application</Description>
+    <Copyright>Ivan Rubilnik</Copyright>
   </PropertyGroup>
 
 </Project>

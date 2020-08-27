@@ -6,6 +6,7 @@ using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 

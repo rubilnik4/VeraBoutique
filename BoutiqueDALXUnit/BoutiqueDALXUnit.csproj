@@ -4,6 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Description>Database Tests</Description>
+
+    <Authors>Ivan Rubilnik</Authors>
+
+    <Company />
+
+    <Product>VeraBoutique</Product>
+
+    <Copyright>Ivan Rubilnik</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\BoutiqueDAL\BoutiqueDAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 
 </Project>

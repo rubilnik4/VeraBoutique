@@ -11,5 +11,10 @@ namespace Functional.Models.Interfaces.Result
         /// Добавить ошибку
         /// </summary>      
         new IResultCollection<TValue> ConcatErrors(IEnumerable<IErrorResult> errors);
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ со значением
+        /// </summary>
+        IResultValue<IReadOnlyCollection<TValue>> ToResultValue() => this;
     }
 }
