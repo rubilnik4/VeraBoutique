@@ -1,11 +1,9 @@
 ﻿using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.Models.Implementations.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
 {
     /// <summary>
     /// Методы расширения для результирующего ответа. Тесты
@@ -18,7 +16,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         [Fact]
         public void ToResultValue_OkStatus()
         {
-            var resultNoError = new ResultError();
+            var resultNoError = new Functional.Models.Implementations.Result.ResultError();
             const string value = "OkStatus";
 
             var resultValue = resultNoError.ToResultValue(value);
@@ -34,7 +32,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
         public void ToResultValue_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = new ResultError(error);
+            var resultHasError = new Functional.Models.Implementations.Result.ResultError(error);
             const string value = "BadStatus";
 
             var resultValue = resultHasError.ToResultValue(value);

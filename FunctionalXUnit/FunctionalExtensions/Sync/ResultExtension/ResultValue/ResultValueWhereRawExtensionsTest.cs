@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
     /// <summary>
     /// Обработка условий для результирующего ответа со значением в обертке. Тесты

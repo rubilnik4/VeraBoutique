@@ -10,7 +10,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,9 +41,8 @@ namespace BoutiqueMVC.Controllers.Clothes
         [HttpGet]
         public async Task<IActionResult> Get() =>
             await _genderService.GetGenders().
-            MapTaskAsync(genderResult => genderResult.ToResultValue()).
-            ResultValueOkTaskAsync(GenderDtoConverter.ToJsonCollection).
-            MapTaskAsync(genders => Ok(genders.Value));
+            ResultCollectionOkToValueTaskAsync(GenderDtoConverter.ToJsonCollection).
+            MapTaskAsync(gendersJson => Ok(gendersJson.Value));
 
         /// <summary>
         /// Записать типы полов для одежды

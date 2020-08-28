@@ -1,35 +1,33 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
-    /// Асинхронное действие над внутренним типом результирующего ответа со значением задачей-объектом.Тесты
+    /// Асинхронное действие над внутренним типом результирующего ответа со значением. Тесты
     /// </summary>
-    public class ResultValueVoidBindAsyncExtensionsTest
+    public class ResultValueVoidAsyncExtensionsTest
     {
         /// <summary>
         /// Проверка выполнения асинхронного действия при результирующем ответе без ошибок с положительным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkBindAsync_Ok_CallVoid()
+        public async Task ResultVoidOkAsync_Ok_CallVoid()
         {
             const int initialNumber = 1;
-            var resultOkTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
+            var resultOk = new ResultValue<int>(initialNumber);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultOkTask.
-                                  ResultVoidOkBindAsync(number => voidObjectMock.Object.TestNumberVoidAsync(number));
+            var resultAfterVoid = await resultOk.
+                                  ResultVoidOkAsync(number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOkTask.Result));
+            Assert.True(resultAfterVoid.Equals(resultOk));
             Assert.Equal(initialNumber, resultAfterVoid.Value);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
@@ -38,16 +36,16 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с ошибкой с положительным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkBindAsync_Bad_NotCallVoid()
+        public async Task ResultVoidOkAsync_Bad_NotCallVoid()
         {
             var initialError = CreateErrorTest();
-            var resultErrorTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialError));
+            var resultError = new ResultValue<int>(initialError);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultErrorTask.
-                                  ResultVoidOkBindAsync(number => voidObjectMock.Object.TestNumberVoidAsync(number));
+            var resultAfterVoid = await resultError.
+                                  ResultVoidOkAsync(number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
+            Assert.True(resultAfterVoid.Equals(resultError));
             Assert.True(resultAfterVoid.Errors.Last().Equals(initialError));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(0), Times.Never);
         }
@@ -56,16 +54,16 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе без ошибок с негативным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidBadBindAsync_Ok_NotCallVoid()
+        public async Task ResultVoidBadAsync_Ok_NotCallVoid()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultErrorTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(errorsInitial));
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultErrorTask.
-                                  ResultVoidBadBindAsync(errors => voidObjectMock.Object.TestNumberVoidAsync(errors.Count));
+            var resultAfterVoid = await resultError.
+                                  ResultVoidBadAsync(errors => voidObjectMock.Object.TestNumberVoidAsync(errors.Count));
 
-            Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
+            Assert.True(resultAfterVoid.Equals(resultError));
             Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(0), Times.Never);
         }
@@ -74,16 +72,16 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с ошибкой с негативным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidBadBindAsync_Bad_CallVoid()
+        public async Task ResultVoidBadAsync_Bad_CallVoid()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultErrorTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(errorsInitial));
+            var resultError = new ResultValue<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultErrorTask.
-                                  ResultVoidBadBindAsync(errors => voidObjectMock.Object.TestNumberVoidAsync(errors.Count));
+            var resultAfterVoid = await resultError.
+                                  ResultVoidBadAsync(errors => voidObjectMock.Object.TestNumberVoidAsync(errors.Count));
 
-            Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
+            Assert.True(resultAfterVoid.Equals(resultError));
             Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(errorsInitial.Count), Times.Once);
         }
@@ -92,18 +90,18 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с положительным условием предиката без ошибок с положительным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkWhereBindAsync_Ok_OkPredicate_CallVoid()
+        public async Task ResultVoidOkWhereAsync_Ok_OkPredicate_CallVoid()
         {
             const int initialNumber = 1;
-            var resultOkTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
+            var resultOk = new ResultValue<int>(initialNumber);
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid =
-                await resultOkTask.
-                ResultVoidOkWhereBindAsync(number => number > 0,
+                await resultOk.
+                ResultVoidOkWhereAsync(number => number > 0,
                     action: number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOkTask.Result));
+            Assert.True(resultAfterVoid.Equals(resultOk));
             Assert.Equal(initialNumber, resultAfterVoid.Value);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
@@ -112,19 +110,18 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с отрицательным условием предиката без ошибок с положительным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkWhereBindAsync_Ok_BadPredicate_NotCallVoid()
+        public async Task ResultVoidOkWhereAsync_Ok_BadPredicate_NotCallVoid()
         {
             const int initialNumber = 1;
-            var resultOkTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
+            var resultOk = new ResultValue<int>(initialNumber);
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid =
-                await resultOkTask.
-                ResultVoidOkWhereBindAsync(number => number > 2,
+                await resultOk.
+                ResultVoidOkWhereAsync(number => number > 2,
                     action: number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultOkTask.Result));
-            Assert.Equal(initialNumber, resultAfterVoid.Value);
+            Assert.True(resultAfterVoid.Equals(resultOk));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Never);
         }
 
@@ -132,19 +129,17 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с положительным условием предиката без ошибок с отрицательным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkWhereBindAsync_Bad_OkPredicate_NotCallVoid()
+        public async Task ResultVoidOkWhereAsync_Bad_OkPredicate_NotCallVoid()
         {
-            var errorsInitial = CreateErrorListTwoTest();
-            var resultErrorTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(errorsInitial));
+            var resultError = new ResultValue<int>(CreateErrorTest());
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid =
-                await resultErrorTask.
-                ResultVoidOkWhereBindAsync(number => number == 0,
+                await resultError.
+                ResultVoidOkWhereAsync(number => number == 0,
                     action: number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
-            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
+            Assert.True(resultAfterVoid.Equals(resultError));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(0), Times.Never);
         }
 
@@ -153,19 +148,17 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension
         /// Проверка выполнения асинхронного действия при результирующем ответе с отрицательным условием предиката с ошибкой с отрицательным условием
         /// </summary>
         [Fact]
-        public async Task ResultVoidOkWhereBindAsync_Bad_BadPredicate_NotCallVoid()
+        public async Task ResultVoidOkWhereAsync_Bad_BadPredicate_NotCallVoid()
         {
-            var errorsInitial = CreateErrorListTwoTest();
-            var resultErrorTask = Task.FromResult((IResultValue<int>)new ResultValue<int>(errorsInitial));
+            var resultError = new ResultValue<int>(CreateErrorTest());
             var voidObjectMock = new Mock<IVoidObject>();
 
             var resultAfterVoid =
-                await resultErrorTask.
-                ResultVoidOkWhereBindAsync(number => number > 2,
+                await resultError.
+                ResultVoidOkWhereAsync(number => number > 2,
                     action: number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
-            Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
-            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
+            Assert.True(resultAfterVoid.Equals(resultError));
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(0), Times.Never);
         }
     }

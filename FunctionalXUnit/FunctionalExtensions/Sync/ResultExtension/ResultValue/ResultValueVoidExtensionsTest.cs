@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Mocks.Interfaces;
@@ -7,7 +6,7 @@ using Moq;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
     /// <summary>
     /// Действие над внутренним типом результирующего ответа со значением. Тесты

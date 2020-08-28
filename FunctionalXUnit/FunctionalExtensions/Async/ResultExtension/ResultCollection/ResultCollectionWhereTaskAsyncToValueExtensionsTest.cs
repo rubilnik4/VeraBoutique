@@ -1,0 +1,158 @@
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
+using FunctionalXUnit.Data;
+using Xunit;
+using static FunctionalXUnit.Data.ErrorData;
+
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollection
+{
+    /// <summary>
+    /// Обработка условий для результирующего ответа задачи-объекта с коллекцией с возвращением к значению. Тесты
+    /// </summary>
+    public class ResultCollectionWhereTaskAsyncToValueExtensionsTest
+    {
+        /// <summary>
+        /// Выполнение условия в положительном результирующем ответе с коллекцией и возвращением к значению
+        /// </summary>
+        [Fact]
+        public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewValue()
+        {
+            var numberCollection = Collections.GetRangeNumber();
+            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+
+            var resultAfterWhere =
+                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => true,
+                                                            okFunc: Collections.AggregateToString,
+                                                            badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение условия в отрицательном результирующем ответе без ошибки с коллекцией и возвращением к значению
+        /// </summary>
+        [Fact]
+        public async Task ResultValueContinueToValueTaskAsync_Ok_ReturnNewError()
+        {
+            var numberCollection = Collections.GetRangeNumber();
+            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+
+            var errorBad = CreateErrorListTwoTest();
+            var resultAfterWhere =
+                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => false,
+                                                            okFunc: _ => String.Empty,
+                                                            badFunc: numbers => errorBad);
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(errorBad.Count, resultAfterWhere.Errors.Count);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в положительном результирующем ответе с ошибкой с коллекцией и возвращением к значению
+        /// </summary>
+        [Fact]
+        public async Task ResultValueContinueToValueTaskAsync_Bad_ReturnNewValue()
+        {
+            var errorInitial = CreateErrorTest();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+
+            var resultAfterWhere =
+               await resultCollection.ResultCollectionContinueToValueTaskAsync(number => true,
+                                                                 okFunc: _ => String.Empty,
+                                                                 badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с ошибкой с коллекцией и возвращением к значению
+        /// </summary>
+        [Fact]
+        public async Task ResultValueContinueToValueTaskAsync_Bad_ReturnNewError()
+        {
+            var errorInitial = CreateErrorTest();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+
+            var resultAfterWhere =
+                await resultCollection.ResultCollectionContinueToValueTaskAsync(number => false,
+                                                                 okFunc: _ => String.Empty,
+                                                                 badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueOkBadToValueTaskAsync_Ok_ReturnNewValue()
+        {
+            var numberCollection = Collections.GetRangeNumber();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+
+            var resultAfterWhere =
+                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
+                    okFunc: Collections.AggregateToString,
+                    badFunc: _ => String.Empty);
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение негативного условия в результирующем ответе с ошибкой с коллекцией и возвращением к значению
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueOkBadToValueTaskAsync_Bad_ReturnNewValueByErrors()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorsInitial));
+
+            var resultAfterWhere =
+                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
+                    okFunc: _ => String.Empty,
+                    badFunc: errors => errors.Count.ToString());
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
+        /// </summary>   
+        [Fact]
+        public async Task ResultValueOkToValueTaskAsync_Ok_ReturnNewValue()
+        {
+            var numberCollection = Collections.GetRangeNumber();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+
+            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в результирующем ответе с ошибкой с коллекцией и возвращением к значению
+        /// </summary>   
+        [Fact]
+        public async Task ResultValueOkToValueTaskAsync_Bad_ReturnInitial()
+        {
+            var errorInitial = CreateErrorTest();
+            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+
+            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.True(errorInitial.Equals(resultAfterWhere.Errors.Last()));
+        }
+    }
+}
