@@ -5,6 +5,7 @@
     /// </summary>
     public enum ErrorResultType
     {
+        DevideByZero,
         IncorrectDatabaseConnection,
         Unknown,
     }

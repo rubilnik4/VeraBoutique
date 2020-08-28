@@ -8,6 +8,7 @@ using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
+using BoutiqueMVC.Extensions.Controllers;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
@@ -42,7 +43,7 @@ namespace BoutiqueMVC.Controllers.Clothes
         public async Task<IActionResult> Get() =>
             await _genderService.GetGenders().
             ResultCollectionOkToValueTaskAsync(GenderDtoConverter.ToJsonCollection).
-            MapTaskAsync(gendersJson => Ok(gendersJson.Value));
+            MapTaskAsync(gendersJson => gendersJson.ToActionResult());
 
         /// <summary>
         /// Записать типы полов для одежды
