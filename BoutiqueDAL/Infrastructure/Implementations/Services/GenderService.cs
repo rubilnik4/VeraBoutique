@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task<IResultCollection<Gender>> GetGenders() =>
             await _boutiqueDatabase.
-            ResultValueOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.ToListAsync()).
+            Res(boutiqueDatabase => boutiqueDatabase.GendersTable.ToListAsync()).
             ResultValueOkTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity).ToList().AsReadOnly()).
             ToResultCollectionTaskAsync();
 

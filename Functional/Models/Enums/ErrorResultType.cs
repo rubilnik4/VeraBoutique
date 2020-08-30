@@ -6,7 +6,8 @@
     public enum ErrorResultType
     {
         DevideByZero,
-        IncorrectDatabaseConnection,
+        DatabaseIncorrectConnection,
+        DatabaseTableAccess,
         Unknown,
     }
 }

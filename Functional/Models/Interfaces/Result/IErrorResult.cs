@@ -26,6 +26,11 @@ namespace Functional.Models.Interfaces.Result
         Exception? Exception { get; }
 
         /// <summary>
+        /// Добавить или заменить исключение
+        /// </summary>
+        IErrorResult AppendException(Exception exception);
+
+        /// <summary>
         /// Преобразовать в ответ
         /// </summary>      
         IResultError ToResult();

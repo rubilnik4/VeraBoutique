@@ -62,5 +62,16 @@ namespace FunctionalXUnit.Models.Result
 
             Assert.Equal(error.ErrorResultType.ToString(), error.ToString());
         }
+
+        [Fact]
+        public void AppendException()
+        {
+            var error = CreateErrorTest();
+            var exception = new ArgumentException();
+
+            var errorWithException = error.AppendException(exception);
+
+            Assert.True(exception.Equals(errorWithException.Exception));
+        }
     }
 }

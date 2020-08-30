@@ -38,6 +38,12 @@ namespace Functional.Models.Implementations.Result
         public Exception? Exception { get; }
 
         /// <summary>
+        /// Добавить или заменить исключение
+        /// </summary>
+        public IErrorResult AppendException(Exception exception) =>
+            new ErrorResult(ErrorResultType, Description, exception);
+
+        /// <summary>
         /// Преобразовать в ответ
         /// </summary>      
         public IResultError ToResult() => new ResultError(this);

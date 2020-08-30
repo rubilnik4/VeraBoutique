@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Base
 {
@@ -11,11 +12,11 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
-        Task<IList<TEntity>> ToListAsync();
+        Task<IResultCollection<TEntity>> ToListAsync();
 
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<IResultError> AddRangeAsync(IEnumerable<TEntity> entities);
     }
 }

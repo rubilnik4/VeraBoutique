@@ -108,6 +108,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         /// Тестовая ошибка подключения к базе данных
         /// </summary>
         private static IErrorResult ErrorDatabase =>
-            new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Тестовая ошибка");
+            new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Тестовая ошибка");
     }
 }

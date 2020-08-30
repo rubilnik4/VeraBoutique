@@ -52,7 +52,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
            host.
            WhereContinue(HostConnection.IsHostValid,
                okFunc: _ => new ResultValue<string>(host!),
-               badFunc: _ => new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Имя сервера базы данных не задано").
+               badFunc: _ => new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Имя сервера базы данных не задано").
                                  ToResultValue<string>());
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
             port.
             WhereContinue(HostConnection.IsPortValid,
                 okFunc: _ => new ResultValue<int>(Int32.Parse(port!)),
-                badFunc: _ => new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Порт базы данных не задан").
+                badFunc: _ => new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Порт базы данных не задан").
                                   ToResultValue<int>());
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
             database.
             WhereContinue(DatabaseConnection.IsDatabaseValid,
                 okFunc: _ => new ResultValue<string>(database!),
-                badFunc: _ => new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Имя базы данных не задано").
+                badFunc: _ => new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Имя базы данных не задано").
                               ToResultValue<string>());
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
             username.
             WhereContinue(Authorization.IsUsernameValid,
                 okFunc: _ => new ResultValue<string>(username!),
-                badFunc: _ => new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Имя пользователя базы данных не задано").
+                badFunc: _ => new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Имя пользователя базы данных не задано").
                               ToResultValue<string>());
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
             password.
             WhereContinue(Authorization.IsPasswordValid,
                 okFunc: _ => new ResultValue<string>(password!),
-                badFunc: _ => new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "Пароль базы данных не задан").
+                badFunc: _ => new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "Пароль базы данных не задан").
                               ToResultValue<string>());
     }
 }

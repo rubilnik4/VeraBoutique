@@ -4,8 +4,9 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
+using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultErrorTryExtensions;
 
 namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
@@ -20,10 +21,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Ok()
         {
-            var resultValue = ResultValueTry(() => Division(1), Exceptions.FuncExceptionToError);
+            var resultValue = ResultValueTry(() => SyncFunctions.Division(1), Exceptions.FuncExceptionToError);
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(Division(1), resultValue.Value);
+            Assert.Equal(SyncFunctions.Division(1), resultValue.Value);
         }
 
         /// <summary>
@@ -32,15 +33,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Exception()
         {
-            var resultValue = ResultValueTry(() => Division(0), Exceptions.FuncExceptionToError);
+            var resultValue = ResultValueTry(() => SyncFunctions.Division(0), Exceptions.FuncExceptionToError);
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
         }
-
-        /// <summary>
-        /// Функция деления на ноль
-        /// </summary>
-        private static int Division(int divider) => 10 / divider;
     }
 }

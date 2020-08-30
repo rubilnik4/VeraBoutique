@@ -10,7 +10,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений
     /// </summary>
-    public static class ResultValueTryExtensions
+    public static class ResultErrorTryExtensions
     {
         /// <summary>
         /// Обработать функцию, вернуть результирующий ответ со значением или ошибку исключения

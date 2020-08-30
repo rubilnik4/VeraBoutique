@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений асинхронно
@@ -13,20 +13,18 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// <summary>
         /// Обработать асинхронную функцию, вернуть результирующий ответ со значением или ошибку исключения
         /// </summary>
-        public static async Task<IResultValue<TValue>> ResultValueTryAsync<TValue>(Func<Task<TValue>> func, Func<Exception, IErrorResult> tryFunc)
+        public static async Task<IResultError> ResultErrorTryAsync(Func<Task> action, Func<Exception, IErrorResult> tryFunc)
         {
-            TValue funcResult;
-
             try
             {
-                funcResult = await func.Invoke();
+                await action.Invoke();
             }
             catch (Exception ex)
             {
-                return new ResultValue<TValue>(tryFunc(ex));
+                return new Models.Implementations.Result.ResultError(tryFunc(ex));
             }
 
-            return new ResultValue<TValue>(funcResult);
+            return new Models.Implementations.Result.ResultError();
         }
     }
 }

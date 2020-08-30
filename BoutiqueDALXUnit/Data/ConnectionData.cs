@@ -29,6 +29,6 @@ namespace BoutiqueDALXUnit.Data
         /// Ошибка подключения к базе
         /// </summary>
         public static IErrorResult ErrorConnection =>
-            new ErrorResult(ErrorResultType.IncorrectDatabaseConnection, "ErrorConnection");
+            new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "ErrorConnection");
     }
 }
