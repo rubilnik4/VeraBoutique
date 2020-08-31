@@ -8,12 +8,12 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
     /// <summary>
     /// Обработка условий для результирующего связывающего ответа со значением
     /// </summary>
-    public static class ResultValueWhereBindExtensions
+    public static class ResultValueBindWhereExtensions
     {
         /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
-        public static IResultValue<TValueOut> ResultValueOkBind<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+        public static IResultValue<TValueOut> ResultValueBindOk<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                      Func<TValueIn, IResultValue<TValueOut>> okFunc) =>
             @this.OkStatus
                 ? okFunc.Invoke(@this.Value)
@@ -22,7 +22,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// <summary>
         /// Выполнение негативного условия результирующего ответа или возвращение положительного в результирующем ответе
         /// </summary>   
-        public static IResultValue<TValue> ResultValueBadBind<TValue>(this IResultValue<TValue> @this,
+        public static IResultValue<TValue> ResultValueBindBad<TValue>(this IResultValue<TValue> @this,
                                                                       Func<IReadOnlyCollection<IErrorResult>, IResultValue<TValue>> badFunc) =>
             @this.OkStatus
                 ? @this

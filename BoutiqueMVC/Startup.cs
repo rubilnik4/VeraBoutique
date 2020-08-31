@@ -53,7 +53,6 @@ namespace BoutiqueMVC
                 endpoints.MapControllers();
             });
 
-
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             DatabaseInjection.UpdateSchema(serviceScope.ServiceProvider);
         }

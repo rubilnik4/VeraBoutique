@@ -8,7 +8,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
     /// <summary>
     /// Асинхронное действие над внутренним типом результирующего ответа со значением задачей-объектом
     /// </summary>
-    public static class ResultValueVoidBindExtensions
+    public static class ResultValueVoidBindAsyncExtensions
     {
         /// <summary>
         /// Выполнить действие при положительном значении, вернуть результирующий ответ задачи-объекта

@@ -2,10 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Implementation.Clothes;
+using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
@@ -32,7 +36,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task<IResultCollection<Gender>> GetGenders() =>
             await _boutiqueDatabase.
-            Res(boutiqueDatabase => boutiqueDatabase.GendersTable.ToListAsync()).
+            ResultValueBindOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.ToListAsync().ToResultValue()).
             ResultValueOkTaskAsync(genders => genders.Select(GenderEntityConverter.FromEntity).ToList().AsReadOnly()).
             ToResultCollectionTaskAsync();
 
@@ -41,8 +45,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task<IResultError> UploadGenders(IEnumerable<Gender> genders) =>
             await _boutiqueDatabase.
-            ResultVoidOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
-                                                  AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity))).
+            ResultValueBindOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
+                                                  AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity)).
+                                                  ToResultValueTaskAsync(boutiqueDatabase)).
             ResultVoidOkBindAsync(boutiqueDatabase => boutiqueDatabase.SaveChangesAsync());
     }
 }

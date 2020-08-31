@@ -9,18 +9,18 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
     /// <summary>
     /// Обработка условий для результирующего ответа со значением в обертке. Тесты
     /// </summary>
-    public class ResultValueWhereRawExtensionsTest
+    public class ResultValueRawWhereExtensionsTest
     {
         /// <summary>
         /// Выполнение положительного условия в результирующем ответе без ошибки в обертке
         /// </summary>   
         [Fact]
-        public void ResultValueOkRaw_Ok_ReturnNewValue()
+        public void ResultValueRawOk_Ok_ReturnNewValue()
         {
             const int initialValue = 2;
             var resultValue = new ResultValue<int>(initialValue);
 
-            var resultAfterWhere = resultValue.ResultValueOkRaw(result => new ResultValue<string>(result.Value.ToString()));
+            var resultAfterWhere = resultValue.ResultValueRawOk(result => new ResultValue<string>(result.Value.ToString()));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
@@ -30,12 +30,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// Выполнение положительного условия в результирующем ответе с ошибкой в обертке
         /// </summary>   
         [Fact]
-        public void ResultValueOkRaw_Bad_ReturnInitial()
+        public void ResultValueRawOk_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
             var resultValue = new ResultValue<int>(errorInitial);
 
-            var resultAfterWhere = resultValue.ResultValueOkRaw(result => new ResultValue<string>(result.Value.ToString()));
+            var resultAfterWhere = resultValue.ResultValueRawOk(result => new ResultValue<string>(result.Value.ToString()));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorInitial.Equals(resultAfterWhere.Errors.Last()));
@@ -45,12 +45,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// Выполнение негативного условия в результирующем ответе без ошибки в обертке
         /// </summary>   
         [Fact]
-        public void ResultValueBadRaw_Ok_ReturnInitial()
+        public void ResultValueRawBad_Ok_ReturnInitial()
         {
             const int initialValue = 2;
             var resultValue = new ResultValue<int>(initialValue);
 
-            var resultAfterWhere = resultValue.ResultValueBadRaw(result => new ResultValue<int>(result.Value * 2));
+            var resultAfterWhere = resultValue.ResultValueRawBad(result => new ResultValue<int>(result.Value * 2));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(initialValue, resultAfterWhere.Value);
@@ -60,12 +60,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// Выполнение негативного условия в результирующем ответе с ошибкой в обертке
         /// </summary>   
         [Fact]
-        public void ResultValueBadRaw_Bad_ReturnInitial()
+        public void ResultValueRawBad_Bad_ReturnInitial()
         {
             var errorsInitial = CreateErrorListTwoTest();
             var resultValue = new ResultValue<int>(errorsInitial);
 
-            var resultAfterWhere = resultValue.ResultValueBadRaw(result => new ResultValue<int>(result.Errors.Count * 2));
+            var resultAfterWhere = resultValue.ResultValueRawBad(result => new ResultValue<int>(result.Errors.Count * 2));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count * 2, resultAfterWhere.Value);
