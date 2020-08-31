@@ -18,7 +18,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ResultErrorTry_Ok()
         {
-            var resultError = ResultErrorTry(() => SyncFunctions.Division(1), Exceptions.FuncExceptionToError);
+            var resultError = ResultErrorTry(() => SyncFunctions.Division(1), Exceptions.ExceptionError());
 
             Assert.True(resultError.OkStatus);
         }
@@ -29,7 +29,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ResultErrorTry_Exception()
         {
-            var resultError = ResultErrorTry(() => SyncFunctions.Division(0), Exceptions.FuncExceptionToError);
+            var resultError = ResultErrorTry(() => SyncFunctions.Division(0), Exceptions.ExceptionError());
 
             Assert.True(resultError.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultError.Errors.First().ErrorResultType);

@@ -6,6 +6,14 @@ using System.Text.Unicode;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDTO.Models.Implementation.Clothes;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection.ResultCollectionTryExtensions;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 
 namespace BoutiqueDTO.Infrastructure.Implementation.Converters
 {
@@ -29,15 +37,45 @@ namespace BoutiqueDTO.Infrastructure.Implementation.Converters
         /// <summary>
         /// Преобразовать тип пола в Json
         /// </summary>
-        public static string ToJson(Gender gender) =>
+        public static IResultValue<string> ToJson(Gender gender) =>
             ToDto(gender).
-            Map(genderDto => JsonSerializer.Serialize(genderDto));
+            Map(genderDto => ResultValueTry(() => JsonSerializer.Serialize(genderDto, JsonSettings.CyrillicJsonOptions),
+                                            ErrorJsonConvertiong(nameof(Gender))));
+
+        /// <summary>
+        /// Преобразовать тип пола в Json
+        /// </summary>
+        public static IResultValue<Gender> FromJson(string genderJson) =>
+            ResultValueTry(() => JsonSerializer.Deserialize<GenderDto>(genderJson, JsonSettings.CyrillicJsonOptions),
+                           ErrorJsonSchema(nameof(Gender))).
+            ResultValueOk(FromDto);
 
         /// <summary>
         /// Преобразовать коллекцию типа пола в Json
         /// </summary>
-        public static string ToJsonCollection(IEnumerable<Gender> genders) =>
+        public static IResultValue<string> ToJsonCollection(IEnumerable<Gender> genders) =>
             genders.Select(ToDto).
-            Map(gendersDto => JsonSerializer.Serialize(gendersDto, JsonSettings.CyrillicJsonOptions));
+            Map(gendersDto => ResultValueTry(() => JsonSerializer.Serialize(gendersDto, JsonSettings.CyrillicJsonOptions),
+                                             ErrorJsonConvertiong(nameof(Gender))));
+
+        /// <summary>
+        /// Преобразовать Json в коллекцию
+        /// </summary>
+        public static IResultCollection<Gender> FromJsonCollection(string gendersJson) => 
+            ResultCollectionTry(() => JsonSerializer.Deserialize<IEnumerable<GenderDto>>(gendersJson, JsonSettings.CyrillicJsonOptions).ToList(),
+                                                                                                              ErrorJsonSchema(nameof(Gender))).
+            ResultCollectionOk(gendersDto => gendersDto.Select(FromDto));
+
+        /// <summary>
+        /// Ошибка преобразования в Json
+        /// </summary>
+        public static IErrorResult ErrorJsonSchema(string schemaName) =>
+            new ErrorResult(ErrorResultType.JsonConvertion, $"Схема Json не соответствует классу {schemaName}");
+
+        /// <summary>
+        /// Ошибка преобразования в Json
+        /// </summary>
+        public static IErrorResult ErrorJsonConvertiong(string schemaName) =>
+            new ErrorResult(ErrorResultType.JsonConvertion, $"Невозможно преобразовать в Json тип {schemaName}");
     }
 }

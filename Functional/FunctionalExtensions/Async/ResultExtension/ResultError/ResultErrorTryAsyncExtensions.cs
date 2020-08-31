@@ -13,7 +13,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Обработать асинхронную функцию, вернуть результирующий ответ со значением или ошибку исключения
         /// </summary>
-        public static async Task<IResultError> ResultErrorTryAsync(Func<Task> action, Func<Exception, IErrorResult> tryFunc)
+        public static async Task<IResultError> ResultErrorTryAsync(Func<Task> action, IErrorResult error)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
             }
             catch (Exception ex)
             {
-                return new Models.Implementations.Result.ResultError(tryFunc(ex));
+                return new Models.Implementations.Result.ResultError(error.AppendException(ex));
             }
 
             return new Models.Implementations.Result.ResultError();

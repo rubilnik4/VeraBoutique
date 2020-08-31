@@ -10,7 +10,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
     /// <summary>
     /// Обработка условий для результирующего ответа со значением. Тесты
     /// </summary>
-    public class ResultValueWhereExtensionsTest
+    public class ResultCollectionWhereExtensionsTest
     {
         /// <summary>
         /// Выполнение условия в положительном результирующем ответе

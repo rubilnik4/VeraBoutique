@@ -17,10 +17,36 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Обработать асинхронную функцию, вернуть результирующий ответ со значением
         /// </summary>
         [Fact]
+        public async Task ResultValueTry_Ok_IEnumerable()
+        {
+            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionEnumerableAsync(1),
+                                                             Exceptions.ExceptionError());
+
+            Assert.True(resultValue.OkStatus);
+            Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
+        }
+
+        /// <summary>
+        /// Обработать асинхронную функцию, вернуть результирующий ответ с ошибкой
+        /// </summary>
+        [Fact]
+        public async Task ResultValueTry_Exception_IEnumerable()
+        {
+            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionEnumerableAsync(0),
+                                                             Exceptions.ExceptionError());
+
+            Assert.True(resultValue.HasErrors);
+            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Обработать асинхронную функцию, вернуть результирующий ответ со значением
+        /// </summary>
+        [Fact]
         public async Task ResultValueTry_Ok_IReadonlyCollection()
         {
             var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionCollectionAsync(1),
-                                                             Exceptions.FuncExceptionToError);
+                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
             Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
@@ -32,8 +58,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultValueTry_Exception_IReadonlyCollection()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionCollectionAsync(0), 
-                                                             Exceptions.FuncExceptionToError);
+            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionCollectionAsync(0),
+                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
@@ -46,7 +72,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultValueTry_Ok_List()
         {
             var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionListAsync(1),
-                                                             Exceptions.FuncExceptionToError);
+                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
             Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
@@ -59,7 +85,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultValueTry_Exception_List()
         {
             var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionListAsync(0),
-                                                             Exceptions.FuncExceptionToError);
+                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);

@@ -7,6 +7,9 @@ namespace BoutiqueDTO.Models.Implementation.Clothes
     /// </summary>
     public class GenderDto
     {
+        public GenderDto()
+        { }
+
         public GenderDto(GenderType genderType, string name)
         {
             GenderType = genderType;
@@ -16,11 +19,11 @@ namespace BoutiqueDTO.Models.Implementation.Clothes
         /// <summary>
         /// Тип пола
         /// </summary>
-        public GenderType GenderType { get;  }
+        public GenderType GenderType { get; set; }
 
         /// <summary>
         /// Наименование
         /// </summary>
-        public string Name { get;  }
+        public string Name { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using BoutiqueMVC.Extensions.Controllers;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Controllers.Clothes
@@ -42,16 +43,9 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// <summary>
         /// Записать типы полов для одежды
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] GenderType genderType)
-        {
-            var genders = new List<Gender>()
-            {
-                new Gender(GenderType.Female, "Женшина"),
-                new Gender(GenderType.Male, "Мушина"),
-            };
-            await _genderService.UploadGenders(genders);
-            return Ok("ok");
-        }
+       // [HttpPost]
+        //public async Task<IActionResult> Post([FromBody] string gendersJson) =>
+        //    GenderDtoConverter.FromJsonCollection(gendersJson).
+        //    MapAsync(genders => _genderService.UploadGenders(genders))
     }
 }

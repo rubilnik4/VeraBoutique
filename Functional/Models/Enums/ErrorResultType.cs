@@ -8,6 +8,7 @@
         DevideByZero,
         DatabaseIncorrectConnection,
         DatabaseTableAccess,
+        JsonConvertion,
         Unknown,
     }
 }

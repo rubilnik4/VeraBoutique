@@ -18,7 +18,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionTry_Ok()
         {
-            var resultCollection = ResultCollectionTry(() => SyncFunctions.DivisionCollection(1), Exceptions.FuncExceptionToError);
+            var resultCollection = ResultCollectionTry(() => SyncFunctions.DivisionCollection(1), Exceptions.ExceptionError());
 
             Assert.True(resultCollection.OkStatus);
             Assert.Equal(SyncFunctions.DivisionCollection(1), resultCollection.Value);
@@ -30,7 +30,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionTry_Exception()
         {
-            var resultCollection = ResultCollectionTry(() => SyncFunctions.DivisionCollection(0), Exceptions.FuncExceptionToError);
+            var resultCollection = ResultCollectionTry(() => SyncFunctions.DivisionCollection(0), Exceptions.ExceptionError());
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultCollection.Errors.First().ErrorResultType);

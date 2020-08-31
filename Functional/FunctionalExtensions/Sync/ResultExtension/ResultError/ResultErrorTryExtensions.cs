@@ -12,7 +12,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
         /// <summary>
         /// Обработать функцию, вернуть результирующий ответ или ошибку исключения
         /// </summary>
-        public static IResultError ResultErrorTry(Action action, Func<Exception, IErrorResult> tryFunc)
+        public static IResultError ResultErrorTry(Action action, IErrorResult error)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
             }
             catch (Exception ex)
             {
-                return new Models.Implementations.Result.ResultError(tryFunc(ex));
+                return new Models.Implementations.Result.ResultError(error.AppendException(ex));
             }
 
             return new Models.Implementations.Result.ResultError();

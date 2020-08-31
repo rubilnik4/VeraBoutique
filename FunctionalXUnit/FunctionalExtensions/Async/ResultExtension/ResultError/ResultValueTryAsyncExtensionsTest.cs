@@ -19,7 +19,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         [Fact]
         public async Task ResultValueTry_Ok()
         {
-            var resultValue = await ResultErrorTryAsync(() => AsyncFunctions.DivisionAsync(1), Exceptions.FuncExceptionToError);
+            var resultValue = await ResultErrorTryAsync(() => AsyncFunctions.DivisionAsync(1), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
         }
@@ -30,7 +30,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         [Fact]
         public async Task ResultValueTry_Exception()
         {
-            var resultValue = await ResultErrorTryAsync(() => AsyncFunctions.DivisionAsync(0), Exceptions.FuncExceptionToError);
+            var resultValue = await ResultErrorTryAsync(() => AsyncFunctions.DivisionAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);

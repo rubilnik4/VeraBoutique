@@ -16,6 +16,12 @@ namespace FunctionalXUnit.Data
             Enumerable.Range(0, 3).ToList().AsReadOnly();
 
         /// <summary>
+        /// Преобразовать коллекцию чисел в коллекцию строк
+        /// </summary>
+        public static IEnumerable<string> CollectionToString(IEnumerable<int> numbers) =>
+            numbers.Select(number => number.ToString());
+
+        /// <summary>
         /// Преобразовать список чисел в строку
         /// </summary>
         public static string AggregateToString(IEnumerable<int> numbers) =>

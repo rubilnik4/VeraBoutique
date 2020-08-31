@@ -39,14 +39,14 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
         public async Task<IResultCollection<TEntity>> ToListAsync() =>
-            await ResultCollectionTryAsync(() => _databaseSet.ToListAsync(),
-                                           exception => DatabaseErrors.TableAccessError(_tableName).AppendException(exception));
+            await ResultCollectionTryAsync(() => _databaseSet.ToListAsync(), 
+                                           DatabaseErrors.TableAccessError(_tableName));
 
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         public async Task<IResultError> AddRangeAsync(IEnumerable<TEntity> entities) =>
-            await ResultErrorTryAsync(() => _databaseSet.AddRangeAsync(entities),
-                                      exception => DatabaseErrors.TableAccessError(_tableName).AppendException(exception));
+            await ResultErrorTryAsync(() => _databaseSet.AddRangeAsync(entities), 
+                                      DatabaseErrors.TableAccessError(_tableName));
     }
 }

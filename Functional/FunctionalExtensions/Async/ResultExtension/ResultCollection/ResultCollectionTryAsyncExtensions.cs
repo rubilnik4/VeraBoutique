@@ -14,10 +14,10 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
         /// <summary>
         /// Обработать асинхронную функцию, вернуть результирующий ответ со значением или ошибку исключения
         /// </summary>
-        public static async Task<IResultCollection<TValue>> ResultCollectionTryAsync<TValue>(Func<Task<IReadOnlyCollection<TValue>>> func, 
-                                                                                             Func<Exception, IErrorResult> tryFunc)
+        public static async Task<IResultCollection<TValue>> ResultCollectionTryAsync<TValue>(Func<Task<IEnumerable<TValue>>> func, 
+                                                                                             IErrorResult error)
         {
-            IReadOnlyCollection<TValue> funcCollectionResult;
+            IEnumerable<TValue> funcCollectionResult;
 
             try
             {
@@ -25,7 +25,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
             }
             catch (Exception ex)
             {
-                return new ResultCollection<TValue>(tryFunc(ex));
+                return new ResultCollection<TValue>(error.AppendException(ex));
             }
 
             return new ResultCollection<TValue>(funcCollectionResult);
@@ -34,8 +34,15 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
         /// <summary>
         /// Обработать асинхронную функцию, вернуть результирующий ответ со значением или ошибку исключения
         /// </summary>
+        public static async Task<IResultCollection<TValue>> ResultCollectionTryAsync<TValue>(Func<Task<IReadOnlyCollection<TValue>>> func,
+                                                                                             IErrorResult error) =>
+            await ResultCollectionTryAsync(async () => (IEnumerable<TValue>)await func.Invoke(), error);
+
+        /// <summary>
+        /// Обработать асинхронную функцию, вернуть результирующий ответ со значением или ошибку исключения
+        /// </summary>
         public static async Task<IResultCollection<TValue>> ResultCollectionTryAsync<TValue>(Func<Task<List<TValue>>> func,
-                                                                                             Func<Exception, IErrorResult> tryFunc) =>
-            await ResultCollectionTryAsync(async () => (IReadOnlyCollection<TValue>)(await func.Invoke()).AsReadOnly(), tryFunc);
+                                                                                             IErrorResult error) =>
+            await ResultCollectionTryAsync(async () => (IEnumerable<TValue>)await func.Invoke(), error);
     }
 }

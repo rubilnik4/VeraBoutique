@@ -13,10 +13,10 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
         /// <summary>
         /// Обработать функцию, вернуть результирующий ответ с коллекцией или ошибку исключения
         /// </summary>
-        public static IResultCollection<TValue> ResultCollectionTry<TValue>(Func<IReadOnlyCollection<TValue>> func,
-                                                                            Func<Exception, IErrorResult> tryFunc)
+        public static IResultCollection<TValue> ResultCollectionTry<TValue>(Func<IEnumerable<TValue>> func,
+                                                                            IErrorResult error)
         {
-            IReadOnlyCollection<TValue> funcCollectionResult;
+            IEnumerable<TValue> funcCollectionResult;
 
             try
             {
@@ -24,7 +24,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
             }
             catch (Exception ex)
             {
-                return new ResultCollection<TValue>(tryFunc(ex));
+                return new ResultCollection<TValue>(error.AppendException(ex));
             }
 
             return new ResultCollection<TValue>(funcCollectionResult);

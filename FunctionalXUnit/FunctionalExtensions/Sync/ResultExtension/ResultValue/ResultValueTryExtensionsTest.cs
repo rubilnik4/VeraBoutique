@@ -6,7 +6,7 @@ using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultErrorTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 
 namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
 {
@@ -21,7 +21,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Ok()
         {
-            var resultValue = ResultValueTry(() => SyncFunctions.Division(1), Exceptions.FuncExceptionToError);
+            var resultValue = ResultValueTry(() => SyncFunctions.Division(1), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
             Assert.Equal(SyncFunctions.Division(1), resultValue.Value);
@@ -33,7 +33,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Exception()
         {
-            var resultValue = ResultValueTry(() => SyncFunctions.Division(0), Exceptions.FuncExceptionToError);
+            var resultValue = ResultValueTry(() => SyncFunctions.Division(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
