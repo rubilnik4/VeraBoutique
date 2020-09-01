@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -9,7 +10,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
     /// <summary>
     /// Обработка условий для результирующего асинхронного связывающего ответа со значением
     /// </summary>
-    public static class ResultValueBindWhereAsyncExtensions
+    public static class ResultCollectionBindWhereAsyncExtensions
     {
         /// <summary>
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
@@ -28,5 +29,14 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
             @this.OkStatus
                 ? @this
                 : await badFunc.Invoke(@this.Errors);
+
+        /// <summary>
+        /// Добавить асинхронно ошибки результирующего ответа или вернуть результат с ошибками для ответа со значением
+        /// </summary>
+        public static async Task<IResultValue<TValue>> ResultValueBindErrorsOkAsync<TValue>(this IResultValue<TValue> @this,
+                                                                                            Func<TValue, Task<IResultError>> okFunc) =>
+            await @this.
+            ResultValueBindOkAsync(value => okFunc.Invoke(value).
+                                                 MapTaskAsync(resultError => resultError.ToResultValue(value)));
     }
 }

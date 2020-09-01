@@ -7,7 +7,7 @@ using Functional.Models.Interfaces.Result;
 namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
 {
     /// <summary>
-    /// Обработка асинхронный условий для результирующего ответа со значением задачей-объектом
+    /// Обработка асинхронных условий для результирующего ответа со значением задачей-объектом
     /// </summary>
     public static class ResultValueWhereTaskBindAsyncExtensions
     {

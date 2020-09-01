@@ -1,4 +1,5 @@
-﻿using Functional.Models.Implementations.Result;
+﻿using System.Collections.Generic;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
@@ -15,5 +16,13 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
             @this.OkStatus
                 ? new ResultValue<TValue>(value)
                 : new ResultValue<TValue>(@this.Errors);
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ со значением
+        /// </summary>      
+        public static IResultCollection<TValue> ToResultCollection<TValue>(this IResultError @this, IReadOnlyCollection<TValue> value) =>
+            @this.OkStatus
+                ? new ResultCollection<TValue>(value)
+                : new ResultCollection<TValue>(@this.Errors);
     }
 }

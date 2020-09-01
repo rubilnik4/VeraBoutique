@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
+
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
+{
+    /// <summary>
+    /// Обработка условий для результирующего асинхронного связывающего ответа с коллекцией
+    /// </summary>
+    public static class ResultCollectionBindWhereAsyncExtensions
+    {
+        /// <summary>
+        /// Выполнение положительного условия результирующего асинхронного ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе с коллекцией
+        /// </summary>   
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionBindOkAsync<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                      Func<IReadOnlyCollection<TValueIn>, Task<IResultCollection<TValueOut>>> okFunc) =>
+            @this.OkStatus
+                ? await okFunc.Invoke(@this.Value)
+                : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение негативного условия результирующего асинхронного ответа или возвращение положительного в результирующем ответе с коллекцией
+        /// </summary>   
+        public static async Task<IResultCollection<TValue>> ResultCollectionBindBadAsync<TValue>(this IResultCollection<TValue> @this,
+                                                                                       Func<IReadOnlyCollection<IErrorResult>, Task<IResultCollection<TValue>>> badFunc) =>
+            @this.OkStatus
+                ? @this
+                : await badFunc.Invoke(@this.Errors);
+
+        /// <summary>
+        /// Добавить асинхронно ошибки результирующего ответа или вернуть результат с ошибками для ответа с коллекцией
+        /// </summary>
+        public static async Task<IResultCollection<TValue>> ResultCollectionBindErrorsOkAsync<TValue>(this IResultCollection<TValue> @this,
+                                                                                       Func<IReadOnlyCollection<TValue>, Task<IResultError>> okFunc) =>
+            await @this.
+            ResultCollectionBindOkAsync(collection => okFunc.Invoke(collection).
+                                                      MapTaskAsync(resultError => resultError.ToResultCollection(collection)));
+
+
+    }
+}

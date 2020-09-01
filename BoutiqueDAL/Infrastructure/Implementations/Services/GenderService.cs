@@ -45,9 +45,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// </summary>
         public async Task<IResultError> UploadGenders(IEnumerable<Gender> genders) =>
             await _boutiqueDatabase.
-            ResultValueBindOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
-                                                  AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity)).
-                                                  ToResultValueTaskAsync(boutiqueDatabase)).
+            ResultValueBindErrorsOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
+                                                             AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity))).
             ResultVoidOkBindAsync(boutiqueDatabase => boutiqueDatabase.SaveChangesAsync());
     }
 }

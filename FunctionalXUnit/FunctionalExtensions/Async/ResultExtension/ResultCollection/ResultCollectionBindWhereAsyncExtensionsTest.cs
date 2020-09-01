@@ -1,15 +1,18 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
+using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
+using static FunctionalXUnit.Data.Collections;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollection
 {
     /// <summary>
     /// Обработка условий для асинхронного результирующего связывающего ответа со значением. Тесты
@@ -20,29 +23,29 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием в результирующем ответе без ошибки
         /// </summary>   
         [Fact]
-        public async Task ResultValueBindOkAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionBindOkAsync_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
-            var resultValue = new ResultValue<int>(initialValue);
+            var numberCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(numberCollection);
 
-            var resultAfterWhere = await resultValue.ResultValueBindOkAsync(
-                number => Task.FromResult((IResultValue<string>)new ResultValue<string>(number.ToString())));
+            var resultAfterWhere = await resultCollection.ResultCollectionBindOkAsync(
+                numbers => Task.FromResult((IResultCollection<string>)new ResultCollection<string>(CollectionToString(numbers))));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
+            Assert.Equal(CollectionToString(numberCollection), resultAfterWhere.Value);
         }
 
         /// <summary>
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием в результирующем ответе с ошибкой
         /// </summary>   
         [Fact]
-        public async Task ResultValueBindOkAsync_Bad_ReturnInitial()
+        public async Task ResultCollectionBindOkAsync_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
-            var resultValue = new ResultValue<int>(errorInitial);
+            var resultCollection = new ResultCollection<int>(errorInitial);
 
-            var resultAfterWhere = await resultValue.ResultValueBindOkAsync(
-                number => Task.FromResult((IResultValue<string>)new ResultValue<string>(number.ToString())));
+            var resultAfterWhere = await resultCollection.ResultCollectionBindOkAsync(
+                numbers => Task.FromResult((IResultCollection<string>)new ResultCollection<string>(CollectionToString(numbers))));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorInitial.Equals(resultAfterWhere.Errors.Last()));
@@ -52,92 +55,92 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Выполнение негативного условия результирующего асинхронного ответа со связыванием в результирующем ответе без ошибки
         /// </summary>   
         [Fact]
-        public async Task ResultValueBindBadAsync_Ok_ReturnInitial()
+        public async Task ResultCollectionBindBadAsync_Ok_ReturnInitial()
         {
-            const int initialValue = 2;
-            var resultValue = new ResultValue<int>(initialValue);
+            var numberCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(numberCollection);
 
-            var resultAfterWhere = await resultValue.ResultValueBindBadAsync(
-                errors => Task.FromResult((IResultValue<int>)new ResultValue<int>(errors.Count)));
+            var resultAfterWhere = await resultCollection.ResultCollectionBindBadAsync(
+                errors => Task.FromResult((IResultCollection<int>)new ResultCollection<int>(new List<int> { errors.Count })));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultValue.Value, resultAfterWhere.Value);
+            Assert.Equal(resultCollection.Value, resultAfterWhere.Value);
         }
 
         /// <summary>
         /// Выполнение негативного условия результирующего асинхронного ответа со связыванием в результирующем ответе с ошибкой
         /// </summary>   
         [Fact]
-        public async Task ResultValueBindBadAsync_Bad_ReturnNewValue()
+        public async Task ResultCollectionBindBadAsync_Bad_ReturnNewValue()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultValue = new ResultValue<int>(errorsInitial);
+            var resultCollection = new ResultCollection<int>(errorsInitial);
 
-            var resultAfterWhere = await resultValue.ResultValueBindBadAsync(
-                errors => Task.FromResult((IResultValue<int>)new ResultValue<int>(errors.Count)));
+            var resultAfterWhere = await resultCollection.ResultCollectionBindBadAsync(
+                errors => Task.FromResult((IResultCollection<int>)new ResultCollection<int>(new List<int> { errors.Count })));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(errorsInitial.Count, resultAfterWhere.Value);
+            Assert.Equal(errorsInitial.Count, resultAfterWhere.Value.First());
         }
 
         /// <summary>
-        /// Добавить ошибки асинхронного результирующего ответа со значением. Без ошибок
+        /// Добавить ошибки асинхронного результирующего ответа с коллекцией. Без ошибок
         /// </summary>
         [Fact]
         public async Task ResultValueBindErrorsOkAsync_NoError()
         {
-            const int initialValue = 2;
-            var resultValue = new ResultValue<int>(initialValue);
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
             var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError();
             var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>())).
                                 ReturnsAsync(resultError);
 
-            var resultAfterWhere = 
-                await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
+            var resultAfterWhere =
+                await resultCollection.ResultCollectionBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(initialValue, resultAfterWhere.Value);
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+            Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value) );
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
         }
 
         /// <summary>
-        /// Добавить ошибки асинхронного результирующего ответа со значением. С ошибками
+        /// Добавить ошибки асинхронного результирующего ответа с коллекцией. С ошибками
         /// </summary>
         [Fact]
         public async Task ResultValueBindErrorsOkAsync_HasError()
         {
-            const int initialValue = 2;
+            var initialCollection = GetRangeNumber();
             var initialError = CreateErrorTest();
-            var resultValue = new ResultValue<int>(initialValue);
+            var resultValue = new ResultCollection<int>(initialCollection);
             var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialError);
             var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>())).
                                 ReturnsAsync(resultError);
 
             var resultAfterWhere =
-                await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
+                await resultValue.ResultValueBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Equal(initialError, resultAfterWhere.Errors.First());
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
         }
 
         /// <summary>
-        /// Добавить ошибки асинхронного результирующего ответа со значением и ошибкой. Без ошибок
+        /// Добавить ошибки асинхронного результирующего ответа с коллекцией и ошибкой. Без ошибок
         /// </summary>
         [Fact]
         public async Task ResultValueBindErrorsBadAsync_NoError()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultValue = new ResultValue<int>(errorsInitial);
+            var resultValue = new ResultCollection<int>(errorsInitial);
             var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError();
             var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>())).
                                 ReturnsAsync(resultError);
 
             var resultAfterWhere =
-                await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
+                await resultValue.ResultValueBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
@@ -145,21 +148,21 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         }
 
         /// <summary>
-        /// Добавить ошибки асинхронного результирующего ответа со значением и ошибкой. С ошибками
+        /// Добавить ошибки асинхронного результирующего ответа с коллекцией и ошибкой. С ошибками
         /// </summary>
         [Fact]
         public async Task ResultValueBindErrorsBadAsync_HasError()
         {
             var errorsInitial = CreateErrorListTwoTest();
             var initialError = CreateErrorTest();
-            var resultValue = new ResultValue<int>(errorsInitial);
+            var resultValue = new ResultCollection<int>(errorsInitial);
             var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialError);
             var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>())).
                                 ReturnsAsync(resultError);
 
             var resultAfterWhere =
-                await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
+                await resultValue.ResultValueBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));

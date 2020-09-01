@@ -35,7 +35,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
         /// Выполнение положительного условия или возвращение предыдущей ошибки в результирующем ответе коллекции с возвращением к значению
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultCollectionOkToValueTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,
-                                                                                                      Func<IReadOnlyCollection<TValueIn>, TValueOut> okFunc) =>
+                                                                                                                  Func<IReadOnlyCollection<TValueIn>, TValueOut> okFunc) =>
             await @this.ToResultValue().
             ResultValueOkTaskAsync(okFunc);
     }

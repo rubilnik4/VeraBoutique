@@ -117,11 +117,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
 
             var resultAfterWhere =
                 resultCollection.ResultCollectionOkBad(
-                    okFunc: _ => String.Empty,
-                    badFunc: errors => errors.Count.ToString());
+                    okFunc: _ => new List<string> { String.Empty },
+                    badFunc: errors => new List<string> { errors.Count.ToString() });
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
+            Assert.Single(resultAfterWhere.Value);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value.First());
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FunctionalXUnit.Data
 {
@@ -20,6 +21,12 @@ namespace FunctionalXUnit.Data
         /// </summary>
         public static IEnumerable<string> CollectionToString(IEnumerable<int> numbers) =>
             numbers.Select(number => number.ToString());
+
+        /// <summary>
+        /// Преобразовать коллекцию чисел в коллекцию строк асинхронно
+        /// </summary>
+        public static async Task<IEnumerable<string>> CollectionToStringAsync(IEnumerable<int> numbers) =>
+            await Task.FromResult(numbers.Select(number => number.ToString()));
 
         /// <summary>
         /// Преобразовать список чисел в строку

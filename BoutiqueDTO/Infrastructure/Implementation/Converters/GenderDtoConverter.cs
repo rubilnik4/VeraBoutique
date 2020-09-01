@@ -29,10 +29,22 @@ namespace BoutiqueDTO.Infrastructure.Implementation.Converters
             new GenderDto(gender.GenderType, gender.Name);
 
         /// <summary>
+        /// Преобразовать коллекцию полов в трансферную модель
+        /// </summary>
+        public static IEnumerable<GenderDto> ToDtoCollection(IEnumerable<Gender> genders) =>
+            genders.Select(ToDto);
+
+        /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
         public static Gender FromDto(GenderDto genderDto) =>
             new Gender(genderDto.GenderType, genderDto.Name);
+
+        /// <summary>
+        /// Преобразовать пол из трансферной модели
+        /// </summary>
+        public static IEnumerable<Gender> FromDtoCollection(IEnumerable<GenderDto> gendersDto) =>
+            gendersDto.Select(FromDto);
 
         /// <summary>
         /// Преобразовать тип пола в Json
@@ -40,7 +52,7 @@ namespace BoutiqueDTO.Infrastructure.Implementation.Converters
         public static IResultValue<string> ToJson(Gender gender) =>
             ToDto(gender).
             Map(genderDto => ResultValueTry(() => JsonSerializer.Serialize(genderDto, JsonSettings.CyrillicJsonOptions),
-                                            ErrorJsonConvertiong(nameof(Gender))));
+                                            ErrorJsonConverting(nameof(Gender))));
 
         /// <summary>
         /// Преобразовать тип пола в Json
@@ -56,12 +68,12 @@ namespace BoutiqueDTO.Infrastructure.Implementation.Converters
         public static IResultValue<string> ToJsonCollection(IEnumerable<Gender> genders) =>
             genders.Select(ToDto).
             Map(gendersDto => ResultValueTry(() => JsonSerializer.Serialize(gendersDto, JsonSettings.CyrillicJsonOptions),
-                                             ErrorJsonConvertiong(nameof(Gender))));
+                                             ErrorJsonConverting(nameof(Gender))));
 
         /// <summary>
         /// Преобразовать Json в коллекцию
         /// </summary>
-        public static IResultCollection<Gender> FromJsonCollection(string gendersJson) => 
+        public static IResultCollection<Gender> FromJsonCollection(string gendersJson) =>
             ResultCollectionTry(() => JsonSerializer.Deserialize<IEnumerable<GenderDto>>(gendersJson, JsonSettings.CyrillicJsonOptions).ToList(),
                                                                                                               ErrorJsonSchema(nameof(Gender))).
             ResultCollectionOk(gendersDto => gendersDto.Select(FromDto));
@@ -75,7 +87,7 @@ namespace BoutiqueDTO.Infrastructure.Implementation.Converters
         /// <summary>
         /// Ошибка преобразования в Json
         /// </summary>
-        public static IErrorResult ErrorJsonConvertiong(string schemaName) =>
+        public static IErrorResult ErrorJsonConverting(string schemaName) =>
             new ErrorResult(ErrorResultType.JsonConvertion, $"Невозможно преобразовать в Json тип {schemaName}");
     }
 }

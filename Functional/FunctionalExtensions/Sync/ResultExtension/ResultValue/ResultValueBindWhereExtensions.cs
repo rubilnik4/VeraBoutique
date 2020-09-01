@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -27,5 +28,14 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
             @this.OkStatus
                 ? @this
                 : badFunc.Invoke(@this.Errors);
+
+        /// <summary>
+        /// Добавить ошибки результирующего ответа или вернуть результат с ошибками для ответа со значением
+        /// </summary>
+        public static IResultValue<TValue> ResultValueBindErrorsOk<TValue>(this IResultValue<TValue> @this,
+                                                                           Func<TValue, IResultError> okFunc) =>
+            @this.
+            ResultValueBindOk(value => okFunc.Invoke(value).
+                                       Map(resultError => resultError.ToResultValue(value)));
     }
 }

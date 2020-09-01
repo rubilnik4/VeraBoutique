@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Mocks.Interfaces;
+using Moq;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
@@ -69,6 +71,84 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count, resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Добавить ошибки результирующего ответа со значением. Без ошибок
+        /// </summary>
+        [Fact]
+        public void ResultValueBindErrorsOk_NoError()
+        {
+            const int initialValue = 2;
+            var resultValue = new ResultValue<int>(initialValue);
+            var resultError = new Functional.Models.Implementations.Result.ResultError();
+            var resultFunctionsMock = new Mock<IResultFunctions>();
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>())).Returns(resultError);
+
+            var resultAfterWhere = resultValue.ResultValueBindErrorsOk(number => resultFunctionsMock.Object.NumberToResult(number));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(initialValue, resultAfterWhere.Value);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+        }
+
+        /// <summary>
+        /// Добавить ошибки результирующего ответа со значением. С ошибками
+        /// </summary>
+        [Fact]
+        public void ResultValueBindErrorsOk_HasError()
+        {
+            const int initialValue = 2;
+            var initialError = CreateErrorTest();
+            var resultValue = new ResultValue<int>(initialValue);
+            var resultError = new Functional.Models.Implementations.Result.ResultError(initialError);
+            var resultFunctionsMock = new Mock<IResultFunctions>();
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>())).Returns(resultError);
+
+            var resultAfterWhere = resultValue.ResultValueBindErrorsOk(number => resultFunctionsMock.Object.NumberToResult(number));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(initialError, resultAfterWhere.Errors.First());
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+        }
+
+        /// <summary>
+        /// Добавить ошибки результирующего ответа со значением и ошибкой. Без ошибок
+        /// </summary>
+        [Fact]
+        public void ResultValueBindErrorsBad_NoError()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
+            var resultError = new Functional.Models.Implementations.Result.ResultError();
+            var resultFunctionsMock = new Mock<IResultFunctions>();
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>())).Returns(resultError);
+
+            var resultAfterWhere = resultValue.ResultValueBindErrorsOk(number => resultFunctionsMock.Object.NumberToResult(number));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>()), Times.Never);
+        }
+
+        /// <summary>
+        /// Добавить ошибки результирующего ответа со значением и ошибкой. С ошибками
+        /// </summary>
+        [Fact]
+        public void ResultValueBindErrorsBad_HasError()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var initialError = CreateErrorTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
+            var resultError = new Functional.Models.Implementations.Result.ResultError(initialError);
+            var resultFunctionsMock = new Mock<IResultFunctions>();
+            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>())).Returns(resultError);
+
+            var resultAfterWhere = resultValue.ResultValueBindErrorsOk(number => resultFunctionsMock.Object.NumberToResult(number));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>()), Times.Never);
         }
     }
 }
