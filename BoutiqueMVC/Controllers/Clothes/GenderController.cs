@@ -47,10 +47,10 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// <summary>
         /// Записать типы полов для одежды
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] IList<GenderDto> gendersDto) =>
-            await GenderDtoConverter.FromDtoCollection(gendersDto).
-            MapAsync(genders => _genderService.UploadGenders(genders)).
-            MapTaskAsync(gendersResult => gendersResult.ToGetActionResult());
+      //  [HttpPost]
+        //public async Task<IActionResult> Post([FromBody] IList<GenderDto> gendersDto) =>
+        //    await GenderDtoConverter.FromDtoCollection(gendersDto).
+        //    MapAsync(genders => _genderService.UploadGenders(genders)).
+        //    MapTaskAsync(gendersResult => gendersResult.ToGetActionResult());
     }
 }

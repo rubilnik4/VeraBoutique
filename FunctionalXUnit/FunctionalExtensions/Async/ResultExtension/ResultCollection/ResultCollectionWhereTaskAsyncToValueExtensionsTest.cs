@@ -38,7 +38,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение условия в отрицательном результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultValueContinueToValueTaskAsync_Ok_ReturnNewError()
+        public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewError()
         {
             var numberCollection = Collections.GetRangeNumber();
             var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
@@ -57,7 +57,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Возвращение предыдущей ошибки в положительном результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultValueContinueToValueTaskAsync_Bad_ReturnNewValue()
+        public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewValue()
         {
             var errorInitial = CreateErrorTest();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
@@ -75,7 +75,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultValueContinueToValueTaskAsync_Bad_ReturnNewError()
+        public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewError()
         {
             var errorInitial = CreateErrorTest();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
@@ -93,7 +93,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>      
         [Fact]
-        public async Task ResultValueOkBadToValueTaskAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionOkBadToValueTaskAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
@@ -111,7 +111,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение негативного условия в результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>      
         [Fact]
-        public async Task ResultValueOkBadToValueTaskAsync_Bad_ReturnNewValueByErrors()
+        public async Task ResultCollectionOkBadToValueTaskAsync_Bad_ReturnNewValueByErrors()
         {
             var errorsInitial = CreateErrorListTwoTest();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorsInitial));
@@ -129,7 +129,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>   
         [Fact]
-        public async Task ResultValueOkToValueTaskAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionOkToValueTaskAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
@@ -144,7 +144,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Возвращение предыдущей ошибки в результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>   
         [Fact]
-        public async Task ResultValueOkToValueTaskAsync_Bad_ReturnInitial()
+        public async Task ResultCollectionOkToValueTaskAsync_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
             var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));

@@ -113,7 +113,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var resultAfterWhere = resultCollection.ResultCollectionBindErrorsOk(numbers => resultFunctionsMock.Object.NumbersToResult(numbers));
 
             Assert.True(resultAfterWhere.HasErrors);
-            Assert.Equal(initialError, resultAfterWhere.Errors.First());
+            Assert.True(initialError.Equals(resultAfterWhere.Errors.First()));
             resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResult(initialCollection), Times.Once);
         }
 

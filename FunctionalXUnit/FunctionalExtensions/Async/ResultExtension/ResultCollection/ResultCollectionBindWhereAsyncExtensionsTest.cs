@@ -32,7 +32,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
                 numbers => Task.FromResult((IResultCollection<string>)new ResultCollection<string>(CollectionToString(numbers))));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(CollectionToString(numberCollection), resultAfterWhere.Value);
+            Assert.Equal(await CollectionToStringAsync(numberCollection), resultAfterWhere.Value);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Добавить ошибки асинхронного результирующего ответа с коллекцией. Без ошибок
         /// </summary>
         [Fact]
-        public async Task ResultValueBindErrorsOkAsync_NoError()
+        public async Task ResultCollectionBindErrorsOkAsync_NoError()
         {
             var initialCollection = GetRangeNumber();
             var resultCollection = new ResultCollection<int>(initialCollection);
@@ -100,7 +100,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
                 await resultCollection.ResultCollectionBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value) );
+            Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value));
             resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
         }
 
@@ -108,7 +108,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Добавить ошибки асинхронного результирующего ответа с коллекцией. С ошибками
         /// </summary>
         [Fact]
-        public async Task ResultValueBindErrorsOkAsync_HasError()
+        public async Task ResultCollectionBindErrorsOkAsync_HasError()
         {
             var initialCollection = GetRangeNumber();
             var initialError = CreateErrorTest();
@@ -122,7 +122,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
                 await resultValue.ResultValueBindErrorsOkAsync(numbers => resultFunctionsMock.Object.NumbersToResultAsync(numbers));
 
             Assert.True(resultAfterWhere.HasErrors);
-            Assert.Equal(initialError, resultAfterWhere.Errors.First());
+            Assert.True(initialError.Equals(resultAfterWhere.Errors.First()));
             resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
         }
 
@@ -130,7 +130,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Добавить ошибки асинхронного результирующего ответа с коллекцией и ошибкой. Без ошибок
         /// </summary>
         [Fact]
-        public async Task ResultValueBindErrorsBadAsync_NoError()
+        public async Task ResultCollectionBindErrorsBadAsync_NoError()
         {
             var errorsInitial = CreateErrorListTwoTest();
             var resultValue = new ResultCollection<int>(errorsInitial);
@@ -151,7 +151,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Добавить ошибки асинхронного результирующего ответа с коллекцией и ошибкой. С ошибками
         /// </summary>
         [Fact]
-        public async Task ResultValueBindErrorsBadAsync_HasError()
+        public async Task ResultCollectionBindErrorsBadAsync_HasError()
         {
             var errorsInitial = CreateErrorListTwoTest();
             var initialError = CreateErrorTest();

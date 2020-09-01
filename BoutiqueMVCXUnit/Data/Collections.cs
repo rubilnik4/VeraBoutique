@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FunctionalXUnit.Data
+namespace BoutiqueMVCXUnit.Data
 {
     /// <summary>
     /// Тестовые примеры коллекций
@@ -14,12 +14,6 @@ namespace FunctionalXUnit.Data
         /// Список чисел
         /// </summary>
         public static IReadOnlyCollection<int> GetRangeNumber() =>
-            Enumerable.Range(1, 3).ToList().AsReadOnly();
-
-        /// <summary>
-        /// Список чисел с нулем
-        /// </summary>
-        public static IReadOnlyCollection<int> GetRangeNumberWithZero() =>
             Enumerable.Range(0, 3).ToList().AsReadOnly();
 
         /// <summary>

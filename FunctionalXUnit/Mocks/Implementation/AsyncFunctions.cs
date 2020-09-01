@@ -44,5 +44,11 @@ namespace FunctionalXUnit.Mocks.Implementation
         public static async Task<IEnumerable<int>> DivisionEnumerableAsync(int divider) =>
             await DivisionListAsync(divider).
                 MapTaskAsync(collection => collection.AsReadOnly());
+
+        /// <summary>
+        /// Функция деления на коллекцию чисел асинхронно
+        /// </summary>
+        public static async Task<IEnumerable<int>> DivisionByCollectionAsync(IEnumerable<int> dividers) =>
+            await Task.FromResult(dividers.Select(divider => 10 / divider));
     }
 }

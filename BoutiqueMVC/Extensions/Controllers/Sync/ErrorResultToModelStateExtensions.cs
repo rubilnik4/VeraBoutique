@@ -7,12 +7,12 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
     /// <summary>
     /// Методы расширения для ошибок результирующего результата
     /// </summary>
-    public static class ErrorResultToModelState
+    public static class ErrorResultToModelStateExtensions
     {
         /// <summary>
         /// Сформировать модель ошибок
         /// </summary>
-        public static ModelStateDictionary ErrorsResultToModelState(this IEnumerable<IErrorResult> errors)
+        public static ModelStateDictionary ToModelState(this IEnumerable<IErrorResult> errors)
         {
             var modelState = new ModelStateDictionary();
             foreach (var error in errors)

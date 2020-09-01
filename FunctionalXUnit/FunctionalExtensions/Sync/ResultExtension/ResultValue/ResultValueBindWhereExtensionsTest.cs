@@ -108,7 +108,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             var resultAfterWhere = resultValue.ResultValueBindErrorsOk(number => resultFunctionsMock.Object.NumberToResult(number));
 
             Assert.True(resultAfterWhere.HasErrors);
-            Assert.Equal(initialError, resultAfterWhere.Errors.First());
+            Assert.True(initialError.Equals(resultAfterWhere.Errors.First()));
             resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
         }
 

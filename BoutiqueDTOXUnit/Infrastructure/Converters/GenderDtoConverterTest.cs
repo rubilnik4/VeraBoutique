@@ -29,6 +29,20 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         }
 
         /// <summary>
+        /// Преобразование в трансферную модель коллекцию и обратно
+        /// </summary>
+        [Fact]
+        public void GenderToDtoCollection_FromDtoCollection()
+        {
+            var genders = GetGenders();
+
+            var gendersDto = GenderDtoConverter.ToDtoCollection(genders);
+            var gendersAfterConverter = GenderDtoConverter.FromDtoCollection(gendersDto);
+
+            Assert.True(genders.SequenceEqual(gendersAfterConverter));
+        }
+
+        /// <summary>
         /// Преобразование в Json и обратно
         /// </summary>
         [Fact]

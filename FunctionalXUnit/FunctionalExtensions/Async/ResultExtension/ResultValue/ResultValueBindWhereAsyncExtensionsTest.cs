@@ -93,12 +93,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
                                 ReturnsAsync(resultError);
 
-            var resultAfterWhere = 
+            var resultAfterWhere =
                 await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(initialValue, resultAfterWhere.Value);
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResultAsync(initialValue), Times.Once);
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
                 await resultValue.ResultValueBindErrorsOkAsync(number => resultFunctionsMock.Object.NumberToResultAsync(number));
 
             Assert.True(resultAfterWhere.HasErrors);
-            Assert.Equal(initialError, resultAfterWhere.Errors.First());
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(initialValue), Times.Once);
+            Assert.True(initialError.Equals(resultAfterWhere.Errors.First()));
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>()), Times.Once);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>()), Times.Never);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>()), Times.Never);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResult(It.IsAny<int>()), Times.Never);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>()), Times.Never);
         }
     }
 }
