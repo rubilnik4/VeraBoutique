@@ -43,10 +43,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        public async Task<IResultError> UploadGenders(IEnumerable<Gender> genders) =>
+        public async Task<IResultCollection<int>> UploadGenders(IEnumerable<Gender> genders) =>
             await _boutiqueDatabase.
-            ResultValueBindErrorsOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
-                                                             AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity))).
-            ResultVoidOkBindAsync(boutiqueDatabase => boutiqueDatabase.SaveChangesAsync());
+            ResultValueBindOkAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
+                                                       AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity)).
+                                                       ResultCollectionVoidOkBindAsync(_ => boutiqueDatabase.SaveChangesAsync()));
     }
 }

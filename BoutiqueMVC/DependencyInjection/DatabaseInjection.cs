@@ -30,7 +30,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void UpdateSchema(IServiceProvider serviceProvider) =>
             serviceProvider.GetService<IBoutiqueDatabaseFactory>().BoutiqueDatabase.
-            ResultVoidOk(boutiqueDatabase => boutiqueDatabase.UpdateSchema());
+            ResultValueVoidOk(boutiqueDatabase => boutiqueDatabase.UpdateSchema());
       
 
         /// <summary>

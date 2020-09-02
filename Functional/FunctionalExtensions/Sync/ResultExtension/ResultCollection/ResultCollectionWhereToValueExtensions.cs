@@ -8,7 +8,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
     /// <summary>
     /// Обработка условий для результирующего ответа с коллекцией с возвращением к значению
     /// </summary>
-    public static class ResultCollectionWhereToValueExtensions
+    public static class ResultValueWhereToCollectionExtensions
     {
         /// <summary>
         /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе коллекции с возвращением к значению

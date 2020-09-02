@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using BoutiqueDAL.Entities.Base;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Base
@@ -7,7 +9,9 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
     /// <summary>
     /// Таблица базы данных
     /// </summary>
-    public interface IDatabaseTable<TEntity> where TEntity: class
+    public interface IDatabaseTable<TIdType, TEntity>
+        where TEntity : BaseEntity<TIdType>
+        where TIdType : IEquatable<TIdType>
     {
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
@@ -17,6 +21,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
-        Task<IResultError> AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<IResultCollection<TIdType>> AddRangeAsync(IEnumerable<TEntity> entities);
     }
 }

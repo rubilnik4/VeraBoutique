@@ -18,6 +18,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        Task<IResultError> UploadGenders(IEnumerable<Gender> genders);
+        Task<IResultCollection<int>> UploadGenders(IEnumerable<Gender> genders);
     }
 }

@@ -61,7 +61,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
                 errors => Task.FromResult((IResultValue<int>)new ResultValue<int>(errors.Count)));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultValue.Value, resultAfterWhere.Value);
+            Assert.Equal(initialValue, resultAfterWhere.Value);
         }
 
         /// <summary>
@@ -151,9 +151,9 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindErrorsBadAsync_HasError()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var initialError = CreateErrorTest();
+            var initialErrorToAdd = CreateErrorTest();
             var resultValue = new ResultValue<int>(errorsInitial);
-            var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialError);
+            var resultError = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialErrorToAdd);
             var resultFunctionsMock = new Mock<IResultFunctions>();
             resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumberToResultAsync(It.IsAny<int>())).
                                 ReturnsAsync(resultError);

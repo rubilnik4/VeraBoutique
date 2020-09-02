@@ -58,7 +58,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var resultAfterWhere = resultCollection.ResultCollectionBindBad(errors => new ResultCollection<int>(new List<int> { errors.Count }));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultCollection.Value, resultAfterWhere.Value);
+            Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value));
         }
 
         /// <summary>

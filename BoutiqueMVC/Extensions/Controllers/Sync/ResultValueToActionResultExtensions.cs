@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -28,7 +29,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// </summary>
         public static IActionResult ToGetJsonResult<TValue>(this IResultValue<TValue> @this) =>
             @this.
-            ResultValueBindTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK},
+            ResultValueBindTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
                                  GenderDtoConverter.ErrorJsonConverting(typeof(TValue).Name)).
             WhereContinue(resultJson => resultJson.OkStatus,
                 okFunc: resultJson => (IActionResult)resultJson.Value,
@@ -45,15 +46,16 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
                 okFunc: resultJson => (IActionResult)resultJson.Value,
                 badFunc: resultJson => new BadRequestObjectResult(resultJson.Errors.ToModelState()));
 
-        ///// <summary>
-        ///// Преобразовать результирующий ответ в ответ контроллера
-        ///// </summary>
-        //public static IActionResult ToPostActionResult<TValue>(this IResultError @this) =>
-        //    @this.OkStatus
-        //        ? (IActionResult)new Object(@this.Value)
-        //        : new BadRequestObjectResult(ResultErrorsToModelState(@this.Errors));
+        /// <summary>
+        /// Преобразовать результирующий ответ в Json ответ
+        /// </summary>
+        public static IActionResult ToPostActionResult(this IResultError @this) =>
+            @this.
+            WhereContinue(result => result.OkStatus,
+                okFunc: result => (IActionResult)new CreatedAtActionResult(nameof(GetById), ,new { id = product.Id }, product),
+                badFunc: result => new BadRequestObjectResult(result.Errors.ToModelState()));
 
-      
+
 
     }
 }

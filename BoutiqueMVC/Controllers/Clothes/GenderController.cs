@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommon.Models.Implementation.Clothes;
@@ -14,6 +15,7 @@ using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Controllers.Clothes
@@ -39,6 +41,8 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// Получить типы полов для одежды
         /// </summary>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get() =>
             await _genderService.GetGenders().
             ResultCollectionOkTaskAsync(GenderDtoConverter.ToDtoCollection).
@@ -47,10 +51,13 @@ namespace BoutiqueMVC.Controllers.Clothes
         /// <summary>
         /// Записать типы полов для одежды
         /// </summary>
-      //  [HttpPost]
-        //public async Task<IActionResult> Post([FromBody] IList<GenderDto> gendersDto) =>
-        //    await GenderDtoConverter.FromDtoCollection(gendersDto).
-        //    MapAsync(genders => _genderService.UploadGenders(genders)).
-        //    MapTaskAsync(gendersResult => gendersResult.ToGetActionResult());
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] IList<GenderDto> gendersDto) =>
+            await GenderDtoConverter.FromDtoCollection(gendersDto).
+            MapAsync(genders => _genderService.UploadGenders(genders)).
+            ToGetJsonResultCollectionTaskAsync();
     }
 }

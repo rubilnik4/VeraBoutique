@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Functional.Models.Interfaces.Result;
 
-namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
+namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
 {
     /// <summary>
-    /// Асинхронное действие над внутренним типом результирующего ответа со значением
+    /// Асинхронное действие над внутренним типом результирующего ответа с коллекцией
     /// </summary>
-    public static class ResultValueVoidAsyncExtensions
+    public static class ResultCollectionVoidAsyncExtensions
     {
         /// <summary>
         /// Выполнить действие при положительном значении, вернуть результирующий ответ
         /// </summary>      
-        public static async Task<IResultValue<TValue>> ResultValueVoidOkAsync<TValue>(this IResultValue<TValue> @this,
-                                                                                 Func<TValue, Task> action) =>
+        public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkAsync<TValue>(this IResultCollection<TValue> @this,
+                                                                                 Func<IReadOnlyCollection<TValue>, Task> action) =>
             await @this.
             VoidOkAsync(_ => @this.OkStatus,
                 action: _ => action.Invoke(@this.Value));
@@ -22,7 +22,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// <summary>
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
-        public static async Task<IResultValue<TValue>> ResultValueVoidBadAsync<TValue>(this IResultValue<TValue> @this,
+        public static async Task<IResultCollection<TValue>> ResultCollectionVoidBadAsync<TValue>(this IResultCollection<TValue> @this,
                                                                                   Func<IReadOnlyCollection<IErrorResult>, Task> action) =>
             await @this.
             VoidOkAsync(_ => @this.HasErrors,
@@ -31,10 +31,10 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
-        public static async Task<IResultValue<TValue>> ResultValueVoidOkWhereAsync<TValue>(this IResultValue<TValue> @this,
-                                                                          Func<TValue, bool> predicate,
-                                                                          Func<TValue, Task> action) =>
-            await  @this.
+        public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkWhereAsync<TValue>(this IResultCollection<TValue> @this,
+                                                                          Func<IReadOnlyCollection<TValue>, bool> predicate,
+                                                                          Func<IReadOnlyCollection<TValue>, Task> action) =>
+            await @this.
             VoidOkAsync(_ => @this.OkStatus && predicate(@this.Value),
                 action: _ => action.Invoke(@this.Value));
     }

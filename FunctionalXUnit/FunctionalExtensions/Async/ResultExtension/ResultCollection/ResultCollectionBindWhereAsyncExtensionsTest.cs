@@ -64,7 +64,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
                 errors => Task.FromResult((IResultCollection<int>)new ResultCollection<int>(new List<int> { errors.Count })));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(resultCollection.Value, resultAfterWhere.Value);
+            Assert.True(numberCollection.SequenceEqual(resultAfterWhere.Value));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value));
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>()), Times.Once);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(initialError.Equals(resultAfterWhere.Errors.First()));
-            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(initialCollection), Times.Once);
+            resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResultAsync(It.IsAny<IReadOnlyCollection<int>>()), Times.Once);
         }
 
         /// <summary>

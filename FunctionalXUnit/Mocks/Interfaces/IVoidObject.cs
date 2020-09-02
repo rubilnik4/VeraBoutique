@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FunctionalXUnit.Mocks.Interfaces
 {
@@ -18,8 +19,18 @@ namespace FunctionalXUnit.Mocks.Interfaces
         void TestNumberVoid(int number);
 
         /// <summary>
+        /// Тестовый метод с числовым параметром коллекцией
+        /// </summary>
+        void TestNumbersVoid(IEnumerable<int> number);
+
+        /// <summary>
         /// Тестовый асинхронный метод с числовым параметром
         /// </summary>
         Task TestNumberVoidAsync(int number);
+
+        /// <summary>
+        /// Тестовый асинхронный метод с числовым параметром коллекцией
+        /// </summary>
+        Task TestNumbersVoidAsync(IEnumerable<int> number);
     }
 }

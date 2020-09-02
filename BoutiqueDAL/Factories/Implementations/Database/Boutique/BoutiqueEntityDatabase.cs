@@ -29,7 +29,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderEntity> GendersTable => new EntityDatabaseTable<GenderEntity>(Genders, nameof(Genders));
+        public IDatabaseTable<int, GenderEntity> GendersTable => 
+            new EntityDatabaseTable<int, GenderEntity>(Genders, nameof(Genders));
 
         /// <summary>
         /// Сохранить изменения в базе асинхронно
