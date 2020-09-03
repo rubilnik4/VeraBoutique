@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
+using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -116,6 +117,48 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
             var numberResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
 
             var actionResult = await numberResult.ToGetJsonResultCollectionTaskAsync();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера для задачи-объекта. Вернуть корректный ответ
+        /// </summary>
+        [Fact]
+        public async Task ToPostActionResultTaskAsync_Created()
+        {
+            var ids = Enumerable.Range(1, 3).ToList();
+            var values = ids.Select(number => number.ToString()).ToList();
+            var idsResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(ids));
+            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+
+            var actionResult = await idsResult.ToPostActionResultTaskAsync(createdActionCollection);
+
+            Assert.IsType<CreatedAtActionResult>(actionResult);
+            var createdAtActionResult = (CreatedAtActionResult)actionResult;
+            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
+            Assert.IsAssignableFrom<IEnumerable<string>>(createdAtActionResult.Value);
+            Assert.True(values.SequenceEqual((IEnumerable<string>)createdAtActionResult.Value));
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера для задачи-объекта. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public async Task ToPostActionResultTaskAsync_BadRequest()
+        {
+            var ids = Enumerable.Range(1, 3).ToList();
+            var values = ids.Select(number => number.ToString()).ToList();
+            var initialError = CreateErrorTest();
+            var idsResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
+
+            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+
+            var actionResult = await idsResult.ToPostActionResultTaskAsync(createdActionCollection);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;

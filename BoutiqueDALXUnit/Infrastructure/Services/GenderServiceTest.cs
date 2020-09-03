@@ -30,7 +30,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         public async Task GetGenders_OK()
         {
             var genderEntities = new ResultCollection<GenderEntity>(EntityData.GetGenderEntities());
-            var gendersTableMock = new Mock<IDatabaseTable<GenderEntity>>();
+            var gendersTableMock = new Mock<IDatabaseTable<int, GenderEntity>>();
             var boutiqueDatabaseMock = new Mock<IBoutiqueDatabase>();
             gendersTableMock.Setup(gendersTable => gendersTable.ToListAsync()).ReturnsAsync(genderEntities);
             boutiqueDatabaseMock.Setup(boutiqueDatabase => boutiqueDatabase.GendersTable).Returns(gendersTableMock.Object);
@@ -69,7 +69,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         {
             var errorInitial = ErrorDatabaseTable;
             var genderEntities = new ResultCollection<GenderEntity>(errorInitial);
-            var gendersTableMock = new Mock<IDatabaseTable<GenderEntity>>();
+            var gendersTableMock = new Mock<IDatabaseTable<int, GenderEntity>>();
             var boutiqueDatabaseMock = new Mock<IBoutiqueDatabase>();
             gendersTableMock.Setup(gendersTable => gendersTable.ToListAsync()).ReturnsAsync(genderEntities);
             boutiqueDatabaseMock.Setup(boutiqueDatabase => boutiqueDatabase.GendersTable).Returns(gendersTableMock.Object);
@@ -89,11 +89,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         [Fact]
         public async Task UploadGenders_OK()
         {
-            var gendersTableMock = new Mock<IDatabaseTable<GenderEntity>>();
-            IEnumerable<GenderEntity> gendersEntitiesSaved = null;
+            var uploadGenders = EntityData.GetGenders();
+            var genderIds = Enumerable.Range(1, uploadGenders.Count).ToList().AsReadOnly();
+            var gendersTableMock = new Mock<IDatabaseTable<int, GenderEntity>>();
             gendersTableMock.Setup(gendersTable => gendersTable.AddRangeAsync(It.IsAny<IEnumerable<GenderEntity>>())).
-                             Callback<IEnumerable<GenderEntity>>(gendersEntities => gendersEntitiesSaved = gendersEntities).
-                             ReturnsAsync(new ResultError());
+                             ReturnsAsync(new ResultCollection<int>(genderIds));
 
             var boutiqueDatabaseMock = new Mock<IBoutiqueDatabase>();
             boutiqueDatabaseMock.Setup(boutiqueDatabase => boutiqueDatabase.GendersTable).Returns(gendersTableMock.Object);
@@ -101,13 +101,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
             var boutiqueDatabaseResult = new ResultValue<IBoutiqueDatabase>(boutiqueDatabaseMock.Object);
             var genderService = new GenderService(boutiqueDatabaseResult);
 
-            var uploadGenders = EntityData.GetGenders();
-            var uploadGenderEntities = uploadGenders.Select(GenderEntityConverter.ToEntity).ToList();
-            var result = await genderService.UploadGenders(uploadGenders);
+            var resultIds = await genderService.UploadGenders(uploadGenders);
 
-            Assert.True(result.OkStatus);
-            gendersTableMock.Verify(gendersTable => gendersTable.AddRangeAsync(It.IsAny<IEnumerable<GenderEntity>>()), Times.Once);
-            Assert.True(uploadGenderEntities.CompareByFunc(gendersEntitiesSaved.ToList(), (first, second) => first.EqualEntity(second)));
+            Assert.True(resultIds.OkStatus);
+            Assert.True(resultIds.Value.SequenceEqual(genderIds));
         }
 
         /// <summary>
@@ -133,10 +130,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
         [Fact]
         public async Task UploadGenders_ErrorDatabaseTable()
         {
+            var uploadGenders = EntityData.GetGenders();
             var errorInitial = ErrorDatabaseTable;
-            var gendersTableMock = new Mock<IDatabaseTable<GenderEntity>>();
+            var gendersTableMock = new Mock<IDatabaseTable<int, GenderEntity>>();
             gendersTableMock.Setup(gendersTable => gendersTable.AddRangeAsync(It.IsAny<IEnumerable<GenderEntity>>())).
-                             ReturnsAsync(new ResultError(errorInitial));
+                             ReturnsAsync(new ResultCollection<int>(errorInitial));
 
             var boutiqueDatabaseMock = new Mock<IBoutiqueDatabase>();
             boutiqueDatabaseMock.Setup(boutiqueDatabase => boutiqueDatabase.GendersTable).Returns(gendersTableMock.Object);
@@ -144,7 +142,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
             var boutiqueDatabaseResult = new ResultValue<IBoutiqueDatabase>(boutiqueDatabaseMock.Object);
             var genderService = new GenderService(boutiqueDatabaseResult);
 
-            var uploadGenders = EntityData.GetGenders();
             var result = await genderService.UploadGenders(uploadGenders);
 
             Assert.True(result.HasErrors);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
+using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
@@ -47,15 +48,15 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
                 badFunc: resultJson => new BadRequestObjectResult(resultJson.Errors.ToModelState()));
 
         /// <summary>
-        /// Преобразовать результирующий ответ в Json ответ
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера
         /// </summary>
-        public static IActionResult ToPostActionResult(this IResultError @this) =>
+        public static IActionResult ToPostActionResult<TId, TValue>(this IResultCollection<TId> @this, 
+                                                                    CreatedActionCollection<TValue> createdActionCollection)
+            where TId: IEquatable<TId> =>
             @this.
             WhereContinue(result => result.OkStatus,
-                okFunc: result => (IActionResult)new CreatedAtActionResult(nameof(GetById), ,new { id = product.Id }, product),
+                okFunc: result => (IActionResult)new CreatedAtActionResult(createdActionCollection.ActionGetName, createdActionCollection.ControllerName,
+                                                                           new { ids = @this.Value }, createdActionCollection.Values),
                 badFunc: result => new BadRequestObjectResult(result.Errors.ToModelState()));
-
-
-
     }
 }

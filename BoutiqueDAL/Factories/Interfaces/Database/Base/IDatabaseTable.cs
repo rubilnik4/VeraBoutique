@@ -9,9 +9,9 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
     /// <summary>
     /// Таблица базы данных
     /// </summary>
-    public interface IDatabaseTable<TIdType, TEntity>
-        where TEntity : BaseEntity<TIdType>
-        where TIdType : IEquatable<TIdType>
+    public interface IDatabaseTable<TId, TEntity>
+        where TEntity : BaseEntity<TId>
+        where TId : IEquatable<TId>
     {
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
@@ -21,6 +21,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
-        Task<IResultCollection<TIdType>> AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
     }
 }

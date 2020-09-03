@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using BoutiqueMVC.Extensions.Controllers.Sync;
+using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -35,5 +37,14 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         public static async Task<IActionResult> ToGetJsonResultCollectionTaskAsync<TValue>(this Task<IResultCollection<TValue>> @this) =>
             await @this.
             MapTaskAsync(thisAwaited => thisAwaited.ToGetJsonResultCollection());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно
+        /// </summary>
+        public static async Task<IActionResult> ToPostActionResultTaskAsync<TId, TValue>(this Task<IResultCollection<TId>> @this,
+                                                                                         CreatedActionCollection<TValue> createdActionCollection)
+            where TId : IEquatable<TId> =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToPostActionResult(createdActionCollection));
     }
 }

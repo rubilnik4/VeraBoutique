@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Models.Implementations.Controller
 {
     /// <summary>
     /// Информация о создаваемом объекте
     /// </summary>
-    public class CreatedActionObject
+    public class CreatedActionCollection<TValue>
     {
-        public CreatedActionObject(string actionGetName, string controllerName, IReadOnlyCollection<int> ids, IReadOnlyCollection<int> values)
+        public CreatedActionCollection(string actionGetName, string controllerName, IEnumerable<TValue> values)
         {
             ActionGetName = actionGetName;
             ControllerName = controllerName;
-            Ids = ids;
-            Values = values;
+            Values = values.ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -26,13 +28,8 @@ namespace BoutiqueMVC.Models.Implementations.Controller
         public string ControllerName { get; }
 
         /// <summary>
-        /// Идентификаторы элементов
+        /// Записанные значения
         /// </summary>
-        public IReadOnlyCollection<int> Ids { get; }
-
-        /// <summary>
-        /// Объекты
-        /// </summary>
-        public IReadOnlyCollection<int> Values { get; }
+        public IReadOnlyCollection<TValue> Values { get; }
     }
 }

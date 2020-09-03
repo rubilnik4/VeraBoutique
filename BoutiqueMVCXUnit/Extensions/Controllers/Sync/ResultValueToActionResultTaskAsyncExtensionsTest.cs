@@ -8,6 +8,7 @@ using static BoutiqueMVCXUnit.Data.ErrorData;
 using static BoutiqueMVCXUnit.Data.Collections;
 using System.Collections;
 using System.Collections.Generic;
+using BoutiqueMVC.Models.Implementations.Controller;
 
 namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 {
@@ -114,6 +115,50 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var numberResult = new ResultCollection<int>(initialError);
 
             var actionResult = numberResult.ToGetJsonResultCollection();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
+        /// </summary>
+        [Fact]
+        public void ToPostActionResult_Created()
+        {
+            var ids = Enumerable.Range(1, 3).ToList();
+            var values = ids.Select(number => number.ToString()).ToList();
+            var idsResult = new ResultCollection<int>(ids);
+            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+
+            var actionResult = idsResult.ToPostActionResult(createdActionCollection);
+
+            Assert.IsType<CreatedAtActionResult>(actionResult);
+            var createdAtActionResult = (CreatedAtActionResult)actionResult;
+            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
+            Assert.IsAssignableFrom<IEnumerable<string>>(createdAtActionResult.Value);
+            Assert.True(values.SequenceEqual((IEnumerable<string>)createdAtActionResult.Value));
+            Assert.IsAssignableFrom<IEnumerable<int>>(createdAtActionResult.RouteValues.Values.First());
+            Assert.True(ids.SequenceEqual((IEnumerable<int>)createdAtActionResult.RouteValues.Values.First()));
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToPostActionResult_BadRequest()
+        {
+            var ids = Enumerable.Range(1, 3).ToList();
+            var values = ids.Select(number => number.ToString()).ToList();
+            var initialError = CreateErrorTest();
+            var idsResult = new ResultCollection<int>(initialError);
+
+            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+
+            var actionResult = idsResult.ToPostActionResult(createdActionCollection);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
