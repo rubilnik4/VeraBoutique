@@ -50,5 +50,11 @@ namespace FunctionalXUnit.Mocks.Implementation
         /// </summary>
         public static async Task<IEnumerable<int>> DivisionByCollectionAsync(IEnumerable<int> dividers) =>
             await Task.FromResult(dividers.Select(divider => 10 / divider));
+
+        /// <summary>
+        /// Преобразовать число в коллекцию повторений
+        /// </summary>
+        public static async Task<IEnumerable<int>> NumberToCollectionAsync(int number) =>
+            await Task.FromResult(Enumerable.Repeat(number, 3));
     }
 }

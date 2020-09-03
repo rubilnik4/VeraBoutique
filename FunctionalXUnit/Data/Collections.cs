@@ -38,6 +38,12 @@ namespace FunctionalXUnit.Data
         /// Преобразовать список чисел в строку
         /// </summary>
         public static string AggregateToString(IEnumerable<int> numbers) =>
-            numbers.Aggregate(String.Empty, (previous, next) => previous.ToString() + next.ToString());
+            numbers.Aggregate(String.Empty, (previous, next) => previous.ToString() + next);
+
+        /// <summary>
+        /// Преобразовать список чисел в строку
+        /// </summary>
+        public static async Task<string> AggregateToStringAsync(IEnumerable<int> numbers) =>
+           await Task.FromResult(numbers.Aggregate(String.Empty, (previous, next) => previous.ToString() + next));
     }
 }

@@ -12,7 +12,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений. Тесты
     /// </summary>
-    public class ResultCollectionBindTryExtensionsTest
+    public class ResultValueBindTryExtensionsTest
     {
         /// <summary>
         /// Положительный результирующий ответ и отсутствие исключения

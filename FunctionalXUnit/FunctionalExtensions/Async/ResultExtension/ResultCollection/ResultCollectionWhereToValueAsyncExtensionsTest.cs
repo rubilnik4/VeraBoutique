@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
@@ -14,58 +15,58 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
     /// <summary>
     /// Обработка условий для результирующего ответа задачи-объекта с коллекцией с возвращением к значению. Тесты
     /// </summary>
-    public class ResultCollectionWhereTaskAsyncToValueExtensionsTest
+    public class ResultCollectionWhereToValueAsyncExtensionsTest
     {
         /// <summary>
         /// Выполнение условия в положительном результирующем ответе с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionContinueToValueAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollectionTask = new ResultCollection<int>(numberCollection);
 
             var resultAfterWhere =
-                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => true,
-                                                            okFunc: Collections.AggregateToString,
-                                                            badFunc: _ => CreateErrorListTwoTest());
+                await resultCollectionTask.ResultCollectionContinueToValueAsync(numbers => true,
+                                                            okFunc: Collections.AggregateToStringAsync,
+                                                            badFunc: _ => CreateErrorListTwoTestTask());
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+            Assert.Equal(await Collections.AggregateToStringAsync(numberCollection), resultAfterWhere.Value);
         }
 
         /// <summary>
         /// Выполнение условия в отрицательном результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewError()
+        public async Task ResultCollectionContinueToValueAsync_Ok_ReturnNewError()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollectionTask = new ResultCollection<int>(numberCollection);
 
-            var errorBad = CreateErrorListTwoTest();
+            var errorsBad = CreateErrorListTwoTest();
             var resultAfterWhere =
-                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => false,
-                                                            okFunc: _ => String.Empty,
-                                                            badFunc: numbers => errorBad);
+                await resultCollectionTask.ResultCollectionContinueToValueAsync(numbers => false,
+                                                            okFunc: Collections.AggregateToStringAsync,
+                                                            badFunc: numbers => Task.FromResult((IEnumerable<IErrorResult>)errorsBad));
 
             Assert.True(resultAfterWhere.HasErrors);
-            Assert.Equal(errorBad.Count, resultAfterWhere.Errors.Count);
+            Assert.Equal(errorsBad.Count, resultAfterWhere.Errors.Count);
         }
 
         /// <summary>
         /// Возвращение предыдущей ошибки в положительном результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewValue()
+        public async Task ResultCollectionContinueToValueAsync_Bad_ReturnNewValue()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = new ResultCollection<int>(errorInitial);
 
             var resultAfterWhere =
-               await resultCollection.ResultCollectionContinueToValueTaskAsync(number => true,
-                                                                 okFunc: _ => String.Empty,
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+               await resultCollection.ResultCollectionContinueToValueAsync(number => true,
+                                                                 okFunc: Collections.AggregateToStringAsync,
+                                                                 badFunc: _ => CreateErrorListTwoTestTask());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
@@ -75,15 +76,15 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>
         [Fact]
-        public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewError()
+        public async Task ResultCollectionContinueToValueAsync_Bad_ReturnNewError()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = new ResultCollection<int>(errorInitial);
 
             var resultAfterWhere =
-                await resultCollection.ResultCollectionContinueToValueTaskAsync(number => false,
-                                                                 okFunc: _ => String.Empty,
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+                await resultCollection.ResultCollectionContinueToValueAsync(number => false,
+                                                                 okFunc: Collections.AggregateToStringAsync,
+                                                                 badFunc: _ => CreateErrorListTwoTestTask());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
@@ -93,33 +94,33 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>      
         [Fact]
-        public async Task ResultCollectionOkBadToValueTaskAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionOkBadToValueAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollection = new ResultCollection<int>(numberCollection);
 
             var resultAfterWhere =
-                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
-                    okFunc: Collections.AggregateToString,
-                    badFunc: _ => String.Empty);
+                await resultCollection.ResultCollectionOkBadToValueAsync(
+                    okFunc: Collections.AggregateToStringAsync,
+                    badFunc: _ => Task.FromResult(String.Empty));
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+            Assert.Equal(await Collections.AggregateToStringAsync(numberCollection), resultAfterWhere.Value);
         }
 
         /// <summary>
         /// Выполнение негативного условия в результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>      
         [Fact]
-        public async Task ResultCollectionOkBadToValueTaskAsync_Bad_ReturnNewValueByErrors()
+        public async Task ResultCollectionOkBadToValueAsync_Bad_ReturnNewValueByErrors()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorsInitial));
+            var resultCollection = new ResultCollection<int>(errorsInitial);
 
             var resultAfterWhere =
-                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
-                    okFunc: _ => String.Empty,
-                    badFunc: errors => errors.Count.ToString());
+                await resultCollection.ResultCollectionOkBadToValueAsync(
+                    okFunc: Collections.AggregateToStringAsync,
+                    badFunc: errors => Task.FromResult(errors.Count.ToString()));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
@@ -129,27 +130,27 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         /// Выполнение положительного условия в результирующем ответе без ошибки с коллекцией и возвращением к значению
         /// </summary>   
         [Fact]
-        public async Task ResultCollectionOkToValueTaskAsync_Ok_ReturnNewValue()
+        public async Task ResultCollectionOkToValueAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollection =new ResultCollection<int>(numberCollection);
 
-            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
+            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueAsync(Collections.AggregateToStringAsync);
 
             Assert.True(resultAfterWhere.OkStatus);
-            Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
+            Assert.Equal(await Collections.AggregateToStringAsync(numberCollection), resultAfterWhere.Value);
         }
 
         /// <summary>
         /// Возвращение предыдущей ошибки в результирующем ответе с ошибкой с коллекцией и возвращением к значению
         /// </summary>   
         [Fact]
-        public async Task ResultCollectionOkToValueTaskAsync_Bad_ReturnInitial()
+        public async Task ResultCollectionOkToValueAsync_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = new ResultCollection<int>(errorInitial);
 
-            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
+            var resultAfterWhere = await resultCollection.ResultCollectionOkToValueAsync(Collections.AggregateToStringAsync);
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorInitial.Equals(resultAfterWhere.Errors.Last()));

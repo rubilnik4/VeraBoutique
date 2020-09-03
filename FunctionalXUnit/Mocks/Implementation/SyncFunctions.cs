@@ -33,5 +33,11 @@ namespace FunctionalXUnit.Mocks.Implementation
             new List<int> { 10, 20, 30 }.
             Select(number => number / divider).
             ToList().AsReadOnly();
+
+        /// <summary>
+        /// Преобразовать число в коллекцию повторений
+        /// </summary>
+        public static IEnumerable<int> NumberToCollection(int number) =>
+            Enumerable.Repeat(number, 3);
     }
 }
