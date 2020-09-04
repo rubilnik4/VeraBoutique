@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
@@ -43,7 +44,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        public async Task<IResultCollection<int>> UploadGenders(IEnumerable<Gender> genders) =>
+        public async Task<IResultCollection<GenderType>> UploadGenders(IEnumerable<Gender> genders) =>
             await _boutiqueDatabase.
             ResultValueBindOkToCollectionAsync(boutiqueDatabase => boutiqueDatabase.GendersTable.
                                                                AddRangeAsync(genders.Select(GenderEntityConverter.ToEntity)).

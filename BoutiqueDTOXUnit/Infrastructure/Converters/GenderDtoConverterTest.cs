@@ -106,7 +106,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
             new List<Gender>
             {
                 new Gender(GenderType.Male, "Мужик"),
-                new Gender(GenderType.Female, "Баба"),
+                new Gender(GenderType.Femalele, "Баба"),
             };
     }
 }

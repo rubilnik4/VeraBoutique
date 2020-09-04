@@ -42,8 +42,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно
         /// </summary>
         public static async Task<IActionResult> ToPostActionResultTaskAsync<TId, TValue>(this Task<IResultCollection<TId>> @this,
-                                                                                         CreatedActionCollection<TValue> createdActionCollection)
-            where TId : IEquatable<TId> =>
+                                                                                         CreatedActionCollection<TValue> createdActionCollection) =>
             await @this.
             MapTaskAsync(thisAwaited => thisAwaited.ToPostActionResult(createdActionCollection));
     }

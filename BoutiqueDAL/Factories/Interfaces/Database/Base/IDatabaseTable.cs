@@ -11,7 +11,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
     /// </summary>
     public interface IDatabaseTable<TId, TEntity>
         where TEntity : BaseEntity<TId>
-        where TId : IEquatable<TId>
     {
         /// <summary>
         /// Вернуть записи из таблицы асинхронно

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using BoutiqueDTO.Models.Implementation.Clothes;

@@ -22,7 +22,6 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
     /// </summary>
     public class EntityDatabaseTable<TIdType, TEntity> : DbSet<TEntity>, IDatabaseTable<TIdType, TEntity>
         where TEntity : BaseEntity<TIdType>
-        where TIdType : IEquatable<TIdType>
     {
         public EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
         {

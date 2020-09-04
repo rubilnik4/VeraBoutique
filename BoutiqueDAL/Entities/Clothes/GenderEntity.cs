@@ -7,7 +7,7 @@ namespace BoutiqueDAL.Entities.Clothes
     /// <summary>
     /// Пол. Структура базы данных
     /// </summary>
-    public class GenderEntity : BaseEntity<int>, IEqualEntity<GenderEntity>
+    public class GenderEntity : BaseEntity<GenderType>, IEqualEntity<GenderEntity>
     {
         public GenderEntity(GenderType genderType, string name)
         {
@@ -18,7 +18,7 @@ namespace BoutiqueDAL.Entities.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public override int Id { get; protected set; }
+        public override GenderType Id => GenderType;
 
         /// <summary>
         /// Тип

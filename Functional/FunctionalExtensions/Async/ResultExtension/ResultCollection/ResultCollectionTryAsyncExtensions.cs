@@ -25,6 +25,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
             }
             catch (Exception ex)
             {
+                
                 return new ResultCollection<TValue>(error.AppendException(ex));
             }
 

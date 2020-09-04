@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Data
             new List<GenderEntity>()
             {
                 new GenderEntity(GenderType.Male, "Мужик" ),
-                new GenderEntity(GenderType.Female, "Тетя"),
+                new GenderEntity(GenderType.Femalele, "Тетя"),
             };
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace BoutiqueDALXUnit.Data
             new List<Gender>()
             {
                 new Gender(GenderType.Male, "Мужик" ),
-                new Gender(GenderType.Female, "Тетя"),
+                new Gender(GenderType.Femalele, "Тетя"),
             };
     }
 }

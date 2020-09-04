@@ -23,6 +23,9 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
     /// </summary>
     public class GenderControllerTest
     {
+        /// <summary>
+        /// Получить типы пола одежды. Корректный вариант
+        /// </summary>
         [Fact]
         public async Task GetGenders_Ok()
         {
@@ -37,11 +40,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var gendersDtoAfter = (IEnumerable<GenderDto>)getGendersOk.Value;
             var gendersAfter = GenderDtoConverter.FromDtoCollection(gendersDtoAfter);
 
-            Assert.NotNull(getGendersOk);
             Assert.Equal(StatusCodes.Status200OK, getGendersOk.StatusCode);
             Assert.True(gendersAfter.SequenceEqual(genders));
         }
 
+        /// <summary>
+        /// Получить типы пола одежды. Вариант с ошибкой
+        /// </summary>
         [Fact]
         public async Task GetGenders_Bad()
         {
@@ -54,9 +59,54 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var getGenders = await genderController.Get();
             var getGendersBad = (BadRequestObjectResult)getGenders;
             var errors = (SerializableError)getGendersBad.Value;
-
-            Assert.NotNull(getGendersBad);
+            
             Assert.Equal(StatusCodes.Status400BadRequest, getGendersBad.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Записать типы полов для одежды. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task PostGenders_Ok()
+        {
+            var genders = GetGenders();
+            var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
+            var genderIds = Enumerable.Range(1, gendersDto.Count).ToList();
+            var genderServiceMock = new Mock<IGenderService>();
+            genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
+                              ReturnsAsync(new ResultCollection<int>(genderIds));
+          
+            var genderController = new GenderController(genderServiceMock.Object);
+
+            var postGenders = await genderController.Post(gendersDto);
+            var postGendersOk = (CreatedAtActionResult)postGenders;
+
+            Assert.Equal(StatusCodes.Status201Created, postGendersOk.StatusCode);
+            Assert.Equal(nameof(GenderController), postGendersOk.ControllerName);
+            Assert.True(genderIds.SequenceEqual((IEnumerable<int>)postGendersOk.RouteValues.Values.First()));
+        }
+
+        /// <summary>
+        /// Записать типы полов для одежды. Вариант с ошибкой
+        /// </summary>
+        [Fact]
+        public async Task PostGenders_Bad()
+        {
+            var initialError = ErrorTest();
+            var genders = GetGenders();
+            var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
+            var genderServiceMock = new Mock<IGenderService>();
+            genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
+                              ReturnsAsync(new ResultCollection<int>(initialError));
+
+            var genderController = new GenderController(genderServiceMock.Object);
+
+            var postGenders = await genderController.Post(gendersDto);
+            var postGendersBad = (BadRequestObjectResult)postGenders;
+            var errors = (SerializableError)postGendersBad.Value;
+
+            Assert.Equal(StatusCodes.Status400BadRequest, postGendersBad.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
         }
 
@@ -67,7 +117,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             new List<Gender>()
             {
                 new Gender(GenderType.Male, "Мужик" ),
-                new Gender(GenderType.Female, "Тетя"),
+                new Gender(GenderType.Femalele, "Тетя"),
             };
 
         /// <summary>

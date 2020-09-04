@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommon.Models.Implementation.Clothes;
 using Functional.Models.Interfaces.Result;
 
@@ -18,6 +19,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services
         /// <summary>
         /// Загрузить типы пола для одежды в базу данных
         /// </summary>
-        Task<IResultCollection<int>> UploadGenders(IEnumerable<Gender> genders);
+        Task<IResultCollection<GenderType>> UploadGenders(IEnumerable<Gender> genders);
     }
 }

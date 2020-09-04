@@ -50,9 +50,8 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// <summary>
         /// Преобразовать результирующий ответ со значением в post ответ контроллера
         /// </summary>
-        public static IActionResult ToPostActionResult<TId, TValue>(this IResultCollection<TId> @this, 
-                                                                    CreatedActionCollection<TValue> createdActionCollection)
-            where TId: IEquatable<TId> =>
+        public static IActionResult ToPostActionResult<TId, TValue>(this IResultCollection<TId> @this,
+                                                                    CreatedActionCollection<TValue> createdActionCollection) =>
             @this.
             WhereContinue(result => result.OkStatus,
                 okFunc: result => (IActionResult)new CreatedAtActionResult(createdActionCollection.ActionGetName, createdActionCollection.ControllerName,

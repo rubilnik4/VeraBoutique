@@ -11,8 +11,8 @@ namespace BoutiqueDAL.Configuration.Clothes
     {
         public void Configure(EntityTypeBuilder<GenderEntity> builder)
         {
-            builder.HasKey(o => o.Id);
-            builder.Property(t => t.GenderType).IsRequired();
+            //builder.HasKey(o => o.Id);
+            builder.HasKey(t => t.GenderType);
             builder.Property(t => t.Name).IsRequired();
         }
     }
