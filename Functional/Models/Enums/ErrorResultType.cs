@@ -7,6 +7,7 @@
     {
         DevideByZero,
         DatabaseIncorrectConnection,
+        DatabaseSave,
         DatabaseTableAccess,
         JsonConvertion,
         Unknown,

@@ -5,10 +5,14 @@ using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Implementations.Database.Base;
+using BoutiqueDAL.Factories.Implementations.Database.Errors;
 using BoutiqueDAL.Factories.Interfaces.Database.Base;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
 namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
 {
@@ -29,13 +33,14 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderType, GenderEntity> GendersTable => 
+        public IDatabaseTable<GenderType, GenderEntity> GendersTable =>
             new EntityDatabaseTable<GenderType, GenderEntity>(Genders, nameof(Genders));
 
         /// <summary>
         /// Сохранить изменения в базе асинхронно
         /// </summary>
-        public async Task SaveChangesAsync() => await base.SaveChangesAsync();
+        public async Task<IResultError> SaveChangesAsync() => await ResultErrorTryAsync(()=> base.SaveChangesAsync(),
+                                                                                        DatabaseErrors.DatabaseSaveError());
 
         /// <summary>
         /// Обновить схемы базы данных

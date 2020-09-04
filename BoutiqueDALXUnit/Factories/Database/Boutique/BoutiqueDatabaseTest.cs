@@ -7,24 +7,42 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Implementations.Database.Boutique;
 using BoutiqueDALXUnit.Data;
+using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Factories.Database.Boutique
 {
-    public class GenderServiceTest
+    public class BoutiqueDatabaseTest
     {
         [Fact]
-        public async Task Test()
+        public async Task AddRange_ToList_Return()
         {
             var boutiqueDatabase = GetBoutiqueDatabase();
             var genders = EntityData.GetGenderEntities();
 
             await boutiqueDatabase.Genders.AddRangeAsync(genders);
-            await boutiqueDatabase.SaveChangesAsync();
+            var result = await boutiqueDatabase.SaveChangesAsync();
             var gendersFromDb = await boutiqueDatabase.Genders.ToListAsync();
 
+            Assert.True(result.OkStatus);
             Assert.True(gendersFromDb.CompareByFunc(genders, (genderFromDb, gender) => genderFromDb.EqualEntity(gender)));
+        }
+        [Fact]
+        public async Task AddRange_DuplicateError()
+        {
+            var boutiqueDatabase = GetBoutiqueDatabase();
+            var genders = EntityData.GetGenderEntities();
+
+            await boutiqueDatabase.Genders.AddRangeAsync(genders);
+            var firstResult = await boutiqueDatabase.SaveChangesAsync();
+
+            await boutiqueDatabase.Genders.AddRangeAsync(genders);
+            var secondResult = await boutiqueDatabase.SaveChangesAsync();
+
+            Assert.True(firstResult.OkStatus);
+            Assert.True(secondResult.HasErrors);
+            Assert.True(secondResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
         }
 
         /// <summary>

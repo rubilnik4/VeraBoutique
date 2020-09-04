@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Base
 {
@@ -10,7 +11,7 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Сохранить изменения в базе асинхронно
         /// </summary>
-        Task SaveChangesAsync();
+        Task<IResultError> SaveChangesAsync();
 
         /// <summary>
         /// Обновить схемы базы данных

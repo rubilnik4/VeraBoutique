@@ -70,12 +70,12 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task PostGenders_Ok()
         {
-            var genders = GetGenders();
+            var genders = GetGenders().ToList();
             var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
-            var genderIds = Enumerable.Range(1, gendersDto.Count).ToList();
+            var genderIds = genders.Select(gender => gender.GenderType).ToList();
             var genderServiceMock = new Mock<IGenderService>();
             genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
-                              ReturnsAsync(new ResultCollection<int>(genderIds));
+                              ReturnsAsync(new ResultCollection<GenderType>(genderIds));
           
             var genderController = new GenderController(genderServiceMock.Object);
 
@@ -84,7 +84,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
 
             Assert.Equal(StatusCodes.Status201Created, postGendersOk.StatusCode);
             Assert.Equal(nameof(GenderController), postGendersOk.ControllerName);
-            Assert.True(genderIds.SequenceEqual((IEnumerable<int>)postGendersOk.RouteValues.Values.First()));
+            Assert.True(genderIds.SequenceEqual((IEnumerable<GenderType>)postGendersOk.RouteValues.Values.First()));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
             var genderServiceMock = new Mock<IGenderService>();
             genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
-                              ReturnsAsync(new ResultCollection<int>(initialError));
+                              ReturnsAsync(new ResultCollection<GenderType>(initialError));
 
             var genderController = new GenderController(genderServiceMock.Object);
 
@@ -117,7 +117,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             new List<Gender>()
             {
                 new Gender(GenderType.Male, "Мужик" ),
-                new Gender(GenderType.Femalele, "Тетя"),
+                new Gender(GenderType.Female, "Тетя"),
             };
 
         /// <summary>
