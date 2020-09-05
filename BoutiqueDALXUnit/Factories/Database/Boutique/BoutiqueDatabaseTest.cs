@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Implementations.Database.Boutique;
 using BoutiqueDALXUnit.Data;
 using Functional.Models.Enums;

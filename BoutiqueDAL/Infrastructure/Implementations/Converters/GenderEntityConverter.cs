@@ -1,5 +1,6 @@
-﻿using BoutiqueCommon.Models.Implementation.Clothes;
-using BoutiqueDAL.Entities.Clothes;
+﻿using BoutiqueCommon.Models.Implementations.Clothes;
+using BoutiqueCommon.Models.Interfaces.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters
 {
@@ -11,13 +12,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public static Gender FromEntity(GenderEntity genderEntity) =>
+        public static IGender FromEntity(GenderEntity genderEntity) =>
             new Gender(genderEntity.GenderType, genderEntity.Name);
 
         /// <summary>
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
-        public static GenderEntity ToEntity(Gender gender) =>
+        public static GenderEntity ToEntity(IGender gender) =>
             new GenderEntity(gender.GenderType, gender.Name);
     }
 }

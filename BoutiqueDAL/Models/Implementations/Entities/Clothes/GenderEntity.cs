@@ -1,13 +1,13 @@
-﻿using System;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Entities.Base;
+﻿using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Base;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
-namespace BoutiqueDAL.Entities.Clothes
+namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {
     /// <summary>
     /// Пол. Структура базы данных
     /// </summary>
-    public class GenderEntity : BaseEntity<GenderType>, IEqualEntity<GenderEntity>
+    public class GenderEntity : IGenderEntity
     {
         public GenderEntity(GenderType genderType, string name)
         {
@@ -18,7 +18,7 @@ namespace BoutiqueDAL.Entities.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public override GenderType Id => GenderType;
+        public GenderType Id => GenderType;
 
         /// <summary>
         /// Тип
@@ -30,11 +30,11 @@ namespace BoutiqueDAL.Entities.Clothes
         /// </summary>
         public string Name { get; }
 
-        /// <summary>
-        /// Идентичны ли сущности
-        /// </summary>
-        public bool EqualEntity(GenderEntity? entity) =>
-            GenderType == entity?.GenderType &&
-            Name == entity?.Name;
+        ///// <summary>
+        ///// Идентичны ли сущности
+        ///// </summary>
+        //public bool EqualEntity(GenderEntity? entity) =>
+        //    GenderType == entity?.GenderType &&
+        //    Name == entity?.Name;
     }
 }

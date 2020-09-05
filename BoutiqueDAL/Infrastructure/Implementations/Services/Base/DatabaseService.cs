@@ -1,0 +1,101 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Interfaces.Base;
+using BoutiqueDAL.Factories.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
+using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Interfaces.Result;
+
+namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
+{
+    /// <summary>
+    /// Базовый сервис получения данных из базы
+    /// </summary>
+    public abstract class DatabaseService<TId, TModel, TEntity> : IDatabaseService<TId, TModel>
+        where TModel : IDomainModel<TId>
+        where TEntity : IEntityModel<TId>
+    {
+        /// <summary>
+        /// База данных
+        /// </summary>
+        private readonly IResultValue<IDatabase> _database;
+
+        /// <summary>
+        /// Таблица базы данных
+        /// </summary>
+        private readonly IResultValue<IDatabaseTable<TId, TEntity>> _dataTable;
+
+        /// <summary>
+        /// Конвертер из доменной модели в модель базы данных
+        /// </summary>
+        private readonly IEntityConverter<TId, TModel, TEntity> _entityConverter;
+
+        protected DatabaseService(IResultValue<IDatabase> database, 
+                                  IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
+                                  IEntityConverter<TId, TModel, TEntity> entityConverter)
+        {
+            _database = database;
+            _dataTable = dataTable;
+            _entityConverter = entityConverter;
+        }
+
+        /// <summary>
+        /// Получить модели из базы
+        /// </summary>
+        public async Task<IResultCollection<TModel>> Get() =>
+            await _dataTable.
+            ResultValueBindOkToCollectionAsync(dataTable => dataTable.ToListAsync()).
+            ResultCollectionOkTaskAsync(entities => _entityConverter.FromEntities(entities));
+
+        /// <summary>
+        /// Получить модель из базы по идентификатору
+        /// </summary>
+        public async Task<IResultValue<TModel>> Get(TId id) =>
+            await _dataTable.
+            ResultValueBindOkAsync(dataTable => dataTable.FirstAsync(id)).
+            ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity));
+
+        /// <summary>
+        /// Загрузить модели в базу
+        /// </summary>
+        public async Task<IResultCollection<TId>> Post(IEnumerable<TModel> models) =>
+            await _dataTable.
+            ResultValueBindOkToCollectionAsync(dataTable => dataTable.AddRangeAsync(_entityConverter.ToEntities(models))).
+            ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+
+        /// <summary>
+        /// Заменить модель в базе по идентификатору
+        /// </summary>
+        public async Task<IResultError> Put(TId id, TModel model) =>
+            await _dataTable.
+            ResultValueBindErrorsOk(dataTable => dataTable.Update(_entityConverter.ToEntity(model))).
+            ResultErrorBindOkAsync(DatabaseSaveChanges);
+
+        /// <summary>
+        /// Удалить модель из базы по идентификатору
+        /// </summary>
+        public async Task<IResultError> Delete(TId id) =>
+            await _dataTable.
+            ResultValueBindErrorsOk(dataTable => dataTable.Remove(CreateRemoveEntityById(id))).
+            ResultErrorBindOkAsync(DatabaseSaveChanges);
+
+        /// <summary>
+        /// Создать модель базы данных для удаления по идентификатору
+        /// </summary>
+        protected abstract TEntity CreateRemoveEntityById(TId id);
+
+        /// <summary>
+        /// Сохранить изменения в базе или вернуть ошибки
+        /// </summary>
+        private async Task< IResultError> DatabaseSaveChanges() =>
+            await _database.
+            ResultValueOkAsync(database => database.SaveChangesAsync()).
+            MapTaskAsync(resultDatabase => (IResultError)resultDatabase);
+    }
+}

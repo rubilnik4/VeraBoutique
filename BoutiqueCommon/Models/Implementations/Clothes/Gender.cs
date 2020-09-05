@@ -1,18 +1,25 @@
 ﻿using System;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommon.Models.Interfaces.Base;
+using BoutiqueCommon.Models.Interfaces.Clothes;
 
-namespace BoutiqueCommon.Models.Implementation.Clothes
+namespace BoutiqueCommon.Models.Implementations.Clothes
 {
     /// <summary>
     /// Пол для одежды
     /// </summary>
-    public class Gender : IEquatable<Gender>
+    public class Gender : IGender, IEquatable<Gender>
     {
         public Gender(GenderType genderType, string name)
         {
             GenderType = genderType;
             Name = name;
         }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public GenderType Id => GenderType;
 
         /// <summary>
         /// Тип пола

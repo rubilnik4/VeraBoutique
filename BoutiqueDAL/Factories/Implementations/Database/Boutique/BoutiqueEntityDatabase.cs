@@ -1,13 +1,13 @@
 ﻿using System.Reflection.Emit;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementation.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
-using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Implementations.Database.Base;
 using BoutiqueDAL.Factories.Implementations.Database.Errors;
 using BoutiqueDAL.Factories.Interfaces.Database.Base;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +28,13 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных EntityFramework
         /// </summary>
-        public DbSet<GenderEntity> Genders { get; set; } = null!;
+        public DbSet<IGenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderType, GenderEntity> GendersTable =>
-            new EntityDatabaseTable<GenderType, GenderEntity>(Genders, nameof(Genders));
+        public IDatabaseTable<GenderType, IGenderEntity> GendersTable =>
+            new EntityDatabaseTable<GenderType, IGenderEntity>(Genders, nameof(Genders));
 
         /// <summary>
         /// Сохранить изменения в базе асинхронно

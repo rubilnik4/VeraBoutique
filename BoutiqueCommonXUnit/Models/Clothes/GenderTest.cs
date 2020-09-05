@@ -1,6 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementation.Clothes;
+using BoutiqueCommon.Models.Implementations.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes

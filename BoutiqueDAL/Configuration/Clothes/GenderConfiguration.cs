@@ -1,4 +1,4 @@
-﻿using BoutiqueDAL.Entities.Clothes;
+﻿using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

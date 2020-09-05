@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementation.Clothes;
+using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Xunit;

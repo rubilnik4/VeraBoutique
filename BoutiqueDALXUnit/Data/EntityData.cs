@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementation.Clothes;
-using BoutiqueDAL.Entities.Clothes;
+using BoutiqueCommon.Models.Implementations.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 
 namespace BoutiqueDALXUnit.Data
 {

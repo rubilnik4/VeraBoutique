@@ -2,7 +2,9 @@
 using BoutiqueDAL.Factories.Implementations.Database.Boutique;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;

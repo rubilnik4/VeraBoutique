@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BoutiqueDAL.Entities.Base
+﻿namespace BoutiqueDAL.Models.Implementations.Entities.Base
 {
     /// <summary>
     /// Базовый класс для сущностей

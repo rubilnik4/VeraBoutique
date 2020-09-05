@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BoutiqueDAL.Entities.Base;
+using BoutiqueDAL.Models.Implementations.Entities.Base;
+using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Base
@@ -10,7 +11,7 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
     /// Таблица базы данных
     /// </summary>
     public interface IDatabaseTable<TId, TEntity>
-        where TEntity : BaseEntity<TId>
+        where TEntity : IEntityModel<TId>
     {
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
@@ -18,8 +19,23 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         Task<IResultCollection<TEntity>> ToListAsync();
 
         /// <summary>
+        /// Вернуть запись из таблицы по идентификатору асинхронно
+        /// </summary>
+        Task<IResultValue<TEntity>> FirstAsync(TId id);
+
+        /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Добавить элемент в таблице
+        /// </summary>
+        IResultError Update(TEntity entity);
+
+        /// <summary>
+        /// Удалить элемент в таблице
+        /// </summary>
+        IResultError Remove(TEntity entity);
     }
 }

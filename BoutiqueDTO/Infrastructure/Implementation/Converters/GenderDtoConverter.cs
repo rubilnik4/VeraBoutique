@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
-using BoutiqueCommon.Models.Implementation.Clothes;
+using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementation.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;

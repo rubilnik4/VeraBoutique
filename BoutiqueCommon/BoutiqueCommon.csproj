@@ -10,4 +10,8 @@
     <Copyright>Ivan Rubilnik</Copyright>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Implementations\Base\" />
+  </ItemGroup>
+
 </Project>

@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementation.Clothes;
+using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using BoutiqueDTO.Models.Implementation.Clothes;
 using BoutiqueMVC.Controllers.Clothes;

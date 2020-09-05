@@ -1,4 +1,4 @@
-﻿namespace BoutiqueDAL.Entities.Base
+﻿namespace BoutiqueDAL.Models.Implementations.Entities.Base
 {
     /// <summary>
     /// Идентичность сущностей

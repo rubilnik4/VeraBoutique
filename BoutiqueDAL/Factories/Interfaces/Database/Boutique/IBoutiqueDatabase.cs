@@ -1,6 +1,7 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Entities.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Base;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Boutique
 {
@@ -12,6 +13,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        IDatabaseTable<GenderType, GenderEntity> GendersTable { get; }
+        IDatabaseTable<GenderType, IGenderEntity> GendersTable { get; }
     }
 }

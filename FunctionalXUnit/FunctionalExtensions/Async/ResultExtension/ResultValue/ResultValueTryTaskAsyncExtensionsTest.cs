@@ -15,18 +15,18 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений для задачи-объекта. Тесты
     /// </summary>
-    public class ResultCollectionBindTryTaskAsyncExtensionsTest
+    public class ResultValueTryTaskAsyncExtensionsTest
     {
         /// <summary>
         /// Положительный результирующий ответ и отсутствие исключения для задачи-объекта
         /// </summary>
         [Fact]
-        public async Task ResultValueBindTryOk_OkResult_OkTry()
+        public async Task ResultValueTryOkTaskAsync_OkResult_OkTry()
         {
             const int initialNumber = 2;
             var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
 
-            var numberAfterTry = await numberResult.ResultValueBindTryOkTaskAsync(Division, CreateErrorTest());
+            var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, CreateErrorTest());
 
             Assert.True(numberAfterTry.OkStatus);
             Assert.Equal(Division(initialNumber), numberAfterTry.Value);
@@ -36,12 +36,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Результирующий ответ с ошибкой и отсутствие исключения для задачи-объекта
         /// </summary>
         [Fact]
-        public async Task ResultValueBindTryOk_ErrorResult_OkTry()
+        public async Task ResultValueTryOkTaskAsync_ErrorResult_OkTry()
         {
             var initialError = CreateErrorTest();
             var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialError));
 
-            var numberAfterTry = await numberResult.ResultValueBindTryOkTaskAsync(Division, CreateErrorTest());
+            var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, CreateErrorTest());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));
@@ -51,12 +51,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Положительный результирующий ответ и исключение для задачи-объекта
         /// </summary>
         [Fact]
-        public async Task ResultValueBindTryOk_OkResult_ExceptionTry()
+        public async Task ResultValueTryOkTaskAsync_OkResult_ExceptionTry()
         {
             const int initialNumber = 0;
             var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
 
-            var numberAfterTry = await numberResult.ResultValueBindTryOkTaskAsync(Division, Exceptions.ExceptionError());
+            var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, numberAfterTry.Errors.First().ErrorResultType);
@@ -66,12 +66,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Результирующий ответ с ошибкой и исключение для задачи-объекта
         /// </summary>
         [Fact]
-        public async Task ResultValueBindTryOk_ErrorResult_ExceptionTry()
+        public async Task ResultValueTryOkTaskAsync_ErrorResult_ExceptionTry()
         {
             var initialError = CreateErrorTest();
             var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialError));
 
-            var numberAfterTry = await numberResult.ResultValueBindTryOkTaskAsync(Division, Exceptions.ExceptionError());
+            var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));
