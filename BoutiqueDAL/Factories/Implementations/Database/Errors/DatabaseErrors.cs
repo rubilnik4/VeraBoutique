@@ -20,5 +20,11 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Errors
         /// </summary>
         public static IErrorResult TableAccessError(string tableName) =>
             new ErrorResult(ErrorResultType.DatabaseTableAccess, $"Ошибка доступа к таблице {tableName}");
+
+        /// <summary>
+        /// Элемент не найден
+        /// </summary>
+        public static IErrorResult ValueNotFoundError(string id, string tableName) =>
+            new ErrorResult(ErrorResultType.DatabaseValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
     }
 }

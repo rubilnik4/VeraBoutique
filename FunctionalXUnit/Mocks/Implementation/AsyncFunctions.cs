@@ -1,4 +1,5 @@
-﻿using Functional.FunctionalExtensions.Async;
+﻿using System;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,12 @@ namespace FunctionalXUnit.Mocks.Implementation
         /// </summary>
         public static async Task<IEnumerable<int>> DivisionByCollectionAsync(IEnumerable<int> dividers) =>
             await Task.FromResult(dividers.Select(divider => 10 / divider));
+
+        /// <summary>
+        /// Функция деления на коллекцию чисел
+        /// </summary>
+        public static async Task<IEnumerable<int>> DivisionCollectionByZeroAsync(IEnumerable<int> dividers) =>
+            throw new DivideByZeroException();
 
         /// <summary>
         /// Преобразовать число в коллекцию повторений

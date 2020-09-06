@@ -2,6 +2,7 @@
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
@@ -41,6 +42,34 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             Assert.True(resultValue.HasErrors);
             Assert.Single(resultValue.Errors);
             Assert.True(error.Equals(resultValue.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Без ошибок
+        /// </summary>
+        [Fact]
+        public void ToResultValueNullCheck_Ok()
+        {
+            const string initialString = "NotNull";
+
+            var resultString = initialString.ToResultValueNullCheck(CreateErrorTest());
+
+            Assert.True(resultString.OkStatus);
+            Assert.Equal(initialString, resultString.Value);
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void ToResultValueNullCheck_ErrorNull()
+        {
+            const string initialString = null;
+            var initialError = CreateErrorTest();
+            var resultString = initialString.ToResultValueNullCheck(initialError);
+
+            Assert.True(resultString.HasErrors);
+            Assert.Equal(resultString.Errors.First(), initialError);
         }
     }
 }

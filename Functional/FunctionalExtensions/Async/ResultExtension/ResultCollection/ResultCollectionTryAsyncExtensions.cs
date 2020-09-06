@@ -45,5 +45,14 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
         public static async Task<IResultCollection<TValue>> ResultCollectionTryAsync<TValue>(Func<Task<List<TValue>>> func,
                                                                                              IErrorResult error) =>
             await ResultCollectionTryAsync(async () => (IEnumerable<TValue>)await func.Invoke(), error);
+
+        /// <summary>
+        /// Связать асинхронный результирующий ответ с коллекцией с обработкой функции при положительном условии
+        /// </summary>
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionTryOkAsync<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                               Func<IReadOnlyCollection<TValueIn>, Task<IEnumerable<TValueOut>>> func,
+                                                                                                               IErrorResult error) =>
+            await @this.
+            ResultCollectionBindOkAsync(value => ResultCollectionTryAsync(() => func.Invoke(value), error));
     }
 }

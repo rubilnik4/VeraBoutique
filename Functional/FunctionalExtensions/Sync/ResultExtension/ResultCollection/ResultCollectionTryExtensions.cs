@@ -29,5 +29,13 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
 
             return new ResultCollection<TValue>(funcCollectionResult);
         }
+
+        /// <summary>
+        /// Связать результирующий ответ с коллекцией с обработкой функции при положительном условии
+        /// </summary>
+        public static IResultCollection<TValueOut> ResultCollectionTryOk<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                  Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> func,
+                                                                                                  IErrorResult error) =>
+            @this.ResultCollectionBindOk(value => ResultCollectionTry(() => func.Invoke(value), error));
     }
 }

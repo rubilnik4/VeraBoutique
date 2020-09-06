@@ -30,7 +30,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// </summary>
         public static IActionResult ToGetJsonResult<TValue>(this IResultValue<TValue> @this) =>
             @this.
-            ResultValueBindTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
+            ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
                                  GenderDtoConverter.ErrorJsonConverting(typeof(TValue).Name)).
             WhereContinue(resultJson => resultJson.OkStatus,
                 okFunc: resultJson => (IActionResult)resultJson.Value,
@@ -41,7 +41,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// </summary>
         public static IActionResult ToGetJsonResultCollection<TValue>(this IResultCollection<TValue> @this) =>
             @this.
-            ResultValueBindTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
+            ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
                                      GenderDtoConverter.ErrorJsonConverting(typeof(TValue).Name)).
             WhereContinue(resultJson => resultJson.OkStatus,
                 okFunc: resultJson => (IActionResult)resultJson.Value,

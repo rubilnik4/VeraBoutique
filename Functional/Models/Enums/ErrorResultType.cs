@@ -9,6 +9,7 @@
         DatabaseIncorrectConnection,
         DatabaseSave,
         DatabaseTableAccess,
+        DatabaseValueNotFound,
         JsonConvertion,
         Unknown,
     }
