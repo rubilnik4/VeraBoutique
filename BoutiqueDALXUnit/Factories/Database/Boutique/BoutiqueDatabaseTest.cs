@@ -25,7 +25,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Boutique
             var gendersFromDb = await boutiqueDatabase.Genders.ToListAsync();
 
             Assert.True(result.OkStatus);
-            Assert.True(gendersFromDb.CompareByFunc(genders, (genderFromDb, gender) => genderFromDb.EqualEntity(gender)));
+            Assert.True(gendersFromDb.CompareByFunc(genders, (genderFromDb, gender) => genderFromDb.Equals(gender)));
         }
         [Fact]
         public async Task AddRange_DuplicateError()

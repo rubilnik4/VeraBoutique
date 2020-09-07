@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Xunit;
@@ -97,16 +99,16 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         /// <summary>
         /// Тестовый пол
         /// </summary>
-        private static Gender GetGender() => new Gender(GenderType.Male, "Мужик");
+        private static IGenderDomain GetGender() => new GenderDomain(GenderType.Male, "Мужик");
 
         /// <summary>
         /// Тестовая коллекция пола
         /// </summary>
-        private static IReadOnlyCollection<Gender> GetGenders() =>
-            new List<Gender>
+        private static IReadOnlyCollection<IGenderDomain> GetGenders() =>
+            new List<IGenderDomain>
             {
-                new Gender(GenderType.Male, "Мужик"),
-                new Gender(GenderType.Female, "Баба"),
+                new GenderDomain(GenderType.Male, "Мужик"),
+                new GenderDomain(GenderType.Female, "Баба"),
             };
     }
 }

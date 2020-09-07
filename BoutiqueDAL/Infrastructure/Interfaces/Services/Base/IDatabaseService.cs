@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Interfaces.Base;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
@@ -9,7 +9,8 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
     /// Сервис получения данных из базы
     /// </summary>
     public interface IDatabaseService<TId, TModel>
-        where TModel: IDomainModel<TId>
+        where TModel : IModel<TId>
+        where TId : notnull
     {
         /// <summary>
         /// Получить модели из базы

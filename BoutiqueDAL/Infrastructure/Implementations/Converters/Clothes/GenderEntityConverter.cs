@@ -1,0 +1,28 @@
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+
+namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
+{
+    /// <summary>
+    /// Преобразования модели типа пола и модель базы данных
+    /// </summary>
+    public class GenderEntityConverter: IGenderEntityConverter
+    {
+        /// <summary>
+        /// Преобразовать тип пола из модели базы данных
+        /// </summary>
+        public IGenderDomain FromEntity(IGenderEntity genderEntity) =>
+            new GenderDomain(genderEntity.GenderType, genderEntity.Name);
+
+        /// <summary>
+        /// Преобразовать тип пола в модель базы данных
+        /// </summary>
+        public IGenderEntity ToEntity(IGenderDomain gender) =>
+            new GenderEntity(gender.GenderType, gender.Name);
+    }
+}

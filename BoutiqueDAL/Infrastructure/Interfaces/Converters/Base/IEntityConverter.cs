@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using BoutiqueCommon.Models.Implementations.Clothes;
-using BoutiqueCommon.Models.Interfaces.Base;
-using BoutiqueCommon.Models.Interfaces.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
 {
@@ -13,8 +11,9 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
     /// Базовый конвертер из доменной модели в модель базы данных
     /// </summary>
     public interface IEntityConverter<TId, TModel, TEntity>
-        where TModel: IDomainModel<TId>
+        where TModel: IModel<TId>
         where TEntity: IEntityModel<TId>
+        where TId: notnull
     {
         /// <summary>
         /// Преобразовать модель базы данных в доменную

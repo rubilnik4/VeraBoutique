@@ -55,8 +55,8 @@ namespace FunctionalXUnit.Mocks.Implementation
         /// <summary>
         /// Функция деления на коллекцию чисел
         /// </summary>
-        public static async Task<IEnumerable<int>> DivisionCollectionByZeroAsync(IEnumerable<int> dividers) =>
-            throw new DivideByZeroException();
+        public static Task<IEnumerable<int>> DivisionCollectionByZeroAsync(IEnumerable<int> dividers) =>
+            throw new DivideByZeroException(dividers.ToString());
 
         /// <summary>
         /// Преобразовать число в коллекцию повторений

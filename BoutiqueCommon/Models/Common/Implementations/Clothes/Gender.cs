@@ -1,16 +1,15 @@
 ﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Interfaces.Base;
-using BoutiqueCommon.Models.Interfaces.Clothes;
 
-namespace BoutiqueCommon.Models.Implementations.Clothes
+namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 {
     /// <summary>
     /// Пол для одежды
     /// </summary>
-    public class Gender : IGender, IEquatable<Gender>
+    public abstract class  Gender : IGender 
     {
-        public Gender(GenderType genderType, string name)
+        protected Gender(GenderType genderType, string name)
         {
             GenderType = genderType;
             Name = name;
@@ -31,10 +30,15 @@ namespace BoutiqueCommon.Models.Implementations.Clothes
         /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// Содержит ли идентификатор
+        /// </summary>
+        public bool HasId(GenderType genderType) => GenderType == genderType;
+
         #region IEquatable
         public override bool Equals(object? obj) => obj is Gender gender && Equals(gender);
 
-        public bool Equals(Gender? other) => 
+        public bool Equals(IGender? other) => 
             other?.GenderType == GenderType &&
             other?.Name == Name;
 

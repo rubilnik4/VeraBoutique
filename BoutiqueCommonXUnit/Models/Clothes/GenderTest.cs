@@ -1,6 +1,7 @@
 ﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementations.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -19,7 +20,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const GenderType genderType = GenderType.Male;
             const string genderName = "Мужик";
 
-            var gender = new Gender(genderType, genderName);
+            var gender = new GenderDomain(genderType, genderName);
 
             int genderHash = HashCode.Combine(genderType, genderName);
             Assert.Equal(genderHash, gender.GetHashCode());

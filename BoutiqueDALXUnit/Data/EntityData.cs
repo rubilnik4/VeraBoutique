@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDALXUnit.Data
 {
@@ -14,8 +17,8 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить сущности типа пола
         /// </summary>
-        public static List<GenderEntity> GetGenderEntities() =>
-            new List<GenderEntity>()
+        public static List<IGenderEntity> GetGenderEntities() =>
+            new List<IGenderEntity>()
             {
                 new GenderEntity(GenderType.Male, "Мужик" ),
                 new GenderEntity(GenderType.Female, "Тетя"),
@@ -24,11 +27,11 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить типы пола
         /// </summary>
-        public static List<Gender> GetGenders() =>
-            new List<Gender>()
+        public static List<IGenderDomain> GetGenders() =>
+            new List<IGenderDomain>()
             {
-                new Gender(GenderType.Male, "Мужик" ),
-                new Gender(GenderType.Female, "Тетя"),
+                new GenderDomain(GenderType.Male, "Мужик" ),
+                new GenderDomain(GenderType.Female, "Тетя"),
             };
 
         /// <summary>

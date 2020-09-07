@@ -1,6 +1,8 @@
-﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementations.Clothes;
+﻿using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters
@@ -16,10 +18,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var gender = new Gender(GenderType.Male, "Мужик");
+            var gender = new GenderDomain(GenderType.Male, "Мужик");
+            var genderEntityConverter = new GenderEntityConverter();
 
-            var genderEntity = GenderEntityConverter.ToEntity(gender);
-            var genderAfterConverter = GenderEntityConverter.FromEntity(genderEntity);
+            var genderEntity = genderEntityConverter.ToEntity(gender);
+            var genderAfterConverter = genderEntityConverter.FromEntity(genderEntity);
 
             Assert.True(gender.Equals(genderAfterConverter));
         }

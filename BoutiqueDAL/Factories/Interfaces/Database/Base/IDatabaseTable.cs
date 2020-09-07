@@ -12,6 +12,7 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
     /// </summary>
     public interface IDatabaseTable<TId, TEntity>
         where TEntity : IEntityModel<TId>
+        where TId: notnull
     {
         /// <summary>
         /// Вернуть записи из таблицы асинхронно

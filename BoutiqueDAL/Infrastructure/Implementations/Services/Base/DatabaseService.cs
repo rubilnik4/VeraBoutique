@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Interfaces.Base;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
+using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Factories.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -20,7 +21,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
     public abstract class DatabaseService<TId, TModel, TEntity> : IDatabaseService<TId, TModel>
         where TModel : IDomainModel<TId>
         where TEntity : IEntityModel<TId>
+        where TId: notnull
     {
+        protected DatabaseService(IResultValue<IDatabase> database,
+                                  IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
+                                  IEntityConverter<TId, TModel, TEntity> entityConverter)
+        {
+            _database = database;
+            _dataTable = dataTable;
+            _entityConverter = entityConverter;
+        }
+
         /// <summary>
         /// База данных
         /// </summary>
@@ -35,15 +46,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
         private readonly IEntityConverter<TId, TModel, TEntity> _entityConverter;
-
-        protected DatabaseService(IResultValue<IDatabase> database, 
-                                  IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
-                                  IEntityConverter<TId, TModel, TEntity> entityConverter)
-        {
-            _database = database;
-            _dataTable = dataTable;
-            _entityConverter = entityConverter;
-        }
 
         /// <summary>
         /// Получить модели из базы

@@ -35,7 +35,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
         /// Связать результирующий ответ со значением со связыванием с обработкой функции при положительном условии
         /// </summary>
         public static IResultCollection<TValueOut> ResultCollectionBindTryOk<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
-                                                                                             Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> func,
+                                                                                             Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> func,
                                                                                              IErrorResult error) =>
             @this.ResultCollectionBindOk(value => ResultCollectionBindTry(() => func.Invoke(value), error));
     }

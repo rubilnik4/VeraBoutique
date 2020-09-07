@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommon.Models.Implementations.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -32,8 +34,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             var genders = GetGenders().ToList();
             var genderServiceMock = new Mock<IGenderService>();
-            genderServiceMock.Setup(genderService => genderService.GetGenders()).
-                              ReturnsAsync(new ResultCollection<Gender>(genders));
+            genderServiceMock.Setup(genderService => genderService.Get()).
+                              ReturnsAsync(new ResultCollection<IGenderDomain>(genders));
             var genderController = new GenderController(genderServiceMock.Object);
 
             var getGenders = await genderController.Get();
@@ -53,8 +55,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             var initialError = ErrorTest();
             var genderServiceMock = new Mock<IGenderService>();
-            genderServiceMock.Setup(genderService => genderService.GetGenders()).
-                              ReturnsAsync(new ResultCollection<Gender>(initialError));
+            genderServiceMock.Setup(genderService => genderService.Get()).
+                              ReturnsAsync(new ResultCollection<IGenderDomain>(initialError));
             var genderController = new GenderController(genderServiceMock.Object);
 
             var getGenders = await genderController.Get();
@@ -75,7 +77,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
             var genderIds = genders.Select(gender => gender.GenderType).ToList();
             var genderServiceMock = new Mock<IGenderService>();
-            genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
+            genderServiceMock.Setup(genderService => genderService.Post(It.IsAny<IEnumerable<IGenderDomain>>())).
                               ReturnsAsync(new ResultCollection<GenderType>(genderIds));
           
             var genderController = new GenderController(genderServiceMock.Object);
@@ -98,7 +100,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var genders = GetGenders();
             var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
             var genderServiceMock = new Mock<IGenderService>();
-            genderServiceMock.Setup(genderService => genderService.UploadGenders(It.IsAny<IEnumerable<Gender>>())).
+            genderServiceMock.Setup(genderService => genderService.Post(It.IsAny<IEnumerable<IGenderDomain>>())).
                               ReturnsAsync(new ResultCollection<GenderType>(initialError));
 
             var genderController = new GenderController(genderServiceMock.Object);
@@ -114,11 +116,11 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Получить типы пола
         /// </summary>
-        private static IEnumerable<Gender> GetGenders() =>
-            new List<Gender>()
+        private static IEnumerable<IGenderDomain> GetGenders() =>
+            new List<IGenderDomain>()
             {
-                new Gender(GenderType.Male, "Мужик" ),
-                new Gender(GenderType.Female, "Тетя"),
+                new GenderDomain(GenderType.Male, "Мужик" ),
+                new GenderDomain(GenderType.Female, "Тетя"),
             };
 
         /// <summary>

@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Implementations\Base\" />
+    <Compile Remove="Models\Common\Implementations\Base\**" />
+    <EmbeddedResource Remove="Models\Common\Implementations\Base\**" />
+    <None Remove="Models\Common\Implementations\Base\**" />
   </ItemGroup>
 
 </Project>

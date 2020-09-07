@@ -12,7 +12,7 @@ using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
@@ -23,6 +23,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
     /// </summary>
     public class EntityDatabaseTable<TId, TEntity> : DbSet<TEntity>, IDatabaseTable<TId, TEntity>
         where TEntity : class, IEntityModel<TId>
+        where TId : notnull
     {
         /// <summary>
         /// Экземпляр таблицы базы данных
@@ -50,7 +51,9 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FirstAsync(TId id) =>
-            await ResultValueBindTryOkTaskAsync(() => new ResultValue<TEntity>(_databaseSet.FirstOrDefaultAsync()), TableAccessError);
+            await ResultValueBindTryAsync(() => _databaseSet.FirstOrDefaultAsync().
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)), 
+                                          TableAccessError);
 
         /// <summary>
         /// Добавить список в таблицу
