@@ -23,18 +23,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис типа пола одежды в базе данных
     /// </summary>
-    public class GenderService : DatabaseService<GenderType, IGenderDomain, IGenderEntity>, IGenderService
+    public class GenderService : DatabaseService<GenderType, IGenderDomain, GenderEntity>, IGenderService
     {
         public GenderService(IResultValue<IDatabase> database,
-                             IResultValue<IDatabaseTable<GenderType, IGenderEntity>> genderDatabaseTable,
-                             IEntityConverter<GenderType, IGenderDomain, IGenderEntity> genderEntityConverter)
+                             IResultValue<IDatabaseTable<GenderType, GenderEntity>> genderDatabaseTable,
+                             IEntityConverter<GenderType, IGenderDomain, GenderEntity> genderEntityConverter)
             : base(database, genderDatabaseTable, genderEntityConverter)
         { }
 
         /// <summary>
         /// Создать модель базы данных для удаления по идентификатору
         /// </summary>
-        protected override IGenderEntity CreateRemoveEntityById(GenderType id) =>
+        protected override GenderEntity CreateRemoveEntityById(GenderType id) =>
             new GenderEntity(id, String.Empty);
     }
 }

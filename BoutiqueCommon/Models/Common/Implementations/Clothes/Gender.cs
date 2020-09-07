@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Пол для одежды
     /// </summary>
-    public abstract class  Gender : IGender 
+    public abstract class Gender: IGender, IEquatable<IGender>
     {
         protected Gender(GenderType genderType, string name)
         {
@@ -36,9 +36,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public bool HasId(GenderType genderType) => GenderType == genderType;
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is Gender gender && Equals(gender);
+        public override bool Equals(object? obj) => obj is IGender gender && Equals(gender);
 
-        public bool Equals(IGender? other) => 
+        public bool Equals(IGender? other) =>
             other?.GenderType == GenderType &&
             other?.Name == Name;
 

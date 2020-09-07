@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BoutiqueDTO.Infrastructure.Implementation.Converters;
+using BoutiqueDTO.Infrastructure.Implementations.Converters;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -31,7 +32,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         public static IActionResult ToGetJsonResult<TValue>(this IResultValue<TValue> @this) =>
             @this.
             ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
-                                 GenderDtoConverter.ErrorJsonConverting(typeof(TValue).Name)).
+                                 GenderTransferConverter.ErrorJsonConverting(typeof(TValue).Name)).
             WhereContinue(resultJson => resultJson.OkStatus,
                 okFunc: resultJson => (IActionResult)resultJson.Value,
                 badFunc: resultJson => new BadRequestObjectResult(resultJson.Errors.ToModelState()));
@@ -42,7 +43,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         public static IActionResult ToGetJsonResultCollection<TValue>(this IResultCollection<TValue> @this) =>
             @this.
             ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
-                                     GenderDtoConverter.ErrorJsonConverting(typeof(TValue).Name)).
+                                     GenderTransferConverter.ErrorJsonConverting(typeof(TValue).Name)).
             WhereContinue(resultJson => resultJson.OkStatus,
                 okFunc: resultJson => (IActionResult)resultJson.Value,
                 badFunc: resultJson => new BadRequestObjectResult(resultJson.Errors.ToModelState()));

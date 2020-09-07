@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueMVC.Controllers.Base;
+using BoutiqueMVC.Controllers.Implementations.Base;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
@@ -10,7 +10,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
     /// <summary>
     /// Базовый контроллер для Api. Тесты
     /// </summary>
-    public class BaseApiControllerTest : BaseApiController
+    public class BaseApiControllerTest : ApiController
     {
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера

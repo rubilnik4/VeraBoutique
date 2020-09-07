@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BoutiqueDTO.Infrastructure.Implementation.Converters;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;

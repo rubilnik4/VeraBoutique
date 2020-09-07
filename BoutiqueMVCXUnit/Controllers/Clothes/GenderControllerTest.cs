@@ -8,9 +8,10 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
-using BoutiqueDTO.Infrastructure.Implementation.Converters;
-using BoutiqueDTO.Models.Implementation.Clothes;
-using BoutiqueMVC.Controllers.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Converters;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -40,8 +41,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
 
             var getGenders = await genderController.Get();
             var getGendersOk = (JsonResult)getGenders;
-            var gendersDtoAfter = (IEnumerable<GenderDto>)getGendersOk.Value;
-            var gendersAfter = GenderDtoConverter.FromDtoCollection(gendersDtoAfter);
+            var gendersDtoAfter = (IEnumerable<GenderTransfer>)getGendersOk.Value;
+            var gendersAfter = GenderTransferConverter.FromDtoCollection(gendersDtoAfter);
 
             Assert.Equal(StatusCodes.Status200OK, getGendersOk.StatusCode);
             Assert.True(gendersAfter.SequenceEqual(genders));
@@ -74,7 +75,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task PostGenders_Ok()
         {
             var genders = GetGenders().ToList();
-            var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
+            var gendersDto = GenderTransferConverter.ToDtoCollection(genders).ToList();
             var genderIds = genders.Select(gender => gender.GenderType).ToList();
             var genderServiceMock = new Mock<IGenderService>();
             genderServiceMock.Setup(genderService => genderService.Post(It.IsAny<IEnumerable<IGenderDomain>>())).
@@ -98,7 +99,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             var initialError = ErrorTest();
             var genders = GetGenders();
-            var gendersDto = GenderDtoConverter.ToDtoCollection(genders).ToList();
+            var gendersDto = GenderTransferConverter.ToDtoCollection(genders).ToList();
             var genderServiceMock = new Mock<IGenderService>();
             genderServiceMock.Setup(genderService => genderService.Post(It.IsAny<IEnumerable<IGenderDomain>>())).
                               ReturnsAsync(new ResultCollection<GenderType>(initialError));

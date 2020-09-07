@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Unicode;
 
-namespace BoutiqueDTO.Infrastructure.Implementation.Converters
+namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
 {
     /// <summary>
     /// Параметры конвертации в Json

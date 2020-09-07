@@ -17,8 +17,8 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить сущности типа пола
         /// </summary>
-        public static List<IGenderEntity> GetGenderEntities() =>
-            new List<IGenderEntity>()
+        public static List<GenderEntity> GetGenderEntities() =>
+            new List<GenderEntity>()
             {
                 new GenderEntity(GenderType.Male, "Мужик" ),
                 new GenderEntity(GenderType.Female, "Тетя"),

@@ -16,13 +16,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public IGenderDomain FromEntity(IGenderEntity genderEntity) =>
+        public IGenderDomain FromEntity(GenderEntity genderEntity) =>
             new GenderDomain(genderEntity.GenderType, genderEntity.Name);
 
         /// <summary>
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
-        public IGenderEntity ToEntity(IGenderDomain gender) =>
+        public GenderEntity ToEntity(IGenderDomain gender) =>
             new GenderEntity(gender.GenderType, gender.Name);
     }
 }

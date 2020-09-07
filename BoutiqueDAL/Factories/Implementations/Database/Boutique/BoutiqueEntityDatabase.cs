@@ -28,13 +28,13 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных EntityFramework
         /// </summary>
-        public DbSet<IGenderEntity> Genders { get; set; } = null!;
+        public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderType, IGenderEntity> GendersTable =>
-            new EntityDatabaseTable<GenderType, IGenderEntity>(Genders, nameof(Genders));
+        public IDatabaseTable<GenderType, GenderEntity> GendersTable =>
+            new EntityDatabaseTable<GenderType, GenderEntity>(Genders, nameof(Genders));
 
         /// <summary>
         /// Сохранить изменения в базе асинхронно
