@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
@@ -17,32 +19,56 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
     public static class ResultValueToActionResultTaskAsyncExtensions
     {
         /// <summary>
-        /// Преобразовать результирующий ответ в ответ контроллера для задачи-объекта
+        /// Преобразовать результирующий ответ в ответ контроллера со значением для задачи-объекта
         /// </summary>
-        public static async Task<IActionResult> ToGetActionResultTaskAsync<TValue>(this Task<IResultValue<TValue>> @this) =>
+        public static async Task<ActionResult<TTransfer>> ToActionResultValueTaskAsync<TId, TTransfer>(this Task<IResultValue<TTransfer>> @this)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
             await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToGetActionResult());
+            MapTaskAsync(thisAwaited => thisAwaited.ToActionResultValue<TId, TTransfer>());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ с коллекцией в ответ контроллера со значением для задачи-объекта
+        /// </summary>
+        public static async Task<ActionResult<IReadOnlyCollection<TTransfer>>> ToActionResultCollectionTaskAsync<TId, TTransfer>(this Task<IResultCollection<TTransfer>> @this)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToActionResultCollection<TId, TTransfer>());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта асинхронно
+        /// </summary>
+        public static async Task<ActionResult<IReadOnlyCollection<TId>>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultCollection<TId>> @this,
+                                                                                                                     CreatedActionCollection<TTransfer> createdActionCollection)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult(createdActionCollection));
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в ответ контроллера о изменении объекта асинхронно
+        /// </summary>
+        public static async Task<IActionResult> ToNoContentActionResultTaskAsync(this Task<IResultError> @this) =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToNoContentActionResult());
 
         /// <summary>
         /// Преобразовать результирующий ответ в Json ответ для задачи-объекта
         /// </summary>
-        public static async Task<IActionResult> ToGetJsonResultTaskAsync<TValue>(this Task<IResultValue<TValue>> @this) =>
+        public static async Task<IActionResult> ToJsonResultTaskAsync<TId, TTransfer>(this Task<IResultValue<TTransfer>> @this)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
             await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToGetJsonResult());
+            MapTaskAsync(thisAwaited => thisAwaited.ToJsonResult<TId, TTransfer>());
 
         /// <summary>
         /// Преобразовать результирующий ответ с коллекцией в Json ответ для задачи-объекта
         /// </summary>
-        public static async Task<IActionResult> ToGetJsonResultCollectionTaskAsync<TValue>(this Task<IResultCollection<TValue>> @this) =>
+        public static async Task<IActionResult> ToJsonResultCollectionTaskAsync<TId, TTransfer>(this Task<IResultCollection<TTransfer>> @this) 
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
             await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToGetJsonResultCollection());
-
-        /// <summary>
-        /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно
-        /// </summary>
-        public static async Task<IActionResult> ToPostActionResultTaskAsync<TId, TValue>(this Task<IResultCollection<TId>> @this,
-                                                                                         CreatedActionCollection<TValue> createdActionCollection) =>
-            await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToPostActionResult(createdActionCollection));
+            MapTaskAsync(thisAwaited => thisAwaited.ToJsonResultCollection<TId, TTransfer>());
     }
 }

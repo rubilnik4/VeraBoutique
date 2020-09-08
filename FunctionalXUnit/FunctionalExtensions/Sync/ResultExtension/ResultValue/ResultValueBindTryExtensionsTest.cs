@@ -49,7 +49,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             const int initialNumber = 2;
             var numberResult = new ResultValue<int>(initialNumber);
 
-            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)), CreateErrorTest());
+            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)),
+                                                                   Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.OkStatus);
             Assert.Equal(Division(initialNumber), numberAfterTry.Value);
@@ -64,7 +65,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             var initialError = CreateErrorTest();
             var numberResult = new ResultValue<int>(initialError);
 
-            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)), CreateErrorTest());
+            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)),
+                                                                   Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));
@@ -79,7 +81,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             const int initialNumber = 0;
             var numberResult = new ResultValue<int>(initialNumber);
 
-            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)), Exceptions.ExceptionError());
+            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)),
+                                                                   Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, numberAfterTry.Errors.First().ErrorResultType);
@@ -94,7 +97,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             var initialError = CreateErrorTest();
             var numberResult = new ResultValue<int>(initialError);
 
-            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)), Exceptions.ExceptionError());
+            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)), 
+                                                                   Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));

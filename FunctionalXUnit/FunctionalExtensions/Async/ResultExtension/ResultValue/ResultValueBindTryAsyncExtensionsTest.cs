@@ -53,7 +53,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var numberResult = new ResultValue<int>(initialNumber);
 
             var numberAfterTry = await numberResult.ResultValueBindTryOkAsync(
-                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), CreateErrorTest());
+                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.OkStatus);
             Assert.Equal(await AsyncFunctions.DivisionAsync(initialNumber), numberAfterTry.Value);
@@ -69,7 +69,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var numberResult = new ResultValue<int>(initialError);
 
             var numberAfterTry = await numberResult.ResultValueBindTryOkAsync(
-                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), CreateErrorTest());
+                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));
@@ -85,7 +85,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var numberResult = new ResultValue<int>(initialNumber);
 
             var numberAfterTry = await numberResult.ResultValueBindTryOkAsync(
-                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), CreateErrorTest());
+                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, numberAfterTry.Errors.First().ErrorResultType);
@@ -101,7 +101,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var numberResult = new ResultValue<int>(initialError);
 
             var numberAfterTry = await numberResult.ResultValueBindTryOkAsync(
-                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), CreateErrorTest());
+                numbers => Task.FromResult((IResultValue<int>)new ResultValue<int>(Division(numbers))), Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
             Assert.True(initialError.Equals(numberAfterTry.Errors.First()));

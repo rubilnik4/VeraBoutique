@@ -44,5 +44,10 @@ namespace FunctionalXUnit.Data
         /// </summary>
         public static Task<IEnumerable<IErrorResult>> CreateErrorListTwoTestTask() =>
             Task.FromResult(CreateErrorEnumerableTwoTest());
+
+        /// <summary>
+        /// ОШибка деления на ноль
+        /// </summary>
+        public static IErrorResult GetDivisionError() => new ErrorResult(ErrorResultType.DevideByZero, "DivisionError");
     }
 }

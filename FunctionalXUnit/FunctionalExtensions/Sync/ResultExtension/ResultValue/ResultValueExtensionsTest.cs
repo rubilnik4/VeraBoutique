@@ -69,7 +69,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
             var resultString = initialString.ToResultValueNullCheck(initialError);
 
             Assert.True(resultString.HasErrors);
-            Assert.Equal(resultString.Errors.First(), initialError);
+            Assert.True(resultString.Errors.First().Equals(initialError));
         }
     }
 }

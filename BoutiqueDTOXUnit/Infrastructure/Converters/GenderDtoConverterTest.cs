@@ -7,6 +7,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Xunit;
 
@@ -24,9 +25,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         public void GenderToDto_FromDto()
         {
             var gender = GetGender();
+            var genderTransferConverter = new GenderTransferConverter();
 
-            var genderDto = GenderTransferConverter.ToDto(gender);
-            var genderAfterConverter = GenderTransferConverter.FromDto(genderDto);
+            var genderDto = genderTransferConverter.ToTransfer(gender);
+            var genderAfterConverter = genderTransferConverter.FromTransfer(genderDto);
 
             Assert.True(gender.Equals(genderAfterConverter));
         }
@@ -38,9 +40,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         public void GenderToDtoCollection_FromDtoCollection()
         {
             var genders = GetGenders();
+            var genderTransferConverter = (IGenderTransferConverter)new GenderTransferConverter();
 
-            var gendersDto = GenderTransferConverter.ToDtoCollection(genders);
-            var gendersAfterConverter = GenderTransferConverter.FromDtoCollection(gendersDto);
+            var gendersDto = genderTransferConverter.ToTransfers(genders);
+            var gendersAfterConverter = genderTransferConverter.FromTransfers(gendersDto);
 
             Assert.True(genders.SequenceEqual(gendersAfterConverter));
         }
@@ -52,9 +55,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         public void GenderToJson_FromJson()
         {
             var gender = GetGender();
+            var genderTransferConverter = new GenderTransferConverter();
 
-            var genderAfterConverter = GenderTransferConverter.ToJson(gender).
-                                       ResultValueBindOk(GenderTransferConverter.FromJson);
+            var genderAfterConverter = genderTransferConverter.ToJson(gender).
+                                       ResultValueBindOk(genderTransferConverter.FromJson);
 
             Assert.True(genderAfterConverter.OkStatus);
             Assert.True(gender.Equals(genderAfterConverter.Value));
@@ -66,7 +70,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         [Fact]
         public void GenderFromIncorrectJson()
         {
-            var genderAfterConverter = GenderTransferConverter.FromJson(String.Empty);
+            var genderTransferConverter = new GenderTransferConverter();
+            var genderAfterConverter = genderTransferConverter.FromJson(String.Empty);
 
             Assert.True(genderAfterConverter.HasErrors);
         }
@@ -78,9 +83,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         public void GendersToJson_FromJson()
         {
             var genders = GetGenders();
+            var genderTransferConverter = new GenderTransferConverter();
 
-            var gendersAfterConverter = GenderTransferConverter.ToJsonCollection(genders).
-                                        ResultValueBindOk(GenderTransferConverter.FromJsonCollection);
+            var gendersAfterConverter = genderTransferConverter.ToJsonCollection(genders).
+                                        ResultValueBindOk(genderTransferConverter.FromJsonCollection);
 
             Assert.True(gendersAfterConverter.OkStatus);
             Assert.True(genders.SequenceEqual(gendersAfterConverter.Value));
@@ -92,7 +98,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters
         [Fact]
         public void GendersFromIncorrectJson()
         {
-            var gendersAfterConverter = GenderTransferConverter.FromJsonCollection(String.Empty);
+            var genderTransferConverter = new GenderTransferConverter();
+            var gendersAfterConverter = genderTransferConverter.FromJsonCollection(String.Empty);
 
             Assert.True(gendersAfterConverter.HasErrors);
         }

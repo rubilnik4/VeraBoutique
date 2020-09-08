@@ -8,10 +8,13 @@ using BoutiqueDAL.Models.Implementations.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
@@ -72,8 +75,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// <summary>
         /// Удалить элемент в таблице
         /// </summary>
-        public new IResultError Remove(TEntity entity) =>
-            ResultErrorTry(() => _databaseSet.Remove(entity), TableAccessError);
+        public new IResultValue<TEntity> Remove(TEntity entity) =>
+            ResultValueTry(() => _databaseSet.Remove(entity).Entity, TableAccessError);
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных

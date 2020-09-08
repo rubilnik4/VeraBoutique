@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
@@ -11,6 +12,7 @@ using Xunit;
 using static BoutiqueMVCXUnit.Data.ErrorData;
 using static BoutiqueMVCXUnit.Data.Collections;
 using Functional.Models.Interfaces.Result;
+using Moq;
 
 namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
 {
@@ -23,32 +25,32 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         /// Преобразовать результирующий ответ в ответ контроллера для задачи-объекта. Вернуть корректный объект
         /// </summary>
         [Fact]
-        public async Task ToGetActionResultTaskAsync_OkRequest()
+        public async Task ToActionResultTaskAsync_OkRequest()
         {
-            const int initialNumber = 2;
-            var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
+            var initialTransfer = new Mock<ITransferModel<int>>();
+            var numberResult = Task.FromResult((IResultValue<ITransferModel<int>>)new ResultValue<ITransferModel<int>>(initialTransfer.Object));
 
-            var actionResult = await numberResult.ToGetActionResultTaskAsync();
+            var actionResult = await numberResult.ToActionResultValueTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<OkObjectResult>(actionResult);
-            var okRequest = (OkObjectResult)actionResult;
+            var okRequest = (OkObjectResult)actionResult.Result;
             Assert.Equal(StatusCodes.Status200OK, okRequest.StatusCode);
-            Assert.Equal(initialNumber, okRequest.Value);
+            Assert.Equal(initialTransfer.Object, okRequest.Value);
         }
 
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера для задачи-объекта. Вернуть объект с ошибкой
         /// </summary>
         [Fact]
-        public async Task ToGetActionResultTaskAsync_BadRequest()
+        public async Task ToActionResultTaskAsync_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialError));
+            var numberResult = Task.FromResult((IResultValue<ITransferModel<int>>)new ResultValue<ITransferModel<int>>(initialError));
 
-            var actionResult = await numberResult.ToGetActionResultTaskAsync();
+            var actionResult = await numberResult.ToActionResultValueTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
-            var badRequest = (BadRequestObjectResult)actionResult;
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
@@ -58,29 +60,29 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         /// Преобразовать результирующий ответ в Json ответ для задачи-объекта. Вернуть корректный объект
         /// </summary>
         [Fact]
-        public async Task ToGetJsonResultTaskAsync_OkRequest()
+        public async Task ToJsonResultTaskAsync_OkRequest()
         {
-            const int initialNumber = 2;
-            var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialNumber));
+            var initialTransfer = new Mock<ITransferModel<int>>();
+            var numberResult = Task.FromResult((IResultValue<ITransferModel<int>>)new ResultValue<ITransferModel<int>>(initialTransfer.Object));
 
-            var actionResult = await numberResult.ToGetJsonResultTaskAsync();
+            var actionResult = await numberResult.ToJsonResultTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<JsonResult>(actionResult);
             var jsonRequest = (JsonResult)actionResult;
             Assert.Equal(StatusCodes.Status200OK, jsonRequest.StatusCode);
-            Assert.Equal(initialNumber, jsonRequest.Value);
+            Assert.Equal(initialTransfer.Object, jsonRequest.Value);
         }
 
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера для задачи-объекта. Вернуть объект с ошибкой
         /// </summary>
         [Fact]
-        public async Task ToGetJsonResultTaskAsync_BadRequest()
+        public async Task ToJsonResultTaskAsync_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = Task.FromResult((IResultValue<int>)new ResultValue<int>(initialError));
+            var numberResult = Task.FromResult((IResultValue<ITransferModel<int>>)new ResultValue<ITransferModel<int>>(initialError));
 
-            var actionResult = await numberResult.ToGetJsonResultTaskAsync();
+            var actionResult = await numberResult.ToJsonResultTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
@@ -95,16 +97,16 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         [Fact]
         public async Task ToGetJsonResultCollectionTaskAsync_OkRequest()
         {
-            var numbers = GetRangeNumber();
-            var numbersResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numbers));
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
+            var numberResult = Task.FromResult((IResultCollection<ITransferModel<int>>)new ResultCollection<ITransferModel<int>>(initialTransfer.Object));
 
-            var actionResult = await numbersResult.ToGetJsonResultCollectionTaskAsync();
+            var actionResult = await numberResult.ToJsonResultCollectionTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<JsonResult>(actionResult);
             var jsonRequest = (JsonResult)actionResult;
             Assert.Equal(StatusCodes.Status200OK, jsonRequest.StatusCode);
             Assert.IsAssignableFrom<IEnumerable<int>>(jsonRequest.Value);
-            Assert.True(numbers.SequenceEqual((IEnumerable<int>)jsonRequest.Value));
+            Assert.True(initialTransfer.Object.SequenceEqual((IEnumerable<ITransferModel<int>>)jsonRequest.Value));
         }
 
         /// <summary>
@@ -114,9 +116,9 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         public async Task ToGetJsonResultCollectionTaskAsync_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
+            var numberResult = Task.FromResult((IResultCollection<ITransferModel<int>>)new ResultCollection<ITransferModel<int>>(initialError));
 
-            var actionResult = await numberResult.ToGetJsonResultCollectionTaskAsync();
+            var actionResult = await numberResult.ToJsonResultCollectionTaskAsync<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
@@ -132,17 +134,17 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         public async Task ToPostActionResultTaskAsync_Created()
         {
             var ids = Enumerable.Range(1, 3).ToList();
-            var values = ids.Select(number => number.ToString()).ToList();
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
             var idsResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(ids));
-            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+            var createdActionCollection = new CreatedActionCollection<ITransferModel<int>>("action", "controller", initialTransfer.Object);
 
-            var actionResult = await idsResult.ToPostActionResultTaskAsync(createdActionCollection);
+            var actionResult = await idsResult.ToCreateActionResultTaskAsync(createdActionCollection);
 
             Assert.IsType<CreatedAtActionResult>(actionResult);
-            var createdAtActionResult = (CreatedAtActionResult)actionResult;
+            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.IsAssignableFrom<IEnumerable<string>>(createdAtActionResult.Value);
-            Assert.True(values.SequenceEqual((IEnumerable<string>)createdAtActionResult.Value));
+            Assert.True(initialTransfer.Object.SequenceEqual((IEnumerable<ITransferModel<int>>)createdAtActionResult.Value));
         }
 
         /// <summary>
@@ -151,17 +153,16 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         [Fact]
         public async Task ToPostActionResultTaskAsync_BadRequest()
         {
-            var ids = Enumerable.Range(1, 3).ToList();
-            var values = ids.Select(number => number.ToString()).ToList();
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
             var initialError = CreateErrorTest();
             var idsResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
 
-            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+            var createdActionCollection = new CreatedActionCollection<ITransferModel<int>>("action", "controller", initialTransfer.Object);
 
-            var actionResult = await idsResult.ToPostActionResultTaskAsync(createdActionCollection);
+            var actionResult = await idsResult.ToCreateActionResultTaskAsync(createdActionCollection);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
-            var badRequest = (BadRequestObjectResult)actionResult;
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());

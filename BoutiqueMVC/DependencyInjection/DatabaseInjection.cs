@@ -7,6 +7,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
@@ -26,8 +27,9 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Внедрить зависимости к базе данных
         /// </summary>
-        public static void InjectPostgres (IServiceCollection services)
+        public static void InjectDatabase(IServiceCollection services)
         {
+            services.AddTransient<IGenderEntityConverter>(serviceProvider => new GenderEntityConverter());
             services.AddTransient<IBoutiqueDatabaseFactory>(serviceProvider => new BoutiqueDatabaseFactory(PostgresConnection));
             services.AddTransient(GetGenderService);
         }
@@ -44,7 +46,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static IGenderService GetGenderService(IServiceProvider serviceProvider) =>
             serviceProvider.GetService<IBoutiqueDatabaseFactory>().BoutiqueDatabase.
-            Map(boutiqueDatabase => new GenderService(boutiqueDatabase, 
+            Map(boutiqueDatabase => new GenderService(boutiqueDatabase,
                                                       boutiqueDatabase.ResultValueOk(database => database.GendersTable),
                                                       new GenderEntityConverter()));
     }

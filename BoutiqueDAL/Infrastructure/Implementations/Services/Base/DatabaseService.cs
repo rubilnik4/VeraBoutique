@@ -18,14 +18,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public abstract class DatabaseService<TId, TModel, TEntity> : IDatabaseService<TId, TModel>
-        where TModel : IDomainModel<TId>
+    public abstract class DatabaseService<TId, TDomain, TEntity> : IDatabaseService<TId, TDomain>
+        where TDomain : IDomainModel<TId>
         where TEntity : IEntityModel<TId>
         where TId: notnull
     {
         protected DatabaseService(IResultValue<IDatabase> database,
                                   IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
-                                  IEntityConverter<TId, TModel, TEntity> entityConverter)
+                                  IEntityConverter<TId, TDomain, TEntity> entityConverter)
         {
             _database = database;
             _dataTable = dataTable;
@@ -45,12 +45,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
-        private readonly IEntityConverter<TId, TModel, TEntity> _entityConverter;
+        private readonly IEntityConverter<TId, TDomain, TEntity> _entityConverter;
 
         /// <summary>
         /// Получить модели из базы
         /// </summary>
-        public async Task<IResultCollection<TModel>> Get() =>
+        public async Task<IResultCollection<TDomain>> Get() =>
             await _dataTable.
             ResultValueBindOkToCollectionAsync(dataTable => dataTable.ToListAsync()).
             ResultCollectionOkTaskAsync(entities => _entityConverter.FromEntities(entities));
@@ -58,7 +58,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Получить модель из базы по идентификатору
         /// </summary>
-        public async Task<IResultValue<TModel>> Get(TId id) =>
+        public async Task<IResultValue<TDomain>> Get(TId id) =>
             await _dataTable.
             ResultValueBindOkAsync(dataTable => dataTable.FirstAsync(id)).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity));
@@ -66,7 +66,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        public async Task<IResultCollection<TId>> Post(IEnumerable<TModel> models) =>
+        public async Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models) =>
             await _dataTable.
             ResultValueBindOkToCollectionAsync(dataTable => dataTable.AddRangeAsync(_entityConverter.ToEntities(models))).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
@@ -74,7 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Заменить модель в базе по идентификатору
         /// </summary>
-        public async Task<IResultError> Put(TId id, TModel model) =>
+        public async Task<IResultError> Put(TId id, TDomain model) =>
             await _dataTable.
             ResultValueBindErrorsOk(dataTable => dataTable.Update(_entityConverter.ToEntity(model))).
             ResultErrorBindOkAsync(DatabaseSaveChanges);
@@ -82,10 +82,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
-        public async Task<IResultError> Delete(TId id) =>
+        public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.
-            ResultValueBindErrorsOk(dataTable => dataTable.Remove(CreateRemoveEntityById(id))).
-            ResultErrorBindOkAsync(DatabaseSaveChanges);
+            ResultValueBindOk(dataTable => dataTable.Remove(CreateRemoveEntityById(id))).
+            ResultValueOk(entity => _entityConverter.FromEntity(entity)).
+            ResultValueBindErrorsOkAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
         /// Создать модель базы данных для удаления по идентификатору

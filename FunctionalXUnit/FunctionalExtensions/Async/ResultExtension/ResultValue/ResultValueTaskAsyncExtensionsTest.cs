@@ -134,7 +134,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var resultString = await initialString.ToResultValueNullCheckTaskAsync(initialError);
 
             Assert.True(resultString.HasErrors);
-            Assert.Equal(resultString.Errors.First(), initialError);
+            Assert.True(resultString.Errors.First().Equals(initialError));
         }
     }
 }

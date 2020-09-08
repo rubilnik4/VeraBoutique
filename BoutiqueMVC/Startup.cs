@@ -28,7 +28,8 @@ namespace BoutiqueMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            DatabaseInjection.InjectPostgres(services);
+            ControllerInjection.InjectControllers(services);
+            DatabaseInjection.InjectDatabase(services);
         }
 
         /// <summary>

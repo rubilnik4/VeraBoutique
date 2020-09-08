@@ -36,6 +36,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
-        Task<IResultError> Delete(TId id);
+        Task<IResultValue<TDomain>> Delete(TId id);
     }
 }

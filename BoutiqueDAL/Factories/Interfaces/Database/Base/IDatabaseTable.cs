@@ -37,6 +37,6 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Удалить элемент в таблице
         /// </summary>
-        IResultError Remove(TEntity entity);
+        IResultValue<TEntity> Remove(TEntity entity);
     }
 }

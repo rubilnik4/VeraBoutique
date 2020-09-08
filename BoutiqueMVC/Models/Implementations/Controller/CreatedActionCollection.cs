@@ -31,5 +31,11 @@ namespace BoutiqueMVC.Models.Implementations.Controller
         /// Записанные значения
         /// </summary>
         public IReadOnlyCollection<TValue> Values { get; }
+
+        /// <summary>
+        /// Преобразовать в ответ контроллера о создании объекта
+        /// </summary>
+        public CreatedAtActionResult ToCreatedAtActionResult<TId>(IEnumerable<TId> idResults) =>
+            new CreatedAtActionResult(ActionGetName, ControllerName, new { ids = idResults }, Values);
     }
 }

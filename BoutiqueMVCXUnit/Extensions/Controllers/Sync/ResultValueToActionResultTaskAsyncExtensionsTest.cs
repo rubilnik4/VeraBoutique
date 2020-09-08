@@ -8,7 +8,9 @@ using static BoutiqueMVCXUnit.Data.ErrorData;
 using static BoutiqueMVCXUnit.Data.Collections;
 using System.Collections;
 using System.Collections.Generic;
+using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Models.Implementations.Controller;
+using Moq;
 
 namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 {
@@ -23,15 +25,15 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToGetActionResult_OkRequest()
         {
-            const int initialNumber = 2;
-            var numberResult = new ResultValue<int>(initialNumber);
+            var initialTransfer = new Mock<ITransferModel<int>>();
+            var numberResult = new ResultValue<ITransferModel<int>>(initialTransfer.Object);
 
-            var actionResult = numberResult.ToGetActionResult();
+            var actionResult = numberResult.ToActionResultValue<int, ITransferModel<int>>();
 
             Assert.IsType<OkObjectResult>(actionResult);
-            var okRequest = (OkObjectResult)actionResult;
+            var okRequest = (OkObjectResult)actionResult.Result;
             Assert.Equal(StatusCodes.Status200OK, okRequest.StatusCode);
-            Assert.Equal(initialNumber, okRequest.Value);
+            Assert.Equal(initialTransfer.Object, okRequest.Value);
         }
 
         /// <summary>
@@ -41,12 +43,12 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         public void ToGetActionResult_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = new ResultValue<int>(initialError);
+            var numberResult = new ResultValue<ITransferModel<int>>(initialError);
 
-            var actionResult = numberResult.ToGetActionResult();
+            var actionResult = numberResult.ToActionResultValue<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
-            var badRequest = (BadRequestObjectResult)actionResult;
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
@@ -58,15 +60,15 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToGetJsonResult_OkRequest()
         {
-            const int initialNumber = 2;
-            var numberResult = new ResultValue<int>(initialNumber);
+            var initialTransfer = new Mock<ITransferModel<int>>();
+            var numberResult = new ResultValue<ITransferModel<int>>(initialTransfer.Object);
 
-            var actionResult = numberResult.ToGetJsonResult();
+            var actionResult = numberResult.ToJsonResult<int, ITransferModel<int>>();
 
             Assert.IsType<JsonResult>(actionResult);
             var jsonRequest = (JsonResult)actionResult;
             Assert.Equal(StatusCodes.Status200OK, jsonRequest.StatusCode);
-            Assert.Equal(initialNumber, jsonRequest.Value);
+            Assert.Equal(initialTransfer.Object, jsonRequest.Value);
         }
 
         /// <summary>
@@ -76,9 +78,9 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         public void ToGetJsonResult_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = new ResultValue<int>(initialError);
+            var numberResult = new ResultValue<ITransferModel<int>>(initialError);
 
-            var actionResult = numberResult.ToGetJsonResult();
+            var actionResult = numberResult.ToJsonResult<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
@@ -93,16 +95,16 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToGetJsonResultCollection_OkRequest()
         {
-            var numbers = GetRangeNumber();
-            var numbersResult = new ResultCollection<int>(numbers);
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
+            var numbersResult = new ResultCollection<ITransferModel<int>>(initialTransfer.Object);
 
-            var actionResult = numbersResult.ToGetJsonResultCollection();
+            var actionResult = numbersResult.ToJsonResultCollection<int, ITransferModel<int>>();
 
             Assert.IsType<JsonResult>(actionResult);
             var jsonRequest = (JsonResult)actionResult;
             Assert.Equal(StatusCodes.Status200OK, jsonRequest.StatusCode);
             Assert.IsAssignableFrom<IEnumerable<int>>(jsonRequest.Value);
-            Assert.True(numbers.SequenceEqual((IEnumerable<int>)jsonRequest.Value));
+            Assert.True(initialTransfer.Object.SequenceEqual((IEnumerable<ITransferModel<int>>)jsonRequest.Value));
         }
 
         /// <summary>
@@ -112,9 +114,9 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         public void ToGetJsonResultCollection_BadRequest()
         {
             var initialError = CreateErrorTest();
-            var numberResult = new ResultCollection<int>(initialError);
+            var numbersResult = new ResultCollection<ITransferModel<int>>(initialError);
 
-            var actionResult = numberResult.ToGetJsonResultCollection();
+            var actionResult = numbersResult.ToJsonResultCollection<int, ITransferModel<int>>();
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
@@ -130,17 +132,17 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         public void ToPostActionResult_Created()
         {
             var ids = Enumerable.Range(1, 3).ToList();
-            var values = ids.Select(number => number.ToString()).ToList();
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
             var idsResult = new ResultCollection<int>(ids);
-            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+            var createdActionCollection = new CreatedActionCollection<ITransferModel<int>>("action", "controller", initialTransfer.Object);
 
-            var actionResult = idsResult.ToPostActionResult(createdActionCollection);
+            var actionResult = idsResult.ToCreateActionResult(createdActionCollection);
 
             Assert.IsType<CreatedAtActionResult>(actionResult);
-            var createdAtActionResult = (CreatedAtActionResult)actionResult;
+            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.IsAssignableFrom<IEnumerable<string>>(createdAtActionResult.Value);
-            Assert.True(values.SequenceEqual((IEnumerable<string>)createdAtActionResult.Value));
+            Assert.True(initialTransfer.Object.SequenceEqual((IEnumerable<ITransferModel<int>>)createdAtActionResult.Value));
             Assert.IsAssignableFrom<IEnumerable<int>>(createdAtActionResult.RouteValues.Values.First());
             Assert.True(ids.SequenceEqual((IEnumerable<int>)createdAtActionResult.RouteValues.Values.First()));
         }
@@ -151,17 +153,16 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToPostActionResult_BadRequest()
         {
-            var ids = Enumerable.Range(1, 3).ToList();
-            var values = ids.Select(number => number.ToString()).ToList();
+            var initialTransfer = new Mock<IEnumerable<ITransferModel<int>>>();
             var initialError = CreateErrorTest();
             var idsResult = new ResultCollection<int>(initialError);
 
-            var createdActionCollection = new CreatedActionCollection<string>("action", "controller", values);
+            var createdActionCollection = new CreatedActionCollection<ITransferModel<int>>("action", "controller", initialTransfer.Object);
 
-            var actionResult = idsResult.ToPostActionResult(createdActionCollection);
+            var actionResult = idsResult.ToCreateActionResult(createdActionCollection);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
-            var badRequest = (BadRequestObjectResult)actionResult;
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());

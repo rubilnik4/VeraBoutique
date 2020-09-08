@@ -19,10 +19,10 @@ namespace BoutiqueMVC.Controllers.Interfaces.Base
         /// </summary>
         Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get();
 
-        /// <summary>
-        /// Получить данные по идентификатору
-        /// </summary>
-        Task<ActionResult<TTransfer>> Get(TId id);
+        ///// <summary>
+        ///// Получить данные по идентификатору
+        ///// </summary>
+        //Task<ActionResult<TTransfer>> Get(TId id);
 
         /// <summary>
         /// Записать данные
