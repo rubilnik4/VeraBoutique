@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Factories\Database\Boutique\" />
     <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 

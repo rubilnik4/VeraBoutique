@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
@@ -22,7 +23,7 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FirstAsync(TId id);
+        Task<IResultValue<TEntity>> FirstAsync(Expression<Func<TId, bool>> findFunc);
 
         /// <summary>
         /// Добавить список в таблицу

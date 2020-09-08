@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FirstAsync(TId id) =>
-            await ResultValueBindTryAsync(() => _databaseSet.FirstOrDefaultAsync().
+            await ResultValueBindTryAsync(() => _databaseSet.FirstOrDefaultAsync(entity => entity.HasId(id)).
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)), 
                                           TableAccessError);
 

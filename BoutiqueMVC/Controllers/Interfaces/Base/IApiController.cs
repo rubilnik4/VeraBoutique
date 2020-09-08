@@ -22,7 +22,7 @@ namespace BoutiqueMVC.Controllers.Interfaces.Base
         ///// <summary>
         ///// Получить данные по идентификатору
         ///// </summary>
-        //Task<ActionResult<TTransfer>> Get(TId id);
+        Task<ActionResult<TTransfer>> Get(TId id);
 
         /// <summary>
         /// Записать данные
