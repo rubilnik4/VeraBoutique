@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -81,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         public async Task AddRange_GetSecond()
         {
             var boutiqueDatabase = GetBoutiqueDatabase();
-           
+
             var genderDatabaseTable = boutiqueDatabase.GendersTable;
             var genders = EntityData.GetGenderEntities();
 
@@ -115,27 +116,76 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
             Assert.True(genderGet.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
         }
 
+        ///// <summary>
+        ///// Добавить сущности в таблицу. Получить вторую
+        ///// </summary>
+        //[Fact]
+        //public async Task AddRange_Update()
+        //{
+        //    var boutiqueDatabase = GetBoutiqueDatabase();
+
+        //    var genderDatabaseTable = boutiqueDatabase.GendersTable;
+        //    var genders = EntityData.GetGenderEntities();
+        //    var genderUpdate = new GenderEntity(GenderType.Female, "Мужа");
+
+        //    await genderDatabaseTable.AddRangeAsync(genders);
+        //    var resultSave = await boutiqueDatabase.SaveChangesAsync();
+
+        //    var resultUpdate = genderDatabaseTable.Update(genderUpdate);
+        //    var resultAfterUpdate = await boutiqueDatabase.SaveChangesAsync();
+
+        //    Assert.True(resultSave.OkStatus);
+        //    Assert.True(resultUpdate.OkStatus);
+        //    Assert.True(resultAfterUpdate.OkStatus);
+        //}
+
         /// <summary>
-        /// Добавить сущности в таблицу. Получить вторую
+        /// Добавить сущности в таблицу. Удалить первую
         /// </summary>
         [Fact]
-        public async Task AddRange_Update()
+        public async Task AddRange_DeleteFirst()
         {
             var boutiqueDatabase = GetBoutiqueDatabase();
 
             var genderDatabaseTable = boutiqueDatabase.GendersTable;
             var genders = EntityData.GetGenderEntities();
-            var genderUpdate = new GenderEntity(GenderType.Female, "Мужа");
 
             await genderDatabaseTable.AddRangeAsync(genders);
             var resultSave = await boutiqueDatabase.SaveChangesAsync();
-            
-            var resultUpdate = genderDatabaseTable.Update(genderUpdate);
-            var resultAfterUpdate = await boutiqueDatabase.SaveChangesAsync();
+
+            var genderRemove = genders.Last();
+            var resultRemove = genderDatabaseTable.Remove(genderRemove);
+            var resultAfterRemove = await boutiqueDatabase.SaveChangesAsync();
+            var gendersAfterRemove = await genderDatabaseTable.ToListAsync();
 
             Assert.True(resultSave.OkStatus);
-            Assert.True(resultUpdate.OkStatus);
-            Assert.True(resultAfterUpdate.OkStatus);
+            Assert.True(resultRemove.OkStatus);
+            Assert.True(resultAfterRemove.OkStatus);
+            Assert.Equal(genders.Count - 1, gendersAfterRemove.Value.Count);
+        }
+
+        /// <summary>
+        /// Добавить сущности в таблицу. Удалить первую
+        /// </summary>
+        [Fact]
+        public async Task AddRange_DeleteNotFound()
+        {
+            var boutiqueDatabase = GetBoutiqueDatabase();
+
+            var genderDatabaseTable = boutiqueDatabase.GendersTable;
+            var genders = EntityData.GetGenderEntities();
+
+            await genderDatabaseTable.AddRangeAsync(genders);
+            var resultSave = await boutiqueDatabase.SaveChangesAsync();
+
+            var genderRemove = new GenderEntity(GenderType.Child, "Дитятя");
+            var resultRemove = genderDatabaseTable.Remove(genderRemove);
+            var resultAfterRemove = await boutiqueDatabase.SaveChangesAsync();
+
+            Assert.True(resultSave.OkStatus);
+            Assert.True(resultRemove.OkStatus);
+            Assert.True(resultAfterRemove.HasErrors);
+         //   Assert.Equal(genders.Count - 1, gendersAfterRemove.Value.Count);
         }
 
         /// <summary>

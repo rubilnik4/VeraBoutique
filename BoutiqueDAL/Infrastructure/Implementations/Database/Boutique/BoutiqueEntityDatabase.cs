@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
@@ -44,8 +45,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// </summary>
         public void UpdateSchema()
         {
-            //base.Database.EnsureDeleted();
-            base.Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
         /// <summary>
