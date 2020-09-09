@@ -23,5 +23,19 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
 
             Assert.Equal(numberInitial.ToString(), stringFromNumber);
         }
+
+        /// <summary>
+        /// Проверка преобразования типов-задачи 
+        /// </summary>
+        [Fact]
+        public async Task MapValueToTask()
+        {
+            const int numberInitial = 2;
+            var numberTask = new ValueTask<int>(numberInitial);
+
+            int number = await numberTask.MapValueToTask();
+
+            Assert.Equal(numberInitial, number);
+        }
     }
 }

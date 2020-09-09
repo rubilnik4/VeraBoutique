@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Factories.Interfaces.Database.Base
+namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
 {
     /// <summary>
     /// Шаблон базы данных

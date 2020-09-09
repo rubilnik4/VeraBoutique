@@ -1,6 +1,7 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Clothes;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Base;
+using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
@@ -13,6 +14,5 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         public GenderEntity(GenderType genderType, string name)
             :base(genderType, name)
         { }
-
     }
 }

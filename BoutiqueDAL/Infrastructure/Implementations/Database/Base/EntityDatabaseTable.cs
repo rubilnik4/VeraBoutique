@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueDAL.Factories.Implementations.Database.Errors;
-using BoutiqueDAL.Factories.Interfaces.Database.Base;
-using BoutiqueDAL.Models.Implementations.Entities.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
-namespace BoutiqueDAL.Factories.Implementations.Database.Base
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
 {
     /// <summary>
     /// Таблица базы данных EntityFramework
     /// </summary>
-    public class EntityDatabaseTable<TId, TEntity> : DbSet<TEntity>, IDatabaseTable<TId, TEntity>
+    public abstract class EntityDatabaseTable<TId, TEntity> : DbSet<TEntity>, IDatabaseTable<TId, TEntity>
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
     {
@@ -38,7 +34,7 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// </summary>
         private readonly string _tableName;
 
-        public EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
+        protected EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
         {
             _databaseSet = databaseSet;
             _tableName = tableName;
@@ -54,8 +50,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Base
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FirstAsync(TId id) =>
-            await ResultValueBindTryAsync(() => _databaseSet.FirstOrDefaultAsync(entity => entity.HasId(id)).
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)), 
+            await ResultValueBindTryAsync(() => _databaseSet.FindAsync(id).MapValueToTask().
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)),
                                           TableAccessError);
 
         /// <summary>

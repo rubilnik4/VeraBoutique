@@ -17,6 +17,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Factories\Database\Boutique\**" />
+    <EmbeddedResource Remove="Factories\Database\Boutique\**" />
+    <EntityDeploy Remove="Factories\Database\Boutique\**" />
+    <None Remove="Factories\Database\Boutique\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
@@ -33,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Factories\Database\Boutique\" />
     <Folder Include="Infrastructure\Services\" />
   </ItemGroup>
 

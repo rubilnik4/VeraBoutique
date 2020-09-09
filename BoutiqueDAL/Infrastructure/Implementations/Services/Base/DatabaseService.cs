@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
-using BoutiqueDAL.Factories.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async;

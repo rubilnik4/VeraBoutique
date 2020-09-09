@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BoutiqueDAL.Models.Implementations.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Factories.Interfaces.Database.Base
+namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
 {
     /// <summary>
     /// Таблица базы данных
@@ -23,7 +20,7 @@ namespace BoutiqueDAL.Factories.Interfaces.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FirstAsync(Expression<Func<TId, bool>> findFunc);
+        Task<IResultValue<TEntity>> FirstAsync(TId id);
 
         /// <summary>
         /// Добавить список в таблицу

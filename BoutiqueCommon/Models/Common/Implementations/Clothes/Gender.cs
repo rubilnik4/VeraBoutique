@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq.Expressions;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 
@@ -29,11 +31,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// Наименование
         /// </summary>
         public string Name { get; }
-
-        /// <summary>
-        /// Содержит ли идентификатор
-        /// </summary>
-        public bool HasId(GenderType genderType) => GenderType == genderType;
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is IGender gender && Equals(gender);

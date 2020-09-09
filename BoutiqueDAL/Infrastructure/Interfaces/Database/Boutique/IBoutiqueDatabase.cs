@@ -1,5 +1,5 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Factories.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 

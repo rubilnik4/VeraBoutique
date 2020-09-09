@@ -1,5 +1,4 @@
-﻿using BoutiqueDAL.Factories.Interfaces.Database.Base;
-using Functional.Models.Interfaces.Result;
+﻿using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Factories.Interfaces.Database.Boutique
 {
