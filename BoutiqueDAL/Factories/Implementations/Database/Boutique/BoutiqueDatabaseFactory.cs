@@ -1,5 +1,6 @@
 ﻿using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;

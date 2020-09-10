@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDALXUnit.Data.Database;
 
 namespace BoutiqueDALXUnit.Data
 {
@@ -22,6 +23,16 @@ namespace BoutiqueDALXUnit.Data
             {
                 new GenderEntity(GenderType.Male, "Мужик" ),
                 new GenderEntity(GenderType.Female, "Тетя"),
+            };
+
+        /// <summary>
+        /// Получить сущности для теста
+        /// </summary>
+        public static List<TestEntity> GetTestEntity() =>
+            new List<TestEntity>()
+            {
+                new TestEntity(TestEnum.First, "First" ),
+                new TestEntity(TestEnum.Second, "Second"),
             };
 
         /// <summary>

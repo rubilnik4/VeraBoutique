@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
@@ -7,55 +6,53 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
+namespace BoutiqueDALXUnit.Data.Database
 {
     /// <summary>
-    /// База данных магазина Entity Framework
+    /// Тестовая база данных
     /// </summary>
-    public class BoutiqueEntityDatabase : EntityDatabase, IBoutiqueDatabase
+    public class TestEntityDatabase : EntityDatabase, IDatabase
     {
-        public BoutiqueEntityDatabase(DbContextOptions options)
-            : base(options)
+        public TestEntityDatabase(DbContextOptions options)
+          : base(options)
         { }
 
         /// <summary>
-        /// Таблица пола базы данных EntityFramework
+        /// Тестовая таблица EntityFramework
         /// </summary>
-        public DbSet<GenderEntity> Genders { get; set; } = null!;
+        public DbSet<TestEntity> Test { get; set; } = null!;
 
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderType, GenderEntity> GendersTable =>
-            new GenderDatabaseTable(Genders, nameof(Genders));
-
-        /// <summary>
-        /// Обновить схемы базы данных
-        /// </summary>
-        public void UpdateSchema()
-        {
-            Database.EnsureCreated();
-        }
+        public IDatabaseTable<TestEnum, TestEntity> TestTable =>
+            new TestDatabaseTable(Test, nameof(Test));
 
         /// <summary>
         /// Записать параметры конфигурации
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder builder) =>
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<GenderType>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<TestEnum>();
 
         /// <summary>
         /// Записать схемы базы данных
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new GenderConfiguration());
-            modelBuilder.HasPostgresEnum<GenderType>();
+            modelBuilder.ApplyConfiguration(new TestConfiguration());
+            modelBuilder.HasPostgresEnum<TestEnum>();
         }
+
+        /// <summary>
+        /// Обновить схему
+        /// </summary>
+        public void UpdateSchema()
+        { }
     }
 }

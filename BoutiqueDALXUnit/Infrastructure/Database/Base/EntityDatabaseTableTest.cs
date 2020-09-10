@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Database;
 using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -23,16 +24,16 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_CheckEntities()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            var ids = await genderDatabaseTable.AddRangeAsync(genders);
-            var result = await boutiqueDatabase.SaveChangesAsync();
+            var ids = await testDatabaseTable.AddRangeAsync(entities);
+            var result = await testDatabase.SaveChangesAsync();
 
             Assert.True(result.OkStatus);
             Assert.True(ids.OkStatus);
-            Assert.True(ids.Value.SequenceEqual(genders.Select(gender => gender.GenderType)));
+            Assert.True(ids.Value.SequenceEqual(entities.Select(entity => entity.TestEnum)));
         }
 
         /// <summary>
@@ -41,15 +42,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_DuplicateError()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            await genderDatabaseTable.AddRangeAsync(genders);
-            var firstResult = await boutiqueDatabase.SaveChangesAsync();
+            await testDatabaseTable.AddRangeAsync(entities);
+            var firstResult = await testDatabase.SaveChangesAsync();
 
-            await genderDatabaseTable.AddRangeAsync(genders);
-            var secondResult = await boutiqueDatabase.SaveChangesAsync();
+            await testDatabaseTable.AddRangeAsync(entities);
+            var secondResult = await testDatabase.SaveChangesAsync();
 
             Assert.True(firstResult.OkStatus);
             Assert.True(secondResult.HasErrors);
@@ -62,17 +63,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_GetEntities()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            await genderDatabaseTable.AddRangeAsync(genders);
-            var result = await boutiqueDatabase.SaveChangesAsync();
-            var gendersGet = await genderDatabaseTable.ToListAsync();
+            await testDatabaseTable.AddRangeAsync(entities);
+            var result = await testDatabase.SaveChangesAsync();
+            var gendersGet = await testDatabaseTable.ToListAsync();
 
             Assert.True(result.OkStatus);
             Assert.True(gendersGet.OkStatus);
-            Assert.True(genders.SequenceEqual(gendersGet.Value));
+            Assert.True(entities.SequenceEqual(gendersGet.Value));
         }
 
         /// <summary>
@@ -81,19 +82,18 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_GetSecond()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
-
-            var ids = await genderDatabaseTable.AddRangeAsync(genders);
-            var result = await boutiqueDatabase.SaveChangesAsync();
+            var ids = await testDatabaseTable.AddRangeAsync(entities);
+            var result = await testDatabase.SaveChangesAsync();
             var getId = ids.Value.Last();
-            var genderGet = await genderDatabaseTable.FirstAsync(getId);
+            var entityGet = await testDatabaseTable.FirstAsync(getId);
 
             Assert.True(result.OkStatus);
-            Assert.True(genderGet.OkStatus);
-            Assert.True(genderGet.Value.Equals(genders.First(gender => gender.GenderType == getId)));
+            Assert.True(entityGet.OkStatus);
+            Assert.True(entityGet.Value.Equals(entities.First(entity => entity.TestEnum == getId)));
         }
 
         /// <summary>
@@ -102,42 +102,44 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_GetNotFount()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
-
-            var ids = await genderDatabaseTable.AddRangeAsync(genders);
-            var result = await boutiqueDatabase.SaveChangesAsync();
-            var genderGet = await genderDatabaseTable.FirstAsync(GenderType.Child);
+            await testDatabaseTable.AddRangeAsync(entities);
+            var result = await testDatabase.SaveChangesAsync();
+            var genderGet = await testDatabaseTable.FirstAsync(TestEnum.Third);
 
             Assert.True(result.OkStatus);
             Assert.True(genderGet.HasErrors);
             Assert.True(genderGet.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
         }
 
-        ///// <summary>
-        ///// Добавить сущности в таблицу. Получить вторую
-        ///// </summary>
-        //[Fact]
-        //public async Task AddRange_Update()
-        //{
-        //    var boutiqueDatabase = GetBoutiqueDatabase();
+        /// <summary>
+        /// Добавить сущности в таблицу. Получить вторую
+        /// </summary>
+        [Fact]
+        public async Task AddRange_Update()
+        {
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-        //    var genderDatabaseTable = boutiqueDatabase.GendersTable;
-        //    var genders = EntityData.GetGenderEntities();
-        //    var genderUpdate = new GenderEntity(GenderType.Female, "Мужа");
+            await testDatabaseTable.AddRangeAsync(entities);
+            var resultSave = await testDatabase.SaveChangesAsync();
 
-        //    await genderDatabaseTable.AddRangeAsync(genders);
-        //    var resultSave = await boutiqueDatabase.SaveChangesAsync();
+            var entityUpdate = entities.Last();
+            entityUpdate.Name = "entityUpdate";
 
-        //    var resultUpdate = genderDatabaseTable.Update(genderUpdate);
-        //    var resultAfterUpdate = await boutiqueDatabase.SaveChangesAsync();
+            var resultUpdate = testDatabaseTable.Update(entityUpdate);
+            var resultAfterUpdate = await testDatabase.SaveChangesAsync();
+            var entityAfterUpdate = await testDatabaseTable.FirstAsync(entityUpdate.Id);
 
-        //    Assert.True(resultSave.OkStatus);
-        //    Assert.True(resultUpdate.OkStatus);
-        //    Assert.True(resultAfterUpdate.OkStatus);
-        //}
+            Assert.True(resultSave.OkStatus);
+            Assert.True(resultUpdate.OkStatus);
+            Assert.True(resultAfterUpdate.OkStatus);
+            Assert.Equal(entityUpdate.Name, entityAfterUpdate.Value.Name);
+        }
 
         /// <summary>
         /// Добавить сущности в таблицу. Удалить первую
@@ -145,23 +147,22 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_DeleteFirst()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
+            await testDatabaseTable.AddRangeAsync(entities);
+            var resultSave = await testDatabase.SaveChangesAsync();
 
-            await genderDatabaseTable.AddRangeAsync(genders);
-            var resultSave = await boutiqueDatabase.SaveChangesAsync();
-
-            var genderRemove = genders.Last();
-            var resultRemove = genderDatabaseTable.Remove(genderRemove);
-            var resultAfterRemove = await boutiqueDatabase.SaveChangesAsync();
-            var gendersAfterRemove = await genderDatabaseTable.ToListAsync();
+            var entityRemove = entities.Last();
+            var resultRemove = testDatabaseTable.Remove(entityRemove);
+            var resultAfterRemove = await testDatabase.SaveChangesAsync();
+            var entityAfterRemove = await testDatabaseTable.ToListAsync();
 
             Assert.True(resultSave.OkStatus);
             Assert.True(resultRemove.OkStatus);
             Assert.True(resultAfterRemove.OkStatus);
-            Assert.Equal(genders.Count - 1, gendersAfterRemove.Value.Count);
+            Assert.Equal(entities.Count - 1, entityAfterRemove.Value.Count);
         }
 
         /// <summary>
@@ -170,34 +171,33 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         [Fact]
         public async Task AddRange_DeleteNotFound()
         {
-            var boutiqueDatabase = GetBoutiqueDatabase();
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
 
-            var genderDatabaseTable = boutiqueDatabase.GendersTable;
-            var genders = EntityData.GetGenderEntities();
+            await testDatabaseTable.AddRangeAsync(entities);
+            var resultSave = await testDatabase.SaveChangesAsync();
 
-            await genderDatabaseTable.AddRangeAsync(genders);
-            var resultSave = await boutiqueDatabase.SaveChangesAsync();
-
-            var genderRemove = new GenderEntity(GenderType.Child, "Дитятя");
-            var resultRemove = genderDatabaseTable.Remove(genderRemove);
-            var resultAfterRemove = await boutiqueDatabase.SaveChangesAsync();
+            var genderRemove = new TestEntity(TestEnum.Third, "Third");
+            var resultRemove = testDatabaseTable.Remove(genderRemove);
+            var resultAfterRemove = await testDatabase.SaveChangesAsync();
 
             Assert.True(resultSave.OkStatus);
             Assert.True(resultRemove.OkStatus);
             Assert.True(resultAfterRemove.HasErrors);
-         //   Assert.Equal(genders.Count - 1, gendersAfterRemove.Value.Count);
+            Assert.True(resultAfterRemove.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
         }
 
         /// <summary>
         /// База данных в памяти
         /// </summary>
-        private static BoutiqueEntityDatabase GetBoutiqueDatabase() =>
-            new BoutiqueEntityDatabase(GetBoutiqueDatabaseOptions());
+        private static TestEntityDatabase GetTestEntityDatabase() =>
+            new TestEntityDatabase(GetGetTestEntityDatabaseOptions());
 
         /// <summary>
         /// Параметры подключения к базе
         /// </summary>
-        private static DbContextOptions GetBoutiqueDatabaseOptions() =>
+        private static DbContextOptions GetGetTestEntityDatabaseOptions() =>
             new DbContextOptionsBuilder().
                 UseInMemoryDatabase(Guid.NewGuid().ToString()).
                 Options;
