@@ -1,6 +1,7 @@
 ﻿using System;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Database.Implementation;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Models.Connection
@@ -16,9 +17,9 @@ namespace BoutiqueDALXUnit.Models.Connection
         [Fact]
         public void Equal_Ok()
         {
-            var hostConnection = ConnectionData.HostConnectionOk;
-            var authorization = ConnectionData.AuthorizationOk;
-            string database = ConnectionData.DatabaseOk;
+            var hostConnection = TestConnectionData.HostConnectionOk;
+            var authorization = TestConnectionData.AuthorizationOk;
+            string database = TestConnectionData.DatabaseOk;
 
             var databaseConnection = new DatabaseConnection(hostConnection, database, authorization);
 

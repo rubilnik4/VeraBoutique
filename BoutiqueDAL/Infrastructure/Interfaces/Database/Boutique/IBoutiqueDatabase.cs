@@ -12,6 +12,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        IDatabaseTable<GenderType, GenderEntity> GendersTable { get; }
+        IGenderDatabaseTable GendersTable { get; }
     }
 }

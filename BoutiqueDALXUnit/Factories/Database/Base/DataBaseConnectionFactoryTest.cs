@@ -3,6 +3,7 @@ using System.Linq;
 using BoutiqueDAL.Factories.Implementations.Database.Base;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Database.Implementation;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Xunit;
@@ -119,9 +120,9 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_Ok()
         {
-            var hostConnection = new ResultValue<HostConnection>(ConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(ConnectionData.DatabaseOk);
+            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
+            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
+            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
@@ -136,9 +137,9 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadHost()
         {
-            var hostConnection = new ResultValue<HostConnection>(ConnectionData.ErrorConnection);
-            var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(ConnectionData.DatabaseOk);
+            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.ErrorConnection);
+            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
+            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
@@ -152,9 +153,9 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadAuthorization()
         {
-            var hostConnection = new ResultValue<HostConnection>(ConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(ConnectionData.ErrorConnection);
-            var database = new ResultValue<string>(ConnectionData.DatabaseOk);
+            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
+            var authorization = new ResultValue<Authorization>(TestConnectionData.ErrorConnection);
+            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
@@ -168,9 +169,9 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadDatabase()
         {
-            var hostConnection = new ResultValue<HostConnection>(ConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(ConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(ConnectionData.ErrorConnection);
+            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
+            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
+            var database = new ResultValue<string>(TestConnectionData.ErrorConnection);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 

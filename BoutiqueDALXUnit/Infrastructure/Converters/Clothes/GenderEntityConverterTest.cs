@@ -1,11 +1,9 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using Xunit;
 
-namespace BoutiqueDALXUnit.Infrastructure.Converters
+namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
 {
     /// <summary>
     /// Преобразования модели типа пола и модель базы данных. Тесты

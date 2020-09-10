@@ -1,23 +1,16 @@
-﻿using System.Threading.Tasks;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Configuration.Clothes;
-using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using Functional.Models.Interfaces.Result;
+using BoutiqueDALXUnit.Data.Database.Interfaces;
+using BoutiqueDALXUnit.Data.Models.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
-namespace BoutiqueDALXUnit.Data.Database
+namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
     /// <summary>
     /// Тестовая база данных
     /// </summary>
-    public class TestEntityDatabase : EntityDatabase, IDatabase
+    public class TestEntityDatabase : EntityDatabase, ITestDatabase
     {
         public TestEntityDatabase(DbContextOptions options)
           : base(options)
@@ -31,7 +24,7 @@ namespace BoutiqueDALXUnit.Data.Database
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<TestEnum, TestEntity> TestTable =>
+        public ITestDatabaseTable TestTable =>
             new TestDatabaseTable(Test, nameof(Test));
 
         /// <summary>

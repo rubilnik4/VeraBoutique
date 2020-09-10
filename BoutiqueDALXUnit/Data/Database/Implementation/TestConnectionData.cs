@@ -3,12 +3,12 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDALXUnit.Data
+namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
     /// <summary>
     /// Данные для проверки подключения
     /// </summary>
-    public static class ConnectionData
+    public static class TestConnectionData
     {
         /// <summary>
         /// Корректные параметры подключения

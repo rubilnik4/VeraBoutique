@@ -1,4 +1,4 @@
-﻿namespace BoutiqueDALXUnit.Data.Database
+﻿namespace BoutiqueDALXUnit.Data.Models.Implementation
 {
     /// <summary>
     /// Тестовое перечисление

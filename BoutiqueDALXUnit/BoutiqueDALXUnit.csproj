@@ -39,8 +39,4 @@
     <ProjectReference Include="..\BoutiqueDAL\BoutiqueDAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Services\" />
-  </ItemGroup>
-
 </Project>

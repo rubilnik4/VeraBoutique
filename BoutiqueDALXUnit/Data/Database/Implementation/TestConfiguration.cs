@@ -1,8 +1,8 @@
-﻿using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+﻿using BoutiqueDALXUnit.Data.Models.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BoutiqueDALXUnit.Data.Database
+namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
     /// <summary>
     /// Пол. Схема базы данных

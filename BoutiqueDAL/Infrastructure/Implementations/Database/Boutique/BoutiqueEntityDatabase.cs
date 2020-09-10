@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IDatabaseTable<GenderType, GenderEntity> GendersTable =>
+        public IGenderDatabaseTable GendersTable =>
             new GenderDatabaseTable(Genders, nameof(Genders));
 
         /// <summary>

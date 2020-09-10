@@ -7,6 +7,9 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database;
+using BoutiqueDALXUnit.Data.Database.Implementation;
+using BoutiqueDALXUnit.Data.Database.Interfaces;
+using BoutiqueDALXUnit.Data.Models.Implementation;
 using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -142,6 +145,27 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         }
 
         /// <summary>
+        /// Добавить сущности в таблицу. Получить вторую
+        /// </summary>
+        [Fact]
+        public async Task AddRange_Update_NotFound()
+        {
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
+
+            var entityUpdate = entities.Last();
+            entityUpdate.Name = "entityUpdate";
+
+            var resultUpdate = testDatabaseTable.Update(entityUpdate);
+            var resultAfterUpdate = await testDatabase.SaveChangesAsync();
+
+            Assert.True(resultUpdate.OkStatus);
+            Assert.True(resultAfterUpdate.HasErrors);
+            Assert.True(resultAfterUpdate.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
+        }
+
+        /// <summary>
         /// Добавить сущности в таблицу. Удалить первую
         /// </summary>
         [Fact]
@@ -191,7 +215,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         /// <summary>
         /// База данных в памяти
         /// </summary>
-        private static TestEntityDatabase GetTestEntityDatabase() =>
+        private static ITestDatabase GetTestEntityDatabase() =>
             new TestEntityDatabase(GetGetTestEntityDatabaseOptions());
 
         /// <summary>

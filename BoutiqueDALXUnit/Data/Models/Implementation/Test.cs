@@ -1,0 +1,45 @@
+﻿using System;
+using BoutiqueDALXUnit.Data.Database.Implementation;
+using BoutiqueDALXUnit.Data.Database.Interfaces;
+using BoutiqueDALXUnit.Data.Models.Interfaces;
+
+namespace BoutiqueDALXUnit.Data.Models.Implementation
+{
+    /// <summary>
+    /// Тестовая базовая модель
+    /// </summary>
+    public class Test: ITest 
+    {
+        public Test(TestEnum testEnum, string name)
+        {
+            TestEnum = testEnum;
+            Name = name;
+        }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public TestEnum Id => TestEnum;
+
+        /// <summary>
+        /// Тестовое перечисление
+        /// </summary>
+        public TestEnum TestEnum { get; }
+
+        /// <summary>
+        /// Тестовое поле
+        /// </summary>
+        public string Name { get; set; }
+
+        #region IEquatable
+        public override bool Equals(object obj) => obj is ITest testEntity && Equals(testEntity);
+
+        public bool Equals(ITest other) =>
+            other?.TestEnum == TestEnum &&
+            other.Name == Name;
+
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
+        public override int GetHashCode() => HashCode.Combine(TestEnum, Name);
+        #endregion
+    }
+}
