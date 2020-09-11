@@ -13,6 +13,32 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
     public static class ResultCollectionBindWhereAsyncExtensions
     {
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в асинхронном результирующем ответе с коллекцией
+        /// </summary>      
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionBindContinueAsync<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, Task<IResultCollection<TValueOut>>> okFunc,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, Task<IEnumerable<IErrorResult>>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? await okFunc.Invoke(@this.Value)
+                 : new ResultCollection<TValueOut>(await badFunc.Invoke(@this.Value))
+             : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в асинхронном результирующем ответе с коллекцией
+        /// </summary>      
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionBindWhereAsync<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, Task<IResultCollection<TValueOut>>> okFunc,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, Task<IResultCollection<TValueOut>>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? await okFunc.Invoke(@this.Value)
+                 : await badFunc.Invoke(@this.Value)
+             : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе с коллекцией
         /// </summary>   
         public static async Task<IResultCollection<TValueOut>> ResultCollectionBindOkAsync<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
@@ -20,6 +46,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
             @this.OkStatus
                 ? await okFunc.Invoke(@this.Value)
                 : new ResultCollection<TValueOut>(@this.Errors);
+
 
         /// <summary>
         /// Выполнение негативного условия результирующего асинхронного ответа или возвращение положительного в результирующем ответе с коллекцией

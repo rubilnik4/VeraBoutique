@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -10,7 +12,9 @@ using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
@@ -21,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
     public abstract class DatabaseService<TId, TDomain, TEntity> : IDatabaseService<TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TEntity : IEntityModel<TId>
-        where TId: notnull
+        where TId : notnull
     {
         protected DatabaseService(IResultValue<IDatabase> database,
                                   IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
@@ -66,10 +70,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        public async Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models) =>
+        public async Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models) =>
             await _dataTable.
-            ResultValueBindOkToCollectionAsync(dataTable => dataTable.AddRangeAsync(_entityConverter.ToEntities(models))).
-            ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+            ResultValueBindOkToCollectionAsync(dataTable =>
+                dataTable.FindAsync(models.Select(model => model.Id)).
+                ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
+                    okFunc: ids => dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
+                                 ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges()),
+                    badFunc: ids => Task.FromResult((IResultCollection<TId>)new ResultCollection<TId>(DatabaseErrors.DuplicateError(ids, dataTable.TableName)))));
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
@@ -96,7 +104,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Сохранить изменения в базе или вернуть ошибки
         /// </summary>
-        private async Task< IResultError> DatabaseSaveChanges() =>
+        private async Task<IResultError> DatabaseSaveChanges() =>
             await _database.
             ResultValueOkAsync(database => database.SaveChangesAsync()).
             MapTaskAsync(resultDatabase => (IResultError)resultDatabase);

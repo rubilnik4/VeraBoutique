@@ -15,6 +15,32 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
     public static class ResultCollectionBindWhereExtensions
     {
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе с коллекцией
+        /// </summary>      
+        public static IResultCollection<TValueOut> ResultCollectionBindContinue<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> okFunc,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IEnumerable<IErrorResult>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? okFunc.Invoke(@this.Value)
+                 : new ResultCollection<TValueOut>(badFunc.Invoke(@this.Value))
+             : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение положительного или негативного условия в результирующем ответе с коллекцией
+        /// </summary>      
+        public static IResultCollection<TValueOut> ResultCollectionBindWhere<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> okFunc,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? okFunc.Invoke(@this.Value)
+                 : badFunc.Invoke(@this.Value)
+             : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе с коллекцией
         /// </summary>   
         public static IResultCollection<TValueOut> ResultCollectionBindOk<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,

@@ -12,6 +12,32 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
     public static class ResultValueBindWhereExtensions
     {
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки со связыванием  в результирующем ответе
+        /// </summary>      
+        public static IResultValue<TValueOut> ResultValueBindContinue<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                       Func<TValueIn, bool> predicate,
+                                                                                       Func<TValueIn, IResultValue<TValueOut>> okFunc,
+                                                                                       Func<TValueIn, IEnumerable<IErrorResult>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? okFunc.Invoke(@this.Value)
+                 : new ResultValue<TValueOut>(badFunc.Invoke(@this.Value))
+             : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение условия в положительном или негативном варианте со связыванием  в результирующем ответе
+        /// </summary>      
+        public static IResultValue<TValueOut> ResultValueBindWhere<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                       Func<TValueIn, bool> predicate,
+                                                                                       Func<TValueIn, IResultValue<TValueOut>> okFunc,
+                                                                                       Func<TValueIn, IResultValue<TValueOut>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? okFunc.Invoke(@this.Value)
+                 : badFunc.Invoke(@this.Value)
+             : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static IResultValue<TValueOut> ResultValueBindOk<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,

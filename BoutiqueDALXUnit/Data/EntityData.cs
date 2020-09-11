@@ -55,9 +55,9 @@ namespace BoutiqueDALXUnit.Data
             };
 
         /// <summary>
-        /// Получить типы пола
+        /// Получить идентификаторы
         /// </summary>
-        public static IReadOnlyCollection<GenderType> GetGendersIds() =>
-            GetGendersDomain().Select(gender => gender.GenderType).ToList().AsReadOnly();
+        public static IReadOnlyCollection<TestEnum> GetTestIds(IEnumerable<ITestDomain> testDomains) =>
+            testDomains.Select(test => test.Id).ToList().AsReadOnly();
     }
 }

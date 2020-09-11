@@ -24,6 +24,19 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
              : new ResultValue<TValueOut>(@this.Errors);
 
         /// <summary>
+        /// Выполнение условия в положительном или негативном варианте в результирующем ответе
+        /// </summary>      
+        public static IResultValue<TValueOut> ResultValueWhere<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                       Func<TValueIn, bool> predicate,
+                                                                                       Func<TValueIn, TValueOut> okFunc,
+                                                                                       Func<TValueIn, TValueOut> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? new ResultValue<TValueOut>(okFunc.Invoke(@this.Value))
+                 : new ResultValue<TValueOut>(badFunc.Invoke(@this.Value))
+             : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
         /// Выполнение положительного или негативного условия в результирующем ответе
         /// </summary>      
         public static IResultValue<TValueOut> ResultValueOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,

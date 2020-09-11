@@ -119,6 +119,42 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         }
 
         /// <summary>
+        /// Добавить сущности в таблицу. Найти их по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task AddRange_FindAll()
+        {
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntity();
+
+            var ids = await testDatabaseTable.AddRangeAsync(entities);
+            var result = await testDatabase.SaveChangesAsync();
+            var testFind = await testDatabaseTable.FindAsync(ids.Value);
+
+            Assert.True(result.OkStatus);
+            Assert.True(testFind.OkStatus);
+            Assert.True(testFind.Value.SequenceEqual(entities));
+        }
+
+        /// <summary>
+        /// Добавить сущности в таблицу. Отсутствие в базе
+        /// </summary>
+        [Fact]
+        public async Task AddRange_Find_NotFound()
+        {
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestDomains();
+            var ids = EntityData.GetTestIds(entities);
+
+            var testFind = await testDatabaseTable.FindAsync(ids);
+
+            Assert.True(testFind.OkStatus);
+            Assert.True(testFind.Value.Count == 0);
+        }
+
+        /// <summary>
         /// Добавить сущности в таблицу. Получить вторую
         /// </summary>
         [Fact]

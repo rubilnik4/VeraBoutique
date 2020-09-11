@@ -25,6 +25,16 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
             MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionContinue(predicate, okFunc, badFunc));
 
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе с коллекцией задачи-объекта
+        /// </summary>      
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionWhereTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> okFunc,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> badFunc) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionWhere(predicate, okFunc, badFunc));
+
+        /// <summary>
         /// Выполнение положительного или негативного условия в результирующем ответе с коллекцией задачи-объекта
         /// </summary>      
         public static async Task<IResultCollection<TValueOut>> ResultCollectionOkBadTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,

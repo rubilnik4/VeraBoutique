@@ -26,6 +26,19 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
         /// <summary>
         /// Выполнение положительного или негативного условия в результирующем ответе с коллекцией
         /// </summary>      
+        public static IResultCollection<TValueOut> ResultCollectionWhere<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> okFunc,
+                                                                                                 Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> badFunc) =>
+         @this.OkStatus
+             ? predicate(@this.Value)
+                 ? new ResultCollection<TValueOut>(okFunc.Invoke(@this.Value))
+                 : new ResultCollection<TValueOut>(badFunc.Invoke(@this.Value))
+             : new ResultCollection<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение положительного или негативного условия в результирующем ответе с коллекцией
+        /// </summary>      
         public static IResultCollection<TValueOut> ResultCollectionOkBad<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
                                                                                               Func<IReadOnlyCollection<TValueIn>, IEnumerable<TValueOut>> okFunc,
                                                                                               Func<IReadOnlyCollection<IErrorResult>, IEnumerable<TValueOut>> badFunc) =>

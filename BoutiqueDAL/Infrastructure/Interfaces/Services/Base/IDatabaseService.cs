@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models);
+        Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models);
 
         /// <summary>
         /// Заменить модель в базе по идентификатору

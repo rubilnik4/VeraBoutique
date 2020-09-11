@@ -1,4 +1,6 @@
-﻿using Functional.Models.Enums;
+﻿using System;
+using System.Collections.Generic;
+using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -26,5 +28,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// </summary>
         public static IErrorResult ValueNotFoundError(string id, string tableName) =>
             new ErrorResult(ErrorResultType.DatabaseValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
+
+        /// <summary>
+        /// Дублирование элементов
+        /// </summary>
+        public static IErrorResult DuplicateError<TId>(IEnumerable<TId> ids, string tableName) =>
+            new ErrorResult(ErrorResultType.DatabaseValueNotFound, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
+
+        /// <summary>
+        /// Преобразовать список элементов в строку
+        /// </summary>
+        private static string AggregateIdsToString<TId>(IEnumerable<TId> ids) =>
+            String.Join(",", ids);
     }
 }

@@ -13,6 +13,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         where TId: notnull
     {
         /// <summary>
+        /// Имя таблицы
+        /// </summary>
+        string TableName { get; }
+
+        /// <summary>
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
         Task<IResultCollection<TEntity>> ToListAsync();
@@ -26,6 +31,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// Добавить список в таблицу
         /// </summary>
         Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Найти записи в таблице по идентификаторам
+        /// </summary>
+        Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids);
 
         /// <summary>
         /// Добавить элемент в таблице

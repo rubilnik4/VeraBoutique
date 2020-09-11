@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
@@ -11,6 +12,7 @@ using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
@@ -24,6 +26,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
     {
+        protected EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
+        {
+            _databaseSet = databaseSet;
+            TableName = tableName;
+        }
+
         /// <summary>
         /// Экземпляр таблицы базы данных
         /// </summary>
@@ -32,13 +40,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Имя таблицы
         /// </summary>
-        private readonly string _tableName;
-
-        protected EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
-        {
-            _databaseSet = databaseSet;
-            _tableName = tableName;
-        }
+        public string TableName { get; }
 
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
@@ -53,6 +55,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
             await ResultValueBindTryAsync(() => _databaseSet.FindAsync(id).MapValueToTask().
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)),
                                           TableAccessError);
+        /// <summary>
+        /// Найти записи в таблице по идентификаторам
+        /// </summary>
+        public async Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids) =>
+            await ResultCollectionTryAsync(() => Where(ids).ToListAsync(), 
+                                           TableAccessError);
 
         /// <summary>
         /// Добавить список в таблицу
@@ -73,6 +81,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// </summary>
         public new IResultValue<TEntity> Remove(TEntity entity) =>
             ResultValueTry(() => _databaseSet.Remove(entity).Entity, TableAccessError);
+
+        /// <summary>
+        /// Поиск по параметрам
+        /// </summary>
+        protected abstract IQueryable<TEntity> Where(IEnumerable<TId> ids);
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных

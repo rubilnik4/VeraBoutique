@@ -29,32 +29,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services
     /// </summary>
     public class GenderServiceTest
     {
-        ///// <summary>
-        ///// Проверить запись типа пола
-        ///// </summary>
-        //[Fact]
-        //public async Task UploadGenders_OK()
-        //{
-        //    var uploadGenders = EntityData.GetGendersDomain();
-        //    var genderIds = EntityData.GetGendersIds();
-        //    var gendersTableMock = new Mock<IDatabaseTable<GenderType, GenderEntity>>();
-        //    gendersTableMock.Setup(gendersTable => gendersTable.AddRangeAsync(It.IsAny<IEnumerable<GenderEntity>>())).
-        //                     ReturnsAsync(new ResultCollection<GenderType>(genderIds));
-
-        //    var boutiqueDatabaseMock = new Mock<IBoutiqueDatabase>();
-        //    boutiqueDatabaseMock.Setup(boutiqueDatabase => boutiqueDatabase.GendersTable).Returns(gendersTableMock.Object);
-
-        //    var boutiqueDatabaseResult = new ResultValue<IBoutiqueDatabase>(boutiqueDatabaseMock.Object);
-        //    var genderConverter = (IGenderEntityConverter)new GenderEntityConverter();
-        //    var genderService = new GenderService(boutiqueDatabaseResult,
-        //                                          boutiqueDatabaseResult.ResultValueOk(database => database.GendersTable),
-        //                                          genderConverter);
-
-        //    var resultIds = await genderService.Post(uploadGenders);
-
-        //    Assert.True(resultIds.OkStatus);
-        //    Assert.True(resultIds.Value.SequenceEqual(genderIds));
-        //}
+      
 
         ///// <summary>
         ///// Проверить запись типа пола. Возврат с ошибкой
