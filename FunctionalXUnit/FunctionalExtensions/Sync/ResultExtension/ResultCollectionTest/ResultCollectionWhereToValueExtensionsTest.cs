@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа с коллекцией с возвращением к значению. Тесты
@@ -25,8 +24,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
 
             var resultAfterWhere =
                 resultCollection.ResultCollectionContinueToValue(numbers => true,
-                                                            okFunc: Collections.AggregateToString,
-                                                            badFunc: _ => CreateErrorListTwoTest());
+                    okFunc: Collections.AggregateToString,
+                    badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(Collections.AggregateToString(numberCollection), resultAfterWhere.Value);
@@ -44,8 +43,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var errorBad = CreateErrorListTwoTest();
             var resultAfterWhere =
                 resultCollection.ResultCollectionContinueToValue(numbers => false,
-                                                            okFunc: _ => String.Empty,
-                                                            badFunc: numbers => errorBad);
+                    okFunc: _ => String.Empty,
+                    badFunc: numbers => errorBad);
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Equal(errorBad.Count, resultAfterWhere.Errors.Count);
@@ -62,8 +61,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
 
             var resultAfterWhere =
                 resultCollection.ResultCollectionContinueToValue(number => true,
-                                                                 okFunc: _ => String.Empty,
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+                    okFunc: _ => String.Empty,
+                    badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
@@ -80,8 +79,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
 
             var resultAfterWhere =
                 resultCollection.ResultCollectionContinueToValue(number => false,
-                                                                 okFunc: _ => String.Empty, 
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+                    okFunc: _ => String.Empty, 
+                    badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);

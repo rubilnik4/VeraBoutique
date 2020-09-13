@@ -2,11 +2,10 @@
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
-using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со значением. Тесты

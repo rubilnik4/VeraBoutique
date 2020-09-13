@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа. Тесты
@@ -17,7 +18,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ToResultValue_OkStatus()
         {
-            var resultNoError = new Functional.Models.Implementations.Result.ResultError();
+            var resultNoError = new ResultError();
             const string value = "OkStatus";
 
             var resultValue = resultNoError.ToResultValue(value);
@@ -33,7 +34,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         public void ToResultValue_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = new Functional.Models.Implementations.Result.ResultError(error);
+            var resultHasError = new ResultError(error);
             const string value = "BadStatus";
 
             var resultValue = resultHasError.ToResultValue(value);
@@ -49,7 +50,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ToResultCollection_OkStatus()
         {
-            var resultNoError = new Functional.Models.Implementations.Result.ResultError();
+            var resultNoError = new ResultError();
             var collection = new List<string> { "OkStatus" };
 
             var resultValue = resultNoError.ToResultCollection(collection);
@@ -65,7 +66,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         public void ToResultCollection_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = new Functional.Models.Implementations.Result.ResultError(error);
+            var resultHasError = new ResultError(error);
             var collection = new List<string> { "BadStatus" };
 
             var resultValue = resultHasError.ToResultValue(collection);

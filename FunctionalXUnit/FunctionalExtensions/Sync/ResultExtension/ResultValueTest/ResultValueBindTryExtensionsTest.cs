@@ -1,7 +1,7 @@
-﻿using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
-using System.Linq;
+﻿using System.Linq;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
@@ -9,7 +9,7 @@ using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueBindTryExtensions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со связыванием со значением и обработкой исключений. Тесты

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Data.Collections;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Обработка условий для результирующего связывающего ответа с коллекцией. Тесты
@@ -55,7 +56,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var initialCollection = GetRangeNumber();
             var resultCollection = new ResultCollection<int>(initialCollection);
 
-            var resultAfterWhere = resultCollection.ResultCollectionBindBad(errors => new ResultCollection<int>(new List<int> { errors.Count }));
+            var resultAfterWhere = resultCollection.ResultCollectionBindBad(GetResultCollectionByErrorCount);
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.True(initialCollection.SequenceEqual(resultAfterWhere.Value));
@@ -70,7 +71,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var errorsInitial = CreateErrorListTwoTest();
             var resultCollection = new ResultCollection<int>(errorsInitial);
 
-            var resultAfterWhere = resultCollection.ResultCollectionBindBad(errors => new ResultCollection<int>(new List<int> { errors.Count }));
+            var resultAfterWhere = resultCollection.ResultCollectionBindBad(GetResultCollectionByErrorCount);
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count, resultAfterWhere.Value.First());
@@ -84,10 +85,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         {
             var initialCollection = GetRangeNumber();
             var resultCollection = new ResultCollection<int>(initialCollection);
-            var resultError = new Functional.Models.Implementations.Result.ResultError();
-            var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
-                                Returns(resultError);
+            var resultError = new ResultError();
+            var resultFunctionsMock = GetNumbersToError(resultError);
 
             var resultAfterWhere = resultCollection.ResultCollectionBindErrorsOk(numbers => resultFunctionsMock.Object.NumbersToResult(numbers));
 
@@ -105,10 +104,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var initialCollection = GetRangeNumber();
             var initialError = CreateErrorTest();
             var resultCollection = new ResultCollection<int>(initialCollection);
-            var resultError = new Functional.Models.Implementations.Result.ResultError(initialError);
-            var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
-                                Returns(resultError);
+            var resultError = new ResultError(initialError);
+            var resultFunctionsMock = GetNumbersToError(resultError);
 
             var resultAfterWhere = resultCollection.ResultCollectionBindErrorsOk(numbers => resultFunctionsMock.Object.NumbersToResult(numbers));
 
@@ -125,10 +122,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         {
             var errorsInitial = CreateErrorListTwoTest();
             var resultCollection = new ResultCollection<int>(errorsInitial);
-            var resultError = new Functional.Models.Implementations.Result.ResultError();
-            var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
-                                Returns(resultError);
+            var resultError = new ResultError();
+            var resultFunctionsMock = GetNumbersToError(resultError);
 
             var resultAfterWhere = resultCollection.ResultCollectionBindErrorsOk(numbers => resultFunctionsMock.Object.NumbersToResult(numbers));
 
@@ -146,10 +141,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var errorsInitial = CreateErrorListTwoTest();
             var initialError = CreateErrorTest();
             var resultCollection = new ResultCollection<int>(errorsInitial);
-            var resultError = new Functional.Models.Implementations.Result.ResultError(initialError);
-            var resultFunctionsMock = new Mock<IResultFunctions>();
-            resultFunctionsMock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
-                                Returns(resultError);
+            var resultError = new ResultError(initialError);
+            var resultFunctionsMock = GetNumbersToError(resultError);
 
             var resultAfterWhere = resultCollection.ResultCollectionBindErrorsOk(numbers => resultFunctionsMock.Object.NumbersToResult(numbers));
 
@@ -157,5 +150,19 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             Assert.True(errorsInitial.SequenceEqual(resultAfterWhere.Errors));
             resultFunctionsMock.Verify(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>()), Times.Never);
         }
+
+        /// <summary>
+        /// Получить функцию с результирующим ответом
+        /// </summary>
+        private static Mock<IResultFunctions> GetNumbersToError(IResultError resultError) =>
+            new Mock<IResultFunctions>().
+                Void(mock => mock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
+                                  Returns(resultError));
+        
+        /// <summary>
+        /// Получить результирующую коллекцию по количеству ошибок
+        /// </summary>
+        private static IResultCollection<int> GetResultCollectionByErrorCount(IReadOnlyCollection<IErrorResult> errors) =>
+            new ResultCollection<int>(GetListByErrorsCount(errors));
     }
 }

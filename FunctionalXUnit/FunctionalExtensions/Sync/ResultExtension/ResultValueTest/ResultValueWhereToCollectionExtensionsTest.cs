@@ -1,14 +1,13 @@
-﻿using Functional.Models.Implementations.Result;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
-using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа с значением с возвращением к коллекции. Тесты
@@ -21,7 +20,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueContinueToCollection_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere =
@@ -39,10 +38,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueContinueToCollection_Ok_ReturnNewError()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
-
             var errorBad = CreateErrorListTwoTest();
+
             var resultAfterWhere =
                 resultValue.ResultValueContinueToCollection(number => false,
                                                 okFunc: NumberToCollection,
@@ -94,7 +93,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueOkBadToCollection_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere =
@@ -130,7 +129,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueOkToCollection_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = resultValue.ResultValueOkToCollection(NumberToCollection);

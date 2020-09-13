@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
@@ -10,7 +8,7 @@ using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.Re
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений. Тесты
@@ -23,10 +21,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Ok()
         {
-            var resultValue = ResultValueTry(() => SyncFunctions.Division(1), Exceptions.ExceptionError());
+            int initialValue = Numbers.Number;
+            var resultValue = ResultValueTry(() => Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(SyncFunctions.Division(1), resultValue.Value);
+            Assert.Equal(Division(1), resultValue.Value);
         }
 
         /// <summary>
@@ -35,7 +34,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTry_Exception()
         {
-            var resultValue = ResultValueTry(() => SyncFunctions.Division(0), Exceptions.ExceptionError());
+            const int initialValue = 0;
+            var resultValue = ResultValueTry(() => Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
@@ -47,13 +47,13 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTryOk_OkResult_OkTry()
         {
-            const int initialNumber = 2;
-            var numberResult = new ResultValue<int>(initialNumber);
+            int initialValue = Numbers.Number;
+            var numberResult = new ResultValue<int>(initialValue);
 
             var numberAfterTry = numberResult.ResultValueTryOk(Division, CreateErrorTest());
 
             Assert.True(numberAfterTry.OkStatus);
-            Assert.Equal(Division(initialNumber), numberAfterTry.Value);
+            Assert.Equal(Division(initialValue), numberAfterTry.Value);
         }
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueTryOk_OkResult_ExceptionTry()
         {
-            const int initialNumber = 0;
-            var numberResult = new ResultValue<int>(initialNumber);
+            const int initialValue = 0;
+            var numberResult = new ResultValue<int>(initialValue);
 
             var numberAfterTry = numberResult.ResultValueTryOk(Division, Exceptions.ExceptionError());
 

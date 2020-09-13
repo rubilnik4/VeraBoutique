@@ -1,16 +1,15 @@
-﻿using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
-using System.Linq;
+﻿using System.Linq;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Data;
-using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
 using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection.ResultCollectionBindTryExtensions;
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollection
+
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа с со связыванием коллекцией и обработкой исключений. Тесты
@@ -23,7 +22,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionBindTry_Ok()
         {
-            var resultCollection = ResultCollectionBindTry(() => new ResultCollection<int>(DivisionCollection(1)),
+            int initialValue = Numbers.Number;
+            var resultCollection = ResultCollectionBindTry(() => new ResultCollection<int>(DivisionCollection(initialValue)),
                                                            Exceptions.ExceptionError());
 
             Assert.True(resultCollection.OkStatus);
@@ -36,7 +36,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionBindTry_Exception()
         {
-            var resultValue = ResultCollectionBindTry(() => new ResultCollection<int>(DivisionCollection(0)), Exceptions.ExceptionError());
+            const int initialValue = 0;
+            var resultValue = ResultCollectionBindTry(() => new ResultCollection<int>(DivisionCollection(initialValue)), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);

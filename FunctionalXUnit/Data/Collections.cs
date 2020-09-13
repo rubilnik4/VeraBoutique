@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Functional.Models.Interfaces.Result;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,5 +46,11 @@ namespace FunctionalXUnit.Data
         /// </summary>
         public static async Task<string> AggregateToStringAsync(IEnumerable<int> numbers) =>
            await Task.FromResult(numbers.Aggregate(String.Empty, (previous, next) => previous.ToString() + next));
+
+        /// <summary>
+        /// Получить количество ошибок списком
+        /// </summary>
+        public static IList<int> GetListByErrorsCount(IReadOnlyCollection<IErrorResult> errors) =>
+            new List<int> { errors.Count };
     }
 }

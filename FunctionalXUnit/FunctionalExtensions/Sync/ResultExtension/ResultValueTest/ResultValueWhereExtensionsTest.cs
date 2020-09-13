@@ -2,10 +2,11 @@
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа со значением. Тесты
@@ -18,7 +19,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueContinue_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere =
@@ -36,7 +37,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueContinue_Ok_ReturnNewError()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var errorBad = CreateErrorListTwoTest();
@@ -91,7 +92,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueOkBad_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere =
@@ -127,7 +128,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueOk_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = resultValue.ResultValueOk(number => number.ToString());
@@ -157,7 +158,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueBad_Ok_ReturnInitial()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = resultValue.ResultValueBad(errors => errors.Count);

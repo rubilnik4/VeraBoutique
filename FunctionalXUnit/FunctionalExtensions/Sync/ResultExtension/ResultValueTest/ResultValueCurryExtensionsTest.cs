@@ -2,10 +2,11 @@
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Преобразование внутреннего типа результирующего ответа со значением для функций высшего порядка. Тесты
@@ -19,13 +20,14 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddOkStatus()
         {
+            int initialValue = Numbers.Number;
             var resultValueFunc = new ResultValue<Func<int, string>>(IntToString);
-            var resultArgument = new ResultValue<int>(2);
+            var resultArgument = new ResultValue<int>(initialValue);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
 
             Assert.True(resultOut.OkStatus);
-            Assert.Equal("2", resultOut.Value.Invoke());
+            Assert.Equal(initialValue.ToString(), resultOut.Value.Invoke());
         }
 
         /// <summary>
@@ -91,13 +93,14 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddOkStatus_TwoArguments()
         {
+            int initialValue = Numbers.Number;
             var resultValueFunc = new ResultValue<Func<int, int, string>>(AggregateTwoToString);
-            var resultArgument = new ResultValue<int>(2);
+            var resultArgument = new ResultValue<int>(initialValue);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
 
             Assert.True(resultOut.OkStatus);
-            Assert.Equal("4", resultOut.Value.Invoke(2));
+            Assert.Equal((initialValue + initialValue).ToString(), resultOut.Value.Invoke(2));
         }
 
         /// <summary>
@@ -125,9 +128,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultCurryOkBind_BadStatus_AddOkStatus_TwoArguments()
         {
+            int initialValue = Numbers.Number;
             var errorFunc = CreateErrorTest();
             var resultValueFunc = new ResultValue<Func<int, int, string>>(errorFunc);
-            var resultArgument = new ResultValue<int>(2);
+            var resultArgument = new ResultValue<int>(initialValue);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
 
@@ -163,13 +167,14 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultCurryOkBind_OkStatus_AddOkStatus_ThreeArguments()
         {
+            int initialValue = Numbers.Number;
             var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateThreeToString);
-            var resultArgument = new ResultValue<int>(2);
+            var resultArgument = new ResultValue<int>(initialValue);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
 
             Assert.True(resultOut.OkStatus);
-            Assert.Equal("6", resultOut.Value.Invoke(2, 2));
+            Assert.Equal((initialValue*3).ToString(), resultOut.Value.Invoke(initialValue, initialValue));
         }
 
         /// <summary>
@@ -197,9 +202,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultCurryOkBind_BadStatus_AddOkStatus_ThreeArguments()
         {
+            int initialValue = Numbers.Number;
             var errorFunc = CreateErrorTest();
             var resultValueFunc = new ResultValue<Func<int, int, int, string>>(errorFunc);
-            var resultArgument = new ResultValue<int>(2);
+            var resultArgument = new ResultValue<int>(initialValue);
 
             var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
 

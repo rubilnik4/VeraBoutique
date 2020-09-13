@@ -2,14 +2,13 @@
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using FunctionalXUnit.Data;
-using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection.ResultCollectionTryExtensions;
 using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа с коллекцией и обработкой исключений. Тесты
@@ -22,7 +21,9 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionTry_Ok()
         {
-            var resultCollection = ResultCollectionTry(() => DivisionCollection(1), Exceptions.ExceptionError());
+            int initialValue = Numbers.Number;
+
+            var resultCollection = ResultCollectionTry(() => DivisionCollection(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultCollection.OkStatus);
             Assert.True(DivisionCollection(1).SequenceEqual( resultCollection.Value));
@@ -34,7 +35,9 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionTry_Exception()
         {
-            var resultCollection = ResultCollectionTry(() => DivisionCollection(0), Exceptions.ExceptionError());
+            const int initialValue = 0;
+
+            var resultCollection = ResultCollectionTry(() => DivisionCollection(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultCollection.Errors.First().ErrorResultType);

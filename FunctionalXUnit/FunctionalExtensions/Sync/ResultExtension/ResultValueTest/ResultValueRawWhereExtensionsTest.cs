@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа со значением в обертке. Тесты
@@ -17,7 +18,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueRawOk_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = resultValue.ResultValueRawOk(result => new ResultValue<string>(result.Value.ToString()));
@@ -47,7 +48,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValue
         [Fact]
         public void ResultValueRawBad_Ok_ReturnInitial()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = resultValue.ResultValueRawBad(result => new ResultValue<int>(result.Value * 2));

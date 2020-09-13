@@ -5,7 +5,7 @@ using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа и обработкой исключений. Тесты
@@ -18,7 +18,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ResultErrorTry_Ok()
         {
-            var resultError = ResultErrorTry(() => SyncFunctions.Division(1), Exceptions.ExceptionError());
+            int initialValue = Numbers.Number;
+            var resultError = ResultErrorTry(() => SyncFunctions.Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultError.OkStatus);
         }
@@ -29,7 +30,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultError
         [Fact]
         public void ResultErrorTry_Exception()
         {
-            var resultError = ResultErrorTry(() => SyncFunctions.Division(0), Exceptions.ExceptionError());
+            const int initialValue = 0;
+            var resultError = ResultErrorTry(() => SyncFunctions.Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultError.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultError.Errors.First().ErrorResultType);

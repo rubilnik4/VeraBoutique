@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -6,9 +7,8 @@ using Functional.Models.Implementations.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Data.Collections;
-using System.Collections.Generic;
 
-namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа с коллекцией. Тесты
@@ -164,7 +164,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var initialCollection = GetRangeNumber();
             var resultCollection = new ResultCollection<int>(initialCollection);
 
-            var resultAfterWhere = resultCollection.ResultCollectionBad(errors => new List<int> { errors.Count });
+            var resultAfterWhere = resultCollection.ResultCollectionBad(GetListByErrorsCount);
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(initialCollection, resultAfterWhere.Value);
@@ -179,7 +179,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var errorsInitial = CreateErrorListTwoTest();
             var resultValue = new ResultCollection<int>(errorsInitial);
 
-            var resultAfterWhere = resultValue.ResultCollectionBad(errors => new List<int> { errors.Count });
+            var resultAfterWhere = resultValue.ResultCollectionBad(GetListByErrorsCount);
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count, resultAfterWhere.Value.First());
