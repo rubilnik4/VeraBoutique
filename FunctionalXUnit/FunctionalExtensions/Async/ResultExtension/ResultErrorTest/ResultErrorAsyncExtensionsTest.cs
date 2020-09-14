@@ -5,7 +5,7 @@ using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultErrorTest
 {
     /// <summary>
     /// Асинхронные методы расширения для результирующего ответа. Тесты

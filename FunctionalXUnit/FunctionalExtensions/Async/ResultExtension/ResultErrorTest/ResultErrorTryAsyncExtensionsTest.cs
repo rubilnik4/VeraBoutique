@@ -6,7 +6,7 @@ using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultErrorTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа и обработкой исключений асинхронно. Тесты

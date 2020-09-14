@@ -3,13 +3,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
+using static FunctionalXUnit.Data.Collections;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со значением. Тесты
@@ -22,8 +23,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         [Fact]
         public async Task ToResultCollectionTaskAsync_Enumerable_OkStatus()
         {
-            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
-            var resultNoError = Task.FromResult((IResultValue<IEnumerable<int>>)new ResultValue<IEnumerable<int>>(collection));
+            var collection = GetRangeNumber();
+            var resultNoError = ResultValueFactory.CreateTaskResultValue<IEnumerable<int>>(collection);
 
             var resultValue = await resultNoError.ToResultCollectionTaskAsync();
 
@@ -38,7 +39,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_Enumerable_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = Task.FromResult((IResultValue<IEnumerable<int>>)new ResultValue<IEnumerable<int>>(error));
+            var resultHasError = ResultValueFactory.CreateTaskResultValue<IEnumerable<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 
@@ -53,8 +54,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         [Fact]
         public async Task ToResultCollectionTaskAsync_IReadOnlyCollection_OkStatus()
         {
-            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
-            var resultNoError = Task.FromResult((IResultValue<IReadOnlyCollection<int>>)new ResultValue<IReadOnlyCollection<int>>(collection));
+            var collection = GetRangeNumber();
+            var resultNoError = ResultValueFactory.CreateTaskResultValue(collection);
 
             var resultValue = await resultNoError.ToResultCollectionTaskAsync();
 
@@ -69,7 +70,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_IReadOnlyCollection_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = Task.FromResult((IResultValue<IReadOnlyCollection<int>>)new ResultValue<IReadOnlyCollection<int>>(error));
+            var resultHasError = ResultValueFactory.CreateTaskResultValue<IReadOnlyCollection<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 
@@ -84,8 +85,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         [Fact]
         public async Task ToResultCollectionTaskAsync_ReadOnlyCollection_OkStatus()
         {
-            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
-            var resultNoError = Task.FromResult((IResultValue<ReadOnlyCollection<int>>)new ResultValue<ReadOnlyCollection<int>>(collection));
+            var collection = GetRangeNumber().ToList().AsReadOnly();
+            var resultNoError = ResultValueFactory.CreateTaskResultValue(collection);
 
             var resultValue = await resultNoError.ToResultCollectionTaskAsync();
 
@@ -100,7 +101,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_ReadOnlyCollection_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = Task.FromResult((IResultValue<ReadOnlyCollection<int>>)new ResultValue<ReadOnlyCollection<int>>(error));
+            var resultHasError = ResultValueFactory.CreateTaskResultValue<ReadOnlyCollection<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 

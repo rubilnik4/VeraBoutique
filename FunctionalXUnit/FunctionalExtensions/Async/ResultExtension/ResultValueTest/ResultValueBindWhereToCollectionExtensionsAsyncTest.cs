@@ -1,14 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValueTest
 {
     /// <summary>
     /// Обработка асинхронных условий для результирующего ответа со связыванием с значением с возвращением к коллекции. Тесты
@@ -21,11 +22,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         [Fact]
         public async Task ResultValueBindOkToCollectionAsync_Ok_ReturnNewValue()
         {
-            const int initialValue = 2;
+            int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
             var resultAfterWhere = await resultValue.ResultValueBindOkToCollectionAsync(
-                number => Task.FromResult((IResultCollection<int>)new ResultCollection<int>(NumberToCollection(number))));
+                number => ResultCollectionFactory.CreateTaskResultCollection(NumberToCollection(number)));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.True(NumberToCollection(initialValue).SequenceEqual(resultAfterWhere.Value));
@@ -41,7 +42,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var resultValue = new ResultValue<int>(errorInitial);
 
             var resultAfterWhere = await resultValue.ResultValueBindOkToCollectionAsync(
-                number => Task.FromResult((IResultCollection<int>)new ResultCollection<int>(NumberToCollection(number))));
+                number => ResultCollectionFactory.CreateTaskResultCollection(NumberToCollection(number)));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.True(errorInitial.Equals(resultAfterWhere.Errors.Last()));
