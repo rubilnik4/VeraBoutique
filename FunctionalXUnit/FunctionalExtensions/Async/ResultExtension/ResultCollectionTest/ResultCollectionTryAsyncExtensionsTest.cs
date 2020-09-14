@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
@@ -11,7 +10,7 @@ using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.AsyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа со значением и обработкой исключений асинхронно. Тесты
@@ -24,11 +23,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Ok_IEnumerable()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionEnumerableAsync(1),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionEnumerableAsync(1), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
+            Assert.Equal(await DivisionCollectionAsync(1), resultValue.Value);
         }
 
         /// <summary>
@@ -37,8 +35,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Exception_IEnumerable()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionEnumerableAsync(0),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionEnumerableAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
@@ -50,11 +47,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Ok_IReadonlyCollection()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionCollectionAsync(1),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionCollectionAsync(1), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
+            Assert.Equal(await DivisionCollectionAsync(1), resultValue.Value);
         }
 
         /// <summary>
@@ -63,8 +59,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Exception_IReadonlyCollection()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionCollectionAsync(0),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionCollectionAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
@@ -76,11 +71,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Ok_List()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionListAsync(1),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionListAsync(1), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(await AsyncFunctions.DivisionCollectionAsync(1), resultValue.Value);
+            Assert.Equal(await DivisionCollectionAsync(1), resultValue.Value);
         }
 
         /// <summary>
@@ -89,8 +83,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionTry_Exception_List()
         {
-            var resultValue = await ResultCollectionTryAsync(() => AsyncFunctions.DivisionListAsync(0),
-                                                             Exceptions.ExceptionError());
+            var resultValue = await ResultCollectionTryAsync(() => DivisionListAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);

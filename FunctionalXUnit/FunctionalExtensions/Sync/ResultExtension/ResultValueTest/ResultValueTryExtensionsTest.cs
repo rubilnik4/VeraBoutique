@@ -25,7 +25,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValue = ResultValueTry(() => Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(Division(1), resultValue.Value);
+            Assert.Equal(Division(initialValue), resultValue.Value);
         }
 
         /// <summary>

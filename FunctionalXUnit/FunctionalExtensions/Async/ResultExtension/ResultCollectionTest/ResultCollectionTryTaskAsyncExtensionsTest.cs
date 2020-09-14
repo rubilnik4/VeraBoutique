@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using Xunit;
@@ -11,7 +11,7 @@ using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Методы расширения для результирующего ответа с коллекцией и обработкой исключений для задачи-объекта. Тесты
@@ -25,7 +25,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionTryTaskAsyncOk_OkResult_OkTry()
         {
             var initialNumbers = GetRangeNumber();
-            var numbersResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialNumbers));
+            var numbersResult = ResultCollectionFactory.CreateTaskResultCollection(initialNumbers);
 
             var numbersAfterTry = await numbersResult.ResultCollectionTryOkTaskAsync(DivisionByCollection, CreateErrorTest());
 
@@ -40,7 +40,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionTryTaskAsyncOk_ErrorResult_OkTry()
         {
             var initialError = CreateErrorTest();
-            var numbersResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
+            var numbersResult = ResultCollectionFactory.CreateTaskResultCollectionError<int>(initialError);
 
             var numbersAfterTry = await numbersResult.ResultCollectionTryOkTaskAsync(DivisionByCollection, CreateErrorTest());
 
@@ -55,7 +55,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionTryTaskAsyncOk_OkResult_ExceptionTry()
         {
             var initialNumbers = GetRangeNumber();
-            var numberResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialNumbers));
+            var numberResult = ResultCollectionFactory.CreateTaskResultCollection(initialNumbers);
 
             var numbersAfterTry = await numberResult.ResultCollectionTryOkTaskAsync(DivisionCollectionByZero, Exceptions.ExceptionError());
 
@@ -70,7 +70,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionTryTaskAsyncOk_ErrorResult_ExceptionTry()
         {
             var initialError = CreateErrorTest();
-            var numbersResult = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(initialError));
+            var numbersResult = ResultCollectionFactory.CreateTaskResultCollectionError<int>(initialError);
 
             var numberAfterTry = await numbersResult.ResultCollectionTryOkTaskAsync(DivisionCollectionByZero, Exceptions.ExceptionError());
 

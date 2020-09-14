@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
@@ -18,8 +20,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         [Fact]
         public async Task ResultErrorBindOkTaskAsync_Ok_NoError()
         {
-            var initialResult = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError());
-            var addingResult = (IResultError)new Functional.Models.Implementations.Result.ResultError();
+            var initialResult = ResultErrorFactory.CreateTaskResultError();
+            var addingResult = new ResultError();
 
             var result = await initialResult.ResultErrorBindOkTaskAsync(() => addingResult);
 
@@ -33,8 +35,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         public async Task ResultErrorBindOkTaskAsync_Ok_HasError()
         {
             var initialError = CreateErrorTest();
-            var initialResult = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError());
-            var addingResult = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialError);
+            var initialResult = ResultErrorFactory.CreateTaskResultError();
+            var addingResult = new ResultError(initialError);
 
             var result = await initialResult.ResultErrorBindOkTaskAsync(() => addingResult);
 
@@ -49,8 +51,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         public async Task ResultErrorBindOkTaskAsync_Bad_NoError()
         {
             var initialError = CreateErrorTest();
-            var initialResult = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError(initialError));
-            var addingResult = (IResultError)new Functional.Models.Implementations.Result.ResultError();
+            var initialResult = ResultErrorFactory.CreateTaskResultError(initialError);
+            var addingResult = new ResultError();
 
             var result = await initialResult.ResultErrorBindOkTaskAsync(() => addingResult);
 
@@ -65,8 +67,8 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         public async Task ResultErrorBindOkTaskAsync_Bad_HasError()
         {
             var initialError = CreateErrorTest();
-            var initialResult = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError(initialError));
-            var addingResult = (IResultError)new Functional.Models.Implementations.Result.ResultError(initialError);
+            var initialResult = ResultErrorFactory.CreateTaskResultError(initialError);
+            var addingResult =new ResultError(initialError);
 
             var result = await initialResult.ResultErrorBindOkTaskAsync(() => addingResult);
 

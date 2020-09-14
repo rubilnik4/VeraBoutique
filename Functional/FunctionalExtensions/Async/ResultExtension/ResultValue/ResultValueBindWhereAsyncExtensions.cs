@@ -13,6 +13,32 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
     public static class ResultCollectionBindWhereAsyncExtensions
     {
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в асинхронном результирующем ответе со значением
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindContinueAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                                            Func<TValueIn, bool> predicate,
+                                                                                                            Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                            Func<TValueIn, Task<IEnumerable<IErrorResult>>> badFunc) =>
+            @this.OkStatus
+                ? predicate(@this.Value)
+                    ? await okFunc.Invoke(@this.Value)
+                    : new ResultValue<TValueOut>(await badFunc.Invoke(@this.Value))
+                : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в асинхронном результирующем ответе со значением
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindWhereAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                                         Func<TValueIn, bool> predicate,
+                                                                                                         Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                         Func<TValueIn, Task<IResultValue<TValueOut>>> badFunc) =>
+            @this.OkStatus
+                ? predicate(@this.Value)
+                    ? await okFunc.Invoke(@this.Value)
+                    : await badFunc.Invoke(@this.Value)
+                : new ResultValue<TValueOut>(@this.Errors);
+
+        /// <summary>
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,

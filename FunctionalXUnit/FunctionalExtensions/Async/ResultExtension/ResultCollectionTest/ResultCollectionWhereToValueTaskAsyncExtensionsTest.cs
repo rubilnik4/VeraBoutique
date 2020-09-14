@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollection
+namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultCollectionTest
 {
     /// <summary>
     /// Обработка условий для результирующего ответа задачи-объекта с коллекцией с возвращением к значению. Тесты
@@ -23,12 +23,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollectionTask = ResultCollectionFactory.CreateTaskResultCollection(numberCollection);
 
-            var resultAfterWhere =
-                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => true,
-                                                            okFunc: Collections.AggregateToString,
-                                                            badFunc: _ => CreateErrorListTwoTest());
+            var resultAfterWhere = await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => true,
+                okFunc: Collections.AggregateToString,
+                badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(await Collections.AggregateToStringAsync(numberCollection), resultAfterWhere.Value);
@@ -41,13 +40,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionContinueToValueTaskAsync_Ok_ReturnNewError()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollectionTask = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollectionTask = ResultCollectionFactory.CreateTaskResultCollection(numberCollection);
 
             var errorsBad = CreateErrorListTwoTest();
-            var resultAfterWhere =
-                await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => false,
-                                                            okFunc: _ => String.Empty,
-                                                            badFunc: numbers => errorsBad);
+            var resultAfterWhere = await resultCollectionTask.ResultCollectionContinueToValueTaskAsync(numbers => false,
+                okFunc: _ => String.Empty,
+                badFunc: numbers => errorsBad);
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Equal(errorsBad.Count, resultAfterWhere.Errors.Count);
@@ -60,12 +58,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewValue()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorInitial);
 
-            var resultAfterWhere =
-               await resultCollection.ResultCollectionContinueToValueTaskAsync(number => true,
-                                                                 okFunc: _ => String.Empty,
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+            var resultAfterWhere = await resultCollection.ResultCollectionContinueToValueTaskAsync(number => true,
+                okFunc: _ => String.Empty,
+                badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
@@ -78,12 +75,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionContinueToValueTaskAsync_Bad_ReturnNewError()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorInitial);
 
-            var resultAfterWhere =
-                await resultCollection.ResultCollectionContinueToValueTaskAsync(number => false,
-                                                                 okFunc: _ => String.Empty,
-                                                                 badFunc: _ => CreateErrorListTwoTest());
+            var resultAfterWhere = await resultCollection.ResultCollectionContinueToValueTaskAsync(number => false,
+                okFunc: _ => String.Empty,
+                badFunc: _ => CreateErrorListTwoTest());
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
@@ -96,12 +92,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionOkBadToValueTaskAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollection(numberCollection);
 
-            var resultAfterWhere =
-                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
-                    okFunc: Collections.AggregateToString,
-                    badFunc: _ => String.Empty);
+            var resultAfterWhere = await resultCollection.ResultCollectionOkBadToValueTaskAsync(
+                okFunc: Collections.AggregateToString,
+                badFunc: _ => String.Empty);
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(await Collections.AggregateToStringAsync(numberCollection), resultAfterWhere.Value);
@@ -114,12 +109,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionOkBadToValueTaskAsync_Bad_ReturnNewValueByErrors()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorsInitial));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorsInitial);
 
-            var resultAfterWhere =
-                await resultCollection.ResultCollectionOkBadToValueTaskAsync(
-                    okFunc: _ => String.Empty,
-                    badFunc: errors => errors.Count.ToString());
+            var resultAfterWhere = await resultCollection.ResultCollectionOkBadToValueTaskAsync(
+                okFunc: _ => String.Empty,
+                badFunc: errors => errors.Count.ToString());
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
@@ -132,7 +126,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionOkToValueTaskAsync_Ok_ReturnNewValue()
         {
             var numberCollection = Collections.GetRangeNumber();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(numberCollection));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollection(numberCollection);
 
             var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
 
@@ -147,7 +141,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         public async Task ResultCollectionOkToValueTaskAsync_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
-            var resultCollection = Task.FromResult((IResultCollection<int>)new ResultCollection<int>(errorInitial));
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorInitial);
 
             var resultAfterWhere = await resultCollection.ResultCollectionOkToValueTaskAsync(Collections.AggregateToString);
 

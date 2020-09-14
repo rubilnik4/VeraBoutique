@@ -20,14 +20,14 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ со значением и ошибкой
         /// </summary>
-        public static Task<IResultValue<TValue>> CreateTaskResultValue<TValue>(IErrorResult error)
+        public static Task<IResultValue<TValue>> CreateTaskResultValueError<TValue>(IErrorResult error)
             where TValue : notnull =>
             Task.FromResult((IResultValue<TValue>)new ResultValue<TValue>(error));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ со значением и ошибкой
         /// </summary>
-        public static Task<IResultValue<TValue>> CreateTaskResultValue<TValue>(IEnumerable<IErrorResult> errors)
+        public static Task<IResultValue<TValue>> CreateTaskResultValueError<TValue>(IEnumerable<IErrorResult> errors)
             where TValue : notnull =>
             Task.FromResult((IResultValue<TValue>)new ResultValue<TValue>(errors));
 
@@ -41,14 +41,14 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ со значением и ошибкой
         /// </summary>
-        public static async Task<IResultValue<TValue>> CreateTaskResultValueAsync<TValue>(IErrorResult error)
+        public static async Task<IResultValue<TValue>> CreateTaskResultValueErrorAsync<TValue>(IErrorResult error)
             where TValue : notnull =>
             await Task.FromResult((IResultValue<TValue>)new ResultValue<TValue>(error));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ со значением и ошибкой
         /// </summary>
-        public static async Task<IResultValue<TValue>> CreateTaskResultValueAsync<TValue>(IEnumerable<IErrorResult> errors)
+        public static async Task<IResultValue<TValue>> CreateTaskResultValueErrorAsync<TValue>(IEnumerable<IErrorResult> errors)
             where TValue : notnull =>
             await Task.FromResult((IResultValue<TValue>)new ResultValue<TValue>(errors));
     }

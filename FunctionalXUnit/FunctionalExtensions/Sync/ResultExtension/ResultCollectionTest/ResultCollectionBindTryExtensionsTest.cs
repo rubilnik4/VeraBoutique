@@ -27,7 +27,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
                                                            Exceptions.ExceptionError());
 
             Assert.True(resultCollection.OkStatus);
-            Assert.True(DivisionCollection(1).SequenceEqual(resultCollection.Value));
+            Assert.True(DivisionCollection(initialValue).SequenceEqual(resultCollection.Value));
         }
 
         /// <summary>

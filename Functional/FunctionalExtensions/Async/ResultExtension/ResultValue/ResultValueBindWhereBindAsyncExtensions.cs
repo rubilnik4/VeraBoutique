@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -13,6 +14,26 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
     /// </summary>
     public static class ResultValueBindWhereBindAsyncExtensions
     {
+        /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе со значением задачи-объекта
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindContinueBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
+                                                                                                            Func<TValueIn, bool> predicate,
+                                                                                                            Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                            Func<TValueIn, Task<IEnumerable<IErrorResult>>> badFunc) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.ResultValueBindContinueAsync(predicate, okFunc, badFunc));
+
+        /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе со значение задачи-объекта
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindWhereBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
+                                                                                                             Func<TValueIn, bool> predicate,
+                                                                                                             Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                             Func<TValueIn, Task<IResultValue<TValueOut>>> badFunc) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.ResultValueBindWhereAsync(predicate, okFunc, badFunc));
+
         /// <summary>
         /// Выполнение асинхронного положительного условия результирующего ответа или возвращение предыдущей ошибки в результирующем ответе для задачи-объекта
         /// </summary>   

@@ -20,14 +20,14 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ с коллекцией и ошибкой
         /// </summary>
-        public static Task<IResultCollection<TValue>> CreateTaskResultCollection<TValue>(IErrorResult error)
+        public static Task<IResultCollection<TValue>> CreateTaskResultCollectionError<TValue>(IErrorResult error)
             where TValue : notnull =>
             Task.FromResult((IResultCollection<TValue>)new ResultCollection<TValue>(error));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с коллекцией и ошибкой
         /// </summary>
-        public static Task<IResultCollection<TValue>> CreateTaskResultCollection<TValue>(IEnumerable<IErrorResult> errors)
+        public static Task<IResultCollection<TValue>> CreateTaskResultCollectionError<TValue>(IEnumerable<IErrorResult> errors)
             where TValue : notnull =>
             Task.FromResult((IResultCollection<TValue>)new ResultCollection<TValue>(errors));
 
@@ -41,14 +41,14 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ с коллекцией и ошибкой
         /// </summary>
-        public static async Task<IResultCollection<TValue>> CreateTaskResultCollectionAsync<TValue>(IErrorResult error)
+        public static async Task<IResultCollection<TValue>> CreateTaskResultCollectionErrorAsync<TValue>(IErrorResult error)
             where TValue : notnull =>
             await Task.FromResult((IResultCollection<TValue>)new ResultCollection<TValue>(error));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с коллекцией и ошибкой
         /// </summary>
-        public static async Task<IResultCollection<TValue>> CreateTaskResultCollectionAsync<TValue>(IEnumerable<IErrorResult> errors)
+        public static async Task<IResultCollection<TValue>> CreateTaskResultCollectionErrorAsync<TValue>(IEnumerable<IErrorResult> errors)
             where TValue : notnull =>
             await Task.FromResult((IResultCollection<TValue>)new ResultCollection<TValue>(errors));
     }

@@ -35,7 +35,7 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         {
             var initialError = CreateErrorTest();
 
-            var resultValue = await ResultValueFactory.CreateTaskResultValue(initialError);
+            var resultValue = await ResultValueFactory.CreateTaskResultValueError<int>(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.Equals(resultValue.Errors.First()));
@@ -49,7 +49,7 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         {
             var initialError = CreateErrorListTwoTest();
 
-            var resultValue = await ResultValueFactory.CreateTaskResultValue(initialError);
+            var resultValue = await ResultValueFactory.CreateTaskResultValueError<int>(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.SequenceEqual(resultValue.Errors));
@@ -77,7 +77,7 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         {
             var initialError = CreateErrorTest();
 
-            var resultValue = await ResultValueFactory.CreateTaskResultValueAsync(initialError);
+            var resultValue = await ResultValueFactory.CreateTaskResultValueErrorAsync<int>(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.Equals(resultValue.Errors.First()));
@@ -91,7 +91,7 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         {
             var initialError = CreateErrorListTwoTest();
 
-            var resultValue = await ResultValueFactory.CreateTaskResultValueAsync(initialError);
+            var resultValue = await ResultValueFactory.CreateTaskResultValueErrorAsync<int>(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.SequenceEqual(resultValue.Errors));

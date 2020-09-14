@@ -26,11 +26,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindTryAsync_Ok()
         {
             int initialValue = Numbers.Number;
+
             var resultValue = await ResultValueBindTryAsync(() => ResultValueFactory.CreateTaskResultValue(Division(initialValue)),
                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.OkStatus);
-            Assert.Equal(initialValue, await AsyncFunctions.DivisionAsync(1));
+            Assert.Equal(resultValue.Value, await AsyncFunctions.DivisionAsync(initialValue));
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindTryAsync_Exception()
         {
             const int initialValue = 0;
+
             var resultValue = await ResultValueBindTryAsync(() => ResultValueFactory.CreateTaskResultValue(Division(initialValue)),
                                                             Exceptions.ExceptionError());
 

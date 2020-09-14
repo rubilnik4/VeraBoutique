@@ -39,7 +39,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueTryOkTaskAsync_ErrorResult_OkTry()
         {
             var initialError = CreateErrorTest();
-            var numberResult = ResultValueFactory.CreateTaskResultValue<int>(initialError);
+            var numberResult = ResultValueFactory.CreateTaskResultValueError<int>(initialError);
 
             var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, CreateErrorTest());
 
@@ -69,7 +69,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueTryOkTaskAsync_ErrorResult_ExceptionTry()
         {
             var initialError = CreateErrorTest();
-            var numberResult = ResultValueFactory.CreateTaskResultValue<int>(initialError);
+            var numberResult = ResultValueFactory.CreateTaskResultValueError<int>(initialError);
 
             var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, Exceptions.ExceptionError());
 

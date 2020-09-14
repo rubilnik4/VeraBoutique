@@ -40,7 +40,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindOkTaskAsync_Bad_ReturnInitial()
         {
             var errorInitial = CreateErrorTest();
-            var resultValue = ResultValueFactory.CreateTaskResultValue<int>(errorInitial);
+            var resultValue = ResultValueFactory.CreateTaskResultValueError<int>(errorInitial);
 
             var resultAfterWhere = await resultValue.ResultValueBindOkTaskAsync(number => new ResultValue<string>(number.ToString()));
 
@@ -70,7 +70,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindBadTaskAsync_Bad_ReturnNewValue()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultValue = ResultValueFactory.CreateTaskResultValue<int>(errorsInitial);
+            var resultValue = ResultValueFactory.CreateTaskResultValueError<int>(errorsInitial);
 
             var resultAfterWhere = await resultValue.ResultValueBindBadTaskAsync(errors => new ResultValue<int>(errors.Count));
 
@@ -124,7 +124,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ResultValueBindErrorsBadTaskAsync_NoError()
         {
             var errorsInitial = CreateErrorListTwoTest();
-            var resultValue = ResultValueFactory.CreateTaskResultValue<int>(errorsInitial);
+            var resultValue = ResultValueFactory.CreateTaskResultValueError<int>(errorsInitial);
             var resultError = new ResultError();
             var resultFunctionsMock = GetNumberToError(resultError);
 
@@ -144,7 +144,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         {
             var errorsInitial = CreateErrorListTwoTest();
             var initialErrorToAdd = CreateErrorTest();
-            var resultValue = ResultValueFactory.CreateTaskResultValue<int>(errorsInitial);
+            var resultValue = ResultValueFactory.CreateTaskResultValueError<int>(errorsInitial);
             var resultError = new ResultError(initialErrorToAdd);
             var resultFunctionsMock = GetNumberToError(resultError);
 

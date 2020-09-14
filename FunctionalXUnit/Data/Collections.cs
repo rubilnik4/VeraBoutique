@@ -52,5 +52,11 @@ namespace FunctionalXUnit.Data
         /// </summary>
         public static IList<int> GetListByErrorsCount(IReadOnlyCollection<IErrorResult> errors) =>
             new List<int> { errors.Count };
+
+        /// <summary>
+        /// Получить список с пустой строкой
+        /// </summary>
+        public static IList<string> GetEmptyStringList() =>
+            new List<string> { String.Empty };
     }
 }

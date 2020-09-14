@@ -39,7 +39,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_Enumerable_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = ResultValueFactory.CreateTaskResultValue<IEnumerable<int>>(error);
+            var resultHasError = ResultValueFactory.CreateTaskResultValueError<IEnumerable<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 
@@ -70,7 +70,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_IReadOnlyCollection_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = ResultValueFactory.CreateTaskResultValue<IReadOnlyCollection<int>>(error);
+            var resultHasError = ResultValueFactory.CreateTaskResultValueError<IReadOnlyCollection<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 
@@ -101,7 +101,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         public async Task ToResultCollectionTaskAsync_ReadOnlyCollection_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = ResultValueFactory.CreateTaskResultValue<ReadOnlyCollection<int>>(error);
+            var resultHasError = ResultValueFactory.CreateTaskResultValueError<ReadOnlyCollection<int>>(error);
 
             var resultValue = await resultHasError.ToResultCollectionTaskAsync();
 

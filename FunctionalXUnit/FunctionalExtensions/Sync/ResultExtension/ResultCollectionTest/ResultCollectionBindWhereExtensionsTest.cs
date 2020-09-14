@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
@@ -17,6 +18,144 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
     /// </summary>
     public class ResultCollectionBindWhereExtensionsTest
     {
+        /// <summary>
+        /// Выполнение условия в положительном результирующем ответе с коллекцией со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindContinue_Ok_ReturnNewValue()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindContinue(numbers => true,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.True(CollectionToString(initialCollection).SequenceEqual(resultAfterWhere.Value));
+        }
+
+        /// <summary>
+        /// Выполнение условия в отрицательном результирующем ответе с коллекцией без ошибки со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindContinue_Ok_ReturnNewError()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
+
+            var errorBad = CreateErrorListTwoTest();
+            var resultAfterWhere = resultCollection.ResultCollectionBindContinue(number => false,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => errorBad);
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(errorBad.Count, resultAfterWhere.Errors.Count);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в положительном результирующем ответе с коллекцией с ошибкой со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindContinue_Bad_ReturnNewValue()
+        {
+            var errorInitial = CreateErrorTest();
+            var resultCollection = new ResultCollection<int>(errorInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindContinue(number => true,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с коллекцией с ошибкой со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindContinue_Bad_ReturnNewError()
+        {
+            var errorsInitial = CreateErrorTest();
+            var resultCollection = new ResultCollection<int>(errorsInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindContinue(number => false,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => CreateErrorListTwoTest());
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Выполнение условия в положительном результирующем ответе с коллекцией со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindWhere_Ok_ReturnNewValue()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindWhere(numbers => true,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => new ResultCollection<string>(CreateErrorListTwoTest()));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.True(CollectionToString(initialCollection).SequenceEqual(resultAfterWhere.Value));
+        }
+
+        /// <summary>
+        /// Выполнение условия в отрицательном результирующем ответе с коллекцией без ошибки со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindWhere_Ok_ReturnNewError()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
+
+            var errorBad = CreateErrorListTwoTest();
+            var resultAfterWhere = resultCollection.ResultCollectionBindWhere(number => false,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => new ResultCollection<string>(errorBad));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(errorBad.Count, resultAfterWhere.Errors.Count);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в положительном результирующем ответе с коллекцией с ошибкой со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindWhere_Bad_ReturnNewValue()
+        {
+            var errorInitial = CreateErrorTest();
+            var resultCollection = new ResultCollection<int>(errorInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindWhere(number => true,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => new ResultCollection<string>(CreateErrorListTwoTest()));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с коллекцией с ошибкой со связыванием
+        /// </summary>
+        [Fact]
+        public void ResultCollectionBindWhere_Bad_ReturnNewError()
+        {
+            var errorsInitial = CreateErrorTest();
+            var resultCollection = new ResultCollection<int>(errorsInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionBindWhere(number => false,
+                okFunc: numbers => new ResultCollection<string>(CollectionToString(numbers)),
+                badFunc: _ => new ResultCollection<string>(CreateErrorListTwoTest()));
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Single(resultAfterWhere.Errors);
+        }
+
         /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием в результирующем ответе с коллекцией без ошибки
         /// </summary>   
@@ -158,7 +297,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             new Mock<IResultFunctions>().
                 Void(mock => mock.Setup(resultFunctions => resultFunctions.NumbersToResult(It.IsAny<IReadOnlyCollection<int>>())).
                                   Returns(resultError));
-        
+
         /// <summary>
         /// Получить результирующую коллекцию по количеству ошибок
         /// </summary>
