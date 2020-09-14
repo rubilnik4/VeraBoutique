@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
@@ -18,7 +19,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         [Fact]
         public async Task ToResultValueTaskAsync_OkStatus()
         {
-            var resultNoError = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError());
+            var resultNoError = ResultErrorFactory.CreateTaskResultError();
             const string value = "OkStatus";
 
             var resultValue = await resultNoError.ToResultValueTaskAsync(value);
@@ -34,7 +35,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         public async Task ToResultValue_HasErrors()
         {
             var error = CreateErrorTest();
-            var resultHasError = Task.FromResult((IResultError)new Functional.Models.Implementations.Result.ResultError(error));
+            var resultHasError = ResultErrorFactory.CreateTaskResultError(error);
             const string value = "BadStatus";
 
             var resultValue = await resultHasError.ToResultValueTaskAsync(value);
