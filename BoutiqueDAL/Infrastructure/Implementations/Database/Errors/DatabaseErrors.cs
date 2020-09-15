@@ -33,7 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// Дублирование элементов
         /// </summary>
         public static IErrorResult DuplicateError<TId>(IEnumerable<TId> ids, string tableName) =>
-            new ErrorResult(ErrorResultType.DatabaseValueNotFound, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
+            new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
 
         /// <summary>
         /// Преобразовать список элементов в строку

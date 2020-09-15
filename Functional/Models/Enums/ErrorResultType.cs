@@ -5,11 +5,12 @@
     /// </summary>
     public enum ErrorResultType
     {
-        DevideByZero,
+        DivideByZero,
         DatabaseIncorrectConnection,
         DatabaseSave,
         DatabaseTableAccess,
         DatabaseValueNotFound,
+        DatabaseValueDuplicate,
         JsonConvertion,
         Unknown,
     }

@@ -40,7 +40,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var resultCollection = ResultCollectionTry(() => DivisionCollection(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultCollection.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultCollection.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultCollection.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var numberAfterTry = numberResult.ResultCollectionTryOk(DivisionCollectionByZero, Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
         }
 
         /// <summary>

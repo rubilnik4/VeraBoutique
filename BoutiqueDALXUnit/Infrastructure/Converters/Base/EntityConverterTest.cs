@@ -3,6 +3,8 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDALXUnit.Data;
 using System.Linq;
+using BoutiqueCommonXUnit.Data;
+using BoutiqueDALXUnit.Data.Services.Implementation;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Base
@@ -13,18 +15,18 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Base
     public class EntityConverterTest
     {
         /// <summary>
-        /// Преобразования модели типа пола и модель базы данных
+        /// Преобразования модели в модель базы данных
         /// </summary>
         [Fact]
         public void ToEntities_FromEntities()
         {
-            var genders = EntityData.GetGendersDomain();
-            var genderEntityConverter = new GenderEntityConverter();
+            var testDomains = TestData.GetTestDomains();
+            var testEntityConverter = new TestEntityConverter();
 
-            var genderEntities = genderEntityConverter.ToEntities(genders);
-            var gendersAfterConverter = genderEntityConverter.FromEntities(genderEntities);
+            var testEntities = testEntityConverter.ToEntities(testDomains);
+            var testDomainsAfterConverter = testEntityConverter.FromEntities(testEntities);
 
-            Assert.True(genders.SequenceEqual(gendersAfterConverter));
+            Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter));
         }
     }
 }

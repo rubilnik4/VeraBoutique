@@ -37,7 +37,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
             var resultValue = await ResultErrorTryAsync(() => AsyncFunctions.DivisionAsync(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
         }
     }
 }

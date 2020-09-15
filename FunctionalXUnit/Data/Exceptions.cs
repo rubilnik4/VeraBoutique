@@ -14,6 +14,6 @@ namespace FunctionalXUnit.Data
         /// Вернуть ошибку на основании исключения
         /// </summary>
         public static IErrorResult ExceptionError() =>
-            new ErrorResult(ErrorResultType.DevideByZero, "Деление на ноль");
+            new ErrorResult(ErrorResultType.DivideByZero, "Деление на ноль");
     }
 }

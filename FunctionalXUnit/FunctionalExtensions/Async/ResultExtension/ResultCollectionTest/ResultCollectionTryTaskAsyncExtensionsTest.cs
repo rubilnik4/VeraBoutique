@@ -60,7 +60,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var numbersAfterTry = await numberResult.ResultCollectionTryOkTaskAsync(DivisionCollectionByZero, Exceptions.ExceptionError());
 
             Assert.True(numbersAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, numbersAfterTry.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, numbersAfterTry.Errors.First().ErrorResultType);
         }
 
         /// <summary>

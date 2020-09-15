@@ -4,12 +4,11 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
-using BoutiqueDALXUnit.Data.Database;
-using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Models.Implementation;
-using BoutiqueDALXUnit.Data.Models.Interfaces;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data
 {
@@ -22,7 +21,7 @@ namespace BoutiqueDALXUnit.Data
         /// Получить сущности типа пола
         /// </summary>
         public static List<GenderEntity> GetGenderEntities() =>
-            GetGendersDomain().
+            GenderData.GetGendersDomain().
             Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
             ToList();
 
@@ -30,34 +29,20 @@ namespace BoutiqueDALXUnit.Data
         /// Получить сущности для теста
         /// </summary>
         public static List<TestEntity> GetTestEntity() =>
-            GetTestDomains().
+            TestData.GetTestDomains().
             Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
             ToList();
 
         /// <summary>
-        /// Получить типы пола
+        /// Тестовые сущности в результирующей коллекции
         /// </summary>
-        public static List<IGenderDomain> GetGendersDomain() =>
-            new List<IGenderDomain>()
-            {
-                new GenderDomain(GenderType.Male, "Мужик" ),
-                new GenderDomain(GenderType.Female, "Тетя"),
-            };
+        public static IResultCollection<TestEntity> TestResultEntity =>
+            new ResultCollection<TestEntity>(GetTestEntity());
 
         /// <summary>
-        /// Получить тестовые модели
+        /// Пустая коллекция результирующих сущностей
         /// </summary>
-        public static List<ITestDomain> GetTestDomains() =>
-            new List<ITestDomain>()
-            {
-                new TestDomain(TestEnum.First, "First" ),
-                new TestDomain(TestEnum.Second, "Second"),
-            };
-
-        /// <summary>
-        /// Получить идентификаторы
-        /// </summary>
-        public static IReadOnlyCollection<TestEnum> GetTestIds(IEnumerable<ITestDomain> testDomains) =>
-            testDomains.Select(test => test.Id).ToList().AsReadOnly();
+        public static IResultCollection<TestEntity> TestResultEntitiesEmpty =>
+           new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
     }
 }

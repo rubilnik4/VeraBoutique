@@ -48,6 +48,6 @@ namespace FunctionalXUnit.Data
         /// <summary>
         /// ОШибка деления на ноль
         /// </summary>
-        public static IErrorResult GetDivisionError() => new ErrorResult(ErrorResultType.DevideByZero, "DivisionError");
+        public static IErrorResult GetDivisionError() => new ErrorResult(ErrorResultType.DivideByZero, "DivisionError");
     }
 }

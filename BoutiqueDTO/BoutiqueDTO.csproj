@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BoutiqueCommonXUnit\BoutiqueCommonXUnit.csproj" />
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>

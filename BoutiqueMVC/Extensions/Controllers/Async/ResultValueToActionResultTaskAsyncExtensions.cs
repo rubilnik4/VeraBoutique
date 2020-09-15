@@ -52,23 +52,5 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         public static async Task<IActionResult> ToNoContentActionResultTaskAsync(this Task<IResultError> @this) =>
             await @this.
             MapTaskAsync(thisAwaited => thisAwaited.ToNoContentActionResult());
-
-        /// <summary>
-        /// Преобразовать результирующий ответ в Json ответ для задачи-объекта
-        /// </summary>
-        public static async Task<IActionResult> ToJsonResultTaskAsync<TId, TTransfer>(this Task<IResultValue<TTransfer>> @this)
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToJsonResult<TId, TTransfer>());
-
-        /// <summary>
-        /// Преобразовать результирующий ответ с коллекцией в Json ответ для задачи-объекта
-        /// </summary>
-        public static async Task<IActionResult> ToJsonResultCollectionTaskAsync<TId, TTransfer>(this Task<IResultCollection<TTransfer>> @this) 
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToJsonResultCollection<TId, TTransfer>());
     }
 }

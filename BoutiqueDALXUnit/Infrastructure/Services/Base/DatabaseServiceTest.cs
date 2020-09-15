@@ -3,30 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueCommon.Extensions.CollectionExtensions;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
-using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Implementation;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
+using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using Moq;
 using Xunit;
+using static BoutiqueDALXUnit.Data.Services.Implementation.SearchInModels;
+using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseTableMock;
+using static BoutiqueDALXUnit.Data.EntityData;
+using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseServiceMock;
+using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseMock;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base
 {
@@ -41,14 +35,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Get_OK()
         {
-            var testEntities = GetTestEntity();
-            var testTableMock = GetTestDatabaseTable(testEntities);
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter.Object);
+            var testConverter = new TestEntityConverter();
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var testResult = await testService.Get();
-            var testEntitiesGet = testConverter.Object.FromEntities(testEntities.Value).ToList();
+            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value).ToList();
 
             Assert.True(testResult.OkStatus);
             Assert.True(testResult.Value.SequenceEqual(testEntitiesGet));
@@ -58,13 +52,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         /// Проверить получение. Возврат с ошибкой базы данных
         /// </summary>
         [Fact]
-        public async Task GetGenders_ErrorDatabase()
+        public async Task Get_ErrorDatabase()
         {
             var errorInitial = TestDatabaseErrors.ErrorDatabase;
             var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
             var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
 
             var testResult = await testService.Get();
 
@@ -78,21 +72,21 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task GetId_OK()
         {
-            var testEntities = GetTestEntity();
-            var testTableMock = GetTestDatabaseTable(testEntities);
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var testResult = await testService.Get(It.IsAny<TestEnum>());
-            var testEntitiesGet = testConverter.Object.FromEntity(FindEntity(testEntities.Value, testResult.Value.Id));
+            var testEntitiesGet = testConverter.FromEntity(FirstEntity(testResultEntities.Value, testResult.Value.Id));
 
             Assert.True(testResult.OkStatus);
             Assert.True(testResult.Value.Equals(testEntitiesGet));
         }
 
         /// <summary>
-        /// Проверить получение по идентификатору. ОШибка базы
+        /// Проверить получение по идентификатору. Ошибка базы
         /// </summary>
         [Fact]
         public async Task GetId_DatabaseError()
@@ -100,8 +94,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var errorInitial = TestDatabaseErrors.ErrorDatabase;
             var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
             var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
 
             var testResult = await testService.Get(It.IsAny<TestEnum>());
 
@@ -110,16 +104,16 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
-        /// Проверить получение по идентификатору. ОШибка базы
+        /// Проверить получение по идентификатору. Элемент не найден
         /// </summary>
         [Fact]
         public async Task GetId_NotFound()
         {
-            var testEntities = GetTestEntity();
-            var testTableMock = GetTestDatabaseTable(testEntities, FirstNotFoundFunc(testEntities));
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var testResult = await testService.Get(It.IsAny<TestEnum>());
 
@@ -128,36 +122,36 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
-        /// Проверить запись типа пола
+        /// Проверить запись
         /// </summary>
         [Fact]
         public async Task Post_OK()
         {
-            var testDomains = EntityData.GetTestDomains();
-            var testEntities = TestEntitiesEmpty;
-            var testTableMock = GetTestDatabaseTable(testEntities);
+            var testDomains = TestData.GetTestDomains();
+            var testResultEntities = TestResultEntitiesEmpty;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var resultIds = await testService.Post(testDomains);
 
             Assert.True(resultIds.OkStatus);
-            Assert.True(resultIds.Value.SequenceEqual(EntityData.GetTestIds(testDomains)));
+            Assert.True(resultIds.Value.SequenceEqual(TestData.GetTestIds(testDomains)));
         }
 
         /// <summary>
-        /// Проверить запись типа пола. Ошибка базы данных
+        /// Проверить запись. Ошибка базы данных
         /// </summary>
         [Fact]
         public async Task Post_DatabaseError()
         {
-            var testDomains = EntityData.GetTestDomains();
+            var testDomains = TestData.GetTestDomains();
             var errorInitial = TestDatabaseErrors.ErrorDatabase;
             var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
             var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
 
             var testResult = await testService.Post(testDomains);
 
@@ -166,128 +160,146 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
-        /// Проверить запись типа пола. Ошибка дублирования
+        /// Проверить запись. Ошибка дублирования
         /// </summary>
         [Fact]
         public async Task Post_ErrorDuplicate()
         {
-            var testDomains = EntityData.GetTestDomains();
-            var testEntities = TestEntitiesEmpty;
-            var testTableMock = GetTestDatabaseTable(testEntities);
+            var testDomains = TestData.GetTestDomains();
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FindDuplicateFunc(testResultEntities));
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
-            var testConverter = GetTestEntityConverter();
-            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var resultIds = await testService.Post(testDomains);
 
-            Assert.True(resultIds.OkStatus);
-            Assert.True(resultIds.Value.SequenceEqual(EntityData.GetTestIds(testDomains)));
+            Assert.True(resultIds.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueDuplicate, resultIds.Errors.First().ErrorResultType);
         }
 
         /// <summary>
-        /// Получить тестовую таблицу в стандартном исполнении
+        /// Проверить обновление
         /// </summary>
-        private static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities) =>
-            GetTestDatabaseTable(testEntities, FirstOkFunc(testEntities));
+        [Fact]
+        public async Task Put_Ok()
+        {
+            var testDomainPut = TestData.GetTestDomains().First();
+            testDomainPut.Name = "ChangeName";
+
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var result = await testService.Put(testDomainPut.Id, testDomainPut);
+
+            Assert.True(result.OkStatus);
+        }
 
         /// <summary>
-        /// Получить тестовую таблицу
+        /// Проверить обновление. Ошибка базы данных
         /// </summary>
-        private static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
-                                                                     Func<TestEnum, IResultValue<TestEntity>> firstFunc) =>
-            new Mock<ITestDatabaseTable>().
-            Void(tableMock => tableMock.Setup(table => table.ToListAsync()).ReturnsAsync(testEntities)).
-            Void(tableMock => tableMock.Setup(table => table.FirstAsync(It.IsAny<TestEnum>())).
-                                        ReturnsAsync((TestEnum id) => testEntities.ToResultValue().
-                                                                      ResultValueBindOk(entities => firstFunc(id)))).
-            Void(tableMock => tableMock.Setup(table => table.AddRangeAsync(It.IsAny<IEnumerable<TestEntity>>())).
-                                        ReturnsAsync((IEnumerable<TestEntity> entities) => AddRangeIdOk(entities)));
+        [Fact]
+        public async Task Put_DatabaseError()
+        {
+            var testDomainPut = TestData.GetTestDomains().First();
+            testDomainPut.Name = "ChangeName";
+
+            var errorInitial = TestDatabaseErrors.ErrorDatabase;
+            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
+            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
+
+            var result = await testService.Put(testDomainPut.Id, testDomainPut);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
 
         /// <summary>
-        /// Функция получения по идентификатору
+        /// Проверить обновление. Элемент не найден
         /// </summary>
-        private static Func<TestEnum, IResultValue<TestEntity>> FirstOkFunc(IResultCollection<TestEntity> entitiesResult) =>
-            id => entitiesResult.ResultCollectionOkToValue(entities => FindEntity(entities, id));
+        [Fact]
+        public async Task Put_NotFound()
+        {
+            var testDomainPut = TestData.GetTestDomains().First();
+            testDomainPut.Name = "ChangeName";
+
+            var testResultEntities = TestResultEntitiesEmpty;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FirstNotFoundFunc(testResultEntities));
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var result = await testService.Put(testDomainPut.Id, testDomainPut);
+
+            Assert.True(result.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueNotFound, result.Errors.First().ErrorResultType);
+        }
 
         /// <summary>
-        /// Получить идентификаторы по добавляемым сущностям
+        /// Проверить удаление
         /// </summary>
-        private static IResultCollection<TestEnum> AddRangeIdOk(IEnumerable<TestEntity> entities) =>
-            entities.Select(entity => entity.Id).
-            Map(ids => new ResultCollection<TestEnum>(ids));
+        [Fact]
+        public async Task Delete_Ok()
+        {
+            var testDelete = TestData.GetTestDomains().Last();
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var resultEntity = await testService.Delete(testDelete.Id);
+
+            Assert.True(resultEntity.OkStatus);
+            Assert.True(testDelete.Equals(resultEntity.Value));
+        }
 
         /// <summary>
-        /// Функция получения по идентификатору. Не найдено
+        /// Проверить удаление. Ошибка базы данных
         /// </summary>
-        private static Func<TestEnum, IResultValue<TestEntity>> FirstNotFoundFunc(IResultCollection<TestEntity> entitiesResult) =>
-            id => entitiesResult.ResultValueBindOk(entities => new ResultValue<TestEntity>(NotFoundError));
+        [Fact]
+        public async Task Delete_DatabaseError()
+        {
+            var testDelete = TestData.GetTestDomains().Last();
+            var errorInitial = TestDatabaseErrors.ErrorDatabase;
+            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
+            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
+
+            var result = await testService.Delete(testDelete.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
 
         /// <summary>
-        /// Получить тестовую базу данных
+        /// Проверить удаление. Элемент не найден
         /// </summary>
-        private static Mock<ITestDatabase> GetTestDatabase(ITestDatabaseTable testDatabaseTable) =>
-            new Mock<ITestDatabase>().
-            Void(databaseMock => databaseMock.Setup(database => database.TestTable).Returns(testDatabaseTable)).
-            Void(databaseMock => databaseMock.Setup(database => database.SaveChangesAsync()).
-                                              ReturnsAsync(new ResultError()));
+        [Fact]
+        public async Task Delete_NotFound()
+        {
+            var testDelete = TestData.GetTestDomains().Last();
+            var testResultEntities = TestResultEntity;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FirstNotFoundFunc(testResultEntities));
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var resultEntity = await testService.Delete(testDelete.Id);
+
+            Assert.True(resultEntity.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueNotFound, resultEntity.Errors.First().ErrorResultType);
+        }
 
         /// <summary>
-        /// Получить конвертер сущностей
+        /// Конвертер в сущность базы данных
         /// </summary>
-        private static Mock<ITestEntityConverter> GetTestEntityConverter() =>
-            new Mock<ITestEntityConverter>().
-            Void(converterMock => converterMock.Setup(converter => converter.FromEntities(It.IsAny<IEnumerable<TestEntity>>())).
-                                                Returns(EntityData.GetTestDomains())).
-            Void(converterMock => converterMock.Setup(converter => converter.ToEntities(It.IsAny<IEnumerable<ITestDomain>>())).
-                                                Returns(EntityData.GetTestEntity())).
-            Void(converterMock => converterMock.Setup(converter => converter.FromEntity(It.IsAny<TestEntity>())).
-                                                Returns<TestEntity>(entity => FindDomain(EntityData.GetTestDomains(), entity.Id)));
-
-        /// <summary>
-        /// Получить базовый сервис получения данных из базы
-        /// </summary>
-        private static TestDatabaseService GetTestDatabaseService(ITestDatabase testDatabase, ITestDatabaseTable testDatabaseTable,
-                                                                  ITestEntityConverter testConverter) =>
-            GetTestDatabaseService(new ResultValue<ITestDatabase>(testDatabase),
-                                   new ResultValue<ITestDatabaseTable>(testDatabaseTable),
-                                   testConverter);
-
-        /// <summary>
-        /// Получить базовый сервис получения данных из базы
-        /// </summary>
-        private static TestDatabaseService GetTestDatabaseService(IResultValue<ITestDatabase> testDatabase,
-                                                                  IResultValue<ITestDatabaseTable> testDatabaseTable,
-                                                                  ITestEntityConverter testConverter) =>
-            new TestDatabaseService(testDatabase, testDatabaseTable, testConverter);
-
-
-        /// <summary>
-        /// Получить тестовые сущности
-        /// </summary>
-        private static IResultCollection<TestEntity> GetTestEntity() =>
-            new ResultCollection<TestEntity>(EntityData.GetTestEntity());
-
-        /// <summary>
-        /// Найти сущность
-        /// </summary>
-        private static TestEntity FindEntity(IEnumerable<TestEntity> entities, TestEnum id) =>
-            entities.First(entity => entity.Id == id);
-
-        /// <summary>
-        /// Найти модель
-        /// </summary>
-        private static ITestDomain FindDomain(IEnumerable<ITestDomain> domains, TestEnum id) =>
-            domains.First(domain => domain.Id == id);
-
-        /// <summary>
-        /// Пустая коллекция сущностей
-        /// </summary>
-        private static IResultCollection<TestEntity> TestEntitiesEmpty =>
-           new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
-
-        /// <summary>
-        /// Ошибка ненайденного элемента
-        /// </summary>
-        private static IErrorResult NotFoundError => DatabaseErrors.ValueNotFoundError(String.Empty, String.Empty);
+        private static ITestEntityConverter TestEntityConverter => new TestEntityConverter();
     }
 }

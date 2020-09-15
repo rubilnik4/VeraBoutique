@@ -66,32 +66,6 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
                 : GetBadRequestByErrors(@this.Errors);
 
         /// <summary>
-        /// Преобразовать результирующий ответ в Json ответ
-        /// </summary>
-        public static IActionResult ToJsonResult<TId, TTransfer>(this IResultValue<TTransfer> @this)
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            @this.
-            ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
-                                 GenderTransferConverter.ErrorJsonConverting(typeof(TTransfer).Name)).
-            WhereContinue(resultJson => resultJson.OkStatus,
-                okFunc: resultJson => (IActionResult)resultJson.Value,
-                badFunc: resultJson => GetBadRequestByErrors(resultJson.Errors));
-
-        /// <summary>
-        /// Преобразовать результирующий ответ с коллекцией в Json ответ
-        /// </summary>
-        public static IActionResult ToJsonResultCollection<TId, TTransfer>(this IResultCollection<TTransfer> @this)
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            @this.
-            ResultValueTryOk(value => new JsonResult(value) { StatusCode = StatusCodes.Status200OK },
-                                     GenderTransferConverter.ErrorJsonConverting(typeof(TTransfer).Name)).
-            WhereContinue(resultJson => resultJson.OkStatus,
-                okFunc: resultJson => (IActionResult)resultJson.Value,
-                badFunc: resultJson => GetBadRequestByErrors(resultJson.Errors));
-
-        /// <summary>
         /// Получить объект со значением или вернуть ошибку
         /// </summary>
         private static ActionResult<TValue> GetBadRequestByErrors<TValue>(IReadOnlyCollection<IErrorResult> errors) =>

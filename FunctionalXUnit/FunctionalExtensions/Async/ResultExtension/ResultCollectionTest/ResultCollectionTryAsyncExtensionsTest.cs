@@ -38,7 +38,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionEnumerableAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionCollectionAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionListAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var numbersAfterTry = await numberResult.ResultCollectionTryOkAsync(DivisionCollectionByZeroAsync, Exceptions.ExceptionError());
 
             Assert.True(numbersAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, numbersAfterTry.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, numbersAfterTry.Errors.First().ErrorResultType);
         }
 
         /// <summary>

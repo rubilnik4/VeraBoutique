@@ -3,6 +3,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
@@ -103,7 +105,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         /// Добавить сущности в таблицу. Элемент не найден
         /// </summary>
         [Fact]
-        public async Task AddRange_GetNotFount()
+        public async Task AddRange_GetNotFound()
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
@@ -145,8 +147,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestDomains();
-            var ids = EntityData.GetTestIds(entities);
+            var entities = TestData.GetTestDomains();
+            var ids = TestData.GetTestIds(entities);
 
             var testFind = await testDatabaseTable.FindAsync(ids);
 

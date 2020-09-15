@@ -30,35 +30,13 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         TTransfer ToTransfer(TDomain domain);
 
         /// <summary>
-        /// Преобразовать тип пола в Json
-        /// </summary>
-        IResultValue<TDomain> FromJson(string json);
-
-        /// <summary>
-        /// Преобразовать тип пола в Json
-        /// </summary>
-        IResultValue<string> ToJson(TDomain domain);
-
-        /// <summary>
-        /// Преобразовать Json в коллекцию
-        /// </summary>
-        IResultCollection<TDomain> FromJsonCollection(string json);
-
-        /// <summary>
-        /// Преобразовать коллекцию типа пола в Json
-        /// </summary>
-        IResultValue<string> ToJsonCollection(IEnumerable<TDomain> domains);
-
-        /// <summary>
         /// Преобразовать трансферные модели в доменные
         /// </summary>
-        public IEnumerable<TDomain> FromTransfers(IEnumerable<TTransfer> transfes) =>
-            transfes.Select(FromTransfer);
+        IEnumerable<TDomain> FromTransfers(IEnumerable<TTransfer> transfers);
 
         /// <summary>
         /// Преобразовать доменные модели в трансферную модели
         /// </summary>
-        public IEnumerable<TTransfer> ToTransfers(IEnumerable<TDomain> domains) =>
-            domains.Select(ToTransfer);
+        IEnumerable<TTransfer> ToTransfers(IEnumerable<TDomain> domains);
     }
 }

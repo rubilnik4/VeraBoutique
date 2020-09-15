@@ -1,4 +1,5 @@
-﻿using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Models.Implementation;

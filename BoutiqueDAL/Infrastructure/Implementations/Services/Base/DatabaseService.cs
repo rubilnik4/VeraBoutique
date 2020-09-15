@@ -15,6 +15,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
@@ -75,26 +76,30 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             ResultValueBindOkToCollectionAsync(dataTable =>
                 dataTable.FindAsync(models.Select(model => model.Id)).
                 ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
-                    okFunc: ids => dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
-                                 ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges()),
-                    badFunc: ids => Task.FromResult((IResultCollection<TId>)new ResultCollection<TId>(DatabaseErrors.DuplicateError(ids, dataTable.TableName)))));
+                    okFunc: _ => AddRangeWithSaving(dataTable, models),
+                    badFunc: ids => GetDuplicateErrorResult(ids, dataTable.TableName)));
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TId id, TDomain model) =>
             await _dataTable.
-            ResultValueBindErrorsOk(dataTable => dataTable.Update(_entityConverter.ToEntity(model))).
-            ResultErrorBindOkAsync(DatabaseSaveChanges);
+            ResultValueBindOkAsync(dataTable => 
+                dataTable.FirstAsync(id).
+                ResultValueBindErrorsOkTaskAsync(_ => dataTable.Update(_entityConverter.ToEntity(model)))).
+            ToResultErrorTaskAsync().
+            ResultErrorBindOkBindAsync(DatabaseSaveChanges);
 
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.
-            ResultValueBindOk(dataTable => dataTable.Remove(CreateRemoveEntityById(id))).
-            ResultValueOk(entity => _entityConverter.FromEntity(entity)).
-            ResultValueBindErrorsOkAsync(_ => DatabaseSaveChanges());
+            ResultValueBindOkAsync(dataTable =>
+                dataTable.FirstAsync(id).
+                ResultValueBindErrorsOkTaskAsync(_ => dataTable.Remove(CreateRemoveEntityById(id)))).
+            ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
+            ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
         /// Создать модель базы данных для удаления по идентификатору
@@ -102,11 +107,26 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         protected abstract TEntity CreateRemoveEntityById(TId id);
 
         /// <summary>
+        /// Добавить модели в базу и сохранить
+        /// </summary>
+        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TEntity> dataTable,
+                                                                      IEnumerable<TDomain> models) =>
+            await dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
+            ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+        
+        /// <summary>
         /// Сохранить изменения в базе или вернуть ошибки
         /// </summary>
         private async Task<IResultError> DatabaseSaveChanges() =>
             await _database.
             ResultValueOkAsync(database => database.SaveChangesAsync()).
             MapTaskAsync(resultDatabase => (IResultError)resultDatabase);
+
+        /// <summary>
+        /// Получить ошибку двойной записи
+        /// </summary>
+        private static async Task<IResultCollection<TId>> GetDuplicateErrorResult(IEnumerable<TEntity> ids, string tableName) =>
+            await ResultCollectionFactory.
+            CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateError(ids, tableName));
     }
 }

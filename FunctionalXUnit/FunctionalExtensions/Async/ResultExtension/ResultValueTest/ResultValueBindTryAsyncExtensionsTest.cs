@@ -46,7 +46,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
                                                             Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
                 numbers => ResultValueFactory.CreateTaskResultValue(Division(numbers)), Exceptions.ExceptionError());
 
             Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DevideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
         }
 
         /// <summary>

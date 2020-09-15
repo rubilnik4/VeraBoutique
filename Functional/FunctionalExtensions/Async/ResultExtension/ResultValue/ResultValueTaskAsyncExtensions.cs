@@ -35,6 +35,13 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
             MapTaskAsync(awaitedThis => awaitedThis.ToResultCollection());
 
         /// <summary>
+        /// Преобразовать в результирующий ответ
+        /// </summary>      
+        public static async Task<IResultError> ToResultErrorTaskAsync<TValue>(this Task<IResultValue<TValue>> @this) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis);
+
+        /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль для задачи-объекта
         /// </summary>
         public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue> @this, IErrorResult errorNull) =>

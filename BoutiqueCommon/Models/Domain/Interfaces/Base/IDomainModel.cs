@@ -5,7 +5,7 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Base
     /// <summary>
     /// Базовая доменная модель
     /// </summary>
-    public interface IDomainModel<TId> : IModel<TId>
+    public interface IDomainModel<out TId> : IModel<TId>
         where TId : notnull
     { }
 }

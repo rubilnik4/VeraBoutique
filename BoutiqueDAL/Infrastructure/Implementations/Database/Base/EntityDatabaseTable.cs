@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// </summary>
         public async Task<IResultValue<TEntity>> FirstAsync(TId id) =>
             await ResultValueBindTryAsync(() => _databaseSet.FindAsync(id).MapValueToTask().
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, _tableName)),
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
         /// <summary>
         /// Найти записи в таблице по идентификаторам
@@ -90,6 +90,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Ошибка доступа к таблице базы данных
         /// </summary>
-        private IErrorResult TableAccessError => DatabaseErrors.TableAccessError(_tableName);
+        private IErrorResult TableAccessError => DatabaseErrors.TableAccessError(TableName);
     }
 }
