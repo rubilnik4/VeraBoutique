@@ -1,8 +1,8 @@
 ﻿using BoutiqueMVC.Extensions.Controllers.Sync;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using BoutiqueCommonXUnit.Data;
 using Xunit;
-using static BoutiqueMVCXUnit.Data.ErrorData;
 
 namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 {
@@ -17,7 +17,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToModelState_OneError()
         {
-            var errorInitial = CreateErrorListTwoTest();
+            var errorInitial = ErrorData.ErrorsTest;
             var modelState = errorInitial.ToModelState();
 
             Assert.False(modelState.IsValid);

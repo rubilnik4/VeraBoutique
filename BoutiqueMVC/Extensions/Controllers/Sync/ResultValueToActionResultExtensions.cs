@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.ComTypes;
-using BoutiqueDTO.Infrastructure.Implementations.Converters;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Models.Implementations.Controller;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Interfaces.Result;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync
 {
@@ -50,7 +39,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта
         /// </summary>
         public static ActionResult<IReadOnlyCollection<TId>> ToCreateActionResult<TId, TTransfer>(this IResultCollection<TId> @this,
-                                                                                                CreatedActionCollection<TTransfer> createdActionCollection)
+                                                                                                  CreatedActionCollection<TTransfer> createdActionCollection)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             @this.OkStatus
