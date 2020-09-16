@@ -44,9 +44,9 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Получить сервис для типа пола одежды
         /// </summary>
-        private static IGenderService GetGenderService(IServiceProvider serviceProvider) =>
+        private static IGenderDatabaseService GetGenderService(IServiceProvider serviceProvider) =>
             serviceProvider.GetService<IBoutiqueDatabaseFactory>().BoutiqueDatabase.
-            Map(boutiqueDatabase => new GenderService(boutiqueDatabase,
+            Map(boutiqueDatabase => new GenderDatabaseService(boutiqueDatabase,
                                                       boutiqueDatabase.ResultValueOk(database => database.GendersTable),
                                                       new GenderEntityConverter()));
     }

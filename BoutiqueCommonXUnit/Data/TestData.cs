@@ -5,6 +5,8 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueCommonXUnit.Data
 {
@@ -28,5 +30,11 @@ namespace BoutiqueCommonXUnit.Data
         /// </summary>
         public static IReadOnlyCollection<TestEnum> GetTestIds(IEnumerable<ITestDomain> testDomains) =>
             testDomains.Select(test => test.Id).ToList().AsReadOnly();
+
+        /// <summary>
+        /// Тестовые сущности в результирующей коллекции
+        /// </summary>
+        public static IResultCollection<ITestDomain> TestResultDomains =>
+            new ResultCollection<ITestDomain>(GetTestDomains());
     }
 }

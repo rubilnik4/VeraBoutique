@@ -28,7 +28,7 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить сущности для теста
         /// </summary>
-        public static List<TestEntity> GetTestEntity() =>
+        public static List<TestEntity> GetTestEntities() =>
             TestData.GetTestDomains().
             Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
             ToList();
@@ -36,8 +36,8 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Тестовые сущности в результирующей коллекции
         /// </summary>
-        public static IResultCollection<TestEntity> TestResultEntity =>
-            new ResultCollection<TestEntity>(GetTestEntity());
+        public static IResultCollection<TestEntity> TestResultEntities =>
+            new ResultCollection<TestEntity>(GetTestEntities());
 
         /// <summary>
         /// Пустая коллекция результирующих сущностей

@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDTO.Infrastructure.Implementations.Converters;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Controllers.Interfaces.Base;
@@ -16,10 +13,8 @@ using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BoutiqueMVC.Controllers.Implementations.Base
 {
@@ -33,17 +28,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         where TDomain : IDomainModel<TId>
         where TId : notnull
     {
-        protected ApiController(IDatabaseService<TId, TDomain> databaseService,
+        protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,
                                 ITransferConverter<TId, TDomain, TTransfer> transferConverter)
         {
-            _databaseService = databaseService;
+            _databaseDatabaseService = databaseDatabaseService;
             _transferConverter = transferConverter;
         }
 
         /// <summary>
         /// Сервис получения данных из базы
         /// </summary>
-        private readonly IDatabaseService<TId, TDomain> _databaseService;
+        private readonly IDatabaseService<TId, TDomain> _databaseDatabaseService;
 
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
@@ -57,7 +52,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public virtual async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
-            await _databaseService.Get().
+            await _databaseDatabaseService.Get().
             ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
 
@@ -69,7 +64,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual async Task<ActionResult<TTransfer>> Get(TId id) =>
-            await _databaseService.Get(id).
+            await _databaseDatabaseService.Get(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
@@ -82,29 +77,31 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public virtual async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).ToList().
-            MapAsync(domains => _databaseService.Post(domains).
+            MapAsync(domains => _databaseDatabaseService.Post(domains).
                                 ToCreateActionResultTaskAsync(GetCreateAction(transfers)));
 
         /// <summary>
         /// Заменить данные по идентификатору
         /// </summary>
         [HttpPut("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual async Task<IActionResult> Put(TId id, TTransfer transfer) =>
-             await _databaseService.Put(id, _transferConverter.FromTransfer(transfer)).
+             await _databaseDatabaseService.Put(id, _transferConverter.FromTransfer(transfer)).
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
         /// Удалить данные по идентификатору
         /// </summary>
         [HttpDelete("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual async Task<ActionResult<TTransfer>> Delete(TId id) =>
-            await _databaseService.Delete(id).
+            await _databaseDatabaseService.Delete(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 

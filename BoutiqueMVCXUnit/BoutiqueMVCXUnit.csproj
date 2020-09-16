@@ -19,4 +19,8 @@
     <ProjectReference Include="..\BoutiqueMVC\BoutiqueMVC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Database\Implementations\" />
+  </ItemGroup>
+
 </Project>

@@ -8,6 +8,8 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDTO.Data.Services.Implementations;
+using BoutiqueDTO.Data.Services.Interfaces;
 using BoutiqueDTO.Infrastructure.Implementations.Converters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
@@ -28,27 +30,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
     /// </summary>
     public class GenderControllerTest
     {
-        ///// <summary>
-        ///// Получить типы пола одежды. Корректный вариант
-        ///// </summary>
-        //[Fact]
-        //public async Task GetGenders_Ok()
-        //{
-        //    var genders = GetGenders().ToList();
-        //    var genderServiceMock = new Mock<IGenderService>();
-        //    genderServiceMock.Setup(genderService => genderService.Get()).
-        //                      ReturnsAsync(new ResultCollection<IGenderDomain>(genders));
-        //    var genderTransferConverter =(IGenderTransferConverter)new GenderTransferConverter();
-        //    var genderController = new GenderController(genderServiceMock.Object, genderTransferConverter);
 
-        //    var getGenders = await genderController.Get();
-        //    var gendersAfter = genderTransferConverter.FromTransfers(getGenders.Value);
-
-        //    Assert.IsType<OkObjectResult>(getGenders.Result);
-        //    var getGendersOk = (OkObjectResult)getGenders.Result;
-        //    Assert.Equal(StatusCodes.Status200OK, getGendersOk.StatusCode);
-        //    Assert.True(gendersAfter.SequenceEqual(genders));
-        //}
 
         ///// <summary>
         ///// Получить типы пола одежды. Вариант с ошибкой
@@ -85,7 +67,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         //    var genderServiceMock = new Mock<IGenderService>();
         //    genderServiceMock.Setup(genderService => genderService.Post(It.IsAny<IEnumerable<IGenderDomain>>())).
         //                      ReturnsAsync(new ResultCollection<GenderType>(genderIds));
-          
+
         //    var genderController = new GenderController(genderServiceMock.Object, genderTransferConverter);
         //    var postGenders = await genderController.Post(gendersDto);
 
@@ -121,20 +103,6 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         //    Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
         //}
 
-        /// <summary>
-        /// Получить типы пола
-        /// </summary>
-        private static IEnumerable<IGenderDomain> GetGenders() =>
-            new List<IGenderDomain>()
-            {
-                new GenderDomain(GenderType.Male, "Мужик" ),
-                new GenderDomain(GenderType.Female, "Тетя"),
-            };
-
-        /// <summary>
-        /// Тестовая ошибка
-        /// </summary>
-        private static IErrorResult ErrorTest() =>
-            new ErrorResult(ErrorResultType.Unknown, "Тестовая ошибка");
+       
     }
 }

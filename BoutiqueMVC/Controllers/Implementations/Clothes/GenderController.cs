@@ -16,8 +16,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// </summary>
     public class GenderController : ApiController<GenderType, IGenderTransfer, IGenderDomain>
     {
-        public GenderController(IGenderService genderService, IGenderTransferConverter genderTransferConverter)
-            : base(genderService, genderTransferConverter)
+        public GenderController(IGenderDatabaseService genderDatabaseService, IGenderTransferConverter genderTransferConverter)
+            : base(genderDatabaseService, genderTransferConverter)
         { }
     }
 }

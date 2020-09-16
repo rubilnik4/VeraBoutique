@@ -125,7 +125,8 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         public void ToPostActionResult_Created()
         {
             var initialTransfer = TransferData.GetTestTransfers();
-            var idsResult = new ResultCollection<TestEnum>(TransferData.GetTestIds(initialTransfer));
+            var ids = TransferData.GetTestIds(initialTransfer);
+            var idsResult = new ResultCollection<TestEnum>(ids);
             var createdActionCollection = new CreatedActionCollection<ITestTransfer>("action", "controller", initialTransfer);
 
             var actionResult = idsResult.ToCreateActionResult(createdActionCollection);
@@ -136,7 +137,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             Assert.IsAssignableFrom<IEnumerable<ITestTransfer>>(createdAtActionResult.Value);
             Assert.True(initialTransfer.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
             Assert.IsAssignableFrom<IEnumerable<TestEnum>>(createdAtActionResult.RouteValues.Values.First());
-            Assert.True(idsResult.Value.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+            Assert.True(ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
         }
 
         /// <summary>

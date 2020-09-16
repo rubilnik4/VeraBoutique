@@ -31,7 +31,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             var ids = await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var firstResult = await testDatabase.SaveChangesAsync();
@@ -70,7 +70,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
@@ -89,7 +89,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             var ids = await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
@@ -109,7 +109,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
@@ -128,7 +128,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             var ids = await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var resultSave = await testDatabase.SaveChangesAsync();
@@ -190,7 +190,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             var entityUpdate = entities.Last();
             entityUpdate.Name = "entityUpdate";
@@ -211,7 +211,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var resultSave = await testDatabase.SaveChangesAsync();
@@ -235,7 +235,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
         {
             var testDatabase = GetTestEntityDatabase();
             var testDatabaseTable = testDatabase.TestTable;
-            var entities = EntityData.GetTestEntity();
+            var entities = EntityData.GetTestEntities();
 
             await testDatabaseTable.AddRangeAsync(entities);
             var resultSave = await testDatabase.SaveChangesAsync();

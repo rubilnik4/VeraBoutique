@@ -23,6 +23,12 @@ namespace BoutiqueCommonXUnit.Data
             new ErrorResult(ErrorResultType.DatabaseValueNotFound, "NotFound");
 
         /// <summary>
+        /// Создать тестовый экземпляр ошибки базы данных
+        /// </summary>
+        public static IErrorResult DatabaseError =>
+            new ErrorResult(ErrorResultType.DatabaseTableAccess, "DatabaseTableAccess");
+
+        /// <summary>
         /// Тестовые экземпляры ошибок
         /// </summary>
         public static IList<IErrorResult> ErrorsTest =>
