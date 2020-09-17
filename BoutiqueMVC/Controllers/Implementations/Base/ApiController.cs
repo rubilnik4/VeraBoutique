@@ -51,7 +51,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public virtual async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
+        public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
             await _databaseDatabaseService.Get().
             ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
@@ -63,7 +63,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public virtual async Task<ActionResult<TTransfer>> Get(TId id) =>
+        public async Task<ActionResult<TTransfer>> Get(TId id) =>
             await _databaseDatabaseService.Get(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
@@ -75,7 +75,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public virtual async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
+        public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).ToList().
             MapAsync(domains => _databaseDatabaseService.Post(domains).
                                 ToCreateActionResultTaskAsync(GetCreateAction(transfers)));
@@ -88,7 +88,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public virtual async Task<IActionResult> Put(TId id, TTransfer transfer) =>
+        public async Task<IActionResult> Put(TId id, TTransfer transfer) =>
              await _databaseDatabaseService.Put(id, _transferConverter.FromTransfer(transfer)).
              ToNoContentActionResultTaskAsync();
 
@@ -96,11 +96,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// Удалить данные по идентификатору
         /// </summary>
         [HttpDelete("{id}")]
-        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public virtual async Task<ActionResult<TTransfer>> Delete(TId id) =>
+        public async Task<ActionResult<TTransfer>> Delete(TId id) =>
             await _databaseDatabaseService.Delete(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();

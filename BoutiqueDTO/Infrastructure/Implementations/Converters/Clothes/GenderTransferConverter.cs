@@ -13,19 +13,19 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Конвертер типа пола в трансферную модель
     /// </summary>
-    public class GenderTransferConverter: TransferConverter<GenderType, IGenderDomain, IGenderTransfer>,
+    public class GenderTransferConverter: TransferConverter<GenderType, IGenderDomain, GenderTransfer>,
                                           IGenderTransferConverter
     {
         /// <summary>
         /// Преобразовать пол в трансферную модель
         /// </summary>
-        public override IGenderTransfer ToTransfer(IGenderDomain gender) =>
+        public override GenderTransfer ToTransfer(IGenderDomain gender) =>
             new GenderTransfer(gender.GenderType, gender.Name);
 
         /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
-        public override IGenderDomain FromTransfer(IGenderTransfer genderTransfer) =>
+        public override IGenderDomain FromTransfer(GenderTransfer genderTransfer) =>
             new GenderDomain(genderTransfer.GenderType, genderTransfer.Name);
     }
 }

@@ -4,7 +4,7 @@ using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueMVC.Models.Implementations.Connection;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueMVC.Factories.Implementation
+namespace BoutiqueMVC.Factories.Database
 {
     /// <summary>
     /// Параметры подключения базы Postgres

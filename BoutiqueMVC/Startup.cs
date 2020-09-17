@@ -1,6 +1,7 @@
 using System;
 using BoutiqueDAL.Factories.Implementations;
 using BoutiqueMVC.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +28,11 @@ namespace BoutiqueMVC
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
+            ControllerServices.InjectControllers(services);
+            DatabaseServices.InjectDatabase(services);
             services.AddControllers();
-            ControllerInjection.InjectControllers(services);
-            DatabaseInjection.InjectDatabase(services);
+            AuthServices.AddAuthorization(services);
+            AuthServices.AddJwtAuthentication(services, Configuration);
         }
 
         /// <summary>
@@ -47,6 +50,7 @@ namespace BoutiqueMVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -55,7 +59,7 @@ namespace BoutiqueMVC
             });
 
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            DatabaseInjection.UpdateSchema(serviceScope.ServiceProvider);
+            DatabaseServices.UpdateSchema(serviceScope.ServiceProvider);
         }
     }
 }

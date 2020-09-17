@@ -34,7 +34,15 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Boutique
         public IResultValue<IBoutiqueDatabase> BoutiqueDatabase =>
             _boutiqueDatabase ??=
             _databaseConnection.
-            ResultValueOk(connection => new DbContextOptionsBuilder().UseNpgsql(connection.ConnectionString)).
+            ResultValueOk(DatabaseOptions).
             ResultValueOk(optionBuilder => new BoutiqueEntityDatabase(optionBuilder.Options));
+
+        /// <summary>
+        /// Параметры базы данных
+        /// </summary>
+        private static DbContextOptionsBuilder DatabaseOptions(DatabaseConnection connection) =>
+            new DbContextOptionsBuilder().
+            UseNpgsql(connection.ConnectionString).
+            UseSnakeCaseNamingConvention();
     }
 }

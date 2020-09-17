@@ -11,7 +11,7 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Регистрация зависимостей для контроллеров
     /// </summary>
-    public static class ControllerInjection
+    public static class ControllerServices
     {
         /// <summary>
         /// Внедрить зависимости к базе данных

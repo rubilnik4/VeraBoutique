@@ -29,5 +29,10 @@
         /// Пароль
         /// </summary>
         public const string PASSWORD_NAME = "POSTGRES_PASSWORD";
+
+        /// <summary>
+        /// JWT ключ
+        /// </summary>
+        public const string JWT_KEY = "JWT_KEY";
     }
 }

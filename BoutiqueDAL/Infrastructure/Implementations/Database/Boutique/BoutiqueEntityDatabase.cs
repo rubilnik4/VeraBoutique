@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
@@ -40,6 +41,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// </summary>
         public void UpdateSchema()
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -54,8 +56,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
+
+            modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
         }
     }
 }
