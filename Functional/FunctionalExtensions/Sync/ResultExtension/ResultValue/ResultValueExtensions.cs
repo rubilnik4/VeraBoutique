@@ -20,9 +20,10 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль
         /// </summary>
-        public static IResultValue<TValue> ToResultValueNullCheck<TValue>(this TValue @this, IErrorResult errorNull) =>
-            @this != null 
-                ? new ResultValue<TValue>(@this) 
+        public static IResultValue<TValue> ToResultValueNullCheck<TValue>(this TValue? @this, IErrorResult errorNull)
+            where TValue : class =>
+            @this != null
+                ? new ResultValue<TValue>(@this)
                 : new ResultValue<TValue>(errorNull);
     }
 }

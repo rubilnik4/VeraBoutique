@@ -5,6 +5,10 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Enums.Identity;
 using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +16,34 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData
 {
+    /// <summary>
+    /// Начальные данные авторизации
+    /// </summary>
     public static class IdentityInitialize
     {
         /// <summary>
         /// Добавить роли
         /// </summary>
-        public static async Task Initialize(IdentityDbContext<IdentityUser> dbContext) =>
+        public static async Task Initialize(IdentityDbContext<IdentityUser> dbContext, IResultCollection<IdentityUser> defaultUser) =>
+            await dbContext.
+            VoidAsync(CreateIdentityRoles).
+            VoidBindAsync(_ => CreateIdentityUsers(dbContext, defaultUser));
+
+        /// <summary>
+        /// Проверить и добавить роли
+        /// </summary>
+        private static async Task CreateIdentityRoles(IdentityDbContext<IdentityUser> dbContext) =>
             await new RoleStore<IdentityRole>(dbContext).
             VoidAsync(roleStore => GetRolesToCreate(roleStore).
                                    VoidBindAsync(roles => CreateRoles(roleStore, roles)));
+
+        /// <summary>
+        /// Проверить и добавить пользователей
+        /// </summary>
+        private static async Task CreateIdentityUsers(IdentityDbContext<IdentityUser> dbContext, IResultCollection<IdentityUser> defaultUsers) =>
+            await new UserStore<IdentityUser>(dbContext).
+            VoidAsync(userStore => GetUsersToCreate(userStore, defaultUsers).
+                                   VoidBindAsync(user => CreateUsers(userStore, user)));
 
         /// <summary>
         /// Получить роли для добавления в базу
@@ -33,6 +56,23 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
                                        Select(roleType => new IdentityRole(roleType)));
 
         /// <summary>
+        /// Получить роли для добавления в базу
+        /// </summary>
+        private static async Task<IEnumerable<IdentityUser>> GetUsersToCreate(UserStore<IdentityUser> userStore, IResultCollection<IdentityUser> defaultUsersResult) =>
+            await defaultUsersResult.WhereContinue(defaultUsers => defaultUsers.OkStatus,
+                okFunc: defaultUsers => userStore.Users.ToListAsync().
+                                        MapTaskAsync(users => users.Select(user => user.UserName)).
+                                        MapTaskAsync(userNames => GetNewDefaultUsers(defaultUsers.Value, userNames)),
+                badFunc: _ => Task.FromResult(Enumerable.Empty<IdentityUser>()));
+
+        /// <summary>
+        /// Найти новых пользователей
+        /// </summary>
+        private static IEnumerable<IdentityUser> GetNewDefaultUsers(IEnumerable<IdentityUser> defaultUsers,
+                                                                    IEnumerable<string> userNames) =>
+            defaultUsers.Where(defaultUser => !userNames.Contains(defaultUser.UserName, StringComparer.OrdinalIgnoreCase));
+
+        /// <summary>
         /// Добавить роли в базу
         /// </summary>
         private static async Task CreateRoles(RoleStore<IdentityRole> roleStore, IEnumerable<IdentityRole> roles)
@@ -43,27 +83,26 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             }
         }
 
+        /// <summary>
+        /// Добавить пользователей в базу
+        /// </summary>
+        private static async Task CreateUsers(UserStore<IdentityUser> userStore, IEnumerable<IdentityUser> users)
+        {
+            foreach (var user in users)
+            {
+                await userStore.CreateAsync(user);
+            }
+        }
 
-        //var user = new ApplicationUser
-        //{
-        //    FirstName = "XXXX",
-        //    LastName = "XXXX",
-        //    Email = "xxxx@example.com",
-        //    NormalizedEmail = "XXXX@EXAMPLE.COM",
-        //    UserName = "Owner",
-        //    NormalizedUserName = "OWNER",
-        //    PhoneNumber = "+111111111111",
-        //    EmailConfirmed = true,
-        //    PhoneNumberConfirmed = true,
-        //    SecurityStamp = Guid.NewGuid().ToString("D")
-        //};
+
+
+
+        //var user = 
 
 
         //if (!context.Users.Any(u => u.UserName == user.UserName))
         //{
-        //    var password = new PasswordHasher<ApplicationUser>();
-        //    var hashed = password.HashPassword(user, "secret");
-        //    user.PasswordHash = hashed;
+
 
         //    var userStore = new UserStore<ApplicationUser>(context);
         //    var result = userStore.CreateAsync(user);

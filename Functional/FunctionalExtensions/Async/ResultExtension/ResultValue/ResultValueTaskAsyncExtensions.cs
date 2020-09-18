@@ -44,7 +44,8 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль для задачи-объекта
         /// </summary>
-        public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue> @this, IErrorResult errorNull) =>
+        public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue?> @this, IErrorResult errorNull) 
+            where TValue : class =>
             await @this.
                 MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullCheck(errorNull));
     }

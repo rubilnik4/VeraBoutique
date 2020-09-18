@@ -12,6 +12,7 @@
         DatabaseValueNotFound,
         DatabaseValueDuplicate,
         JsonConvertion,
+        UserDefaultNotFound,
         Unknown,
     }
 }
