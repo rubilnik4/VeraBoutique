@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Implementations;
 using BoutiqueMVC.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,9 +31,9 @@ namespace BoutiqueMVC
         {
             ControllerServices.InjectControllers(services);
             DatabaseServices.InjectDatabase(services);
-            services.AddControllers();
             AuthServices.AddAuthorization(services);
             AuthServices.AddJwtAuthentication(services, Configuration);
+            services.AddControllers();
         }
 
         /// <summary>
@@ -57,9 +58,12 @@ namespace BoutiqueMVC
             {
                 endpoints.MapControllers();
             });
-
-            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
-            DatabaseServices.UpdateSchema(serviceScope.ServiceProvider);
         }
+
+        /// <summary>
+        /// Стартовые асинхронные операции
+        /// </summary>
+        public static async Task PreLoadAsync(IServiceProvider serviceProvider) =>
+            await DatabaseServices.UpdateSchema(serviceProvider);
     }
 }

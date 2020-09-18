@@ -8,6 +8,7 @@ services:
       dockerfile: BoutiqueMVC/Dockerfile    
     env_file:
       -  postgres.env
+      -  jwt.env
     ports:
       - "5000:5000"
     volumes:

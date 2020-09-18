@@ -13,6 +13,8 @@ using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +24,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     /// Базовый контроллер для Api
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public abstract class ApiController<TId, TTransfer, TDomain> : ControllerBase, IApiController<TId, TTransfer>
         where TTransfer : ITransferModel<TId>
@@ -49,6 +52,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// Базовый метод получения данных
         /// </summary>
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
@@ -60,6 +64,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// Базовый метод отправки данных
         /// </summary>
         [HttpGet("{id}")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

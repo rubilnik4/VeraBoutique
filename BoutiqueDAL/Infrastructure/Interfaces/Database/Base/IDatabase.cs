@@ -16,6 +16,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        void UpdateSchema();
+        Task UpdateSchema();
     }
 }

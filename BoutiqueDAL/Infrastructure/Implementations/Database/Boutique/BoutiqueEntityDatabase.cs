@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
@@ -9,8 +10,11 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.Models.Interfaces.Result;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -39,10 +43,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public void UpdateSchema()
+        public async Task UpdateSchema()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+          //  Database.EnsureDeleted();
+            await  Database.EnsureCreatedAsync();
+            await IdentityInitialize.Initialize(this);
         }
 
         /// <summary>
@@ -61,6 +66,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
 
+            InitializeEntityData(modelBuilder);
+        }
+
+        /// <summary>
+        /// Инициализация данными таблиц
+        /// </summary>
+        private static void InitializeEntityData(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
         }
     }

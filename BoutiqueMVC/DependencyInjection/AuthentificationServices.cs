@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using BoutiqueMVC.Models.Enums.Authorization;
+using BoutiqueMVC.Factories.Database;
+using BoutiqueMVC.Models.Enums.Identity;
 using BoutiqueMVC.Models.Implementations.Authentication;
-using BoutiqueMVC.Models.Implementations.Connection;
+using BoutiqueMVC.Models.Implementations.Environment;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -33,21 +34,7 @@ namespace BoutiqueMVC.DependencyInjection
         public static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration) =>
             services.
             AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
-            AddJwtBearer(options => options.TokenValidationParameters = GetJwtSettings(configuration).TokenValidationParameters);
-
-        /// <summary>
-        /// Параметры авторизации
-        /// </summary>
-        private static JwtSettings GetJwtSettings(IConfiguration configuration) =>
-            new JwtSettings(configuration["JwtToken:Issuer"],
-                            configuration["JwtToken:Audience"],
-                            SymmetricKey);
-
-        /// <summary>
-        /// Получить симметричный ключ
-        /// </summary>
-        private static byte[] SymmetricKey =>
-             Environment.GetEnvironmentVariable(PostgresEnvironment.JWT_KEY).
-             Map(key => Encoding.ASCII.GetBytes(key?? String.Empty));
+            AddJwtBearer(options =>
+                options.TokenValidationParameters = JwtSettingsFactory.GetJwtSettings(configuration).TokenValidationParameters);
     }
 }
