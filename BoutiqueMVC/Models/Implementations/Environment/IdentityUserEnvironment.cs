@@ -8,21 +8,21 @@
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public const string USER_NAME = "UserName";
+        public const string USER_NAME = "USER_NAME";
 
         /// <summary>
         /// Пароль
         /// </summary>
-        public const string PASSWORD = "Password";
+        public const string PASSWORD = "PASSWORD";
 
         /// <summary>
         /// Почта
         /// </summary>
-        public const string EMAIL = "Email";
+        public const string EMAIL = "EMAIL";
 
         /// <summary>
         /// Телефон
         /// </summary>
-        public const string PHONE = "Phone";
+        public const string PHONE = "PHONE";
     }
 }

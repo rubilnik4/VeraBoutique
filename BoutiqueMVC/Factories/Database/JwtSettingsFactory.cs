@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Text;
-using BoutiqueMVC.Models.Implementations.Authentication;
 using BoutiqueMVC.Models.Implementations.Environment;
+using BoutiqueMVC.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.Extensions.Configuration;
 
@@ -61,6 +61,6 @@ namespace BoutiqueMVC.Factories.Database
         /// </summary>
         private static string KeyEnvironment =>
             Environment.GetEnvironmentVariable(JwtEnvironment.JWT_KEY) ??
-            throw new ConfigurationErrorsException();
+            throw new ConfigurationErrorsException(nameof(KeyEnvironment));
     }
 }

@@ -1,11 +1,11 @@
-﻿namespace BoutiqueMVC.Models.Implementations.Authentication
+﻿namespace BoutiqueDAL.Models.Implementations.Identity
 {
     /// <summary>
     /// Имя пользователя и пароль
     /// </summary>
-    public class Login
+    public class IdentityLogin
     {
-        public Login(string userName, string password)
+        public IdentityLogin(string userName, string password)
         {
             UserName = userName;
             Password = password;

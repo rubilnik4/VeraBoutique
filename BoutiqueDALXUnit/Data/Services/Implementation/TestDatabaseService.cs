@@ -19,8 +19,8 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     /// </summary>
     public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, TestEntity>
     {
-        public TestDatabaseService(IResultValue<IDatabase> database,
-                                   IResultValue<IDatabaseTable<TestEnum, TestEntity>> testDatabaseTable,
+        public TestDatabaseService(IDatabase database,
+                                   IDatabaseTable<TestEnum, TestEntity> testDatabaseTable,
                                    IEntityConverter<TestEnum, ITestDomain, TestEntity> testEntityConverter)
             : base(database, testDatabaseTable, testEntityConverter)
         { }

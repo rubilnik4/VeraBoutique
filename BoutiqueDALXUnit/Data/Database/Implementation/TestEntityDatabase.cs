@@ -1,8 +1,11 @@
-﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
+﻿using System.Threading.Tasks;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using Functional.Models.Interfaces.Result;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -39,6 +42,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new TestConfiguration());
             modelBuilder.HasPostgresEnum<TestEnum>();
         }
@@ -46,7 +50,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Обновить схему
         /// </summary>
-        public void UpdateSchema()
-        { }
+        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<IdentityUser> defaultUsers) =>
+            await Task.FromResult(defaultUsers);
     }
 }

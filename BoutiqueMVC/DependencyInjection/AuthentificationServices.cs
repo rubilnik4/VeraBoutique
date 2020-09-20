@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using System.Text;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Enums.Identity;
-using BoutiqueMVC.Models.Implementations.Authentication;
 using BoutiqueMVC.Models.Implementations.Environment;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

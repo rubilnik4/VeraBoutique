@@ -19,8 +19,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// </summary>
     public class GenderDatabaseService : DatabaseService<GenderType, IGenderDomain, GenderEntity>, IGenderDatabaseService
     {
-        public GenderDatabaseService(IResultValue<IDatabase> database,
-                             IResultValue<IDatabaseTable<GenderType, GenderEntity>> genderDatabaseTable,
+        public GenderDatabaseService(IDatabase database,
+                             IDatabaseTable<GenderType, GenderEntity> genderDatabaseTable,
                              IEntityConverter<GenderType, IGenderDomain, GenderEntity> genderEntityConverter)
             : base(database, genderDatabaseTable, genderEntityConverter)
         { }

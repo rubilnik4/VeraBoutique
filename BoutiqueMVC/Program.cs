@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using BoutiqueMVC.DependencyInjection;
-using BoutiqueMVC.Models.Implementations.Authentication;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;

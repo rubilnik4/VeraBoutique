@@ -49,24 +49,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
-        /// Проверить получение. Возврат с ошибкой базы данных
-        /// </summary>
-        [Fact]
-        public async Task Get_ErrorDatabase()
-        {
-            var errorInitial = TestDatabaseErrors.ErrorDatabase;
-            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
-            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = TestEntityConverter;
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
-
-            var testResult = await testService.Get();
-
-            Assert.True(testResult.HasErrors);
-            Assert.True(testResult.Errors.First().Equals(errorInitial));
-        }
-
-        /// <summary>
         /// Проверить получение по идентификатору
         /// </summary>
         [Fact]
@@ -83,24 +65,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
 
             Assert.True(testResult.OkStatus);
             Assert.True(testResult.Value.Equals(testEntitiesGet));
-        }
-
-        /// <summary>
-        /// Проверить получение по идентификатору. Ошибка базы
-        /// </summary>
-        [Fact]
-        public async Task GetId_DatabaseError()
-        {
-            var errorInitial = TestDatabaseErrors.ErrorDatabase;
-            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
-            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = TestEntityConverter;
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
-
-            var testResult = await testService.Get(It.IsAny<TestEnum>());
-
-            Assert.True(testResult.HasErrors);
-            Assert.True(testResult.Errors.First().Equals(errorInitial));
         }
 
         /// <summary>
@@ -138,25 +102,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
 
             Assert.True(resultIds.OkStatus);
             Assert.True(resultIds.Value.SequenceEqual(TestData.GetTestIds(testDomains)));
-        }
-
-        /// <summary>
-        /// Проверить запись. Ошибка базы данных
-        /// </summary>
-        [Fact]
-        public async Task Post_DatabaseError()
-        {
-            var testDomains = TestData.GetTestDomains();
-            var errorInitial = TestDatabaseErrors.ErrorDatabase;
-            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
-            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = TestEntityConverter;
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
-
-            var testResult = await testService.Post(testDomains);
-
-            Assert.True(testResult.HasErrors);
-            Assert.True(testResult.Errors.First().Equals(errorInitial));
         }
 
         /// <summary>
@@ -199,27 +144,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
-        /// Проверить обновление. Ошибка базы данных
-        /// </summary>
-        [Fact]
-        public async Task Put_DatabaseError()
-        {
-            var testDomainPut = TestData.GetTestDomains().First();
-            testDomainPut.Name = "ChangeName";
-
-            var errorInitial = TestDatabaseErrors.ErrorDatabase;
-            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
-            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = TestEntityConverter;
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
-
-            var result = await testService.Put(testDomainPut.Id, testDomainPut);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().Equals(errorInitial));
-        }
-
-        /// <summary>
         /// Проверить обновление. Элемент не найден
         /// </summary>
         [Fact]
@@ -257,25 +181,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
 
             Assert.True(resultEntity.OkStatus);
             Assert.True(testDelete.Equals(resultEntity.Value));
-        }
-
-        /// <summary>
-        /// Проверить удаление. Ошибка базы данных
-        /// </summary>
-        [Fact]
-        public async Task Delete_DatabaseError()
-        {
-            var testDelete = TestData.GetTestDomains().Last();
-            var errorInitial = TestDatabaseErrors.ErrorDatabase;
-            var testDatabase = new ResultValue<ITestDatabase>(errorInitial);
-            var testTable = testDatabase.ResultValueOk(database => database.TestTable);
-            var testConverter = TestEntityConverter;
-            var testService = GetTestDatabaseService(testDatabase, testTable, testConverter);
-
-            var result = await testService.Delete(testDelete.Id);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().Equals(errorInitial));
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 
-namespace BoutiqueMVC.Models.Implementations.Authentication
+namespace BoutiqueMVC.Models.Implementations.Identity
 {
     /// <summary>
     /// Параметры JWT токена

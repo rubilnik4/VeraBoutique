@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
-using BoutiqueDAL.Factories.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
-using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -43,11 +36,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema()
+        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<IdentityUser> defaultUsers)
         {
-          //  Database.EnsureDeleted();
-            await  Database.EnsureCreatedAsync();
-            await IdentityInitialize.Initialize(this);
+            await Database.EnsureDeletedAsync();
+            await Database.EnsureCreatedAsync();
+            await IdentityInitialize.Initialize(this, userManager, defaultUsers);
         }
 
         /// <summary>

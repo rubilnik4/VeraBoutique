@@ -1,6 +1,9 @@
 ﻿using System;
-using BoutiqueMVC.Models.Implementations.Authentication;
+using System.Collections.Generic;
+using BoutiqueDAL.Models.Enums.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
+using BoutiqueMVC.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
@@ -16,10 +19,16 @@ namespace BoutiqueMVC.Factories.Identity
     public static class IdentityUserFactory
     {
         /// <summary>
-        /// Пользователь по умолчанию
+        /// Пользователи по умолчанию
         /// </summary>
-        public static IResultValue<IdentityUser> DefaultUser =>
-            new ResultValue<Func<Login, string, string, IdentityUser>>(GetDefaultUser).
+        public static IResultCollection<IdentityUser> DefaultUsers =>
+            DefaultAdminUser.ResultValueOkToCollection(adminUser => new List<IdentityUser> { adminUser });
+
+        /// <summary>
+        /// Пользователь администратор по умолчанию
+        /// </summary>
+        private static IResultValue<IdentityUser> DefaultAdminUser =>
+            new ResultValue<Func<IdentityLogin, string, string, IdentityUser>>(GetDefaultUser).
             ResultCurryOkBind(Login).
             ResultCurryOkBind(Email).
             ResultCurryOkBind(Phone).
@@ -28,8 +37,8 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Имя пользователя и пароль
         /// </summary>
-        private static IResultValue<Login> Login =>
-            new ResultValue<Func<string, string, Login>>(GetLogin).
+        private static IResultValue<IdentityLogin> Login =>
+            new ResultValue<Func<string, string, IdentityLogin>>(GetLogin).
                 ResultCurryOkBind(UserName).
                 ResultCurryOkBind(Password).
                 ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
@@ -37,35 +46,14 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Получить пользователя о умолчанию
         /// </summary>
-        private static IdentityUser GetDefaultUser(Login login, string email, string phone) =>
-            new IdentityUser
-            {
-                UserName = login.UserName,
-                NormalizedUserName = login.UserName.ToUpperInvariant(),
-                Email = email,
-                NormalizedEmail = email.ToUpperInvariant(),
-                PhoneNumber = phone,
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
-            }.Map(user =>
-            {
-                user.PasswordHash = GetPasswordHash(user, login.Password);
-                return user;
-            });
+        private static BoutiqueUser GetDefaultUser(IdentityLogin login, string email, string phone) =>
+            new BoutiqueUser(IdentityRoleType.Admin, login, email, phone);
 
         /// <summary>
         /// Получить имя пользователя и пароль
         /// </summary>
-        private static Login GetLogin(string userName, string password) =>
-            new Login(userName, password);
-
-        /// <summary>
-        /// Хэшировать пароль
-        /// </summary>
-        private static string GetPasswordHash(IdentityUser user, string password) =>
-            new PasswordHasher<IdentityUser>().
-            Map(passwordHasher => passwordHasher.HashPassword(user, password));
+        private static IdentityLogin GetLogin(string userName, string password) =>
+            new IdentityLogin(userName, password);
 
         /// <summary>
         /// Имя пользователя
@@ -79,20 +67,20 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<string> Password =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PASSWORD).
-                ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Пароль пользователя не найден"));
+            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Пароль пользователя не найден"));
 
         /// <summary>
         /// Почта
         /// </summary>
         private static IResultValue<string> Email =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.EMAIL).
-                ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Почта пользователя не найдена"));
+            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Почта пользователя не найдена"));
 
         /// <summary>
         /// Телефон
         /// </summary>
         private static IResultValue<string> Phone =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PHONE).
-                ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Телефон пользователя не найден"));
+            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Телефон пользователя не найден"));
     }
 }

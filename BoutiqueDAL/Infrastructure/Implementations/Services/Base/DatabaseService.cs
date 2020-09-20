@@ -28,8 +28,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         where TEntity : IEntityModel<TId>
         where TId : notnull
     {
-        protected DatabaseService(IResultValue<IDatabase> database,
-                                  IResultValue<IDatabaseTable<TId, TEntity>> dataTable,
+        protected DatabaseService(IDatabase database,
+                                  IDatabaseTable<TId, TEntity> dataTable,
                                   IEntityConverter<TId, TDomain, TEntity> entityConverter)
         {
             _database = database;
@@ -40,12 +40,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// База данных
         /// </summary>
-        private readonly IResultValue<IDatabase> _database;
+        private readonly IDatabase _database;
 
         /// <summary>
         /// Таблица базы данных
         /// </summary>
-        private readonly IResultValue<IDatabaseTable<TId, TEntity>> _dataTable;
+        private readonly IDatabaseTable<TId, TEntity> _dataTable;
 
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
@@ -56,37 +56,31 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить модели из базы
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
-            await _dataTable.
-            ResultValueBindOkToCollectionAsync(dataTable => dataTable.ToListAsync()).
+            await _dataTable.ToListAsync().
             ResultCollectionOkTaskAsync(entities => _entityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
-            await _dataTable.
-            ResultValueBindOkAsync(dataTable => dataTable.FirstAsync(id)).
+            await _dataTable.FirstAsync(id).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
         public async Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.
-            ResultValueBindOkToCollectionAsync(dataTable =>
-                dataTable.FindAsync(models.Select(model => model.Id)).
-                ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
-                    okFunc: _ => AddRangeWithSaving(dataTable, models),
-                    badFunc: ids => GetDuplicateErrorResult(ids, dataTable.TableName)));
+            await _dataTable.FindAsync(models.Select(model => model.Id)).
+            ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
+                okFunc: _ => AddRangeWithSaving(_dataTable, models),
+                badFunc: ids => GetDuplicateErrorResult(ids, _dataTable.TableName));
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TId id, TDomain model) =>
-            await _dataTable.
-            ResultValueBindOkAsync(dataTable => 
-                dataTable.FirstAsync(id).
-                ResultValueBindErrorsOkTaskAsync(_ => dataTable.Update(_entityConverter.ToEntity(model)))).
+            await _dataTable.FirstAsync(id).
+            ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Update(_entityConverter.ToEntity(model))).
             ToResultErrorTaskAsync().
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
 
@@ -94,10 +88,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.
-            ResultValueBindOkAsync(dataTable =>
-                dataTable.FirstAsync(id).
-                ResultValueBindErrorsOkTaskAsync(_ => dataTable.Remove(CreateRemoveEntityById(id)))).
+            await _dataTable.FirstAsync(id).
+            ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Remove(CreateRemoveEntityById(id))).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
@@ -118,9 +110,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Сохранить изменения в базе или вернуть ошибки
         /// </summary>
         private async Task<IResultError> DatabaseSaveChanges() =>
-            await _database.
-            ResultValueOkAsync(database => database.SaveChangesAsync()).
-            MapTaskAsync(resultDatabase => (IResultError)resultDatabase);
+            await _database.SaveChangesAsync();
 
         /// <summary>
         /// Получить ошибку двойной записи

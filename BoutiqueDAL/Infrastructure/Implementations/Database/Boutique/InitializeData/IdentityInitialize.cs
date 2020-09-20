@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Enums.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -24,10 +25,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Добавить роли
         /// </summary>
-        public static async Task Initialize(IdentityDbContext<IdentityUser> dbContext, IResultCollection<IdentityUser> defaultUser) =>
+        public static async Task Initialize(IdentityDbContext<IdentityUser> dbContext, UserManager<IdentityUser> userManager,
+                                            IResultCollection<BoutiqueUser> defaultUsers) =>
             await dbContext.
             VoidAsync(CreateIdentityRoles).
-            VoidBindAsync(_ => CreateIdentityUsers(dbContext, defaultUser));
+            VoidBindAsync(_ => CreateIdentityUsers(dbContext, defaultUsers));
 
         /// <summary>
         /// Проверить и добавить роли
@@ -40,7 +42,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Проверить и добавить пользователей
         /// </summary>
-        private static async Task CreateIdentityUsers(IdentityDbContext<IdentityUser> dbContext, IResultCollection<IdentityUser> defaultUsers) =>
+        private static async Task CreateIdentityUsers(IdentityDbContext<IdentityUser> dbContext, IResultCollection<BoutiqueUser> defaultUsers) =>
             await new UserStore<IdentityUser>(dbContext).
             VoidAsync(userStore => GetUsersToCreate(userStore, defaultUsers).
                                    VoidBindAsync(user => CreateUsers(userStore, user)));
@@ -53,12 +55,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             MapTaskAsync(roles => roles.Select(role => role.Name)).
             MapTaskAsync(rolesNames => Enum.GetNames(typeof(IdentityRoleType)).
                                        Where(roleType => !rolesNames.Contains(roleType, StringComparer.OrdinalIgnoreCase)).
-                                       Select(roleType => new IdentityRole(roleType)));
+                                       Select(roleType => new IdentityRole(roleType) { NormalizedName = roleType.ToUpperInvariant() }));
 
         /// <summary>
         /// Получить роли для добавления в базу
         /// </summary>
-        private static async Task<IEnumerable<IdentityUser>> GetUsersToCreate(UserStore<IdentityUser> userStore, IResultCollection<IdentityUser> defaultUsersResult) =>
+        private static async Task<IEnumerable<IdentityUser>> GetUsersToCreate(UserStore<IdentityUser> userStore, 
+                                                                              IResultCollection<BoutiqueUser> defaultUsersResult) =>
             await defaultUsersResult.WhereContinue(defaultUsers => defaultUsers.OkStatus,
                 okFunc: defaultUsers => userStore.Users.ToListAsync().
                                         MapTaskAsync(users => users.Select(user => user.UserName)).
@@ -93,21 +96,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
                 await userStore.CreateAsync(user);
             }
         }
-
-
-
-
-        //var user = 
-
-
-        //if (!context.Users.Any(u => u.UserName == user.UserName))
-        //{
-
-
-        //    var userStore = new UserStore<ApplicationUser>(context);
-        //    var result = userStore.CreateAsync(user);
-
-        //}
 
         //AssignRoles(serviceProvider, user.Email, roles);
 

@@ -10,11 +10,21 @@
     <UserSecretsId>2f77cbc9-3cd3-44f0-af7b-f1450b916958</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose - Copy (2).override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose - Copy - Copy.override.yml">
+      <DependentUpon>docker-compose - Copy.override.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose - Copy.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="defaultUser.env" />
     <None Include="jwt.env" />
     <None Include="postgres.env" />
   </ItemGroup>
