@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net.Mime;
+using BoutiqueDTO.Models.Implementations.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Controllers.Implementations.Authorization
@@ -11,16 +15,25 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
-        public AuthController()
+        public AuthController(SignInManager<IdentityUser> signInManager)
         {
-
+            _signInManager = signInManager;
         }
 
-        [HttpPost]
-        public IActionResult GenerateToken()
-        {
+        /// <summary>
+        /// Менеджер аутентификации
+        /// </summary>
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-            return Ok();
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult Authenticate(IdentityLoginTransfer login)
+        {
+            _signInManager.PasswordSignInAsync(login.UserName, login.Password, true, true);
+            //_userManager.CheckPasswordAsync()
+            //return Ok();
         }
     }
 }

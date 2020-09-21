@@ -10,11 +10,11 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// </summary>
     public sealed class BoutiqueUser: IdentityUser
     {
-        public BoutiqueUser(IdentityRoleType identityRoleType, IdentityLogin login, string email, string phone)
+        public BoutiqueUser(string identityRoleType, IdentityLogin login, string email, string phone)
             :this(identityRoleType, login.UserName, login.Password, email, phone)
         { }
 
-        public BoutiqueUser(IdentityRoleType identityRoleType, string userName, string password, string email, string phone)
+        public BoutiqueUser(string identityRoleType, string userName, string password, string email, string phone)
         {
             IdentityRoleType = identityRoleType;
             UserName = userName;
@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         /// <summary>
         /// Тип роли
         /// </summary>
-        public IdentityRoleType IdentityRoleType { get; }
+        public string IdentityRoleType { get; }
 
         /// <summary>
         /// Нормализованное имя пользователя

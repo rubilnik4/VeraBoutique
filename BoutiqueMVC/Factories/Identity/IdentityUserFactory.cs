@@ -21,14 +21,14 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Пользователи по умолчанию
         /// </summary>
-        public static IResultCollection<IdentityUser> DefaultUsers =>
-            DefaultAdminUser.ResultValueOkToCollection(adminUser => new List<IdentityUser> { adminUser });
+        public static IResultCollection<BoutiqueUser> DefaultUsers =>
+            DefaultAdminUser.ResultValueOkToCollection(adminUser => new List<BoutiqueUser> { adminUser });
 
         /// <summary>
         /// Пользователь администратор по умолчанию
         /// </summary>
-        private static IResultValue<IdentityUser> DefaultAdminUser =>
-            new ResultValue<Func<IdentityLogin, string, string, IdentityUser>>(GetDefaultUser).
+        private static IResultValue<BoutiqueUser> DefaultAdminUser =>
+            new ResultValue<Func<IdentityLogin, string, string, BoutiqueUser>>(GetDefaultUser).
             ResultCurryOkBind(Login).
             ResultCurryOkBind(Email).
             ResultCurryOkBind(Phone).

@@ -6,6 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeDat
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<IdentityUser> defaultUsers)
+        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers)
         {
             await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();

@@ -2,6 +2,7 @@
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using Functional.Models.Interfaces.Result;
@@ -50,7 +51,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Обновить схему
         /// </summary>
-        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<IdentityUser> defaultUsers) =>
+        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers) =>
             await Task.FromResult(defaultUsers);
     }
 }

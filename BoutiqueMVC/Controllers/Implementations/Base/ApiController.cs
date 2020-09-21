@@ -5,6 +5,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Controllers.Interfaces.Base;
@@ -24,7 +25,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     /// Базовый контроллер для Api
     /// </summary>
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = IdentityRoleTypes.ADMIN_ROLE)]
     [ApiController]
     public abstract class ApiController<TId, TTransfer, TDomain> : ControllerBase, IApiController<TId, TTransfer>
         where TTransfer : ITransferModel<TId>

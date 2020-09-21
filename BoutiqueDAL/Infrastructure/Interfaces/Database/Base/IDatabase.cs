@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,6 +18,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<IdentityUser> defaultUsers);
+        Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers);
     }
 }
