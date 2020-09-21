@@ -7,11 +7,12 @@ namespace BoutiqueMVC.Models.Implementations.Identity
     /// </summary>
     public class JwtSettings
     {
-        public JwtSettings(string issuer, string audience, byte[] key)
+        public JwtSettings(string issuer, string audience, int expires, byte[] key)
         {
-            Key = key;
             Issuer = issuer;
             Audience = audience;
+            Expires = expires;
+            Key = key;
         }
 
         /// <summary>
@@ -23,6 +24,11 @@ namespace BoutiqueMVC.Models.Implementations.Identity
         /// 
         /// </summary>
         public string Audience { get; }
+
+        /// <summary>
+        /// Срок действия токена
+        /// </summary>
+        public int Expires{ get; }
 
         /// <summary>
         /// Ключ

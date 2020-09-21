@@ -29,11 +29,17 @@ namespace BoutiqueMVC.Factories.Database
         private const string AUDIENCE = "Audience";
 
         /// <summary>
+        /// Потребитель токена
+        /// </summary>
+        private const string EXPIRES = "Expires";
+
+        /// <summary>
         /// Параметры авторизации
         /// </summary>
         public static JwtSettings GetJwtSettings(IConfiguration configuration) =>
             new JwtSettings(GetIssuerConfiguration(configuration),
                             GetAudienceConfiguration(configuration),
+                            GetExpiresConfiguration(configuration),
                             SymmetricKey);
 
         /// <summary>
@@ -49,6 +55,15 @@ namespace BoutiqueMVC.Factories.Database
         private static string GetAudienceConfiguration(IConfiguration configuration) =>
             configuration[$"{JWT_SECTION}:{AUDIENCE}"] ??
             throw new ConfigurationErrorsException();
+
+        /// <summary>
+        /// Получить срок действия токена
+        /// </summary>
+        private static int GetExpiresConfiguration(IConfiguration configuration) =>
+            configuration[$"{JWT_SECTION}:{EXPIRES}"].
+            WhereContinue(expires => Int32.TryParse(expires, out _),
+                okFunc: Int32.Parse,
+                badFunc: _ => throw new ConfigurationErrorsException());
 
         /// <summary>
         /// Получить симметричный ключ

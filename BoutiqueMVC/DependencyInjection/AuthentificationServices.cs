@@ -26,11 +26,18 @@ namespace BoutiqueMVC.DependencyInjection
                 options.AddPolicy(PolicyType.User.ToString(), policy => policy.RequireClaim(ClaimType.ReadOnly.ToString()));
             });
 
+        /// <summary>
+        /// Внедрить зависимости авторизации
+        /// </summary>
+        public static void InjectJwtServices(IServiceCollection services, IConfiguration configuration) =>
+            JwtSettingsFactory.GetJwtSettings(configuration).
+            Map(jwtSettings => services.AddSingleton(jwtSettings).
+                               Void(_ => AddJwtAuthentication(services, configuration)));
 
         /// <summary>
         /// Добавить авторизацию через JWT токен
         /// </summary>
-        public static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration) =>
+        private static void AddJwtAuthentication(IServiceCollection services, IConfiguration configuration) =>
             services.
             AddAuthentication(JwtBearerDefaults.AuthenticationScheme).
             AddJwtBearer(options =>
