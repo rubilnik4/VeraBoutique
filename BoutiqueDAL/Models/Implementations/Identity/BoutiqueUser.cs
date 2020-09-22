@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;

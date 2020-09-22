@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoutiqueCommon.Models.Common.Interfaces.Identity;
+using static BoutiqueCommon.Models.Common.Implementations.Identity.IdentitySettings;
 
 namespace BoutiqueDTO.Models.Implementations.Identity
 {
@@ -8,6 +9,9 @@ namespace BoutiqueDTO.Models.Implementations.Identity
     /// </summary>
     public class IdentityLoginTransfer: IIdentityLogin
     {
+        public IdentityLoginTransfer()
+        { }
+
         public IdentityLoginTransfer(string userName, string password)
         {
             UserName = userName;
@@ -18,12 +22,14 @@ namespace BoutiqueDTO.Models.Implementations.Identity
         /// Имя пользователя
         /// </summary>
         [Required]
-        public string UserName { get; }
+        [MinLength(USERNAME_MINLENGTH)]
+        public string UserName { get; set; }
 
         /// <summary>
         /// Пароль
         /// </summary>
         [Required]
-        public string Password { get; }
+        [MinLength(PASSWORD_MINLENGTH)]
+        public string Password { get; set; }
     }
 }

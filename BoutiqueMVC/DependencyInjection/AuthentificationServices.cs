@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Enums.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using static BoutiqueDAL.Models.Enums.Identity.IdentityRoleTypes;
+using static BoutiqueMVC.Models.Enums.Identity.IdentityPolicyType;
 
 namespace BoutiqueMVC.DependencyInjection
 {
@@ -22,8 +27,8 @@ namespace BoutiqueMVC.DependencyInjection
         public static void AddAuthorization(IServiceCollection services) =>
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(PolicyType.Admin.ToString(), policy => policy.RequireClaim(ClaimType.Everything.ToString()));
-                options.AddPolicy(PolicyType.User.ToString(), policy => policy.RequireClaim(ClaimType.ReadOnly.ToString()));
+                options.AddPolicy(ADMIN_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, ADMIN_ROLE));
+                options.AddPolicy(USER_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, USER_ROLE));
             });
 
         /// <summary>

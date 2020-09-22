@@ -6,9 +6,12 @@ using System.Net.Mime;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
+using BoutiqueMVC.Models.Interfaces.Identity;
 using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,38 +26,42 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
     /// Контроллер авторизации
     /// </summary>
     [ApiController]
-    [Route("/api/auth")]
+    [Route("/api/login")]
     [AllowAnonymous]
-    public class AuthController : ControllerBase
+    public class LoginController : ControllerBase
     {
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-                              JwtSettings jwtSettings)
+        public LoginController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager,
+                               JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings;
         }
+
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserManagerBoutique _userManager;
 
         /// <summary>
         /// Менеджер аутентификации
         /// </summary>
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ISignInManagerBoutique _signInManager;
 
         /// <summary>
         /// Параметры JWT токена
         /// </summary>
         private readonly JwtSettings _jwtSettings;
 
+        /// <summary>
+        /// Авторизировать
+        /// </summary>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<string>> Login(IdentityLoginTransfer login) =>
-            await _signInManager.PasswordSignInAsync(login.UserName, login.UserName, false, false).
+            await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false).
             MapBindAsync(result => GetLoginAction(result, login.UserName));
 
         /// <summary>
@@ -84,30 +91,31 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
         /// <summary>
         /// Сгенерировать токен
         /// </summary>
-        private async Task<string> GenerateJwtToken(IdentityUser user)
-        {
-            var roles = await _userManager.GetRolesAsync(user);
+        private async Task<string> GenerateJwtToken(IdentityUser user) =>
+             new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                GetClaims(user, await _userManager.GetRolesAsync(user)),
+                expires: DateTime.Now.AddDays(_jwtSettings.Expires),
+                signingCredentials: GetCredentials(_jwtSettings)
+            ).Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));
 
-            var claims = new List<Claim>
+        /// <summary>
+        /// Получить права доступа
+        /// </summary>
+        private static IEnumerable<Claim> GetClaims(IdentityUser user, IEnumerable<string> roles) =>
+            new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-            };
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            }.Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var key = new SymmetricSecurityKey(_jwtSettings.Key);
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                claims,
-                expires: DateTime.Now.AddDays(_jwtSettings.Expires),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        /// <summary>
+        /// Получить ключ для доступа
+        /// </summary>
+        private static SigningCredentials GetCredentials(JwtSettings jwtSettings) =>
+            new SymmetricSecurityKey(jwtSettings.Key).
+            Map(key => new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
     }
 }

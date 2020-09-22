@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
@@ -39,15 +40,15 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<IdentityLogin> Login =>
             new ResultValue<Func<string, string, IdentityLogin>>(GetLogin).
-                ResultCurryOkBind(UserName).
-                ResultCurryOkBind(Password).
-                ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
+            ResultCurryOkBind(UserName).
+            ResultCurryOkBind(Password).
+            ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
 
         /// <summary>
         /// Получить пользователя о умолчанию
         /// </summary>
         private static BoutiqueUser GetDefaultUser(IdentityLogin login, string email, string phone) =>
-            new BoutiqueUser(IdentityRoleType.Admin, login, email, phone);
+            new BoutiqueUser(IdentityRoleTypes.ADMIN_ROLE, login, email, phone);
 
         /// <summary>
         /// Получить имя пользователя и пароль

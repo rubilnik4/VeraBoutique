@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
@@ -56,7 +57,12 @@ namespace BoutiqueMVC.DependencyInjection
         /// Подключить сервисы авторизации к базе
         /// </summary>
         private static void InjectDatabaseIdentities(IServiceCollection services) =>
-            services.AddIdentity<IdentityUser, IdentityRole>().
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+                     {
+                         options.Password.RequiredLength = IdentitySettings.PASSWORD_MINLENGTH;
+                         options.SignIn.RequireConfirmedEmail = true;
+                         options.User.RequireUniqueEmail = true;
+                     }).
             AddEntityFrameworkStores<BoutiqueEntityDatabase>().
             AddDefaultTokenProviders();
 

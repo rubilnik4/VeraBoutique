@@ -1,5 +1,8 @@
 ﻿using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueMVC.Models.Implementations.Identity;
+using BoutiqueMVC.Models.Interfaces.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BoutiqueMVC.DependencyInjection
@@ -15,6 +18,8 @@ namespace BoutiqueMVC.DependencyInjection
         public static void InjectControllerServices(IServiceCollection services)
         {
             services.AddTransient<IGenderTransferConverter>(serviceProvider => new GenderTransferConverter());
+            services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
+            services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
         }
     }
 }
