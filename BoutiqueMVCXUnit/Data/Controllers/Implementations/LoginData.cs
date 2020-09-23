@@ -14,7 +14,7 @@ namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
         /// Имя пользователя и пароль
         /// </summary>
         public static IdentityLoginTransfer IdentityLogin =>
-          new IdentityLoginTransfer("userName", "password");
+          new IdentityLoginTransfer(UserName, "password");
 
         /// <summary>
         /// Тестовые пользователи
@@ -22,7 +22,18 @@ namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
         public static IReadOnlyCollection<IdentityUser> Users =>
             new List<IdentityUser>
             {
-                new IdentityUser("UserName")
+                new IdentityUser(UserName)
             };
+
+        /// <summary>
+        /// Тестовое имя пользователя
+        /// </summary>
+        public static string UserName => "userName";
+
+        /// <summary>
+        /// Тестовые роли
+        /// </summary>
+        public static IList<string> Roles =>
+            new List<string> { "Admin" };
     }
 }

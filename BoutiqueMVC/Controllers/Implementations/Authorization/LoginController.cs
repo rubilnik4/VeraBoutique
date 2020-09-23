@@ -76,17 +76,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
             };
 
         /// <summary>
-        /// Найти пользователя по имени
-        /// </summary>
-        private async Task<IdentityUser> GetIdentityByUserName(string userName) =>
-            await _userManager.Users.SingleOrDefaultAsync(r => r.UserName == userName);
-
-        /// <summary>
         /// Получить ответ сервера с токеном
         /// </summary>
         private async Task<ActionResult<string>> GetJwtResult(string userName) =>
             await GetIdentityByUserName(userName).
             MapBindAsync(GenerateJwtToken);
+
+        /// <summary>
+        /// Найти пользователя по имени
+        /// </summary>
+        private async Task<IdentityUser> GetIdentityByUserName(string userName) =>
+            await _userManager.Users.FirstOrDefaultAsync(r => r.UserName == userName);
 
         /// <summary>
         /// Сгенерировать токен

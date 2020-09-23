@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using BoutiqueDTO.Models.Implementations.Identity;
@@ -9,9 +12,13 @@ using BoutiqueMVC.Models.Interfaces.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using MockQueryable.Moq;
 using Moq;
 using Xunit;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace BoutiqueMVCXUnit.Controllers.Authorization
 {
@@ -20,6 +27,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
     /// </summary>
     public class LoginControllerTest
     {
+        /// <summary>
+        /// Сгенерировать токен
+        /// </summary>
         [Fact]
         public async Task Login_GenerateToken()
         {
@@ -29,8 +39,43 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
 
             var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            var handler = new JwtSecurityTokenHandler();
+            var tokenDecode = handler.ReadToken(tokenResult.Value) as JwtSecurityToken;
+            var claims = tokenDecode?.Claims.ToList();
+            var claimRole = claims?.First(claim => claim.Type == ClaimTypes.Role && claim.Value == LoginData.Roles.First());
 
             Assert.True(!String.IsNullOrWhiteSpace(tokenResult.Value));
+            Assert.NotNull(claimRole);
+        }
+
+        /// <summary>
+        /// Ошибка. Аккаунт блокирован
+        /// </summary>
+        [Fact]
+        public async Task Login_LockOut()
+        {
+            var userManager = GetUserManager();
+            var signInManager = GetSignInManager(SignInLockOut);
+            var jwtSettings = JwtSettings;
+            var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
+
+            var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
+        }
+
+        /// <summary>
+        /// Ошибка. Неправильное имя пользователя и пароль
+        /// </summary>
+        [Fact]
+        public async Task Login_IncorrectLogin()
+        {
+            var userManager = GetUserManager();
+            var signInManager = GetSignInManager(SignInIncorrectLogin);
+            var jwtSettings = JwtSettings;
+            var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
+
+            var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
         }
 
         /// <summary>
@@ -38,7 +83,10 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// </summary>
         private static Mock<IUserManagerBoutique> GetUserManager() =>
             new Mock<IUserManagerBoutique>().
-            Void(userMock => userMock.Setup(userManager => userManager.Users).Returns(LoginData.Users.AsQueryable()));
+            Void(userMock => userMock.Setup(userManager => userManager.Users).
+                                      Returns(LoginData.Users.AsQueryable().BuildMock().Object)).
+            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<IdentityUser>())).
+                                      ReturnsAsync(LoginData.Roles));
 
         /// <summary>
         /// Менеджер аутентификации
@@ -53,6 +101,16 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// Ответ сервера авторизации
         /// </summary>
         private static SignInResult SignInSuccess => SignInResult.Success;
+
+        /// <summary>
+        /// Аккаунт блокирован
+        /// </summary>
+        private static SignInResult SignInLockOut => SignInResult.LockedOut;
+
+        /// <summary>
+        /// Неправильное имя пользователя и пароль
+        /// </summary>
+        private static SignInResult SignInIncorrectLogin => SignInResult.Failed;
 
         /// <summary>
         /// Параметры JWT токена

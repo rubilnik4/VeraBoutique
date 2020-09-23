@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BoutiqueMVC.DependencyInjection;
 using Microsoft.AspNetCore;
@@ -5,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace BoutiqueMVC
 {
@@ -12,19 +15,31 @@ namespace BoutiqueMVC
     {
         public static async Task Main(string[] args)
         {
+            await NLogStartUp.NLogStart(() => RunWebHost(args));
+        }
+
+        /// <summary>
+        /// Запустить сервер
+        /// </summary>
+        private static async Task RunWebHost(string[] args)
+        {
             var webHost = CreateWebHostBuilder(args).Build();
             using (var scope = webHost.Services.CreateScope())
             {
-               await Startup.PreLoadAsync(scope.ServiceProvider);
+                await Startup.PreLoadAsync(scope.ServiceProvider);
             }
             await webHost.RunAsync();
         }
 
         /// <summary>
-        /// Запустить сервис
+        /// Опередить параметры запуска
         /// </summary>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args).
-                    UseStartup<Startup>();
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.
+            CreateDefaultBuilder(args).
+            UseStartup<Startup>().ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+            }).UseNLog();
     }
 }
