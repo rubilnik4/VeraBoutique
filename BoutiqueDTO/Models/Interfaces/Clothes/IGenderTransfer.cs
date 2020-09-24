@@ -5,7 +5,7 @@ using BoutiqueDTO.Models.Interfaces.Base;
 namespace BoutiqueDTO.Models.Interfaces.Clothes
 {
     /// <summary>
-    /// Трансферная модель типа пола
+    /// Тип пола. Трансферная модель
     /// </summary>
     public interface IGenderTransfer: IGender, ITransferModel<GenderType>
     { }

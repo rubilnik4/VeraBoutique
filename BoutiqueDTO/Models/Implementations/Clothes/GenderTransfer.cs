@@ -6,7 +6,7 @@ using BoutiqueDTO.Models.Interfaces.Clothes;
 namespace BoutiqueDTO.Models.Implementations.Clothes
 {
     /// <summary>
-    /// Трансферная модель типа пола
+    /// Тип пола. Трансферная модель
     /// </summary>
     public class GenderTransfer: IGenderTransfer
     {
@@ -35,10 +35,5 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Содержит ли идентификатор
-        /// </summary>
-        public bool HasId(GenderType genderType) => GenderType == genderType;
     }
 }

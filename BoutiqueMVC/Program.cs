@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog.Web;
 
 namespace BoutiqueMVC
 {
@@ -15,7 +14,7 @@ namespace BoutiqueMVC
     {
         public static async Task Main(string[] args)
         {
-            await NLogStartUp.NLogStart(() => RunWebHost(args));
+            await RunWebHost(args);
         }
 
         /// <summary>
@@ -37,9 +36,6 @@ namespace BoutiqueMVC
         private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.
             CreateDefaultBuilder(args).
-            UseStartup<Startup>().ConfigureLogging(logging =>
-            {
-                logging.ClearProviders();
-            }).UseNLog();
+            UseStartup<Startup>();
     }
 }

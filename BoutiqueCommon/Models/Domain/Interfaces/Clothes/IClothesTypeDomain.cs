@@ -1,12 +1,11 @@
 ﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
-using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
 {
     /// <summary>
-    /// Тип пола. Доменная модель
+    /// Вид одежды. Доменная модель
     /// </summary>
-    public interface IGenderDomain: IGender, IDomainModel<GenderType>
+    public interface IClothesTypeDomain: IClothesType, IDomainModel<string>
     { }
 }

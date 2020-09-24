@@ -4,6 +4,9 @@ using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
 {
+    /// <summary>
+    /// Тип пола. Доменная модель
+    /// </summary>
     public class GenderDomain: Gender, IGenderDomain
     {
         public GenderDomain(GenderType genderType, string name)

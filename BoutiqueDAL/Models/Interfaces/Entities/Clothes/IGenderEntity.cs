@@ -5,7 +5,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Base;
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
 {
     /// <summary>
-    /// Пол. Структура базы данных
+    /// Пол. Сущность базы данных
     /// </summary>
     public interface IGenderEntity: IGender, IEntityModel<GenderType>
     { }
