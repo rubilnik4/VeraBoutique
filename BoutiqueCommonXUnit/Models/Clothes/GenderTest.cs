@@ -15,14 +15,14 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void Equal_Ok()
+        public void Gender_Equal_Ok()
         {
             const GenderType genderType = GenderType.Male;
             const string genderName = "Мужик";
 
             var gender = new GenderDomain(genderType, genderName);
 
-            int genderHash = HashCode.Combine(genderType, genderName);
+            int genderHash = HashCode.Combine(genderType);
             Assert.Equal(genderHash, gender.GetHashCode());
         }
     }

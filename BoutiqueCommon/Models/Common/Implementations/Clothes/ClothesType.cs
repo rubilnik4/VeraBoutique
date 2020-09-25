@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -8,12 +9,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Вид одежды
     /// </summary>
-    public class ClothesType: IClothesType
+    public abstract class ClothesType: IClothesType, IEquatable<IClothesType>
     {
-        public ClothesType(string name, IEnumerable<GenderType> genders)
+        protected ClothesType(string name)
         {
             Name = name;
-            Genders = genders.ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -26,9 +26,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public string Name { get; }
 
-        /// <summary>
-        /// Типы пола
-        /// </summary>
-        public IReadOnlyCollection<GenderType> Genders { get; }
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is IClothesType clothesType && Equals(clothesType);
+
+        public bool Equals(IClothesType? other) =>
+            other?.Name == Name ;
+
+        public override int GetHashCode() => HashCode.Combine(Name);
+        #endregion
     }
 }

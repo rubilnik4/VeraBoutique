@@ -29,8 +29,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public ITestDatabaseTable TestTable =>
-            new TestDatabaseTable(Test, nameof(Test));
+        public ITestDatabaseTable TestTable => new TestDatabaseTable(Test);
 
         /// <summary>
         /// Записать параметры конфигурации

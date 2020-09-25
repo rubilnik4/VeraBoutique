@@ -13,10 +13,5 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Наименование
         /// </summary>
         string Name { get; }
-
-        /// <summary>
-        /// Типы пола
-        /// </summary>
-        IReadOnlyCollection<GenderType> Genders { get; }
     }
 }

@@ -15,9 +15,34 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         public static IReadOnlyCollection<GenderEntity> GenderData =>
             new List<GenderEntity>()
             {
-                new GenderEntity(GenderType.Female, "Женщины"),
-                new GenderEntity(GenderType.Male, "Мужчины"),
-                 new GenderEntity(GenderType.Child, "Дети"),
+               Male,
+               Female,
+               Child,
             }.AsReadOnly();
+
+        /// <summary>
+        /// Мужской и женский пол
+        /// </summary>
+        public static IReadOnlyCollection<GenderEntity> MaleAndFemale =>
+         new List<GenderEntity>()
+            {
+               Male,
+               Female,
+            }.AsReadOnly();
+
+        /// <summary>
+        /// Мужской пол
+        /// </summary>
+        public static GenderEntity Male => new GenderEntity(GenderType.Male, "Мужчины");
+
+        /// <summary>
+        /// Женский пол
+        /// </summary>
+        public static GenderEntity Female => new GenderEntity(GenderType.Female, "Женщины");
+
+        /// <summary>
+        /// Детский пол
+        /// </summary>
+        public static GenderEntity Child => new GenderEntity(GenderType.Child, "Дети");
     }
 }

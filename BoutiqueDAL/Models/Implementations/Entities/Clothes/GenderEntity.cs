@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
@@ -12,7 +14,19 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class GenderEntity : Gender, IGenderEntity
     {
         public GenderEntity(GenderType genderType, string name)
-            :base(genderType, name)
+            : this(genderType, name, Enumerable.Empty<ClothesTypeGenderEntity>())
         { }
+
+        public GenderEntity(GenderType genderType, string name,
+                            IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+           : base(genderType, name)
+        {
+            ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
+        }
+
+        /// <summary>
+        /// Связующие сущности пола и вида одежды
+        /// </summary>
+        public ICollection<ClothesTypeGenderEntity> ClothesTypeGenderEntities { get;  }
     }
 }

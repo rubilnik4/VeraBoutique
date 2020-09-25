@@ -26,10 +26,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
     {
-        protected EntityDatabaseTable(DbSet<TEntity> databaseSet, string tableName)
+        protected EntityDatabaseTable(DbSet<TEntity> databaseSet)
         {
             _databaseSet = databaseSet;
-            TableName = tableName;
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Имя таблицы
         /// </summary>
-        public string TableName { get; }
+        public string TableName => GetType().Name;
 
         /// <summary>
         /// Вернуть записи из таблицы асинхронно

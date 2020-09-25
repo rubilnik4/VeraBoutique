@@ -15,8 +15,8 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
     /// </summary>
     public class TestDatabaseTable: EntityDatabaseTable<TestEnum, TestEntity>, ITestDatabaseTable
     {
-        public TestDatabaseTable(DbSet<TestEntity> testSet, string tableName)
-            :base(testSet, tableName)
+        public TestDatabaseTable(DbSet<TestEntity> testSet)
+            :base(testSet)
         {
             _testSet = testSet;
         }

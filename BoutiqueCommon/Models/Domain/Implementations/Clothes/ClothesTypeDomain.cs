@@ -10,8 +10,8 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// </summary>
     public class ClothesTypeDomain: ClothesType, IClothesTypeDomain
     {
-        public ClothesTypeDomain(string name, IEnumerable<GenderType> genders)
-          : base(name, genders)
+        public ClothesTypeDomain(string name)
+          : base(name)
         { }
     }
 }

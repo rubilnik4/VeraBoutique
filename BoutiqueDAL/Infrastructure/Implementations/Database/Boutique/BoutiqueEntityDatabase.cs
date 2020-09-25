@@ -5,6 +5,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.Models.Interfaces.Result;
@@ -29,10 +30,24 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных вида одежды EntityFramework
+        /// </summary>
+        public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица, связующая сущность пола и вид одежды
+        /// </summary>
+        public DbSet<ClothesTypeGenderEntity> ClothesTypeGenders { get; set; } = null!;
+
+        /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IGenderDatabaseTable GendersTable =>
-            new GenderDatabaseTable(Genders, nameof(Genders));
+        public IGenderTable GendersTable => new GenderTable(Genders);
+
+        /// <summary>
+        /// Таблица базы данных вида одежды
+        /// </summary>
+        public IClothesTypeTable ClotheTypeTable => new ClothesTypeTable(ClothesTypes);
 
         /// <summary>
         /// Обновить схемы базы данных
@@ -58,6 +73,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
 
             InitializeEntityData(modelBuilder);
@@ -69,6 +86,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         private static void InitializeEntityData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
+            modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
+            modelBuilder.Entity<ClothesTypeGenderEntity>().HasData(ClothesTypeGenderInitialize.ClothesTypeGenderData);
         }
     }
 }
