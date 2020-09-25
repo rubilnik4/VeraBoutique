@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes
 {
     /// <summary>
     /// Начальные данные таблицы типа пола

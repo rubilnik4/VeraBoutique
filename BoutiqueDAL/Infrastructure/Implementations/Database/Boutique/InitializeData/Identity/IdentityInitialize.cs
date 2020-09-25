@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BoutiqueCommon.Extensions.TaskExtensions;
-using BoutiqueDAL.Models.Enums.Identity;
+﻿using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity
 {
     /// <summary>
     /// Начальные данные авторизации

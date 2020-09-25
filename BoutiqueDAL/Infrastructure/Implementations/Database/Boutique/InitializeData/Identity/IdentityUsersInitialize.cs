@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity
 {
     /// <summary>
     /// Инициализация пользователей

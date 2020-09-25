@@ -10,7 +10,7 @@ using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity
 {
     public static class IdentityAssignRoles
     {

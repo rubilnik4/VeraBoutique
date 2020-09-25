@@ -12,14 +12,11 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     public class ClothesTypeTransfer : IClothesTypeTransfer
     {
         public ClothesTypeTransfer()
-        {
+        { }
 
-        }
-
-        public ClothesTypeTransfer(string name, IEnumerable<GenderType> genderTypes)
+        public ClothesTypeTransfer(string name)
         {
             Name = name;
-            GenderTypes = genderTypes.ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -32,11 +29,5 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public string Name { get; }
-
-        /// <summary>
-        /// Типы пола
-        /// </summary>
-        [Required]
-        public IReadOnlyCollection<GenderType> GenderTypes { get; }
     }
 }

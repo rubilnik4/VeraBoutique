@@ -19,13 +19,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var gender = GenderData.GetGendersDomain().First(); 
+            var genderDomain = GenderData.GetGendersDomain().First(); 
             var genderEntityConverter = new GenderEntityConverter();
 
-            var genderEntity = genderEntityConverter.ToEntity(gender);
+            var genderEntity = genderEntityConverter.ToEntity(genderDomain);
             var genderAfterConverter = genderEntityConverter.FromEntity(genderEntity);
 
-            Assert.True(gender.Equals(genderAfterConverter));
+            Assert.True(genderDomain.Equals(genderAfterConverter));
         }
     }
 }

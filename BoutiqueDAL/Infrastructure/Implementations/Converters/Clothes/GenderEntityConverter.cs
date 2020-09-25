@@ -11,7 +11,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
     /// <summary>
-    /// Преобразования модели типа пола и модель базы данных
+    /// Преобразования модели типа пола в модель базы данных
     /// </summary>
     public class GenderEntityConverter: EntityConverter<GenderType, IGenderDomain, GenderEntity>, IGenderEntityConverter
     {
@@ -24,7 +24,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
-        public override GenderEntity ToEntity(IGenderDomain gender) =>
-            new GenderEntity(gender.GenderType, gender.Name);
+        public override GenderEntity ToEntity(IGenderDomain genderDomain) =>
+            new GenderEntity(genderDomain.GenderType, genderDomain.Name);
     }
 }

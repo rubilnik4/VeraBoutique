@@ -19,8 +19,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать пол в трансферную модель
         /// </summary>
-        public override GenderTransfer ToTransfer(IGenderDomain gender) =>
-            new GenderTransfer(gender.GenderType, gender.Name);
+        public override GenderTransfer ToTransfer(IGenderDomain genderDomain) =>
+            new GenderTransfer(genderDomain.GenderType, genderDomain.Name);
 
         /// <summary>
         /// Преобразовать пол из трансферной модели

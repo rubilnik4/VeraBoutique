@@ -17,7 +17,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
     public class GenderTransferConverterTest
     {
         /// <summary>
-        /// Преобразования модели типа пола и модель базы данных
+        /// Преобразования модели типа пола в трансферную модель
         /// </summary>
         [Fact]
         public void ToTransfer_FromTransfer()
@@ -25,8 +25,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
             var gender = GenderData.GetGendersDomain().First();
             var genderEntityConverter = new GenderTransferConverter();
 
-            var genderEntity = genderEntityConverter.ToTransfer(gender);
-            var genderAfterConverter = genderEntityConverter.FromTransfer(genderEntity);
+            var genderTransfer = genderEntityConverter.ToTransfer(gender);
+            var genderAfterConverter = genderEntityConverter.FromTransfer(genderTransfer);
 
             Assert.True(gender.Equals(genderAfterConverter));
         }
