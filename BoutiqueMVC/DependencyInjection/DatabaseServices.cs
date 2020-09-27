@@ -32,7 +32,9 @@ namespace BoutiqueMVC.DependencyInjection
         public static void InjectDatabaseServices(IServiceCollection services)
         {
             services.AddTransient<IGenderEntityConverter>(serviceProvider => new GenderEntityConverter());
+            services.AddTransient<IClothesTypeEntityConverter>(serviceProvider => new ClothesTypeEntityConverter());
             services.AddTransient(GetGenderService);
+            services.AddTransient(GetClothesTypeService);
             InjectDatabase(services);
         }
 
@@ -44,6 +46,9 @@ namespace BoutiqueMVC.DependencyInjection
             UpdateSchema(serviceProvider.GetService<UserManager<IdentityUser>>(),
                          IdentityUserFactory.DefaultUsers);
 
+        /// <summary>
+        /// Подключить сервисы базы данных
+        /// </summary>
         private static void InjectDatabase(IServiceCollection services)
         {
             if (PostgresConnection.HasErrors) throw new ConfigurationErrorsException(nameof(PostgresConnection));
@@ -82,5 +87,14 @@ namespace BoutiqueMVC.DependencyInjection
             Map(boutiqueDatabase => new GenderDatabaseService(boutiqueDatabase,
                                                               boutiqueDatabase.GendersTable,
                                                               new GenderEntityConverter()));
+
+        /// <summary>
+        /// Получить сервис для вида одежды
+        /// </summary>
+        private static IClothesTypeDatabaseService GetClothesTypeService(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabase>().
+            Map(boutiqueDatabase => new ClothesTypeDatabaseService(boutiqueDatabase,
+                                                              boutiqueDatabase.ClotheTypeTable,
+                                                              new ClothesTypeEntityConverter()));
     }
 }

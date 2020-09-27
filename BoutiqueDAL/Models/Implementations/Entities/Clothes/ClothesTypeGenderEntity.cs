@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды
     /// </summary>
-    public class ClothesTypeGenderEntity
+    public class ClothesTypeGenderEntity: IEntityModel<(string, GenderType)>
     {
         /// <summary>
         /// Конструктор для базы данных с отсутствующими сущностями
@@ -27,6 +28,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             GenderTypeId = genderTypeId;
             GenderEntity = genderEntity;
         }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public (string, GenderType) Id => (ClothesTypeId, GenderTypeId);
 
         /// <summary>
         /// Идентификатор вида одежды

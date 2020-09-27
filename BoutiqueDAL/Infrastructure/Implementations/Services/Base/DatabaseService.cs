@@ -63,7 +63,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
-            await _dataTable.FirstAsync(id).
+            await _dataTable.FindAsync(id).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TId id, TDomain model) =>
-            await _dataTable.FirstAsync(id).
+            await _dataTable.FindAsync(id).
             ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Update(_entityConverter.ToEntity(model))).
             ToResultErrorTaskAsync().
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
@@ -88,7 +88,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.FirstAsync(id).
+            await _dataTable.FindAsync(id).
             ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Remove(CreateRemoveEntityById(id))).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());

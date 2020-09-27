@@ -48,7 +48,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
                                                                      Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
             new Mock<ITestDatabaseTable>().
             Void(tableMock => tableMock.Setup(table => table.ToListAsync()).ReturnsAsync(testEntities)).
-            Void(tableMock => tableMock.Setup(table => table.FirstAsync(It.IsAny<TestEnum>())).
+            Void(tableMock => tableMock.Setup(table => table.FindAsync(It.IsAny<TestEnum>())).
                                         ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => firstFunc(id)))).
             Void(tableMock => tableMock.Setup(table => table.FindAsync(It.IsAny<IEnumerable<TestEnum>>())).
                                         ReturnsAsync((IEnumerable<TestEnum> ids) => testEntities.ResultCollectionBindOk(_ => findFunc(ids)))).

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
@@ -50,7 +51,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TEntity>> FirstAsync(TId id) =>
+        public async Task<IResultValue<TEntity>> FindAsync(TId id) =>
             await ResultValueBindTryAsync(() => (_databaseSet.FindAsync(id).MapValueToTask()!).
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
@@ -59,6 +60,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids) =>
             await ResultCollectionTryAsync(() => Where(ids).ToListAsync(), 
+                                           TableAccessError);
+
+        /// <summary>
+        /// Найти записи в таблице по идентификаторам с включением сущностей
+        /// </summary>
+        public async Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids, 
+                                                                                    Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull =>
+            await ResultCollectionTryAsync(() => Where<TIdOut, TEntityOut>(ids, include).ToListAsync(),
                                            TableAccessError);
 
         /// <summary>
@@ -85,6 +96,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// Поиск по параметрам
         /// </summary>
         protected abstract IQueryable<TEntity> Where(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Поиск по параметрам с включением сущностей
+        /// </summary>
+        protected abstract IQueryable<TEntity> Where<TIdOut, TEntityOut>(IEnumerable<TId> ids, 
+                                                                         Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных

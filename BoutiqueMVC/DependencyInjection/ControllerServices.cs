@@ -18,6 +18,7 @@ namespace BoutiqueMVC.DependencyInjection
         public static void InjectControllerServices(IServiceCollection services)
         {
             services.AddTransient<IGenderTransferConverter>(serviceProvider => new GenderTransferConverter());
+            services.AddTransient<IClothesTypeTransferConverter>(serviceProvider => new ClothesTypeTransferConverter());
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
         }

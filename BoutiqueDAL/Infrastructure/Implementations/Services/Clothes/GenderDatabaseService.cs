@@ -7,7 +7,9 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.Models.Interfaces.Result;
@@ -20,8 +22,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class GenderDatabaseService : DatabaseService<GenderType, IGenderDomain, GenderEntity>, IGenderDatabaseService
     {
         public GenderDatabaseService(IDatabase database,
-                             IDatabaseTable<GenderType, GenderEntity> genderTable,
-                             IEntityConverter<GenderType, IGenderDomain, GenderEntity> genderEntityConverter)
+                                     IGenderTable genderTable,
+                                     IGenderEntityConverter genderEntityConverter)
             : base(database, genderTable, genderEntityConverter)
         { }
 

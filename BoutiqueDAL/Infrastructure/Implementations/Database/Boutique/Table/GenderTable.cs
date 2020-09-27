@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
@@ -30,5 +31,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         /// </summary>
         protected override IQueryable<GenderEntity> Where(IEnumerable<GenderType> ids) =>
             _genderSet.Where(genderEntity => ids.Contains(genderEntity.GenderType));
+
+        /// <summary>
+        /// Поиск по параметрам с включением сущностей
+        /// </summary>
+        protected override IQueryable<GenderEntity> Where<TIdOut, TEntityOut>(IEnumerable<GenderType> ids,
+                                                                              Func<GenderEntity, IReadOnlyCollection<TEntityOut>> include) =>
+            _genderSet.
+            Include(genderEntity => include(genderEntity)).
+            Where(genderEntity => ids.Contains(genderEntity.GenderType));
     }
 }

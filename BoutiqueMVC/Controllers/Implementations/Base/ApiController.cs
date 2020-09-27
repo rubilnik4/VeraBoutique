@@ -64,7 +64,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
 
         /// <summary>
-        /// Базовый метод отправки данных
+        /// Базовый метод получения данных по идентификатору
         /// </summary>
         [HttpGet("{id}")]
         [AllowAnonymous]

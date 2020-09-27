@@ -94,7 +94,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
             var ids = await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
             var getId = ids.Value.Last();
-            var entityGet = await testDatabaseTable.FirstAsync(getId);
+            var entityGet = await testDatabaseTable.FindAsync(getId);
 
             Assert.True(result.OkStatus);
             Assert.True(entityGet.OkStatus);
@@ -113,7 +113,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
 
             await testDatabaseTable.AddRangeAsync(entities);
             var result = await testDatabase.SaveChangesAsync();
-            var genderGet = await testDatabaseTable.FirstAsync(TestEnum.Third);
+            var genderGet = await testDatabaseTable.FindAsync(TestEnum.Third);
 
             Assert.True(result.OkStatus);
             Assert.True(genderGet.HasErrors);
@@ -174,7 +174,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
 
             var resultUpdate = testDatabaseTable.Update(entityUpdate);
             var resultAfterUpdate = await testDatabase.SaveChangesAsync();
-            var entityAfterUpdate = await testDatabaseTable.FirstAsync(entityUpdate.Id);
+            var entityAfterUpdate = await testDatabaseTable.FindAsync(entityUpdate.Id);
 
             Assert.True(resultSave.OkStatus);
             Assert.True(resultUpdate.OkStatus);

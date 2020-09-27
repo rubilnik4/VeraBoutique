@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
@@ -25,17 +26,25 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FirstAsync(TId id);
-
-        /// <summary>
-        /// Добавить список в таблицу
-        /// </summary>
-        Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<IResultValue<TEntity>> FindAsync(TId id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
         Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Найти записи в таблице по идентификаторам с включением сущностей
+        /// </summary>
+        Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids, 
+                                                                       Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
+
+        /// <summary>
+        /// Добавить список в таблицу
+        /// </summary>
+        Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Добавить элемент в таблице
