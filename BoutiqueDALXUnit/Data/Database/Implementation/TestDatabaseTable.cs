@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
@@ -31,5 +35,23 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// </summary>
         protected override IQueryable<TestEntity> Where(IEnumerable<TestEnum> ids) =>
             _testSet.Where(genderEntity => ids.Contains(genderEntity.TestEnum));
+
+        /// <summary>
+        /// Поиск по параметрам с включением сущностей
+        /// </summary>
+        protected override IQueryable<TestEntity> Where<TIdOut, TEntityOut>(IEnumerable<TestEnum> ids,
+                                                                            Func<TestEntity, IReadOnlyCollection<TEntityOut>> include) =>
+            _testSet.
+            Include(testEntity => include(testEntity)).
+            Where(testEntity => ids.Contains(testEntity.TestEnum));
+
+        /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected override async Task<TestEntity?> FirstAsync<TEntityOut>(TestEnum id,
+                                                                          Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
+            await _testSet.
+            Include(include).
+            FirstOrDefaultAsync(testEntity => testEntity.TestEnum == id);
     }
 }

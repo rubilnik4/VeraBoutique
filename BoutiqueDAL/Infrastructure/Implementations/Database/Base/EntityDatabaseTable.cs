@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
@@ -13,7 +14,6 @@ using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
@@ -53,6 +53,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync(TId id) =>
             await ResultValueBindTryAsync(() => (_databaseSet.FindAsync(id).MapValueToTask()!).
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
+                                          TableAccessError);
+
+        /// <summary>
+        /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
+        /// </summary>
+        public async Task<IResultValue<TEntity>> FindAsync<TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include) =>
+            await ResultValueBindTryAsync(() => FirstAsync(id, include).
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
         /// <summary>
@@ -104,6 +112,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
                                                                          Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
+
+        /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected abstract Task<TEntity?> FirstAsync<TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include);
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных

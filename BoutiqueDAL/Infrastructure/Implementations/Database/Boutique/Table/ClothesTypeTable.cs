@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
@@ -41,5 +43,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
             _clothesTypeSet.
             Include(clothesTypeEntity => include(clothesTypeEntity)).
             Where(clothesTypeEntity => ids.Contains(clothesTypeEntity.Name));
+
+        /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected override async Task<ClothesTypeEntity?> FirstAsync<TEntityOut>(string id, 
+                                                                                 Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include) =>
+            await _clothesTypeSet.
+            Include(include).
+            FirstOrDefaultAsync(clothesTypeEntity => clothesTypeEntity.Name == id);
     }
 }

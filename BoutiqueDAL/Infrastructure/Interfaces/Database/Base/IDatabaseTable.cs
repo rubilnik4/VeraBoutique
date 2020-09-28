@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
@@ -29,15 +32,20 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         Task<IResultValue<TEntity>> FindAsync(TId id);
 
         /// <summary>
+        /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
+        /// </summary>
+        Task<IResultValue<TEntity>> FindAsync<TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include);
+
+        /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids);
+        Task <IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам с включением сущностей
         /// </summary>
         Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids, 
-                                                                       Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
+                                                               Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 

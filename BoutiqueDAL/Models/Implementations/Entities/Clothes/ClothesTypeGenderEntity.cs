@@ -8,7 +8,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Связующая сущность пола и вида одежды
     /// </summary>
-    public class ClothesTypeGenderEntity: IEntityModel<(string, GenderType)>
+    public class ClothesTypeGenderEntity: IEntityModel<string>
     {
         /// <summary>
         /// Конструктор для базы данных с отсутствующими сущностями
@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (string, GenderType) Id => (ClothesTypeId, GenderTypeId);
+        public string Id => ClothesTypeId;
 
         /// <summary>
         /// Идентификатор вида одежды
