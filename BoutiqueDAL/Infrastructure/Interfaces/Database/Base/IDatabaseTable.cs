@@ -34,7 +34,9 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
         /// </summary>
-        Task<IResultValue<TEntity>> FindAsync<TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include);
+        Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
@@ -44,8 +46,8 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Найти записи в таблице по идентификаторам с включением сущностей
         /// </summary>
-        Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids, 
-                                                               Func<TEntity, IReadOnlyCollection<TEntityOut>> include)
+        Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids,
+                                                                       Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 

@@ -31,6 +31,15 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         private readonly DbSet<TestEntity> _testSet;
 
         /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected override async Task<TestEntity?> FirstAsync<TIdOut, TEntityOut>(TestEnum id,
+                                                                                  Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
+            await _testSet.
+                Include(include).
+                FirstOrDefaultAsync(testEntity => testEntity.TestEnum == id);
+
+        /// <summary>
         /// Поиск по параметрам
         /// </summary>
         protected override IQueryable<TestEntity> Where(IEnumerable<TestEnum> ids) =>
@@ -40,18 +49,9 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Поиск по параметрам с включением сущностей
         /// </summary>
         protected override IQueryable<TestEntity> Where<TIdOut, TEntityOut>(IEnumerable<TestEnum> ids,
-                                                                            Func<TestEntity, IReadOnlyCollection<TEntityOut>> include) =>
+                                                                            Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
             _testSet.
-            Include(testEntity => include(testEntity)).
-            Where(testEntity => ids.Contains(testEntity.TestEnum));
-
-        /// <summary>
-        /// Поиск первого с включением сущностей
-        /// </summary>
-        protected override async Task<TestEntity?> FirstAsync<TEntityOut>(TestEnum id,
-                                                                          Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
-            await _testSet.
             Include(include).
-            FirstOrDefaultAsync(testEntity => testEntity.TestEnum == id);
+            Where(testEntity => ids.Contains(testEntity.TestEnum));
     }
 }

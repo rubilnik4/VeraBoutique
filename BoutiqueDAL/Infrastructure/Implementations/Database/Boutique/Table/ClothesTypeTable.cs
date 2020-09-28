@@ -30,6 +30,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         private readonly DbSet<ClothesTypeEntity> _clothesTypeSet;
 
         /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected override async Task<ClothesTypeEntity?> FirstAsync<TIdOut, TEntityOut>(string id,
+                                                                                         Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include) =>
+            await _clothesTypeSet.
+                Include(include).
+                FirstOrDefaultAsync(clothesTypeEntity => clothesTypeEntity.Name == id);
+
+        /// <summary>
         /// Поиск по параметрам
         /// </summary>
         protected override IQueryable<ClothesTypeEntity> Where(IEnumerable<string> ids) =>
@@ -38,19 +47,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         /// <summary>
         /// Поиск по параметрам с включением сущностей
         /// </summary>
-        protected override IQueryable<ClothesTypeEntity> Where<TIdOut, TEntityOut>(IEnumerable<string> ids, 
-                                                                                   Func<ClothesTypeEntity, IReadOnlyCollection<TEntityOut>> include)=>
+        protected override IQueryable<ClothesTypeEntity> Where<TIdOut, TEntityOut>(IEnumerable<string> ids,
+                                                                                   Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include)=>
             _clothesTypeSet.
-            Include(clothesTypeEntity => include(clothesTypeEntity)).
-            Where(clothesTypeEntity => ids.Contains(clothesTypeEntity.Name));
-
-        /// <summary>
-        /// Поиск первого с включением сущностей
-        /// </summary>
-        protected override async Task<ClothesTypeEntity?> FirstAsync<TEntityOut>(string id, 
-                                                                                 Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include) =>
-            await _clothesTypeSet.
             Include(include).
-            FirstOrDefaultAsync(clothesTypeEntity => clothesTypeEntity.Name == id);
+            Where(clothesTypeEntity => ids.Contains(clothesTypeEntity.Name));
     }
 }

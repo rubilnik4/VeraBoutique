@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить вид одежды по типу пола
         /// </summary>
         public async Task<IResultCollection<IClothesTypeDomain>> GetByGender(GenderType genderType) =>
-            await _genderTable.FindAsync(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
+            await _genderTable.FindAsync<(string, GenderType), ClothesTypeGenderEntity>(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
             ResultValueOkToCollectionTaskAsync(gender => gender.ClothesTypeGenderEntities).
             ResultCollectionOkTaskAsync(clothesTypeGenders => clothesTypeGenders.Select(clothesTypeGender => clothesTypeGender.ClothesTypeId)).
             ResultCollectionBindOkBindAsync(FindClothesTypeByGender).
@@ -72,6 +72,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         private async Task<IResultCollection<ClothesTypeEntity>> FindClothesTypeByGender(IEnumerable<string> clothesTypeIds) =>
             await _clothesTypeTable.
-            FindAsync<string, ClothesTypeGenderEntity>(clothesTypeIds, clothesTypeEntity => clothesTypeEntity.ClothesTypeGenderEntities);
+            FindAsync<(string, GenderType), ClothesTypeGenderEntity>(clothesTypeIds, clothesTypeEntity => clothesTypeEntity.ClothesTypeGenderEntities);
     }
 }

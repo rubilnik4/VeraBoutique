@@ -47,6 +47,6 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue?> @this, IErrorResult errorNull) 
             where TValue : class =>
             await @this.
-                MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullCheck(errorNull));
+            MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullCheck(errorNull));
     }
 }

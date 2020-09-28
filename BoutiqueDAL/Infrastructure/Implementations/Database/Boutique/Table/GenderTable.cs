@@ -30,6 +30,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         private readonly DbSet<GenderEntity> _genderSet;
 
         /// <summary>
+        /// Поиск первого с включением сущностей
+        /// </summary>
+        protected override async Task<GenderEntity?> FirstAsync<TIdOut, TEntityOut>(GenderType id,
+                                                                                    Expression<Func<GenderEntity, IEnumerable<TEntityOut>>> include) =>
+            await _genderSet.
+                Include(include).
+                FirstOrDefaultAsync(genderEntity => genderEntity.GenderType == id);
+
+        /// <summary>
         /// Поиск по параметрам
         /// </summary>
         protected override IQueryable<GenderEntity> Where(IEnumerable<GenderType> ids) =>
@@ -39,21 +48,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         /// Поиск по параметрам с включением сущностей
         /// </summary>
         protected override IQueryable<GenderEntity> Where<TIdOut, TEntityOut>(IEnumerable<GenderType> ids,
-                                                                              Func<GenderEntity, IReadOnlyCollection<TEntityOut>> include) =>
+                                                                              Expression<Func<GenderEntity, IEnumerable<TEntityOut>>> include) =>
             _genderSet.
-            Include(genderEntity => include(genderEntity)).
-            Where(genderEntity => ids.Contains(genderEntity.GenderType));
-
-        /// <summary>
-        /// Поиск первого с включением сущностей
-        /// </summary>
-        protected override async Task<GenderEntity?> FirstAsync<TEntityOut>(GenderType id,
-                                                                Expression<Func<GenderEntity, IEnumerable<TEntityOut>>> include) =>
-            await _genderSet.
             Include(include).
-            FirstOrDefaultAsync(genderEntity => genderEntity.GenderType == id);
-
-        private static Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>> Ttt =>
-            genderEntity => genderEntity.ClothesTypeGenderEntities;
+            Where(genderEntity => ids.Contains(genderEntity.GenderType));
     }
 }
