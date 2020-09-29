@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -20,37 +21,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
     {
         public GenderTable(DbSet<GenderEntity> genderSet)
             : base(genderSet)
-        {
-            _genderSet = genderSet;
-        }
+        { }
 
         /// <summary>
-        /// Таблица типа пола
+        /// Функция поиска по идентификатору
         /// </summary>
-        private readonly DbSet<GenderEntity> _genderSet;
+        protected override Expression<Func<GenderEntity, bool>> IdPredicate(GenderType id) =>
+            entity => entity.GenderType == id;
 
         /// <summary>
-        /// Поиск первого с включением сущностей
+        /// Функция поиска по параметрам
         /// </summary>
-        protected override async Task<GenderEntity?> FirstAsync<TIdOut, TEntityOut>(GenderType id,
-                                                                                    Expression<Func<GenderEntity, IEnumerable<TEntityOut>>> include) =>
-            await _genderSet.
-                Include(include).
-                FirstOrDefaultAsync(genderEntity => genderEntity.GenderType == id);
-
-        /// <summary>
-        /// Поиск по параметрам
-        /// </summary>
-        protected override IQueryable<GenderEntity> Where(IEnumerable<GenderType> ids) =>
-            _genderSet.Where(genderEntity => ids.Contains(genderEntity.GenderType));
-
-        /// <summary>
-        /// Поиск по параметрам с включением сущностей
-        /// </summary>
-        protected override IQueryable<GenderEntity> Where<TIdOut, TEntityOut>(IEnumerable<GenderType> ids,
-                                                                              Expression<Func<GenderEntity, IEnumerable<TEntityOut>>> include) =>
-            _genderSet.
-            Include(include).
-            Where(genderEntity => ids.Contains(genderEntity.GenderType));
+        protected override Expression<Func<GenderEntity, bool>> IdsPredicate(IEnumerable<GenderType> ids) =>
+            entity => ids.Contains(entity.GenderType);
     }
 }

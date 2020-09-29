@@ -20,37 +20,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
     {
         public ClothesTypeTable(DbSet<ClothesTypeEntity> clothesTypeSet)
          : base(clothesTypeSet)
-        {
-            _clothesTypeSet = clothesTypeSet;
-        }
+        { }
 
         /// <summary>
-        /// Таблица типа пола
+        /// Функция поиска по идентификатору
         /// </summary>
-        private readonly DbSet<ClothesTypeEntity> _clothesTypeSet;
+        protected override Expression<Func<ClothesTypeEntity, bool>> IdPredicate(string id) =>
+            entity => entity.Name == id;
 
         /// <summary>
-        /// Поиск первого с включением сущностей
+        /// Функция поиска по параметрам
         /// </summary>
-        protected override async Task<ClothesTypeEntity?> FirstAsync<TIdOut, TEntityOut>(string id,
-                                                                                         Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include) =>
-            await _clothesTypeSet.
-                Include(include).
-                FirstOrDefaultAsync(clothesTypeEntity => clothesTypeEntity.Name == id);
-
-        /// <summary>
-        /// Поиск по параметрам
-        /// </summary>
-        protected override IQueryable<ClothesTypeEntity> Where(IEnumerable<string> ids) =>
-            _clothesTypeSet.Where(clothesTypeEntity => ids.Contains(clothesTypeEntity.Name));
-
-        /// <summary>
-        /// Поиск по параметрам с включением сущностей
-        /// </summary>
-        protected override IQueryable<ClothesTypeEntity> Where<TIdOut, TEntityOut>(IEnumerable<string> ids,
-                                                                                   Expression<Func<ClothesTypeEntity, IEnumerable<TEntityOut>>> include)=>
-            _clothesTypeSet.
-            Include(include).
-            Where(clothesTypeEntity => ids.Contains(clothesTypeEntity.Name));
+        protected override Expression<Func<ClothesTypeEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
+            entity => ids.Contains(entity.Name);
     }
 }

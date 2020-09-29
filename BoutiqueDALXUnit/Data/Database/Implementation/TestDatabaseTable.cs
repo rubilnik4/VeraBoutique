@@ -21,37 +21,18 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
     {
         public TestDatabaseTable(DbSet<TestEntity> testSet)
             :base(testSet)
-        {
-            _testSet = testSet;
-        }
+        { }
 
         /// <summary>
-        /// Таблица типа пола
+        /// Функция поиска по идентификатору
         /// </summary>
-        private readonly DbSet<TestEntity> _testSet;
+        protected override Expression<Func<TestEntity, bool>> IdPredicate(TestEnum id) =>
+            entity => entity.TestEnum == id;
 
         /// <summary>
-        /// Поиск первого с включением сущностей
+        /// Функция поиска по параметрам
         /// </summary>
-        protected override async Task<TestEntity?> FirstAsync<TIdOut, TEntityOut>(TestEnum id,
-                                                                                  Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
-            await _testSet.
-                Include(include).
-                FirstOrDefaultAsync(testEntity => testEntity.TestEnum == id);
-
-        /// <summary>
-        /// Поиск по параметрам
-        /// </summary>
-        protected override IQueryable<TestEntity> Where(IEnumerable<TestEnum> ids) =>
-            _testSet.Where(genderEntity => ids.Contains(genderEntity.TestEnum));
-
-        /// <summary>
-        /// Поиск по параметрам с включением сущностей
-        /// </summary>
-        protected override IQueryable<TestEntity> Where<TIdOut, TEntityOut>(IEnumerable<TestEnum> ids,
-                                                                            Expression<Func<TestEntity, IEnumerable<TEntityOut>>> include) =>
-            _testSet.
-            Include(include).
-            Where(testEntity => ids.Contains(testEntity.TestEnum));
+        protected override Expression<Func<TestEntity, bool>> IdsPredicate(IEnumerable<TestEnum> ids) =>
+            entity => ids.Contains(entity.TestEnum);
     }
 }

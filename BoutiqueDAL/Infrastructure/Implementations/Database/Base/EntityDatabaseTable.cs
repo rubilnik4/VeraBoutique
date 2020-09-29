@@ -52,7 +52,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync(TId id) =>
-            await ResultValueBindTryAsync(() => (_databaseSet.FindAsync(id).MapValueToTask()!).
+            await ResultValueBindTryAsync(() => _databaseSet.FindAsync(id).MapValueToTask()!.
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
 
@@ -62,15 +62,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await ResultValueBindTryAsync(() => FirstAsync<TIdOut, TEntityOut>(id, include).
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
-                                          TableAccessError);
+            await FindAsyncWrapper(_databaseSet.Include(include).FirstOrDefaultAsync(IdPredicate(id)), id);
+
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids) =>
-            await ResultCollectionTryAsync(() => Where(ids).ToListAsync(), 
-                                           TableAccessError);
+            await FindAsync(_databaseSet.Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам с включением сущностей
@@ -79,8 +77,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
                                                                                     Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await ResultCollectionTryAsync(() => Where<TIdOut, TEntityOut>(ids, include).ToListAsync(),
-                                           TableAccessError);
+            await FindAsync(_databaseSet.Where(IdsPredicate(ids)).Include(include).ToListAsync());
 
         /// <summary>
         /// Добавить список в таблицу
@@ -103,28 +100,32 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
             ResultValueTry(() => _databaseSet.Remove(entity).Entity, TableAccessError);
 
         /// <summary>
-        /// Поиск первого с включением сущностей
+        /// Функция поиска по идентификатору
         /// </summary>
-        protected abstract Task<TEntity?> FirstAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull;
+        protected abstract Expression<Func<TEntity, bool>> IdPredicate(TId id);
 
         /// <summary>
         /// Поиск по параметрам
         /// </summary>
-        protected abstract IQueryable<TEntity> Where(IEnumerable<TId> ids);
-
-        /// <summary>
-        /// Поиск по параметрам с включением сущностей
-        /// </summary>
-        protected abstract IQueryable<TEntity> Where<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                                         Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull;
+        protected abstract Expression<Func<TEntity, bool>> IdsPredicate(IEnumerable<TId> ids);
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных
         /// </summary>
         private IErrorResult TableAccessError => DatabaseErrors.TableAccessError(TableName);
+
+        /// <summary>
+        /// Поиск элемента с проверкой
+        /// </summary>
+        private async Task<IResultValue<TEntity>> FindAsyncWrapper(Task<TEntity> entity, TId id) =>
+            await ResultValueBindTryAsync(() => entity!.
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
+                                          TableAccessError);
+
+        /// <summary>
+        /// Найти записи в таблице по идентификаторам
+        /// </summary>
+        public async Task<IResultCollection<TEntity>> FindAsync(Task<List<TEntity>> entities) =>
+            await ResultCollectionTryAsync(() => entities, TableAccessError);
     }
 }

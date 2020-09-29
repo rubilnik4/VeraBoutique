@@ -2,24 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDTO.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Services.Implementations;
 using BoutiqueDTO.Data.Services.Interfaces;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueMVC.Controllers.Implementations.Base;
-using BoutiqueMVC.Controllers.Implementations.Clothes;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
-using BoutiqueMVCXUnit.Data.Database.Interfaces;
-using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Xunit;
 using static BoutiqueMVCXUnit.Controllers.Base.Mocks.TestDatabaseServiceMock;
 
