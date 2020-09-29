@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
     /// <summary>
-    /// Пол. Схема базы данных
+    /// Тестовая сущность. Схема базы данных
     /// </summary>
     public class TestConfiguration : IEntityTypeConfiguration<TestEntity>
     {

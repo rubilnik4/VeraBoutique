@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -118,6 +119,27 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Base
             Assert.True(result.OkStatus);
             Assert.True(genderGet.HasErrors);
             Assert.True(genderGet.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+        }
+
+        /// <summary>
+        /// Добавить сущности в таблицу. Получить вторую с включением сущностей
+        /// </summary>
+        [Fact]
+        public async Task AddRange_GetSecond_IncludeEntities()
+        {
+            var testDatabase = GetTestEntityDatabase();
+            var testDatabaseTable = testDatabase.TestTable;
+            var entities = EntityData.GetTestEntitiesWithIncludes().First();
+
+            var ids = await testDatabaseTable.AddRangeAsync(new List<TestEntity> { entities });
+            var result = await testDatabase.SaveChangesAsync();
+            
+            var getId = ids.Value.Last();
+            var entityGet = await testDatabaseTable.FindAsync<string, TestIncludeEntity>(getId, entity => entity.TestIncludeEntities);
+
+            Assert.True(result.OkStatus);
+            Assert.True(entityGet.OkStatus);
+         // Assert.True(entityGet.Value.Equals(entities.First(entity => entity.TestEnum == getId)));
         }
 
         /// <summary>

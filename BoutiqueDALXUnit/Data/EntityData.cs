@@ -34,6 +34,14 @@ namespace BoutiqueDALXUnit.Data
             ToList();
 
         /// <summary>
+        /// Получить сущности для теста с включением
+        /// </summary>
+        public static List<TestEntity> GetTestEntitiesWithIncludes() =>
+            TestData.GetTestDomains().
+            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name, TestIncludeEntities)).
+            ToList();
+
+        /// <summary>
         /// Тестовые сущности в результирующей коллекции
         /// </summary>
         public static IResultCollection<TestEntity> TestResultEntities =>
@@ -44,5 +52,15 @@ namespace BoutiqueDALXUnit.Data
         /// </summary>
         public static IResultCollection<TestEntity> TestResultEntitiesEmpty =>
            new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
+
+        /// <summary>
+        /// Тестовые сущности для включения в запрос
+        /// </summary>
+        private static IReadOnlyCollection<TestIncludeEntity> TestIncludeEntities =>
+            new List<TestIncludeEntity>
+            {
+                new TestIncludeEntity("FirstInclude"),
+                new TestIncludeEntity("SecondInclude"),
+            };
     }
 }

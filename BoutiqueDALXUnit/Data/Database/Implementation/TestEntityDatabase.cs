@@ -44,6 +44,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new TestConfiguration());
+            modelBuilder.ApplyConfiguration(new TestIncludeConfiguration());
             modelBuilder.HasPostgresEnum<TestEnum>();
         }
 
