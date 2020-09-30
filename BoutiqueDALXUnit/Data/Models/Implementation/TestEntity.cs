@@ -25,6 +25,6 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
         /// <summary>
         /// Тестовые связующие сущности
         /// </summary>
-        public IReadOnlyList<TestIncludeEntity> TestIncludeEntities { get; set; }
+        public IReadOnlyCollection<TestIncludeEntity> TestIncludeEntities { get; set; }
     }
 }

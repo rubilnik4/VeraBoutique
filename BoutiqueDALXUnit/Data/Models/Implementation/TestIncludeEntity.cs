@@ -1,4 +1,5 @@
-﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
+﻿using System;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDALXUnit.Data.Models.Implementation
@@ -6,28 +7,18 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
     /// <summary>
     /// Тестовая сущность для включения в запрос
     /// </summary>
-    public class TestIncludeEntity : IEntityModel<string>
+    public class TestIncludeEntity : TestInclude, IEntityModel<string>
     {
         public TestIncludeEntity(string name)
-            :this(name, null, null)
+            :this(name,  null)
         { }
 
-        public TestIncludeEntity(string name, TestEnum? testId, TestEntity? testEntity )
+        public TestIncludeEntity(string name,TestEntity? testEntity )
+            :base(name)
         {
-            Name = name;
-            TestId = testId;
+            TestId = testEntity?.Id;
             TestEntity = testEntity;
         }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public string Id => Name;
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name{ get; }
 
         /// <summary>
         /// Ключ к связующей сущности

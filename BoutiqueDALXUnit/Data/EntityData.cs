@@ -20,47 +20,57 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить сущности типа пола
         /// </summary>
-        public static List<GenderEntity> GetGenderEntities() =>
+        public static List<GenderEntity> GenderEntities =>
             GenderData.GetGendersDomain().
             Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
             ToList();
 
         /// <summary>
-        /// Получить сущности для теста
+        /// Получить сущности вида одежды
         /// </summary>
-        public static List<TestEntity> GetTestEntities() =>
-            TestData.GetTestDomains().
-            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
+        public static List<ClothesTypeEntity> ClothesTypeEntities =>
+            ClothesTypeData.GetClothesTypeDomain().
+            Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain.Name)).
             ToList();
 
         /// <summary>
-        /// Получить сущности для теста с включением
+        /// Получить вид одежды
         /// </summary>
-        public static List<TestEntity> GetTestEntitiesWithIncludes() =>
+        public static List<GenderEntity> GetGenderEntitiesWithClothesType(IList<GenderEntity> genderEntities,
+                                                                          IList<ClothesTypeEntity> clothesTypeEntities) =>
+            genderEntities.
+            Select(gender => new GenderEntity(gender.GenderType, gender.Name,
+                                                             GetClothesTypeGenderEntity(gender, clothesTypeEntities))).
+            ToList();
+
+        /// <summary>
+        /// Получить пол с видом одежды
+        /// </summary>
+        public static IList<ClothesTypeGenderEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
+                                                                                IList<ClothesTypeEntity> clothesTypeEntities) =>
+            clothesTypeEntities.
+            Select(clothesTypeEntity => new ClothesTypeGenderEntity(clothesTypeEntity.Id, clothesTypeEntity, 
+                                                                    genderEntity.Id, genderEntity)).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности для теста
+        /// </summary>
+        public static List<TestEntity> TestEntities =>
             TestData.GetTestDomains().
-            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name, TestIncludeEntities)).
+            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
             ToList();
 
         /// <summary>
         /// Тестовые сущности в результирующей коллекции
         /// </summary>
         public static IResultCollection<TestEntity> TestResultEntities =>
-            new ResultCollection<TestEntity>(GetTestEntities());
+            new ResultCollection<TestEntity>(TestEntities);
 
         /// <summary>
         /// Пустая коллекция результирующих сущностей
         /// </summary>
         public static IResultCollection<TestEntity> TestResultEntitiesEmpty =>
            new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
-
-        /// <summary>
-        /// Тестовые сущности для включения в запрос
-        /// </summary>
-        private static IReadOnlyCollection<TestIncludeEntity> TestIncludeEntities =>
-            new List<TestIncludeEntity>
-            {
-                new TestIncludeEntity("FirstInclude"),
-                new TestIncludeEntity("SecondInclude"),
-            };
     }
 }

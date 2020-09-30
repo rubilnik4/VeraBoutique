@@ -49,6 +49,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
             await ResultCollectionTryAsync(() => _databaseSet.ToListAsync(), TableAccessError);
 
         /// <summary>
+        /// Вернуть записи из таблицы асинхронно с включением сущностей
+        /// </summary>
+        public async Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull =>
+            await ResultCollectionTryAsync(() => _databaseSet.Include(include).ToListAsync(), TableAccessError);
+
+        /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync(TId id) =>
@@ -61,6 +69,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull =>
+            await FindAsyncWrapper(_databaseSet.Include(include).FirstOrDefaultAsync(IdPredicate(id)), id);
+
+        /// <summary>
+        /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
+        /// </summary>
+        public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, TEntityOut>> include)
+            where TEntityOut :  IEntityModel<TIdOut>
             where TIdOut : notnull =>
             await FindAsyncWrapper(_databaseSet.Include(include).FirstOrDefaultAsync(IdPredicate(id)), id);
 

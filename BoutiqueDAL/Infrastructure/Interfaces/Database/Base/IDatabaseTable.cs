@@ -27,6 +27,13 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         Task<IResultCollection<TEntity>> ToListAsync();
 
         /// <summary>
+        /// Вернуть записи из таблицы асинхронно с включением сущностей
+        /// </summary>
+        Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
+
+        /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         Task<IResultValue<TEntity>> FindAsync(TId id);
