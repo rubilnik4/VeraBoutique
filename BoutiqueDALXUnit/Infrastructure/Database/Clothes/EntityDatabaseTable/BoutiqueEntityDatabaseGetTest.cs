@@ -5,17 +5,12 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
-using BoutiqueDALXUnit.Data.Database.Implementation;
-using BoutiqueDALXUnit.Data.Database.Interfaces;
-using BoutiqueDALXUnit.Data.Models.Implementation;
-using Functional.Models.Enums;
 using Xunit;
-using static BoutiqueDALXUnit.Infrastructure.Database.Base.BoutiqueEntityDatabaseTest;
 
-namespace BoutiqueDALXUnit.Infrastructure.Database.Base.EntityDatabaseTable
+namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
 {
     /// <summary>
-    /// Таблица базы данных EntityFramework. Тесты
+    /// Тесты добавления и получения элементов в базе данных
     /// </summary>
     public static class BoutiqueEntityDatabaseGetTest
     {

@@ -2,6 +2,7 @@
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
 {
