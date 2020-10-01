@@ -179,7 +179,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);
-            var actionResult = await testController.Put(testPutId, testTransfer);
+            var actionResult = await testController.Put(testTransfer);
 
             Assert.IsType<NoContentResult>(actionResult);
             var noContentResult = (NoContentResult)actionResult;
@@ -201,7 +201,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);
-            var actionResult = await testController.Put(testPutId, testTransfer);
+            var actionResult = await testController.Put(testTransfer);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;
@@ -224,7 +224,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);
-            var actionResult = await testController.Put(testPutId, testTransfer);
+            var actionResult = await testController.Put(testTransfer);
 
             Assert.IsType<NotFoundResult>(actionResult);
             var notFoundResult = (NotFoundResult)actionResult;

@@ -36,8 +36,8 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить вид одежды
         /// </summary>
-        public static List<GenderEntity> GetGenderEntitiesWithClothesType(IList<GenderEntity> genderEntities,
-                                                                          IList<ClothesTypeEntity> clothesTypeEntities) =>
+        public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
+                                                                          IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                                              GetClothesTypeGenderEntity(gender, clothesTypeEntities))).
@@ -47,7 +47,7 @@ namespace BoutiqueDALXUnit.Data
         /// Получить пол с видом одежды
         /// </summary>
         public static IList<ClothesTypeGenderEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
-                                                                                IList<ClothesTypeEntity> clothesTypeEntities) =>
+                                                                                IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             clothesTypeEntities.
             Select(clothesTypeEntity => new ClothesTypeGenderEntity(clothesTypeEntity.Id, clothesTypeEntity, 
                                                                     genderEntity.Id, genderEntity)).

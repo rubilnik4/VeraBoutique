@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
+using Functional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
@@ -17,14 +18,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// <summary>
         /// Обновить записи в таблице
         /// </summary>
-        public static async Task Update(IBoutiqueDatabase database)
+        public static async Task Update(IBoutiqueDatabase database, GenderType idUpdate)
         {
-            var genderEntity = new GenderEntity(GenderType.Child, "Дите");
-
-            await database.GendersTable.AddRangeAsync(new List<GenderEntity>() { genderEntity });
-            var resultAddSave = await database.SaveChangesAsync();
-
-            var genderUpdate = new GenderEntity(genderEntity.GenderType, "Куропатка");
+            var genderFind = await database.GendersTable.FindAsync(idUpdate);
+            var genderUpdate = new GenderEntity(genderFind.Value.GenderType, "Куропатка");
 
             var resultUpdate = database.GendersTable.Update(genderUpdate);
             var resultSave = await database.SaveChangesAsync();
@@ -36,25 +33,20 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
             Assert.Equal(genderUpdate.Name, genderGet.Value.Name);
         }
 
-        ///// <summary>
-        ///// Добавить сущности в таблицу. Получить вторую
-        ///// </summary>
-        //[Fact]
-        //public async Task AddRange_Update_NotFound()
-        //{
-        //    var testDatabase = GetTestEntityDatabase();
-        //    var testDatabaseTable = testDatabase.TestTable;
-        //    var entities = EntityData.TestEntities;
+        /// <summary>
+        /// Обновить элемент в базе. Запись не найдена
+        /// </summary>
+        public static async Task Update_NotFound(IBoutiqueDatabase database)
+        {
+            var clothesTypeUpdate = new ClothesTypeEntity("NotFound");
 
-        //    var entityUpdate = entities.Last();
-        //    entityUpdate.Name = "entityUpdate";
+            var resultUpdate = database.ClotheTypeTable.Update(clothesTypeUpdate);
+            var resultSave = await database.SaveChangesAsync();
+            database.Detach();
 
-        //    var resultUpdate = testDatabaseTable.Update(entityUpdate);
-        //    var resultAfterUpdate = await testDatabase.SaveChangesAsync();
-
-        //    Assert.True(resultUpdate.OkStatus);
-        //    Assert.True(resultAfterUpdate.HasErrors);
-        //    Assert.True(resultAfterUpdate.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
-        //}  
+            Assert.True(resultUpdate.OkStatus);
+            Assert.True(resultSave.HasErrors);
+            Assert.True(resultSave.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
+        }
     }
 }

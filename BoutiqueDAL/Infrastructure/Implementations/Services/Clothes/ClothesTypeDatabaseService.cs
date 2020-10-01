@@ -60,13 +60,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             ResultCollectionBindOkBindAsync(FindClothesTypeByGender).
             ResultCollectionOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
 
-       
-        /// <summary>
-        /// Создать модель базы данных для удаления по идентификатору
-        /// </summary>
-        protected override ClothesTypeEntity CreateRemoveEntityById(string id) =>
-            new ClothesTypeEntity(id);
-
         /// <summary>
         /// Найти виды одежды по идентификаторам
         /// </summary>

@@ -4,6 +4,8 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -32,11 +34,6 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица базы данных вида одежды EntityFramework
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
-
-        /// <summary>
-        /// Таблица, связующая сущность пола и вид одежды
-        /// </summary>
-        public DbSet<ClothesTypeGenderEntity> ClothesTypeGenders { get; set; } = null!;
 
         /// <summary>
         /// Таблица пола базы данных
@@ -80,6 +77,8 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
+
+            BoutiqueEntityDatabase.InitializeEntityData(modelBuilder);
         }
     }
 }

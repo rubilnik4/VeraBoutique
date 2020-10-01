@@ -24,11 +24,5 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
                                    IEntityConverter<TestEnum, ITestDomain, TestEntity> testEntityConverter)
             : base(database, testDatabaseTable, testEntityConverter)
         { }
-
-        /// <summary>
-        /// Создать модель базы данных для удаления по идентификатору
-        /// </summary>
-        protected override TestEntity CreateRemoveEntityById(TestEnum id) =>
-            new TestEntity(id, String.Empty);
     }
 }

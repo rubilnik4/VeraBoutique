@@ -78,8 +78,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Заменить модель в базе по идентификатору
         /// </summary>
-        public async Task<IResultError> Put(TId id, TDomain model) =>
-            await _dataTable.FindAsync(id).
+        public async Task<IResultError> Put(TDomain model) =>
+            await _dataTable.FindAsync(model.Id).
             ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Update(_entityConverter.ToEntity(model))).
             ToResultErrorTaskAsync().
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
@@ -89,14 +89,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.FindAsync(id).
-            ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Remove(CreateRemoveEntityById(id))).
+            ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
             ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
-
-        /// <summary>
-        /// Создать модель базы данных для удаления по идентификатору
-        /// </summary>
-        protected abstract TEntity CreateRemoveEntityById(TId id);
 
         /// <summary>
         /// Добавить модели в базу и сохранить

@@ -70,7 +70,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                             ReturnsAsync(getByIdFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
                                             ReturnsAsync(postFunc)).
-            Void(serviceMock => serviceMock.Setup(service => service.Put(It.IsAny<TestEnum>(), It.IsAny<ITestDomain>())).
+            Void(serviceMock => serviceMock.Setup(service => service.Put(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(putFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).
                                             ReturnsAsync(deleteFunc));

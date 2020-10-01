@@ -91,18 +91,19 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Заменить данные по идентификатору
         /// </summary>
-        [HttpPut("{id}")]
+        [AllowAnonymous]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Put(TId id, TTransfer transfer) =>
-             await _databaseDatabaseService.Put(id, _transferConverter.FromTransfer(transfer)).
+        public async Task<IActionResult> Put(TTransfer transfer) =>
+             await _databaseDatabaseService.Put(_transferConverter.FromTransfer(transfer)).
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
         /// Удалить данные по идентификатору
         /// </summary>
+        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

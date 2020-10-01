@@ -26,11 +26,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                      IGenderEntityConverter genderEntityConverter)
             : base(database, genderTable, genderEntityConverter)
         { }
-
-        /// <summary>
-        /// Создать модель базы данных для удаления по идентификатору
-        /// </summary>
-        protected override GenderEntity CreateRemoveEntityById(GenderType id) =>
-            new GenderEntity(id, String.Empty);
     }
 }

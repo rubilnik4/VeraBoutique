@@ -138,7 +138,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testConverter = TestEntityConverter;
             var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
-            var result = await testService.Put(testDomainPut.Id, testDomainPut);
+            var result = await testService.Put(testDomainPut);
 
             Assert.True(result.OkStatus);
         }
@@ -158,7 +158,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testConverter = TestEntityConverter;
             var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
-            var result = await testService.Put(testDomainPut.Id, testDomainPut);
+            var result = await testService.Put(testDomainPut);
 
             Assert.True(result.HasErrors);
             Assert.Equal(ErrorResultType.DatabaseValueNotFound, result.Errors.First().ErrorResultType);

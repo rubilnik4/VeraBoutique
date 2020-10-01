@@ -20,10 +20,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const GenderType genderType = GenderType.Male;
             const string genderName = "Мужик";
 
-            var gender = new GenderDomain(genderType, genderName);
+            var genderDomain = new GenderDomain(genderType, genderName);
 
             int genderHash = HashCode.Combine(genderType);
-            Assert.Equal(genderHash, gender.GetHashCode());
+            Assert.Equal(genderHash, genderDomain.GetHashCode());
         }
     }
 }

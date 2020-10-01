@@ -17,6 +17,7 @@ using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.Re
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
+using Functional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
 {
@@ -54,15 +55,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         public async Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await ResultCollectionTryAsync(() => _databaseSet.Include(include).ToListAsync(), TableAccessError);
+            await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().Include(include).ToListAsync(), TableAccessError);
 
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync(TId id) =>
-            await ResultValueBindTryAsync(() => _databaseSet.FindAsync(id).MapValueToTask()!.
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
-                                          TableAccessError);
+            await FindAsyncWrapper(() => _databaseSet.AsNoTracking().FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
@@ -70,21 +69,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await FindAsyncWrapper(_databaseSet.Include(include).FirstOrDefaultAsync(IdPredicate(id)), id);
+            await FindAsyncWrapper(() => _databaseSet.AsNoTracking().Include(include).FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
         /// </summary>
         public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, TEntityOut>> include)
-            where TEntityOut :  IEntityModel<TIdOut>
+            where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await FindAsyncWrapper(_databaseSet.Include(include).FirstOrDefaultAsync(IdPredicate(id)), id);
+            await FindAsyncWrapper(() => _databaseSet.AsNoTracking().Include(include).FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindAsync(IEnumerable<TId> ids) =>
-            await FindAsync(_databaseSet.Where(IdsPredicate(ids)).ToListAsync());
+            await FindAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам с включением сущностей
@@ -93,7 +92,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
                                                                                     Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
-            await FindAsync(_databaseSet.Where(IdsPredicate(ids)).Include(include).ToListAsync());
+            await FindAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).Include(include).ToListAsync());
 
         /// <summary>
         /// Добавить список в таблицу
@@ -116,6 +115,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
             ResultValueTry(() => _databaseSet.Remove(entity).Entity, TableAccessError);
 
         /// <summary>
+        /// Удалить элементы в таблице
+        /// </summary>
+        public new IResultError RemoveRange(IEnumerable<TEntity> entities) =>
+            ResultErrorTry(() => _databaseSet.RemoveRange(entities), TableAccessError);
+
+        /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
         protected abstract Expression<Func<TEntity, bool>> IdPredicate(TId id);
@@ -133,15 +138,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Поиск элемента с проверкой
         /// </summary>
-        private async Task<IResultValue<TEntity>> FindAsyncWrapper(Task<TEntity> entity, TId id) =>
-            await ResultValueBindTryAsync(() => entity!.
+        private async Task<IResultValue<TEntity>> FindAsyncWrapper(Func<Task<TEntity?>> getEntity, TId id) =>
+            await ResultValueBindTryAsync(() => getEntity().
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        public async Task<IResultCollection<TEntity>> FindAsync(Task<List<TEntity>> entities) =>
-            await ResultCollectionTryAsync(() => entities, TableAccessError);
+        public async Task<IResultCollection<TEntity>> FindAsync(Func<Task<List<TEntity>>> getEntities) =>
+            await ResultCollectionTryAsync(getEntities, TableAccessError);
     }
 }

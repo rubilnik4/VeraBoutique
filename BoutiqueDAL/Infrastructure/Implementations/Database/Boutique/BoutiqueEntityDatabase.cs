@@ -37,11 +37,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
 
         /// <summary>
-        /// Таблица, связующая сущность пола и вид одежды
-        /// </summary>
-        public DbSet<ClothesTypeGenderEntity> ClothesTypeGenders { get; set; } = null!;
-
-        /// <summary>
         /// Таблица пола базы данных
         /// </summary>
         public IGenderTable GendersTable => new GenderTable(Genders);
@@ -85,7 +80,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Инициализация данными таблиц
         /// </summary>
-        private static void InitializeEntityData(ModelBuilder modelBuilder)
+        public static void InitializeEntityData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
             modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);

@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
+using Functional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
@@ -17,60 +18,63 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// <summary>
         /// Добавить сущности в таблицу. Проверить идентификаторы
         /// </summary>
-        public static async Task AddRangeEntities(IBoutiqueDatabase database, IList<GenderEntity> genderEntities, 
-                                                  IList<ClothesTypeEntity> clothesTypeEntities)
+        public static async Task AddRangeEntities(IBoutiqueDatabase database)
         {
-            var genderEntitiesWithClothesType = EntityData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypeEntities);
+            //var clothesTypeGenderEntities = new List<ClothesTypeGenderEntity>
+            //{
+            //    new ClothesTypeGenderEntity("First", GenderType.Male),
+            //    new ClothesTypeGenderEntity("Second", GenderType.Female),
+            //};
+            //var clothesTypeEntities = new List<ClothesTypeEntity>
+            //{
+            //    new ClothesTypeEntity("First", clothesTypeGenderEntities.ToList()),
+            //    new ClothesTypeEntity("Second", clothesTypeGenderEntities.ToList()),
+            //};
 
-            var clothesIds = await database.ClotheTypeTable.AddRangeAsync(clothesTypeEntities);
-            var genderIds = await database.GendersTable.AddRangeAsync(genderEntitiesWithClothesType);
-            var result = await database.SaveChangesAsync();
+            //var clothesIds = await database.ClotheTypeTable.AddRangeAsync(clothesTypeEntities);
+            //var result = await database.SaveChangesAsync();
+            //var getClothesTypes = await database.ClotheTypeTable.ToListAsync<(string, GenderType), ClothesTypeGenderEntity>(entity => entity.ClothesTypeGenderEntities);
 
-            Assert.True(result.OkStatus);
+            //Assert.True(result.OkStatus);
+            //Assert.True(clothesIds.OkStatus);
+            //Assert.True(clothesIds.Value.SequenceEqual(clothesTypeEntities.Select(entity => entity.Id)));
+            //Assert.True(getClothesTypes.Value.
+            //            Where(entity => clothesTypeEntities.Contains(entity)).
+            //            All(entity => entity.ClothesTypeGenderEntities.Count > 0));
+        }
+
+        /// <summary>
+        /// Добавить одинаковые данные дважды. Ошибка
+        /// </summary>
+        public static async Task AddRange_DuplicateError(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities)
+        {
+            var genderIds = await database.GendersTable.AddRangeAsync(genderEntities);
+            var resultSave = await database.SaveChangesAsync();
+            database.Detach();
+
             Assert.True(genderIds.OkStatus);
-            Assert.True(clothesIds.OkStatus);
-            Assert.True(genderIds.Value.SequenceEqual(genderEntities.Select(entity => entity.Id)));
-            Assert.True(clothesIds.Value.SequenceEqual(clothesTypeEntities.Select(entity => entity.Id)));
+            Assert.True(resultSave.HasErrors);
+            Assert.True(resultSave.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
         }
 
         /// <summary>
         /// Получить сущности из таблицы
         /// </summary>
-        public static async Task ToListEntities(IBoutiqueDatabase database, IList<GenderEntity> genderEntities, 
-                                                IList<ClothesTypeEntity> clothesTypeEntities)
+        public static async Task ToListEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities,
+                                                IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
+                                                IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
         {
             var clothesTypeGetEntities = await database.ClotheTypeTable.ToListAsync();
             var genderGetEntities = await database.GendersTable.
                                     ToListAsync<(string, GenderType), ClothesTypeGenderEntity>(gender => gender.ClothesTypeGenderEntities);
-            
+
             Assert.True(genderGetEntities.OkStatus);
             Assert.True(clothesTypeGetEntities.OkStatus);
             Assert.True(genderEntities.SequenceEqual(genderGetEntities.Value));
             Assert.True(clothesTypeEntities.SequenceEqual(clothesTypeGetEntities.Value));
-            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderEntities.Count == clothesTypeEntities.Count));
+            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderEntities.Count ==
+                                                              clothesTypeGenderEntities.Count(entity => entity.GenderTypeId == gender.GenderType)));
         }
-
-        ///// <summary>
-        ///// Добавить одинаковые данные дважды. Ошибка
-        ///// </summary>
-        //[Fact]
-        //public async Task AddRange_DuplicateError()
-        //{
-        //    var testDatabase = GetTestEntityDatabase();
-        //    var testDatabaseTable = testDatabase.TestTable;
-        //    var entities = EntityData.TestEntities;
-
-        //    await testDatabaseTable.AddRangeAsync(entities);
-        //    var firstResult = await testDatabase.SaveChangesAsync();
-
-        //    await testDatabaseTable.AddRangeAsync(entities);
-        //    var secondResult = await testDatabase.SaveChangesAsync();
-
-        //    Assert.True(firstResult.OkStatus);
-        //    Assert.True(secondResult.HasErrors);
-        //    Assert.True(secondResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseSave);
-        //}
-
 
     }
 }

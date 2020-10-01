@@ -32,7 +32,7 @@ namespace BoutiqueMVC.Controllers.Interfaces.Base
         /// <summary>
         /// Заменить данные по идентификатору
         /// </summary>
-        Task<IActionResult> Put(TId id, TTransfer transfer);
+        Task<IActionResult> Put(TTransfer transfer);
 
         /// <summary>
         /// Удалить данные по идентификатору
