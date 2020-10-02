@@ -32,6 +32,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных категорий одежды
+        /// </summary>
+        public DbSet<CategoryEntity> Category { get; set; } = null!;
+
+        /// <summary>
         /// Таблица базы данных вида одежды EntityFramework
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
@@ -40,6 +45,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// Таблица пола базы данных
         /// </summary>
         public IGenderTable GendersTable => new GenderTable(Genders);
+
+        /// <summary>
+        /// Таблица базы данных категорий одежды
+        /// </summary>
+        public ICategoryTable CategoryTable => new CategoryTable(Category);
 
         /// <summary>
         /// Таблица базы данных вида одежды
@@ -70,6 +80,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
@@ -83,6 +94,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         public static void InitializeEntityData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
+            modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
             modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
             modelBuilder.Entity<ClothesTypeGenderEntity>().HasData(ClothesTypeGenderInitialize.ClothesTypeGenderData);
         }

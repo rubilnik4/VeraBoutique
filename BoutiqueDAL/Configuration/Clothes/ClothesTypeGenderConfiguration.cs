@@ -13,14 +13,14 @@ namespace BoutiqueDAL.Configuration.Clothes
         {
             builder.HasKey(t => new { t.ClothesTypeId, t.GenderTypeId });
 
+            builder.HasOne(t => t.GenderEntity)
+                   .WithMany(s => s!.ClothesTypeGenderEntities)
+                   .HasForeignKey(sc => sc.GenderTypeId)
+                   .IsRequired();
+
             builder.HasOne(t => t.ClothesTypeEntity)
                    .WithMany(s => s!.ClothesTypeGenderEntities)
                    .HasForeignKey(sc => sc.ClothesTypeId)
-                   .IsRequired();
-
-            builder.HasOne(sc => sc.GenderEntity)
-                   .WithMany(s => s!.ClothesTypeGenderEntities)
-                   .HasForeignKey(sc => sc.GenderTypeId)
                    .IsRequired();
         }
     }

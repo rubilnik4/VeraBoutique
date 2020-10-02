@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (string, GenderType) Id => (ClothesTypeId, GenderTypeId);
+        public (string, GenderType) Id => (ClothesTypeId,  GenderTypeId);
 
         /// <summary>
         /// Идентификатор вида одежды

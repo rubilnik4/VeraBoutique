@@ -17,14 +17,10 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectControllerServices(IServiceCollection services)
         {
-            services.AddTransient<IGenderTransferConverter>(serviceProvider => new GenderTransferConverter());
-            services.AddTransient<IClothesTypeTransferConverter>(serviceProvider => new ClothesTypeTransferConverter());
-            services.AddTransient<ICategoryTransferConverter>(serviceProvider => new CategoryTransferConverter());
+            ConverterServices.InjectTransferConverters(services);
 
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
         }
-
-        private static
     }
 }

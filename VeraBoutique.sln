@@ -31,7 +31,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueDTO", "BoutiqueDTO\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueDTOXUnit", "BoutiqueDTOXUnit\BoutiqueDTOXUnit.csproj", "{3E6A27C1-3A08-42AA-997C-63A32784BAFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoutiqueMVCXUnit", "BoutiqueMVCXUnit\BoutiqueMVCXUnit.csproj", "{5F35E4D1-4C50-4644-AE28-C625474BD982}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueMVCXUnit", "BoutiqueMVCXUnit\BoutiqueMVCXUnit.csproj", "{5F35E4D1-4C50-4644-AE28-C625474BD982}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98963CF2-5628-49F2-A5F4-674A96064308}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

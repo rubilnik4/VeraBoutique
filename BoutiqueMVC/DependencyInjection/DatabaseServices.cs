@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
-using BoutiqueDAL.Infrastructure.Interfaces.Services;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueMVC.Factories.Identity;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +25,10 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectDatabaseServices(IServiceCollection services)
         {
-            services.AddTransient<IGenderEntityConverter>(serviceProvider => new GenderEntityConverter());
-            services.AddTransient<IClothesTypeEntityConverter>(serviceProvider => new ClothesTypeEntityConverter());
+            ConverterServices.InjectEntityConverters(services);
+
             services.AddTransient(GetGenderService);
+            services.AddTransient(GetCategoryService);
             services.AddTransient(GetClothesTypeService);
             InjectDatabase(services);
         }
@@ -73,6 +68,15 @@ namespace BoutiqueMVC.DependencyInjection
             Map(boutiqueDatabase => new GenderDatabaseService(boutiqueDatabase,
                                                               boutiqueDatabase.GendersTable,
                                                               new GenderEntityConverter()));
+
+        /// <summary>
+        /// Получить сервис для категорий одежды
+        /// </summary>
+        private static ICategoryDatabaseService GetCategoryService(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabase>().
+                Map(boutiqueDatabase => new CategoryDatabaseService(boutiqueDatabase,
+                                                                    boutiqueDatabase.CategoryTable,
+                                                                    new CategoryEntityConverter()));
 
         /// <summary>
         /// Получить сервис для вида одежды

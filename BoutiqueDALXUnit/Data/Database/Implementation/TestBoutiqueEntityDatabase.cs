@@ -31,6 +31,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных категорий одежды
+        /// </summary>
+        public DbSet<CategoryEntity> Category { get; set; } = null!;
+
+        /// <summary>
         /// Таблица базы данных вида одежды EntityFramework
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
@@ -39,6 +44,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица пола базы данных
         /// </summary>
         public IGenderTable GendersTable => new GenderTable(Genders);
+
+        /// <summary>
+        /// Таблица базы данных категорий одежды
+        /// </summary>
+        public ICategoryTable CategoryTable => new CategoryTable(Category);
 
         /// <summary>
         /// Таблица базы данных вида одежды
@@ -74,6 +84,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
             modelBuilder.HasPostgresEnum<GenderType>();
