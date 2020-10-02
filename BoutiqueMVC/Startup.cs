@@ -36,6 +36,7 @@ namespace BoutiqueMVC
             DatabaseServices.InjectDatabaseServices(services);
             AuthServices.AddAuthorization(services);
             AuthServices.InjectJwtServices(services, Configuration);
+            AuthServices.InjectDatabaseIdentities(services);
             services.AddControllers();
         }
 

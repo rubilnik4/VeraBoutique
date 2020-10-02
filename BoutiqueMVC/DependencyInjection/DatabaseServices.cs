@@ -54,22 +54,8 @@ namespace BoutiqueMVC.DependencyInjection
             if (PostgresConnection.HasErrors) throw new ConfigurationErrorsException(nameof(PostgresConnection));
 
             services.AddDbContext<BoutiqueEntityDatabase>(GetDatabaseOptions);
-            InjectDatabaseIdentities(services);
             services.AddTransient<IBoutiqueDatabase, BoutiqueEntityDatabase>();
         }
-
-        /// <summary>
-        /// Подключить сервисы авторизации к базе
-        /// </summary>
-        private static void InjectDatabaseIdentities(IServiceCollection services) =>
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
-                     {
-                         options.Password.RequiredLength = IdentitySettings.PASSWORD_MINLENGTH;
-                         options.SignIn.RequireConfirmedEmail = true;
-                         options.User.RequireUniqueEmail = true;
-                     }).
-            AddEntityFrameworkStores<BoutiqueEntityDatabase>().
-            AddDefaultTokenProviders();
 
         /// <summary>
         /// Получить параметры подключения к базе данных

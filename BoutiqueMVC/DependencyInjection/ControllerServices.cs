@@ -19,8 +19,12 @@ namespace BoutiqueMVC.DependencyInjection
         {
             services.AddTransient<IGenderTransferConverter>(serviceProvider => new GenderTransferConverter());
             services.AddTransient<IClothesTypeTransferConverter>(serviceProvider => new ClothesTypeTransferConverter());
+            services.AddTransient<ICategoryTransferConverter>(serviceProvider => new CategoryTransferConverter());
+
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
         }
+
+        private static
     }
 }

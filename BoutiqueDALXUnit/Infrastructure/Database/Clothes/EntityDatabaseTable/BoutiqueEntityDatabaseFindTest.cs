@@ -8,6 +8,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using Functional.Models.Enums;
+using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
@@ -82,13 +83,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// <summary>
         /// Получить сущности по идентификаторам. Добавочные элементы не найдены
         /// </summary>
-        public static async Task FindByIds_NotFound(IBoutiqueDatabase database, IReadOnlyCollection<GenderType> idsFind)
+        public static async Task FindByIds_NotFound(IBoutiqueDatabase database, IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
-            //var idsAdditional = idsFind.Append(GenderType.Child);
-            //var testFind = await database.GendersTable.FindAsync(idsAdditional);
+            var testFind = await database.ClotheTypeTable.FindAsync(new List<string> {"NotFound", clothesTypeEntities .First().Name});
 
-            //Assert.True(testFind.OkStatus);
-            //Assert.True(testFind.Value.Count == idsFind.Count);
+            Assert.True(testFind.OkStatus);
+            Assert.True(testFind.Value.Count == 1);
         }
     }
 }

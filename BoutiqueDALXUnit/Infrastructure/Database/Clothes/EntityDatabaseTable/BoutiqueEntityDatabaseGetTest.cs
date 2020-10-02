@@ -16,34 +16,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
     public static class BoutiqueEntityDatabaseGetTest
     {
         /// <summary>
-        /// Добавить сущности в таблицу. Проверить идентификаторы
-        /// </summary>
-        public static async Task AddRangeEntities(IBoutiqueDatabase database)
-        {
-            //var clothesTypeGenderEntities = new List<ClothesTypeGenderEntity>
-            //{
-            //    new ClothesTypeGenderEntity("First", GenderType.Male),
-            //    new ClothesTypeGenderEntity("Second", GenderType.Female),
-            //};
-            //var clothesTypeEntities = new List<ClothesTypeEntity>
-            //{
-            //    new ClothesTypeEntity("First", clothesTypeGenderEntities.ToList()),
-            //    new ClothesTypeEntity("Second", clothesTypeGenderEntities.ToList()),
-            //};
-
-            //var clothesIds = await database.ClotheTypeTable.AddRangeAsync(clothesTypeEntities);
-            //var result = await database.SaveChangesAsync();
-            //var getClothesTypes = await database.ClotheTypeTable.ToListAsync<(string, GenderType), ClothesTypeGenderEntity>(entity => entity.ClothesTypeGenderEntities);
-
-            //Assert.True(result.OkStatus);
-            //Assert.True(clothesIds.OkStatus);
-            //Assert.True(clothesIds.Value.SequenceEqual(clothesTypeEntities.Select(entity => entity.Id)));
-            //Assert.True(getClothesTypes.Value.
-            //            Where(entity => clothesTypeEntities.Contains(entity)).
-            //            All(entity => entity.ClothesTypeGenderEntities.Count > 0));
-        }
-
-        /// <summary>
         /// Добавить одинаковые данные дважды. Ошибка
         /// </summary>
         public static async Task AddRange_DuplicateError(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities)

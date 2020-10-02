@@ -21,6 +21,8 @@ namespace BoutiqueDAL.Models.Implementations.Identity
             UserName = userName;
             Email = email;
             PhoneNumber = phone;
+            EmailConfirmed = true;
+            PhoneNumberConfirmed = true;
             PasswordHash = GetPasswordHash(this, password);
         }
 
@@ -38,16 +40,6 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         /// Нормализованная почта
         /// </summary>
         public override string NormalizedEmail => Email.ToUpperInvariant();
-
-        /// <summary>
-        /// Подтверждена ли почта
-        /// </summary>
-        public override bool EmailConfirmed =>  true;
-
-        /// <summary>
-        /// Подтвержден ли телефон
-        /// </summary>
-        public override bool PhoneNumberConfirmed => true;
 
         /// <summary>
         /// Идентификатор

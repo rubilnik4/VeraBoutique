@@ -91,7 +91,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Заменить данные по идентификатору
         /// </summary>
-        [AllowAnonymous]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -103,7 +102,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Удалить данные по идентификатору
         /// </summary>
-        [AllowAnonymous]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

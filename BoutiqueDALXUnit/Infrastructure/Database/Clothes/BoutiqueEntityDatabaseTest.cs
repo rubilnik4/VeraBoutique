@@ -29,12 +29,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
             using var boutiqueEntityDatabase = await GetTestBoutiqueEntityDatabase();
 
             await DatabaseLoadTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
-            await DatabaseFindTests(boutiqueEntityDatabase, genderEntities, clothesTypeGenderEntities);
+            await DatabaseFindTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
             await DatabaseUpdateTests(boutiqueEntityDatabase);
 
             using var boutiqueEntityDatabaseDelete = await GetTestBoutiqueEntityDatabase();
-            await DatabaseDeleteTests(boutiqueEntityDatabaseDelete, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
-            await DatabaseAddingTests(boutiqueEntityDatabase);
+            await DatabaseDeleteTests(boutiqueEntityDatabaseDelete, genderEntities, clothesTypeEntities);
         }
 
         /// <summary>
@@ -54,7 +53,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// Тесты поиска элементов в базе
         /// </summary>
         public static async Task DatabaseFindTests(IBoutiqueDatabase boutiqueEntityDatabase,
-                                                   IReadOnlyCollection<GenderEntity> genderEntities, 
+                                                   IReadOnlyCollection<GenderEntity> genderEntities,
+                                                   IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
                                                    IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();
@@ -64,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
             await BoutiqueEntityDatabaseFindTest.FindById_IncludeEntities(boutiqueEntityDatabase, genderIds.Last());
             await BoutiqueEntityDatabaseFindTest.FindByIds_IncludeEntities(boutiqueEntityDatabase, genderIds, clothesTypeGenderEntities);
             await BoutiqueEntityDatabaseFindTest.FindById_NotFound(boutiqueEntityDatabase);
-            await BoutiqueEntityDatabaseFindTest.FindByIds_NotFound(boutiqueEntityDatabase, genderIds);
+            await BoutiqueEntityDatabaseFindTest.FindByIds_NotFound(boutiqueEntityDatabase, clothesTypeEntities);
         }
 
         /// <summary>
@@ -81,20 +81,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseDeleteTests(IBoutiqueDatabase boutiqueEntityDatabase, 
                                                      IReadOnlyCollection<GenderEntity> genderEntities,
-                                                     IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                     IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                     IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
             await BoutiqueEntityDatabaseDeleteTest.Delete(boutiqueEntityDatabase, genderEntities);
-            await BoutiqueEntityDatabaseDeleteTest.Delete_All(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, 
-                                                              clothesTypeGenderEntities);
-        }
-
-        /// <summary>
-        /// Тесты добавления элементов в базе
-        /// </summary>
-        public static async Task DatabaseAddingTests(IBoutiqueDatabase boutiqueEntityDatabase)
-        {
-            await BoutiqueEntityDatabaseGetTest.AddRangeEntities(boutiqueEntityDatabase);
+            await BoutiqueEntityDatabaseDeleteTest.Delete_All(boutiqueEntityDatabase, clothesTypeEntities);
         }
 
         /// <summary>

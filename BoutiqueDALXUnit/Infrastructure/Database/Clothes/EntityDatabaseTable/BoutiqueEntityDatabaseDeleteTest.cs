@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
             foreach(var gender in genderEntities)
             {
                 var genderFind = await database.GendersTable.FindAsync(gender.Id);
-                var resultRemove = database.GendersTable.Remove(genderFind.Value);
+                database.GendersTable.Remove(genderFind.Value);
             }
             var resultAfterRemove = await database.SaveChangesAsync();
             var entitiesAfterRemove = await database.GendersTable.ToListAsync();
@@ -39,9 +39,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// <summary>
         /// Удалить все записи в таблице
         /// </summary>
-        public static async Task Delete_All(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities,
-                                            IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                            IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+        public static async Task Delete_All(IBoutiqueDatabase database,
+                                            IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
             var resultClothesRemove = database.ClotheTypeTable.RemoveRange(clothesTypeEntities);
             var resultAfterRemove = await database.SaveChangesAsync();
