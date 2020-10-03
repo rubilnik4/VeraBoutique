@@ -44,13 +44,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Получить вид одежды по типу пола
         /// </summary>
-        [HttpGet("gender/{genderType}")]
+        [HttpGet("genderCategory/{genderType}/{category}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IReadOnlyCollection<ClothesTypeTransfer>>> GetByGender(GenderType genderType) =>
-            await _clothesTypeDatabaseService.GetByGender(genderType).
+        public async Task<ActionResult<IReadOnlyCollection<ClothesTypeTransfer>>> GetByGenderCategory(GenderType genderType,
+                                                                                                      string category) =>
+            await _clothesTypeDatabaseService.GetByGenderCategory(genderType, category).
             ResultCollectionOkTaskAsync(clothesTypes => _clothesTypeTransferConverter.ToTransfers(clothesTypes)).
             ToActionResultCollectionTaskAsync<string, ClothesTypeTransfer>();
     }

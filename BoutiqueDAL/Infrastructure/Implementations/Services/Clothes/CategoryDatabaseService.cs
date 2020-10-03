@@ -14,8 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// </summary>
     public class CategoryDatabaseService : DatabaseService<string, ICategoryDomain, CategoryEntity>, ICategoryDatabaseService
     {
-        public CategoryDatabaseService(IDatabase database,
-                                       ICategoryTable categoryTable,
+        public CategoryDatabaseService(IDatabase database, ICategoryTable categoryTable,
                                        ICategoryEntityConverter categoryEntityConverter)
             : base(database, categoryTable, categoryEntityConverter)
         { }

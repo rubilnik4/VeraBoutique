@@ -9,15 +9,41 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
     public class CategoryInitialize
     {
         /// <summary>
-        /// ачальные данные таблицы категорий одежды
+        /// Начальные данные таблицы категорий одежды
         /// </summary>
         public static IReadOnlyCollection<CategoryEntity> CategoryData =>
             new List<CategoryEntity>
             {
-                new CategoryEntity("Верхняя одежда"),
-                new CategoryEntity("Штаны"),
-                new CategoryEntity("Обувь"),
-                new CategoryEntity("Аксессуары"),
+                new CategoryEntity(Outerwear),
+                new CategoryEntity(Dress),
+                new CategoryEntity(Pants),
+                new CategoryEntity(Footwear),
+                new CategoryEntity(Accessories),
             }.AsReadOnly();
+
+        /// <summary>
+        /// Верхняя одежда
+        /// </summary>
+        public static string Outerwear => "Верхняя одежда";
+
+        /// <summary>
+        /// Платья
+        /// </summary>
+        public static string Dress => "Платья";
+
+        /// <summary>
+        /// Штаны
+        /// </summary>
+        public static string Pants => "Штаны";
+
+        /// <summary>
+        /// Обувь
+        /// </summary>
+        public static string Footwear => "Обувь";
+
+        /// <summary>
+        /// Аксессуары
+        /// </summary>
+        public static string Accessories => "Аксессуары";
     }
 }

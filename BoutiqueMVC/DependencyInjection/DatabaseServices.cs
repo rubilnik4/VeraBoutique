@@ -57,8 +57,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static void GetDatabaseOptions(DbContextOptionsBuilder options) =>
             options.
-            UseNpgsql(PostgresConnection.Value.ConnectionString).
-            UseSnakeCaseNamingConvention();
+            UseNpgsql(PostgresConnection.Value.ConnectionString);
 
         /// <summary>
         /// Получить сервис для типа пола одежды
@@ -86,6 +85,7 @@ namespace BoutiqueMVC.DependencyInjection
             Map(boutiqueDatabase => new ClothesTypeDatabaseService(boutiqueDatabase,
                                                                    boutiqueDatabase.ClotheTypeTable,
                                                                    boutiqueDatabase.GendersTable,
+                                                                   boutiqueDatabase.CategoryTable,
                                                                    new ClothesTypeEntityConverter()));
     }
 }

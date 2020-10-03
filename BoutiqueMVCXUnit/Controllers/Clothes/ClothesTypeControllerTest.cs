@@ -30,12 +30,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_Ok()
         {
             const GenderType genderType = GenderType.Male;
+            string category = CategoryData.GetCategoryDomain().First().Name;
             var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(ClothesTypeData.GetClothesTypeDomain());
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeTransferConverter = ClothesTypeTransferConverter;
             var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
 
-            var clothesTypeTransfers = await clothesTypeController.GetByGender(genderType);
+            var clothesTypeTransfers = await clothesTypeController.GetByGenderCategory(genderType, category);
             var clothesTypeAfter = clothesTypeTransferConverter.FromTransfers(clothesTypeTransfers.Value);
 
             Assert.True(clothesTypeAfter.SequenceEqual(clothesTypeDomains.Value));
@@ -48,13 +49,14 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_ErrorDatabase()
         {
             const GenderType genderType = GenderType.Male;
+            string category = CategoryData.GetCategoryDomain().First().Name;
             var initialError = ErrorData.DatabaseError;
             var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeTransferConverter = ClothesTypeTransferConverter;
             var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
 
-            var actionResult = await clothesTypeController.GetByGender(genderType);
+            var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;
@@ -70,13 +72,14 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_NotFound()
         {
             const GenderType genderType = GenderType.Male;
+            string category = CategoryData.GetCategoryDomain().First().Name;
             var initialError = ErrorData.NotFoundError;
             var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeTransferConverter = ClothesTypeTransferConverter;
             var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
 
-            var actionResult = await clothesTypeController.GetByGender(genderType);
+            var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
             Assert.IsType<NotFoundResult>(actionResult.Result);
             var notFoundResult = (NotFoundResult)actionResult.Result;
@@ -88,7 +91,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// </summary>
         private static Mock<IClothesTypeDatabaseService> GetClothesTypeDatabaseService(IResultCollection<IClothesTypeDomain> clothesTypeDomains) =>
             new Mock<IClothesTypeDatabaseService>().
-            Void(mock => mock.Setup(service => service.GetByGender(It.IsAny<GenderType>())).
+            Void(mock => mock.Setup(service => service.GetByGenderCategory(It.IsAny<GenderType>(), It.IsAny<string>())).
                               ReturnsAsync(clothesTypeDomains));
 
         /// <summary>

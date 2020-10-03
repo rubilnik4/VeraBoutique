@@ -59,6 +59,32 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
             where TIdOut : notnull;
 
         /// <summary>
+        /// Запрос поиска по идентификатору
+        /// </summary>
+        IQueryable<TEntity> Where(TId id);
+
+        /// <summary>
+        /// Запрос поиска по идентификаторам
+        /// </summary>
+        IQueryable<TEntity> Where(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Запрос поиска по идентификатору с включением сущностей
+        /// </summary>
+        IQueryable<TEntity> Where<TIdOut, TEntityOut>(TId id,
+                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
+
+        /// <summary>
+        /// Запрос поиска по идентификаторам  с включением сущностей
+        /// </summary>
+        IQueryable<TEntity> Where<TIdOut, TEntityOut>(IEnumerable<TId> ids,
+                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+            where TEntityOut : IEntityModel<TIdOut>
+            where TIdOut : notnull;
+
+        /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);

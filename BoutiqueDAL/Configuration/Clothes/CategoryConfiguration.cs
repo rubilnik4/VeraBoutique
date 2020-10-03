@@ -12,6 +12,11 @@ namespace BoutiqueDAL.Configuration.Clothes
         public void Configure(EntityTypeBuilder<CategoryEntity> builder)
         {
             builder.HasKey(t => t.Name);
+
+            //builder.HasMany(t => t.ClothesTypeEntities)
+            //       .WithOne(s => s.CategoryEntity!)
+            //       .HasForeignKey(sc => sc.CategoryEntityId)
+            //       .IsRequired();
         }
     }
 }

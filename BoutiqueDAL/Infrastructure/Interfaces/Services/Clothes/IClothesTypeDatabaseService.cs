@@ -14,8 +14,8 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     public interface IClothesTypeDatabaseService : IDatabaseService<string, IClothesTypeDomain>
     {
         /// <summary>
-        /// Получить вид одежды по типу пола
+        /// Получить вид одежды по типу пола и категории
         /// </summary>
-        Task<IResultCollection<IClothesTypeDomain>> GetByGender(GenderType genderType);
+        Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category);
     }
 }

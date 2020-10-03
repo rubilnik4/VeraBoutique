@@ -12,16 +12,30 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class ClothesTypeEntity : ClothesType, IClothesTypeEntity
     {
         public ClothesTypeEntity(string name)
-            : this(name, null, Enumerable.Empty<ClothesTypeGenderEntity>())
+            : this(name, null, null, Enumerable.Empty<ClothesTypeGenderEntity>())
         { }
 
-        public ClothesTypeEntity(string name, CategoryEntity? categoryEntity, 
+        public ClothesTypeEntity(string name, string? categoryEntityId)
+            : this(name, categoryEntityId, null, Enumerable.Empty<ClothesTypeGenderEntity>())
+        { }
+
+        public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+            : this(name, null, null, clothesTypeGenderEntities)
+        { }
+
+        public ClothesTypeEntity(string name, string? categoryEntityId, CategoryEntity? categoryEntity,
                                  IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
            : base(name)
         {
+            CategoryEntityId = categoryEntityId;
             CategoryEntity = categoryEntity;
             ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
         }
+
+        /// <summary>
+        /// Идентификатор связующей сущности категории одежды
+        /// </summary>
+        public string? CategoryEntityId { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using static BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes.CategoryInitialize;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes
 {
@@ -15,18 +16,19 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         public static IReadOnlyCollection<(ClothesTypeEntity ClothesType, IReadOnlyCollection<GenderEntity> Genders)> ClothesTypeWithGenderData =>
             new List<(ClothesTypeEntity ClothesType, IReadOnlyCollection<GenderEntity> Genders)>
             {
-                (new ClothesTypeEntity("Пальто"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Куртки"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Толстовки"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Свитера"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Рубашки"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Брюки"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Джинсы"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Футболки"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Обувь"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Шорты"), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Платья"), new List<GenderEntity> {GenderInitialize.Female}),
-                (new ClothesTypeEntity("Юбки"), new List<GenderEntity> {GenderInitialize.Female}),
+                (new ClothesTypeEntity("Пальто", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Куртки", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Толстовки", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Свитера", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Рубашки", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Футболки", Outerwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Брюки", Pants), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Джинсы", Pants), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Шорты", Pants), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Кроссовки", Footwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Туфли", Footwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Платья", Dress), new List<GenderEntity> {GenderInitialize.Female}),
+                (new ClothesTypeEntity("Юбки", Dress), new List<GenderEntity> {GenderInitialize.Female}),
             }.AsReadOnly();
 
         /// <summary>
