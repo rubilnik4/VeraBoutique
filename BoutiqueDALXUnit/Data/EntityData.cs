@@ -18,7 +18,7 @@ namespace BoutiqueDALXUnit.Data
     public static class EntityData
     {
         /// <summary>
-        /// Получить сущности типа пола
+        /// Сущности типа пола
         /// </summary>
         public static List<GenderEntity> GenderEntities =>
             GenderData.GetGendersDomain().
@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Data
             ToList();
 
         /// <summary>
-        /// Получить сущности вида одежды
+        /// Сущности вида одежды
         /// </summary>
         public static List<ClothesTypeEntity> ClothesTypeEntities =>
             ClothesTypeData.GetClothesTypeDomain().
@@ -34,13 +34,30 @@ namespace BoutiqueDALXUnit.Data
             ToList();
 
         /// <summary>
-        /// Получить вид одежды
+        /// Сущности категорий одежды
+        /// </summary>
+        public static List<CategoryEntity> CategoryEntities =>
+            CategoryData.GetCategoryDomain().
+            Select(categoryDomain => new CategoryEntity(categoryDomain.Name)).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности типа пола c видом одежды
         /// </summary>
         public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
                                                                           IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                                             GetClothesTypeGenderEntity(gender, clothesTypeEntities))).
+                                              GetClothesTypeGenderEntity(gender, clothesTypeEntities))).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности категорий c видом одежды
+        /// </summary>
+        public static List<CategoryEntity> GetCategoryEntitiesWithClothesType(IReadOnlyCollection<CategoryEntity> categoryEntities,
+                                                                              IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
+            categoryEntities.
+            Select(category => new CategoryEntity(category.Name, clothesTypeEntities)).
             ToList();
 
         /// <summary>

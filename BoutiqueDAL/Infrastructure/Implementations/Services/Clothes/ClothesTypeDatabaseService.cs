@@ -61,20 +61,29 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
             ResultCollectionOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
 
+        /// <summary>
+        /// Получить вид одежды
+        /// </summary>
         private async Task<IReadOnlyCollection<ClothesTypeEntity>> GetClothesTypes(GenderType genderType, string category) =>
             await GetClothesTypeByGender(genderType).
-            Join(GetClothesTypeByCategory(category),
-                 clothesTypeGender => clothesTypeGender.Name,
-                 clothesTypeCategory => clothesTypeCategory.Name,
-                 (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
+            //Join(GetClothesTypeByCategory(category),
+            //     clothesTypeGender => clothesTypeGender.Name,
+            //     clothesTypeCategory => clothesTypeCategory.Name,
+            //     (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
             AsNoTracking().
             ToListAsync();
 
+        /// <summary>
+        /// Получить вид одежды по типу пола
+        /// </summary>
         private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
             _genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
             SelectMany(genderEntity => genderEntity.ClothesTypeGenderEntities).
             Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesTypeEntity!);
 
+        /// <summary>
+        /// Получить вид одежды по категории
+        /// </summary>
         private IQueryable<ClothesTypeEntity> GetClothesTypeByCategory(string category) =>
            _categoryTable.Where<string, ClothesTypeEntity>(category, categoryEntity => categoryEntity.ClothesTypeEntities).
            SelectMany(categoryEntity => categoryEntity.ClothesTypeEntities);

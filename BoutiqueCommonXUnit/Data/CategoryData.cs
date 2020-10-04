@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Data
         public static List<ICategoryDomain> GetCategoryDomain() =>
             new List<ICategoryDomain>()
             {
-                new CategoryDomain("Верхняя одежды"),
+                new CategoryDomain("Верхняя одежда"),
                 new CategoryDomain("Побрякушки"),
             };
     }
