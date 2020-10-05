@@ -11,6 +11,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
@@ -30,12 +31,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public ClothesTypeDatabaseService(IDatabase database, IClothesTypeTable clothesTypeTable,
                                           IGenderTable genderTable, ICategoryTable categoryTable,
-                                          IClothesTypeEntityConverter clothesTypeEntityConverter)
+                                          IClothesTypeEntityConverter clothesTypeEntityConverter,
+                                          IQueryableService<string ,ClothesTypeEntity> queryableService)
             : base(database, clothesTypeTable, clothesTypeEntityConverter)
         {
             _genderTable = genderTable;
             _categoryTable = categoryTable;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
+            _queryableService = queryableService;
         }
 
         /// <summary>
@@ -54,6 +57,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
 
         /// <summary>
+        /// Сервис обработки запросов базы данных
+        /// </summary>
+        private readonly IQueryableService<string, ClothesTypeEntity> _queryableService;
+
+        /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
         public async Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category) =>
@@ -66,12 +74,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         private async Task<IReadOnlyCollection<ClothesTypeEntity>> GetClothesTypes(GenderType genderType, string category) =>
             await GetClothesTypeByGender(genderType).
-            //Join(GetClothesTypeByCategory(category),
-            //     clothesTypeGender => clothesTypeGender.Name,
-            //     clothesTypeCategory => clothesTypeCategory.Name,
-            //     (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
+            Join(GetClothesTypeByCategory(category),
+                 clothesTypeGender => clothesTypeGender.Name,
+                 clothesTypeCategory => clothesTypeCategory.Name,
+                 (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
             AsNoTracking().
-            ToListAsync();
+            Map(clothesTypeQuery => _queryableService.ToListAsync(clothesTypeQuery));
 
         /// <summary>
         /// Получить вид одежды по типу пола

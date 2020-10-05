@@ -26,11 +26,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
             var genderEntities = GenderInitialize.GenderData;
             var clothesTypeEntities = ClothesTypeInitialize.ClothesTypeData;
             var clothesTypeGenderEntities = ClothesTypeGenderInitialize.ClothesTypeGenderData;
+            var categoryEntities = CategoryInitialize.CategoryData;
             using var boutiqueEntityDatabase = await GetTestBoutiqueEntityDatabase();
 
             await DatabaseLoadTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
             await DatabaseFindTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
+            await DatabaseWhereTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
             await DatabaseUpdateTests(boutiqueEntityDatabase);
+            await BoutiqueEntityDatabaseAdding.AddRange(boutiqueEntityDatabase, categoryEntities);
 
             using var boutiqueEntityDatabaseDelete = await GetTestBoutiqueEntityDatabase();
             await DatabaseDeleteTests(boutiqueEntityDatabaseDelete, genderEntities, clothesTypeEntities);
@@ -68,6 +71,22 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         }
 
         /// <summary>
+        /// Тесты поиска элементов в базе
+        /// </summary>
+        public static async Task DatabaseWhereTests(IBoutiqueDatabase boutiqueEntityDatabase,
+                                                    IReadOnlyCollection<GenderEntity> genderEntities,
+                                                    IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
+                                                    IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+        {
+            var genderIds = genderEntities.Select(entity => entity.Id).ToList();
+
+            await BoutiqueEntityDatabaseWhereTest.WhereById(boutiqueEntityDatabase, genderIds.Last());
+            await BoutiqueEntityDatabaseWhereTest.WhereByIds(boutiqueEntityDatabase, genderIds);
+            await BoutiqueEntityDatabaseWhereTest.WhereById_IncludeEntities(boutiqueEntityDatabase, genderIds.Last());
+            await BoutiqueEntityDatabaseWhereTest.WhereByIds_IncludeEntities(boutiqueEntityDatabase, genderIds, clothesTypeGenderEntities);
+        }
+
+        /// <summary>
         /// Тесты обновления элементов в базе
         /// </summary>
         public static async Task DatabaseUpdateTests(IBoutiqueDatabase boutiqueEntityDatabase)
@@ -79,7 +98,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// <summary>
         /// Тесты удаления элементов в базе
         /// </summary>
-        public static async Task DatabaseDeleteTests(IBoutiqueDatabase boutiqueEntityDatabase, 
+        public static async Task DatabaseDeleteTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                      IReadOnlyCollection<GenderEntity> genderEntities,
                                                      IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {

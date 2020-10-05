@@ -18,7 +18,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
     /// </summary>
     public static class BoutiqueEntityDatabaseFindTest
     {
-
         /// <summary>
         /// Получить сущность по идентификатору
         /// </summary>

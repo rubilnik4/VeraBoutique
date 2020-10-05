@@ -16,4 +16,8 @@
     <None Remove="Models\Common\Implementations\Base\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Functional\Functional.csproj" />
+  </ItemGroup>
+
 </Project>

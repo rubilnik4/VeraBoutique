@@ -3,9 +3,13 @@ using System.Configuration;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueMVC.Factories.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -27,6 +31,7 @@ namespace BoutiqueMVC.DependencyInjection
         {
             ConverterServices.InjectEntityConverters(services);
 
+            services.AddTransient(typeof(IQueryableService<,>), typeof(QueryableService<,>));
             services.AddTransient(GetGenderService);
             services.AddTransient(GetCategoryService);
             services.AddTransient(GetClothesTypeService);
@@ -66,7 +71,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
             Map(boutiqueDatabase => new GenderDatabaseService(boutiqueDatabase,
                                                               boutiqueDatabase.GendersTable,
-                                                              new GenderEntityConverter()));
+                                                              serviceProvider.GetService<GenderEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для категорий одежды
@@ -75,7 +80,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
                 Map(boutiqueDatabase => new CategoryDatabaseService(boutiqueDatabase,
                                                                     boutiqueDatabase.CategoryTable,
-                                                                    new CategoryEntityConverter()));
+                                                                    serviceProvider.GetService<CategoryEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для вида одежды
@@ -86,6 +91,7 @@ namespace BoutiqueMVC.DependencyInjection
                                                                    boutiqueDatabase.ClotheTypeTable,
                                                                    boutiqueDatabase.GendersTable,
                                                                    boutiqueDatabase.CategoryTable,
-                                                                   new ClothesTypeEntityConverter()));
+                                                                   serviceProvider.GetService<IClothesTypeEntityConverter>(),
+                                                                   serviceProvider.GetService<IQueryableService<string, ClothesTypeEntity>>()));
     }
 }

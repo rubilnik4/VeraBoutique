@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using Functional.FunctionalExtensions.Sync;
@@ -44,7 +46,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter);
+                                                                            clothesTypeEntityConverter, QueryableService.Object);
 
             var clothesTypesResult = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
             var clothesTypesDomain = clothesTypeEntityConverter.FromEntities(clothesTypes);
@@ -66,7 +68,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             new Mock<IGenderTable>().
             Void(mock => mock.Setup(genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(It.IsAny<GenderType>(), 
                                                                                                                     genderEntity => genderEntity.ClothesTypeGenderEntities)).
-                              Returns((GenderType genderType, Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>> include) => GetIQueryable(genderEntities.Where(genderEntity => genderEntity.Id == genderType)).Object));
+                              Returns((GenderType genderType, Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>> include) => genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
 
        /// <summary>
         /// Таблица базы данных категорий одежды
@@ -77,9 +79,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                                                                                     categoryEntity => categoryEntity.ClothesTypeEntities)).
                               Returns((string category, Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>> include) => categoryEntities.Where(categoryEntity => categoryEntity.Id == category).AsQueryable()));
 
-        private static Mock<IQueryable<TValue>> GetIQueryable<TValue>(IEnumerable<TValue> values) =>
-            new Mock<IQueryable<TValue>>().
-            Void(mock => mock.Setup(q => q.ToListAsync(default)).ReturnsAsync(values.ToList()));
+        private static Mock<IQueryableService<string, ClothesTypeEntity>> QueryableService =>
+            new Mock<IQueryableService<string, ClothesTypeEntity>>().
+            Void(mock => mock.Setup(service => service.ToListAsync(It.IsAny<IEnumerable<ClothesTypeEntity>>())).
+                              ReturnsAsync((IEnumerable<ClothesTypeEntity> clothesTypeEntities) => clothesTypeEntities.ToList()));
 
         /// <summary>
         /// Таблица базы данных вида одежды
