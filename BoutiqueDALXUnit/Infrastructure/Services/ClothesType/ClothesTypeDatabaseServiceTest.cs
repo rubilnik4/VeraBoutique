@@ -19,9 +19,11 @@ using Functional.FunctionalExtensions.Sync;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
-
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
+    using genderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>>;
+    using categoryExpression = Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>>;
+
     /// <summary>
     /// Сервис вида одежды в базе данных. Тесты
     /// </summary>
@@ -66,19 +68,36 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static Mock<IGenderTable> GetGenderTable(IEnumerable<GenderEntity> genderEntities) =>
             new Mock<IGenderTable>().
-            Void(mock => mock.Setup(genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(It.IsAny<GenderType>(), 
-                                                                                                                    genderEntity => genderEntity.ClothesTypeGenderEntities)).
-                              Returns((GenderType genderType, Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>> include) => genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
+            Void(mock => mock.Setup(GenderTableWhere).
+                              Returns((GenderType genderType, genderExpression include) => 
+                                          genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
 
-       /// <summary>
+        /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
         private static Mock<ICategoryTable> GetCategoryTable(IEnumerable<CategoryEntity> categoryEntities) =>
             new Mock<ICategoryTable>().
-            Void(mock => mock.Setup(categoryTable => categoryTable.Where<string, ClothesTypeEntity>(It.IsAny<string>(),
-                                                                                                    categoryEntity => categoryEntity.ClothesTypeEntities)).
-                              Returns((string category, Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>> include) => categoryEntities.Where(categoryEntity => categoryEntity.Id == category).AsQueryable()));
+            Void(mock => mock.Setup(CategoryTableWhere).
+                              Returns((string category, categoryExpression include) =>
+                                          categoryEntities.Where(categoryEntity => categoryEntity.Id == category).AsQueryable()));
 
+        /// <summary>
+        /// Функция поиска в таблице типа пола
+        /// </summary>
+        private static Expression<Func<IGenderTable, IQueryable<GenderEntity>>> GenderTableWhere =>
+            genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(It.IsAny<GenderType>(),
+                                                                                            genderEntity => genderEntity.ClothesTypeGenderEntities);
+
+        /// <summary>
+        /// Функция поиска в таблице категории одежды
+        /// </summary>
+        private static Expression<Func<ICategoryTable, IQueryable<CategoryEntity>>> CategoryTableWhere =>
+            categoryTable => categoryTable.Where<string, ClothesTypeEntity>(It.IsAny<string>(),
+                                                                            categoryEntity => categoryEntity.ClothesTypeEntities);
+
+        /// <summary>
+        /// Сервис обработки запросов базы данных
+        /// </summary>
         private static Mock<IQueryableService<string, ClothesTypeEntity>> QueryableService =>
             new Mock<IQueryableService<string, ClothesTypeEntity>>().
             Void(mock => mock.Setup(service => service.ToListAsync(It.IsAny<IEnumerable<ClothesTypeEntity>>())).

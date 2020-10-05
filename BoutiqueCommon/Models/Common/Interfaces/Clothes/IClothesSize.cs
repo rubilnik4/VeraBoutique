@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public interface IClothesSize<out TSize> : IModel<string>
+    public interface IClothesSize: IModel<string>
     {
         /// <summary>
         /// Тип размера одежды
@@ -16,7 +16,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// <summary>
         /// Размер
         /// </summary>
-        TSize Size { get; }
+        int Size { get; }
 
         /// <summary>
         /// Наименование размера

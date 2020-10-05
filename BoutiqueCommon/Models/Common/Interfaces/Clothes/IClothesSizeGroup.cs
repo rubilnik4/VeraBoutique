@@ -6,19 +6,19 @@ using BoutiqueCommon.Models.Enums.Clothes;
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
 {
     /// <summary>
-    /// Группа размеров одежды разной маркировки
+    /// Группа размеров одежды разного типа
     /// </summary>
     public interface IClothesSizeGroup: IModel<string>
     {
         /// <summary>
-        /// Размеры одежды
+        /// Базовый размер одежды
         /// </summary>
-        IReadOnlyCollection<ClothesSize> ClothesSizes { get; }
+        IClothesSize ClothesSizeBase { get; }
 
         /// <summary>
-        /// Базовый тип размера группы
+        /// Дополнительные размеры одежды
         /// </summary>
-        ClothesSizeType ClothesSizeBase { get; }
+        IReadOnlyCollection<IClothesSize> ClothesSizesAdditional { get; }
 
         /// <summary>
         /// Наименование

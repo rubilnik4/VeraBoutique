@@ -36,7 +36,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public override bool Equals(object? obj) => obj is IGender gender && Equals(gender);
 
         public bool Equals(IGender? other) =>
-            other?.GenderType == GenderType;
+            other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(GenderType);
         #endregion

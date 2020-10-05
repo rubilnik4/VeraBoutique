@@ -30,7 +30,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public override bool Equals(object? obj) => obj is IClothesType clothesType && Equals(clothesType);
 
         public bool Equals(IClothesType? other) =>
-            other?.Name == Name ;
+            other?.Id == Id ;
 
         public override int GetHashCode() => HashCode.Combine(Name);
         #endregion

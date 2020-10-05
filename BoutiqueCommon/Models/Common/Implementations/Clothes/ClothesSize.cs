@@ -12,10 +12,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public class ClothesSize<TSize> : IClothesSize<TSize>, IEquatable<IClothesSize<TSize>>, IFormattable
-        where TSize : IEquatable<TSize>
+    public class ClothesSize: IClothesSize, IEquatable<IClothesSize>, IFormattable
     {
-        public ClothesSize(ClothesSizeType clothesSizeType, TSize size, string sizeName)
+        public ClothesSize(ClothesSizeType clothesSizeType, int size, string sizeName)
         {
             ClothesSizeType = clothesSizeType;
             Size = size;
@@ -25,9 +24,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => 
-            $"{ClothesSizeTypeShort(ClothesSizeType)} {SizeName}".
-            Trim();
+        public string Id => ClothesSizeNameShort;
 
         /// <summary>
         /// Тип размера одежды
@@ -37,19 +34,35 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Размер
         /// </summary>
-        public TSize Size { get; }
+        public int Size { get; }
 
         /// <summary>
         /// Размер
         /// </summary>
         public string SizeName { get; }
 
-        #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesSize<TSize> clothesSize && Equals(clothesSize);
+        /// <summary>
+        /// Укороченное наименование размера
+        /// </summary>
+        private string ClothesSizeNameShort => $"{ClothesSizeTypeShort} {SizeName}".Trim();
 
-        public bool Equals(IClothesSize<TSize>? other) =>
-            other?.ClothesSizeType == ClothesSizeType &&
-            other?.Size.Equals(Size) == true;
+        /// <summary>
+        /// Укороченное наименование типа размера
+        /// </summary>
+        private string ClothesSizeTypeShort =>
+            ClothesSizeType switch
+            {
+                ClothesSizeType.American => "",
+                ClothesSizeType.European => "EU",
+                ClothesSizeType.Russian => "RU",
+                _ => throw new InvalidEnumArgumentException(nameof(ClothesSizeType), (int)ClothesSizeType, typeof(ClothesSizeType))
+            };
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is IClothesSize clothesSize && Equals(clothesSize);
+
+        public bool Equals(IClothesSize? other) =>
+            other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(ClothesSizeType, Size);
         #endregion
@@ -57,19 +70,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         #region IFormattable Support
         public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);
 
-        public string ToString(string? format, IFormatProvider? formatProvider) => Id;
+        public string ToString(string? format, IFormatProvider? formatProvider) => ClothesSizeNameShort;
         #endregion
-
-        /// <summary>
-        /// Укороченное наименование типа размера
-        /// </summary>
-        public static string ClothesSizeTypeShort(ClothesSizeType clothesSizeType) =>
-            clothesSizeType switch
-            {
-                ClothesSizeType.American => "",
-                ClothesSizeType.European => "EU",
-                ClothesSizeType.Russian => "RU",
-                _ => throw new InvalidEnumArgumentException(nameof(clothesSizeType), (int)clothesSizeType, typeof(ClothesSizeType))
-            };
     }
 }

@@ -27,7 +27,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public override bool Equals(object? obj) => obj is ICategory category && Equals(category);
 
         public bool Equals(ICategory? other) =>
-            other?.Name == Name;
+            other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(Name);
         #endregion
