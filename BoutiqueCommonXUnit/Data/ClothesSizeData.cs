@@ -15,23 +15,12 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить размеры одежды
         /// </summary>
-        public static List<IClothesSizeDomain> GetClothesSizeDomain() =>
-            GetClothesSizesAdditionalDomain().Append(GetClothesSizeBaseDomain()).ToList();
-
-        /// <summary>
-        /// Получить базовый размер одежды
-        /// </summary>
-        public static IClothesSizeDomain GetClothesSizeBaseDomain() =>
-            new ClothesSizeDomain(SizeType.American, 'M', "M");
-
-        /// <summary>
-        /// Получить дополнительные размеры одежды
-        /// </summary>
-        public static List<IClothesSizeDomain> GetClothesSizesAdditionalDomain() =>
-            new List<IClothesSizeDomain>()
+        public static List<ISizeDomain> GetClothesSizeDomain() =>
+            new List<ISizeDomain>()
             {
-                new ClothesSizeDomain(SizeType.European, 73, "72/74"),
-                new ClothesSizeDomain(SizeType.Russian, 156, "156/158"),
+                new SizeDomain(SizeType.American, 'M', "M"),
+                new SizeDomain(SizeType.European, 73, "72/74"),
+                new SizeDomain(SizeType.Russian, 156, "156/158"),
             };
     }
 }

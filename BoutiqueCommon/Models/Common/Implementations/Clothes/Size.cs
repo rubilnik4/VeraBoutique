@@ -44,7 +44,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        private string ClothesSizeNameShort => GetClothesSizeNameShort(SizeType, SizeName);
+        public string ClothesSizeNameShort => GetClothesSizeNameShort(SizeType, SizeName);
 
          /// <summary>
          /// Получить укороченное наименование размера

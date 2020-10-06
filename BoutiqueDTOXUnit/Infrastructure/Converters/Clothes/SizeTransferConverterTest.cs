@@ -8,7 +8,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
     /// <summary>
     /// Конвертер размеров одежды в трансферную модель. Тесты
     /// </summary>
-    public class ClothesSizeTransferConverterTest
+    public class SizeTransferConverterTest
     {
         /// <summary>
         /// Преобразования модели размеров одежды в трансферную модель
@@ -17,7 +17,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var clothesSize = ClothesSizeData.GetClothesSizeDomain().First();
-            var clothesSizeTransferConverter = new ClothesSizeTransferConverter();
+            var clothesSizeTransferConverter = new SizeTransferConverter();
 
             var clothesSizeTransfer = clothesSizeTransferConverter.ToTransfer(clothesSize);
             var clothesSizeAfterConverter = clothesSizeTransferConverter.FromTransfer(clothesSizeTransfer);

@@ -1,12 +1,13 @@
 ﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Implementations.Clothes;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes
 {
     /// <summary>
-    /// Конвертер группы размеров одежды в трансферную модель
+    /// Конвертер размеров одежды в трансферную модель
     /// </summary>
-    public interface IClothesSizeGroupTransferConverter : ITransferConverter<string, IClothesSizeGroupDomain, ClothesSizeGroupTransfer>
+    public interface ISizeTransferConverter : ITransferConverter<(SizeType, int), ISizeDomain, SizeTransfer>
     { }
 }

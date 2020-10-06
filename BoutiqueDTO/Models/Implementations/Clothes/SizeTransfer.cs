@@ -9,12 +9,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// <summary>
     /// Размер одежды. Трансферная модель
     /// </summary>
-    public class ClothesSizeTransfer : IClothesSizeTransfer
+    public class SizeTransfer : ISizeTransfer
     {
-        public ClothesSizeTransfer()
+        public SizeTransfer()
         { }
 
-        public ClothesSizeTransfer(SizeType clothesSizeType, int size, string sizeName)
+        public SizeTransfer(SizeType clothesSizeType, int size, string sizeName)
         {
             SizeType = clothesSizeType;
             SizeValue = size;
@@ -24,7 +24,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => ClothesSizeNameShort;
+        public (SizeType, int) Id => (SizeType, SizeValue);
 
         /// <summary>
         /// Тип размера одежды
@@ -47,6 +47,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        private string ClothesSizeNameShort => BoutiqueCommon.Models.Common.Implementations.Clothes.Size.GetClothesSizeNameShort(SizeType, SizeName);
+        public string ClothesSizeNameShort => Size.GetClothesSizeNameShort(SizeType, SizeName);
     }
 }

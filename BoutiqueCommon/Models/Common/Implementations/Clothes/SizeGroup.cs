@@ -46,8 +46,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// Получить имя группы размеров по базовому типу
         /// </summary>
         public string GetBaseGroupName(SizeType sizeType) =>
-            GetGroupName(Sizes.FirstOrDefault(size => size.SizeType == sizeType),
-                         Sizes.Where(size => size.SizeType != sizeType));
+            GetGroupName(sizeType, Sizes);
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISizeGroup clothesSizeGroup && Equals(clothesSizeGroup);
@@ -61,16 +60,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Получить имя группы
         /// </summary>
-        public static string GetGroupName(ISize? clothesSizeBase ,
-                                          IEnumerable<ISize> clothesSizesAdditional) =>
-            (clothesSizeBase?.ToString() ?? String.Empty) + 
-            GetClothesSizeGroupSubName(clothesSizesAdditional);
+        public static string GetGroupName(SizeType sizeTypeBase,
+                                          IReadOnlyCollection<ISize> sizes) =>
+            (sizes.FirstOrDefault(size => size.SizeType == sizeTypeBase)?.ToString() ?? String.Empty) + 
+            GetClothesSizeGroupSubName(sizes.Where(size => size.SizeType != sizeTypeBase));
 
         /// <summary>
         /// Получить наименование дополнительной группы размеров
         /// </summary>
-        private static string GetClothesSizeGroupSubName(IEnumerable<ISize> clothesSizesAdditional) =>
-            clothesSizesAdditional.ToList().
+        private static string GetClothesSizeGroupSubName(IEnumerable<ISize> sizesAdditional) =>
+            sizesAdditional.ToList().
             WhereContinue(clothesSize => clothesSize.Count > 0,
                 okFunc: clothesSizeCollection => $" ({String.Join(", ", clothesSizeCollection)})",
                 badFunc: _ => String.Empty);

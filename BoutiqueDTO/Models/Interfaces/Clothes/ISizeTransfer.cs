@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
 
 namespace BoutiqueDTO.Models.Interfaces.Clothes
@@ -6,6 +7,6 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     /// <summary>
     /// Размер одежды. Трансферная модель
     /// </summary>
-    public interface IClothesSizeTransfer : ISize, ITransferModel<string>
+    public interface ISizeTransfer : ISize, ITransferModel<(SizeType, int)>
     { }
 }

@@ -11,7 +11,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа. Тесты
     /// </summary>
-    public class ClothesSizeGroupTest
+    public class SizeGroupTest
     {
         /// <summary>
         /// Проверка идентичности
@@ -19,15 +19,15 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesSizeGroup_ToString()
         {
-            var expectedGroupName = "M (EU 72/74, RU 156/158)";
-            var clothesSizeGroupDomain = ClothesSizeGroupData.GetClothesSizeGroupDomain().First();
+            const string expectedGroupName = "M (EU 72/74, RU 156/158)";
+            const SizeType sizeType = SizeType.Russian;
+            var sizeGroupDomain = ClothesSizeGroupData.GetClothesSizeGroupDomain().First();
 
-            string clothesSizeGroupToString = clothesSizeGroupDomain.ToString();
-            string clothesSizeGroupName = SizeGroup.GetGroupName(clothesSizeGroupDomain.ClothesSizeBase, 
-                                                                        clothesSizeGroupDomain.Sizes);
+            string sizeBaseGroupName = sizeGroupDomain.GetBaseGroupName(sizeType);
+            string sizeGroupName = SizeGroup.GetGroupName(sizeType, sizeGroupDomain.Sizes);
 
-            Assert.Equal(expectedGroupName, clothesSizeGroupToString);
-            Assert.Equal(expectedGroupName, clothesSizeGroupName);
+            Assert.Equal(sizeBaseGroupName, sizeGroupName);
+            Assert.Equal(expectedGroupName, sizeGroupName);
         }
     }
 }

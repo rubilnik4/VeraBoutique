@@ -9,19 +9,19 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель
     /// </summary>
-    public class ClothesSizeGroupTransferConverter : TransferConverter<string, IClothesSizeGroupDomain, ClothesSizeGroupTransfer>,
-                                                     IClothesSizeGroupTransferConverter
+    public class SizeGroupTransferConverter : TransferConverter<string, ISizeGroupDomain, SizeGroupTransfer>,
+                                                     ISizeGroupTransferConverter
     {
         /// <summary>
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
-        public override ClothesSizeGroupTransfer ToTransfer(IClothesSizeGroupDomain clothesSizeGroupDomain) =>
-            new ClothesSizeGroupTransfer(clothesSizeGroupDomain.ClothesSizeBase, clothesSizeGroupDomain.Sizes);
+        public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
+            new SizeGroupTransfer(sizeGroupDomain.ClothesSizeBase, sizeGroupDomain.Sizes);
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override IClothesSizeGroupDomain FromTransfer(ClothesSizeGroupTransfer clothesSizeGroupTransfer) =>
-            new ClothesSizeGroupDomain(clothesSizeGroupTransfer.ClothesSizeBase, clothesSizeGroupTransfer.Sizes);
+        public override ISizeGroupDomain FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
+            new SizeGroupDomain(sizeGroupTransfer.ClothesSizeBase, sizeGroupTransfer.Sizes);
     }
 }

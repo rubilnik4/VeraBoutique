@@ -24,5 +24,10 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Дополнительные размеры одежды
         /// </summary>
         IReadOnlyCollection<ISize> Sizes { get; }
+
+        /// <summary>
+        /// Получить имя группы размеров по базовому типу
+        /// </summary>
+        string GetBaseGroupName(SizeType sizeType);
     }
 }
