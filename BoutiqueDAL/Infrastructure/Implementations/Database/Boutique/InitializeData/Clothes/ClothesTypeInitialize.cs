@@ -25,8 +25,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
                 (new ClothesTypeEntity("Брюки", Pants), GenderInitialize.MaleAndFemale),
                 (new ClothesTypeEntity("Джинсы", Pants), GenderInitialize.MaleAndFemale),
                 (new ClothesTypeEntity("Шорты", Pants), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Кроссовки", Footwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Туфли", Footwear), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Кроссовки", Shoes), GenderInitialize.MaleAndFemale),
+                (new ClothesTypeEntity("Туфли", Shoes), GenderInitialize.MaleAndFemale),
                 (new ClothesTypeEntity("Платья", Dress), new List<GenderEntity> {GenderInitialize.Female}),
                 (new ClothesTypeEntity("Юбки", Dress), new List<GenderEntity> {GenderInitialize.Female}),
             }.AsReadOnly();

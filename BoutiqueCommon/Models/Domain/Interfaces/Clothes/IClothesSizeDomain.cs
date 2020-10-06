@@ -6,6 +6,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Размер одежды. Доменная модель
     /// </summary>
-    public interface IClothesSizeDomain : IClothesSize, IDomainModel<string>
+    public interface IClothesSizeDomain : ISize, IDomainModel<string>
     { }
 }

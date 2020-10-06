@@ -17,7 +17,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesSize_Equal_Ok()
         {
-            const ClothesSizeType clothesSizeType = ClothesSizeType.American;
+            const SizeType clothesSizeType = SizeType.American;
             const int size = 72;
             const string sizeName = "72/74";
 
@@ -31,15 +31,17 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Преобразование в строковое значение
         /// </summary>
         [Theory]
-        [InlineData(ClothesSizeType.American, 'M', "M", "M")]
-        [InlineData(ClothesSizeType.European, 73, "72/74", "EU 72/74")]
-        [InlineData(ClothesSizeType.Russian, 156, "156/158", "RU 156/158")]
-        public void ClothesSize_ToString(ClothesSizeType clothesSizeType, int size, string sizeName, string expectedString)
+        [InlineData(SizeType.American, 'M', "M", "M")]
+        [InlineData(SizeType.European, 73, "72/74", "EU 72/74")]
+        [InlineData(SizeType.Russian, 156, "156/158", "RU 156/158")]
+        public void ClothesSize_ToString(SizeType clothesSizeType, int size, string sizeName, string expectedString)
         {
             var clothesSize = new ClothesSizeDomain(clothesSizeType, size, sizeName);
             var clothesSizeString = clothesSize.ToString();
+            string clothesSizeShortName = Size.GetClothesSizeNameShort(clothesSizeType, sizeName);
 
             Assert.Equal(expectedString, clothesSizeString);
+            Assert.Equal(expectedString, clothesSizeShortName);
         }
     }
 }

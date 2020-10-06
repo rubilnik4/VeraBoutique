@@ -7,9 +7,9 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// <summary>
     /// Размер одежды. Доменная модель
     /// </summary>
-    public class ClothesSizeDomain : ClothesSize, IClothesSizeDomain
+    public class ClothesSizeDomain : Size, IClothesSizeDomain
     {
-        public ClothesSizeDomain(ClothesSizeType clothesSizeType, int size, string sizeName)
+        public ClothesSizeDomain(SizeType clothesSizeType, int size, string sizeName)
             : base(clothesSizeType, size, sizeName)
         { }
     }

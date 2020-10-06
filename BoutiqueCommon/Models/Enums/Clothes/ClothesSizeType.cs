@@ -1,12 +1,19 @@
 ﻿namespace BoutiqueCommon.Models.Enums.Clothes
 {
     /// <summary>
-    /// Тип размера одежды
+    /// Тип одежды для определения размера
     /// </summary>
     public enum ClothesSizeType
     {
-        European,
-        American,
-        Russian,
+        Outerwear,
+        Shirt,
+        Tshirt,
+        Jacket,
+        Pants,
+        Dress,
+        Blouse,
+        Underwear,
+        Socks,
+        Shoes,
     }
 }

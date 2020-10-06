@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Controllers.Implementations.Clothes
 {
+    /// <summary>
+    /// Контроллер для получения и записи категорий одежды
+    /// </summary>
     public class CategoryController : ApiController<string, CategoryTransfer, ICategoryDomain>
     {
         public CategoryController(ICategoryDatabaseService categoryDatabaseService,

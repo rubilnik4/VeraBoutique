@@ -22,7 +22,7 @@ namespace BoutiqueCommonXUnit.Data
         /// Получить базовый размер одежды
         /// </summary>
         public static IClothesSizeDomain GetClothesSizeBaseDomain() =>
-            new ClothesSizeDomain(ClothesSizeType.American, 'M', "M");
+            new ClothesSizeDomain(SizeType.American, 'M', "M");
 
         /// <summary>
         /// Получить дополнительные размеры одежды
@@ -30,8 +30,8 @@ namespace BoutiqueCommonXUnit.Data
         public static List<IClothesSizeDomain> GetClothesSizesAdditionalDomain() =>
             new List<IClothesSizeDomain>()
             {
-                new ClothesSizeDomain(ClothesSizeType.European, 73, "72/74"),
-                new ClothesSizeDomain(ClothesSizeType.Russian, 156, "156/158"),
+                new ClothesSizeDomain(SizeType.European, 73, "72/74"),
+                new ClothesSizeDomain(SizeType.Russian, 156, "156/158"),
             };
     }
 }

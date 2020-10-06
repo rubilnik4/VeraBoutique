@@ -9,10 +9,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public class ClothesSizeGroupDomain : ClothesSizeGroup, IClothesSizeGroupDomain
+    public class ClothesSizeGroupDomain : SizeGroup, IClothesSizeGroupDomain
     {
-        public ClothesSizeGroupDomain(IClothesSize clothesSizeBase,
-                                      IReadOnlyCollection<IClothesSize> clothesSizesAdditional)
+        public ClothesSizeGroupDomain(ISize clothesSizeBase,
+                                      IReadOnlyCollection<ISize> clothesSizesAdditional)
             : base(clothesSizeBase, clothesSizesAdditional)
         { }
     }

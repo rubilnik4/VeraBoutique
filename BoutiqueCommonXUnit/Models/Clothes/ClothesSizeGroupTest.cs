@@ -19,10 +19,15 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesSizeGroup_ToString()
         {
+            var expectedGroupName = "M (EU 72/74, RU 156/158)";
             var clothesSizeGroupDomain = ClothesSizeGroupData.GetClothesSizeGroupDomain().First();
-            string clothesSizeGroupToString = clothesSizeGroupDomain.ToString();
 
-            Assert.Equal("M (EU 72/74, RU 156/158)" , clothesSizeGroupToString);
+            string clothesSizeGroupToString = clothesSizeGroupDomain.ToString();
+            string clothesSizeGroupName = SizeGroup.GetGroupName(clothesSizeGroupDomain.ClothesSizeBase, 
+                                                                        clothesSizeGroupDomain.Sizes);
+
+            Assert.Equal(expectedGroupName, clothesSizeGroupToString);
+            Assert.Equal(expectedGroupName, clothesSizeGroupName);
         }
     }
 }

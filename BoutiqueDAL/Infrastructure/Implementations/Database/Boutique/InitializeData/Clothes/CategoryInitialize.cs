@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
                 new CategoryEntity(Outerwear),
                 new CategoryEntity(Dress),
                 new CategoryEntity(Pants),
-                new CategoryEntity(Footwear),
+                new CategoryEntity(Shoes),
                 new CategoryEntity(Accessories),
             }.AsReadOnly();
 
@@ -39,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Обувь
         /// </summary>
-        public static string Footwear => "Обувь";
+        public static string Shoes => "Обувь";
 
         /// <summary>
         /// Аксессуары

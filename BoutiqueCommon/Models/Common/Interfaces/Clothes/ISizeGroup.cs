@@ -8,21 +8,21 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public interface IClothesSizeGroup: IModel<string>
+    public interface ISizeGroup: IModel<(ClothesSizeType, int)>
     {
         /// <summary>
-        /// Базовый размер одежды
+        /// Тип одежды для определения размера
         /// </summary>
-        IClothesSize ClothesSizeBase { get; }
+        ClothesSizeType ClothesSizeType { get; }
+
+        /// <summary>
+        /// Номинальное значение размера
+        /// </summary>
+        int SizeNormalize { get; }
 
         /// <summary>
         /// Дополнительные размеры одежды
         /// </summary>
-        IReadOnlyCollection<IClothesSize> ClothesSizesAdditional { get; }
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        string Name { get; }
+        IReadOnlyCollection<ISize> Sizes { get; }
     }
 }

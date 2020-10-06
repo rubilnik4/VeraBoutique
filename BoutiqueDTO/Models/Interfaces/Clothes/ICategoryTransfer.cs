@@ -7,7 +7,5 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     /// Категория одежды. Трансферная модель
     /// </summary>
     public interface ICategoryTransfer : ICategory, ITransferModel<string>
-    {
-        
-    }
+    { }
 }
