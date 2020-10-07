@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -14,10 +17,14 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// </summary>
     public class Size : ISize, IEquatable<ISize>, IFormattable
     {
-        public Size(SizeType clothesSizeType, int size, string sizeName)
+        public Size(SizeType sizeType, int sizeValue)
+            :this(sizeType, sizeValue, sizeValue.ToString())
+        { }
+
+        public Size(SizeType sizeType, int sizeValue, string sizeName)
         {
-            SizeType = clothesSizeType;
-            SizeValue = size;
+            SizeType = sizeType;
+            SizeValue = sizeValue;
             SizeName = sizeName;
         }
 
@@ -44,25 +51,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string ClothesSizeNameShort => GetClothesSizeNameShort(SizeType, SizeName);
-
-         /// <summary>
-         /// Получить укороченное наименование размера
-         /// </summary>
-        public static string GetClothesSizeNameShort(SizeType clothesSizeType, string sizeName) =>
-             $"{GetClothesSizeTypeShort(clothesSizeType)} {sizeName}".Trim();
-
-        /// <summary>
-        /// Укороченное наименование типа размера
-        /// </summary>
-        private static string GetClothesSizeTypeShort(SizeType clothesSizeType) =>
-            clothesSizeType switch
-            {
-                SizeType.American => "",
-                SizeType.European => "EU",
-                SizeType.Russian => "RU",
-                _ => throw new InvalidEnumArgumentException(nameof(SizeType), (int)clothesSizeType, typeof(SizeType))
-            };
+        public string ClothesSizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISize clothesSize && Equals(clothesSize);
@@ -78,5 +67,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 
         public string ToString(string? format, IFormatProvider? formatProvider) => ClothesSizeNameShort;
         #endregion
+
+        /// <summary>
+        /// Получить хэш-код коллекции размеров одежды
+        /// </summary>
+        public static int GetSizesHashCodes<TSize>(IEnumerable<TSize> sizes)
+            where TSize: ISize=>
+            sizes.Aggregate(0, HashCode.Combine);
     }
 }

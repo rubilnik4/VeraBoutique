@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using Functional.FunctionalExtensions.Sync;
@@ -12,14 +13,15 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public class SizeGroup: ISizeGroup, IEquatable<ISizeGroup>
+    public class SizeGroup<TSize>: ISizeGroup<TSize>, IEquatable<ISizeGroup<TSize>>
+        where TSize: ISize
     {
         public SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize,
-                         IReadOnlyCollection<ISize> sizes)
+                         IEnumerable<TSize> sizes)
         {
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            Sizes = sizes;
+            Sizes = sizes.ToList();
         }
 
         /// <summary>
@@ -40,38 +42,21 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Дополнительные размеры одежды
         /// </summary>
-        public IReadOnlyCollection<ISize> Sizes { get; }
+        public IReadOnlyCollection<TSize> Sizes { get; }
 
         /// <summary>
         /// Получить имя группы размеров по базовому типу
         /// </summary>
         public string GetBaseGroupName(SizeType sizeType) =>
-            GetGroupName(sizeType, Sizes);
+            SizeNaming.GetGroupName(sizeType, Sizes);
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroup clothesSizeGroup && Equals(clothesSizeGroup);
+        public override bool Equals(object? obj) => obj is ISizeGroup<TSize> clothesSizeGroup && Equals(clothesSizeGroup);
 
-        public bool Equals(ISizeGroup? other) =>
-            other?.Id == Id;
+        public bool Equals(ISizeGroup<TSize>? other) =>
+            other?.Id == Id && Sizes.SequenceEqual(other?.Sizes);
 
-        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize);
+        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize, Size.GetSizesHashCodes(Sizes));
         #endregion
-
-        /// <summary>
-        /// Получить имя группы
-        /// </summary>
-        public static string GetGroupName(SizeType sizeTypeBase,
-                                          IReadOnlyCollection<ISize> sizes) =>
-            (sizes.FirstOrDefault(size => size.SizeType == sizeTypeBase)?.ToString() ?? String.Empty) + 
-            GetClothesSizeGroupSubName(sizes.Where(size => size.SizeType != sizeTypeBase));
-
-        /// <summary>
-        /// Получить наименование дополнительной группы размеров
-        /// </summary>
-        private static string GetClothesSizeGroupSubName(IEnumerable<ISize> sizesAdditional) =>
-            sizesAdditional.ToList().
-            WhereContinue(clothesSize => clothesSize.Count > 0,
-                okFunc: clothesSizeCollection => $" ({String.Join(", ", clothesSizeCollection)})",
-                badFunc: _ => String.Empty);
     }
 }

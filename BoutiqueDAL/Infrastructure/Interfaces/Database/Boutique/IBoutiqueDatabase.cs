@@ -25,5 +25,15 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique
         /// Таблица базы данных вида одежды
         /// </summary>
         IClothesTypeTable ClotheTypeTable { get; }
+
+        /// <summary>
+        /// Таблица базы данных размеров одежды
+        /// </summary>
+        ISizeTable SizeTable { get; } 
+
+        /// <summary>
+        /// Таблица базы данных группы размеров одежды
+        /// </summary>
+        ISizeGroupTable SizeGroupTable { get; } 
     }
 }

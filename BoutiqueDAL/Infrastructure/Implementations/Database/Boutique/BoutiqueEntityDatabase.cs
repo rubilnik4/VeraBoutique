@@ -5,6 +5,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -27,19 +28,29 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         { }
 
         /// <summary>
-        /// Таблица пола базы данных EntityFramework
+        /// Таблица пола базы данных
         /// </summary>
         public DbSet<GenderEntity> Genders { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public DbSet<CategoryEntity> Category { get; set; } = null!;
+        public DbSet<CategoryEntity> Categories { get; set; } = null!;
 
         /// <summary>
-        /// Таблица базы данных вида одежды EntityFramework
+        /// Таблица базы данных вида одежды
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных размеров одежды
+        /// </summary>
+        public DbSet<SizeEntity> Sizes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных группы размеров одежды
+        /// </summary>
+        public DbSet<SizeGroupEntity> SizeGroups { get; set; } = null!;
 
         /// <summary>
         /// Таблица пола базы данных
@@ -49,12 +60,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public ICategoryTable CategoryTable => new CategoryTable(Category);
+        public ICategoryTable CategoryTable => new CategoryTable(Categories);
 
         /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
         public IClothesTypeTable ClotheTypeTable => new ClothesTypeTable(ClothesTypes);
+
+        /// <summary>
+        /// Таблица базы данных размеров одежды
+        /// </summary>
+        public ISizeTable SizeTable => new SizeTable(Sizes);
+
+        /// <summary>
+        /// Таблица базы данных группы размеров одежды
+        /// </summary>
+        public ISizeGroupTable SizeGroupTable => new SizeGroupTable(SizeGroups);
 
         /// <summary>
         /// Обновить схемы базы данных
@@ -70,7 +91,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// Записать параметры конфигурации
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder builder) =>
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<GenderType>();
+            DatabaseConfiguration.ConfigureEnumsMapping();
 
         /// <summary>
         /// Записать схемы базы данных
@@ -78,25 +99,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new GenderConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
-            modelBuilder.HasPostgresEnum<GenderType>();
-
-            InitializeEntityData(modelBuilder);
+            DatabaseConfiguration.ApplyConfiguration(modelBuilder);
+            DatabaseConfiguration.InitializeEntityData(modelBuilder);
         }
 
-        /// <summary>
-        /// Инициализация данными таблиц
-        /// </summary>
-        public static void InitializeEntityData(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
-            modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
-            modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
-            modelBuilder.Entity<ClothesTypeGenderEntity>().HasData(ClothesTypeGenderInitialize.ClothesTypeGenderData);
-        }
+       
     }
 }

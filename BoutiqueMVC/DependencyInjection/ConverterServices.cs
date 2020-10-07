@@ -16,9 +16,11 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectTransferConverters(IServiceCollection services)
         {
-            services.AddTransient<IGenderTransferConverter>(serviceProvider => new GenderTransferConverter());
-            services.AddTransient<IClothesTypeTransferConverter>(serviceProvider => new ClothesTypeTransferConverter());
-            services.AddTransient<ICategoryTransferConverter>(serviceProvider => new CategoryTransferConverter());
+            services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
+            services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
+            services.AddTransient<ICategoryTransferConverter, CategoryTransferConverter>();
+            services.AddTransient<ISizeTransferConverter, SizeTransferConverter>();
+            services.AddTransient<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
         }
 
         /// <summary>
@@ -26,9 +28,11 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectEntityConverters(IServiceCollection services)
         {
-            services.AddTransient<IGenderEntityConverter>(serviceProvider => new GenderEntityConverter());
-            services.AddTransient<IClothesTypeEntityConverter>(serviceProvider => new ClothesTypeEntityConverter());
-            services.AddTransient<ICategoryEntityConverter>(serviceProvider => new CategoryEntityConverter());
+            services.AddTransient<IGenderEntityConverter, GenderEntityConverter>();
+            services.AddTransient<IClothesTypeEntityConverter, ClothesTypeEntityConverter>();
+            services.AddTransient<ICategoryEntityConverter, CategoryEntityConverter>();
+            services.AddTransient<ISizeEntityConverter, SizeEntityConverter>();
+            services.AddTransient<ISizeGroupEntityConverter, SizeGroupEntityConverter>();
         }
     }
 }

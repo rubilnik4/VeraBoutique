@@ -35,6 +35,8 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient(GetGenderService);
             services.AddTransient(GetCategoryService);
             services.AddTransient(GetClothesTypeService);
+            services.AddTransient(GetSizeService);
+            services.AddTransient(GetSizeGroupService);
             InjectDatabase(services);
         }
 
@@ -71,7 +73,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
             Map(boutiqueDatabase => new GenderDatabaseService(boutiqueDatabase,
                                                               boutiqueDatabase.GendersTable,
-                                                              serviceProvider.GetService<GenderEntityConverter>()));
+                                                              serviceProvider.GetService<IGenderEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для категорий одежды
@@ -80,7 +82,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
                 Map(boutiqueDatabase => new CategoryDatabaseService(boutiqueDatabase,
                                                                     boutiqueDatabase.CategoryTable,
-                                                                    serviceProvider.GetService<CategoryEntityConverter>()));
+                                                                    serviceProvider.GetService<ICategoryEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для вида одежды
@@ -93,5 +95,23 @@ namespace BoutiqueMVC.DependencyInjection
                                                                    boutiqueDatabase.CategoryTable,
                                                                    serviceProvider.GetService<IClothesTypeEntityConverter>(),
                                                                    serviceProvider.GetService<IQueryableService<string, ClothesTypeEntity>>()));
+
+        /// <summary>
+        /// Получить сервис для размеров одежды
+        /// </summary>
+        private static ISizeDatabaseService GetSizeService(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabase>().
+            Map(boutiqueDatabase => new SizeDatabaseService(boutiqueDatabase,
+                                                            boutiqueDatabase.SizeTable,
+                                                            serviceProvider.GetService<ISizeEntityConverter>()));
+
+        /// <summary>
+        /// Получить сервис для группы размеров одежды
+        /// </summary>
+        private static ISizeGroupDatabaseService GetSizeGroupService(IServiceProvider serviceProvider) =>
+            serviceProvider.GetService<IBoutiqueDatabase>().
+            Map(boutiqueDatabase => new SizeGroupDatabaseService(boutiqueDatabase,
+                                                                 boutiqueDatabase.SizeGroupTable,
+                                                                 serviceProvider.GetService<ISizeGroupEntityConverter>()));
     }
 }

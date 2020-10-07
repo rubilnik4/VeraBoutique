@@ -16,13 +16,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var clothesSizeGroup = ClothesSizeGroupData.GetClothesSizeGroupDomain().First();
-            var clothesSizeGroupTransferConverter = new SizeGroupTransferConverter();
+            var sizeGroup = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeTransferConverter = new SizeTransferConverter();
+            var sizeGroupTransferConverter = new SizeGroupTransferConverter(sizeTransferConverter);
 
-            var clothesSizeGroupTransfer = clothesSizeGroupTransferConverter.ToTransfer(clothesSizeGroup);
-            var clothesSizeGroupAfterConverter = clothesSizeGroupTransferConverter.FromTransfer(clothesSizeGroupTransfer);
+            var sizeGroupTransfer = sizeGroupTransferConverter.ToTransfer(sizeGroup);
+            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupTransfer);
 
-            Assert.True(clothesSizeGroup.Equals(clothesSizeGroupAfterConverter));
+            Assert.True(sizeGroup.Equals(sizeGroupAfterConverter));
         }
     }
 }

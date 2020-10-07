@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -16,11 +18,11 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         { }
 
         public SizeGroupTransfer(ClothesSizeType clothesSizeType, int sizeNormalize,
-                                 IReadOnlyCollection<ISize> sizes)
+                                 IEnumerable<SizeTransfer> sizes)
         {
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            Sizes = sizes;
+            Sizes = sizes.ToList();
         }
 
         /// <summary>
@@ -44,12 +46,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Дополнительные размеры одежды
         /// </summary>
         [Required]
-        public IReadOnlyCollection<ISize> Sizes { get; }
+        public IReadOnlyCollection<SizeTransfer> Sizes { get; }
 
         /// <summary>
         /// Получить имя группы размеров по базовому типу
         /// </summary>
         public string GetBaseGroupName(SizeType sizeType) =>
-            SizeGroup.GetGroupName(sizeType, Sizes);
+            SizeNaming.GetGroupName(sizeType, Sizes);
     }
 }

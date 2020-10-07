@@ -14,6 +14,6 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Связующие сущности пола и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeGenderEntity>? ClothesTypeGenderEntities { get; }
+        IReadOnlyCollection<ClothesTypeGenderEntity>? ClothesTypeGenderEntities { get; }
     }
 }

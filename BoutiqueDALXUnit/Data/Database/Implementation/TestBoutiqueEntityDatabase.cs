@@ -6,6 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -41,6 +42,26 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных размеров одежды
+        /// </summary>
+        public DbSet<SizeEntity> Sizes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных группы размеров одежды
+        /// </summary>
+        public DbSet<SizeGroupEntity> SizeGroups { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных размеров одежды
+        /// </summary>
+        public ISizeTable SizeTable => new SizeTable(Sizes);
+
+        /// <summary>
+        /// Таблица базы данных группы размеров одежды
+        /// </summary>
+        public ISizeGroupTable SizeGroupTable => new SizeGroupTable(SizeGroups);
+
+        /// <summary>
         /// Таблица пола базы данных
         /// </summary>
         public IGenderTable GendersTable => new GenderTable(Genders);
@@ -74,22 +95,16 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Записать параметры конфигурации
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder builder) =>
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<GenderType>();
+            DatabaseConfiguration.ConfigureEnumsMapping();
 
         /// <summary>
         /// Записать схемы базы данных
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new GenderConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
-            modelBuilder.HasPostgresEnum<GenderType>();
-
-            BoutiqueEntityDatabase.InitializeEntityData(modelBuilder);
+            base.OnModelCreating(modelBuilder); 
+            DatabaseConfiguration.ApplyConfiguration(modelBuilder);
+            DatabaseConfiguration.InitializeEntityData(modelBuilder);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
 
             await DatabaseLoadTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
             await DatabaseFindTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
-            await DatabaseWhereTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
+            await DatabaseWhereTests(boutiqueEntityDatabase, genderEntities, clothesTypeGenderEntities);
             await DatabaseUpdateTests(boutiqueEntityDatabase);
             await BoutiqueEntityDatabaseAdding.AddRange(boutiqueEntityDatabase, categoryEntities);
 
@@ -75,7 +75,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseWhereTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                     IReadOnlyCollection<GenderEntity> genderEntities,
-                                                    IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
                                                     IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();

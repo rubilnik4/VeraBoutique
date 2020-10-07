@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var clothesSize = ClothesSizeData.GetClothesSizeDomain().First();
+            var clothesSize = SizeData.GetSizeDomain().First();
             var clothesSizeTransferConverter = new SizeTransferConverter();
 
             var clothesSizeTransfer = clothesSizeTransferConverter.ToTransfer(clothesSize);

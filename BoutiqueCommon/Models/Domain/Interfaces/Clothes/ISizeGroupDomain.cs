@@ -7,6 +7,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public interface ISizeGroupDomain : ISizeGroup, IDomainModel<(ClothesSizeType, int)>
+    public interface ISizeGroupDomain : ISizeGroup<ISizeDomain>, IDomainModel<(ClothesSizeType, int)>
     { }
 }

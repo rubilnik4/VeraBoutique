@@ -9,8 +9,8 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// </summary>
     public class SizeDomain : Size, ISizeDomain
     {
-        public SizeDomain(SizeType clothesSizeType, int size, string sizeName)
-            : base(clothesSizeType, size, sizeName)
+        public SizeDomain(SizeType sizeType, int sizeValue, string sizeName)
+            : base(sizeType, sizeValue, sizeName)
         { }
     }
 }

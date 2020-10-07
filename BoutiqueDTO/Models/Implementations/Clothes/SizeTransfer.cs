@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -14,10 +15,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public SizeTransfer()
         { }
 
-        public SizeTransfer(SizeType clothesSizeType, int size, string sizeName)
+        public SizeTransfer(SizeType clothesSizeType, int sizeValue, string sizeName)
         {
             SizeType = clothesSizeType;
-            SizeValue = size;
+            SizeValue = sizeValue;
             SizeName = sizeName;
         }
 
@@ -47,6 +48,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string ClothesSizeNameShort => Size.GetClothesSizeNameShort(SizeType, SizeName);
+        public string ClothesSizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
     }
 }
