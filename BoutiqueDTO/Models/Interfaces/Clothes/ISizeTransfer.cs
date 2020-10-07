@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     /// <summary>
     /// Размер одежды. Трансферная модель
     /// </summary>
-    public interface ISizeTransfer : ISize, ITransferModel<(SizeType, int)>
+    public interface ISizeTransfer : ISize, ITransferModel<(SizeType, string)>
     { }
 }

@@ -49,7 +49,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
                 FirstOrDefaultAsync();
 
             Assert.True(genderGetEntity.GenderType == idWhere);
-            Assert.True(genderGetEntity.ClothesTypeGenderEntities.All(entity => entity.GenderTypeId == idWhere));
+            Assert.True(genderGetEntity.ClothesTypeGenderEntities.All(entity => entity.GenderType == idWhere));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
 
             Assert.True(genderGetEntities.Select(entity => entity.GenderType).SequenceEqual(idsFind));
             Assert.True(genderGetEntities.All(gender => gender.ClothesTypeGenderEntities.Count ==
-                                                        clothesTypeGenderEntities.Count(entity => entity.GenderTypeId == gender.GenderType)));
+                                                        clothesTypeGenderEntities.Count(entity => entity.GenderType == gender.GenderType)));
         }
     }
 }

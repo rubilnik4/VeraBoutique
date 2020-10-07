@@ -10,9 +10,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class GenderTransfer: IGenderTransfer
     {
-        public GenderTransfer()
-        { }
-
         public GenderTransfer(GenderType genderType, string name)
         {
             GenderType = genderType;

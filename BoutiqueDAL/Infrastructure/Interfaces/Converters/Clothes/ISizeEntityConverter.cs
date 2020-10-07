@@ -8,6 +8,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes
     /// <summary>
     /// Преобразования модели размера одежды в модель базы данных
     /// </summary>
-    public interface ISizeEntityConverter : IEntityConverter<(SizeType, int), ISizeDomain, SizeEntity>
+    public interface ISizeEntityConverter : IEntityConverter<(SizeType, string), ISizeDomain, SizeEntity>
     { }
 }

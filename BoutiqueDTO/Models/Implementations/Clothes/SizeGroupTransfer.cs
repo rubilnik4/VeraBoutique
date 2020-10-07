@@ -14,9 +14,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class SizeGroupTransfer : ISizeGroupTransfer
     {
-        public SizeGroupTransfer()
-        { }
-
         public SizeGroupTransfer(ClothesSizeType clothesSizeType, int sizeNormalize,
                                  IEnumerable<SizeTransfer> sizes)
         {

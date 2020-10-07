@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
@@ -10,48 +12,21 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// </summary>
     public class SizeEntity : Size, ISizeEntity
     {
-        public SizeEntity(SizeType sizeType, int sizeValue)
-         : this(sizeType, sizeValue, sizeValue.ToString(), null, null, null)
+
+        public SizeEntity(SizeType sizeType,  string sizeName)
+            : this(sizeType, sizeName, Enumerable.Empty<SizeGroupCompositeEntity>())
         { }
 
-        public SizeEntity(SizeType sizeType, int sizeValue, string sizeName)
-            : this(sizeType, sizeValue, sizeName, null, null, null)
-        { }
-
-        public SizeEntity(SizeType sizeType, int sizeValue,
-                         (ClothesSizeType ClothesSizeType, int sizeNormalize) sizeGroupEntityId)
-           : this(sizeType, sizeValue, sizeValue.ToString(),
-                  sizeGroupEntityId.ClothesSizeType, sizeGroupEntityId.sizeNormalize, null)
-        { }
-
-        public SizeEntity(SizeType sizeType, int sizeValue, string sizeName,
-                          (ClothesSizeType ClothesSizeType, int sizeNormalize) sizeGroupEntityId)
-            : this(sizeType, sizeValue, sizeName,
-                   sizeGroupEntityId.ClothesSizeType, sizeGroupEntityId.sizeNormalize, null)
-        { }
-
-        public SizeEntity(SizeType sizeType, int sizeValue, string sizeName,
-                          ClothesSizeType? clothesSizeTypeId, int? sizeNormalizeId, SizeGroupEntity? sizeGroupEntity)
-            : base(sizeType, sizeValue, sizeName)
+        public SizeEntity(SizeType sizeType, string sizeName, 
+                          IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
+            : base(sizeType,  sizeName)
         {
-            ClothesSizeTypeId = clothesSizeTypeId;
-            SizeNormalizeId = sizeNormalizeId;
-            SizeGroupEntity = sizeGroupEntity;
+            SizeGroupCompositeEntities = sizeGroupCompositeEntities.ToList();
         }
 
         /// <summary>
-        /// Идентификатор связующей сущности типа одежды для размеров
+        /// Связующая сущность размера одежды
         /// </summary>
-        public ClothesSizeType? ClothesSizeTypeId { get; }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды для размеров
-        /// </summary>
-        public int? SizeNormalizeId { get; }
-
-        /// <summary>
-        /// Связующая сущность категории одежды
-        /// </summary>
-        public SizeGroupEntity? SizeGroupEntity { get; }
+        public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupCompositeEntities { get; }
     }
 }

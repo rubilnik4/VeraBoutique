@@ -18,9 +18,9 @@ namespace BoutiqueCommonXUnit.Data
         public static List<ISizeDomain> GetSizeDomain() =>
             new List<ISizeDomain>()
             {
-                new SizeDomain(SizeType.American, 'M', "M"),
-                new SizeDomain(SizeType.European, 73, "72/74"),
-                new SizeDomain(SizeType.Russian, 156, "156/158"),
+                new SizeDomain(SizeType.American, "M"),
+                new SizeDomain(SizeType.European, "72/74"),
+                new SizeDomain(SizeType.Russian,  "156/158"),
             };
     }
 }

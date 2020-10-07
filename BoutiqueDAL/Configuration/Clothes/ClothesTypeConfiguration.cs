@@ -15,7 +15,7 @@ namespace BoutiqueDAL.Configuration.Clothes
 
             builder.HasOne(t => t.CategoryEntity)
                    .WithMany(s => s!.ClothesTypeEntities)
-                   .HasForeignKey(sc => sc.CategoryEntityId)
+                   .HasForeignKey(sc => sc.CategoryName)
                    .IsRequired();
         }
     }

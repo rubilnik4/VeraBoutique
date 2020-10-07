@@ -19,12 +19,11 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void Size_Equal_Ok()
         {
             const SizeType sizeType = SizeType.American;
-            const int size = 72;
             const string sizeName = "72/74";
 
-            var clothesSizeDomain = new SizeDomain(sizeType, size, sizeName);
+            var clothesSizeDomain = new SizeDomain(sizeType, sizeName);
 
-            int genderHash = HashCode.Combine(sizeType, size);
+            int genderHash = HashCode.Combine(sizeType, sizeName);
             Assert.Equal(genderHash, clothesSizeDomain.GetHashCode());
         }
 

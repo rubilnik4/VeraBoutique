@@ -13,15 +13,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public class SizeGroup<TSize>: ISizeGroup<TSize>, IEquatable<ISizeGroup<TSize>>
+    public abstract class SizeGroup<TSize>: ISizeGroup<TSize>, IEquatable<ISizeGroup<TSize>>
         where TSize: ISize
     {
-        public SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize,
-                         IEnumerable<TSize> sizes)
+        protected SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            Sizes = sizes.ToList();
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Дополнительные размеры одежды
         /// </summary>
-        public IReadOnlyCollection<TSize> Sizes { get; }
+        public abstract IReadOnlyCollection<TSize> Sizes { get; }
 
         /// <summary>
         /// Получить имя группы размеров по базовому типу

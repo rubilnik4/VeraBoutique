@@ -7,6 +7,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table
     /// <summary>
     /// Таблица базы данных размеров одежды
     /// </summary>
-    public interface ISizeTable : IDatabaseTable<(SizeType, int), SizeEntity>
+    public interface ISizeTable : IDatabaseTable<(SizeType, string), SizeEntity>
     { }
 }

@@ -10,18 +10,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели размера одежды в модель базы данных
     /// </summary>
-    public class SizeEntityConverter : EntityConverter<(SizeType, int), ISizeDomain, SizeEntity>, ISizeEntityConverter
+    public class SizeEntityConverter : EntityConverter<(SizeType, string), ISizeDomain, SizeEntity>, ISizeEntityConverter
     {
         /// <summary>
         /// Преобразовать размер одежды из модели базы данных
         /// </summary>
         public override ISizeDomain FromEntity(SizeEntity sizeEntity) =>
-            new SizeDomain(sizeEntity.SizeType, sizeEntity.SizeValue, sizeEntity.SizeName);
+            new SizeDomain(sizeEntity.SizeType,  sizeEntity.SizeName);
 
         /// <summary>
         /// Преобразовать размер одежды в модель базы данных
         /// </summary>
         public override SizeEntity ToEntity(ISizeDomain sizeDomain) =>
-            new SizeEntity(sizeDomain.SizeType, sizeDomain.SizeValue, sizeDomain.SizeName);
+            new SizeEntity(sizeDomain.SizeType, sizeDomain.SizeName);
     }
 }

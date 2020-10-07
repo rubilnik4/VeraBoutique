@@ -33,6 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
             modelBuilder.ApplyConfiguration(new SizeConfiguration());
             modelBuilder.ApplyConfiguration(new SizeGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new SizeGroupCompositeConfiguration());
 
             modelBuilder.HasPostgresEnum<GenderType>();
             modelBuilder.HasPostgresEnum<SizeType>();
@@ -41,7 +42,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
 
         /// <summary>
         /// Инициализация данными таблиц
-        /// </summary>
+        /// </summary> 
         public static void InitializeEntityData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);

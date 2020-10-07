@@ -2,52 +2,53 @@
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды
     /// </summary>
-    public class ClothesTypeGenderEntity: IEntityModel<(string, GenderType)>
+    public class ClothesTypeGenderEntity: IClothesTypeGenderEntity
     {
         /// <summary>
         /// Конструктор для базы данных с отсутствующими сущностями
         /// </summary>
-        public ClothesTypeGenderEntity(string clothesTypeId, GenderType genderTypeId)
-            : this(clothesTypeId, null, genderTypeId, null)
+        public ClothesTypeGenderEntity(string clothesType, GenderType genderType)
+            : this(clothesType, null, genderType, null)
         {
-            ClothesTypeId = clothesTypeId;
-            GenderTypeId = genderTypeId;
+            ClothesType = clothesType;
+            GenderType = genderType;
         }
 
-        public ClothesTypeGenderEntity(string clothesTypeId, ClothesTypeEntity? clothesTypeEntity,
-                                       GenderType genderTypeId, GenderEntity? genderEntity)
+        public ClothesTypeGenderEntity(string clothesType, ClothesTypeEntity? clothesTypeEntity,
+                                       GenderType genderType, GenderEntity? genderEntity)
         {
-            ClothesTypeId = clothesTypeId;
+            ClothesType = clothesType;
             ClothesTypeEntity = clothesTypeEntity;
-            GenderTypeId = genderTypeId;
+            GenderType = genderType;
             GenderEntity = genderEntity;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (string, GenderType) Id => (ClothesTypeId,  GenderTypeId);
+        public (string, GenderType) Id => (ClothesType,  GenderType);
 
         /// <summary>
         /// Идентификатор вида одежды
         /// </summary>
-        public string ClothesTypeId { get; }
+        public string ClothesType { get; }
+        
+        /// <summary>
+        /// Идентификатор пола одежды
+        /// </summary>
+        public GenderType GenderType { get; }
 
         /// <summary>
         /// Вид одежды
         /// </summary>
         public ClothesTypeEntity? ClothesTypeEntity { get; }
-
-        /// <summary>
-        /// Идентификатор пола одежды
-        /// </summary>
-        public GenderType GenderTypeId { get; }
 
         /// <summary>
         /// Пол одежды

@@ -12,32 +12,22 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class SizeTransfer : ISizeTransfer
     {
-        public SizeTransfer()
-        { }
-
-        public SizeTransfer(SizeType clothesSizeType, int sizeValue, string sizeName)
+        public SizeTransfer(SizeType clothesSizeType, string sizeName)
         {
             SizeType = clothesSizeType;
-            SizeValue = sizeValue;
             SizeName = sizeName;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (SizeType, int) Id => (SizeType, SizeValue);
+        public (SizeType, string) Id => (SizeType, SizeName);
 
         /// <summary>
         /// Тип размера одежды
         /// </summary>
         [Required]
         public SizeType SizeType { get; }
-
-        /// <summary>
-        /// Размер
-        /// </summary>
-        [Required]
-        public int SizeValue { get; }
 
         /// <summary>
         /// Наименование размера
@@ -48,6 +38,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string ClothesSizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
+        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
     }
 }

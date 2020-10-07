@@ -13,7 +13,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
     /// <summary>
     /// Таблица базы данных размеров одежды
     /// </summary>
-    public class SizeTable : EntityDatabaseTable<(SizeType, int), SizeEntity>, ISizeTable
+    public class SizeTable : EntityDatabaseTable<(SizeType, string), SizeEntity>, ISizeTable
     {
         public SizeTable(DbSet<SizeEntity> sizeSet)
             : base(sizeSet)
@@ -22,13 +22,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        protected override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, int) id) =>
-            entity => entity.SizeType == id.Item1 && entity.SizeValue == id.Item2;
+        protected override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
+            entity => entity.SizeType == id.Item1 && entity.SizeName == id.Item2;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        protected override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, int)> ids) =>
-            entity => ids.Contains(new Tuple<SizeType, int>(entity.SizeType, entity.SizeValue).ToValueTuple());
+        protected override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
+            entity => ids.Contains(new Tuple<SizeType, string>(entity.SizeType, entity.SizeName).ToValueTuple());
     }
 }

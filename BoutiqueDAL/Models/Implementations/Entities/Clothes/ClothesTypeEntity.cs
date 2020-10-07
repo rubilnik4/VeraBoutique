@@ -15,19 +15,19 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             : this(name, null, null, Enumerable.Empty<ClothesTypeGenderEntity>())
         { }
 
-        public ClothesTypeEntity(string name, string? categoryEntityId)
-            : this(name, categoryEntityId, null, Enumerable.Empty<ClothesTypeGenderEntity>())
+        public ClothesTypeEntity(string name, string? categoryName)
+            : this(name, categoryName, null, Enumerable.Empty<ClothesTypeGenderEntity>())
         { }
 
         public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
             : this(name, null, null, clothesTypeGenderEntities)
         { }
 
-        public ClothesTypeEntity(string name, string? categoryEntityId, CategoryEntity? categoryEntity,
+        public ClothesTypeEntity(string name, string? categoryName, CategoryEntity? categoryEntity,
                                  IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
            : base(name)
         {
-            CategoryEntityId = categoryEntityId;
+            CategoryName = categoryName;
             CategoryEntity = categoryEntity;
             ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
         }
@@ -35,7 +35,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Идентификатор связующей сущности категории одежды
         /// </summary>
-        public string? CategoryEntityId { get; }
+        public string? CategoryName { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

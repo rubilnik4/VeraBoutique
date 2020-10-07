@@ -1,4 +1,6 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
@@ -35,6 +37,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override SizeGroupEntity ToEntity(ISizeGroupDomain sizeGroupDomain) =>
             new SizeGroupEntity(sizeGroupDomain.ClothesSizeType, sizeGroupDomain.SizeNormalize,
-                                _sizeEntityConverter.ToEntities(sizeGroupDomain.Sizes));
+                                SizeEntitiesToComposite(sizeGroupDomain.Sizes, sizeGroupDomain.ClothesSizeType,
+                                                        sizeGroupDomain.SizeNormalize));
+
+        /// <summary>
+        /// Преобразовать размеры в связующую сущность
+        /// </summary>
+        private IEnumerable<SizeGroupCompositeEntity> SizeEntitiesToComposite(IEnumerable<ISizeDomain> sizes,
+                                                                              ClothesSizeType clothesSizeType, int sizeNormalize) =>
+            _sizeEntityConverter.ToEntities(sizes).
+            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
+                                                              clothesSizeType, sizeNormalize));
     }
 }

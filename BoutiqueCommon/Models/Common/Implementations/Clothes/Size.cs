@@ -15,23 +15,18 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public class Size : ISize, IEquatable<ISize>, IFormattable
+    public abstract class Size : ISize, IEquatable<ISize>, IFormattable
     {
-        public Size(SizeType sizeType, int sizeValue)
-            :this(sizeType, sizeValue, sizeValue.ToString())
-        { }
-
-        public Size(SizeType sizeType, int sizeValue, string sizeName)
+        protected Size(SizeType sizeType, string sizeName)
         {
             SizeType = sizeType;
-            SizeValue = sizeValue;
             SizeName = sizeName;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (SizeType, int) Id => (SizeType, SizeValue);
+        public (SizeType, string) Id => (SizeType, SizeName);
 
         /// <summary>
         /// Тип размера одежды
@@ -41,17 +36,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Размер
         /// </summary>
-        public int SizeValue { get; }
-
-        /// <summary>
-        /// Размер
-        /// </summary>
         public string SizeName { get; }
 
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string ClothesSizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
+        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISize clothesSize && Equals(clothesSize);
@@ -59,13 +49,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public bool Equals(ISize? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(SizeType, SizeValue);
+        public override int GetHashCode() => HashCode.Combine(SizeType, SizeName);
         #endregion
 
         #region IFormattable Support
         public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);
 
-        public string ToString(string? format, IFormatProvider? formatProvider) => ClothesSizeNameShort;
+        public string ToString(string? format, IFormatProvider? formatProvider) => SizeNameShort;
         #endregion
 
         /// <summary>

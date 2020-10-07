@@ -12,7 +12,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис размеров одежды в базе данных
     /// </summary>
-    public class SizeDatabaseService : DatabaseService<(SizeType, int), ISizeDomain, SizeEntity>, ISizeDatabaseService
+    public class SizeDatabaseService : DatabaseService<(SizeType, string), ISizeDomain, SizeEntity>, ISizeDatabaseService
     {
         public SizeDatabaseService(IDatabase database, ISizeTable sizeTable, ISizeEntityConverter sizeEntityConverter)
             : base(database, sizeTable, sizeEntityConverter)
