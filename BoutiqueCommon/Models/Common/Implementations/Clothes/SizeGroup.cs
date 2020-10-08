@@ -13,8 +13,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public abstract class SizeGroup<TSize>: ISizeGroup<TSize>, IEquatable<ISizeGroup<TSize>>
-        where TSize: ISize
+    public abstract class SizeGroup: ISizeGroup, IEquatable<ISizeGroup>
     {
         protected SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
@@ -38,18 +37,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public int SizeNormalize { get; }
 
         /// <summary>
-        /// Дополнительные размеры одежды
-        /// </summary>
-        public abstract IReadOnlyCollection<TSize> Sizes { get; }
-
-        /// <summary>
         /// Получить имя группы размеров по базовому типу
         /// </summary>
         public string GetBaseGroupName(SizeType sizeType) =>
             SizeNaming.GetGroupName(sizeType, Sizes);
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroup<TSize> clothesSizeGroup && Equals(clothesSizeGroup);
+        public override bool Equals(object? obj) => obj is ISizeGroup sizeGroup && Equals(sizeGroup);
 
         public bool Equals(ISizeGroup<TSize>? other) =>
             other?.Id == Id && Sizes.SequenceEqual(other?.Sizes);

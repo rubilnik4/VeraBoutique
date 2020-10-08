@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
@@ -32,10 +34,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Размеры одежды
         /// </summary>
+        [NotMapped]
         public override IReadOnlyCollection<SizeEntity> Sizes =>
-            SizeGroupCompositeEntities?.
-            Select(sizeComposite => new SizeEntity(sizeComposite.SizeType, sizeComposite.SizeName)).
-            ToList()
-            ?? new List<SizeEntity>();
+            new List<SizeEntity>();
+            //SizeGroupCompositeEntities?.
+            //Select(sizeComposite => new SizeEntity(sizeComposite.SizeType, sizeComposite.SizeName)).
+            //ToList()
+            //?? new List<SizeEntity>();
     }
 }

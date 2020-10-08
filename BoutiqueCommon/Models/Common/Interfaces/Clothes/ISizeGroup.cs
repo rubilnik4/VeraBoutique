@@ -8,8 +8,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public interface ISizeGroup<out TSize>: IModel<(ClothesSizeType, int)>
-        where TSize: ISize
+    public interface ISizeGroup: IModel<(ClothesSizeType, int)>
     {
         /// <summary>
         /// Тип одежды для определения размера
@@ -20,11 +19,6 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Номинальное значение размера
         /// </summary>
         int SizeNormalize { get; }
-
-        /// <summary>
-        /// Дополнительные размеры одежды
-        /// </summary>
-        IReadOnlyCollection<TSize> Sizes { get; }
 
         /// <summary>
         /// Получить имя группы размеров по базовому типу

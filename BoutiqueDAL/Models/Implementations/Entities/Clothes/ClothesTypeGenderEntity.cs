@@ -15,14 +15,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// Конструктор для базы данных с отсутствующими сущностями
         /// </summary>
         public ClothesTypeGenderEntity(string clothesType, GenderType genderType)
-            : this(clothesType, null, genderType, null)
+            : this(clothesType, genderType, null, null)
         {
             ClothesType = clothesType;
             GenderType = genderType;
         }
 
-        public ClothesTypeGenderEntity(string clothesType, ClothesTypeEntity? clothesTypeEntity,
-                                       GenderType genderType, GenderEntity? genderEntity)
+        public ClothesTypeGenderEntity(string clothesType, GenderType genderType,
+                                        ClothesTypeEntity? clothesTypeEntity, GenderEntity? genderEntity)
         {
             ClothesType = clothesType;
             ClothesTypeEntity = clothesTypeEntity;

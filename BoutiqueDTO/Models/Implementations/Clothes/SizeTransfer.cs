@@ -12,6 +12,9 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class SizeTransfer : ISizeTransfer
     {
+        public SizeTransfer()
+        { }
+
         public SizeTransfer(SizeType clothesSizeType, string sizeName)
         {
             SizeType = clothesSizeType;

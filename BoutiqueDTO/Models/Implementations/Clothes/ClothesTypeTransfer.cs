@@ -11,6 +11,9 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class ClothesTypeTransfer : IClothesTypeTransfer
     {
+        public ClothesTypeTransfer()
+        { }
+
         public ClothesTypeTransfer(string name)
         {
             Name = name;

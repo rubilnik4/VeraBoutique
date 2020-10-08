@@ -8,6 +8,9 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// </summary>
     public class CategoryTransfer : ICategoryTransfer
     {
+        public CategoryTransfer()
+        { }
+
         public CategoryTransfer(string name)
         {
             Name = name;

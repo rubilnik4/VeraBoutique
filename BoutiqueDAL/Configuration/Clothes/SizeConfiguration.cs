@@ -16,11 +16,6 @@ namespace BoutiqueDAL.Configuration.Clothes
             builder.HasKey(t => new {t.SizeType, t.SizeName });
             builder.Property(t => t.SizeType).IsRequired();
             builder.Property(t => t.SizeName).IsRequired();
-
-            //builder.HasOne(t => t.SizeGroupEntity)
-            //       .WithMany(s => s!.Sizes)
-            //       .HasForeignKey(sc => new { sc.ClothesSizeTypeId, sc.SizeNormalizeId })
-            //       .IsRequired();
         }
     }
 }

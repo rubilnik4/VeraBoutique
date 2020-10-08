@@ -64,7 +64,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static void GetDatabaseOptions(DbContextOptionsBuilder options) =>
             options.
-            UseNpgsql(PostgresConnection.Value.ConnectionString);
+            UseNpgsql(PostgresConnection.Value.ConnectionString).
+            EnableSensitiveDataLogging();
 
         /// <summary>
         /// Получить сервис для типа пола одежды
