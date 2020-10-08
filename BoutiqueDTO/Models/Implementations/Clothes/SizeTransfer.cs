@@ -30,17 +30,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Тип размера одежды
         /// </summary>
         [Required]
-        public SizeType SizeType { get; }
+        public SizeType SizeType { get; set; }
 
         /// <summary>
         /// Наименование размера
         /// </summary>
         [Required]
-        public string SizeName { get; }
-
-        /// <summary>
-        /// Укороченное наименование размера
-        /// </summary>
-        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
+        public string SizeName { get; set; }
     }
 }

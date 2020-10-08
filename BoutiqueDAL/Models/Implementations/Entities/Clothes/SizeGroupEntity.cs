@@ -13,7 +13,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Группа размеров одежды. Сущность базы данных
     /// </summary>
-    public class SizeGroupEntity : SizeGroup<SizeEntity>, ISizeGroupEntity
+    public class SizeGroupEntity : SizeGroup, ISizeGroupEntity
     {
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
            : this(clothesSizeType, sizeNormalize, Enumerable.Empty<SizeGroupCompositeEntity>())
@@ -30,16 +30,5 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// Связующая сущность размера одежды
         /// </summary>
         public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupCompositeEntities { get; }
-
-        /// <summary>
-        /// Размеры одежды
-        /// </summary>
-        [NotMapped]
-        public override IReadOnlyCollection<SizeEntity> Sizes =>
-            new List<SizeEntity>();
-            //SizeGroupCompositeEntities?.
-            //Select(sizeComposite => new SizeEntity(sizeComposite.SizeType, sizeComposite.SizeName)).
-            //ToList()
-            //?? new List<SizeEntity>();
     }
 }

@@ -30,7 +30,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override ISizeGroupDomain FromEntity(SizeGroupEntity sizeGroupEntity) =>
             new SizeGroupDomain(sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
-                                _sizeEntityConverter.FromEntities(sizeGroupEntity.Sizes));
+                                SizeDomainsFromComposite(sizeGroupEntity.SizeGroupCompositeEntities));
 
         /// <summary>
         /// Преобразовать группу размеров одежды в модель базы данных
@@ -48,5 +48,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
             _sizeEntityConverter.ToEntities(sizes).
             Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
                                                               clothesSizeType, sizeNormalize));
+
+        /// <summary>
+        /// Преобразовать связующую сущность в коллекцию размеров
+        /// </summary>
+        private IEnumerable<ISizeDomain> SizeDomainsFromComposite(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
+            sizeGroupCompositeEntities.
+            Select(sizeGroupComposite => sizeGroupComposite.SizeEntity).
+            Where(sizeEntity => sizeEntity != null).
+            Select(sizeEntity => _sizeEntityConverter.FromEntity(sizeEntity!));
     }
 }

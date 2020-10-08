@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// <summary>
     /// Группа размеров одежды. Сущность базы данных
     /// </summary>
-    public interface ISizeGroupEntity : ISizeGroup<SizeEntity>, IEntityModel<(ClothesSizeType, int)>
+    public interface ISizeGroupEntity : ISizeGroup, IEntityModel<(ClothesSizeType, int)>
     {
         /// <summary>
         /// Связующая сущность группы размера одежды

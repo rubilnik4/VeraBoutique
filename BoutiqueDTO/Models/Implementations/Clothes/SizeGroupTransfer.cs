@@ -47,11 +47,5 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public IReadOnlyCollection<SizeTransfer> Sizes { get; }
-
-        /// <summary>
-        /// Получить имя группы размеров по базовому типу
-        /// </summary>
-        public string GetBaseGroupName(SizeType sizeType) =>
-            SizeNaming.GetGroupName(sizeType, Sizes);
     }
 }

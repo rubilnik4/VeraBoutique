@@ -19,10 +19,5 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Номинальное значение размера
         /// </summary>
         int SizeNormalize { get; }
-
-        /// <summary>
-        /// Получить имя группы размеров по базовому типу
-        /// </summary>
-        string GetBaseGroupName(SizeType sizeType);
     }
 }

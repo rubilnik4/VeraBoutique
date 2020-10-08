@@ -66,8 +66,8 @@ namespace BoutiqueDALXUnit.Data
         public static IList<ClothesTypeGenderEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
                                                                                 IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             clothesTypeEntities.
-            Select(clothesTypeEntity => new ClothesTypeGenderEntity(clothesTypeEntity.Id, clothesTypeEntity, 
-                                                                    genderEntity.Id, genderEntity)).
+            Select(clothesTypeEntity => new ClothesTypeGenderEntity(clothesTypeEntity.Id, genderEntity.Id, 
+                                                                    clothesTypeEntity, genderEntity)).
             ToList();
 
         /// <summary>

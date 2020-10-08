@@ -50,11 +50,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                                                             genderTable.Object, categoryTable.Object,
                                                                             clothesTypeEntityConverter, QueryableService.Object);
 
-            var clothesTypesResult = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
-            var clothesTypesDomain = clothesTypeEntityConverter.FromEntities(clothesTypes);
+            var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
+            var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypes);
 
-            Assert.True(clothesTypesResult.OkStatus);
-            Assert.True(clothesTypesResult.Value.SequenceEqual(clothesTypesDomain));
+            Assert.True(clothesTypesResults.OkStatus);
+            Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains));
         }
 
         /// <summary>

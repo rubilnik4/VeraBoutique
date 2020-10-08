@@ -1,6 +1,8 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
 {
@@ -9,6 +11,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// </summary>
     public interface ISizeGroupDatabaseService : IDatabaseService<(ClothesSizeType, int), ISizeGroupDomain>
     {
-        
+        /// <summary>
+        /// Получить группу размеров совместно со списком размеров
+        /// </summary>
+        Task<IResultCollection<ISizeGroupDomain>> GetSizeGroupsIncludeSize(ClothesSizeType clothesSizeType,
+                                                                           int sizeNormalize);
     }
 }

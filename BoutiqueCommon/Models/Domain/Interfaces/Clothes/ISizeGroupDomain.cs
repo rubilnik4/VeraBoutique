@@ -13,6 +13,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
         /// <summary>
         /// Дополнительные размеры одежды
         /// </summary>
-        IReadOnlyCollection<ISize> Sizes { get; }
+        IReadOnlyCollection<ISizeDomain> Sizes { get; }
+
+        /// <summary>
+        /// Получить имя группы размеров по базовому типу
+        /// </summary>
+        string GetBaseGroupName(SizeType sizeType);
     }
 }

@@ -28,6 +28,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Наименование
         /// </summary>
         [Required]
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

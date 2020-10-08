@@ -36,19 +36,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public int SizeNormalize { get; }
 
-        /// <summary>
-        /// Получить имя группы размеров по базовому типу
-        /// </summary>
-        public string GetBaseGroupName(SizeType sizeType) =>
-            SizeNaming.GetGroupName(sizeType, Sizes);
-
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISizeGroup sizeGroup && Equals(sizeGroup);
 
-        public bool Equals(ISizeGroup<TSize>? other) =>
-            other?.Id == Id && Sizes.SequenceEqual(other?.Sizes);
+        public bool Equals(ISizeGroup? other) =>
+            other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize, Size.GetSizesHashCodes(Sizes));
+        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize);
         #endregion
     }
 }

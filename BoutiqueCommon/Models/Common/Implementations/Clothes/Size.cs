@@ -15,7 +15,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public abstract class Size : ISize, IEquatable<ISize>, IFormattable
+    public abstract class Size : ISize, IEquatable<ISize>
     {
         protected Size(SizeType sizeType, string sizeName)
         {
@@ -38,11 +38,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public string SizeName { get; }
 
-        /// <summary>
-        /// Укороченное наименование размера
-        /// </summary>
-        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
-
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISize clothesSize && Equals(clothesSize);
 
@@ -50,12 +45,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
             other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(SizeType, SizeName);
-        #endregion
-
-        #region IFormattable Support
-        public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);
-
-        public string ToString(string? format, IFormatProvider? formatProvider) => SizeNameShort;
         #endregion
 
         /// <summary>
