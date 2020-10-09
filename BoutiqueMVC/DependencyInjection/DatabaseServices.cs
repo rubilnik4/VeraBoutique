@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
@@ -113,6 +114,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
             Map(boutiqueDatabase => new SizeGroupDatabaseService(boutiqueDatabase,
                                                                  boutiqueDatabase.SizeGroupTable,
-                                                                 serviceProvider.GetService<ISizeGroupEntityConverter>()));
+                                                                 serviceProvider.GetService<ISizeGroupEntityConverter>(),
+                                                                 serviceProvider.GetService<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>>()));
     }
 }

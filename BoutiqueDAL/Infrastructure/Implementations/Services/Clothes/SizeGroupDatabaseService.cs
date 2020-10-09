@@ -8,15 +8,17 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
 {
@@ -27,11 +29,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IDatabase database, ISizeGroupTable sizeGroupTable,
-                                        ISizeGroupEntityConverter sizeGroupEntityConverter)
+                                        ISizeGroupEntityConverter sizeGroupEntityConverter,
+                                        IQueryableService<(ClothesSizeType, int), SizeGroupEntity> queryableService)
             : base(database, sizeGroupTable, sizeGroupEntityConverter)
         {
             _sizeGroupTable = sizeGroupTable;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
+            _queryableService = queryableService;
         }
 
         /// <summary>
@@ -45,12 +49,27 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly ISizeGroupEntityConverter _sizeGroupEntityConverter;
 
         /// <summary>
+        /// Сервис обработки запросов базы данных
+        /// </summary>
+        private readonly IQueryableService<(ClothesSizeType, int), SizeGroupEntity> _queryableService;
+
+        /// <summary>
         /// Получить группу размеров совместно со списком размеров
         /// </summary>
         public async Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
                                                                                   int sizeNormalize) =>
-            await _sizeGroupTable.FindAsync<(SizeType, string, ClothesSizeType, int), SizeGroupCompositeEntity>(
-                (clothesSizeType, sizeNormalize), sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
-            ResultValueOkTaskAsync(sizeGroupEntity => _sizeGroupEntityConverter.FromEntity(sizeGroupEntity));
+            await ResultValueTryAsync(() => GetSizeGroup(clothesSizeType, sizeNormalize),
+                                           DatabaseErrors.TableAccessError(nameof(_sizeGroupTable))).
+            ResultValueOkTaskAsync(sizeGroups => _sizeGroupEntityConverter.FromEntity(sizeGroups));
+
+        /// <summary>
+        /// Получить группу размеров совместно со списком размеров
+        /// </summary>
+        private async Task<SizeGroupEntity> GetSizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize) =>
+            await _sizeGroupTable.Where((clothesSizeType, sizeNormalize)).
+            Include(sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
+            ThenInclude(sizeGroupComposite => sizeGroupComposite.SizeEntity).
+            AsNoTracking().
+            Map(sizeGroupQuery => _queryableService.FirstOrDefaultAsync(sizeGroupQuery));
     }
 }

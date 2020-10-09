@@ -17,15 +17,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// </summary>
         public static IReadOnlyCollection<SizeGroupEntity> SizeGroupData =>
             SizeOutwearData.
-            //Concat(SizeShirtData).
-            //Concat(SizeTShirtData).
-            //Concat(SizeJacketData).
-            //Concat(SizePantsData).
-            //Concat(SizeUnderwearData).
-            //Concat(SizeSocksData).
-            //Concat(SizeShoesData).
-            //Concat(SizeDressData).
-            //Concat(SizeBlouseData).
+            Concat(SizeShirtData).
+            Concat(SizeTShirtData).
+            Concat(SizeJacketData).
+            Concat(SizePantsData).
+            Concat(SizeUnderwearData).
+            Concat(SizeSocksData).
+            Concat(SizeShoesData).
+            Concat(SizeDressData).
+            Concat(SizeBlouseData).
             ToList().AsReadOnly();
 
         /// <summary>
@@ -35,17 +35,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             new List<SizeGroupEntity>
             {
                 new SizeGroupEntity(ClothesSizeType.Outerwear, 38),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 40),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 42),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 44),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 46),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 48),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 50),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 52),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 54),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 56),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 58),
-                //new SizeGroupEntity(ClothesSizeType.Outerwear, 60),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 40),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 42),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 44),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 46),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 48),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 50),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 52),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 54),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 56),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 58),
+                new SizeGroupEntity(ClothesSizeType.Outerwear, 60),
             };
 
         /// <summary>

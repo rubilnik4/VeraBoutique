@@ -16,5 +16,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// Выгрузить данные из базы асинхронно
         /// </summary>
         Task<IReadOnlyCollection<TValue>> ToListAsync(IEnumerable<TValue> query);
+
+        /// <summary>
+        /// Выгрузить первый элемент из базы асинхронно
+        /// </summary>
+        Task<TValue> FirstOrDefaultAsync(IEnumerable<TValue> query);
     }
 }

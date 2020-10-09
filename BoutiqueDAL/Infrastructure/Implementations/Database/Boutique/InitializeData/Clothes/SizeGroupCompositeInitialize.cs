@@ -15,15 +15,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// </summary>
         public static IReadOnlyCollection<SizeGroupCompositeEntity> CompositeSizeData =>
             OutwearSizes.
-            //Concat(ShirtSizes).
-            //Concat(TshirtSizes).
-            //Concat(JacketSizes).
-            //Concat(PantsSizes).
-            //Concat(UnderwearSizes).
-            //Concat(SocksSizes).
-            //Concat(ShoesSizes).
-            //Concat(DressSizes).
-            //Concat(BlouseSizes).
+            Concat(ShirtSizes).
+            Concat(TshirtSizes).
+            Concat(JacketSizes).
+            Concat(PantsSizes).
+            Concat(UnderwearSizes).
+            Concat(SocksSizes).
+            Concat(ShoesSizes).
+            Concat(DressSizes).
+            Concat(BlouseSizes).
             ToList().AsReadOnly();
 
         /// <summary>
@@ -33,52 +33,52 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             new List<SizeGroupCompositeEntity>()
             {
                 new SizeGroupCompositeEntity(SizeType.Russian, "38", ClothesSizeType.Outerwear, 38),
-                //new SizeGroupCompositeEntity(SizeType.European,"38", ClothesSizeType.Outerwear, 38),
-                //new SizeGroupCompositeEntity(SizeType.American,"28", ClothesSizeType.Outerwear, 38),
+                new SizeGroupCompositeEntity(SizeType.European,"38", ClothesSizeType.Outerwear, 38),
+                new SizeGroupCompositeEntity(SizeType.American,"28", ClothesSizeType.Outerwear, 38),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "40", ClothesSizeType.Outerwear, 40),
-                //new SizeGroupCompositeEntity(SizeType.European,"40", ClothesSizeType.Outerwear, 40),
-                //new SizeGroupCompositeEntity(SizeType.American,"30", ClothesSizeType.Outerwear, 40),
+                new SizeGroupCompositeEntity(SizeType.Russian, "40", ClothesSizeType.Outerwear, 40),
+                new SizeGroupCompositeEntity(SizeType.European,"40", ClothesSizeType.Outerwear, 40),
+                new SizeGroupCompositeEntity(SizeType.American,"30", ClothesSizeType.Outerwear, 40),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "42", ClothesSizeType.Outerwear, 42),
-                //new SizeGroupCompositeEntity(SizeType.European,"42", ClothesSizeType.Outerwear, 42),
-                //new SizeGroupCompositeEntity(SizeType.American,"32", ClothesSizeType.Outerwear, 42),
+                new SizeGroupCompositeEntity(SizeType.Russian, "42", ClothesSizeType.Outerwear, 42),
+                new SizeGroupCompositeEntity(SizeType.European,"42", ClothesSizeType.Outerwear, 42),
+                new SizeGroupCompositeEntity(SizeType.American,"32", ClothesSizeType.Outerwear, 42),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "44", ClothesSizeType.Outerwear, 44),
-                //new SizeGroupCompositeEntity(SizeType.European,"44", ClothesSizeType.Outerwear, 44),
-                //new SizeGroupCompositeEntity(SizeType.American,"34", ClothesSizeType.Outerwear, 44),
+                new SizeGroupCompositeEntity(SizeType.Russian, "44", ClothesSizeType.Outerwear, 44),
+                new SizeGroupCompositeEntity(SizeType.European,"44", ClothesSizeType.Outerwear, 44),
+                new SizeGroupCompositeEntity(SizeType.American,"34", ClothesSizeType.Outerwear, 44),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "46", ClothesSizeType.Outerwear, 46),
-                //new SizeGroupCompositeEntity(SizeType.European,"46", ClothesSizeType.Outerwear, 46),
-                //new SizeGroupCompositeEntity(SizeType.American,"36", ClothesSizeType.Outerwear, 46),
+                new SizeGroupCompositeEntity(SizeType.Russian, "46", ClothesSizeType.Outerwear, 46),
+                new SizeGroupCompositeEntity(SizeType.European,"46", ClothesSizeType.Outerwear, 46),
+                new SizeGroupCompositeEntity(SizeType.American,"36", ClothesSizeType.Outerwear, 46),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "48", ClothesSizeType.Outerwear, 48),
-                //new SizeGroupCompositeEntity(SizeType.European,"48", ClothesSizeType.Outerwear, 48),
-                //new SizeGroupCompositeEntity(SizeType.American,"38", ClothesSizeType.Outerwear, 48),
+                new SizeGroupCompositeEntity(SizeType.Russian, "48", ClothesSizeType.Outerwear, 48),
+                new SizeGroupCompositeEntity(SizeType.European,"48", ClothesSizeType.Outerwear, 48),
+                new SizeGroupCompositeEntity(SizeType.American,"38", ClothesSizeType.Outerwear, 48),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "50", ClothesSizeType.Outerwear, 50),
-                //new SizeGroupCompositeEntity(SizeType.European,"50", ClothesSizeType.Outerwear, 50),
-                //new SizeGroupCompositeEntity(SizeType.American,"40", ClothesSizeType.Outerwear, 50),
+                new SizeGroupCompositeEntity(SizeType.Russian, "50", ClothesSizeType.Outerwear, 50),
+                new SizeGroupCompositeEntity(SizeType.European,"50", ClothesSizeType.Outerwear, 50),
+                new SizeGroupCompositeEntity(SizeType.American,"40", ClothesSizeType.Outerwear, 50),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "52", ClothesSizeType.Outerwear, 52),
-                //new SizeGroupCompositeEntity(SizeType.European,"52", ClothesSizeType.Outerwear, 52),
-                //new SizeGroupCompositeEntity(SizeType.American,"42", ClothesSizeType.Outerwear, 52),
+                new SizeGroupCompositeEntity(SizeType.Russian, "52", ClothesSizeType.Outerwear, 52),
+                new SizeGroupCompositeEntity(SizeType.European,"52", ClothesSizeType.Outerwear, 52),
+                new SizeGroupCompositeEntity(SizeType.American,"42", ClothesSizeType.Outerwear, 52),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "54", ClothesSizeType.Outerwear, 54),
-                //new SizeGroupCompositeEntity(SizeType.European,"54", ClothesSizeType.Outerwear, 54),
-                //new SizeGroupCompositeEntity(SizeType.American,"44", ClothesSizeType.Outerwear, 54),
+                new SizeGroupCompositeEntity(SizeType.Russian, "54", ClothesSizeType.Outerwear, 54),
+                new SizeGroupCompositeEntity(SizeType.European,"54", ClothesSizeType.Outerwear, 54),
+                new SizeGroupCompositeEntity(SizeType.American,"44", ClothesSizeType.Outerwear, 54),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "56", ClothesSizeType.Outerwear, 56),
-                //new SizeGroupCompositeEntity(SizeType.European,"56", ClothesSizeType.Outerwear, 56),
-                //new SizeGroupCompositeEntity(SizeType.American,"46", ClothesSizeType.Outerwear, 56),
+                new SizeGroupCompositeEntity(SizeType.Russian, "56", ClothesSizeType.Outerwear, 56),
+                new SizeGroupCompositeEntity(SizeType.European,"56", ClothesSizeType.Outerwear, 56),
+                new SizeGroupCompositeEntity(SizeType.American,"46", ClothesSizeType.Outerwear, 56),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "58", ClothesSizeType.Outerwear, 58),
-                //new SizeGroupCompositeEntity(SizeType.European,"58", ClothesSizeType.Outerwear, 58),
-                //new SizeGroupCompositeEntity(SizeType.American,"48", ClothesSizeType.Outerwear, 58),
+                new SizeGroupCompositeEntity(SizeType.Russian, "58", ClothesSizeType.Outerwear, 58),
+                new SizeGroupCompositeEntity(SizeType.European,"58", ClothesSizeType.Outerwear, 58),
+                new SizeGroupCompositeEntity(SizeType.American,"48", ClothesSizeType.Outerwear, 58),
 
-                //new SizeGroupCompositeEntity(SizeType.Russian, "60", ClothesSizeType.Outerwear, 60),
-                //new SizeGroupCompositeEntity(SizeType.European,"60", ClothesSizeType.Outerwear, 60),
-                //new SizeGroupCompositeEntity(SizeType.American,"50", ClothesSizeType.Outerwear, 60),
+                new SizeGroupCompositeEntity(SizeType.Russian, "60", ClothesSizeType.Outerwear, 60),
+                new SizeGroupCompositeEntity(SizeType.European,"60", ClothesSizeType.Outerwear, 60),
+                new SizeGroupCompositeEntity(SizeType.American,"50", ClothesSizeType.Outerwear, 60),
             };
 
         /// <summary>
