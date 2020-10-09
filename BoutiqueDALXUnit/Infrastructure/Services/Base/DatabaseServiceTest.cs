@@ -49,6 +49,26 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
+        /// Проверить получение. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task Get_Error()
+        {
+            var errorInitial = ErrorData.DatabaseError;
+            var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = new TestEntityConverter();
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var testResult = await testService.Get();
+            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value).ToList();
+
+            Assert.True(testResult.HasErrors);
+            Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
         /// Проверить получение по идентификатору
         /// </summary>
         [Fact]

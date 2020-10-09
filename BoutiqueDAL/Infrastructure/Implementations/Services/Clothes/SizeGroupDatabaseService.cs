@@ -13,6 +13,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
@@ -46,10 +47,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить группу размеров совместно со списком размеров
         /// </summary>
-        public async Task<IResultCollection<ISizeGroupDomain>> GetSizeGroupsIncludeSize(ClothesSizeType clothesSizeType,
-                                                                                        int sizeNormalize) =>
-            await _sizeGroupTable.ToListAsync<(SizeType, string, ClothesSizeType, int), SizeGroupCompositeEntity>(
-                sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
-            ResultCollectionOkTaskAsync(sizeGroupEntities => _sizeGroupEntityConverter.FromEntities(sizeGroupEntities));
+        public async Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
+                                                                                  int sizeNormalize) =>
+            await _sizeGroupTable.FindAsync<(SizeType, string, ClothesSizeType, int), SizeGroupCompositeEntity>(
+                (clothesSizeType, sizeNormalize), sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
+            ResultValueOkTaskAsync(sizeGroupEntity => _sizeGroupEntityConverter.FromEntity(sizeGroupEntity));
     }
 }

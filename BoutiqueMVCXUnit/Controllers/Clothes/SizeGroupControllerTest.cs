@@ -31,15 +31,15 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
-            var sizeGroupDomains = new ResultCollection<ISizeGroupDomain>(SizeGroupData.GetSizeGroupDomain());
-            var sizeGroupDatabaseService = GetSizeGroupDatabaseService(sizeGroupDomains);
+            var sizeGroupDomain = new ResultValue<ISizeGroupDomain>(sizeGroupInitial);
+            var sizeGroupDatabaseService = GetSizeGroupDatabaseService(sizeGroupDomain);
             var sizeGroupTransferConverter = SizeGroupTransferConverter;
             var sizeGroupController = new SizeGroupController(sizeGroupDatabaseService.Object, sizeGroupTransferConverter);
 
-            var sizeGroupTransfers = await sizeGroupController.GetSizeGroupsIncludeSize(clothesSizeType, sizeNormalize);
-            var sizeGroupAfter = sizeGroupTransferConverter.FromTransfers(sizeGroupTransfers.Value);
+            var sizeGroupTransfer = await sizeGroupController.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
+            var sizeGroupAfter = sizeGroupTransferConverter.FromTransfer(sizeGroupTransfer.Value);
 
-            Assert.True(sizeGroupAfter.SequenceEqual(sizeGroupDomains.Value));
+            Assert.True(sizeGroupAfter.Equals(sizeGroupDomain.Value));
         }
 
 
@@ -53,12 +53,12 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var initialError = ErrorData.DatabaseError;
-            var sizeGroupDomains = new ResultCollection<ISizeGroupDomain>(initialError);
+            var sizeGroupDomains = new  ResultValue<ISizeGroupDomain>(initialError);
             var sizeGroupDatabaseService = GetSizeGroupDatabaseService(sizeGroupDomains);
             var sizeGroupTransferConverter = SizeGroupTransferConverter;
             var sizeGroupController = new SizeGroupController(sizeGroupDatabaseService.Object, sizeGroupTransferConverter);
 
-            var actionResult = await sizeGroupController.GetSizeGroupsIncludeSize(clothesSizeType, sizeNormalize);
+            var actionResult = await sizeGroupController.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;
@@ -68,12 +68,34 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         }
 
         /// <summary>
+        /// Получить группу размеров одежды совместно с размерами. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task GetByGender_NotFound()
+        {
+            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var clothesSizeType = sizeGroupInitial.ClothesSizeType;
+            int sizeNormalize = sizeGroupInitial.SizeNormalize;
+            var initialError = ErrorData.NotFoundError;
+            var sizeGroupDomains = new ResultValue<ISizeGroupDomain>(initialError);
+            var sizeGroupDatabaseService = GetSizeGroupDatabaseService(sizeGroupDomains);
+            var sizeGroupTransferConverter = SizeGroupTransferConverter;
+            var sizeGroupController = new SizeGroupController(sizeGroupDatabaseService.Object, sizeGroupTransferConverter);
+
+            var actionResult = await sizeGroupController.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+            var notFoundResult = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+        }
+
+        /// <summary>
         /// Сервис вида одежды в базе данных
         /// </summary>
-        private static Mock<ISizeGroupDatabaseService> GetSizeGroupDatabaseService(IResultCollection<ISizeGroupDomain> sizeGroupDomains) =>
+        private static Mock<ISizeGroupDatabaseService> GetSizeGroupDatabaseService(IResultValue<ISizeGroupDomain> sizeGroupDomain) =>
             new Mock<ISizeGroupDatabaseService>().
-            Void(mock => mock.Setup(service => service.GetSizeGroupsIncludeSize(It.IsAny<ClothesSizeType>(), It.IsAny<int>())).
-                              ReturnsAsync(sizeGroupDomains));
+            Void(mock => mock.Setup(service => service.GetSizeGroupIncludeSize(It.IsAny<ClothesSizeType>(), It.IsAny<int>())).
+                              ReturnsAsync(sizeGroupDomain));
 
         /// <summary>
         /// Конвертер группы размеров одежды в трансферную модель

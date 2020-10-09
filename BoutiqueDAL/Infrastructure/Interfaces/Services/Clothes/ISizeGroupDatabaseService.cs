@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
         /// <summary>
         /// Получить группу размеров совместно со списком размеров
         /// </summary>
-        Task<IResultCollection<ISizeGroupDomain>> GetSizeGroupsIncludeSize(ClothesSizeType clothesSizeType,
-                                                                           int sizeNormalize);
+        Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
+                                                                     int sizeNormalize);
     }
 }

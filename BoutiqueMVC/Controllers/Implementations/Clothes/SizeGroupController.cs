@@ -8,6 +8,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,14 +41,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Получить группу размеров одежды совместно с размерами
         /// </summary>
-        [HttpGet("sizeGroupsInclude/{clothesSizeType}/{sizeNormalize}")]
+        [HttpGet("sizeGroupInclude/{clothesSizeType}/{sizeNormalize}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IReadOnlyCollection<SizeGroupTransfer>>> GetSizeGroupsIncludeSize(ClothesSizeType clothesSizeType,
-                                                                                                         int sizeNormalize) =>
-            await _sizeGroupDatabaseService.GetSizeGroupsIncludeSize(clothesSizeType, sizeNormalize).
-            ResultCollectionOkTaskAsync(sizeGroups => _sizeGroupTransferConverter.ToTransfers(sizeGroups)).
-            ToActionResultCollectionTaskAsync<(ClothesSizeType, int), SizeGroupTransfer>();
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<SizeGroupTransfer>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType, int sizeNormalize) =>
+            await _sizeGroupDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize).
+            ResultValueOkTaskAsync(sizeGroup => _sizeGroupTransferConverter.ToTransfer(sizeGroup)).
+            ToActionResultValueTaskAsync<(ClothesSizeType, int), SizeGroupTransfer>();
     }
 }

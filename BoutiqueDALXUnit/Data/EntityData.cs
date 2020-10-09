@@ -42,6 +42,17 @@ namespace BoutiqueDALXUnit.Data
             ToList();
 
         /// <summary>
+        /// Сущности группы размеров
+        /// </summary>
+        public static List<SizeGroupEntity> SizeGroupEntities =>
+            SizeGroupData.GetSizeGroupDomain().
+            Select(sizeGroup => new SizeGroupEntity(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
+                                                    GetSizeGroupComposite(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
+                                                                          sizeGroup.Sizes))).
+            ToList();
+            
+
+        /// <summary>
         /// Получить сущности типа пола c видом одежды
         /// </summary>
         public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
@@ -89,5 +100,14 @@ namespace BoutiqueDALXUnit.Data
         /// </summary>
         public static IResultCollection<TestEntity> TestResultEntitiesEmpty =>
            new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
+
+        /// <summary>
+        /// Получить связующую сущность группы размеров
+        /// </summary>
+        private static IEnumerable<SizeGroupCompositeEntity> GetSizeGroupComposite(ClothesSizeType clothesSizeType, int sizeNormalize,
+                                                                                   IEnumerable<ISizeDomain> sizes) =>
+            sizes.Select(size => new SizeGroupCompositeEntity(size.SizeType, size.SizeName, clothesSizeType, sizeNormalize, 
+                                                              new SizeEntity(size.SizeType, size.SizeName),
+                                                              new SizeGroupEntity(clothesSizeType, sizeNormalize)));
     }
 }

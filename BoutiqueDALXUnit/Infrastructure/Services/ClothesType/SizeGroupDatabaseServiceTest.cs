@@ -15,19 +15,24 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
+    using SizeGroupTableExpression = Expression<Func<ISizeGroupTable, Task<IResultValue<SizeGroupEntity>>>>;
+    using SizeGroupCompositeExpression = Expression<Func<SizeGroupEntity, IEnumerable<SizeGroupCompositeEntity>>>;
+
     /// <summary>
     /// Сервис группы размеров одежды в базе данных. Тесты
     /// </summary>
     public class SizeGroupDatabaseServiceTest
     {
         /// <summary>
-        /// Получить вид одежды по типу пола и категории
+        /// Получить группу размеров совместно с размерами
         /// </summary>
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Ok()
@@ -35,25 +40,36 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
-            //var genderEntities = EntityData.GenderEntities;
-            var sizeGroups = EntityData.();
-            //var categories = EntityData.CategoryEntities;
-            //var gender = genderEntities.First().GenderType;
-            //string category = categories.First().Name;
-
-            //var genderWithClothesTypeEntities = EntityData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
-            //var categoryEntitiesWithClothesType = EntityData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
-            //var genderTable = GetGenderTable(genderWithClothesTypeEntities);
-            //var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
+            var sizeGroupEntities = EntityData.SizeGroupEntities;
+            var sizeGroupTable = GetSizeGroupTable(FirstResultOk(sizeGroupEntities));
             var sizeGroupEntityConverter = SizeGroupEntityConverter;
-            var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, ClothesTypeTable.Object,
+            var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, sizeGroupTable.Object,
                                                                    sizeGroupEntityConverter);
 
-            var sizeGroupResults = await sizeDatabaseService.GetSizeGroupsIncludeSize(clothesSizeType, sizeNormalize);
-            var sizeGroupDomains = sizeGroupEntityConverter.FromEntities(sizeGroups);
+            var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
             Assert.True(sizeGroupResults.OkStatus);
-            Assert.True(sizeGroupResults.Value.SequenceEqual(sizeGroupDomains));
+            Assert.True(sizeGroupResults.Value.Equals(sizeGroupInitial));
+        }
+
+        /// <summary>
+        /// Получить группу размеров совместно с размерами. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task GetSizeGroupsIncludeSize_NotFound()
+        {
+            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var clothesSizeType = sizeGroupInitial.ClothesSizeType;
+            int sizeNormalize = sizeGroupInitial.SizeNormalize;
+            var sizeGroupTable = GetSizeGroupTable(FirstResultNotFound());
+            var sizeGroupEntityConverter = SizeGroupEntityConverter;
+            var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, sizeGroupTable.Object,
+                                                                   sizeGroupEntityConverter);
+
+            var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
+
+            Assert.True(sizeGroupResults.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueNotFound, sizeGroupResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -65,18 +81,18 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
-        private static Mock<ISizeGroupTable> GetSizeGroupTable(IEnumerable<SizeGroupEntity> sizeGroupEntities) =>
+        private static Mock<ISizeGroupTable> GetSizeGroupTable(Func<(ClothesSizeType, int), IResultValue<SizeGroupEntity>> firstResultFunc) =>
             new Mock<ISizeGroupTable>().
-            Void(mock => mock.Setup(SizeGroupTableToList).
-                              Returns((GenderType genderType, genderExpression include) =>
-                                          genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
+            Void(mock => mock.Setup(SizeGroupTableFirstAsync).
+                              ReturnsAsync(((ClothesSizeType, int) sizeGroupId, SizeGroupCompositeExpression include) =>
+                                           firstResultFunc(sizeGroupId)));
 
         /// <summary>
         /// Функция выгрузки в таблице группы размеров одежды
         /// </summary>
-        private static Expression<Func<ISizeGroupTable, IResultCollection<SizeGroupEntity>>> SizeGroupTableToList =>
-            sizeGroupTable => sizeGroupTable.ToListAsync<(SizeType, string, ClothesSizeType, int), SizeGroupCompositeEntity>(
-                sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities);
+        private static SizeGroupTableExpression SizeGroupTableFirstAsync =>
+            sizeGroupTable => sizeGroupTable.FindAsync<(SizeType, string, ClothesSizeType, int), SizeGroupCompositeEntity>(
+                It.IsAny<(ClothesSizeType, int)>(), sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities);
 
         /// <summary>
         /// Преобразования модели группы размера одежды в модель базы данных
@@ -84,5 +100,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         private static ISizeGroupEntityConverter SizeGroupEntityConverter =>
             new SizeGroupEntityConverter(new SizeEntityConverter());
 
+        /// <summary>
+        /// Функция поиска группы размеров
+        /// </summary>
+        private static Func<(ClothesSizeType, int), IResultValue<SizeGroupEntity>> FirstResultOk(IEnumerable<SizeGroupEntity> sizeGroupEntities) =>
+            sizeGroupId => sizeGroupEntities.FirstOrDefault(sizeGroup => sizeGroup.Id == sizeGroupId).
+            Map(sizeGroupEntity => new ResultValue<SizeGroupEntity>(sizeGroupEntity));
+
+        /// <summary>
+        /// Функция поиска группы размеров. Элемент не найден
+        /// </summary>
+        private static Func<(ClothesSizeType, int), IResultValue<SizeGroupEntity>> FirstResultNotFound() =>
+            _ => new ResultValue<SizeGroupEntity>(Errors.NotFoundError);
     }
 }

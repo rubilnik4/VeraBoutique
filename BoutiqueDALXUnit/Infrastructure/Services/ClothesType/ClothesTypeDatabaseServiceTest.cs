@@ -21,8 +21,8 @@ using Moq;
 using Xunit;
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
-    using genderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>>;
-    using categoryExpression = Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>>;
+    using GenderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>>;
+    using CategoryExpression = Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>>;
 
     /// <summary>
     /// Сервис вида одежды в базе данных. Тесты
@@ -69,7 +69,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         private static Mock<IGenderTable> GetGenderTable(IEnumerable<GenderEntity> genderEntities) =>
             new Mock<IGenderTable>().
             Void(mock => mock.Setup(GenderTableWhere).
-                              Returns((GenderType genderType, genderExpression include) => 
+                              Returns((GenderType genderType, GenderExpression include) => 
                                           genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         private static Mock<ICategoryTable> GetCategoryTable(IEnumerable<CategoryEntity> categoryEntities) =>
             new Mock<ICategoryTable>().
             Void(mock => mock.Setup(CategoryTableWhere).
-                              Returns((string category, categoryExpression include) =>
+                              Returns((string category, CategoryExpression include) =>
                                           categoryEntities.Where(categoryEntity => categoryEntity.Id == category).AsQueryable()));
 
         /// <summary>
