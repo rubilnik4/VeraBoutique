@@ -18,7 +18,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
 {
@@ -58,14 +58,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         public async Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
                                                                                   int sizeNormalize) =>
-            await ResultValueTryAsync(() => GetSizeGroup(clothesSizeType, sizeNormalize),
+            await ResultValueBindTryAsync(() => GetSizeGroup(clothesSizeType, sizeNormalize).
+                                            ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(clothesSizeType.ToString() + sizeNormalize, 
+                                                                                                              nameof(ISizeGroupTable))),
                                            DatabaseErrors.TableAccessError(nameof(_sizeGroupTable))).
-            ResultValueOkTaskAsync(sizeGroups => _sizeGroupEntityConverter.FromEntity(sizeGroups));
+            ResultValueOkTaskAsync(sizeGroup => _sizeGroupEntityConverter.FromEntity(sizeGroup));
 
         /// <summary>
         /// Получить группу размеров совместно со списком размеров
         /// </summary>
-        private async Task<SizeGroupEntity> GetSizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize) =>
+        private async Task<SizeGroupEntity?> GetSizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize) =>
             await _sizeGroupTable.Where((clothesSizeType, sizeNormalize)).
             Include(sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
             ThenInclude(sizeGroupComposite => sizeGroupComposite.SizeEntity).

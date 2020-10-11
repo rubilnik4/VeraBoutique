@@ -23,7 +23,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Выгрузить первый элемент из базы асинхронно
         /// </summary>
-        public async Task<TValue> FirstOrDefaultAsync(IEnumerable<TValue> query) =>
+        public async Task<TValue?> FirstOrDefaultAsync(IEnumerable<TValue> query) =>
             await query.AsQueryable().FirstOrDefaultAsync();
     }
 }

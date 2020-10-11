@@ -20,6 +20,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Выгрузить первый элемент из базы асинхронно
         /// </summary>
-        Task<TValue> FirstOrDefaultAsync(IEnumerable<TValue> query);
+        Task<TValue?> FirstOrDefaultAsync(IEnumerable<TValue> query);
     }
 }
