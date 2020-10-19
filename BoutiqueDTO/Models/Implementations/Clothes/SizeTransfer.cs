@@ -36,6 +36,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Наименование размера
         /// </summary>
         [Required]
-        public string SizeName { get; set; }
+        public string SizeName { get; set; } = null!;
     }
 }

@@ -46,6 +46,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Дополнительные размеры одежды
         /// </summary>
         [Required]
-        public IReadOnlyCollection<SizeTransfer> Sizes { get; }
+        public IReadOnlyCollection<SizeTransfer> Sizes { get; } = new List<SizeTransfer>();
     }
 }
