@@ -21,7 +21,7 @@ using Moq;
 using Xunit;
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
-    using GenderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderEntity>>>;
+    using GenderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderCompositeEntity>>>;
     using CategoryExpression = Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>>;
 
     /// <summary>
@@ -85,7 +85,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// Функция поиска в таблице типа пола
         /// </summary>
         private static Expression<Func<IGenderTable, IQueryable<GenderEntity>>> GenderTableWhere =>
-            genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(It.IsAny<GenderType>(),
+            genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(It.IsAny<GenderType>(),
                                                                                             genderEntity => genderEntity.ClothesTypeGenderEntities);
 
         /// <summary>

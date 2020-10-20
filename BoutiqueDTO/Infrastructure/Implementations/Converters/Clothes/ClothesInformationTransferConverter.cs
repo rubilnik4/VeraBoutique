@@ -17,7 +17,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override ClothesInformationTransfer ToTransfer(IClothesInformationDomain clothesInformationDomain) =>
             new ClothesInformationTransfer(clothesInformationDomain.Id, clothesInformationDomain.Name,
-                                           clothesInformationDomain.Description, clothesInformationDomain.Color,
+                                           clothesInformationDomain.Description, clothesInformationDomain.Colors,
                                            clothesInformationDomain.Sizes,
                                            clothesInformationDomain.Price, clothesInformationDomain.Image);
 
@@ -26,7 +26,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override IClothesInformationDomain FromTransfer(ClothesInformationTransfer clothesInformationTransfer) =>
             new ClothesInformationDomain(clothesInformationTransfer.Id, clothesInformationTransfer.Name,
-                                         clothesInformationTransfer.Description, clothesInformationTransfer.Color,
+                                         clothesInformationTransfer.Description, clothesInformationTransfer.Colors,
                                          clothesInformationTransfer.Sizes,
                                          clothesInformationTransfer.Price, clothesInformationTransfer.Image);
     }

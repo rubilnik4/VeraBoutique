@@ -12,11 +12,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Начальные данные, связующие пол и вид одежды
         /// </summary>
-        public static IReadOnlyCollection<ClothesTypeGenderEntity> ClothesTypeGenderData =>
+        public static IReadOnlyCollection<ClothesTypeGenderCompositeEntity> ClothesTypeGenderData =>
             ClothesTypeInitialize.ClothesTypeWithGenderData.
             SelectMany(clothesTypeWithGender => 
                 clothesTypeWithGender.Genders.
-                Select(gender => new ClothesTypeGenderEntity(clothesTypeWithGender.ClothesType.Id, gender.Id))).
+                Select(gender => new ClothesTypeGenderCompositeEntity(clothesTypeWithGender.ClothesType.Id, gender.Id))).
             ToList().AsReadOnly();
     }
 }

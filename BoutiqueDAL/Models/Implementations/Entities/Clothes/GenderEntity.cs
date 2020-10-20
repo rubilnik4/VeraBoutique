@@ -14,11 +14,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class GenderEntity : Gender, IGenderEntity
     {
         public GenderEntity(GenderType genderType, string name)
-            : this(genderType, name, Enumerable.Empty<ClothesTypeGenderEntity>())
+            : this(genderType, name, Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
         public GenderEntity(GenderType genderType, string name,
-                            IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                            IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
            : base(genderType, name)
         {
             ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
@@ -27,6 +27,6 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Связующие сущности пола и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeGenderEntity> ClothesTypeGenderEntities { get; }
+        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity> ClothesTypeGenderEntities { get; }
     }
 }

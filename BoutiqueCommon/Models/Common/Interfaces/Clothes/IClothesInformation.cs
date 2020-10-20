@@ -13,15 +13,5 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Описание
         /// </summary>
         string Description { get; }
-
-        /// <summary>
-        /// Вид одежды
-        /// </summary>
-        string Color { get; }
-
-        /// <summary>
-        /// Размеры
-        /// </summary>
-        IReadOnlyCollection<int> Sizes { get; }
     }
 }

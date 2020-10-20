@@ -74,10 +74,10 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Получить пол с видом одежды
         /// </summary>
-        public static IList<ClothesTypeGenderEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
+        public static IList<ClothesTypeGenderCompositeEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
                                                                                 IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             clothesTypeEntities.
-            Select(clothesTypeEntity => new ClothesTypeGenderEntity(clothesTypeEntity.Id, genderEntity.Id, 
+            Select(clothesTypeEntity => new ClothesTypeGenderCompositeEntity(clothesTypeEntity.Id, genderEntity.Id, 
                                                                     clothesTypeEntity, genderEntity)).
             ToList();
 

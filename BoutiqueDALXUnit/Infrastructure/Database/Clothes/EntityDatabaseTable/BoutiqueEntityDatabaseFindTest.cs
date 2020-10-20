@@ -46,7 +46,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         public static async Task FindById_IncludeEntities(IBoutiqueDatabase database, GenderType idFind)
         {
             var genderGetEntity = await database.GendersTable.
-                FindAsync<(string, GenderType), ClothesTypeGenderEntity>(idFind, entity => entity.ClothesTypeGenderEntities);
+                FindAsync<(string, GenderType), ClothesTypeGenderCompositeEntity>(idFind, entity => entity.ClothesTypeGenderEntities);
 
             Assert.True(genderGetEntity.OkStatus);
             Assert.True(genderGetEntity.Value.GenderType == idFind);
@@ -57,10 +57,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Получить сущность по идентификатору с включением
         /// </summary>
         public static async Task FindByIds_IncludeEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderType> idsFind,
-                                                           IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                           IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderGetEntities = await database.GendersTable.
-                FindAsync<(string, GenderType), ClothesTypeGenderEntity>(idsFind, entity => entity.ClothesTypeGenderEntities);
+                FindAsync<(string, GenderType), ClothesTypeGenderCompositeEntity>(idsFind, entity => entity.ClothesTypeGenderEntities);
 
             Assert.True(genderGetEntities.OkStatus);
             Assert.True(genderGetEntities.Value.Select(entity => entity.GenderType).SequenceEqual(idsFind));

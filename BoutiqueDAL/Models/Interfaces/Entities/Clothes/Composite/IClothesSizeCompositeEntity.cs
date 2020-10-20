@@ -2,22 +2,17 @@
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
-namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
+namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
 {
     /// <summary>
-    /// Связующая сущность размера одежды с группой
+    /// Связующая сущность одежды с размером
     /// </summary>
-    public interface ISizeGroupCompositeEntity: IEntityModel<(SizeType, string, ClothesSizeType, int)>
+    public interface IClothesSizeCompositeEntity : IEntityModel<(int, (ClothesSizeType, int))>
     {
         /// <summary>
-        /// Тип размера одежды
+        /// Идентификатор одежды
         /// </summary>
-        SizeType SizeType { get; }
-
-        /// <summary>
-        /// Размер
-        /// </summary>
-        string SizeName { get; }
+        int ClothesId { get; }
 
         /// <summary>
         /// Тип одежды для определения размера
@@ -30,9 +25,9 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         int SizeNormalize { get; }
 
         /// <summary>
-        /// Размер одежды
+        /// Одежда. Информация
         /// </summary>
-        SizeEntity? SizeEntity { get; }
+        ClothesInformationEntity? ClothesInformationEntity { get; }
 
         /// <summary>
         /// Группа размеров одежды

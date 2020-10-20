@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BoutiqueDAL.Configuration.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
 {
     /// <summary>
     /// Группа размеров одежды. Схема базы данных

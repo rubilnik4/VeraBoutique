@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
@@ -38,6 +38,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         public DbSet<CategoryEntity> Categories { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных цвета одежды
+        /// </summary>
+        public DbSet<ColorClothesEntity> ColorClothes { get; set; } = null!;
+
+        /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
@@ -61,6 +66,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique
         /// Таблица базы данных категорий одежды
         /// </summary>
         public ICategoryTable CategoryTable => new CategoryTable(Categories);
+
+        /// <summary>
+        /// Таблица базы данных цвета одежды
+        /// </summary>
+        public IColorClothesTable ColorClothesTable => new ColorClothesTable(ColorClothes);
 
         /// <summary>
         /// Таблица базы данных вида одежды

@@ -2,12 +2,12 @@
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
-namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
+namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды
     /// </summary>
-    public interface IClothesTypeGenderEntity : IEntityModel<(string, GenderType)>
+    public interface IClothesTypeGenderCompositeEntity : IEntityModel<(string, GenderType)>
     {
         /// <summary>
         /// Идентификатор вида одежды

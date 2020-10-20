@@ -44,7 +44,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         public static async Task WhereById_IncludeEntities(IBoutiqueDatabase database, GenderType idWhere)
         {
             var genderGetEntity = await database.GendersTable.
-                Where<(string, GenderType), ClothesTypeGenderEntity>(idWhere, entity => entity.ClothesTypeGenderEntities).
+                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idWhere, entity => entity.ClothesTypeGenderEntities).
                 AsNoTracking().
                 FirstOrDefaultAsync();
 
@@ -56,10 +56,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Получить сущность по идентификатору с включением
         /// </summary>
         public static async Task WhereByIds_IncludeEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderType> idsFind,
-                                                           IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                           IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderGetEntities = await database.GendersTable.
-                Where<(string, GenderType), ClothesTypeGenderEntity>(idsFind, entity => entity.ClothesTypeGenderEntities).
+                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idsFind, entity => entity.ClothesTypeGenderEntities).
                 AsNoTracking().
                 ToListAsync();
 

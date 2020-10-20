@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
 {
     /// <summary>
     /// Таблица базы данных вида одежды

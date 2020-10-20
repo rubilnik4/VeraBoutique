@@ -34,11 +34,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// </summary>
         public static async Task ToListEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities,
                                                 IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var clothesTypeGetEntities = await database.ClotheTypeTable.ToListAsync();
             var genderGetEntities = await database.GendersTable.
-                                    ToListAsync<(string, GenderType), ClothesTypeGenderEntity>(gender => gender.ClothesTypeGenderEntities);
+                                    ToListAsync<(string, GenderType), ClothesTypeGenderCompositeEntity>(gender => gender.ClothesTypeGenderEntities);
 
             Assert.True(genderGetEntities.OkStatus);
             Assert.True(clothesTypeGetEntities.OkStatus);

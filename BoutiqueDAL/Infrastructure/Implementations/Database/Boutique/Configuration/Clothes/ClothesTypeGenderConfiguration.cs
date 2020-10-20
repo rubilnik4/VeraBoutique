@@ -2,14 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BoutiqueDAL.Configuration.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды. Схема базы данных
     /// </summary>
-    public class ClothesTypeGenderConfiguration : IEntityTypeConfiguration<ClothesTypeGenderEntity>
+    public class ClothesTypeGenderConfiguration : IEntityTypeConfiguration<ClothesTypeGenderCompositeEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesTypeGenderEntity> builder)
+        public void Configure(EntityTypeBuilder<ClothesTypeGenderCompositeEntity> builder)
         {
             builder.HasKey(t => new { t.ClothesType, t.GenderType });
 

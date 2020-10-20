@@ -11,14 +11,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// </summary>
     public abstract class ClothesInformation : ClothesShort, IClothesInformation, IEquatable<IClothesInformation>
     {
-        protected ClothesInformation(int id, string name, string description,
-                                    string color, IReadOnlyCollection<int> sizes, 
-                                    decimal price, byte[]? image)
+        protected ClothesInformation(int id, string name, string description, decimal price, byte[]? image)
             :base(id, name, price, image)
         {
             Description = description;
-            Color = color;
-            Sizes = sizes;
         }
 
         /// <summary>
@@ -26,25 +22,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public string Description { get; }
 
-        /// <summary>
-        /// Вид одежды
-        /// </summary>
-        public string Color { get; }
-
-        /// <summary>
-        /// Размеры
-        /// </summary>
-        public IReadOnlyCollection<int> Sizes { get; }
-
         #region IEquatable
         public override bool Equals(object? obj) => obj is IClothesInformation clothes && Equals(clothes);
 
         public bool Equals(IClothesInformation? other) =>
-            other?.Id == Id && other?.Name == Name && other?.Price == Price &&
-            other?.Description == Description && other?.Color == Color &&
-            other?.Sizes.SequenceEqual(Sizes) == true;
+            other?.Id == Id && other?.Name == Name && other?.Price == Price;
 
-        public override int GetHashCode() => HashCode.Combine(Id, Name, Price, Description, Color, Sizes.Average(size => size.GetHashCode()));
+        public override int GetHashCode() => HashCode.Combine(Id, Name, Price, Description);
         #endregion
     }
 }

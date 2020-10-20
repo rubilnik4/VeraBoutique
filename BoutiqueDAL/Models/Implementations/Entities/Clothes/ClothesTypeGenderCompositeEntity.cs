@@ -3,25 +3,26 @@ using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды
     /// </summary>
-    public class ClothesTypeGenderEntity: IClothesTypeGenderEntity
+    public class ClothesTypeGenderCompositeEntity: IClothesTypeGenderCompositeEntity
     {
         /// <summary>
         /// Конструктор для базы данных с отсутствующими сущностями
         /// </summary>
-        public ClothesTypeGenderEntity(string clothesType, GenderType genderType)
+        public ClothesTypeGenderCompositeEntity(string clothesType, GenderType genderType)
             : this(clothesType, genderType, null, null)
         {
             ClothesType = clothesType;
             GenderType = genderType;
         }
 
-        public ClothesTypeGenderEntity(string clothesType, GenderType genderType,
+        public ClothesTypeGenderCompositeEntity(string clothesType, GenderType genderType,
                                         ClothesTypeEntity? clothesTypeEntity, GenderEntity? genderEntity)
         {
             ClothesType = clothesType;

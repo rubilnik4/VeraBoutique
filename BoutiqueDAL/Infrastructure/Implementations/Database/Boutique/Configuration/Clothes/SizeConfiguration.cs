@@ -1,10 +1,8 @@
-﻿using System;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+﻿using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BoutiqueDAL.Configuration.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
 {
     /// <summary>
     /// Размер одежды. Схема базы данных

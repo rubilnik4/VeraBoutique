@@ -12,19 +12,19 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class ClothesTypeEntity : ClothesType, IClothesTypeEntity
     {
         public ClothesTypeEntity(string name)
-            : this(name, null, null, Enumerable.Empty<ClothesTypeGenderEntity>())
+            : this(name, null, null, Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
         public ClothesTypeEntity(string name, string? categoryName)
-            : this(name, categoryName, null, Enumerable.Empty<ClothesTypeGenderEntity>())
+            : this(name, categoryName, null, Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
-        public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+        public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
             : this(name, null, null, clothesTypeGenderEntities)
         { }
 
         public ClothesTypeEntity(string name, string? categoryName, CategoryEntity? categoryEntity,
-                                 IEnumerable<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
            : base(name)
         {
             CategoryName = categoryName;
@@ -45,6 +45,6 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Связующие сущности пола и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeGenderEntity> ClothesTypeGenderEntities { get; }
+        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity> ClothesTypeGenderEntities { get; }
     }
 }

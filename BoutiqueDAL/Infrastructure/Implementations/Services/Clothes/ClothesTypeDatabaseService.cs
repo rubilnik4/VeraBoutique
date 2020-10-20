@@ -85,7 +85,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить вид одежды по типу пола
         /// </summary>
         private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
-            _genderTable.Where<(string, GenderType), ClothesTypeGenderEntity>(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
+            _genderTable.Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
             SelectMany(genderEntity => genderEntity.ClothesTypeGenderEntities).
             Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesTypeEntity!);
 

@@ -45,7 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         public static async Task DatabaseLoadTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
                                                    IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                   IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                   IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             await BoutiqueEntityDatabaseGetTest.ToListEntities(boutiqueEntityDatabase, genderEntities,
                                                                clothesTypeEntities, clothesTypeGenderEntities);
@@ -58,7 +58,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         public static async Task DatabaseFindTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
                                                    IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                   IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                   IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();
 
@@ -75,7 +75,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseWhereTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                     IReadOnlyCollection<GenderEntity> genderEntities,
-                                                    IReadOnlyCollection<ClothesTypeGenderEntity> clothesTypeGenderEntities)
+                                                    IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();
 

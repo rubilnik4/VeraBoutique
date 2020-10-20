@@ -10,8 +10,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// </summary>
     public abstract class ClothesShort : IClothesShort, IEquatable<IClothesShort>
     {
-        protected ClothesShort(int id, string name,
-                          decimal price, byte[]? image)
+        protected ClothesShort(int id, string name, decimal price, byte[]? image)
         {
             Id = id;
             Name = name;

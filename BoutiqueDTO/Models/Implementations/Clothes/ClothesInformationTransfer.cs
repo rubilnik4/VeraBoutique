@@ -11,17 +11,15 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     public class ClothesInformationTransfer : ClothesShortTransfer, IClothesInformationTransfer
     {
         public ClothesInformationTransfer()
-        {
-
-        }
+        { }
 
         public ClothesInformationTransfer(int id, string name, string description,
-                                          string color, IReadOnlyCollection<int> sizes,
+                                          IReadOnlyCollection<string> colors, IReadOnlyCollection<int> sizes,
                                           decimal price, byte[]? image)
             : base(id, name, price, image)
         {
             Description = description;
-            Color = color;
+            Colors = colors;
             Sizes = sizes;
         }
 
@@ -35,7 +33,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Вид одежды
         /// </summary>
         [Required]
-        public string Color { get; } = null!;
+        public IReadOnlyCollection<string> Colors { get; } = new List<string>();
 
         /// <summary>
         /// Размеры
