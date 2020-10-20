@@ -19,7 +19,7 @@ using Xunit;
 namespace BoutiqueMVCXUnit.Controllers.Clothes
 {
     /// <summary>
-    /// Контроллер для получения и записи вида одежды
+    /// Контроллер для получения и записи вида одежды. Тесты
     /// </summary>
     public class ClothesTypeControllerTest
     {

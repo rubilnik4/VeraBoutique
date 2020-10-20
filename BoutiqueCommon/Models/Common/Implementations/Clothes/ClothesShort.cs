@@ -43,9 +43,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public override bool Equals(object? obj) => obj is IClothesShort clothes && Equals(clothes);
 
         public bool Equals(IClothesShort? other) =>
-            other?.Id == Id;
+            other?.Id == Id && other?.Name == Name && other?.Price == Price;
 
-        public override int GetHashCode() => HashCode.Combine(Id);
+        public override int GetHashCode() => HashCode.Combine(Id, Name, Price);
         #endregion
     }
 }

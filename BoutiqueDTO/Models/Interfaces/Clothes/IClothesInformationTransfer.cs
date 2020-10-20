@@ -1,9 +1,11 @@
-﻿namespace BoutiqueDTO.Models.Interfaces.Clothes
+﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+
+namespace BoutiqueDTO.Models.Interfaces.Clothes
 {
     /// <summary>
     /// Одежда. Информация. Доменная модель
     /// </summary>
-    public interface IClothesInformationTransfer: IClothesShortTransfer
+    public interface IClothesInformationTransfer: IClothesInformation, IClothesShortTransfer
     {
         
     }

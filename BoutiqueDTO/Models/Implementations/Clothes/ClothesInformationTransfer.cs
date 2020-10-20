@@ -15,14 +15,13 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
 
         }
 
-        public ClothesInformationTransfer(int id, string name, string description, GenderType genderType,
-                                          string clothesType, IReadOnlyCollection<int> sizes,
+        public ClothesInformationTransfer(int id, string name, string description,
+                                          string color, IReadOnlyCollection<int> sizes,
                                           decimal price, byte[]? image)
             : base(id, name, price, image)
         {
             Description = description;
-            GenderType = genderType;
-            ClothesType = clothesType;
+            Color = color;
             Sizes = sizes;
         }
 
@@ -33,16 +32,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public string Description { get; } = null!;
 
         /// <summary>
-        /// Пол
-        /// </summary>
-        [Required]
-        public GenderType GenderType { get; }
-
-        /// <summary>
         /// Вид одежды
         /// </summary>
         [Required]
-        public string ClothesType { get; } = null!;
+        public string Color { get; } = null!;
 
         /// <summary>
         /// Размеры

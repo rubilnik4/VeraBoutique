@@ -18,10 +18,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const int id = 1;
             const string name = "Полушубок";
-            const decimal price = (decimal)0.55;
+            const decimal price = 0.55m;
             var clothesShort = new ClothesShortDomain(id, name, price, null);
 
-            int clothesHash = HashCode.Combine(id);
+            int clothesHash = HashCode.Combine(id, name, price);
             Assert.Equal(clothesHash, clothesShort.GetHashCode());
         }
     }

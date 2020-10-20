@@ -15,14 +15,9 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         string Description { get; }
 
         /// <summary>
-        /// Пол
-        /// </summary>
-        GenderType GenderType { get; }
-
-        /// <summary>
         /// Вид одежды
         /// </summary>
-        string ClothesType { get; }
+        string Color { get; }
 
         /// <summary>
         /// Размеры

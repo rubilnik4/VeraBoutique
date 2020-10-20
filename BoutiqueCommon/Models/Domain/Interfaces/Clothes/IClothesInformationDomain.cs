@@ -6,6 +6,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Одежда. Информация. Трансферная модель
     /// </summary>
-    public interface IClothesInformationDomain : IClothesShortDomain
+    public interface IClothesInformationDomain : IClothesShortDomain, IClothesInformation
     { }
 }

@@ -7,11 +7,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
 {
     public class ClothesInformationDomain: ClothesInformation, IClothesInformationDomain
     {
-        protected ClothesInformationDomain(int id, string name, string description, GenderType genderType,
-                                           string clothesType, IReadOnlyCollection<int> sizes,
+        public ClothesInformationDomain(int id, string name, string description, 
+                                           string color, IReadOnlyCollection<int> sizes,
                                            decimal price, byte[]? image)
-            : base(id, name, description, genderType,
-                   clothesType, sizes, price, image)
+            : base(id, name, description, color, sizes, price, image)
         { }
     }
 }
