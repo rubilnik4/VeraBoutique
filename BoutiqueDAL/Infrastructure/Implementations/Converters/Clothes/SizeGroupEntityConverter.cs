@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
@@ -37,17 +38,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override SizeGroupEntity ToEntity(ISizeGroupDomain sizeGroupDomain) =>
             new SizeGroupEntity(sizeGroupDomain.ClothesSizeType, sizeGroupDomain.SizeNormalize,
-                                SizeEntitiesToComposite(sizeGroupDomain.Sizes, sizeGroupDomain.ClothesSizeType,
+                                SizeToCompositeEntities(sizeGroupDomain.Sizes, sizeGroupDomain.ClothesSizeType,
                                                         sizeGroupDomain.SizeNormalize));
-
-        /// <summary>
-        /// Преобразовать размеры в связующую сущность
-        /// </summary>
-        private IEnumerable<SizeGroupCompositeEntity> SizeEntitiesToComposite(IEnumerable<ISizeDomain> sizes,
-                                                                              ClothesSizeType clothesSizeType, int sizeNormalize) =>
-            _sizeEntityConverter.ToEntities(sizes).
-            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
-                                                              clothesSizeType, sizeNormalize));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию размеров
@@ -57,5 +49,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
             Select(sizeGroupComposite => sizeGroupComposite.SizeEntity).
             Where(sizeEntity => sizeEntity != null).
             Select(sizeEntity => _sizeEntityConverter.FromEntity(sizeEntity!));
+
+        /// <summary>
+        /// Преобразовать размеры в связующую сущность
+        /// </summary>
+        private IEnumerable<SizeGroupCompositeEntity> SizeToCompositeEntities(IEnumerable<ISizeDomain> sizeDomains,
+                                                                              ClothesSizeType clothesSizeType, int sizeNormalize) =>
+            _sizeEntityConverter.ToEntities(sizeDomains).
+            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
+                                                              clothesSizeType, sizeNormalize));
     }
 }

@@ -9,5 +9,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// Одежда. Сущность базы данных
     /// </summary>
     public interface IClothesShortEntity : IClothesShort, IEntityModel<int>
-    { }
+    {
+        
+    }
 }

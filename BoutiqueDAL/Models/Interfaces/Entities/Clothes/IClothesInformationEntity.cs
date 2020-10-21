@@ -6,6 +6,6 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// <summary>
     /// Одежда. Информация. Сущность базы данных
     /// </summary>
-    public interface IClothesInformationEntity : IClothesInformation, IEntityModel<int>
+    public interface IClothesInformationEntity : IClothesInformation, IClothesShortEntity
     { }
 }

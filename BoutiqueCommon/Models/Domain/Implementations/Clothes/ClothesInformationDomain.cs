@@ -13,23 +13,23 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
                                            IEquatable<IClothesInformationDomain>
     {
         public ClothesInformationDomain(int id, string name, string description,
-                                        IReadOnlyCollection<string> colors, IReadOnlyCollection<int> sizes,
+                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes,
                                         decimal price, byte[]? image)
             : base(id, name, description, price, image)
         {
-            Colors = colors;
-            Sizes = sizes;
+            Colors = colors.ToList();
+            SizeGroups = sizes.ToList();
         }
 
         /// <summary>
         /// Цвета одежды
         /// </summary>
-        public IReadOnlyCollection<string> Colors { get; }
+        public IReadOnlyCollection<IColorClothesDomain> Colors { get; }
 
         /// <summary>
         /// Размеры
         /// </summary>
-        public IReadOnlyCollection<int> Sizes { get; }
+        public IReadOnlyCollection<ISizeGroupDomain> SizeGroups { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is IClothesInformationDomain clothes && Equals(clothes);
@@ -38,12 +38,12 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
             other?.Description == Description && 
             other?.Colors.SequenceEqual(Colors) == true &&
-            other?.Sizes.SequenceEqual(Sizes) == true;
+            other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
             HashCode.Combine(Id, Name, Price, Description,
                              Colors.Average(color => color.GetHashCode()),
-                             Sizes.Average(size => size.GetHashCode()));
+                             SizeGroups.Average(size => size.GetHashCode()));
         #endregion
     }
 }

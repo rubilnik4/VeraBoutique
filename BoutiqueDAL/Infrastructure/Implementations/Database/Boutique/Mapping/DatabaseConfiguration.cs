@@ -1,7 +1,9 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -31,7 +33,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ColorClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesTypeGenderConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesTypeGenderCompositeConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesColorCompositeConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesSizeGroupCompositeConfiguration());
             modelBuilder.ApplyConfiguration(new SizeConfiguration());
             modelBuilder.ApplyConfiguration(new SizeGroupConfiguration());
             modelBuilder.ApplyConfiguration(new SizeGroupCompositeConfiguration());

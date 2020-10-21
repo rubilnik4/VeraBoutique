@@ -59,9 +59,15 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
             where TIdOut : notnull;
 
         /// <summary>
+        /// Запрос выбора
+        /// </summary>
+        IQueryable<TEntitySelect> Select<TEntitySelect>(Expression<Func<TEntity, TEntitySelect>> selectFunc)
+            where TEntitySelect : class, IEntityModel<TId>;
+
+        /// <summary>
         /// Запрос поиска по идентификатору
         /// </summary>
-        IQueryable<TEntity> Where(TId id);
+        IQueryable <TEntity> Where(TId id);
 
         /// <summary>
         /// Запрос поиска по идентификаторам

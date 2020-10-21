@@ -1,13 +1,13 @@
-﻿using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+﻿using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite
 {
     /// <summary>
     /// Связующая сущность пола и вида одежды. Схема базы данных
     /// </summary>
-    public class ClothesTypeGenderConfiguration : IEntityTypeConfiguration<ClothesTypeGenderCompositeEntity>
+    public class ClothesTypeGenderCompositeConfiguration : IEntityTypeConfiguration<ClothesTypeGenderCompositeEntity>
     {
         public void Configure(EntityTypeBuilder<ClothesTypeGenderCompositeEntity> builder)
         {

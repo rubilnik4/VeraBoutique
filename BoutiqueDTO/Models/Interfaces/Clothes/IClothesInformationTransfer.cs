@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes;
 
 namespace BoutiqueDTO.Models.Interfaces.Clothes
 {
@@ -11,11 +12,11 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
         /// <summary>
         /// Цвета одежды
         /// </summary>
-        IReadOnlyCollection<string> Colors { get; }
+        IReadOnlyCollection<ColorClothesTransfer> Colors { get; }
 
         /// <summary>
         /// Размеры
         /// </summary>
-        IReadOnlyCollection<int> Sizes { get; }
+        IReadOnlyCollection<SizeGroupTransfer> SizeGroups { get; }
     }
 }

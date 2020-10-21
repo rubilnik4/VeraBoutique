@@ -41,7 +41,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Получить группу размеров одежды совместно с размерами
         /// </summary>
-        [HttpGet("sizeGroupInclude/{clothesSizeType}/{sizeNormalize}")]
+        [HttpGet("include/{clothesSizeType}/{sizeNormalize}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

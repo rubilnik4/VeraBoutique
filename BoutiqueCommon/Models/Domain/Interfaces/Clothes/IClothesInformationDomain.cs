@@ -12,11 +12,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
         /// <summary>
         /// Цвета одежды
         /// </summary>
-        IReadOnlyCollection<string> Colors { get; }
+        IReadOnlyCollection<IColorClothesDomain> Colors { get; }
 
         /// <summary>
         /// Размеры
         /// </summary>
-        IReadOnlyCollection<int> Sizes { get; }
+        IReadOnlyCollection<ISizeGroupDomain> SizeGroups { get; }
     }
 }
