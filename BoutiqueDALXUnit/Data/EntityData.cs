@@ -51,7 +51,27 @@ namespace BoutiqueDALXUnit.Data
                                                     GetSizeGroupComposite(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
                                                                           sizeGroup.Sizes))).
             ToList();
-            
+
+        /// <summary>
+        /// Получить сущности одежды
+        /// </summary>
+        public static IList<ClothesShortEntity> ClothesShortEntities =>
+            ClothesData.ClothesShortDomains.
+            Select(clothesShort => new ClothesShortEntity(clothesShort.Id, clothesShort.Name,
+                                                          clothesShort.Price, clothesShort.Image)).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности информации об одежде
+        /// </summary>
+        public static IList<ClothesInformationEntity> ClothesInformationEntities =>
+            ClothesData.ClothesInformationDomains.
+            Select(clothesInformation => new ClothesInformationEntity(clothesInformation.Id, clothesInformation.Name,
+                                                                      clothesInformation.Description,
+                                                                      , 
+                                                                      ,
+                                                                      clothesInformation.Price, clothesInformation.Image)).
+            ToList();
 
         /// <summary>
         /// Получить сущности типа пола c видом одежды
@@ -76,31 +96,11 @@ namespace BoutiqueDALXUnit.Data
         /// Получить пол с видом одежды
         /// </summary>
         public static IList<ClothesTypeGenderCompositeEntity> GetClothesTypeGenderEntity(GenderEntity genderEntity,
-                                                                                IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
+                                                                                         IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             clothesTypeEntities.
             Select(clothesTypeEntity => new ClothesTypeGenderCompositeEntity(clothesTypeEntity.Id, genderEntity.Id, 
                                                                     clothesTypeEntity, genderEntity)).
             ToList();
-
-        /// <summary>
-        /// Получить сущности для теста
-        /// </summary>
-        public static List<TestEntity> TestEntities =>
-            TestData.GetTestDomains().
-            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
-            ToList();
-
-        /// <summary>
-        /// Тестовые сущности в результирующей коллекции
-        /// </summary>
-        public static IResultCollection<TestEntity> TestResultEntities =>
-            new ResultCollection<TestEntity>(TestEntities);
-
-        /// <summary>
-        /// Пустая коллекция результирующих сущностей
-        /// </summary>
-        public static IResultCollection<TestEntity> TestResultEntitiesEmpty =>
-           new ResultCollection<TestEntity>(Enumerable.Empty<TestEntity>());
 
         /// <summary>
         /// Получить связующую сущность группы размеров

@@ -32,6 +32,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
 
             await DatabaseLoadTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
             await DatabaseFindTests(boutiqueEntityDatabase, genderEntities, clothesTypeEntities, clothesTypeGenderEntities);
+            await DatabaseSelectTests(boutiqueEntityDatabase);
             await DatabaseWhereTests(boutiqueEntityDatabase, genderEntities, clothesTypeGenderEntities);
             await DatabaseUpdateTests(boutiqueEntityDatabase);
             await BoutiqueEntityDatabaseAdding.AddRange(boutiqueEntityDatabase, categoryEntities);
@@ -70,6 +71,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
             await BoutiqueEntityDatabaseFindTest.FindById_NotFound(boutiqueEntityDatabase);
             await BoutiqueEntityDatabaseFindTest.FindByIds_NotFound(boutiqueEntityDatabase, clothesTypeEntities);
         }
+
+        /// <summary>
+        /// Тесты выбора элементов в базе
+        /// </summary>
+        public static async Task DatabaseSelectTests(IBoutiqueDatabase boutiqueEntityDatabase)
+        {
+            await BoutiqueEntityDatabaseSelectTest.Select(boutiqueEntityDatabase);
+        }
+
 
         /// <summary>
         /// Тесты поиска элементов в базе

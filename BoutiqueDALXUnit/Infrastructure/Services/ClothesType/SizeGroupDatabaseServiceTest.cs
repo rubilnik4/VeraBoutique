@@ -78,8 +78,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// <summary>
         /// База данных
         /// </summary>
-        private static Mock<IDatabase> Database =>
-            new Mock<IDatabase>();
+        private static Mock<IDatabase> Database => new Mock<IDatabase>();
 
         /// <summary>
         /// Таблица базы данных размеров одежды
@@ -112,7 +111,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static Mock<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>> QueryableService =>
             new Mock<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>>().
-                Void(mock => mock.Setup(service => service.FirstOrDefaultAsync(It.IsAny<IEnumerable<SizeGroupEntity>>())).
-                                  ReturnsAsync((IEnumerable<SizeGroupEntity> sizeGroupEntities) => sizeGroupEntities.FirstOrDefault()));
+            Void(mock => mock.Setup(service => service.FirstOrDefaultAsync(It.IsAny<IEnumerable<SizeGroupEntity>>())).
+                              ReturnsAsync((IEnumerable<SizeGroupEntity> sizeGroupEntities) => sizeGroupEntities.FirstOrDefault()));
     }
 }

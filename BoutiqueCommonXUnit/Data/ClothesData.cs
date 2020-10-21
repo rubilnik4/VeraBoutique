@@ -12,8 +12,8 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить одежду
         /// </summary>
-        public static List<IClothesShortDomain> GetClothesShortDomain() =>
-            new List<IClothesShortDomain>()
+        public static List<IClothesShortDomain> ClothesShortDomains =>
+            new List<IClothesShortDomain>
             {
                 new ClothesShortDomain(1, "Верхонки", 55.55m, null),
                 new ClothesShortDomain(2,"Варежки", 0.66m, null),
@@ -22,13 +22,15 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static List<IClothesInformationDomain> GetClothesInformationDomain() =>
-            new List<IClothesInformationDomain>()
+        public static List<IClothesInformationDomain> ClothesInformationDomains =>
+            new List<IClothesInformationDomain>
             {
-                new ClothesInformationDomain(1, "Верхонки", "Верхонки батраческие","Мешковинный",
-                                             new List<int>{ 1,2,3} , 55.55m, null),
-                new ClothesInformationDomain(2,"Варежки", "Варежки простолюдинные", "Серо-вязанные",
-                                             new List<int>{ 3,4,5}, 0.66m, null),
+                new ClothesInformationDomain(1, "Верхонки", "Верхонки батраческие",
+                                             ColorClothesData.GetColorClothesDomain(),
+                                             SizeGroupData.GetSizeGroupDomain(), 55.55m, null),
+                new ClothesInformationDomain(2,"Варежки", "Варежки простолюдинные", 
+                                             ColorClothesData.GetColorClothesDomain(),
+                                             SizeGroupData.GetSizeGroupDomain(), 0.66m, null),
             };
     }
 }

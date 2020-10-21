@@ -16,11 +16,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     public class ClothesInformationEntityConverter : EntityConverter<int, IClothesInformationDomain, ClothesInformationEntity>,
                                                      IClothesInformationEntityConverter
     {
-        public ClothesInformationEntityConverter(ISizeGroupEntityConverter sizeGroupEntityConverter,
-                                                 IColorClothesEntityConverter colorClothesEntityConverter)
+        public ClothesInformationEntityConverter(IColorClothesEntityConverter colorClothesEntityConverter,
+                                                 ISizeGroupEntityConverter sizeGroupEntityConverter)
         {
-            _sizeGroupEntityConverter = sizeGroupEntityConverter;
             _colorClothesEntityConverter = colorClothesEntityConverter;
+            _sizeGroupEntityConverter = sizeGroupEntityConverter;
         }
 
         /// <summary>
