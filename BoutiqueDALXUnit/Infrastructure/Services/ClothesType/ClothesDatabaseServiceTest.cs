@@ -13,7 +13,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Entities;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
 using Moq;
 using Xunit;
 
@@ -31,9 +33,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         public async Task GetWithoutImages_Ok()
         {
             var clothesShortDomains = ClothesData.ClothesShortDomains;
-            var clothesShortEntities = EntityData.ClothesShortEntities;
-          
-            var clothesTable = GetClothesTable(clothesShortEntities);
+            var clothesShortEntities = ClothesShortEntitiesData.ClothesShortEntities;
+
+            var clothesTable = GetClothesTable(GetClothesShortOk(clothesShortEntities),
+                                               FirstClothesInformationOk(ClothesInformationEntitiesData.ClothesInformationEntities));
             var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
                                                                     ClothesShortEntityConverter,
                                                                     ClothesInformationEntityConverter,
@@ -47,25 +50,89 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         }
 
         /// <summary>
-        /// Получить информацию об одежде по идентификатору
+        /// Получить одежду без изображений. Ошибка
         /// </summary>
         [Fact]
-        public async Task GetIncludesById_Ok()
+        public async Task GetWithoutImages_Exception()
         {
-            var clothesInformationDomains = ClothesData.ClothesInformationDomains;
-            var clothesInformationEntities = EntityData.ClothesShortEntities;
-
-            var clothesTable = GetClothesTable(clothesShortEntities);
+            var clothesTable = GetClothesTable(GetClothesShortException(),
+                                               FirstClothesInformationOk(ClothesInformationEntitiesData.ClothesInformationEntities));
             var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
                                                                     ClothesShortEntityConverter,
                                                                     ClothesInformationEntityConverter,
                                                                     QueryableClothesShortService.Object,
                                                                     QueryableInformationService.Object);
 
-            var clothesResults = await clothesDatabaseService.GetIncludesById();
+            var clothesResults = await clothesDatabaseService.GetWithoutImages();
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesResults.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Получить информацию об одежде по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task GetIncludesById_Ok()
+        {
+            var clothesInformationDomains = ClothesData.ClothesInformationDomains;
+            var clothesInformationEntities = ClothesInformationEntitiesData.ClothesInformationEntities;
+            var clothesTable = GetClothesTable(GetClothesShortOk(ClothesShortEntitiesData.ClothesShortEntities),
+                                               FirstClothesInformationOk(clothesInformationEntities));
+            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
+                                                                    ClothesShortEntityConverter,
+                                                                    ClothesInformationEntityConverter,
+                                                                    QueryableClothesShortService.Object,
+                                                                    QueryableInformationService.Object);
+
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
 
             Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.SequenceEqual(clothesShortDomains));
+            Assert.True(clothesResults.Value.Equals(clothesInformationDomains.Last()));
+        }
+
+        /// <summary>
+        /// Получить информацию об одежде по идентификатору. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task GetIncludesById_NotFound()
+        {
+            var clothesInformationDomains = ClothesData.ClothesInformationDomains;
+            var clothesTable = GetClothesTable(GetClothesShortOk(ClothesShortEntitiesData.ClothesShortEntities),
+                                               FirstClothesInformationNotFound());
+
+            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
+                                                                    ClothesShortEntityConverter,
+                                                                    ClothesInformationEntityConverter,
+                                                                    QueryableClothesShortService.Object,
+                                                                    QueryableInformationService.Object);
+
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueNotFound, clothesResults.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Получить информацию об одежде по идентификатору. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task GetIncludesById_Exception()
+        {
+            var clothesInformationDomains = ClothesData.ClothesInformationDomains;
+            var clothesTable = GetClothesTable(GetClothesShortOk(ClothesShortEntitiesData.ClothesShortEntities),
+                                               FirstClothesInformationException());
+
+            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
+                                                                    ClothesShortEntityConverter,
+                                                                    ClothesInformationEntityConverter,
+                                                                    QueryableClothesShortService.Object,
+                                                                    QueryableInformationService.Object);
+
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -76,12 +143,45 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// <summary>
         /// Таблица базы данных одежды
         /// </summary>
-        private static Mock<IClothesTable> GetClothesTable(IEnumerable<ClothesShortEntity> clothesShortEntities) =>
+        private static Mock<IClothesTable> GetClothesTable(Func<IQueryable<ClothesShortEntity>> clothesShortFunc,
+                                                           Func<int, IQueryable<ClothesInformationEntity>> clothesInformationFunc) =>
             new Mock<IClothesTable>().
-            Void(mock => mock.Setup(clothesTable => clothesTable.Select(clothesInformation => 
+            Void(mock => mock.Setup(clothesTable => clothesTable.Select(clothesInformation =>
                                                         new ClothesShortEntity(clothesInformation.Id, clothesInformation.Name,
                                                                                clothesInformation.Price, clothesInformation.Image))).
-                              Returns(clothesShortEntities.AsQueryable));
+                              Returns(clothesShortFunc)).
+            Void(mock => mock.Setup(clothesTable => clothesTable.Where(It.IsAny<int>())).
+                              Returns(clothesInformationFunc));
+
+        /// <summary>
+        /// Функция выбора одежды
+        /// </summary>
+        private static Func<IQueryable<ClothesShortEntity>> GetClothesShortOk(IEnumerable<ClothesShortEntity> clothesShortEntities) =>
+            clothesShortEntities.AsQueryable;
+
+        /// <summary>
+        /// Функция выбора одежды с ошибкой
+        /// </summary>
+        private static Func<IQueryable<ClothesShortEntity>> GetClothesShortException() =>
+            () => throw new Exception();
+
+        /// <summary>
+        /// Функция поиска информации об одежде
+        /// </summary>
+        private static Func<int, IQueryable<ClothesInformationEntity>> FirstClothesInformationOk(IEnumerable<ClothesInformationEntity> clothesInformationEntities) =>
+            id => clothesInformationEntities.Where(clothesInformation => clothesInformation.Id == id).AsQueryable();
+
+        /// <summary>
+        /// Функция поиска информации об одежде. Элемент не найден
+        /// </summary>
+        private static Func<int, IQueryable<ClothesInformationEntity>> FirstClothesInformationNotFound() =>
+            _ => Enumerable.Empty<ClothesInformationEntity>().AsQueryable();
+
+        /// <summary>
+        /// Функция поиска информации об одежде. Ошибка
+        /// </summary>
+        private static Func<int, IQueryable<ClothesInformationEntity>> FirstClothesInformationException() =>
+            _ => throw new Exception();
 
         /// <summary>
         /// Преобразования модели одежды в модель базы данных

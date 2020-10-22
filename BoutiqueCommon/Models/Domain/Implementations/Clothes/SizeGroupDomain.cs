@@ -33,7 +33,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
             SizeNaming.GetGroupName(sizeType, Sizes);
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroup sizeGroup && Equals(sizeGroup);
+        public override bool Equals(object? obj) => obj is ISizeGroupDomain sizeGroup && Equals(sizeGroup);
 
         public bool Equals(ISizeGroupDomain? other) =>
             other?.Id == Id && Sizes.SequenceEqual(other?.Sizes);

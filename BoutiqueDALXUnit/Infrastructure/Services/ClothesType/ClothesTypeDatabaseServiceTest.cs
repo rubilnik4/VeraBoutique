@@ -17,7 +17,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Entities;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Xunit;
@@ -37,26 +39,55 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetByGenderCategory_Ok()
         {
-            var genderEntities = EntityData.GenderEntities;
-            var clothesTypes = EntityData.ClothesTypeEntities;
-            var categories = EntityData.CategoryEntities;
+            var genderEntities = GenderEntitiesData.GenderEntities;
+            var clothesTypes = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var categories = CategoryEntitiesData.CategoryEntities;
             var gender = genderEntities.First().GenderType;
             string category = categories.First().Name;
 
-            var genderWithClothesTypeEntities = EntityData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
-            var categoryEntitiesWithClothesType = EntityData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
+            var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
+            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
             var genderTable = GetGenderTable(genderWithClothesTypeEntities);
             var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter, QueryableService.Object);
+                                                                            clothesTypeEntityConverter,
+                                                                            GetQueryableService(QueryableToListOk).Object);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
             var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypes);
 
             Assert.True(clothesTypesResults.OkStatus);
             Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains));
+        }
+
+        /// <summary>
+        /// Получить вид одежды по типу пола и категории. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetByGenderCategory_Exception()
+        {
+            var genderEntities = GenderEntitiesData.GenderEntities;
+            var clothesTypes = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var categories = CategoryEntitiesData.CategoryEntities;
+            var gender = genderEntities.First().GenderType;
+            string category = categories.First().Name;
+
+            var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
+            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
+            var genderTable = GetGenderTable(genderWithClothesTypeEntities);
+            var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
+            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+            var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
+                                                                            genderTable.Object, categoryTable.Object,
+                                                                            clothesTypeEntityConverter,
+                                                                            GetQueryableService(QueryableToListException).Object);
+
+            var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
+
+            Assert.True(clothesTypesResults.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesTypesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -100,10 +131,23 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// <summary>
         /// Сервис обработки запросов базы данных
         /// </summary>
-        private static Mock<IQueryableService<string, ClothesTypeEntity>> QueryableService =>
+        private static Mock<IQueryableService<string, ClothesTypeEntity>> GetQueryableService(Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> toListFunc)=>
             new Mock<IQueryableService<string, ClothesTypeEntity>>().
             Void(mock => mock.Setup(service => service.ToListAsync(It.IsAny<IEnumerable<ClothesTypeEntity>>())).
-                              ReturnsAsync((IEnumerable<ClothesTypeEntity> clothesTypeEntities) => clothesTypeEntities.ToList()));
+                              ReturnsAsync(toListFunc));
+
+        /// <summary>
+        /// Функция преобразования в список
+        /// </summary>
+        private static Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> QueryableToListOk =>
+            clothesTypeEntities => clothesTypeEntities.ToList();
+
+
+        /// <summary>
+        /// Функция преобразования в список с ошибкой
+        /// </summary>
+        private static Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> QueryableToListException =>
+           _ => throw new Exception();
 
         /// <summary>
         /// Таблица базы данных вида одежды

@@ -7,15 +7,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
     /// <summary>
     /// Связующая сущность одежды с размером
     /// </summary>
-    public class ClothesSizeGroupCompositeEntity: IClothesSizeCompositeEntity
+    public class ClothesSizeGroupCompositeEntity : IClothesSizeCompositeEntity
     {
         public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize)
         : this(clothesId, clothesSizeType, sizeNormalize, null, null)
         { }
 
         public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize,
-                                           ClothesInformationEntity? clothesInformationEntity,
-                                           SizeGroupEntity? sizeGroupEntity)
+                                               ClothesInformationEntity? clothesInformationEntity,
+                                               SizeGroupEntity? sizeGroupEntity)
         {
             ClothesId = clothesId;
             ClothesSizeType = clothesSizeType;

@@ -38,6 +38,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         public DbSet<CategoryEntity> Category { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных цвета одежды
+        /// </summary>
+        public DbSet<ColorClothesEntity> ColorClothes { get; set; } = null!;
+
+        /// <summary>
         /// Таблица базы данных вида одежды EntityFramework
         /// </summary>
         public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
@@ -53,6 +58,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         public DbSet<SizeGroupEntity> SizeGroups { get; set; } = null!;
 
         /// <summary>
+        /// Таблица базы данных  одежды
+        /// </summary>
+        public DbSet<ClothesInformationEntity> Clothes { get; set; } = null!;
+
+        /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
         public ISizeTable SizeTable => new SizeTable(Sizes);
@@ -61,6 +71,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица базы данных группы размеров одежды
         /// </summary>
         public ISizeGroupTable SizeGroupTable => new SizeGroupTable(SizeGroups);
+
+        /// <summary>
+        /// Таблица базы данных цвета одежды
+        /// </summary>
+        public IColorClothesTable ColorClothesTable => new ColorClothesTable(ColorClothes);
 
         /// <summary>
         /// Таблица пола базы данных
@@ -76,6 +91,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица базы данных вида одежды
         /// </summary>
         public IClothesTypeTable ClotheTypeTable => new ClothesTypeTable(ClothesTypes);
+
+        /// <summary>
+        /// Таблица базы данных одежды
+        /// </summary>
+        public IClothesTable ClothesTable => new ClothesTable(Clothes);
 
         /// <summary>
         /// Обновить схемы базы данных

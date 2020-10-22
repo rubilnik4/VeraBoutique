@@ -18,7 +18,7 @@ using Moq;
 using Xunit;
 using static BoutiqueDALXUnit.Data.Services.Implementation.SearchInModels;
 using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseTableMock;
-using static BoutiqueDALXUnit.Data.EntityData;
+using static BoutiqueDALXUnit.Data.Entities.TestEntitiesData;
 using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseServiceMock;
 using static BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.DatabaseMock;
 
@@ -62,7 +62,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var testResult = await testService.Get();
-            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value).ToList();
 
             Assert.True(testResult.HasErrors);
             Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);

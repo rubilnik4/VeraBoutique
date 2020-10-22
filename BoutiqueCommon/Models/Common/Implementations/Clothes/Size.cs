@@ -50,8 +50,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Получить хэш-код коллекции размеров одежды
         /// </summary>
-        public static int GetSizesHashCodes<TSize>(IEnumerable<TSize> sizes)
+        public static double GetSizesHashCodes<TSize>(IEnumerable<TSize> sizes)
             where TSize: ISize=>
-            sizes.Aggregate(0, HashCode.Combine);
+            sizes.Average(size => size.GetHashCode());
     }
 }

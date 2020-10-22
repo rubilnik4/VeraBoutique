@@ -137,13 +137,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Данные одежды. Корректный вариант
         /// </summary>
         private static ResultCollection<IClothesShortDomain> ClothesShortDomainsOk =>
-            new ResultCollection<IClothesShortDomain>(ClothesData.ClothesShortDomains());
+            new ResultCollection<IClothesShortDomain>(ClothesData.ClothesShortDomains);
 
         /// <summary>
         /// Данные информации об одежде. Корректный вариант
         /// </summary>
         private static ResultValue<IClothesInformationDomain> ClothesInformationDomainOk =>
-            new ResultValue<IClothesInformationDomain>(ClothesData.ClothesInformationDomains().First());
+            new ResultValue<IClothesInformationDomain>(ClothesData.ClothesInformationDomains.First());
 
         /// <summary>
         /// Конвертер одежды в трансферную модель

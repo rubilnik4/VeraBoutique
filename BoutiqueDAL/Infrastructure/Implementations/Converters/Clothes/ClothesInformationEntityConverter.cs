@@ -49,9 +49,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         public override ClothesInformationEntity ToEntity(IClothesInformationDomain clothesShortDomain) =>
             new ClothesInformationEntity(clothesShortDomain.Id, clothesShortDomain.Name,
                                          clothesShortDomain.Description,
+                                         clothesShortDomain.Price, clothesShortDomain.Image,
                                          ColorClothesToCompositeEntities(clothesShortDomain.Colors, clothesShortDomain.Id),
-                                         SizeGroupToCompositeEntities(clothesShortDomain.SizeGroups, clothesShortDomain.Id),
-                                         clothesShortDomain.Price, clothesShortDomain.Image);
+                                         SizeGroupToCompositeEntities(clothesShortDomain.SizeGroups, clothesShortDomain.Id));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов
@@ -77,7 +77,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         private IEnumerable<ClothesColorCompositeEntity> ColorClothesToCompositeEntities(IEnumerable<IColorClothesDomain> colorClothesDomains, 
                                                                                          int clothesId) =>
             _colorClothesEntityConverter.ToEntities(colorClothesDomains).
-            Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name));
+            Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name, null,
+                                                                         new ColorClothesEntity(colorClothesEntity.Name)));
 
 
         /// <summary>
@@ -86,7 +87,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         private IEnumerable<ClothesSizeGroupCompositeEntity> SizeGroupToCompositeEntities(IEnumerable<ISizeGroupDomain> sizeGroupDomains,
                                                                                           int clothesId) =>
             _sizeGroupEntityConverter.ToEntities(sizeGroupDomains).
-            Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize));
+            Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
+                                                                          null, sizeGroupEntity));
 
 
     }

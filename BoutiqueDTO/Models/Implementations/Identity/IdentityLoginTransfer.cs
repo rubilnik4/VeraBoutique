@@ -23,13 +23,13 @@ namespace BoutiqueDTO.Models.Implementations.Identity
         /// </summary>
         [Required]
         [MinLength(USERNAME_MINLENGTH)]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = null!;
 
         /// <summary>
         /// Пароль
         /// </summary>
         [Required]
         [MinLength(PASSWORD_MINLENGTH)]
-        public string Password { get; set; }
+        public string Password { get; set; } = null!;
     }
 }

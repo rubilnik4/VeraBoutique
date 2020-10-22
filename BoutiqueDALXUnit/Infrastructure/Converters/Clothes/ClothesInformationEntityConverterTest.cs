@@ -16,7 +16,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var clothesInformationDomains = ClothesData.ClothesInformationDomains().First();
+            var clothesInformationDomains = ClothesData.ClothesInformationDomains.First();
             var colorClothesEntityConverter = new ColorClothesEntityConverter();
             var sizeEntityConverter = new SizeEntityConverter();
             var sizeGroupEntityConverter = new SizeGroupEntityConverter(sizeEntityConverter);

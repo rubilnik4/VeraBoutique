@@ -11,7 +11,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     {
         public void Configure(EntityTypeBuilder<ClothesInformationEntity> builder)
         {
-            builder.HasKey(t => t.Id);
+            builder.HasKey(t => t.Generated);
+            builder.Property(t => t.Generated).IsRequired().HasDefaultValueSql("nextval('\"OrderNumbers\"')");
+           //
             builder.Property(t => t.Name).IsRequired();
             builder.Property(t => t.Description).IsRequired();
             builder.Property(t => t.Price).IsRequired();

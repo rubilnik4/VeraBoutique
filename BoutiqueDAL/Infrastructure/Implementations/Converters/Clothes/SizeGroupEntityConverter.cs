@@ -57,6 +57,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
                                                                               ClothesSizeType clothesSizeType, int sizeNormalize) =>
             _sizeEntityConverter.ToEntities(sizeDomains).
             Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
-                                                              clothesSizeType, sizeNormalize));
+                                                              clothesSizeType, sizeNormalize,
+                                                              new SizeEntity(sizeEntity.SizeType, sizeEntity.SizeName), null));
     }
 }

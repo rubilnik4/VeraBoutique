@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Enums.Identity;

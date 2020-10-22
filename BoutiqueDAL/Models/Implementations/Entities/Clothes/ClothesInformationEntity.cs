@@ -11,23 +11,26 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// </summary>
     public class ClothesInformationEntity : ClothesInformation, IClothesInformationEntity
     {
-        public ClothesInformationEntity(int id, string name, string description, 
-                                        decimal price, byte[]? image)
-            : this(id, name, description, 
-                   Enumerable.Empty<ClothesColorCompositeEntity>(),
-                   Enumerable.Empty<ClothesSizeGroupCompositeEntity>(),
-                   price, image)
+        public ClothesInformationEntity(string name, string description, decimal price, byte[]? image)
+          : this(1, name, description, price, image)
         { }
 
-        public ClothesInformationEntity(int id, string name, string description,
+        public ClothesInformationEntity(int id, string name, string description, decimal price, byte[]? image)
+            : this(id, name, description, price, image,
+                   Enumerable.Empty<ClothesColorCompositeEntity>(),
+                   Enumerable.Empty<ClothesSizeGroupCompositeEntity>())
+        { }
+
+        public ClothesInformationEntity(int id, string name, string description, decimal price, byte[]? image,
                                         IEnumerable<ClothesColorCompositeEntity> clothesColorCompositeEntities,
-                                        IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupCompositeEntities,
-                                        decimal price, byte[]? image)
+                                        IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupCompositeEntities)
           : base(id, name, description, price, image)
         {
             ClothesColorCompositeEntities = clothesColorCompositeEntities.ToList();
             ClothesSizeGroupCompositeEntities = clothesSizeGroupCompositeEntities.ToList();
         }
+
+        public int Generated { get; set; } = 1;
 
         /// <summary>
         /// Связующая сущность одежды и цвета
