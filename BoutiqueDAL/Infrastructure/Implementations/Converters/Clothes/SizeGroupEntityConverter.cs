@@ -7,13 +7,14 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
     /// <summary>
     /// Преобразования модели категории одежды в модель базы данных
     /// </summary>
-    public class SizeGroupEntityConverter : EntityConverter<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupEntityConverter : EntityConverter<(ClothesSizeType, int), ISizeGroupDomain, ISizeGroupEntity, SizeGroupEntity>,
                                             ISizeGroupEntityConverter
     {
         public SizeGroupEntityConverter(ISizeEntityConverter sizeEntityConverter)
@@ -29,7 +30,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать группу размеров одежды из модели базы данных
         /// </summary>
-        public override ISizeGroupDomain FromEntity(SizeGroupEntity sizeGroupEntity) =>
+        public override ISizeGroupDomain FromEntity(ISizeGroupEntity sizeGroupEntity) =>
             new SizeGroupDomain(sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
                                 SizeDomainsFromComposite(sizeGroupEntity.SizeGroupCompositeEntities));
 

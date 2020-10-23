@@ -7,24 +7,40 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
     /// <summary>
     /// Преобразования модели информации об одежде в модель базы данных
     /// </summary>
-    public class ClothesInformationEntityConverter : EntityConverter<int, IClothesInformationDomain, ClothesInformationEntity>,
-                                                     IClothesInformationEntityConverter
+    public class ClothesInformationEntityConverter : 
+        EntityConverter<int, IClothesInformationDomain, IClothesInformationEntity, ClothesInformationEntity>,
+        IClothesInformationEntityConverter
     {
-        public ClothesInformationEntityConverter(IColorClothesEntityConverter colorClothesEntityConverter,
+        public ClothesInformationEntityConverter(IClothesShortEntityConverter clothesShortEntityConverter,
+                                                 IClothesTypeEntityConverter clothesTypeEntityConverter,
+                                                 IColorClothesEntityConverter colorClothesEntityConverter,
                                                  ISizeGroupEntityConverter sizeGroupEntityConverter)
         {
+            _clothesShortEntityConverter = clothesShortEntityConverter;
+            _clothesTypeEntityConverter = clothesTypeEntityConverter;
             _colorClothesEntityConverter = colorClothesEntityConverter;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
         }
 
         /// <summary>
-        /// Преобразования модели категории одежды в модель базы данных
+        /// Преобразования модели одежды в модель базы данных
+        /// </summary>
+        private readonly IClothesShortEntityConverter _clothesShortEntityConverter;
+
+        /// <summary>
+        /// Преобразования модели вида одежды в модель базы данных
+        /// </summary>
+        private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
+
+        /// <summary>
+        /// Преобразования модели цвета одежды в модель базы данных
         /// </summary>
         private readonly IColorClothesEntityConverter _colorClothesEntityConverter;
 
@@ -36,22 +52,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
-        public override IClothesInformationDomain FromEntity(ClothesInformationEntity clothesInformationEntity) =>
-            new ClothesInformationDomain(clothesInformationEntity.Id, clothesInformationEntity.Name,
+        public override IClothesInformationDomain FromEntity(IClothesInformationEntity clothesInformationEntity) =>
+            new ClothesInformationDomain(_clothesShortEntityConverter.FromEntity(clothesInformationEntity),
                                          clothesInformationEntity.Description,
+                                         _clothesTypeEntityConverter.FromEntity(clothesInformationEntity.ClothesTypeEntity!),
                                          ColorClothesDomainsFromComposite(clothesInformationEntity.ClothesColorCompositeEntities),
-                                         SizeGroupDomainsFromComposite(clothesInformationEntity.ClothesSizeGroupCompositeEntities),
-                                         clothesInformationEntity.Price, clothesInformationEntity.Image);
+                                         SizeGroupDomainsFromComposite(clothesInformationEntity.ClothesSizeGroupCompositeEntities));
 
         /// <summary>
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
-        public override ClothesInformationEntity ToEntity(IClothesInformationDomain clothesShortDomain) =>
-            new ClothesInformationEntity(clothesShortDomain.Id, clothesShortDomain.Name,
-                                         clothesShortDomain.Description,
-                                         clothesShortDomain.Price, clothesShortDomain.Image,
-                                         ColorClothesToCompositeEntities(clothesShortDomain.Colors, clothesShortDomain.Id),
-                                         SizeGroupToCompositeEntities(clothesShortDomain.SizeGroups, clothesShortDomain.Id));
+        public override ClothesInformationEntity ToEntity(IClothesInformationDomain clothesInformationDomain) =>
+            new ClothesInformationEntity(_clothesShortEntityConverter.ToEntity(clothesInformationDomain),
+                                         clothesInformationDomain.Description,
+                                         _clothesTypeEntityConverter.ToEntity(clothesInformationDomain.ClothesType),
+                                         ColorClothesToCompositeEntities(clothesInformationDomain.Colors, clothesInformationDomain.Id),
+                                         SizeGroupToCompositeEntities(clothesInformationDomain.SizeGroups, clothesInformationDomain.Id));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов

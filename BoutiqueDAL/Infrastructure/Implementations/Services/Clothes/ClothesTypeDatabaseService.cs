@@ -16,6 +16,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -28,7 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис вида одежды в базе данных
     /// </summary>
-    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, ClothesTypeEntity>, 
+    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>, 
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IDatabase database, IClothesTypeTable clothesTypeTable,

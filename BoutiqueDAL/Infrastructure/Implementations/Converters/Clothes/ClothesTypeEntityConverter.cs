@@ -4,18 +4,20 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
     /// <summary>
     /// Преобразования модели вида одежды в модель базы данных
     /// </summary>
-    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, ClothesTypeEntity>, IClothesTypeEntityConverter
+    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
+                                              IClothesTypeEntityConverter
     {
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public override IClothesTypeDomain FromEntity(ClothesTypeEntity clothesTypeEntity) =>
+        public override IClothesTypeDomain FromEntity(IClothesTypeEntity clothesTypeEntity) =>
             new ClothesTypeDomain(clothesTypeEntity.Name);
 
         /// <summary>

@@ -12,14 +12,28 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     public class ClothesInformationDomain: ClothesInformation, IClothesInformationDomain, 
                                            IEquatable<IClothesInformationDomain>
     {
-        public ClothesInformationDomain(int id, string name, string description,
-                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes,
-                                        decimal price, byte[]? image)
+        public ClothesInformationDomain(IClothesShort clothesShort, 
+                                        string description, IClothesTypeDomain clothesType,
+                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
+           : this(clothesShort.Id, clothesShort.Name,
+                  clothesShort.Price, clothesShort.Image,
+                  description, clothesType, colors, sizes)
+        { }
+
+        public ClothesInformationDomain(int id, string name, decimal price, byte[]? image, 
+                                        string description, IClothesTypeDomain clothesType,
+                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
             : base(id, name, description, price, image)
         {
+            ClothesType = clothesType;
             Colors = colors.ToList();
             SizeGroups = sizes.ToList();
         }
+
+        /// <summary>
+        /// Вид одежды
+        /// </summary>
+        public IClothesTypeDomain ClothesType { get; }
 
         /// <summary>
         /// Цвета одежды
@@ -36,12 +50,13 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
 
         public bool Equals(IClothesInformationDomain? other) =>
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
-            other?.Description == Description && 
+            other?.Description == Description &&
+            other?.ClothesType == ClothesType &&
             other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description,
+            HashCode.Combine(Id, Name, Price, Description, ClothesType.GetHashCode(),
                              Colors.Average(color => color.GetHashCode()),
                              SizeGroups.Average(size => size.GetHashCode()));
         #endregion

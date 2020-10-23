@@ -3,19 +3,20 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
     /// <summary>
     /// Преобразования модели цвета одежды в модель базы данных
     /// </summary>
-    public class ColorClothesEntityConverter : EntityConverter<string, IColorClothesDomain, ColorClothesEntity>,
+    public class ColorClothesEntityConverter : EntityConverter<string, IColorClothesDomain, IColorClothesEntity, ColorClothesEntity>,
                                                IColorClothesEntityConverter
     {
         /// <summary>
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
-        public override IColorClothesDomain FromEntity(ColorClothesEntity colorClothesEntity) =>
+        public override IColorClothesDomain FromEntity(IColorClothesEntity colorClothesEntity) =>
             new ColorClothesDomain(colorClothesEntity.Name);
 
         /// <summary>

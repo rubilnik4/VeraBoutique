@@ -23,14 +23,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public abstract class DatabaseService<TId, TDomain, TEntity> : IDatabaseService<TId, TDomain>
-        where TDomain : IDomainModel<TId>
-        where TEntity : IEntityModel<TId>
-        where TId : notnull
+    public abstract class DatabaseService<TId, TDomain, TEntityIn, TEntityOut> : IDatabaseService<TId, TDomain>
+       where TDomain : IDomainModel<TId>
+       where TEntityIn : IEntityModel<TId>
+       where TEntityOut : class, TEntityIn
+       where TId : notnull
     {
         protected DatabaseService(IDatabase database,
-                                  IDatabaseTable<TId, TEntity> dataTable,
-                                  IEntityConverter<TId, TDomain, TEntity> entityConverter)
+                                  IDatabaseTable<TId, TEntityOut> dataTable,
+                                  IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> entityConverter)
         {
             _database = database;
             _dataTable = dataTable;
@@ -45,12 +46,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Таблица базы данных
         /// </summary>
-        private readonly IDatabaseTable<TId, TEntity> _dataTable;
+        private readonly IDatabaseTable<TId, TEntityOut> _dataTable;
 
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
-        private readonly IEntityConverter<TId, TDomain, TEntity> _entityConverter;
+        private readonly IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> _entityConverter;
 
         /// <summary>
         /// Получить модели из базы
@@ -96,7 +97,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Добавить модели в базу и сохранить
         /// </summary>
-        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TEntity> dataTable,
+        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TEntityOut> dataTable,
                                                                       IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
@@ -110,7 +111,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Получить ошибку двойной записи
         /// </summary>
-        private static async Task<IResultCollection<TId>> GetDuplicateErrorResult(IEnumerable<TEntity> ids, string tableName) =>
+        private static async Task<IResultCollection<TId>> GetDuplicateErrorResult(IEnumerable<TEntityOut> ids, string tableName) =>
             await ResultCollectionFactory.
             CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateError(ids, tableName));
     }

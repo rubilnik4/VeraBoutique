@@ -8,6 +8,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using BoutiqueDALXUnit.Data.Models.Interfaces;
 using Functional.Models.Interfaces.Result;
 using Moq;
 using Xunit;
@@ -17,11 +18,11 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, TestEntity>
+    public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, ITestEntity, TestEntity>
     {
         public TestDatabaseService(IDatabase database,
                                    IDatabaseTable<TestEnum, TestEntity> testDatabaseTable,
-                                   IEntityConverter<TestEnum, ITestDomain, TestEntity> testEntityConverter)
+                                   IEntityConverter<TestEnum, ITestDomain, ITestEntity, TestEntity> testEntityConverter)
             : base(database, testDatabaseTable, testEntityConverter)
         { }
     }

@@ -17,13 +17,12 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// </summary>
         public static IList<ClothesInformationEntity> ClothesInformationEntities =>
             ClothesData.ClothesInformationDomains.
-            Select(clothesInformation => new ClothesInformationEntity(clothesInformation.Id, clothesInformation.Name,
-                                                                      clothesInformation.Description,
-                                                                      clothesInformation.Price, clothesInformation.Image,
-                                                                      GetClothesColorCompositeEntities(clothesInformation.Colors,
-                                                                                                       clothesInformation.Id),
-                                                                      GetClothesSizeGroupCompositeEntities(clothesInformation.SizeGroups,
-                                                                                                           clothesInformation.Id))).
+            Select(clothesInformation =>
+                new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
+                                             new ClothesTypeEntity(clothesInformation.ClothesType.Name), 
+                                             GetClothesColorCompositeEntities(clothesInformation.Colors, clothesInformation.Id),
+                                             GetClothesSizeGroupCompositeEntities(clothesInformation.SizeGroups,
+                                                                                  clothesInformation.Id))).
             ToList();
 
         /// <summary>

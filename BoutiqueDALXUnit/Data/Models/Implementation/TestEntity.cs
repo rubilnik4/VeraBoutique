@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using BoutiqueDALXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueDALXUnit.Data.Models.Implementation
 {
     /// <summary>
     /// Тестовая сущность базы данных
     /// </summary>
-    public class TestEntity : Test, IEntityModel<TestEnum>
+    public class TestEntity : Test, ITestEntity
     {
         public TestEntity(TestEnum testEnum, string name)
             : this(testEnum, name, Enumerable.Empty<TestIncludeEntity> ())

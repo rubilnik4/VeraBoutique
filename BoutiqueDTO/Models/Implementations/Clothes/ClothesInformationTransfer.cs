@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 
@@ -14,12 +16,21 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public ClothesInformationTransfer()
         { }
 
-        public ClothesInformationTransfer(int id, string name, string description,
-                                          IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes,
-                                          decimal price, byte[]? image)
+        public ClothesInformationTransfer(IClothesShort clothesShort,
+                                          string description, ClothesTypeTransfer clothesTypeTransfer,
+                                          IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
+            :this(clothesShort.Id, clothesShort.Name, 
+                  clothesShort.Price, clothesShort.Image,
+                  description, clothesTypeTransfer, colors, sizes)
+        { }
+
+        public ClothesInformationTransfer(int id, string name, decimal price, byte[]? image, 
+                                          string description,  ClothesTypeTransfer clothesTypeTransfer,
+                                          IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
             : base(id, name, price, image)
         {
             Description = description;
+            ClothesTypeTransfer = clothesTypeTransfer;
             Colors = colors.ToList();
             SizeGroups = sizes.ToList();
         }
@@ -29,6 +40,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public string Description { get; } = null!;
+
+        /// <summary>
+        /// Вид одежды
+        /// </summary>
+        [Required]
+        public ClothesTypeTransfer ClothesTypeTransfer { get; } = null!;
 
         /// <summary>
         /// Вид одежды

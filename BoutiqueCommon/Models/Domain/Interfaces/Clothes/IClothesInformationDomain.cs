@@ -10,6 +10,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     public interface IClothesInformationDomain : IClothesShortDomain, IClothesInformation
     {
         /// <summary>
+        /// Вид одежды
+        /// </summary>
+        IClothesTypeDomain ClothesType { get; }
+
+        /// <summary>
         /// Цвета одежды
         /// </summary>
         IReadOnlyCollection<IColorClothesDomain> Colors { get; }

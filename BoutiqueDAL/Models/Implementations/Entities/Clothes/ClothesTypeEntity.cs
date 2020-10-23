@@ -13,23 +13,29 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class ClothesTypeEntity : ClothesType, IClothesTypeEntity
     {
         public ClothesTypeEntity(string name)
-            : this(name, null, null, Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
+            : this(name, null, null,
+                   Enumerable.Empty<ClothesInformationEntity>(), 
+                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
         public ClothesTypeEntity(string name, string? categoryName)
-            : this(name, categoryName, null, Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
+            : this(name, categoryName, null,
+                   Enumerable.Empty<ClothesInformationEntity>(),
+                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
         public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
-            : this(name, null, null, clothesTypeGenderEntities)
+            : this(name, null, null, Enumerable.Empty<ClothesInformationEntity>(), clothesTypeGenderEntities)
         { }
 
         public ClothesTypeEntity(string name, string? categoryName, CategoryEntity? categoryEntity,
+                                 IEnumerable<ClothesInformationEntity> clothesInformationEntities,
                                  IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
            : base(name)
         {
             CategoryName = categoryName;
             CategoryEntity = categoryEntity;
+            ClothesInformationEntities = clothesInformationEntities.ToList();
             ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
         }
 
@@ -42,6 +48,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// Связующая сущность категории одежды
         /// </summary>
         public CategoryEntity? CategoryEntity { get; }
+
+        /// <summary>
+        /// Связующие сущности категории и одежды
+        /// </summary>
+        public IReadOnlyCollection<ClothesInformationEntity> ClothesInformationEntities { get; }
 
         /// <summary>
         /// Связующие сущности пола и вида одежды

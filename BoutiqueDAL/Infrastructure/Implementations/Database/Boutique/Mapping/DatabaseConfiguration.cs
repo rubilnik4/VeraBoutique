@@ -29,8 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
         /// </summary>
         public static void ApplyConfiguration(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseHiLo();
-            modelBuilder.HasSequence<int>("OrderNumbers").StartsAt(10000).IncrementsBy(1);
+            ClothesSequences.ApplyGenerator(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -62,7 +61,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupCompositeInitialize.CompositeSizeData);
             modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);
             modelBuilder.Entity<SizeGroupEntity>().HasData(SizeGroupInitialize.SizeGroupData);
-            modelBuilder.Entity<ClothesInformationEntity>().HasData(ClothesInitialize.ClothesInformationEntities);
         }
     }
 }

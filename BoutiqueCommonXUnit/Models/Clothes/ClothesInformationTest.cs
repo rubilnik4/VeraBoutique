@@ -24,12 +24,13 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
+            var clothesType = new ClothesTypeDomain("Тряпье");
             var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
             var sizes = new List<ISizeDomain> {new SizeDomain(SizeType.American, "1")};
             var sizeGroups = new List<ISizeGroupDomain> {new SizeGroupDomain(ClothesSizeType.Shirt , 1 , sizes) };
-            var clothesShort = new ClothesInformationDomain(id, name, description, colors, sizeGroups, price, null);
+            var clothesShort = new ClothesInformationDomain(id, name, price, null, description, clothesType, colors, sizeGroups);
 
-            int clothesHash = HashCode.Combine(id, name, price, description,
+            int clothesHash = HashCode.Combine(id, name, price, description, clothesType.GetHashCode(),
                                                colors.Average(color => color.GetHashCode()),
                                                sizeGroups.Average(size => size.GetHashCode()));
             Assert.Equal(clothesHash, clothesShort.GetHashCode());

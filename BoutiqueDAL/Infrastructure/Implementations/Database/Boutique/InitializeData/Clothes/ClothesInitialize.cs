@@ -14,8 +14,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         public static IReadOnlyCollection<ClothesInformationEntity> ClothesInformationEntities =>
            new List<ClothesInformationEntity>
            {
-               new ClothesInformationEntity(1, "Платье", "Платье пернатое", 55m, Properties.Resources.TestImage ),
-               new ClothesInformationEntity(2, "Джинсы", "Джинсы резанные", 35m, Properties.Resources.TestImage ),
+               new ClothesInformationEntity(10000, "Платье", 55m, Properties.Resources.TestImage, "Платье пернатое"),
+               new ClothesInformationEntity(10001, "Джинсы", 35m, Properties.Resources.TestImage, "Джинсы резанные"),
            };
     }
 }

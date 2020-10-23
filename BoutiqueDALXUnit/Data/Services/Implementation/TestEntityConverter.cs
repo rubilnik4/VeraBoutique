@@ -7,6 +7,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
@@ -14,12 +15,12 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     /// <summary>
     /// Преобразования доменной модели в модель базы данных
     /// </summary>
-    public class TestEntityConverter : EntityConverter<TestEnum, ITestDomain, TestEntity>, ITestEntityConverter
+    public class TestEntityConverter : EntityConverter<TestEnum, ITestDomain, ITestEntity, TestEntity>, ITestEntityConverter
     {
         /// <summary>
         /// Преобразовать из модели базы данных
         /// </summary>
-        public override ITestDomain FromEntity(TestEntity testEntity) =>
+        public override ITestDomain FromEntity(ITestEntity testEntity) =>
             new TestDomain(testEntity.TestEnum, testEntity.Name);
 
         /// <summary>

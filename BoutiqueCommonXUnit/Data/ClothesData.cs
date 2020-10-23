@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 
@@ -25,12 +26,14 @@ namespace BoutiqueCommonXUnit.Data
         public static List<IClothesInformationDomain> ClothesInformationDomains =>
             new List<IClothesInformationDomain>
             {
-                new ClothesInformationDomain(1, "Верхонки", "Верхонки батраческие",
+                new ClothesInformationDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",
+                                             new ClothesTypeDomain("Перчатки"),
                                              ColorClothesData.GetColorClothesDomain(),
-                                             SizeGroupData.GetSizeGroupDomain(), 55.55m, null),
-                new ClothesInformationDomain(2,"Варежки", "Варежки простолюдинные", 
+                                             SizeGroupData.GetSizeGroupDomain()),
+                new ClothesInformationDomain(2, "Варежки", 0.66m, null, "Варежки простолюдинные",
+                                             new ClothesTypeDomain("Перчатки"),
                                              ColorClothesData.GetColorClothesDomain(),
-                                             SizeGroupData.GetSizeGroupDomain(), 0.66m, null),
+                                             SizeGroupData.GetSizeGroupDomain()),
             };
     }
 }

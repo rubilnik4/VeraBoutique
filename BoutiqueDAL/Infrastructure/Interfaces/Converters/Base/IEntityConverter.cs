@@ -11,29 +11,30 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
     /// <summary>
     /// Базовый конвертер из доменной модели в модель базы данных
     /// </summary>
-    public interface IEntityConverter<TId, TDomain, TEntity>
+    public interface IEntityConverter<TId, TDomain, in TEntityIn, out TEntityOut>
         where TDomain : IDomainModel<TId>
-        where TEntity: IEntityModel<TId>
+        where TEntityIn : IEntityModel<TId>
+        where TEntityOut : class, TEntityIn
         where TId: notnull
     {
         /// <summary>
         /// Преобразовать модель базы данных в доменную
         /// </summary>
-        TDomain FromEntity(TEntity entity);
+        TDomain FromEntity(TEntityIn entity);
 
         /// <summary>
         /// Преобразовать доменную модель в модель базы данных
         /// </summary>
-        TEntity ToEntity(TDomain domain);
+        TEntityOut ToEntity(TDomain domain);
 
         /// <summary>
         /// Преобразовать модели базы данных в доменные
         /// </summary>
-        IEnumerable<TDomain> FromEntities(IEnumerable<TEntity> entities);
+        IEnumerable<TDomain> FromEntities(IEnumerable<TEntityIn> entities);
 
         /// <summary>
         /// Преобразовать доменные модели в модели базы данных
         /// </summary>
-        IEnumerable<TEntity> ToEntities(IEnumerable<TDomain> domains);
+        IEnumerable<TEntityOut> ToEntities(IEnumerable<TDomain> domains);
     }
 }
