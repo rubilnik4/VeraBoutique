@@ -19,6 +19,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
             builder.Property(t => t.Price).IsRequired();
             builder.Property(t => t.Image).IsRequired();
 
+            builder.HasOne(t => t.GenderEntity)
+                   .WithMany(s => s!.ClothesInformationEntities)
+                   .HasForeignKey(sc => sc.GenderType)
+                   .IsRequired();
+
             builder.HasOne(t => t.ClothesTypeEntity)
                    .WithMany(s => s!.ClothesInformationEntities)
                    .HasForeignKey(sc => sc.ClothesTypeName)

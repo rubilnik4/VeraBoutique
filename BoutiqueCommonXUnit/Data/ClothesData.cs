@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommonXUnit.Data
 {
@@ -27,11 +28,13 @@ namespace BoutiqueCommonXUnit.Data
             new List<IClothesInformationDomain>
             {
                 new ClothesInformationDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",
-                                             new ClothesTypeDomain("Перчатки"),
+                                             new GenderDomain(GenderType.Male, "Мужик"), 
+                                             new ClothesTypeDomain("Перчатки", new CategoryDomain("Перчатки")),
                                              ColorClothesData.GetColorClothesDomain(),
                                              SizeGroupData.GetSizeGroupDomain()),
                 new ClothesInformationDomain(2, "Варежки", 0.66m, null, "Варежки простолюдинные",
-                                             new ClothesTypeDomain("Перчатки"),
+                                             new GenderDomain(GenderType.Female, "Женщина"),
+                                             new ClothesTypeDomain("Перчатки", new CategoryDomain("Перчатки")),
                                              ColorClothesData.GetColorClothesDomain(),
                                              SizeGroupData.GetSizeGroupDomain()),
             };

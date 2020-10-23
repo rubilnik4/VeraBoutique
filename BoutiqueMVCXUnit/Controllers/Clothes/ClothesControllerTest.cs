@@ -156,7 +156,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// </summary>
         private static IClothesInformationTransferConverter ClothesInformationTransferConverter =>
             new ClothesInformationTransferConverter(new ClothesShortTransferConverter(), 
-                                                    new ClothesTypeTransferConverter(), 
+                                                    new GenderTransferConverter(), 
+                                                    new ClothesTypeTransferConverter(new CategoryTransferConverter()), 
                                                     new ColorClothesTransferConverter(), 
                                                     new SizeGroupTransferConverter(new SizeTransferConverter()));
     }

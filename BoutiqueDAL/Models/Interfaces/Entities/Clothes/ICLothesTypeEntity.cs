@@ -16,7 +16,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Идентификатор связующей сущности категории одежды
         /// </summary>
-        string? CategoryName { get; }
+        string CategoryName { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

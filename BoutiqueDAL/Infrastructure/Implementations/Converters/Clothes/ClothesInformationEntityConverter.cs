@@ -19,11 +19,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         IClothesInformationEntityConverter
     {
         public ClothesInformationEntityConverter(IClothesShortEntityConverter clothesShortEntityConverter,
+                                                 IGenderEntityConverter genderEntityConverter,
                                                  IClothesTypeEntityConverter clothesTypeEntityConverter,
                                                  IColorClothesEntityConverter colorClothesEntityConverter,
                                                  ISizeGroupEntityConverter sizeGroupEntityConverter)
         {
             _clothesShortEntityConverter = clothesShortEntityConverter;
+            _genderEntityConverter = genderEntityConverter;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
             _colorClothesEntityConverter = colorClothesEntityConverter;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
@@ -33,6 +35,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// Преобразования модели одежды в модель базы данных
         /// </summary>
         private readonly IClothesShortEntityConverter _clothesShortEntityConverter;
+
+        /// <summary>
+        /// Преобразования модели вида одежды в модель базы данных
+        /// </summary>
+        private readonly IGenderEntityConverter _genderEntityConverter;
 
         /// <summary>
         /// Преобразования модели вида одежды в модель базы данных
@@ -55,6 +62,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         public override IClothesInformationDomain FromEntity(IClothesInformationEntity clothesInformationEntity) =>
             new ClothesInformationDomain(_clothesShortEntityConverter.FromEntity(clothesInformationEntity),
                                          clothesInformationEntity.Description,
+                                         _genderEntityConverter.FromEntity(clothesInformationEntity.GenderEntity!),
                                          _clothesTypeEntityConverter.FromEntity(clothesInformationEntity.ClothesTypeEntity!),
                                          ColorClothesDomainsFromComposite(clothesInformationEntity.ClothesColorCompositeEntities),
                                          SizeGroupDomainsFromComposite(clothesInformationEntity.ClothesSizeGroupCompositeEntities));
@@ -65,6 +73,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         public override ClothesInformationEntity ToEntity(IClothesInformationDomain clothesInformationDomain) =>
             new ClothesInformationEntity(_clothesShortEntityConverter.ToEntity(clothesInformationDomain),
                                          clothesInformationDomain.Description,
+                                         _genderEntityConverter.ToEntity(clothesInformationDomain.Gender),
                                          _clothesTypeEntityConverter.ToEntity(clothesInformationDomain.ClothesType),
                                          ColorClothesToCompositeEntities(clothesInformationDomain.Colors, clothesInformationDomain.Id),
                                          SizeGroupToCompositeEntities(clothesInformationDomain.SizeGroups, clothesInformationDomain.Id));

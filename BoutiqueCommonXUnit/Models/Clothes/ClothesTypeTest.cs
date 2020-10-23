@@ -17,11 +17,11 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesType_Equal_Ok()
         {
-            const string clothesType = "свитер";
+            const string clothesType = "Свитер";
+            var categoryDomain = new CategoryDomain("Верхушка");
+            var clothesTypeDomain = new ClothesTypeDomain(clothesType, categoryDomain);
 
-            var clothesTypeDomain = new ClothesTypeDomain(clothesType);
-
-            int clothesTypeHash = HashCode.Combine(clothesType);
+            int clothesTypeHash = HashCode.Combine(clothesType, categoryDomain.GetHashCode());
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
         }
     }

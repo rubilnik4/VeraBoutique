@@ -18,11 +18,12 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         {
             var clothesInformation = ClothesData.ClothesInformationDomains.First();
             var clothesShortTransferConverter = new ClothesShortTransferConverter();
-            var clothesTypeTransferConverter = new ClothesTypeTransferConverter();
+            var genderTransferConverter = new GenderTransferConverter();
+            var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new CategoryTransferConverter());
             var colorClothesTransferConverter = new ColorClothesTransferConverter();
-            var sizeTransferConverter = new SizeTransferConverter();
-            var sizeGroupTransferConverter = new SizeGroupTransferConverter(sizeTransferConverter);
+            var sizeGroupTransferConverter = new SizeGroupTransferConverter(new SizeTransferConverter());
             var clothesInformationTransferConverter = new ClothesInformationTransferConverter(clothesShortTransferConverter,
+                                                                                              genderTransferConverter,
                                                                                               clothesTypeTransferConverter,
                                                                                               colorClothesTransferConverter,
                                                                                               sizeGroupTransferConverter);

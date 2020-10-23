@@ -9,6 +9,6 @@ namespace BoutiqueDALXUnit.Data.Services.Interfaces
     /// <summary>
     /// Тестовый конвертер сущностей
     /// </summary>
-    public interface ITestEntityConverter: IEntityConverter<TestEnum, ITestDomain, ITestEntity,TestEntity>
+    public interface ITestEntityConverter : IEntityConverter<TestEnum, ITestDomain, ITestEntity, TestEntity>
     { }
 }

@@ -10,6 +10,11 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     public interface IClothesInformationTransfer: IClothesInformation, IClothesShortTransfer
     {
         /// <summary>
+        /// Тип пола
+        /// </summary>
+        GenderTransfer GenderTransfer { get; }
+
+        /// <summary>
         /// Вид одежды
         /// </summary>
         ClothesTypeTransfer ClothesTypeTransfer { get; }

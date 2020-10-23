@@ -14,9 +14,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public ClothesTypeTransfer()
         { }
 
-        public ClothesTypeTransfer(string name)
+        public ClothesTypeTransfer(string name, CategoryTransfer categoryTransfer)
         {
             Name = name;
+            CategoryTransfer = categoryTransfer;
         }
 
         /// <summary>
@@ -29,5 +30,11 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// Категория одежды. Трансферная модель
+        /// </summary>
+        [Required]
+        public CategoryTransfer CategoryTransfer { get; } = null!;
     }
 }

@@ -19,7 +19,8 @@ namespace BoutiqueDALXUnit.Data.Entities
             ClothesData.ClothesInformationDomains.
             Select(clothesInformation =>
                 new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
-                                             new ClothesTypeEntity(clothesInformation.ClothesType.Name), 
+                                             new GenderEntity(clothesInformation.Gender.GenderType, clothesInformation.Gender.Name), 
+                                             new ClothesTypeEntity(clothesInformation.ClothesType.Name, clothesInformation.ClothesType.Name), 
                                              GetClothesColorCompositeEntities(clothesInformation.Colors, clothesInformation.Id),
                                              GetClothesSizeGroupCompositeEntities(clothesInformation.SizeGroups,
                                                                                   clothesInformation.Id))).
@@ -29,7 +30,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить связующие сущности одежды и цвета
         /// </summary>
         private static IEnumerable<ClothesColorCompositeEntity> GetClothesColorCompositeEntities(IEnumerable<IColorClothesDomain> colorClothesDomains,
-                                                                                               int clothesId) =>
+                                                                                                 int clothesId) =>
             colorClothesDomains.
             Select(colorClothesDomain => new ClothesColorCompositeEntity(clothesId, colorClothesDomain.Name,
                                                                          null, new ColorClothesEntity(colorClothesDomain.Name)));

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
@@ -14,7 +15,17 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
         /// </summary>
-        string? ClothesTypeName { get; }
+        GenderType GenderType { get; }
+
+        /// <summary>
+        /// Связующая сущность типа одежды
+        /// </summary>
+        GenderEntity? GenderEntity { get; }
+
+        /// <summary>
+        /// Идентификатор связующей сущности типа одежды
+        /// </summary>
+        string ClothesTypeName { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

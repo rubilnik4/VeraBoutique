@@ -9,26 +9,32 @@ using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
 {
-    public class ClothesInformationDomain: ClothesInformation, IClothesInformationDomain, 
+    public class ClothesInformationDomain : ClothesInformation, IClothesInformationDomain,
                                            IEquatable<IClothesInformationDomain>
     {
-        public ClothesInformationDomain(IClothesShort clothesShort, 
-                                        string description, IClothesTypeDomain clothesType,
+        public ClothesInformationDomain(IClothesShort clothesShort,
+                                        string description, IGenderDomain gender, IClothesTypeDomain clothesType,
                                         IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
            : this(clothesShort.Id, clothesShort.Name,
                   clothesShort.Price, clothesShort.Image,
-                  description, clothesType, colors, sizes)
+                  description, gender, clothesType, colors, sizes)
         { }
 
-        public ClothesInformationDomain(int id, string name, decimal price, byte[]? image, 
-                                        string description, IClothesTypeDomain clothesType,
+        public ClothesInformationDomain(int id, string name, decimal price, byte[]? image,
+                                        string description, IGenderDomain gender, IClothesTypeDomain clothesType,
                                         IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
             : base(id, name, description, price, image)
         {
+            Gender = gender;
             ClothesType = clothesType;
             Colors = colors.ToList();
             SizeGroups = sizes.ToList();
         }
+
+        /// <summary>
+        /// Пол одежды
+        /// </summary>
+        public IGenderDomain Gender { get; }
 
         /// <summary>
         /// Вид одежды
@@ -52,11 +58,13 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
             other?.Description == Description &&
             other?.ClothesType == ClothesType &&
+            other?.Gender == Gender &&
             other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description, ClothesType.GetHashCode(),
+            HashCode.Combine(Id, Name, Price, Description, 
+                             ClothesType.GetHashCode(), Gender.GetHashCode(),
                              Colors.Average(color => color.GetHashCode()),
                              SizeGroups.Average(size => size.GetHashCode()));
         #endregion

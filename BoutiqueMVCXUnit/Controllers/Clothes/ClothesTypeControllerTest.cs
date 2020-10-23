@@ -98,6 +98,6 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
         private static IClothesTypeTransferConverter ClothesTypeTransferConverter => 
-            new ClothesTypeTransferConverter();
+            new ClothesTypeTransferConverter(new CategoryTransferConverter());
     }
 }

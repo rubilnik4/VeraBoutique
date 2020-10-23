@@ -14,16 +14,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
                                               IClothesTypeEntityConverter
     {
+        public ClothesTypeEntityConverter(ICategoryEntityConverter categoryEntityConverter)
+        {
+            _categoryEntityConverter = categoryEntityConverter;
+        }
+
+        /// <summary>
+        /// Преобразования модели категории одежды в модель базы данных
+        /// </summary>
+        private readonly ICategoryEntityConverter _categoryEntityConverter;
+
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
         public override IClothesTypeDomain FromEntity(IClothesTypeEntity clothesTypeEntity) =>
-            new ClothesTypeDomain(clothesTypeEntity.Name);
+            new ClothesTypeDomain(clothesTypeEntity.Name,
+                                  _categoryEntityConverter.FromEntity(clothesTypeEntity.CategoryEntity!));
 
         /// <summary>
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
         public override ClothesTypeEntity ToEntity(IClothesTypeDomain clothesTypeDomain) =>
-            new ClothesTypeEntity(clothesTypeDomain.Name);
+            new ClothesTypeEntity(clothesTypeDomain.Name,
+                                  _categoryEntityConverter.ToEntity(clothesTypeDomain.CategoryDomain));
     }
 }

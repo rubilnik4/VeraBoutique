@@ -15,8 +15,8 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// </summary>
         public static List<GenderEntity> GenderEntities =>
             GenderData.GetGendersDomain().
-                       Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
-                       ToList();
+            Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
+            ToList();
 
         /// <summary>
         /// Получить сущности типа пола c видом одежды
@@ -24,8 +24,9 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
                                                                           IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             genderEntities.
-                Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                                  ClothesTypeEntitiesData.GetClothesTypeGenderEntity(gender, clothesTypeEntities))).
-                ToList();
+            Select(gender => new GenderEntity(gender.GenderType, gender.Name,
+                                              ClothesTypeEntitiesData.GetClothesTypeGenderEntity(gender, clothesTypeEntities),
+                                              Enumerable.Empty<ClothesInformationEntity>())).
+            ToList();
     }
 }

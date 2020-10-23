@@ -17,12 +17,12 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var clothesType = ClothesTypeData.GetClothesTypeDomain().First();
-            var clothesTypeTransferConverter = new ClothesTypeTransferConverter();
+            var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new CategoryTransferConverter());
 
             var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);
-            var ClothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);
+            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);
 
-            Assert.True(clothesType.Equals(ClothesTypeAfterConverter));
+            Assert.True(clothesType.Equals(clothesTypeAfterConverter));
         }
     }
 }

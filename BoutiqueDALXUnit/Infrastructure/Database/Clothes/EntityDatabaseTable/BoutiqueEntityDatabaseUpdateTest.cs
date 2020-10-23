@@ -38,7 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// </summary>
         public static async Task Update_NotFound(IBoutiqueDatabase database)
         {
-            var clothesTypeUpdate = new ClothesTypeEntity("NotFound");
+            var clothesTypeUpdate = new ClothesTypeEntity("NotFound", new CategoryEntity("NotFound"));
 
             var resultUpdate = database.ClotheTypeTable.Update(clothesTypeUpdate);
             var resultSave = await database.SaveChangesAsync();

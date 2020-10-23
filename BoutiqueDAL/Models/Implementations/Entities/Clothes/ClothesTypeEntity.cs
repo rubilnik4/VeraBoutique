@@ -12,23 +12,19 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// </summary>
     public class ClothesTypeEntity : ClothesType, IClothesTypeEntity
     {
-        public ClothesTypeEntity(string name)
-            : this(name, null, null,
-                   Enumerable.Empty<ClothesInformationEntity>(), 
-                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
-        { }
-
-        public ClothesTypeEntity(string name, string? categoryName)
+        public ClothesTypeEntity(string name, string categoryName)
             : this(name, categoryName, null,
                    Enumerable.Empty<ClothesInformationEntity>(),
                    Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
-        public ClothesTypeEntity(string name, IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
-            : this(name, null, null, Enumerable.Empty<ClothesInformationEntity>(), clothesTypeGenderEntities)
+        public ClothesTypeEntity(string name, CategoryEntity categoryEntity)
+            : this(name, categoryEntity.Name, categoryEntity,
+                   Enumerable.Empty<ClothesInformationEntity>(),
+                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
-        public ClothesTypeEntity(string name, string? categoryName, CategoryEntity? categoryEntity,
+        public ClothesTypeEntity(string name, string categoryName, CategoryEntity? categoryEntity,
                                  IEnumerable<ClothesInformationEntity> clothesInformationEntities,
                                  IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
            : base(name)
@@ -42,7 +38,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Идентификатор связующей сущности категории одежды
         /// </summary>
-        public string? CategoryName { get; }
+        public string CategoryName { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

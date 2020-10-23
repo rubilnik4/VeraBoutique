@@ -194,7 +194,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static IClothesInformationEntityConverter ClothesInformationEntityConverter =>
             new ClothesInformationEntityConverter(new ClothesShortEntityConverter(), 
-                                                  new ClothesTypeEntityConverter(), 
+                                                  new GenderEntityConverter(), 
+                                                  new ClothesTypeEntityConverter(new CategoryEntityConverter()), 
                                                   new ColorClothesEntityConverter(),
                                                   new SizeGroupEntityConverter(new SizeEntityConverter()));
 
