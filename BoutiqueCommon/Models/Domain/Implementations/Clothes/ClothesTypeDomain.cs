@@ -27,7 +27,8 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
         public override bool Equals(object? obj) => obj is IClothesTypeDomain clothesTypeDomain && Equals(clothesTypeDomain);
 
         public bool Equals(IClothesTypeDomain? other) =>
-            other?.Id == Id && other?.CategoryDomain == CategoryDomain;
+            other?.Id == Id && 
+            other?.CategoryDomain.Equals(CategoryDomain) == true;
 
         public override int GetHashCode() => HashCode.Combine(Name, CategoryDomain.GetHashCode());
         #endregion

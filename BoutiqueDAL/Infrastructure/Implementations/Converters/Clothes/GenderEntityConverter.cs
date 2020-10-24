@@ -7,6 +7,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
@@ -19,8 +22,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public override IGenderDomain FromEntity(IGenderEntity genderEntity) =>
-            new GenderDomain(genderEntity.GenderType, genderEntity.Name);
+        public override IResultValue<IGenderDomain> FromEntity(IGenderEntity genderEntity) =>
+            new GenderDomain(genderEntity.GenderType, genderEntity.Name).
+            Map(gender => new ResultValue<IGenderDomain>(gender));
 
         /// <summary>
         /// Преобразовать тип пола в модель базы данных

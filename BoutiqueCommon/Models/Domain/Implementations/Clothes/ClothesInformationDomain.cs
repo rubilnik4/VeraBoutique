@@ -57,8 +57,8 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
         public bool Equals(IClothesInformationDomain? other) =>
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
             other?.Description == Description &&
-            other?.ClothesType == ClothesType &&
-            other?.Gender == Gender &&
+            other?.ClothesType.Equals(ClothesType) == true &&
+            other?.Gender.Equals(Gender) == true &&
             other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 

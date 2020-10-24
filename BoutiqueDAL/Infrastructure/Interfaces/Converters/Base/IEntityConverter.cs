@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
 {
@@ -20,7 +21,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать модель базы данных в доменную
         /// </summary>
-        TDomain FromEntity(TEntityIn entity);
+        IResultValue<TDomain> FromEntity(TEntityIn entity);
 
         /// <summary>
         /// Преобразовать доменную модель в модель базы данных
@@ -30,7 +31,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать модели базы данных в доменные
         /// </summary>
-        IEnumerable<TDomain> FromEntities(IEnumerable<TEntityIn> entities);
+        IResultCollection<TDomain> FromEntities(IEnumerable<TEntityIn> entities);
 
         /// <summary>
         /// Преобразовать доменные модели в модели базы данных

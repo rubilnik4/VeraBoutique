@@ -3,6 +3,9 @@ using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Base
 {
@@ -19,7 +22,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Base
         /// <summary>
         /// Преобразовать модель базы данных в доменную
         /// </summary>
-        public abstract TDomain FromEntity(TEntityIn entity);
+        public abstract IResultValue<TDomain> FromEntity(TEntityIn entity);
 
         /// <summary>
         /// Преобразовать доменную модель в модель базы данных
@@ -29,8 +32,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Base
         /// <summary>
         /// Преобразовать модели базы данных в доменные
         /// </summary>
-        public IEnumerable<TDomain> FromEntities(IEnumerable<TEntityIn> entities) =>
-            entities.Select(FromEntity);
+        public IResultCollection<TDomain> FromEntities(IEnumerable<TEntityIn> entities) =>
+            entities.Select(FromEntity).ToResultCollection();
 
         /// <summary>
         /// Преобразовать доменные модели в модели базы данных

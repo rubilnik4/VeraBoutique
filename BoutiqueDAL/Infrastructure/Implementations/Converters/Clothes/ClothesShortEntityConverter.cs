@@ -4,6 +4,9 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
@@ -16,8 +19,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
-        public override IClothesShortDomain FromEntity(IClothesShortEntity clothesShortEntity) =>
-            new ClothesShortDomain(clothesShortEntity.Id, clothesShortEntity.Name, clothesShortEntity.Price, clothesShortEntity.Image);
+        public override IResultValue<IClothesShortDomain> FromEntity(IClothesShortEntity clothesShortEntity) =>
+            new ClothesShortDomain(clothesShortEntity.Id, clothesShortEntity.Name, clothesShortEntity.Price, clothesShortEntity.Image).
+            Map(clothesShort => new ResultValue<IClothesShortDomain>(clothesShort));
 
         /// <summary>
         /// Преобразовать категорию одежды в модель базы данных

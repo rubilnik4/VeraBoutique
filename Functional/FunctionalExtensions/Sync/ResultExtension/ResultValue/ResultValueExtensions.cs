@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -16,6 +17,15 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
             @this.OkStatus
                 ? new ResultCollection<TValue>(@this.Value)
                 : new ResultCollection<TValue>(@this.Errors);
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ со значением в коллекцию
+        /// </summary>      
+        public static IResultCollection<TValue> ToResultCollection<TValue>(this IEnumerable<IResultValue<TValue>> @this) =>
+            @this.ToList().
+            Map(collection => collection.All(result => result.OkStatus)
+                    ? new ResultCollection<TValue>(collection.Select(result => result.Value))
+                    : new ResultCollection<TValue>(collection.SelectMany(result => result.Errors)));
 
         /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль

@@ -21,10 +21,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
             var resultNoError = new ResultValue<IEnumerable<int>>(collection);
 
-            var resultValue = resultNoError.ToResultCollection();
+            var resultCollection = resultNoError.ToResultCollection();
 
-            Assert.True(resultValue.OkStatus);
-            Assert.True(collection.SequenceEqual(resultValue.Value));
+            Assert.True(resultCollection.OkStatus);
+            Assert.True(collection.SequenceEqual(resultCollection.Value));
         }
 
         /// <summary>
@@ -36,11 +36,44 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var error = CreateErrorTest();
             var resultHasError = new ResultValue<IEnumerable<int>>(error);
 
-            var resultValue = resultHasError.ToResultCollection();
+            var resultCollection = resultHasError.ToResultCollection();
 
-            Assert.True(resultValue.HasErrors);
-            Assert.Single(resultValue.Errors);
-            Assert.True(error.Equals(resultValue.Errors.Last()));
+            Assert.True(resultCollection.HasErrors);
+            Assert.Single(resultCollection.Errors);
+            Assert.True(error.Equals(resultCollection.Errors.Last()));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ с коллекцией без ошибок
+        /// </summary>      
+        [Fact]
+        public void ToResultCollection_Enumerable_OkStatus()
+        {
+            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
+            var resultValues = collection.Select(value => new ResultValue<int>(value));
+
+            var resultCollection = resultValues.ToResultCollection();
+
+            Assert.True(resultCollection.OkStatus);
+            Assert.True(collection.SequenceEqual(resultCollection.Value));
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ с коллекцией с ошибкой
+        /// </summary>      
+        [Fact]
+        public void ToResultCollection_Enumerable_HasErrors()
+        {
+            var error = CreateErrorTest();
+            var collection = Enumerable.Range(0, 3).ToList().AsReadOnly();
+            var resultValues = collection.Select(value => new ResultValue<int>(value)).
+                                          Append(new ResultValue<int>(error));
+
+            var resultCollection = resultValues.ToResultCollection();
+
+            Assert.True(resultCollection.HasErrors);
+            Assert.Single(resultCollection.Errors);
+            Assert.True(error.Equals(resultCollection.Errors.Last()));
         }
 
         /// <summary>
