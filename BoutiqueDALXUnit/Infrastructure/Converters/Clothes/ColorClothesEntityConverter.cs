@@ -22,7 +22,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
             var colorClothesEntity = colorClothesEntityConverter.ToEntity(colorClothesDomain);
             var colorClothesAfterConverter = colorClothesEntityConverter.FromEntity(colorClothesEntity);
 
-            Assert.True(colorClothesDomain.Equals(colorClothesAfterConverter));
+            Assert.True(colorClothesAfterConverter.OkStatus);
+            Assert.True(colorClothesDomain.Equals(colorClothesAfterConverter.Value));
         }
     }
 }

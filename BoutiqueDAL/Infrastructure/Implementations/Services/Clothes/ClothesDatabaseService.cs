@@ -74,7 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IClothesShortDomain>> GetWithoutImages() =>
             await ResultCollectionTryAsync(GetClothesInformationWithoutImages,
                                            DatabaseErrors.TableAccessError(nameof(_clothesTable))).
-            ResultCollectionOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
+            ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
 
         /// <summary>
         /// Получить информацию об одежде по идентификатору
@@ -84,7 +84,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString(),
                                                                                                                   nameof(IClothesTable))),
                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
-            ResultValueOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
+            ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
 
 
         /// <summary>

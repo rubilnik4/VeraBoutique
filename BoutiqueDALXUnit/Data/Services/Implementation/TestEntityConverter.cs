@@ -9,6 +9,9 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
 {
@@ -20,8 +23,9 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// <summary>
         /// Преобразовать из модели базы данных
         /// </summary>
-        public override ITestDomain FromEntity(ITestEntity testEntity) =>
-            new TestDomain(testEntity.TestEnum, testEntity.Name);
+        public override IResultValue<ITestDomain> FromEntity(ITestEntity testEntity) =>
+            new TestDomain(testEntity.TestEnum, testEntity.Name).
+            Map(test => new ResultValue<ITestDomain>(test));
 
         /// <summary>
         /// Преобразовать  в модель базы данных

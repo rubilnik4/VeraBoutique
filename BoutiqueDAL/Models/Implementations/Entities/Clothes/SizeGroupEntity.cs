@@ -27,22 +27,22 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,
-                               IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities,
-                               IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupCompositeEntity)
+                               IEnumerable<SizeGroupCompositeEntity>? sizeGroupCompositeEntities,
+                               IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupCompositeEntity)
             : base(clothesSizeType, sizeNormalize)
         {
-            SizeGroupCompositeEntities = sizeGroupCompositeEntities.ToList();
-            ClothesSizeGroupCompositeEntities = clothesSizeGroupCompositeEntity.ToList();
+            SizeGroupCompositeEntities = sizeGroupCompositeEntities?.ToList();
+            ClothesSizeGroupCompositeEntities = clothesSizeGroupCompositeEntity?.ToList();
         }
 
         /// <summary>
         /// Связующая сущность размера одежды
         /// </summary>
-        public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupCompositeEntities { get; }
+        public IReadOnlyCollection<SizeGroupCompositeEntity>? SizeGroupCompositeEntities { get; }
 
         /// <summary>
         /// Связующая сущность одежды и размера
         /// </summary>
-        public IReadOnlyCollection<ClothesSizeGroupCompositeEntity> ClothesSizeGroupCompositeEntities { get; }
+        public IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? ClothesSizeGroupCompositeEntities { get; }
     }
 }

@@ -58,14 +58,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
             await _dataTable.ToListAsync().
-            ResultCollectionOkTaskAsync(entities => _entityConverter.FromEntities(entities));
+            ResultCollectionBindOkTaskAsync(entities => _entityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
             await _dataTable.FindAsync(id).
-            ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity));
+            ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
         /// Загрузить модели в базу
@@ -91,7 +91,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.FindAsync(id).
             ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
-            ResultValueOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
+            ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>

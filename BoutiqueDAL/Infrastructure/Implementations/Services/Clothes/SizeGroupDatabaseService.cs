@@ -63,7 +63,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                             ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(clothesSizeType.ToString() + sizeNormalize, 
                                                                                                               nameof(ISizeGroupTable))),
                                            DatabaseErrors.TableAccessError(nameof(_sizeGroupTable))).
-            ResultValueOkTaskAsync(sizeGroup => _sizeGroupEntityConverter.FromEntity(sizeGroup));
+            ResultValueBindOkTaskAsync(sizeGroup => _sizeGroupEntityConverter.FromEntity(sizeGroup));
 
         /// <summary>
         /// Получить группу размеров совместно со списком размеров

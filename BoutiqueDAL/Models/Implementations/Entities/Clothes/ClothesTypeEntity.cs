@@ -25,14 +25,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public ClothesTypeEntity(string name, string categoryName, CategoryEntity? categoryEntity,
-                                 IEnumerable<ClothesInformationEntity> clothesInformationEntities,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
+                                 IEnumerable<ClothesInformationEntity>? clothesInformationEntities,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderEntities)
            : base(name)
         {
             CategoryName = categoryName;
             CategoryEntity = categoryEntity;
-            ClothesInformationEntities = clothesInformationEntities.ToList();
-            ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
+            ClothesInformationEntities = clothesInformationEntities?.ToList();
+            ClothesTypeGenderEntities = clothesTypeGenderEntities?.ToList();
         }
 
         /// <summary>
@@ -48,11 +48,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Связующие сущности категории и одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesInformationEntity> ClothesInformationEntities { get; }
+        public IReadOnlyCollection<ClothesInformationEntity>? ClothesInformationEntities { get; }
 
         /// <summary>
         /// Связующие сущности пола и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity> ClothesTypeGenderEntities { get; }
+        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity>? ClothesTypeGenderEntities { get; }
     }
 }

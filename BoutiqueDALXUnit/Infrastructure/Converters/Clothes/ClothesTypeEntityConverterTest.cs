@@ -3,7 +3,10 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Entities;
+using Functional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
@@ -25,7 +28,26 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
             var clothesTypeEntity = clothesTypeEntityConverter.ToEntity(clothesTypeDomain);
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeEntity);
 
-            Assert.True(clothesTypeDomain.Equals(clothesTypeAfterConverter));
+            Assert.True(clothesTypeAfterConverter.OkStatus);
+            Assert.True(clothesTypeDomain.Equals(clothesTypeAfterConverter.Value));
+        }
+
+        /// <summary>
+        /// Преобразования модели вида одежды в модель базы данных. Ошибка категории одежды
+        /// </summary>
+        [Fact]
+        public void FromEntity_CategoryNotFound()
+        {
+            var clothesType= ClothesTypeEntitiesData.ClothesTypeEntities.First();
+            var clothesTypeNull = new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName, null,
+                                                        clothesType.ClothesInformationEntities,
+                                                        clothesType.ClothesTypeGenderEntities);
+            var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter());
+
+            var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
+
+            Assert.True(clothesTypeAfterConverter.HasErrors);
+            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
         }
     }
 }

@@ -26,7 +26,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Base
             var testEntities = testEntityConverter.ToEntities(testDomains);
             var testDomainsAfterConverter = testEntityConverter.FromEntities(testEntities);
 
-            Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter));
+            Assert.True(testDomainsAfterConverter.OkStatus);
+            Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter.Value));
         }
     }
 }

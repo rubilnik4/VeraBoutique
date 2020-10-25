@@ -22,7 +22,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
             var sizeEntity = sizeEntityConverter.ToEntity(sizeDomain);
             var sizeAfterConverter = sizeEntityConverter.FromEntity(sizeEntity);
 
-            Assert.True(sizeDomain.Equals(sizeAfterConverter));
+            Assert.True(sizeAfterConverter.OkStatus);
+            Assert.True(sizeDomain.Equals(sizeAfterConverter.Value));
         }
     }
 }

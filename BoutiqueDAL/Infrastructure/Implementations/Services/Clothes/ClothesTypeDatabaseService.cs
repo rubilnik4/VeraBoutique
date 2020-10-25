@@ -70,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category) =>
             await ResultCollectionTryAsync(() => GetClothesTypes(genderType, category),
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
-            ResultCollectionOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
+            ResultCollectionBindOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
 
         /// <summary>
         /// Получить вид одежды

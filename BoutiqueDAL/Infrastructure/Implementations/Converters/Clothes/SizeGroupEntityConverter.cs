@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
 {
@@ -30,9 +36,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать группу размеров одежды из модели базы данных
         /// </summary>
-        public override ISizeGroupDomain FromEntity(ISizeGroupEntity sizeGroupEntity) =>
-            new SizeGroupDomain(sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
-                                SizeDomainsFromComposite(sizeGroupEntity.SizeGroupCompositeEntities));
+        public override IResultValue<ISizeGroupDomain> FromEntity(ISizeGroupEntity sizeGroupEntity) =>
+            GetSizeGroupFunc(sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize).           
+            ResultCurryOkBind(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupCompositeEntities)).
+            ResultValueOk(func => func.Invoke());
 
         /// <summary>
         /// Преобразовать группу размеров одежды в модель базы данных
@@ -43,13 +50,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
                                                         sizeGroupDomain.SizeNormalize));
 
         /// <summary>
+        /// Функция получения группы размеров одежды
+        /// </summary>
+        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ClothesSizeType clothesSizeType,
+                                                                                                       int sizeNormalize) =>
+            new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
+                sizeDomains => new SizeGroupDomain(clothesSizeType, sizeNormalize, sizeDomains));
+
+        /// <summary>
         /// Преобразовать связующую сущность в коллекцию размеров
         /// </summary>
-        private IEnumerable<ISizeDomain> SizeDomainsFromComposite(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
+        private IResultCollection<ISizeDomain> SizeDomainsFromComposite(IEnumerable<SizeGroupCompositeEntity>? sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
-            Select(sizeGroupComposite => sizeGroupComposite.SizeEntity).
-            Where(sizeEntity => sizeEntity != null).
-            Select(sizeEntity => _sizeEntityConverter.FromEntity(sizeEntity!));
+            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroupCompositeEntities))).
+            ResultValueBindOkToCollection(GetSizes).
+            ResultCollectionBindOk(sizeEntities => _sizeEntityConverter.FromEntities(sizeEntities));
 
         /// <summary>
         /// Преобразовать размеры в связующую сущность
@@ -60,5 +75,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
             Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.SizeName,
                                                               clothesSizeType, sizeNormalize,
                                                               new SizeEntity(sizeEntity.SizeType, sizeEntity.SizeName), null));
+
+        /// <summary>
+        /// Получить сущности размера одежды
+        /// </summary>
+        private static IResultCollection<ISizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
+            sizeGroupCompositeEntities.
+            Select(sizeGroup => sizeGroup.SizeEntity.
+                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroup.SizeEntity)))).
+            ToResultCollection();
     }
 }

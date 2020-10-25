@@ -14,21 +14,21 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     {
         public ClothesInformationDomain(IClothesShort clothesShort,
                                         string description, IGenderDomain gender, IClothesTypeDomain clothesType,
-                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
+                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
            : this(clothesShort.Id, clothesShort.Name,
                   clothesShort.Price, clothesShort.Image,
-                  description, gender, clothesType, colors, sizes)
+                  description, gender, clothesType, colors, sizeGroups)
         { }
 
         public ClothesInformationDomain(int id, string name, decimal price, byte[]? image,
                                         string description, IGenderDomain gender, IClothesTypeDomain clothesType,
-                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizes)
+                                        IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
             : base(id, name, description, price, image)
         {
             Gender = gender;
             ClothesType = clothesType;
             Colors = colors.ToList();
-            SizeGroups = sizes.ToList();
+            SizeGroups = sizeGroups.ToList();
         }
 
         /// <summary>

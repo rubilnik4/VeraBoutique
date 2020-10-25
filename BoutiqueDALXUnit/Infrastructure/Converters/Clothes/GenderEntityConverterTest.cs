@@ -25,7 +25,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
             var genderEntity = genderEntityConverter.ToEntity(genderDomain);
             var genderAfterConverter = genderEntityConverter.FromEntity(genderEntity);
 
-            Assert.True(genderDomain.Equals(genderAfterConverter));
+            Assert.True(genderAfterConverter.OkStatus);
+            Assert.True(genderDomain.Equals(genderAfterConverter.Value));
         }
     }
 }

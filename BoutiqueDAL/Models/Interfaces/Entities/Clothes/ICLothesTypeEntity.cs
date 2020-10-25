@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Связующие сущности категории и одежды
         /// </summary>
-        IReadOnlyCollection<ClothesInformationEntity> ClothesInformationEntities { get; }
+        IReadOnlyCollection<ClothesInformationEntity>? ClothesInformationEntities { get; }
 
         /// <summary>
         /// Связующие сущности пола и вида одежды
