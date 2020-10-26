@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
@@ -7,14 +6,14 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Services.Implementations;
 using BoutiqueDTO.Data.Services.Interfaces;
-using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVCXUnit.Data.Controllers.Implementations;
 using Xunit;
-using static BoutiqueMVCXUnit.Controllers.Base.Mocks.TestDatabaseServiceMock;
+using static MVCXUnit.Controllers.Base.Mocks.TestDatabaseServiceMock;
 
-namespace BoutiqueMVCXUnit.Controllers.Base
+namespace MVCXUnit.Controllers.Base
 {
     /// <summary>
     /// Базовый контроллер для Api. Тесты
@@ -173,7 +172,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         {
             var testDomains = TestData.TestResultDomains;
             var testPut = testDomains.Value.Last();
-            var testPutId = testPut.Id;
             var testService = GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
@@ -195,7 +193,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testPut = TestData.TestResultDomains.Value.Last();
-            var testPutId = testPut.Id;
             var testService = GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);

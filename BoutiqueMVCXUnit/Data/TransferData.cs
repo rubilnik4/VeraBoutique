@@ -2,11 +2,10 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Models.Implementations;
 using BoutiqueDTO.Data.Models.Interfaces;
 
-namespace BoutiqueMVCXUnit.Data
+namespace MVCXUnit.Data
 {
     public class TransferData
     {

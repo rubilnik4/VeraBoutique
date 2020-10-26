@@ -1,10 +1,9 @@
-﻿using BoutiqueMVC.Extensions.Controllers.Sync;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueMVC.Extensions.Controllers.Sync;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
+namespace MVCXUnit.Extensions.Controllers.Sync
 {
     /// <summary>
     /// Методы расширения для ошибок результирующего результата. Тесты

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
@@ -15,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Controllers.Clothes
+namespace MVCXUnit.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи одежды. Тесты

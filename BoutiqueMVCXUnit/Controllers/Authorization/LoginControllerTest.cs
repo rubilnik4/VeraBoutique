@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Controllers.Implementations.Authorization;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
-using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MockQueryable.Moq;
 using Moq;
+using MVCXUnit.Data.Controllers.Implementations;
 using Xunit;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace BoutiqueMVCXUnit.Controllers.Authorization
+namespace MVCXUnit.Controllers.Authorization
 {
     /// <summary>
     /// Контроллер авторизации. Тесты
@@ -84,7 +79,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         private static Mock<IUserManagerBoutique> GetUserManager() =>
             new Mock<IUserManagerBoutique>().
             Void(userMock => userMock.Setup(userManager => userManager.Users).
-                                      Returns(LoginData.Users.AsQueryable().BuildMock().Object)).
+                                      Returns(LoginData.Users.AsQueryable())).
             Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<IdentityUser>())).
                                       ReturnsAsync(LoginData.Roles));
 

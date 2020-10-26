@@ -4,18 +4,15 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Data.Models.Interfaces;
-using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
-using BoutiqueMVCXUnit.Data;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVCXUnit.Data;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
+namespace MVCXUnit.Extensions.Controllers.Async
 {
     /// <summary>
     /// Преобразование результирующего ответа в ответ контроллера. Тесты

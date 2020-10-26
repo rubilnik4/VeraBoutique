@@ -42,10 +42,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
 
             var testResult = await testService.Get();
-            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value).ToList();
+            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value);
 
             Assert.True(testResult.OkStatus);
-            Assert.True(testResult.Value.SequenceEqual(testEntitiesGet));
+            Assert.True(testResult.Value.SequenceEqual(testEntitiesGet.Value));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testEntitiesGet = testConverter.FromEntity(FirstEntity(testResultEntities.Value, testResult.Value.Id));
 
             Assert.True(testResult.OkStatus);
-            Assert.True(testResult.Value.Equals(testEntitiesGet));
+            Assert.True(testResult.Value.Equals(testEntitiesGet.Value));
         }
 
         /// <summary>

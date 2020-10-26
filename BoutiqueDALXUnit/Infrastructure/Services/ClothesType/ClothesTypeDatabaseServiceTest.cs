@@ -59,7 +59,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypes);
 
             Assert.True(clothesTypesResults.OkStatus);
-            Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains));
+            Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains.Value));
         }
 
         /// <summary>

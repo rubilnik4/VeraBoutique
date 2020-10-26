@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueMVCXUnit.Data.Database.Interfaces;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
+using MVCXUnit.Data.Database.Interfaces;
 
-namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
+namespace MVCXUnit.Controllers.Base.Mocks
 {
     public static class TestDatabaseServiceMock
     {

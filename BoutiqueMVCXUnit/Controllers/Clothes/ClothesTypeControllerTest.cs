@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -16,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Controllers.Clothes
+namespace MVCXUnit.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи вида одежды. Тесты

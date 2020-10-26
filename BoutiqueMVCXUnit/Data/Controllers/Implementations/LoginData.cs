@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using BoutiqueDTO.Models.Implementations.Identity;
-using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 
-namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
+namespace MVCXUnit.Data.Controllers.Implementations
 {
     /// <summary>
     /// Тестовые данные для авторизации

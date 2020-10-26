@@ -1,20 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDTO.Data.Models.Interfaces;
 using BoutiqueMVC.Extensions.Controllers.Sync;
+using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVCXUnit.Data;
 using Xunit;
-using BoutiqueCommonXUnit.Data;
-using BoutiqueMVCXUnit.Data;
-using Moq;
-using BoutiqueDTO.Data.Models.Interfaces;
-using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDTO.Models.Interfaces.Base;
-using BoutiqueMVC.Models.Implementations.Controller;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 
-namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
+namespace MVCXUnit.Extensions.Controllers.Sync
 {
     /// <summary>
     /// Преобразование результирующего ответа в ответ контроллера. Тесты
