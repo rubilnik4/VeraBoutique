@@ -2,6 +2,8 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {
@@ -25,8 +27,19 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                           IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                              ClothesTypeEntitiesData.GetClothesTypeGenderEntity(gender, clothesTypeEntities),
+                                              ClothesTypeEntitiesData.GetClothesTypeGenderCompositeEntities(gender, clothesTypeEntities),
                                               Enumerable.Empty<ClothesInformationEntity>())).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности типа пола c информацией об одежде
+        /// </summary>
+        public static List<GenderEntity> GetGenderEntitiesWithClothes(IReadOnlyCollection<GenderEntity> genderEntities,
+                                                                                 IReadOnlyCollection<ClothesInformationEntity> clothesInformationEntities) =>
+            genderEntities.
+            Select(gender => new GenderEntity(gender.GenderType, gender.Name,
+                                              Enumerable.Empty<ClothesTypeGenderCompositeEntity>(),
+                                              clothesInformationEntities)).
             ToList();
     }
 }

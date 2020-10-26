@@ -52,8 +52,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IReadOnlyCollection<ClothesShortTransfer>>> GetWithoutImages() =>
-            await _clothesDatabaseService.GetWithoutImages().
+        public async Task<ActionResult<IReadOnlyCollection<ClothesShortTransfer>>> GetClothesShorts(GenderType genderType, string clothesType) =>
+            await _clothesDatabaseService.GetClothesShorts(genderType, clothesType).
             ResultCollectionOkTaskAsync(clothes => _clothesShortTransferConverter.ToTransfers(clothes)).
             ToActionResultCollectionTaskAsync<int, ClothesShortTransfer>();
 

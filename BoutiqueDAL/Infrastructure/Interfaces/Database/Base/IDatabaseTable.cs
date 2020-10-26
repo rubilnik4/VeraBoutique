@@ -29,7 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Вернуть записи из таблицы асинхронно с включением сущностей
         /// </summary>
-        Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+        Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 
@@ -41,7 +41,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
         /// </summary>
-        Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+        Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 
@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// Найти записи в таблице по идентификаторам с включением сущностей
         /// </summary>
         Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                                       Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                                       Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 
@@ -78,7 +78,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// Запрос поиска по идентификатору с включением сущностей
         /// </summary>
         IQueryable<TEntity> Where<TIdOut, TEntityOut>(TId id,
-                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 
@@ -86,7 +86,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// Запрос поиска по идентификаторам  с включением сущностей
         /// </summary>
         IQueryable<TEntity> Where<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 

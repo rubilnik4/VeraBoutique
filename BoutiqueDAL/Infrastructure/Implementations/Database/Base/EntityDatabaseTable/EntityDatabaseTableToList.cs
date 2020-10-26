@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Вернуть записи из таблицы асинхронно с включением сущностей
         /// </summary>
-        public async Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+        public async Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
             await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().Include(include).ToListAsync(), TableAccessError);

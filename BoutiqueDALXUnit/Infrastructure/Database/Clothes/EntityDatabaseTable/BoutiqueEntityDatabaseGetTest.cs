@@ -45,7 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
             Assert.True(clothesTypeGetEntities.OkStatus);
             Assert.True(genderEntities.SequenceEqual(genderGetEntities.Value));
             Assert.True(clothesTypeEntities.SequenceEqual(clothesTypeGetEntities.Value));
-            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderEntities.Count ==
+            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderEntities?.Count ==
                                                               clothesTypeGenderEntities.Count(entity => entity.GenderType == gender.GenderType)));
         }
 

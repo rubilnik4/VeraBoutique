@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
         /// </summary>
-        public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+        public async Task<IResultValue<TEntity>> FindAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
             await FindAsyncWrapper(() => _databaseSet.AsNoTracking().Include(include).FirstOrDefaultAsync(IdPredicate(id))!, id);
@@ -48,7 +48,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Найти записи в таблице по идентификаторам с включением сущностей
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                                                    Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                                                    Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
             await FindAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).Include(include).ToListAsync());

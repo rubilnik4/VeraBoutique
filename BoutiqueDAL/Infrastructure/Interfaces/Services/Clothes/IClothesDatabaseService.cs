@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using Functional.Models.Interfaces.Result;
 
@@ -11,9 +12,9 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     public interface IClothesDatabaseService : IDatabaseService<int, IClothesInformationDomain>
     {
         /// <summary>
-        /// Получить одежду без изображений
+        /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
-        Task<IResultCollection<IClothesShortDomain>> GetWithoutImages();
+        Task<IResultCollection<IClothesShortDomain>> GetClothesShorts(GenderType genderType, string clothesType);
 
         /// <summary>
         /// Получить информацию об одежде по идентификатору

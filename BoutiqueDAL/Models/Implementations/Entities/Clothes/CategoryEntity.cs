@@ -14,15 +14,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             : this(name, Enumerable.Empty<ClothesTypeEntity>())
         { }
 
-        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity> clothesTypeEntities)
+        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypeEntities)
             : base(name)
         {
-            ClothesTypeEntities = clothesTypeEntities.ToList();
+            ClothesTypeEntities = clothesTypeEntities?.ToList();
         }
 
         /// <summary>
         /// Связующие сущности категории и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeEntity> ClothesTypeEntities { get; }
+        public IReadOnlyCollection<ClothesTypeEntity>? ClothesTypeEntities { get; }
     }
 }

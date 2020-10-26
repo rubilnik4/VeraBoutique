@@ -15,7 +15,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности информации об одежде
         /// </summary>
-        public static IList<ClothesInformationEntity> ClothesInformationEntities =>
+        public static List<ClothesInformationEntity> ClothesInformationEntities =>
             ClothesData.ClothesInformationDomains.
             Select(clothesInformation =>
                 new ClothesInformationEntity(clothesInformation, clothesInformation.Description,

@@ -27,9 +27,6 @@ using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
-    using SizeGroupTableExpression = Expression<Func<ISizeGroupTable, Task<IResultValue<SizeGroupEntity>>>>;
-    using SizeGroupCompositeExpression = Expression<Func<SizeGroupEntity, IEnumerable<SizeGroupCompositeEntity>>>;
-
     /// <summary>
     /// Сервис группы размеров одежды в базе данных. Тесты
     /// </summary>

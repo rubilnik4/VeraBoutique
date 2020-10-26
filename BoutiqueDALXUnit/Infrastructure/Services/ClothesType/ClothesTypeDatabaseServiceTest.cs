@@ -25,9 +25,6 @@ using Moq;
 using Xunit;
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 {
-    using GenderExpression = Expression<Func<GenderEntity, IEnumerable<ClothesTypeGenderCompositeEntity>>>;
-    using CategoryExpression = Expression<Func<CategoryEntity, IEnumerable<ClothesTypeEntity>>>;
-
     /// <summary>
     /// Сервис вида одежды в базе данных. Тесты
     /// </summary>
@@ -40,13 +37,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         public async Task GetByGenderCategory_Ok()
         {
             var genderEntities = GenderEntitiesData.GenderEntities;
-            var clothesTypes = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var categories = CategoryEntitiesData.CategoryEntities;
             var gender = genderEntities.First().GenderType;
             string category = categories.First().Name;
 
-            var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
-            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
+            var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypeEntities);
+            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypeEntities);
             var genderTable = GetGenderTable(genderWithClothesTypeEntities);
             var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
@@ -56,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                                                             GetQueryableService(QueryableToListOk).Object);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
-            var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypes);
+            var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypeEntities);
 
             Assert.True(clothesTypesResults.OkStatus);
             Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains.Value));
@@ -101,32 +98,20 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static Mock<IGenderTable> GetGenderTable(IEnumerable<GenderEntity> genderEntities) =>
             new Mock<IGenderTable>().
-            Void(mock => mock.Setup(GenderTableWhere).
-                              Returns((GenderType genderType, GenderExpression include) => 
-                                          genderEntities.Where(genderEntity => genderEntity.Id == genderType).AsQueryable()));
+            Void(mock => mock.Setup(genderTable => genderTable.Where(It.IsAny<GenderType>())).
+                              Returns((GenderType genderType) => genderEntities.
+                                                                 Where(genderEntity => genderEntity.Id == genderType).
+                                                                 AsQueryable()));
 
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
         private static Mock<ICategoryTable> GetCategoryTable(IEnumerable<CategoryEntity> categoryEntities) =>
             new Mock<ICategoryTable>().
-            Void(mock => mock.Setup(CategoryTableWhere).
-                              Returns((string category, CategoryExpression include) =>
-                                          categoryEntities.Where(categoryEntity => categoryEntity.Id == category).AsQueryable()));
-
-        /// <summary>
-        /// Функция поиска в таблице типа пола
-        /// </summary>
-        private static Expression<Func<IGenderTable, IQueryable<GenderEntity>>> GenderTableWhere =>
-            genderTable => genderTable.Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(It.IsAny<GenderType>(),
-                                                                                            genderEntity => genderEntity.ClothesTypeGenderEntities);
-
-        /// <summary>
-        /// Функция поиска в таблице категории одежды
-        /// </summary>
-        private static Expression<Func<ICategoryTable, IQueryable<CategoryEntity>>> CategoryTableWhere =>
-            categoryTable => categoryTable.Where<string, ClothesTypeEntity>(It.IsAny<string>(),
-                                                                            categoryEntity => categoryEntity.ClothesTypeEntities);
+            Void(mock => mock.Setup(categoryTable => categoryTable.Where(It.IsAny<string>())).
+                              Returns((string category) => categoryEntities.
+                                                           Where(categoryEntity => categoryEntity.Id == category).
+                                                           AsQueryable()));
 
         /// <summary>
         /// Сервис обработки запросов базы данных

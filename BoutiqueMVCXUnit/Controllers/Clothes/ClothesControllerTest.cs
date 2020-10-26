@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
@@ -34,7 +35,7 @@ namespace MVCXUnit.Controllers.Clothes
                                                                ClothesShortTransferConverter, 
                                                                ClothesInformationTransferConverter);
 
-            var clothesShortTransfers = await clothesShortController.GetWithoutImages();
+            var clothesShortTransfers = await clothesShortController.GetClothesShorts();
             var clothesShortAfter = clothesShortTransferConverter.FromTransfers(clothesShortTransfers.Value);
 
             Assert.True(clothesShortAfter.SequenceEqual(clothesShortDomains.Value));
@@ -53,7 +54,7 @@ namespace MVCXUnit.Controllers.Clothes
                                                                ClothesShortTransferConverter,
                                                                ClothesInformationTransferConverter);
 
-            var actionResult = await clothesShortController.GetWithoutImages();
+            var actionResult = await clothesShortController.GetClothesShorts();
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;
@@ -129,7 +130,8 @@ namespace MVCXUnit.Controllers.Clothes
         private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesShortDomain> clothesShortDomains,
                                                                                IResultValue<IClothesInformationDomain> clothesInformationDomain) =>
             new Mock<IClothesDatabaseService>().
-            Void(mock => mock.Setup(service => service.GetWithoutImages()).ReturnsAsync(clothesShortDomains)).
+            Void(mock => mock.Setup(service => service.GetClothesShorts(It.IsAny<GenderType>(), It.IsAny<string>())).
+                              ReturnsAsync(clothesShortDomains)).
             Void(mock => mock.Setup(service => service.GetIncludesById(It.IsAny<int>())).ReturnsAsync(clothesInformationDomain));
 
         /// <summary>

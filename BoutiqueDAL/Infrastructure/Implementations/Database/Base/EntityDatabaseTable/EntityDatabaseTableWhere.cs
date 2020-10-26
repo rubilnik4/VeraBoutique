@@ -30,7 +30,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Запрос поиска по идентификатору с включением сущностей
         /// </summary>
         public IQueryable<TEntity> Where<TIdOut, TEntityOut>(TId id,
-                                                             Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                             Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
             _databaseSet.Where(IdPredicate(id)).Include(include);
@@ -39,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Запрос поиска по идентификаторам  с включением сущностей
         /// </summary>
         public IQueryable<TEntity> Where<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                             Expression<Func<TEntity, IEnumerable<TEntityOut>>> include)
+                                                             Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull =>
             _databaseSet.Where(IdsPredicate(ids)).Include(include);

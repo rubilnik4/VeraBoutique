@@ -21,22 +21,22 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public GenderEntity(GenderType genderType, string name,
-                            IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities,
-                            IEnumerable<ClothesInformationEntity> clothesInformationEntities)
+                            IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderEntities,
+                            IEnumerable<ClothesInformationEntity>? clothesInformationEntities)
            : base(genderType, name)
         {
-            ClothesTypeGenderEntities = clothesTypeGenderEntities.ToList();
-            ClothesInformationEntities = clothesInformationEntities.ToList();
+            ClothesTypeGenderEntities = clothesTypeGenderEntities?.ToList();
+            ClothesInformationEntities = clothesInformationEntities?.ToList();
         }
 
         /// <summary>
         /// Связующие сущности пола и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity> ClothesTypeGenderEntities { get; }
+        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity>? ClothesTypeGenderEntities { get; }
 
         /// <summary>
         /// Связующие сущности пола и одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesInformationEntity> ClothesInformationEntities { get; }
+        public IReadOnlyCollection<ClothesInformationEntity>? ClothesInformationEntities { get; }
     }
 }

@@ -88,7 +88,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить вид одежды по типу пола
         /// </summary>
         private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
-            _genderTable.Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(genderType, genderEntity => genderEntity.ClothesTypeGenderEntities).
+            _genderTable.Where(genderType).
+            Include(genderEntity => genderEntity.ClothesTypeGenderEntities).
             SelectMany(genderEntity => genderEntity.ClothesTypeGenderEntities).
             Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesTypeEntity!);
 
@@ -96,7 +97,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить вид одежды по категории
         /// </summary>
         private IQueryable<ClothesTypeEntity> GetClothesTypeByCategory(string category) =>
-           _categoryTable.Where<string, ClothesTypeEntity>(category, categoryEntity => categoryEntity.ClothesTypeEntities).
+           _categoryTable.Where(category).
+           Include(categoryEntity => categoryEntity.ClothesTypeEntities).
            SelectMany(categoryEntity => categoryEntity.ClothesTypeEntities);
     }
 }

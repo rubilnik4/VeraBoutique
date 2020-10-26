@@ -29,7 +29,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ClothesDatabaseService: DatabaseService<int, IClothesInformationDomain, IClothesInformationEntity, ClothesInformationEntity>,
                                          IClothesDatabaseService
     {
-        public ClothesDatabaseService(IDatabase database, IClothesTable clothesTable,
+        public ClothesDatabaseService(IDatabase database, 
+                                      IClothesTable clothesTable, IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
                                       IClothesShortEntityConverter clothesShortEntityConverter,
                                       IClothesInformationEntityConverter clothesInformationEntityConverter,
                                       IQueryableService<int, ClothesShortEntity> queryableClothesShortService,
@@ -37,6 +38,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
           : base(database, clothesTable, clothesInformationEntityConverter)
         {
             _clothesTable = clothesTable;
+            _genderTable = genderTable;
+            _clothesTypeTable = clothesTypeTable;
             _clothesShortEntityConverter = clothesShortEntityConverter;
             _clothesInformationEntityConverter = clothesInformationEntityConverter;
             _queryableClothesShortService = queryableClothesShortService;
@@ -47,6 +50,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Таблица базы данных одежды
         /// </summary>
         private readonly IClothesTable _clothesTable;
+
+        /// <summary>
+        /// Таблица базы данных одежды
+        /// </summary>
+        private readonly IGenderTable _genderTable;
+
+        /// <summary>
+        /// Таблица базы данных одежды
+        /// </summary>
+        private readonly IClothesTypeTable _clothesTypeTable;
 
         /// <summary>
         /// Преобразования модели одежды в модель базы данных
@@ -69,10 +82,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IQueryableService<int, ClothesInformationEntity> _queryableClothesInformationService;
 
         /// <summary>
-        /// Получить одежду без изображений
+        /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
-        public async Task<IResultCollection<IClothesShortDomain>> GetWithoutImages() =>
-            await ResultCollectionTryAsync(GetClothesInformationWithoutImages,
+        public async Task<IResultCollection<IClothesShortDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
+            await ResultCollectionTryAsync(() => GetByGenderAndClothesType(genderType, clothesType),
                                            DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
 
@@ -90,12 +103,34 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>
-        private async Task<IReadOnlyCollection<ClothesShortEntity>> GetClothesInformationWithoutImages() =>
-            await _clothesTable.
+        private async Task<IReadOnlyCollection<ClothesShortEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
+            await GetClothesInformationByGender(genderType).
+            Join(GetClothesInformationByClothesType(clothesType),
+                 clothesInformationGender => clothesInformationGender.Id,
+                 clothesInformationClothesType => clothesInformationClothesType.Id,
+                 (clothesInformationGender, clothesInformationClothesType) => clothesInformationGender).            
             Select(clothesInformationEntity => new ClothesShortEntity(clothesInformationEntity.Id, clothesInformationEntity.Name,
                                                                       clothesInformationEntity.Price, clothesInformationEntity.Image)).
             AsNoTracking().
             Map(clothesShortQuery => _queryableClothesShortService.ToListAsync(clothesShortQuery));
+
+        /// <summary>
+        /// Получить список информации об одежде по типу пола
+        /// </summary>
+        private IQueryable<ClothesInformationEntity> GetClothesInformationByGender(GenderType genderType) =>
+            _genderTable.
+            Where(genderType).
+            Include(genderEntity => genderEntity.ClothesInformationEntities).
+            SelectMany(genderEntity => genderEntity.ClothesInformationEntities);
+
+        /// <summary>
+        /// Получить список информации об одежде по типу пола
+        /// </summary>
+        private IQueryable<ClothesInformationEntity> GetClothesInformationByClothesType(string clothesType) =>
+            _clothesTypeTable.
+            Where(clothesType).
+            Include(clothesTypeEntity => clothesTypeEntity.ClothesInformationEntities).
+            SelectMany(genderEntity => genderEntity.ClothesInformationEntities);
 
         /// <summary>
         /// Получить информацию об одежде по идентификатору
