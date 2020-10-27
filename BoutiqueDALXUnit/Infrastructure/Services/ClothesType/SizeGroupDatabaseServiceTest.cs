@@ -18,10 +18,12 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
+using MockQueryable.Moq;
 using Moq;
 using Xunit;
 
@@ -42,10 +44,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupEntities = SizeGroupEntitiesData.SizeGroupEntities;
-            var sizeGroupTable = GetSizeGroupTable(FirstResultOk(sizeGroupEntities));
+            var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupOk(sizeGroupEntities));
             var sizeGroupEntityConverter = SizeGroupEntityConverter;
             var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, sizeGroupTable.Object,
-                                                                   sizeGroupEntityConverter, QueryableService.Object);
+                                                                   sizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -62,10 +64,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
-            var sizeGroupTable = GetSizeGroupTable(FirstResultException());
+            var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupException());
             var sizeGroupEntityConverter = SizeGroupEntityConverter;
             var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, sizeGroupTable.Object,
-                                                                   sizeGroupEntityConverter, QueryableService.Object);
+                                                                   sizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -82,10 +84,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
-            var sizeGroupTable = GetSizeGroupTable(FirstResultNotFound());
+            var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupNotFound());
             var sizeGroupEntityConverter = SizeGroupEntityConverter;
             var sizeDatabaseService = new SizeGroupDatabaseService(Database.Object, sizeGroupTable.Object,
-                                                                   sizeGroupEntityConverter, QueryableService.Object);
+                                                                   sizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -99,43 +101,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         private static Mock<IDatabase> Database => new Mock<IDatabase>();
 
         /// <summary>
-        /// Таблица базы данных размеров одежды
-        /// </summary>
-        private static Mock<ISizeGroupTable> GetSizeGroupTable(Func<(ClothesSizeType, int), IQueryable<SizeGroupEntity>> firstResultFunc) =>
-            new Mock<ISizeGroupTable>().
-            Void(mock => mock.Setup(sizeGroupTable => sizeGroupTable.Where(It.IsAny<(ClothesSizeType, int)>())).
-                              Returns(firstResultFunc));
-
-        /// <summary>
         /// Преобразования модели группы размера одежды в модель базы данных
         /// </summary>
         private static ISizeGroupEntityConverter SizeGroupEntityConverter =>
             new SizeGroupEntityConverter(new SizeEntityConverter());
-
-        /// <summary>
-        /// Функция поиска группы размеров
-        /// </summary>
-        private static Func<(ClothesSizeType, int), IQueryable<SizeGroupEntity>> FirstResultOk(IEnumerable<SizeGroupEntity> sizeGroupEntities) =>
-            sizeGroupId => sizeGroupEntities.Where(sizeGroup => sizeGroup.Id == sizeGroupId).AsQueryable();
-
-        /// <summary>
-        /// Функция поиска группы размеров. Элемент не найден
-        /// </summary>
-        private static Func<(ClothesSizeType, int), IQueryable<SizeGroupEntity>> FirstResultNotFound() =>
-            _ => Enumerable.Empty<SizeGroupEntity>().AsQueryable();
-
-        /// <summary>
-        /// Функция поиска группы размеров. Ошибка
-        /// </summary>
-        private static Func<(ClothesSizeType, int), IQueryable<SizeGroupEntity>> FirstResultException() =>
-            _ => throw new Exception();
-
-        /// <summary>
-        /// Сервис обработки запросов базы данных
-        /// </summary>
-        private static Mock<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>> QueryableService =>
-            new Mock<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>>().
-            Void(mock => mock.Setup(service => service.FirstOrDefaultAsync(It.IsAny<IEnumerable<SizeGroupEntity>>())).
-                              ReturnsAsync((IEnumerable<SizeGroupEntity> sizeGroupEntities) => sizeGroupEntities.FirstOrDefault()));
     }
 }

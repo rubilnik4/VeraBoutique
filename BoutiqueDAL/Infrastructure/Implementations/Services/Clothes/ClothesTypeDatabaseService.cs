@@ -34,14 +34,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public ClothesTypeDatabaseService(IDatabase database, IClothesTypeTable clothesTypeTable,
                                           IGenderTable genderTable, ICategoryTable categoryTable,
-                                          IClothesTypeEntityConverter clothesTypeEntityConverter,
-                                          IQueryableService<string ,ClothesTypeEntity> queryableService)
+                                          IClothesTypeEntityConverter clothesTypeEntityConverter)
             : base(database, clothesTypeTable, clothesTypeEntityConverter)
         {
             _genderTable = genderTable;
             _categoryTable = categoryTable;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
-            _queryableService = queryableService;
         }
 
         /// <summary>
@@ -58,11 +56,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
-
-        /// <summary>
-        /// Сервис обработки запросов базы данных
-        /// </summary>
-        private readonly IQueryableService<string, ClothesTypeEntity> _queryableService;
 
         /// <summary>
         /// Получить вид одежды по типу пола и категории
@@ -82,7 +75,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                  clothesTypeCategory => clothesTypeCategory.Name,
                  (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
             AsNoTracking().
-            Map(clothesTypeQuery => _queryableService.ToListAsync(clothesTypeQuery));
+            ToListAsync();
 
         /// <summary>
         /// Получить вид одежды по типу пола

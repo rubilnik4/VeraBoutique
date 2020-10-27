@@ -18,9 +18,11 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 using Xunit;
 namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
@@ -44,13 +46,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 
             var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypeEntities);
             var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypeEntities);
-            var genderTable = GetGenderTable(genderWithClothesTypeEntities);
-            var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
+            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderOk(genderWithClothesTypeEntities));
+            var categoryTable = CategoryTableMock.GetCategoryTable(CategoryTableMock.GetCategoryOk(categoryEntitiesWithClothesType));
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter,
-                                                                            GetQueryableService(QueryableToListOk).Object);
+                                                                            clothesTypeEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
             var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypeEntities);
@@ -71,15 +72,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var gender = genderEntities.First().GenderType;
             string category = categories.First().Name;
 
-            var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypes);
             var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
-            var genderTable = GetGenderTable(genderWithClothesTypeEntities);
-            var categoryTable = GetCategoryTable(categoryEntitiesWithClothesType);
+            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
+            var categoryTable = CategoryTableMock.GetCategoryTable(CategoryTableMock.GetCategoryOk(categoryEntitiesWithClothesType));
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter,
-                                                                            GetQueryableService(QueryableToListException).Object);
+                                                                            clothesTypeEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
 
@@ -92,47 +91,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static Mock<IDatabase> Database => 
             new Mock<IDatabase>();
-
-        /// <summary>
-        /// Таблица базы данных типа пола
-        /// </summary>
-        private static Mock<IGenderTable> GetGenderTable(IEnumerable<GenderEntity> genderEntities) =>
-            new Mock<IGenderTable>().
-            Void(mock => mock.Setup(genderTable => genderTable.Where(It.IsAny<GenderType>())).
-                              Returns((GenderType genderType) => genderEntities.
-                                                                 Where(genderEntity => genderEntity.Id == genderType).
-                                                                 AsQueryable()));
-
-        /// <summary>
-        /// Таблица базы данных категорий одежды
-        /// </summary>
-        private static Mock<ICategoryTable> GetCategoryTable(IEnumerable<CategoryEntity> categoryEntities) =>
-            new Mock<ICategoryTable>().
-            Void(mock => mock.Setup(categoryTable => categoryTable.Where(It.IsAny<string>())).
-                              Returns((string category) => categoryEntities.
-                                                           Where(categoryEntity => categoryEntity.Id == category).
-                                                           AsQueryable()));
-
-        /// <summary>
-        /// Сервис обработки запросов базы данных
-        /// </summary>
-        private static Mock<IQueryableService<string, ClothesTypeEntity>> GetQueryableService(Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> toListFunc)=>
-            new Mock<IQueryableService<string, ClothesTypeEntity>>().
-            Void(mock => mock.Setup(service => service.ToListAsync(It.IsAny<IEnumerable<ClothesTypeEntity>>())).
-                              ReturnsAsync(toListFunc));
-
-        /// <summary>
-        /// Функция преобразования в список
-        /// </summary>
-        private static Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> QueryableToListOk =>
-            clothesTypeEntities => clothesTypeEntities.ToList();
-
-
-        /// <summary>
-        /// Функция преобразования в список с ошибкой
-        /// </summary>
-        private static Func<IEnumerable<ClothesTypeEntity>, List<ClothesTypeEntity>> QueryableToListException =>
-           _ => throw new Exception();
 
         /// <summary>
         /// Таблица базы данных вида одежды

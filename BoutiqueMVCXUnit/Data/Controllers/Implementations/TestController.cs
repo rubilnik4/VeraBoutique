@@ -3,9 +3,9 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Services.Interfaces;
 using BoutiqueMVC.Controllers.Implementations.Base;
-using MVCXUnit.Data.Database.Interfaces;
+using BoutiqueMVCXUnit.Data.Database.Interfaces;
 
-namespace MVCXUnit.Data.Controllers.Implementations
+namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
 {
     /// <summary>
     /// Тестовый контроллер

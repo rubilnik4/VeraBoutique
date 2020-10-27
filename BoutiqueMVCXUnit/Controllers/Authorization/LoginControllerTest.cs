@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 using BoutiqueMVC.Controllers.Implementations.Authorization;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
+using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MockQueryable.Moq;
 using Moq;
-using MVCXUnit.Data.Controllers.Implementations;
 using Xunit;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace MVCXUnit.Controllers.Authorization
+namespace BoutiqueMVCXUnit.Controllers.Authorization
 {
     /// <summary>
     /// Контроллер авторизации. Тесты
@@ -79,7 +80,7 @@ namespace MVCXUnit.Controllers.Authorization
         private static Mock<IUserManagerBoutique> GetUserManager() =>
             new Mock<IUserManagerBoutique>().
             Void(userMock => userMock.Setup(userManager => userManager.Users).
-                                      Returns(LoginData.Users.AsQueryable())).
+                                      Returns(LoginData.Users.AsQueryable().BuildMock().Object)).
             Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<IdentityUser>())).
                                       ReturnsAsync(LoginData.Roles));
 

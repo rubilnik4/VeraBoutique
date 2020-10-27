@@ -33,7 +33,6 @@ namespace BoutiqueMVC.DependencyInjection
         {
             ConverterServices.InjectEntityConverters(services);
 
-            services.AddTransient(typeof(IQueryableService<,>), typeof(QueryableService<,>));
             services.AddTransient(DatabaseServicesFactory.GetGenderService);
             services.AddTransient(DatabaseServicesFactory.GetCategoryService);
             services.AddTransient(DatabaseServicesFactory.GetClothesTypeService);

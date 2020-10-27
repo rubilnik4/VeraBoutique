@@ -3,7 +3,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using Xunit;
 
-namespace MVCXUnit.Extensions.Controllers.Sync
+namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 {
     /// <summary>
     /// Методы расширения для ошибок результирующего результата. Тесты

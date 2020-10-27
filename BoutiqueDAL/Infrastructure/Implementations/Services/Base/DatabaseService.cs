@@ -70,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        public async Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models) =>
+        public virtual async Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models) =>
             await _dataTable.FindAsync(models.Select(model => model.Id)).
             ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
                 okFunc: _ => AddRangeWithSaving(_dataTable, models),
@@ -101,7 +101,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
                                                                       IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
-        
+
         /// <summary>
         /// Сохранить изменения в базе или вернуть ошибки
         /// </summary>

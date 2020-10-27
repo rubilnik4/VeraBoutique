@@ -30,13 +30,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IDatabase database, ISizeGroupTable sizeGroupTable,
-                                        ISizeGroupEntityConverter sizeGroupEntityConverter,
-                                        IQueryableService<(ClothesSizeType, int), SizeGroupEntity> queryableService)
+                                        ISizeGroupEntityConverter sizeGroupEntityConverter)
             : base(database, sizeGroupTable, sizeGroupEntityConverter)
         {
             _sizeGroupTable = sizeGroupTable;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
-            _queryableService = queryableService;
         }
 
         /// <summary>
@@ -48,11 +46,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Преобразования модели категории одежды в модель базы данных
         /// </summary>
         private readonly ISizeGroupEntityConverter _sizeGroupEntityConverter;
-
-        /// <summary>
-        /// Сервис обработки запросов базы данных
-        /// </summary>
-        private readonly IQueryableService<(ClothesSizeType, int), SizeGroupEntity> _queryableService;
 
         /// <summary>
         /// Получить группу размеров совместно со списком размеров
@@ -73,6 +66,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             Include(sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
             ThenInclude(sizeGroupComposite => sizeGroupComposite.SizeEntity).
             AsNoTracking().
-            Map(sizeGroupQuery => _queryableService.FirstOrDefaultAsync(sizeGroupQuery));
+            FirstOrDefaultAsync();
     }
 }

@@ -5,7 +5,7 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Data.Models.Implementations;
 using BoutiqueDTO.Data.Models.Interfaces;
 
-namespace MVCXUnit.Data
+namespace BoutiqueMVCXUnit.Data
 {
     public class TransferData
     {

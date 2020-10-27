@@ -2,7 +2,7 @@
 using BoutiqueDTO.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace MVCXUnit.Data.Controllers.Implementations
+namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
 {
     /// <summary>
     /// Тестовые данные для авторизации

@@ -6,13 +6,13 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Data.Models.Interfaces;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Controller;
+using BoutiqueMVCXUnit.Data;
 using Functional.Models.Implementations.ResultFactory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MVCXUnit.Data;
 using Xunit;
 
-namespace MVCXUnit.Extensions.Controllers.Async
+namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
 {
     /// <summary>
     /// Преобразование результирующего ответа в ответ контроллера. Тесты

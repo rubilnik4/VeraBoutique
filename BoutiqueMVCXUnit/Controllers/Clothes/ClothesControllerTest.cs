@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace MVCXUnit.Controllers.Clothes
+namespace BoutiqueMVCXUnit.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи одежды. Тесты
@@ -26,16 +26,19 @@ namespace MVCXUnit.Controllers.Clothes
         /// Получить одежду без картинок. Корректный вариант
         /// </summary>
         [Fact]
-        public async Task GetWithoutImages_Ok()
+        public async Task GetClothesShorts_Ok()
         {
             var clothesShortDomains = ClothesShortDomainsOk;
-            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, ClothesInformationDomainOk);
+            var clothesInformationDomain = ClothesInformationDomainOk;
+            var genderType = clothesInformationDomain.Value.Gender.GenderType;
+            var clothesType = clothesInformationDomain.Value.ClothesType.Name;
+            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, clothesInformationDomain);
             var clothesShortTransferConverter = ClothesShortTransferConverter;
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter, 
                                                                ClothesInformationTransferConverter);
 
-            var clothesShortTransfers = await clothesShortController.GetClothesShorts();
+            var clothesShortTransfers = await clothesShortController.GetClothesShorts(genderType, clothesType);
             var clothesShortAfter = clothesShortTransferConverter.FromTransfers(clothesShortTransfers.Value);
 
             Assert.True(clothesShortAfter.SequenceEqual(clothesShortDomains.Value));
@@ -49,12 +52,15 @@ namespace MVCXUnit.Controllers.Clothes
         {
             var initialError = ErrorData.DatabaseError;
             var clothesShortDomains = new ResultCollection<IClothesShortDomain>(initialError);
-            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, ClothesInformationDomainOk);
+            var clothesInformationDomain = ClothesInformationDomainOk;
+            var genderType = clothesInformationDomain.Value.Gender.GenderType;
+            var clothesType = clothesInformationDomain.Value.ClothesType.Name;
+            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, clothesInformationDomain);
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter,
                                                                ClothesInformationTransferConverter);
 
-            var actionResult = await clothesShortController.GetClothesShorts();
+            var actionResult = await clothesShortController.GetClothesShorts(genderType, clothesType);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;

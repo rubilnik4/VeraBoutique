@@ -6,14 +6,14 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Data.Services.Implementations;
 using BoutiqueDTO.Data.Services.Interfaces;
+using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MVCXUnit.Data.Controllers.Implementations;
 using Xunit;
-using static MVCXUnit.Controllers.Base.Mocks.TestDatabaseServiceMock;
+using static BoutiqueMVCXUnit.Controllers.Base.Mocks.TestDatabaseServiceMock;
 
-namespace MVCXUnit.Controllers.Base
+namespace BoutiqueMVCXUnit.Controllers.Base
 {
     /// <summary>
     /// Базовый контроллер для Api. Тесты

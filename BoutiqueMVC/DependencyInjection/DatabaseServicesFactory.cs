@@ -43,8 +43,7 @@ namespace BoutiqueMVC.DependencyInjection
                                                                    boutiqueDatabase.ClotheTypeTable,
                                                                    boutiqueDatabase.GendersTable,
                                                                    boutiqueDatabase.CategoryTable,
-                                                                   serviceProvider.GetService<IClothesTypeEntityConverter>(),
-                                                                   serviceProvider.GetService<IQueryableService<string, ClothesTypeEntity>>()));
+                                                                   serviceProvider.GetService<IClothesTypeEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для размеров одежды
@@ -62,8 +61,7 @@ namespace BoutiqueMVC.DependencyInjection
             serviceProvider.GetService<IBoutiqueDatabase>().
             Map(boutiqueDatabase => new SizeGroupDatabaseService(boutiqueDatabase,
                                                                  boutiqueDatabase.SizeGroupTable,
-                                                                 serviceProvider.GetService<ISizeGroupEntityConverter>(),
-                                                                 serviceProvider.GetService<IQueryableService<(ClothesSizeType, int), SizeGroupEntity>>()));
+                                                                 serviceProvider.GetService<ISizeGroupEntityConverter>()));
 
         /// <summary>
         /// Получить сервис цвета одежды
@@ -82,8 +80,6 @@ namespace BoutiqueMVC.DependencyInjection
             Map(boutiqueDatabase => new ClothesDatabaseService(boutiqueDatabase, boutiqueDatabase.ClothesTable,
                                                                boutiqueDatabase.GendersTable, boutiqueDatabase.ClotheTypeTable,
                                                                serviceProvider.GetService<IClothesShortEntityConverter>(),
-                                                               serviceProvider.GetService<IClothesInformationEntityConverter>(),
-                                                               serviceProvider.GetService<IQueryableService<int, ClothesShortEntity>>(),
-                                                               serviceProvider.GetService<IQueryableService<int, ClothesInformationEntity>>()));
+                                                               serviceProvider.GetService<IClothesInformationEntityConverter>()));
     }
 }

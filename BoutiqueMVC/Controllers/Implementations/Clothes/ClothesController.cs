@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -7,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +51,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>
-        [HttpGet("withoutImages")]
+        [HttpGet("clothesShorts/{genderType}/{clothesType}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

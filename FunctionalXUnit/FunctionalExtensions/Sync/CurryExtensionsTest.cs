@@ -60,7 +60,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync
 
             var totalFunc = plusFourFunc.Curry(4);
 
-            Assert.Equal(6, totalFunc.Invoke(2, 1, 1));
+            Assert.Equal(8, totalFunc.Invoke(2, 1, 1));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync
 
             var totalFunc = plusFiveFunc.Curry(6);
 
-            Assert.Equal(6, totalFunc.Invoke(2, 2, 1, 1));
+            Assert.Equal(12, totalFunc.Invoke(2, 2, 1, 1));
         }
     }
 }

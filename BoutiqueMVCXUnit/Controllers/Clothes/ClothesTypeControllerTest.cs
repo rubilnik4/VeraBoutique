@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace MVCXUnit.Controllers.Clothes
+namespace BoutiqueMVCXUnit.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи вида одежды. Тесты

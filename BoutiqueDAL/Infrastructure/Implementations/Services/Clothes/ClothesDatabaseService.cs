@@ -26,15 +26,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService: DatabaseService<int, IClothesInformationDomain, IClothesInformationEntity, ClothesInformationEntity>,
+    public class ClothesDatabaseService : DatabaseService<int, IClothesInformationDomain, IClothesInformationEntity, ClothesInformationEntity>,
                                          IClothesDatabaseService
     {
-        public ClothesDatabaseService(IDatabase database, 
+        public ClothesDatabaseService(IDatabase database,
                                       IClothesTable clothesTable, IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
                                       IClothesShortEntityConverter clothesShortEntityConverter,
-                                      IClothesInformationEntityConverter clothesInformationEntityConverter,
-                                      IQueryableService<int, ClothesShortEntity> queryableClothesShortService,
-                                      IQueryableService<int, ClothesInformationEntity> queryableClothesInformationService)
+                                      IClothesInformationEntityConverter clothesInformationEntityConverter)
           : base(database, clothesTable, clothesInformationEntityConverter)
         {
             _clothesTable = clothesTable;
@@ -42,8 +40,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             _clothesTypeTable = clothesTypeTable;
             _clothesShortEntityConverter = clothesShortEntityConverter;
             _clothesInformationEntityConverter = clothesInformationEntityConverter;
-            _queryableClothesShortService = queryableClothesShortService;
-            _queryableClothesInformationService = queryableClothesInformationService;
         }
 
         /// <summary>
@@ -72,16 +68,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IClothesInformationEntityConverter _clothesInformationEntityConverter;
 
         /// <summary>
-        /// Сервис обработки запросов базы данных одежды
-        /// </summary>
-        private readonly IQueryableService<int, ClothesShortEntity> _queryableClothesShortService;
-
-        /// <summary>
-        /// Сервис обработки запросов базы данных информации об одежде
-        /// </summary>
-        private readonly IQueryableService<int, ClothesInformationEntity> _queryableClothesInformationService;
-
-        /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         public async Task<IResultCollection<IClothesShortDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
@@ -99,7 +85,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
 
+        public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesInformationDomain> clothesInformationDomains) =>
+            clothesInformationDomains.Select(clothesInformation => clothesInformation.Gender);
 
+        private IResultError 
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>
@@ -108,11 +97,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             Join(GetClothesInformationByClothesType(clothesType),
                  clothesInformationGender => clothesInformationGender.Id,
                  clothesInformationClothesType => clothesInformationClothesType.Id,
-                 (clothesInformationGender, clothesInformationClothesType) => clothesInformationGender).            
+                 (clothesInformationGender, clothesInformationClothesType) => clothesInformationGender).
             Select(clothesInformationEntity => new ClothesShortEntity(clothesInformationEntity.Id, clothesInformationEntity.Name,
                                                                       clothesInformationEntity.Price, clothesInformationEntity.Image)).
             AsNoTracking().
-            Map(clothesShortQuery => _queryableClothesShortService.ToListAsync(clothesShortQuery));
+            ToListAsync();
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
@@ -144,6 +133,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             ThenInclude(sizeGroupEntity => sizeGroupEntity!.SizeGroupCompositeEntities).
             ThenInclude(sizeGroupCompositeEntity => sizeGroupCompositeEntity.SizeEntity).
             AsNoTracking().
-            Map(clothesInformationQuery => _queryableClothesInformationService.FirstOrDefaultAsync(clothesInformationQuery));
+            FirstOrDefaultAsync();
     }
 }
