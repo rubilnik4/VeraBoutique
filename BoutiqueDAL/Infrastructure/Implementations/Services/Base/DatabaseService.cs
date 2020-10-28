@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
@@ -93,6 +94,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+
+        /// <summary>
+        /// Проверить наличие моделей
+        /// </summary>
+        public async Task<IResultError> CheckEntities(IReadOnlyCollection<TDomain> models) =>
+            await _dataTable.FindAsync(models.Select(model => model.Id)).
+            ResultCollectionOkTaskAsync(entities => models.Where(model => entities.All(entity => !entity.Id.Equals(model.Id)))).
+            ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound => 
+                entitiesNotFound.
+                Select(entityNotFound => new ResultError(DatabaseErrors.ValueNotFoundError(entityNotFound.Id?.ToString() ?? String.Empty, 
+                                                                                           _dataTable.GetType().Name))).
+                Map());
 
         /// <summary>
         /// Добавить модели в базу и сохранить
