@@ -98,14 +98,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Проверить наличие моделей
         /// </summary>
-        public async Task<IResultError> CheckEntities(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindAsync(models.Select(model => model.Id)).
-            ResultCollectionOkTaskAsync(entities => models.Where(model => entities.All(entity => !entity.Id.Equals(model.Id)))).
-            ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound => 
-                entitiesNotFound.
-                Select(entityNotFound => new ResultError(DatabaseErrors.ValueNotFoundError(entityNotFound.Id?.ToString() ?? String.Empty, 
-                                                                                           _dataTable.GetType().Name))).
-                Map());
+        public virtual async Task<IResultError> CheckEntities(IEnumerable<TDomain> models) =>
+            await CheckEntitiesCollection(models.Distinct().ToList());
 
         /// <summary>
         /// Добавить модели в базу и сохранить
@@ -127,5 +121,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private static async Task<IResultCollection<TId>> GetDuplicateErrorResult(IEnumerable<TEntityOut> ids, string tableName) =>
             await ResultCollectionFactory.
             CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateError(ids, tableName));
+
+        /// <summary>
+        /// Проверить наличие моделей
+        /// </summary>
+        private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<TDomain> models) =>
+            await _dataTable.FindAsync(models.Select(model => model.Id)).
+            ResultCollectionOkTaskAsync(entities => models.Where(model => entities.All(entity => !entity.Id.Equals(model.Id)))).
+            ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound =>
+                entitiesNotFound.
+                Select(entityNotFound => DatabaseErrors.ValueNotFoundError(entityNotFound.Id?.ToString() ?? String.Empty,
+                                                                           _dataTable.GetType().Name)).
+                Map(errors => new ResultError(errors)));
     }
 }

@@ -14,8 +14,10 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
@@ -30,17 +32,30 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                          IClothesDatabaseService
     {
         public ClothesDatabaseService(IDatabase database,
+                                      IGenderDatabaseService genderDatabaseService, IClothesTypeDatabaseService clothesTypeDatabaseService,
                                       IClothesTable clothesTable, IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
                                       IClothesShortEntityConverter clothesShortEntityConverter,
                                       IClothesInformationEntityConverter clothesInformationEntityConverter)
           : base(database, clothesTable, clothesInformationEntityConverter)
         {
+            _genderDatabaseService = genderDatabaseService;
+            _clothesTypeDatabaseService = clothesTypeDatabaseService;
             _clothesTable = clothesTable;
             _genderTable = genderTable;
             _clothesTypeTable = clothesTypeTable;
             _clothesShortEntityConverter = clothesShortEntityConverter;
             _clothesInformationEntityConverter = clothesInformationEntityConverter;
         }
+
+        /// <summary>
+        /// Сервис типа пола одежды в базе данных
+        /// </summary>
+        private readonly IGenderDatabaseService _genderDatabaseService;
+
+        /// <summary>
+        /// Сервис типа пола одежды в базе данных
+        /// </summary>
+        private readonly IClothesTypeDatabaseService _clothesTypeDatabaseService;
 
         /// <summary>
         /// Таблица базы данных одежды
@@ -86,9 +101,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
 
         public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesInformationDomain> clothesInformationDomains) =>
-            clothesInformationDomains.Select(clothesInformation => clothesInformation.Gender);
-
-        private IResultError 
+            _genderDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.Gender)).
+            ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.ClothesType)))
+            
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>

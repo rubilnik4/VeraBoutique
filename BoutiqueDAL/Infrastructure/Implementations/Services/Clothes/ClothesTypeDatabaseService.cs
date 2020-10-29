@@ -18,6 +18,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
@@ -32,15 +33,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>, 
                                               IClothesTypeDatabaseService
     {
-        public ClothesTypeDatabaseService(IDatabase database, IClothesTypeTable clothesTypeTable,
-                                          IGenderTable genderTable, ICategoryTable categoryTable,
+        public ClothesTypeDatabaseService(IDatabase database,
+                                          ICategoryDatabaseService categoryDatabaseService,
+                                          IClothesTypeTable clothesTypeTable, IGenderTable genderTable, ICategoryTable categoryTable,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter)
             : base(database, clothesTypeTable, clothesTypeEntityConverter)
         {
+            _categoryDatabaseService = categoryDatabaseService;
             _genderTable = genderTable;
             _categoryTable = categoryTable;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
         }
+
+        /// <summary>
+        /// Сервис вида одежды в базе данных
+        /// </summary>
+        private readonly ICategoryDatabaseService _categoryDatabaseService;
 
         /// <summary>
         /// Таблица базы данных типа пола
@@ -56,6 +64,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
+
+        public override async Task<IResultError> CheckEntities(IEnumerable<IClothesTypeDomain> clothesTypeDomains) =>
+            await base.CheckEntities(clothesTypeDomains).
+            ResultErrorBindOkBindAsync(() => _categoryDatabaseService.CheckEntities(clothesTypeDomains.Select(clothesType => clothesType.CategoryDomain)));
 
         /// <summary>
         /// Получить вид одежды по типу пола и категории
