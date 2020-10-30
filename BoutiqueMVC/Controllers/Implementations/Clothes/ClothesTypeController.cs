@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
@@ -21,11 +22,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи вида одежды
     /// </summary>
-    public class ClothesTypeController : ApiController<string, ClothesTypeTransfer, IClothesTypeDomain>
+    public class ClothesTypeController : ApiController<string, ClothesTypeShortTransfer, IClothesTypeShortDomain>
     {
         public ClothesTypeController(IClothesTypeDatabaseService clothesTypeDatabaseService,
+                                     IClothesTypeShortTransferConverter clothesTypeShortTransferConverter,
                                      IClothesTypeTransferConverter clothesTypeTransferConverter)
-            : base(clothesTypeDatabaseService, clothesTypeTransferConverter)
+            : base(clothesTypeDatabaseService, clothesTypeShortTransferConverter)
         {
             _clothesTypeDatabaseService = clothesTypeDatabaseService;
             _clothesTypeTransferConverter = clothesTypeTransferConverter;

@@ -5,6 +5,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
@@ -13,28 +14,22 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
                                            IEquatable<IClothesInformationDomain>
     {
         public ClothesInformationDomain(IClothesShort clothesShort,
-                                        string description, IGenderDomain gender, IClothesTypeDomain clothesType,
+                                        string description, IClothesTypeDomain clothesType,
                                         IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
            : this(clothesShort.Id, clothesShort.Name,
                   clothesShort.Price, clothesShort.Image,
-                  description, gender, clothesType, colors, sizeGroups)
+                  description, clothesType, colors, sizeGroups)
         { }
 
         public ClothesInformationDomain(int id, string name, decimal price, byte[]? image,
-                                        string description, IGenderDomain gender, IClothesTypeDomain clothesType,
+                                        string description, IClothesTypeDomain clothesType,
                                         IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
             : base(id, name, description, price, image)
         {
-            Gender = gender;
             ClothesType = clothesType;
             Colors = colors.ToList();
             SizeGroups = sizeGroups.ToList();
         }
-
-        /// <summary>
-        /// Пол одежды
-        /// </summary>
-        public IGenderDomain Gender { get; }
 
         /// <summary>
         /// Вид одежды
@@ -58,13 +53,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
             other?.Description == Description &&
             other?.ClothesType.Equals(ClothesType) == true &&
-            other?.Gender.Equals(Gender) == true &&
             other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description, 
-                             ClothesType.GetHashCode(), Gender.GetHashCode(),
+            HashCode.Combine(Id, Name, Price, Description, ClothesType.GetHashCode(),
                              Colors.Average(color => color.GetHashCode()),
                              SizeGroups.Average(size => size.GetHashCode()));
         #endregion

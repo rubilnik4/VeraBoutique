@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
 {
@@ -9,11 +10,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// </summary>
     public interface IClothesInformationDomain : IClothesShortDomain, IClothesInformation
     {
-        /// <summary>
-        /// Тип пола одежды
-        /// </summary>
-        IGenderDomain Gender { get; }
-
         /// <summary>
         /// Вид одежды
         /// </summary>

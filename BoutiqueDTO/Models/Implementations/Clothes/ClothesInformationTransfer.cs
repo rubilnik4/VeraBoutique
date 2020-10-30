@@ -16,21 +16,20 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public ClothesInformationTransfer()
         { }
 
-        public ClothesInformationTransfer(IClothesShort clothesShort,
-                                          string description, GenderTransfer genderTransfer, ClothesTypeTransfer clothesTypeTransfer,
+        public ClothesInformationTransfer(IClothesShort clothesShort, string description,
+                                          ClothesTypeTransfer clothesTypeTransfer,
                                           IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
             :this(clothesShort.Id, clothesShort.Name, 
                   clothesShort.Price, clothesShort.Image,
-                  description, genderTransfer, clothesTypeTransfer, colors, sizes)
+                  description, clothesTypeTransfer, colors, sizes)
         { }
 
         public ClothesInformationTransfer(int id, string name, decimal price, byte[]? image, 
-                                          string description, GenderTransfer genderTransfer,  ClothesTypeTransfer clothesTypeTransfer,
+                                          string description, ClothesTypeTransfer clothesTypeTransfer,
                                           IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
             : base(id, name, price, image)
         {
             Description = description;
-            GenderTransfer = genderTransfer;
             ClothesTypeTransfer = clothesTypeTransfer;
             Colors = colors.ToList();
             SizeGroups = sizes.ToList();
@@ -41,12 +40,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// </summary>
         [Required]
         public string Description { get; } = null!;
-
-        /// <summary>
-        /// Тип пола
-        /// </summary>
-        [Required]
-        public GenderTransfer GenderTransfer { get; } = null!;
 
         /// <summary>
         /// Вид одежды

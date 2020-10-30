@@ -1,40 +1,36 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using BoutiqueCommon.Models.Enums.Clothes;
+﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes
 {
-    /// <summary>
-    /// Вид одежды. Трансферная модель
-    /// </summary>
-    public class ClothesTypeTransfer : IClothesTypeTransfer
+    public class ClothesTypeTransfer : ClothesTypeShortTransfer, IClothesTypeTransfer
     {
         public ClothesTypeTransfer()
         { }
 
-        public ClothesTypeTransfer(string name, CategoryTransfer categoryTransfer)
+        public ClothesTypeTransfer(IClothesType clothesType, 
+                                   GenderTransfer genderTransfer, CategoryTransfer categoryTransfer)
+          : this(clothesType.Name, genderTransfer, categoryTransfer)
+        { }
+
+        public ClothesTypeTransfer(string name, GenderTransfer genderTransfer, CategoryTransfer categoryTransfer)
+            :base(name)
         {
-            Name = name;
+            GenderTransfer = genderTransfer;
             CategoryTransfer = categoryTransfer;
         }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public string Id => Name;
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        [Required]
-        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Категория одежды. Трансферная модель
         /// </summary>
         [Required]
         public CategoryTransfer CategoryTransfer { get; } = null!;
+
+        /// <summary>
+        /// Тип пола. Трансферная модель
+        /// </summary>
+        [Required]
+        public GenderTransfer GenderTransfer { get; } = null!;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;

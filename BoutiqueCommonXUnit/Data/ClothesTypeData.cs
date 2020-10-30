@@ -2,6 +2,7 @@
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommonXUnit.Data
@@ -17,8 +18,8 @@ namespace BoutiqueCommonXUnit.Data
         public static List<IClothesTypeDomain> GetClothesTypeDomain() =>
             new List<IClothesTypeDomain>()
             {
-                new ClothesTypeDomain("Пиджак", new CategoryDomain("Верхняя одежда")),
-                new ClothesTypeDomain("Брюки", new CategoryDomain("Штаны")),
+                new ClothesTypeShortDomain("Пиджак", new CategoryDomain("Верхняя одежда")),
+                new ClothesTypeShortDomain("Брюки", new CategoryDomain("Штаны")),
             };
     }
 }

@@ -17,7 +17,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var clothesType = ClothesTypeData.GetClothesTypeDomain().First();
-            var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new CategoryTransferConverter());
+            var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new GenderTransferConverter(), 
+                                                                                new CategoryTransferConverter());
 
             var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);
             var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);

@@ -19,9 +19,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const string clothesType = "Свитер";
             var categoryDomain = new CategoryDomain("Верхушка");
-            var clothesTypeDomain = new ClothesTypeDomain(clothesType, categoryDomain);
+            var genderDomain = new GenderDomain(GenderType.Male, "Мужичок");
+            var clothesTypeDomain = new ClothesTypeDomain(clothesType, genderDomain, categoryDomain);
 
-            int clothesTypeHash = HashCode.Combine(clothesType, categoryDomain.GetHashCode());
+            int clothesTypeHash = HashCode.Combine(clothesType, clothesTypeDomain.GetHashCode(), categoryDomain.GetHashCode());
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
         }
     }

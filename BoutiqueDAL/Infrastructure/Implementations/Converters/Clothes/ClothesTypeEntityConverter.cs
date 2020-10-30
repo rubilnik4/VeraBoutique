@@ -1,6 +1,7 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
@@ -49,7 +50,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         private static IResultValue<Func<ICategoryDomain, IClothesTypeDomain>> GetClothesTypeFunc(string name) =>
             new ResultValue<Func<ICategoryDomain, IClothesTypeDomain>>(
-                categoryDomain => new ClothesTypeDomain(name, categoryDomain));
+                categoryDomain => new ClothesTypeShortDomain(name, categoryDomain));
 
         /// <summary>
         /// Преобразовать пол одежды в доменную модель

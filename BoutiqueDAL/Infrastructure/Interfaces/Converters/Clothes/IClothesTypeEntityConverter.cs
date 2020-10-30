@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
