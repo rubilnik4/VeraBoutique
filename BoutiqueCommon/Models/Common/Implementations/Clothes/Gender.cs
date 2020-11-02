@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
@@ -40,5 +42,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 
         public override int GetHashCode() => HashCode.Combine(GenderType);
         #endregion
+
+        /// <summary>
+        /// Получить хэш-код коллекции пола одежды
+        /// </summary>
+        public static double GetGendersHashCodes(IEnumerable<IGender> genders) =>
+            genders.Average(gender => gender.GetHashCode());
     }
 }

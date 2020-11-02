@@ -1,12 +1,14 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntity;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -36,8 +38,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Функция получения типа одежды
         /// </summary>
-        private static IResultValue<Func<ICategoryDomain, IClothesTypeDomain>> GetClothesTypeFunc(string name) =>
-            new ResultValue<Func<ICategoryDomain, IClothesTypeDomain>>(
+        private static IResultValue<Func<ICategoryDomain, IClothesTypeFullDomain>> GetClothesTypeFunc(string name) =>
+            new ResultValue<Func<ICategoryDomain, IClothesTypeFullDomain>>(
                                                                        categoryDomain => new ClothesTypeShortDomain(name, categoryDomain));
 
         /// <summary>

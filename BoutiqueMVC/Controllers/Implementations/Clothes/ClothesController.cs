@@ -3,10 +3,13 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfer;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfer;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using Functional.FunctionalExtensions.Async;
@@ -21,16 +24,16 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи информации об одежде
     /// </summary>
-    public class ClothesController : ApiController<int, ClothesInformationTransfer, IClothesInformationDomain>
+    public class ClothesController : ApiController<int, ClothesFullTransfer, IClothesFullDomain>
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesShortTransferConverter clothesShortTransferConverter,
-                                 IClothesInformationTransferConverter clothesInformationTransferConverter)
-           : base(clothesDatabaseService, clothesInformationTransferConverter)
+                                 IClothesFullTransferConverter clothesFullTransferConverter)
+           : base(clothesDatabaseService, clothesFullTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
             _clothesShortTransferConverter = clothesShortTransferConverter;
-            _clothesInformationTransferConverter = clothesInformationTransferConverter;
+            _clothesFullTransferConverter = clothesFullTransferConverter;
         }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Конвертер информации об одежде в трансферную модель
         /// </summary>
-        private readonly IClothesInformationTransferConverter _clothesInformationTransferConverter;
+        private readonly IClothesFullTransferConverter _clothesFullTransferConverter;
 
         /// <summary>
         /// Получить одежду без изображений
@@ -68,9 +71,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ClothesInformationTransfer>> GetIncludesById(int id) =>
+        public async Task<ActionResult<ClothesFullTransfer>> GetIncludesById(int id) =>
             await _clothesDatabaseService.GetIncludesById(id).
-            ResultValueOkTaskAsync(clothesInformation => _clothesInformationTransferConverter.ToTransfer(clothesInformation)).
-            ToActionResultValueTaskAsync<int, ClothesInformationTransfer>();
+            ResultValueOkTaskAsync(clothesInformation => _clothesFullTransferConverter.ToTransfer(clothesInformation)).
+            ToActionResultValueTaskAsync<int, ClothesFullTransfer>();
     }
 }

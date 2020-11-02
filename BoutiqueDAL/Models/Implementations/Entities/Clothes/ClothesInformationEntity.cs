@@ -2,16 +2,18 @@
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntity;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {
     /// <summary>
     /// Одежда. Информация. Сущность базы данных
     /// </summary>
-    public class ClothesInformationEntity : ClothesInformation, IClothesInformationEntity
+    public class ClothesInformationEntity : BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes.ClothesInformation, IClothesEntity
     {
         public ClothesInformationEntity(IClothesShort clothesShort, string description,
                                         GenderType genderType, string clothesTypeName)

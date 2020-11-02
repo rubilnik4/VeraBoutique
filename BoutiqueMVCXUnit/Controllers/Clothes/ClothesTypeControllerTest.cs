@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfer;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfer;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
@@ -31,13 +33,16 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             const GenderType genderType = GenderType.Male;
             string category = CategoryData.GetCategoryDomain().First().Name;
-            var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(ClothesTypeData.GetClothesTypeDomain());
+            var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(ClothesTypeData.GetClothesTypeShortDomain());
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
-            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
-            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
+            var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
+            var clothesTypeFullTransferConverter = ClothesTypeFullTransferConverter;
+            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
+                                                                  clothesTypeShortTransferConverter,
+                                                                  clothesTypeFullTransferConverter);
 
             var clothesTypeTransfers = await clothesTypeController.GetByGenderCategory(genderType, category);
-            var clothesTypeAfter = clothesTypeTransferConverter.FromTransfers(clothesTypeTransfers.Value);
+            var clothesTypeAfter = clothesTypeShortTransferConverter.FromTransfers(clothesTypeTransfers.Value);
 
             Assert.True(clothesTypeAfter.SequenceEqual(clothesTypeDomains.Value));
         }
@@ -51,10 +56,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             const GenderType genderType = GenderType.Male;
             string category = CategoryData.GetCategoryDomain().First().Name;
             var initialError = ErrorData.DatabaseError;
-            var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(initialError);
+            var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
-            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
-            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
+            var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
+            var clothesTypeFullTransferConverter = ClothesTypeFullTransferConverter;
+            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
+                                                                  clothesTypeShortTransferConverter,
+                                                                  clothesTypeFullTransferConverter);
 
             var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
@@ -74,10 +82,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             const GenderType genderType = GenderType.Male;
             string category = CategoryData.GetCategoryDomain().First().Name;
             var initialError = ErrorData.NotFoundError;
-            var clothesTypeDomains = new ResultCollection<IClothesTypeDomain>(initialError);
+            var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
-            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
-            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, clothesTypeTransferConverter);
+            var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
+            var clothesTypeFullTransferConverter = ClothesTypeFullTransferConverter;
+            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
+                                                                  clothesTypeShortTransferConverter,
+                                                                  clothesTypeFullTransferConverter);
 
             var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
@@ -89,7 +100,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Сервис вида одежды в базе данных
         /// </summary>
-        private static Mock<IClothesTypeDatabaseService> GetClothesTypeDatabaseService(IResultCollection<IClothesTypeDomain> clothesTypeDomains) =>
+        private static Mock<IClothesTypeDatabaseService> GetClothesTypeDatabaseService(IResultCollection<IClothesTypeShortDomain> clothesTypeDomains) =>
             new Mock<IClothesTypeDatabaseService>().
             Void(mock => mock.Setup(service => service.GetByGenderCategory(It.IsAny<GenderType>(), It.IsAny<string>())).
                               ReturnsAsync(clothesTypeDomains));
@@ -97,7 +108,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
-        private static IClothesTypeTransferConverter ClothesTypeTransferConverter => 
-            new ClothesTypeTransferConverter(new CategoryTransferConverter());
+        private static IClothesTypeShortTransferConverter ClothesTypeShortTransferConverter =>
+            new ClothesTypeShortTransferConverter(new CategoryTransferConverter(), new GenderTransferConverter());
+
+        /// <summary>
+        /// Конвертер полной информации вида одежды в трансферную модель
+        /// </summary>
+        private static IClothesTypeFullTransferConverter ClothesTypeFullTransferConverter => 
+            new ClothesTypeFullTransferConverter(new CategoryTransferConverter(), new GenderTransferConverter());
     }
 }

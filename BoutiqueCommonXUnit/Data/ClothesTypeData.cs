@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommonXUnit.Data
@@ -15,11 +16,25 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить виды одежды
         /// </summary>
-        public static List<IClothesTypeDomain> GetClothesTypeDomain() =>
-            new List<IClothesTypeDomain>()
+        public static List<IClothesTypeFullDomain> GetClothesTypeFullDomain() =>
+            new List<IClothesTypeFullDomain>()
             {
-                new ClothesTypeShortDomain("Пиджак", new CategoryDomain("Верхняя одежда")),
-                new ClothesTypeShortDomain("Брюки", new CategoryDomain("Штаны")),
+                new ClothesTypeFullDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
+                                          new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
+                new ClothesTypeFullDomain("Брюки", new CategoryDomain("Штаны"),
+                                          new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
+            };
+
+        /// <summary>
+        /// Получить основную информацию видов одежды
+        /// </summary>
+        public static List<IClothesTypeShortDomain> GetClothesTypeShortDomain() =>
+            new List<IClothesTypeShortDomain>()
+            {
+                new ClothesTypeShortDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
+                                           new GenderDomain(GenderType.Male, "Мужик")),
+                new ClothesTypeShortDomain("Брюки", new CategoryDomain("Штаны"),
+                                          new GenderDomain(GenderType.Male, "Мужик")),
             };
     }
 }

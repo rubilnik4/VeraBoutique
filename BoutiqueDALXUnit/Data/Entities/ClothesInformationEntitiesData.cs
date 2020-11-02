@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -21,7 +21,7 @@ namespace BoutiqueDALXUnit.Data.Entities
             Select(clothesInformation =>
                 new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
                                              new GenderEntity(clothesInformation.Gender.GenderType, clothesInformation.Gender.Name),
-                                             GetClothesTypeEntity(clothesInformation.ClothesType), 
+                                             GetClothesTypeEntity(clothesInformation.ClothesTypeFull), 
                                              GetClothesColorCompositeEntities(clothesInformation.Colors, clothesInformation.Id),
                                              GetClothesSizeGroupCompositeEntities(clothesInformation.SizeGroups,
                                                                                   clothesInformation.Id))).
@@ -49,9 +49,9 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущность типа одежды
         /// </summary>
-        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeDomain clothesTypeDomain) =>
-             new ClothesTypeEntity(clothesTypeDomain.Name, clothesTypeDomain.Name,
-                                   new CategoryEntity(clothesTypeDomain.CategoryDomain.Name),
+        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
+             new ClothesTypeEntity(clothesTypeFullDomain.Name, clothesTypeFullDomain.Name,
+                                   new CategoryEntity(clothesTypeFullDomain.Category.Name),
                                    Enumerable.Empty<ClothesInformationEntity>(),
                                    Enumerable.Empty<ClothesTypeGenderCompositeEntity>());
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesType;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
@@ -18,6 +18,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntity;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -66,18 +67,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
 
-        public override async Task<IResultError> CheckEntities(IEnumerable<IClothesTypeDomain> clothesTypeDomains) =>
+        public override async Task<IResultError> CheckEntities(IEnumerable<IClothesTypeFullDomain> clothesTypeDomains) =>
             await CheckEntitiesCollection(clothesTypeDomains.ToList());
 
-        private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<IClothesTypeDomain> clothesTypeDomains) =>
+        private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<IClothesTypeFullDomain> clothesTypeDomains) =>
            await base.CheckEntities(clothesTypeDomains).
            ResultErrorBindOkBindAsync(() => _categoryDatabaseService.
-                                            CheckEntities(clothesTypeDomains.Select(clothesType => clothesType.CategoryDomain)));
+                                            CheckEntities(clothesTypeDomains.Select(clothesType => clothesType.Category)));
 
         /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
-        public async Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category) =>
+        public async Task<IResultCollection<IClothesTypeFullDomain>> GetByGenderCategory(GenderType genderType, string category) =>
             await ResultCollectionTryAsync(() => GetClothesTypes(genderType, category),
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
             ResultCollectionBindOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
@@ -13,6 +14,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntity;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -28,7 +30,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesInformationDomain, IClothesInformationEntity, ClothesInformationEntity>,
+    public class ClothesDatabaseService : DatabaseService<int, IClothesFullDomain, IClothesEntity, ClothesInformationEntity>,
                                          IClothesDatabaseService
     {
         public ClothesDatabaseService(IDatabase database,
@@ -93,16 +95,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить информацию об одежде по идентификатору
         /// </summary>
-        public async Task<IResultValue<IClothesInformationDomain>> GetIncludesById(int id) =>
+        public async Task<IResultValue<IClothesFullDomain>> GetIncludesById(int id) =>
             await ResultValueBindTryAsync(() => GetClothesInformationIncludesById(id).
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString(),
                                                                                                                   nameof(IClothesTable))),
                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
 
-        public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesInformationDomain> clothesInformationDomains) =>
+        public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesFullDomain> clothesInformationDomains) =>
             _genderDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.Gender)).
-            ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.ClothesType)))
+            ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.ClothesTypeFull)))
             
         /// <summary>
         /// Получить одежду без изображений

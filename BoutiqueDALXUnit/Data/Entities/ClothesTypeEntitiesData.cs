@@ -15,9 +15,9 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности вида одежды
         /// </summary>
         public static List<ClothesTypeEntity> ClothesTypeEntities =>
-            ClothesTypeData.GetClothesTypeDomain().
+            ClothesTypeData.GetClothesTypeFullDomain().
             Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain.Name, 
-                                                              new CategoryEntity(clothesTypeDomain.CategoryDomain.Name))).
+                                                              new CategoryEntity(clothesTypeDomain.Category.Name))).
             ToList();
 
         /// <summary>
