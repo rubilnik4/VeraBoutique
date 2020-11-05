@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
 using Functional.Models.Enums;
@@ -34,18 +35,18 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Получить сущности из таблицы
         /// </summary>
         public static async Task ToListEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities,
-                                                IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
+                                                IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
                                                 IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var clothesTypeGetEntities = await database.ClotheTypeTable.ToListAsync();
             var genderGetEntities = await database.GendersTable.
-                                    ToListAsync<(string, GenderType), ClothesTypeGenderCompositeEntity>(gender => gender.ClothesTypeGenderEntities);
+                                    ToListAsync<(string, GenderType), ClothesTypeGenderCompositeEntity>(gender => gender.ClothesTypeGenderComposites);
 
             Assert.True(genderGetEntities.OkStatus);
             Assert.True(clothesTypeGetEntities.OkStatus);
             Assert.True(genderEntities.SequenceEqual(genderGetEntities.Value));
             Assert.True(clothesTypeEntities.SequenceEqual(clothesTypeGetEntities.Value));
-            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderEntities?.Count ==
+            Assert.True(genderGetEntities.Value.All(gender => gender.ClothesTypeGenderComposites?.Count ==
                                                               clothesTypeGenderEntities.Count(entity => entity.GenderType == gender.GenderType)));
         }
 

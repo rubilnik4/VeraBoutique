@@ -38,14 +38,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         {
             var sizeGroup = SizeGroupEntitiesData.SizeGroupEntities.First();
             var sizeGroupNull = new SizeGroupEntity(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
-                                                    null, sizeGroup.ClothesSizeGroupCompositeEntities);
+                                                    null, sizeGroup.ClothesSizeGroupComposites);
             var sizeEntityConverter = new SizeEntityConverter();
             var sizeGroupEntityConverter = new SizeGroupEntityConverter(sizeEntityConverter);
 
             var sizeGroupAfterConverter = sizeGroupEntityConverter.FromEntity(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
     }
 }

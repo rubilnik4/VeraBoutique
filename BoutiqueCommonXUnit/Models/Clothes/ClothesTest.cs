@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomain;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using Xunit;
@@ -46,7 +46,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
             var sizes = new List<ISizeDomain> {new SizeDomain(SizeType.American, "1")};
             var sizeGroups = new List<ISizeGroupDomain> {new SizeGroupDomain(ClothesSizeType.Shirt , 1 , sizes) };
-            var clothesShort = new ClothesFullDomain(id, name, price, null, description, clothesType, colors, sizeGroups);
+            var clothesShort = new ClothesDomain(id, name, price, null, description, clothesType, colors, sizeGroups);
 
             int clothesHash = HashCode.Combine(id, name, price, description, 
                                                clothesType.GetHashCode(), gender.GetHashCode(),

@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
@@ -14,14 +15,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         { }
 
         public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize,
-                                               ClothesInformationEntity? clothesInformationEntity,
+                                               ClothesEntity? clothesInformationEntity,
                                                SizeGroupEntity? sizeGroupEntity)
         {
             ClothesId = clothesId;
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            ClothesInformationEntity = clothesInformationEntity;
-            SizeGroupEntity = sizeGroupEntity;
+            Clothes = clothesInformationEntity;
+            SizeGroup = sizeGroupEntity;
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Одежда. Информация
         /// </summary>
-        public ClothesInformationEntity? ClothesInformationEntity { get; }
+        public ClothesEntity? Clothes { get; }
 
         /// <summary>
         /// Группа размеров одежды
         /// </summary>
-        public SizeGroupEntity? SizeGroupEntity { get; }
+        public SizeGroupEntity? SizeGroup { get; }
     }
 }

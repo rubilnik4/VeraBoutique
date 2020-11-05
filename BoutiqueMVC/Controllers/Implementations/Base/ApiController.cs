@@ -35,10 +35,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         where TId : notnull
     {
         protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,
-                                ITransferConverter<TId, TDomain, TTransfer> fullTransferConverter)
+                                ITransferConverter<TId, TDomain, TTransfer> transferConverter)
         {
             _databaseDatabaseService = databaseDatabaseService;
-            _fullTransferConverter = fullTransferConverter;
+            _transferConverter = transferConverter;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
         /// </summary>
-        private readonly ITransferConverter<TId, TDomain, TTransfer> _fullTransferConverter;
+        private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
         /// Базовый метод получения данных
@@ -60,7 +60,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
             await _databaseDatabaseService.Get().
-            ResultCollectionOkTaskAsync(_fullTransferConverter.ToTransfers).
+            ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TTransfer>> Get(TId id) =>
             await _databaseDatabaseService.Get(id).
-            ResultValueOkTaskAsync(_fullTransferConverter.ToTransfer).
+            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
-            await _fullTransferConverter.FromTransfers(transfers).ToList().
+            await _transferConverter.FromTransfers(transfers).ToList().
             MapAsync(domains => _databaseDatabaseService.Post(domains).
                                 ToCreateActionResultTaskAsync(GetCreateAction(transfers)));
 
@@ -96,7 +96,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(TTransfer transfer) =>
-             await _databaseDatabaseService.Put(_fullTransferConverter.FromTransfer(transfer)).
+             await _databaseDatabaseService.Put(_transferConverter.FromTransfer(transfer)).
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TTransfer>> Delete(TId id) =>
             await _databaseDatabaseService.Delete(id).
-            ResultValueOkTaskAsync(_fullTransferConverter.ToTransfer).
+            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>

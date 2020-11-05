@@ -2,6 +2,8 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
@@ -24,18 +26,18 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности типа пола c видом одежды
         /// </summary>
         public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                          IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
+                                                                          IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               ClothesTypeEntitiesData.GetClothesTypeGenderCompositeEntities(gender, clothesTypeEntities),
-                                              Enumerable.Empty<ClothesInformationEntity>())).
+                                              Enumerable.Empty<ClothesEntity>())).
             ToList();
 
         /// <summary>
         /// Получить сущности типа пола c информацией об одежде
         /// </summary>
         public static List<GenderEntity> GetGenderEntitiesWithClothes(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                                 IReadOnlyCollection<ClothesInformationEntity> clothesInformationEntities) =>
+                                                                                 IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               Enumerable.Empty<ClothesTypeGenderCompositeEntity>(),

@@ -22,12 +22,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
                           IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
             : base(sizeType,  sizeName)
         {
-            SizeGroupCompositeEntities = sizeGroupCompositeEntities.ToList();
+            SizeGroupComposites = sizeGroupCompositeEntities.ToList();
         }
 
         /// <summary>
         /// Связующая сущность размера одежды
         /// </summary>
-        public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupCompositeEntities { get; }
+        public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupComposites { get; }
     }
 }

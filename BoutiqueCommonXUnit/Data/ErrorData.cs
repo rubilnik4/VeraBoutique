@@ -20,7 +20,7 @@ namespace BoutiqueCommonXUnit.Data
         /// Создать тестовый экземпляр ошибки не найденного элемента
         /// </summary>
         public static IErrorResult NotFoundError =>
-            new ErrorResult(ErrorResultType.DatabaseValueNotFound, "NotFound");
+            new ErrorResult(ErrorResultType.ValueNotFound, "NotFound");
 
         /// <summary>
         /// Создать тестовый экземпляр ошибки базы данных

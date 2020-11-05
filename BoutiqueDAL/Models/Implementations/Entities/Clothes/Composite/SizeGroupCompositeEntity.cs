@@ -21,8 +21,8 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
             SizeName = sizeName;
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            SizeEntity = sizeEntity;
-            SizeGroupEntity = sizeGroupEntity;
+            Size = sizeEntity;
+            SizeGroup = sizeGroupEntity;
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Размер одежды
         /// </summary>
-        public SizeEntity? SizeEntity { get; }
+        public SizeEntity? Size { get; }
 
         /// <summary>
         /// Группа размеров одежды
         /// </summary>
-        public SizeGroupEntity? SizeGroupEntity { get; }
+        public SizeGroupEntity? SizeGroup { get; }
     }
 }

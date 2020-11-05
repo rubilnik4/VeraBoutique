@@ -4,21 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntity;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -32,7 +34,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис вида одежды в базе данных
     /// </summary>
-    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeShortDomain, IClothesTypeEntity, ClothesTypeEntity>, 
+    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeFullDomain, IClothesTypeFullEntity, ClothesTypeFullEntity>, 
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IDatabase database,
@@ -78,7 +80,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
-        public async Task<IResultCollection<IClothesTypeFullDomain>> GetByGenderCategory(GenderType genderType, string category) =>
+        public async Task<IResultCollection<IClothesTypeShortDomain>> GetByGenderCategory(GenderType genderType, string category) =>
             await ResultCollectionTryAsync(() => GetClothesTypes(genderType, category),
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
             ResultCollectionBindOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
@@ -86,7 +88,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды
         /// </summary>
-        private async Task<IReadOnlyCollection<ClothesTypeEntity>> GetClothesTypes(GenderType genderType, string category) =>
+        private async Task<IReadOnlyCollection<ClothesTypeFullEntity>> GetClothesTypes(GenderType genderType, string category) =>
             await GetClothesTypeByGender(genderType).
             Join(GetClothesTypeByCategory(category),
                  clothesTypeGender => clothesTypeGender.Name,
@@ -98,18 +100,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды по типу пола
         /// </summary>
-        private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
+        private IQueryable<ClothesTypeFullEntity> GetClothesTypeByGender(GenderType genderType) =>
             _genderTable.Where(genderType).
-            Include(genderEntity => genderEntity.ClothesTypeGenderEntities).
-            SelectMany(genderEntity => genderEntity.ClothesTypeGenderEntities).
-            Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesTypeEntity!);
+            Include(genderEntity => genderEntity.ClothesTypeGenderComposites).
+            SelectMany(genderEntity => genderEntity.ClothesTypeGenderComposites).
+            Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesType!);
 
         /// <summary>
         /// Получить вид одежды по категории
         /// </summary>
-        private IQueryable<ClothesTypeEntity> GetClothesTypeByCategory(string category) =>
+        private IQueryable<ClothesTypeFullEntity> GetClothesTypeByCategory(string category) =>
            _categoryTable.Where(category).
-           Include(categoryEntity => categoryEntity.ClothesTypeEntities).
-           SelectMany(categoryEntity => categoryEntity.ClothesTypeEntities);
+           Include(categoryEntity => categoryEntity.ClothesTypes).
+           SelectMany(categoryEntity => categoryEntity.ClothesTypes);
     }
 }

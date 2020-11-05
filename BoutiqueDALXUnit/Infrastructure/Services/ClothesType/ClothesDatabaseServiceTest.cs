@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -126,7 +127,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueNotFound, clothesResults.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.ValueNotFound, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

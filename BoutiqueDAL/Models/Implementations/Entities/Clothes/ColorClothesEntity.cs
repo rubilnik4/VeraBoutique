@@ -18,12 +18,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         public ColorClothesEntity(string name, IEnumerable<ClothesColorCompositeEntity> clothesColorCompositeEntities)
             : base(name)
         {
-            ClothesColorCompositeEntities = clothesColorCompositeEntities.ToList();
+            ClothesColorComposites = clothesColorCompositeEntities.ToList();
         }
 
         /// <summary>
         /// Связующая сущность одежды и цвета
         /// </summary>
-        public IReadOnlyCollection<ClothesColorCompositeEntity> ClothesColorCompositeEntities { get; }
+        public IReadOnlyCollection<ClothesColorCompositeEntity> ClothesColorComposites { get; }
     }
 }

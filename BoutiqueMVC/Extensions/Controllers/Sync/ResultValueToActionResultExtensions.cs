@@ -66,7 +66,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         private static ActionResult GetBadRequestByErrors(IReadOnlyCollection<IErrorResult> errors) =>
             errors.First().ErrorResultType switch
             {
-                ErrorResultType.DatabaseValueNotFound => new NotFoundResult(),
+                ErrorResultType.ValueNotFound => new NotFoundResult(),
                 _ => new BadRequestObjectResult(errors.ToModelState()),
             };
     }

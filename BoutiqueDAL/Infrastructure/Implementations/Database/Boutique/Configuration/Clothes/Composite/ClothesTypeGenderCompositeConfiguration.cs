@@ -13,13 +13,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         {
             builder.HasKey(t => new { t.ClothesType, t.GenderType });
 
-            builder.HasOne(t => t.GenderEntity)
-                   .WithMany(s => s!.ClothesTypeGenderEntities)
+            builder.HasOne(t => t.Gender)
+                   .WithMany(s => s!.ClothesTypeGenderComposites)
                    .HasForeignKey(sc => sc.GenderType)
                    .IsRequired();
 
             builder.HasOne(t => t.ClothesTypeEntity)
-                   .WithMany(s => s!.ClothesTypeGenderEntities)
+                   .WithMany(s => s!.ClothesTypeGenderComposites)
                    .HasForeignKey(sc => sc.ClothesType)
                    .IsRequired();
         }

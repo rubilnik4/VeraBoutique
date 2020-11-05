@@ -13,13 +13,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         {
             builder.HasKey(t => new { t.ClothesId, t.ColorName });
 
-            builder.HasOne(t => t.ClothesInformationEntity)
-                   .WithMany(s => s!.ClothesColorCompositeEntities)
+            builder.HasOne(t => t.Clothes)
+                   .WithMany(s => s!.ClothesColorComposites)
                    .HasForeignKey(sc => sc.ClothesId)
                    .IsRequired();
 
-            builder.HasOne(t => t.ColorClothesEntity)
-                   .WithMany(s => s!.ClothesColorCompositeEntities)
+            builder.HasOne(t => t.ColorClothes)
+                   .WithMany(s => s!.ClothesColorComposites)
                    .HasForeignKey(sc => sc.ColorName)
                    .IsRequired();
         }

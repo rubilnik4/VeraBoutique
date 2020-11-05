@@ -1,5 +1,7 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfer;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfer;
@@ -27,7 +29,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
             services.AddTransient<IColorClothesTransferConverter, ColorClothesTransferConverter>();
             services.AddTransient<IClothesShortTransferConverter, ClothesShortTransferConverter>();
-            services.AddTransient<IClothesFullTransferConverter, ClothesFullTransferConverter>();
+            services.AddTransient<IClothesTransferConverter, ClothesTransferConverter>();
         }
 
         /// <summary>

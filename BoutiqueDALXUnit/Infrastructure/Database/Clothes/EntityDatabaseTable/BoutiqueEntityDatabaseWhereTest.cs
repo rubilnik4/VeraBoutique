@@ -45,12 +45,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         public static async Task WhereById_IncludeEntities(IBoutiqueDatabase database, GenderType idWhere)
         {
             var genderGetEntity = await database.GendersTable.
-                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idWhere, entity => entity.ClothesTypeGenderEntities).
+                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idWhere, entity => entity.ClothesTypeGenderComposites).
                 AsNoTracking().
                 FirstOrDefaultAsync();
 
             Assert.True(genderGetEntity.GenderType == idWhere);
-            Assert.True(genderGetEntity.ClothesTypeGenderEntities.All(entity => entity.GenderType == idWhere));
+            Assert.True(genderGetEntity.ClothesTypeGenderComposites.All(entity => entity.GenderType == idWhere));
         }
 
         /// <summary>
@@ -60,12 +60,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
                                                            IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderGetEntities = await database.GendersTable.
-                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idsFind, entity => entity.ClothesTypeGenderEntities).
+                Where<(string, GenderType), ClothesTypeGenderCompositeEntity>(idsFind, entity => entity.ClothesTypeGenderComposites).
                 AsNoTracking().
                 ToListAsync();
 
             Assert.True(genderGetEntities.Select(entity => entity.GenderType).SequenceEqual(idsFind));
-            Assert.True(genderGetEntities.All(gender => gender.ClothesTypeGenderEntities?.Count ==
+            Assert.True(genderGetEntities.All(gender => gender.ClothesTypeGenderComposites?.Count ==
                                                         clothesTypeGenderEntities.Count(entity => entity.GenderType == gender.GenderType)));
         }
     }

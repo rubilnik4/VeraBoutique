@@ -92,7 +92,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
             Assert.True(sizeGroupResults.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueNotFound, sizeGroupResults.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.ValueNotFound, sizeGroupResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

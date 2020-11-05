@@ -3,7 +3,9 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using Functional.Models.Enums;
 using Xunit;
@@ -38,17 +40,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_GenderNotFound()
         {
             var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
-            var clothesInformationNull = new ClothesInformationEntity(clothesInformation, clothesInformation.Description, 
+            var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description, 
                                                                             clothesInformation.GenderType, null,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,
-                                                                            clothesInformation.ClothesColorCompositeEntities,
-                                                                            clothesInformation.ClothesSizeGroupCompositeEntities);
+                                                                            clothesInformation.ClothesColorComposites,
+                                                                            clothesInformation.ClothesSizeGroupComposites);
             var clothesInformationEntityConverter = ClothesInformationEntityConverter;
 
             var clothesInformationAfterConverter = clothesInformationEntityConverter.FromEntity(clothesInformationNull);
 
             Assert.True(clothesInformationAfterConverter.HasErrors);
-            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>
@@ -58,17 +60,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_ClothesTypeNotFound()
         {
             var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
-            var clothesInformationNull = new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
-                                                                            clothesInformation.GenderType, clothesInformation.GenderEntity,
+            var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
+                                                                            clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, null,
-                                                                            clothesInformation.ClothesColorCompositeEntities,
-                                                                            clothesInformation.ClothesSizeGroupCompositeEntities);
+                                                                            clothesInformation.ClothesColorComposites,
+                                                                            clothesInformation.ClothesSizeGroupComposites);
             var clothesInformationEntityConverter = ClothesInformationEntityConverter;
 
             var clothesInformationAfterConverter = clothesInformationEntityConverter.FromEntity(clothesInformationNull);
 
             Assert.True(clothesInformationAfterConverter.HasErrors);
-            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>
@@ -78,17 +80,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_ColorNotFound()
         {
             var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
-            var clothesInformationNull = new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
-                                                                            clothesInformation.GenderType, clothesInformation.GenderEntity,
+            var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
+                                                                            clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,
                                                                             null,
-                                                                            clothesInformation.ClothesSizeGroupCompositeEntities);
+                                                                            clothesInformation.ClothesSizeGroupComposites);
             var clothesInformationEntityConverter = ClothesInformationEntityConverter;
 
             var clothesInformationAfterConverter = clothesInformationEntityConverter.FromEntity(clothesInformationNull);
 
             Assert.True(clothesInformationAfterConverter.HasErrors);
-            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>
@@ -98,17 +100,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_SizeGroupNotFound()
         {
             var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
-            var clothesInformationNull = new ClothesInformationEntity(clothesInformation, clothesInformation.Description,
-                                                                            clothesInformation.GenderType, clothesInformation.GenderEntity,
+            var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
+                                                                            clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,
-                                                                            clothesInformation.ClothesColorCompositeEntities,
+                                                                            clothesInformation.ClothesColorComposites,
                                                                             null);
             var clothesInformationEntityConverter = ClothesInformationEntityConverter;
 
             var clothesInformationAfterConverter = clothesInformationEntityConverter.FromEntity(clothesInformationNull);
 
             Assert.True(clothesInformationAfterConverter.HasErrors);
-            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(clothesInformationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>

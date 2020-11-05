@@ -1,5 +1,6 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +9,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Одежда. Информация. Схема базы данных
     /// </summary>
-    public class ClothesInformationConfiguration : IEntityTypeConfiguration<ClothesInformationEntity>
+    public class ClothesInformationConfiguration : IEntityTypeConfiguration<ClothesEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesInformationEntity> builder)
+        public void Configure(EntityTypeBuilder<ClothesEntity> builder)
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasDefaultValueSql($"nextval('\"{ClothesSequences.CLOTHES_ID_GENERATOR}\"')").IsRequired();
@@ -19,8 +20,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
             builder.Property(t => t.Price).IsRequired();
             builder.Property(t => t.Image).IsRequired();
 
-            builder.HasOne(t => t.GenderEntity)
-                   .WithMany(s => s!.ClothesInformationEntities)
+            builder.HasOne(t => t.Gender)
+                   .WithMany(s => s!.Clothes)
                    .HasForeignKey(sc => sc.GenderType)
                    .IsRequired();
 

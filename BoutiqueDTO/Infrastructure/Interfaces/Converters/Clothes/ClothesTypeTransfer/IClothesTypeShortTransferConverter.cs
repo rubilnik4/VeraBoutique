@@ -1,6 +1,6 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfer;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfer
 {

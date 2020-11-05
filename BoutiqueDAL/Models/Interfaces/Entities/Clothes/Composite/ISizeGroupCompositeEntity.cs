@@ -32,11 +32,11 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Размер одежды
         /// </summary>
-        SizeEntity? SizeEntity { get; }
+        SizeEntity? Size { get; }
 
         /// <summary>
         /// Группа размеров одежды
         /// </summary>
-        SizeGroupEntity? SizeGroupEntity { get; }
+        SizeGroupEntity? SizeGroup { get; }
     }
 }

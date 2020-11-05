@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using Functional.Models.Enums;
@@ -40,7 +41,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Удалить все записи в таблице
         /// </summary>
         public static async Task Delete_All(IBoutiqueDatabase database,
-                                            IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
+                                            IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities)
         {
             var resultClothesRemove = database.ClotheTypeTable.RemoveRange(clothesTypeEntities);
             var resultAfterRemove = await database.SaveChangesAsync();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Sync;
 using MockQueryable.Moq;
 using Moq;
@@ -17,7 +18,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
         /// <summary>
         /// Таблица базы данных одежды
         /// </summary>
-        public static Mock<IClothesTable> GetClothesTable(Func<int, IQueryable<ClothesInformationEntity>> clothesInformationFunc) =>
+        public static Mock<IClothesTable> GetClothesTable(Func<int, IQueryable<ClothesEntity>> clothesInformationFunc) =>
             new Mock<IClothesTable>().
             Void(mock => mock.Setup(clothesTable => clothesTable.Where(It.IsAny<int>())).
                               Returns(clothesInformationFunc));
@@ -25,21 +26,21 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
         /// <summary>
         /// Функция поиска информации об одежде
         /// </summary>
-        public static Func<int, IQueryable<ClothesInformationEntity>> GetClothesInformationOk(IEnumerable<ClothesInformationEntity> clothesInformationEntities) =>
+        public static Func<int, IQueryable<ClothesEntity>> GetClothesInformationOk(IEnumerable<ClothesEntity> clothesInformationEntities) =>
             id => clothesInformationEntities.Where(clothesInformation => clothesInformation.Id == id).
                                              AsQueryable().BuildMock().Object;
 
         /// <summary>
         /// Функция поиска информации об одежде. Элемент не найден
         /// </summary>
-        public static Func<int, IQueryable<ClothesInformationEntity>> GetClothesInformationNotFound() =>
-            _ => Enumerable.Empty<ClothesInformationEntity>().
+        public static Func<int, IQueryable<ClothesEntity>> GetClothesInformationNotFound() =>
+            _ => Enumerable.Empty<ClothesEntity>().
                             AsQueryable().BuildMock().Object;
 
         /// <summary>
         /// Функция поиска информации об одежде. Ошибка
         /// </summary>
-        public static Func<int, IQueryable<ClothesInformationEntity>> GetClothesInformationException() =>
+        public static Func<int, IQueryable<ClothesEntity>> GetClothesInformationException() =>
             _ => throw new Exception();
     }
 }

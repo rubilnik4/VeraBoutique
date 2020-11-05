@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -38,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override IResultValue<ISizeGroupDomain> FromEntity(ISizeGroupEntity sizeGroupEntity) =>
             GetSizeGroupFunc(sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize).           
-            ResultCurryOkBind(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupCompositeEntities)).
+            ResultCurryOkBind(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupComposites)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>
@@ -81,8 +82,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         private static IResultCollection<ISizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
-            Select(sizeGroup => sizeGroup.SizeEntity.
-                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroup.SizeEntity)))).
+            Select(sizeGroup => sizeGroup.Size.
+                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroup.Size)))).
             ToResultCollection();
     }
 }

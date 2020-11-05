@@ -6,6 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTab
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
@@ -13,22 +14,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных вида одежды
     /// </summary>
-    public class ClothesTypeTable : EntityDatabaseTable<string, ClothesTypeEntity>, IClothesTypeTable
+    public class ClothesTypeTable : EntityDatabaseTable<string, ClothesTypeFullEntity>, IClothesTypeTable
     {
-        public ClothesTypeTable(DbSet<ClothesTypeEntity> clothesTypeSet)
+        public ClothesTypeTable(DbSet<ClothesTypeFullEntity> clothesTypeSet)
          : base(clothesTypeSet)
         { }
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> IdPredicate(string id) =>
+        protected override Expression<Func<ClothesTypeFullEntity, bool>> IdPredicate(string id) =>
             entity => entity.Name == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
+        protected override Expression<Func<ClothesTypeFullEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
             entity => ids.Contains(entity.Name);
     }
 }

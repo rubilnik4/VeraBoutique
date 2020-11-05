@@ -39,7 +39,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
                                                                                      new GenderTransferConverter());
             var colorClothesTransferConverter = new ColorClothesTransferConverter();
             var sizeGroupTransferConverter = new SizeGroupTransferConverter(new SizeTransferConverter());
-            var clothesInformationTransferConverter = new ClothesFullTransferConverter(clothesShortTransferConverter,
+            var clothesInformationTransferConverter = new ClothesTransferConverter(clothesShortTransferConverter,
                                                                                        clothesTypeShortTransferConverter,
                                                                                        colorClothesTransferConverter,
                                                                                        sizeGroupTransferConverter);

@@ -31,18 +31,18 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
                                IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupCompositeEntity)
             : base(clothesSizeType, sizeNormalize)
         {
-            SizeGroupCompositeEntities = sizeGroupCompositeEntities?.ToList();
-            ClothesSizeGroupCompositeEntities = clothesSizeGroupCompositeEntity?.ToList();
+            SizeGroupComposites = sizeGroupCompositeEntities?.ToList();
+            ClothesSizeGroupComposites = clothesSizeGroupCompositeEntity?.ToList();
         }
 
         /// <summary>
         /// Связующая сущность размера одежды
         /// </summary>
-        public IReadOnlyCollection<SizeGroupCompositeEntity>? SizeGroupCompositeEntities { get; }
+        public IReadOnlyCollection<SizeGroupCompositeEntity>? SizeGroupComposites { get; }
 
         /// <summary>
         /// Связующая сущность одежды и размера
         /// </summary>
-        public IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? ClothesSizeGroupCompositeEntities { get; }
+        public IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? ClothesSizeGroupComposites { get; }
     }
 }

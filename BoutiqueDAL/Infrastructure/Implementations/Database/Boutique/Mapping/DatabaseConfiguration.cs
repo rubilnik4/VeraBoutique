@@ -3,6 +3,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -56,7 +57,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
             modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
             modelBuilder.Entity<ColorClothesEntity>().HasData(ColorClothesInitialize.ColorClothesData);
-            modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
+            modelBuilder.Entity<ClothesTypeFullEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
             modelBuilder.Entity<ClothesTypeGenderCompositeEntity>().HasData(ClothesTypeGenderInitialize.ClothesTypeGenderData);
             modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupCompositeInitialize.CompositeSizeData);
             modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);

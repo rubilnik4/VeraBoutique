@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntity;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -30,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesFullDomain, IClothesEntity, ClothesInformationEntity>,
+    public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, IClothesEntity, ClothesEntity>,
                                          IClothesDatabaseService
     {
         public ClothesDatabaseService(IDatabase database,
@@ -95,14 +97,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить информацию об одежде по идентификатору
         /// </summary>
-        public async Task<IResultValue<IClothesFullDomain>> GetIncludesById(int id) =>
+        public async Task<IResultValue<IClothesDomain>> GetIncludesById(int id) =>
             await ResultValueBindTryAsync(() => GetClothesInformationIncludesById(id).
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString(),
                                                                                                                   nameof(IClothesTable))),
                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesInformationEntityConverter.FromEntity(clothesInformationDomain));
 
-        public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesFullDomain> clothesInformationDomains) =>
+        public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesDomain> clothesInformationDomains) =>
             _genderDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.Gender)).
             ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.ClothesTypeFull)))
             
@@ -123,32 +125,32 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesInformationEntity> GetClothesInformationByGender(GenderType genderType) =>
+        private IQueryable<ClothesEntity> GetClothesInformationByGender(GenderType genderType) =>
             _genderTable.
             Where(genderType).
-            Include(genderEntity => genderEntity.ClothesInformationEntities).
-            SelectMany(genderEntity => genderEntity.ClothesInformationEntities);
+            Include(genderEntity => genderEntity.Clothes).
+            SelectMany(genderEntity => genderEntity.Clothes);
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesInformationEntity> GetClothesInformationByClothesType(string clothesType) =>
+        private IQueryable<ClothesEntity> GetClothesInformationByClothesType(string clothesType) =>
             _clothesTypeTable.
             Where(clothesType).
-            Include(clothesTypeEntity => clothesTypeEntity.ClothesInformationEntities).
-            SelectMany(genderEntity => genderEntity.ClothesInformationEntities);
+            Include(clothesTypeEntity => clothesTypeEntity.Clothes).
+            SelectMany(genderEntity => genderEntity.Clothes);
 
         /// <summary>
         /// Получить информацию об одежде по идентификатору
         /// </summary>
-        private async Task<ClothesInformationEntity?> GetClothesInformationIncludesById(int id) =>
+        private async Task<ClothesEntity?> GetClothesInformationIncludesById(int id) =>
             await _clothesTable.Where(id).
-            Include(clothesInformationEntity => clothesInformationEntity.ClothesColorCompositeEntities).
-            ThenInclude(clothesColorCompositeEntity => clothesColorCompositeEntity.ColorClothesEntity).
-            Include(clothesInformationEntity => clothesInformationEntity.ClothesSizeGroupCompositeEntities).
-            ThenInclude(clothesSizeGroupCompositeEntity => clothesSizeGroupCompositeEntity.SizeGroupEntity).
-            ThenInclude(sizeGroupEntity => sizeGroupEntity!.SizeGroupCompositeEntities).
-            ThenInclude(sizeGroupCompositeEntity => sizeGroupCompositeEntity.SizeEntity).
+            Include(clothesInformationEntity => clothesInformationEntity.ClothesColorComposites).
+            ThenInclude(clothesColorCompositeEntity => clothesColorCompositeEntity.ColorClothes).
+            Include(clothesInformationEntity => clothesInformationEntity.ClothesSizeGroupComposites).
+            ThenInclude(clothesSizeGroupCompositeEntity => clothesSizeGroupCompositeEntity.SizeGroup).
+            ThenInclude(sizeGroupEntity => sizeGroupEntity!.SizeGroupComposites).
+            ThenInclude(sizeGroupCompositeEntity => sizeGroupCompositeEntity.Size).
             AsNoTracking().
             FirstOrDefaultAsync();
     }

@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using Functional.Models.Enums;
@@ -39,15 +40,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_CategoryNotFound()
         {
             var clothesType= ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeNull = new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName, null,
-                                                        clothesType.ClothesInformationEntities,
-                                                        clothesType.ClothesTypeGenderEntities);
+            var clothesTypeNull = new ClothesTypeFullEntity(clothesType.Name, clothesType.CategoryName, null,
+                                                        clothesType.Clothes,
+                                                        clothesType.ClothesTypeGenderComposites);
             var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter());
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 
             Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueNotFound);
+            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
     }
 }

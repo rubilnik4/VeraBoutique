@@ -101,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
 
             Assert.True(testResult.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueNotFound, testResult.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.ValueNotFound, testResult.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var result = await testService.Put(testDomainPut);
 
             Assert.True(result.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueNotFound, result.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.ValueNotFound, result.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueNotFound, resultEntity.Errors.First().ErrorResultType);
+            Assert.Equal(ErrorResultType.ValueNotFound, resultEntity.Errors.First().ErrorResultType);
         }
 
         /// <summary>

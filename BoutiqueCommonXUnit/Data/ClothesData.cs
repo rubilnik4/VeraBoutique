@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomain;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommonXUnit.Data
@@ -27,15 +27,15 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static List<IClothesFullDomain> ClothesInformationDomains =>
-            new List<IClothesFullDomain>
+        public static List<IClothesDomain> ClothesInformationDomains =>
+            new List<IClothesDomain>
             {
-                new ClothesFullDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",
+                new ClothesDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",
                                              new GenderDomain(GenderType.Male, "Мужик"), 
                                              new ClothesTypeShortDomain("Перчатки", new CategoryDomain("Напалечники")),
                                              ColorClothesData.GetColorClothesDomain(),
                                              SizeGroupData.GetSizeGroupDomain()),
-                new ClothesFullDomain(2, "Варежки", 0.66m, null, "Варежки простолюдинные",
+                new ClothesDomain(2, "Варежки", 0.66m, null, "Варежки простолюдинные",
                                              new GenderDomain(GenderType.Female, "Женщина"),
                                              new ClothesTypeShortDomain("Перчатки", new CategoryDomain("Напалечники")),
                                              ColorClothesData.GetColorClothesDomain(),

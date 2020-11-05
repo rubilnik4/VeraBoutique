@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
@@ -46,7 +47,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseLoadTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
-                                                   IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
+                                                   IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
                                                    IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             await BoutiqueEntityDatabaseGetTest.ToListEntities(boutiqueEntityDatabase, genderEntities,
@@ -59,7 +60,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseFindTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
-                                                   IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
+                                                   IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
                                                    IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();
@@ -110,7 +111,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseDeleteTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                      IReadOnlyCollection<GenderEntity> genderEntities,
-                                                     IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
+                                                     IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities)
         {
             await BoutiqueEntityDatabaseDeleteTest.Delete(boutiqueEntityDatabase, genderEntities);
             await BoutiqueEntityDatabaseDeleteTest.Delete_All(boutiqueEntityDatabase, clothesTypeEntities);

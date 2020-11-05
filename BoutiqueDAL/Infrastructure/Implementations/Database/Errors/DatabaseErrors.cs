@@ -27,7 +27,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// Элемент не найден
         /// </summary>
         public static IErrorResult ValueNotFoundError(string id, string tableName) =>
-            new ErrorResult(ErrorResultType.DatabaseValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
+            new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
 
         /// <summary>
         /// Дублирование элементов

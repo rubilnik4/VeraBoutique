@@ -63,8 +63,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         private async Task<SizeGroupEntity?> GetSizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize) =>
             await _sizeGroupTable.Where((clothesSizeType, sizeNormalize)).
-            Include(sizeGroupEntity => sizeGroupEntity.SizeGroupCompositeEntities).
-            ThenInclude(sizeGroupComposite => sizeGroupComposite.SizeEntity).
+            Include(sizeGroupEntity => sizeGroupEntity.SizeGroupComposites).
+            ThenInclude(sizeGroupComposite => sizeGroupComposite.Size).
             AsNoTracking().
             FirstOrDefaultAsync();
     }

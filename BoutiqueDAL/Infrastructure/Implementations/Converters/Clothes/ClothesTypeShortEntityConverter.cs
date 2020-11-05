@@ -1,14 +1,17 @@
 ﻿using System;
+using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntity;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -19,21 +22,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели основных данных вида одежды в модель базы данных
     /// </summary>
-    public class ClothesTypeShortEntityConverter : EntityConverter<string, IClothesTypeShortDomain, IClothesTypeEntity, ClothesTypeEntity>,
+    public class ClothesTypeShortEntityConverter : EntityConverter<string, IClothesTypeShortDomain, IClothesTypeFullEntity, ClothesTypeFullEntity>,
                                                    IClothesTypeShortEntityConverter
     {
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public override IResultValue<IClothesTypeShortDomain> FromEntity(IClothesTypeEntity clothesTypeEntity) =>
-            new ClothesTypeShortDomain(clothesTypeEntity.Name).
+        public override IResultValue<IClothesTypeShortDomain> FromEntity(IClothesTypeFullEntity clothesTypeFullEntity) =>
+            new ClothesTypeShortDomain(clothesTypeFullEntity.Name).
             Map(clothesType => new ResultValue<IClothesTypeShortDomain>(clothesType));
 
         /// <summary>
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
-        public override ClothesTypeEntity ToEntity(IClothesTypeShortDomain clothesTypeShortDomain) =>
-            new ClothesTypeEntity(clothesTypeShortDomain.Name);
+        public override ClothesTypeFullEntity ToEntity(IClothesTypeShortDomain clothesTypeShortDomain) =>
+            new ClothesTypeFullEntity(clothesTypeShortDomain.Name);
 
         /// <summary>
         /// Функция получения типа одежды

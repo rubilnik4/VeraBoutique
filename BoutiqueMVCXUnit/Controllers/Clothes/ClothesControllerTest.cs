@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -40,7 +40,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesShortTransferConverter = ClothesShortTransferConverter;
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter, 
-                                                               ClothesFullTransferConverter);
+                                                               ClothesTransferConverter);
 
             var clothesShortTransfers = await clothesShortController.GetClothesShorts(genderType, clothesType);
             var clothesShortAfter = clothesShortTransferConverter.FromTransfers(clothesShortTransfers.Value);
@@ -62,7 +62,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, clothesInformationDomain);
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter,
-                                                               ClothesFullTransferConverter);
+                                                               ClothesTransferConverter);
 
             var actionResult = await clothesShortController.GetClothesShorts(genderType, clothesType);
 
@@ -81,10 +81,10 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             var clothesInformationDomain = ClothesInformationDomainOk;
             var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesInformationDomain);
-            var clothesInformationTransferConverter = ClothesFullTransferConverter;
+            var clothesInformationTransferConverter = ClothesTransferConverter;
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter,
-                                                               ClothesFullTransferConverter);
+                                                               ClothesTransferConverter);
 
             var clothesInformationTransfer = await clothesShortController.GetIncludesById(clothesInformationDomain.Value.Id);
             var clothesInformationAfter = clothesInformationTransferConverter.FromTransfer(clothesInformationTransfer.Value);
@@ -99,11 +99,11 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetIncludesById_ErrorDatabase()
         {
             var initialError = ErrorData.DatabaseError;
-            var clothesInformationDomain = new ResultValue<IClothesFullDomain>(initialError);
+            var clothesInformationDomain = new ResultValue<IClothesDomain>(initialError);
             var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesInformationDomain);
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter,
-                                                               ClothesFullTransferConverter);
+                                                               ClothesTransferConverter);
 
             var actionResult = await clothesShortController.GetIncludesById(ClothesInformationDomainOk.Value.Id);
 
@@ -121,11 +121,11 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetIncludesById_NotFound()
         {
             var initialError = ErrorData.NotFoundError;
-            var clothesInformationDomain = new ResultValue<IClothesFullDomain>(initialError);
+            var clothesInformationDomain = new ResultValue<IClothesDomain>(initialError);
             var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesInformationDomain);
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesShortTransferConverter,
-                                                               ClothesFullTransferConverter);
+                                                               ClothesTransferConverter);
 
             var actionResult = await clothesShortController.GetIncludesById(ClothesInformationDomainOk.Value.Id);
 
@@ -138,7 +138,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Сервис одежды в базе данных
         /// </summary>
         private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesShortDomain> clothesShortDomains,
-                                                                               IResultValue<IClothesFullDomain> clothesInformationDomain) =>
+                                                                               IResultValue<IClothesDomain> clothesInformationDomain) =>
             new Mock<IClothesDatabaseService>().
             Void(mock => mock.Setup(service => service.GetClothesShorts(It.IsAny<GenderType>(), It.IsAny<string>())).
                               ReturnsAsync(clothesShortDomains)).
@@ -153,8 +153,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Данные информации об одежде. Корректный вариант
         /// </summary>
-        private static ResultValue<IClothesFullDomain> ClothesInformationDomainOk =>
-            new ResultValue<IClothesFullDomain>(ClothesData.ClothesInformationDomains.First());
+        private static ResultValue<IClothesDomain> ClothesInformationDomainOk =>
+            new ResultValue<IClothesDomain>(ClothesData.ClothesInformationDomains.First());
 
         /// <summary>
         /// Конвертер одежды в трансферную модель
@@ -165,8 +165,8 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Конвертер информации об одежде в трансферную модель
         /// </summary>
-        private static IClothesFullTransferConverter ClothesFullTransferConverter =>
-            new ClothesFullTransferConverter(new ClothesShortTransferConverter(), 
+        private static IClothesTransferConverter ClothesTransferConverter =>
+            new ClothesTransferConverter(new ClothesShortTransferConverter(), 
                                                     new GenderTransferConverter(), 
                                                     new ClothesTypeFullTransferConverter(new CategoryTransferConverter()), 
                                                     new ColorClothesTransferConverter(), 

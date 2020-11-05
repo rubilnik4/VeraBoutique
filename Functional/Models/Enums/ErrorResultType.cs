@@ -9,7 +9,7 @@
         DatabaseIncorrectConnection,
         DatabaseSave,
         DatabaseTableAccess,
-        DatabaseValueNotFound,
+        ValueNotFound,
         DatabaseValueDuplicate,
         JsonConvertion,
         UserDefaultNotFound,

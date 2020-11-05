@@ -1,5 +1,6 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
@@ -12,7 +13,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор вида одежды
         /// </summary>
-        string ClothesType { get; }
+        string ClothesTypeName { get; }
 
         /// <summary>
         /// Идентификатор пола одежды
@@ -22,11 +23,11 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Вид одежды
         /// </summary>
-        ClothesTypeEntity? ClothesTypeEntity { get; }
+        ClothesTypeFullEntity? ClothesType { get; }
 
         /// <summary>
         /// Пол одежды
         /// </summary>
-        GenderEntity? GenderEntity { get; }
+        GenderEntity? Gender { get; }
     }
 }
