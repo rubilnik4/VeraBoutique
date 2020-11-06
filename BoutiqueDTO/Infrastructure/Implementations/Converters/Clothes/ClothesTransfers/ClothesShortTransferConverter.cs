@@ -1,10 +1,10 @@
 ﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfer;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfer
+namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers
 {
     /// <summary>
     /// Конвертер одежды в трансферную модель

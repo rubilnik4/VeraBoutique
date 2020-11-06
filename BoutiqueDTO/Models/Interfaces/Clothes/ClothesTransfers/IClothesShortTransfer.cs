@@ -4,7 +4,7 @@ using BoutiqueDTO.Models.Interfaces.Base;
 namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers
 {
     /// <summary>
-    /// Одежда. Трансферная модель
+    /// Одежда. Базовая трансферная модель
     /// </summary>
     public interface IClothesShortTransfer : IClothesShort, ITransferModel<int>
     { }

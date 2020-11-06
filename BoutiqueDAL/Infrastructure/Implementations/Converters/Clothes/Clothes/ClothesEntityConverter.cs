@@ -2,32 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Errors;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
-using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
-using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes
 {
     using ClothesInformationFunc = Func<IClothesShortDomain, IGenderDomain, IClothesTypeFullDomain, 
                                         IEnumerable<IColorClothesDomain>, IEnumerable<ISizeGroupDomain>, 
@@ -36,11 +30,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели информации об одежде в модель базы данных
     /// </summary>
-    public class ClothesInformationEntityConverter : 
-        EntityConverter<int, IClothesDomain, IClothesEntity, ClothesEntity>,
-        IClothesInformationEntityConverter
+    public class ClothesEntityConverter : EntityConverter<int, IClothesDomain, IClothesEntity, ClothesEntity>,
+                                          IClothesEntityConverter
     {
-        public ClothesInformationEntityConverter(IClothesShortEntityConverter clothesShortEntityConverter,
+        public ClothesEntityConverter(IClothesShortEntityConverter clothesShortEntityConverter,
                                                  IGenderEntityConverter genderEntityConverter,
                                                  IClothesTypeEntityConverter clothesTypeEntityConverter,
                                                  IColorClothesEntityConverter colorClothesEntityConverter,
@@ -95,11 +88,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// </summary>
         public override ClothesEntity ToEntity(IClothesDomain clothesDomain) =>
             new ClothesEntity(_clothesShortEntityConverter.ToEntity(clothesDomain),
-                                         clothesDomain.Description,
-                                         _genderEntityConverter.ToEntity(clothesDomain.Gender),
-                                         _clothesTypeEntityConverter.ToEntity(clothesDomain.ClothesTypeFull),
-                                         ColorClothesToCompositeEntities(clothesDomain.Colors, clothesDomain.Id),
-                                         SizeGroupToCompositeEntities(clothesDomain.SizeGroups, clothesDomain.Id));
+                              clothesDomain.Description,
+                              _genderEntityConverter.ToEntity(clothesDomain.),
+                              _clothesTypeEntityConverter.ToEntity(clothesDomain.ClothesTypeFull),
+                              ColorClothesToCompositeEntities(clothesDomain.Colors, clothesDomain.Id),
+                              SizeGroupToCompositeEntities(clothesDomain.SizeGroups, clothesDomain.Id));
 
         /// <summary>
         /// Функция получения информации об одежде

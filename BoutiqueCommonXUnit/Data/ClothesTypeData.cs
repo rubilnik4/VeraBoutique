@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
@@ -16,12 +17,12 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить виды одежды
         /// </summary>
-        public static List<IClothesTypeFullDomain> GetClothesTypeFullDomain() =>
-            new List<IClothesTypeFullDomain>()
+        public static List<IClothesTypeDomain> GetClothesTypeDomain() =>
+            new List<IClothesTypeDomain>()
             {
-                new ClothesTypeFullDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
+                new ClothesTypeDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
                                           new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
-                new ClothesTypeFullDomain("Брюки", new CategoryDomain("Штаны"),
+                new ClothesTypeDomain("Брюки", new CategoryDomain("Штаны"),
                                           new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
             };
 
@@ -29,12 +30,8 @@ namespace BoutiqueCommonXUnit.Data
         /// Получить основную информацию видов одежды
         /// </summary>
         public static List<IClothesTypeShortDomain> GetClothesTypeShortDomain() =>
-            new List<IClothesTypeShortDomain>()
-            {
-                new ClothesTypeShortDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
-                                           new GenderDomain(GenderType.Male, "Мужик")),
-                new ClothesTypeShortDomain("Брюки", new CategoryDomain("Штаны"),
-                                          new GenderDomain(GenderType.Male, "Мужик")),
-            };
+            GetClothesTypeDomain().
+            Select(clothesType => (IClothesTypeShortDomain)clothesType).
+            ToList();
     }
 }

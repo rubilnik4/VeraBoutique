@@ -2,7 +2,7 @@
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfer
+namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers
 {
     /// <summary>
     /// Конвертер одежды в трансферную модель

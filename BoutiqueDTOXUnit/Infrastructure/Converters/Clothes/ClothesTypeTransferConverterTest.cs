@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfer;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
@@ -18,8 +18,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ClothesTypeShort_ToTransfer_FromTransfer()
         {
             var clothesType = ClothesTypeData.GetClothesTypeShortDomain().First();
-            var clothesTypeShortTransferConverter = new ClothesTypeShortTransferConverter(new CategoryTransferConverter(),
-                                                                                          new GenderTransferConverter());
+            var clothesTypeShortTransferConverter = new ClothesTypeShortTransferConverter(new CategoryTransferConverter());
 
             var clothesTypeShortTransfer = clothesTypeShortTransferConverter.ToTransfer(clothesType);
             var clothesTypeAfterShortConverter = clothesTypeShortTransferConverter.FromTransfer(clothesTypeShortTransfer);
@@ -31,11 +30,11 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         /// Преобразования модели вида одежды в трансферную модель
         /// </summary>
         [Fact]
-        public void ClothesTypeFull_ToTransfer_FromTransfer()
+        public void ClothesType_ToTransfer_FromTransfer()
         {
-            var clothesType = ClothesTypeData.GetClothesTypeFullDomain().First();
-            var clothesTypeTransferConverter = new ClothesTypeFullTransferConverter(new CategoryTransferConverter(),
-                                                                                    new GenderTransferConverter());
+            var clothesType = ClothesTypeData.GetClothesTypeDomain().First();
+            var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new CategoryTransferConverter(),
+                                                                                new GenderTransferConverter());
 
             var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);
             var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);

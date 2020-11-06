@@ -1,34 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
 {
-    public abstract class ClothesTypeTransfer : IClothesTypeTransfer
+    public class ClothesTypeTransfer : ClothesTypeShortTransfer, IClothesTypeTransfer
     {
-        protected ClothesTypeTransfer()
+        public ClothesTypeTransfer()
         { }
 
-        protected ClothesTypeTransfer(string name, CategoryTransfer category)
+        public ClothesTypeTransfer(IClothesType clothesType, CategoryTransfer category, 
+                                   IEnumerable<GenderTransfer> genders)
+          : this(clothesType.Name, category, genders)
+        { }
+
+        public ClothesTypeTransfer(string name, CategoryTransfer category,
+                                   IEnumerable<GenderTransfer> genders)
+            :base(name, category)
         {
-            Name = name;
-            Category = category;
+            Genders = genders.ToList();
         }
 
         /// <summary>
-        /// Идентификатор
+        /// Типы пола. Трансферная модель
         /// </summary>
-        public string Id => Name;
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        [Required]
-        public string Name { get; set; } = null!;
-
-        /// <summary>
-        /// Категория одежды. Трансферная модель
-        /// </summary>
-        [Required]
-        public CategoryTransfer Category { get; } = null!;
+        public IReadOnlyCollection<GenderTransfer> Genders { get; } = null!;
     }
 }

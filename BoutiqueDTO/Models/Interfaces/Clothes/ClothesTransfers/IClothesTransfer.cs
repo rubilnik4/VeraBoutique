@@ -6,10 +6,15 @@ using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers
 {
     /// <summary>
-    /// Одежда. Информация. Доменная модель
+    /// Одежда. Доменная модель
     /// </summary>
     public interface IClothesTransfer: IClothesMain, IClothesShortTransfer
     {
+        /// <summary>
+        /// Пол одежды
+        /// </summary>
+        GenderTransfer Gender { get; }
+
         /// <summary>
         /// Вид одежды
         /// </summary>

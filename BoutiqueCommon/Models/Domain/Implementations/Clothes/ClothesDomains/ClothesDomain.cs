@@ -11,23 +11,29 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
     public class ClothesDomain : ClothesMain, IClothesDomain, IEquatable<IClothesDomain>
     {
-        public ClothesDomain(IClothesShort clothesShort,
-                             string description, IClothesTypeShortDomain clothesTypeShort,
+        public ClothesDomain(IClothesShort clothesShort, string description,
+                             IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
            : this(clothesShort.Id, clothesShort.Name,
                   clothesShort.Price, clothesShort.Image,
-                  description, clothesTypeShort, colors, sizeGroups)
+                  description, gender, clothesTypeShort, colors, sizeGroups)
         { }
 
-        public ClothesDomain(int id, string name, decimal price, byte[]? image,
-                             string description, IClothesTypeShortDomain clothesTypeShort,
+        public ClothesDomain(int id, string name, decimal price, byte[]? image, string description,
+                             IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
             : base(id, name, description, price, image)
         {
             ClothesTypeShort = clothesTypeShort;
+            Gender = gender;
             Colors = colors.ToList();
             SizeGroups = sizeGroups.ToList();
         }
+
+        /// <summary>
+        /// Тип пола
+        /// </summary>
+        public IGenderDomain Gender { get; }
 
         /// <summary>
         /// Вид одежды
@@ -50,12 +56,14 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
         public bool Equals(IClothesDomain? other) =>
             other?.Id == Id && other?.Name == Name && other?.Price == Price &&
             other?.Description == Description &&
+            other?.Gender.Equals(Gender) == true &&
             other?.ClothesTypeShort.Equals(ClothesTypeShort) == true &&
             other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description, ClothesTypeShort.GetHashCode(),
+            HashCode.Combine(Id, Name, Price, Description,
+                             Gender.GetHashCode(), ClothesTypeShort.GetHashCode(),
                              Colors.Average(color => color.GetHashCode()),
                              SizeGroups.Average(size => size.GetHashCode()));
         #endregion

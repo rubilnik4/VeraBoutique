@@ -3,6 +3,9 @@ using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
 {
+    /// <summary>
+    /// Одежда. Базовая трансферная модель
+    /// </summary>
     public class ClothesShortTransfer: IClothesShortTransfer
     {
         public ClothesShortTransfer()

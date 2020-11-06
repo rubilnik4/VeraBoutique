@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;

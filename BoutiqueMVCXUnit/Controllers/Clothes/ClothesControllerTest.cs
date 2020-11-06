@@ -6,10 +6,10 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfer;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfer;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfer;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
@@ -168,7 +168,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         private static IClothesTransferConverter ClothesTransferConverter =>
             new ClothesTransferConverter(new ClothesShortTransferConverter(), 
                                                     new GenderTransferConverter(), 
-                                                    new ClothesTypeFullTransferConverter(new CategoryTransferConverter()), 
+                                                    new ClothesTypeTransferConverter(new CategoryTransferConverter()), 
                                                     new ColorClothesTransferConverter(), 
                                                     new SizeGroupTransferConverter(new SizeTransferConverter()));
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
@@ -6,34 +7,33 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains
 {
     /// <summary>
-    /// Вид одежды. Основная информация. Доменная модель
+    /// Вид одежды. Базовая доменная модель
     /// </summary>
-    public class ClothesTypeShortDomain : ClothesTypeDomain, IClothesTypeShortDomain, IEquatable<IClothesTypeShortDomain>
+    public class ClothesTypeShortDomain : ClothesType, IClothesTypeShortDomain, IEquatable<IClothesTypeShortDomain>
     {
-        public ClothesTypeShortDomain(IClothesType clothesType, ICategoryDomain category, IGenderDomain gender)
-            : this(clothesType.Name, category, gender)
+        public ClothesTypeShortDomain(IClothesType clothesType, ICategoryDomain category)
+            : this(clothesType.Name, category)
         { }
 
-        public ClothesTypeShortDomain(string name, ICategoryDomain category, IGenderDomain gender)
-          : base(name, category)
+        public ClothesTypeShortDomain(string name, ICategoryDomain category)
+          : base(name)
         {
-            Gender = gender;
+            Category = category;
         }
 
         /// <summary>
-        /// Тип пола. Доменная модель
+        /// Категория одежды. Доменная модель
         /// </summary>
-        public IGenderDomain Gender { get; }
+        public ICategoryDomain Category { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is IClothesTypeShortDomain clothesTypeDomain && Equals(clothesTypeDomain);
 
         public bool Equals(IClothesTypeShortDomain? other) =>
             other?.Id == Id &&
-            other?.Category.Equals(Category) == true &&
-            other?.Gender.Equals(Gender) == true;
+            other?.Category.Equals(Category) == true;
 
-        public override int GetHashCode() => HashCode.Combine(Name, Category.GetHashCode(), Gender.GetHashCode());
+        public override int GetHashCode() => HashCode.Combine(Name, Category.GetHashCode());
         #endregion
     }
 }

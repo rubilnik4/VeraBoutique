@@ -1,31 +1,42 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
 {
     /// <summary>
-    /// Вид одежды. Основная информация. Трансферная модель
+    /// Вид одежды. Базовая трансферная модель
     /// </summary>
-    public class ClothesTypeShortTransfer : ClothesTypeTransfers.ClothesTypeTransfer, IClothesTypeShortTransfer
+    public class ClothesTypeShortTransfer : IClothesTypeShortTransfer
     {
         public ClothesTypeShortTransfer()
         { }
 
-        public ClothesTypeShortTransfer(IClothesType clothesType, CategoryTransfer category, GenderTransfer gender)
-          : this(clothesType.Name, category, gender)
-        {
-            Gender = gender;
-        }
+        public ClothesTypeShortTransfer(IClothesType clothesType, CategoryTransfer category)
+          : this(clothesType.Name, category)
+        { }
 
-        public ClothesTypeShortTransfer(string name, CategoryTransfer category, GenderTransfer gender)
-            :base(name, category)
+        public ClothesTypeShortTransfer(string name, CategoryTransfer category)
         {
-            Gender = gender;
+            Name = name;
+            Category = category;
         }
 
         /// <summary>
-        /// Тип пола. Трансферная модель
+        /// Идентификатор
         /// </summary>
-        public GenderTransfer Gender { get; } = null!;
+        public string Id => Name;
+
+        /// <summary>
+        /// Наименование
+        /// </summary>
+        [Required]
+        public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// Категория одежды. Трансферная модель
+        /// </summary>
+        [Required]
+        public CategoryTransfer Category { get; } = null!;
     }
 }

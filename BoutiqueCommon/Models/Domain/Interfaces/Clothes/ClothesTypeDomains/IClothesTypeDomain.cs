@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
@@ -6,11 +7,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
     /// <summary>
     /// Вид одежды. Доменная модель
     /// </summary>
-    public interface IClothesTypeDomain : IClothesType, IDomainModel<string>
+    public interface IClothesTypeDomain : IClothesTypeShortDomain
     {
         /// <summary>
-        /// Категория одежды. Доменная модель
+        /// Типы пола. Доменная модель
         /// </summary>
-        ICategoryDomain Category { get; }
+        IReadOnlyCollection<IGenderDomain> Genders { get; }
     }
 }

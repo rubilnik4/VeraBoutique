@@ -1,17 +1,16 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using System.Collections.Generic;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Interfaces.Base;
 
 namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers
 {
     /// <summary>
     /// Вид одежды. Трансферная модель
     /// </summary>
-    public interface IClothesTypeTransfer : IClothesType, ITransferModel<string>
+    public interface IClothesTypeTransfer : IClothesTypeShortTransfer
     {
         /// <summary>
-        /// Категория одежды. Трансферная модель
+        /// Типы пола. Трансферная модель
         /// </summary>
-        CategoryTransfer Category { get; }
+        IReadOnlyCollection<GenderTransfer> Genders { get; }
     }
 }

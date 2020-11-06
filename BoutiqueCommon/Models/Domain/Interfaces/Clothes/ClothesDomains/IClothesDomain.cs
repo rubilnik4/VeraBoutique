@@ -5,10 +5,15 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains
 {
     /// <summary>
-    /// Одежда. Информация. Трансферная модель
+    /// Одежда. Трансферная модель
     /// </summary>
     public interface IClothesDomain : IClothesShortDomain, IClothesMain
     {
+        /// <summary>
+        /// Тип пола
+        /// </summary>
+        IGenderDomain Gender { get; }
+
         /// <summary>
         /// Вид одежды
         /// </summary>

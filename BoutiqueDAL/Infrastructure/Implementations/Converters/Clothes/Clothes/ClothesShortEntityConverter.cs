@@ -1,18 +1,14 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes
 {
     /// <summary>
     /// Преобразования модели одежды в модель базы данных

@@ -1,13 +1,16 @@
-﻿namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
+﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Base;
+
+namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
 {
     /// <summary>
-    /// Вид одежды. Основная информация. Доменная модель
+    /// Вид одежды. Базовая доменная модель
     /// </summary>
-    public interface IClothesTypeShortDomain : IClothesTypeDomain
+    public interface IClothesTypeShortDomain : IClothesType, IDomainModel<string>
     {
         /// <summary>
-        /// Тип пола. Доменная модель
+        /// Категория одежды. Доменная модель
         /// </summary>
-        IGenderDomain Gender { get; }
+        ICategoryDomain Category { get; }
     }
 }

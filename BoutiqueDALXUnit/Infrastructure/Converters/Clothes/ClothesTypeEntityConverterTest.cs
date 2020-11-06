@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDALXUnit.Data;
@@ -23,8 +24,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var clothesTypeDomain = ClothesTypeData.GetClothesTypeFullDomain().First(); 
-            var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter());
+            var clothesTypeDomain = ClothesTypeData.GetClothesTypeDomain().First(); 
+            var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter(),
+                                                                            new GenderEntityConverter());
 
             var clothesTypeEntity = clothesTypeEntityConverter.ToEntity(clothesTypeDomain);
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeEntity);
@@ -41,9 +43,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         {
             var clothesType= ClothesTypeEntitiesData.ClothesTypeEntities.First();
             var clothesTypeNull = new ClothesTypeFullEntity(clothesType.Name, clothesType.CategoryName, null,
-                                                        clothesType.Clothes,
-                                                        clothesType.ClothesTypeGenderComposites);
-            var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter());
+                                                            clothesType.Clothes,
+                                                            clothesType.ClothesTypeGenderComposites);
+            var clothesTypeEntityConverter = new ClothesTypeEntityConverter(new CategoryEntityConverter(), 
+                                                                            new GenderEntityConverter());
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 

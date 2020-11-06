@@ -5,7 +5,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity
 {
-    public interface IClothesInformationEntityConverter : 
+    public interface IClothesEntityConverter : 
         IEntityConverter<int, IClothesDomain, IClothesEntity, Models.Implementations.Entities.Clothes.ClothesEntities.ClothesEntity>
     { }
 }

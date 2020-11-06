@@ -7,7 +7,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfer;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes;
@@ -28,8 +28,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     {
         public ClothesTypeController(IClothesTypeDatabaseService clothesTypeDatabaseService,
                                      IClothesTypeShortTransferConverter clothesTypeShortTransferConverter,
-                                     IClothesTypeFullTransferConverter clothesTypeFullTransferConverter)
-            : base(clothesTypeDatabaseService, clothesTypeFullTransferConverter)
+                                     IClothesTypeTransferConverter clothesTypeTransferConverter)
+            : base(clothesTypeDatabaseService, clothesTypeTransferConverter)
         {
             _clothesTypeDatabaseService = clothesTypeDatabaseService;
             _clothesTypeShortTransferConverter = clothesTypeShortTransferConverter;

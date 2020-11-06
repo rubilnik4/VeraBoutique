@@ -85,6 +85,75 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         }
 
         /// <summary>
+        /// Выполнение условия в положительном результирующем ответе с коллекцией
+        /// </summary>
+        [Fact]
+        public void ResultCollectionWhere_Ok_ReturnNewValue()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
+
+            var resultAfterWhere = resultCollection.ResultCollectionWhere(numbers => true,
+                                                                          okFunc: CollectionToString,
+                                                                          badFunc: _ => new List<string>());
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.True(CollectionToString(initialCollection).SequenceEqual(resultAfterWhere.Value));
+        }
+
+        /// <summary>
+        /// Выполнение условия в отрицательном результирующем ответе с коллекцией без ошибки
+        /// </summary>
+        [Fact]
+        public void ResultCollectionWhere_Ok_ReturnNewValueByErrors()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultCollection = new ResultCollection<int>(errorsInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionWhere(number => false,
+                                                                          okFunc: _ => new List<string>(),
+                                                                          badFunc: errors => new List<string> { errors.Count.ToString() });
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Single(resultAfterWhere.Value);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value.First());
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в положительном результирующем ответе с коллекцией с ошибкой
+        /// </summary>
+        [Fact]
+        public void ResultCollectionWhere_Ok_ReturnError()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultCollection = new ResultCollection<int>(errorsInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionWhere(number => true,
+                okFunc: _ => new List<string>(),
+                badFunc: errors => new List<string> { errors.Count.ToString() });
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(errorsInitial.Count, resultAfterWhere.Errors.Count);
+        }
+
+        /// <summary>
+        /// Возвращение предыдущей ошибки в отрицательном результирующем ответе с коллекцией с ошибкой
+        /// </summary>
+        [Fact]
+        public void ResultCollectionWhere_Bad_ReturnError()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultCollection = new ResultCollection<int>(errorsInitial);
+
+            var resultAfterWhere = resultCollection.ResultCollectionWhere(number => false,
+                okFunc: _ => new List<string>(),
+                badFunc: errors => new List<string> { errors.Count.ToString() });
+
+            Assert.True(resultAfterWhere.HasErrors);
+            Assert.Equal(errorsInitial.Count, resultAfterWhere.Errors.Count);
+        }
+
+        /// <summary>
         /// Выполнение положительного условия в результирующем ответе с коллекцией без ошибки
         /// </summary>      
         [Fact]

@@ -2,10 +2,10 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfer;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfer
+namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers
 {
     /// <summary>
     /// Конвертер основной информации вида одежды в трансферную модель
@@ -13,11 +13,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     public class ClothesTypeShortTransferConverter : TransferConverter<string, IClothesTypeShortDomain, ClothesTypeShortTransfer>,
                                                      IClothesTypeShortTransferConverter
     {
-        public ClothesTypeShortTransferConverter(ICategoryTransferConverter categoryTransferConverter,
-                                                 IGenderTransferConverter genderTransferConverter)
+        public ClothesTypeShortTransferConverter(ICategoryTransferConverter categoryTransferConverter)
         {
             _categoryTransferConverter = categoryTransferConverter;
-            _genderTransferConverter = genderTransferConverter;
         }
 
         /// <summary>
@@ -26,24 +24,17 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         private readonly ICategoryTransferConverter _categoryTransferConverter;
 
         /// <summary>
-        /// Конвертер типа пола в трансферную модель
-        /// </summary>
-        private readonly IGenderTransferConverter _genderTransferConverter;
-
-        /// <summary>
         /// Преобразовать пол в трансферную модель
         /// </summary>
         public override ClothesTypeShortTransfer ToTransfer(IClothesTypeShortDomain clothesTypeShortDomain) =>
             new ClothesTypeShortTransfer(clothesTypeShortDomain,
-                                         _categoryTransferConverter.ToTransfer(clothesTypeShortDomain.Category),
-                                         _genderTransferConverter.ToTransfer(clothesTypeShortDomain.Gender));
+                                         _categoryTransferConverter.ToTransfer(clothesTypeShortDomain.Category));
 
         /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
         public override IClothesTypeShortDomain FromTransfer(ClothesTypeShortTransfer clothesTypeShortTransfer) =>
             new ClothesTypeShortDomain(clothesTypeShortTransfer, 
-                                       _categoryTransferConverter.FromTransfer(clothesTypeShortTransfer.Category),
-                                       _genderTransferConverter.FromTransfer(clothesTypeShortTransfer.Gender));
+                                       _categoryTransferConverter.FromTransfer(clothesTypeShortTransfer.Category));
     }
 }
