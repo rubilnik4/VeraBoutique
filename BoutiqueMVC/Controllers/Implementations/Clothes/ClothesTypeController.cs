@@ -24,11 +24,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи вида одежды
     /// </summary>
-    public class ClothesTypeController : ApiController<string, ClothesTypeFullTransfer, IClothesTypeFullDomain>
+    public class ClothesTypeController : ApiController<string, ClothesTypeTransfer, IClothesTypeDomain>
     {
         public ClothesTypeController(IClothesTypeDatabaseService clothesTypeDatabaseService,
-                                     IClothesTypeShortTransferConverter clothesTypeShortTransferConverter,
-                                     IClothesTypeTransferConverter clothesTypeTransferConverter)
+                                     IClothesTypeTransferConverter clothesTypeTransferConverter,
+                                     IClothesTypeShortTransferConverter clothesTypeShortTransferConverter)
             : base(clothesTypeDatabaseService, clothesTypeTransferConverter)
         {
             _clothesTypeDatabaseService = clothesTypeDatabaseService;

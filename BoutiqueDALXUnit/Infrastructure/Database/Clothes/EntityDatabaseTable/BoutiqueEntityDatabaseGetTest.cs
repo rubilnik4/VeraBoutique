@@ -35,7 +35,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Получить сущности из таблицы
         /// </summary>
         public static async Task ToListEntities(IBoutiqueDatabase database, IReadOnlyCollection<GenderEntity> genderEntities,
-                                                IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
+                                                IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
                                                 IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var clothesTypeGetEntities = await database.ClotheTypeTable.ToListAsync();

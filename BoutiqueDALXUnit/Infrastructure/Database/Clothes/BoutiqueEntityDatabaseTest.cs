@@ -47,7 +47,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseLoadTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
-                                                   IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
+                                                   IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
                                                    IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             await BoutiqueEntityDatabaseGetTest.ToListEntities(boutiqueEntityDatabase, genderEntities,
@@ -60,7 +60,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseFindTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                    IReadOnlyCollection<GenderEntity> genderEntities,
-                                                   IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities,
+                                                   IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
                                                    IReadOnlyCollection<ClothesTypeGenderCompositeEntity> clothesTypeGenderEntities)
         {
             var genderIds = genderEntities.Select(entity => entity.Id).ToList();
@@ -111,7 +111,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes
         /// </summary>
         public static async Task DatabaseDeleteTests(IBoutiqueDatabase boutiqueEntityDatabase,
                                                      IReadOnlyCollection<GenderEntity> genderEntities,
-                                                     IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities)
+                                                     IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
             await BoutiqueEntityDatabaseDeleteTest.Delete(boutiqueEntityDatabase, genderEntities);
             await BoutiqueEntityDatabaseDeleteTest.Delete_All(boutiqueEntityDatabase, clothesTypeEntities);

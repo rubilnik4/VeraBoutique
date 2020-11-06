@@ -1,38 +1,35 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities
 {
     /// <summary>
-    /// Вид одежды. Базовая информация. Сущность базы данных
+    /// Вид одежды. Сущность базы данных
     /// </summary>
-    public abstract class ClothesTypeEntity: ClothesType, IClothesTypeEntity
+    public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
-        protected ClothesTypeEntity(string name, string categoryName)
-            :this(name, categoryName, null)
+        public ClothesTypeEntity(string name, string categoryName)
+            : this(name, categoryName, null,
+                   Enumerable.Empty<ClothesEntity>(),
+                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
-        protected ClothesTypeEntity(string name, CategoryEntity category)
-            :this(name, category.Name, category)
-        { }
-
-        protected ClothesTypeEntity(string name, string categoryName, CategoryEntity? category)
-            :base(name)
+        public ClothesTypeEntity(string name, string categoryName, CategoryEntity? category,
+                                 IEnumerable<ClothesEntity>? clothes,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
+           : base(name, categoryName, category, clothes)
         {
-            CategoryName = categoryName;
-            Category = category;
+            ClothesTypeGenderComposites = clothesTypeGenderComposites?.ToList();
         }
 
         /// <summary>
-        /// Идентификатор связующей сущности категории одежды
+        /// Связующие сущности пола и вида одежды
         /// </summary>
-        public string CategoryName { get; }
+        public IReadOnlyCollection<ClothesTypeGenderCompositeEntity>? ClothesTypeGenderComposites { get; }
 
-        /// <summary>
-        /// Связующая сущность категории одежды
-        /// </summary>
-        public CategoryEntity? Category { get; }
     }
 }

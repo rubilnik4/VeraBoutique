@@ -34,7 +34,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис вида одежды в базе данных
     /// </summary>
-    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeFullDomain, IClothesTypeFullEntity, ClothesTypeFullEntity>, 
+    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeFullDomain, IClothesTypeEntity, ClothesTypeEntity>, 
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IDatabase database,
@@ -88,7 +88,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды
         /// </summary>
-        private async Task<IReadOnlyCollection<ClothesTypeFullEntity>> GetClothesTypes(GenderType genderType, string category) =>
+        private async Task<IReadOnlyCollection<ClothesTypeEntity>> GetClothesTypes(GenderType genderType, string category) =>
             await GetClothesTypeByGender(genderType).
             Join(GetClothesTypeByCategory(category),
                  clothesTypeGender => clothesTypeGender.Name,
@@ -100,7 +100,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды по типу пола
         /// </summary>
-        private IQueryable<ClothesTypeFullEntity> GetClothesTypeByGender(GenderType genderType) =>
+        private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
             _genderTable.Where(genderType).
             Include(genderEntity => genderEntity.ClothesTypeGenderComposites).
             SelectMany(genderEntity => genderEntity.ClothesTypeGenderComposites).
@@ -109,7 +109,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды по категории
         /// </summary>
-        private IQueryable<ClothesTypeFullEntity> GetClothesTypeByCategory(string category) =>
+        private IQueryable<ClothesTypeEntity> GetClothesTypeByCategory(string category) =>
            _categoryTable.Where(category).
            Include(categoryEntity => categoryEntity.ClothesTypes).
            SelectMany(categoryEntity => categoryEntity.ClothesTypes);

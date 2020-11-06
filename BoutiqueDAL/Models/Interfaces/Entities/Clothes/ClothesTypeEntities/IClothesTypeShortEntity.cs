@@ -1,16 +1,24 @@
 ﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities
 {
     /// <summary>
-    /// Вид одежды. Сущность базы данных
+    /// Вид одежды. Базовая сущность базы данных
     /// </summary>
-    public interface IClothesTypeShortEntity: IClothesTypeEntity
+    public interface IClothesTypeShortEntity: IClothesType, IEntityModel<string>
     {
         /// <summary>
-        /// Связующая сущность пола и вида одежды
+        /// Идентификатор связующей сущности категории одежды
         /// </summary>
-        ClothesTypeGenderCompositeEntity? ClothesTypeGender { get; }
+        string CategoryName { get; }
+
+        /// <summary>
+        /// Связующая сущность категории одежды
+        /// </summary>
+        CategoryEntity? Category { get; }
     }
 }

@@ -30,7 +30,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>
-        ClothesTypeFullEntity? ClothesType { get; }
+        ClothesTypeShortEntity? ClothesTypeShort { get; }
 
         /// <summary>
         /// Связующая сущность одежды и цвета

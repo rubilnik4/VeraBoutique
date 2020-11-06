@@ -47,7 +47,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Таблица базы данных вида одежды EntityFramework
         /// </summary>
-        public DbSet<ClothesTypeFullEntity> ClothesTypes { get; set; } = null!;
+        public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных размеров одежды

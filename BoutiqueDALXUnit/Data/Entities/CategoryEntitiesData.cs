@@ -23,7 +23,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности категорий c видом одежды
         /// </summary>
         public static List<CategoryEntity> GetCategoryEntitiesWithClothesType(IReadOnlyCollection<CategoryEntity> categoryEntities,
-                                                                              IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities) =>
+                                                                              IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             categoryEntities.
                 Select(category => new CategoryEntity(category.Name, clothesTypeEntities)).
                 ToList();

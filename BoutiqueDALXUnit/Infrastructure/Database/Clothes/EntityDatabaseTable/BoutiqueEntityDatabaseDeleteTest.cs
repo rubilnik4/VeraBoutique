@@ -41,7 +41,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// Удалить все записи в таблице
         /// </summary>
         public static async Task Delete_All(IBoutiqueDatabase database,
-                                            IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities)
+                                            IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
             var resultClothesRemove = database.ClotheTypeTable.RemoveRange(clothesTypeEntities);
             var resultAfterRemove = await database.SaveChangesAsync();

@@ -37,7 +37,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new ColorClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderCompositeConfiguration());
-            modelBuilder.ApplyConfiguration(new ClothesInformationConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesColorCompositeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesSizeGroupCompositeConfiguration());
             modelBuilder.ApplyConfiguration(new SizeConfiguration());
@@ -57,7 +57,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
             modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
             modelBuilder.Entity<ColorClothesEntity>().HasData(ColorClothesInitialize.ColorClothesData);
-            modelBuilder.Entity<ClothesTypeFullEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
+            modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
             modelBuilder.Entity<ClothesTypeGenderCompositeEntity>().HasData(ClothesTypeGenderInitialize.ClothesTypeGenderData);
             modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupCompositeInitialize.CompositeSizeData);
             modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);

@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Одежда. Информация. Схема базы данных
     /// </summary>
-    public class ClothesInformationConfiguration : IEntityTypeConfiguration<ClothesEntity>
+    public class ClothesConfiguration : IEntityTypeConfiguration<ClothesEntity>
     {
         public void Configure(EntityTypeBuilder<ClothesEntity> builder)
         {
@@ -25,8 +25,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
                    .HasForeignKey(sc => sc.GenderType)
                    .IsRequired();
 
-            builder.HasOne(t => t.ClothesTypeEntity)
-                   .WithMany(s => s!.ClothesInformationEntities)
+            builder.HasOne(t => t.ClothesTypeShort)
+                   .WithMany(s => s!.Clothes)
                    .HasForeignKey(sc => sc.ClothesTypeName)
                    .IsRequired();
         }

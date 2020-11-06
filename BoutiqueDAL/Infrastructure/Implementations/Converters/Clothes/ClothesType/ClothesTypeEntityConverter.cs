@@ -23,7 +23,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
     /// <summary>
     /// Преобразования модели вида одежды в модель базы данных
     /// </summary>
-    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeFullDomain, IClothesTypeFullEntity, ClothesTypeFullEntity>,
+    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeFullDomain, IClothesTypeEntity, ClothesTypeEntity>,
                                               IClothesTypeEntityConverter
     {
         public ClothesTypeEntityConverter(ICategoryEntityConverter categoryEntityConverter, 
@@ -46,17 +46,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать вид одежды из модели базы данных
         /// </summary>
-        public override IResultValue<IClothesTypeFullDomain> FromEntity(IClothesTypeFullEntity clothesTypeFullEntity) =>
-            GetClothesTypeFunc(clothesTypeFullEntity.Name).
-            ResultCurryOkBind(GetCategory(clothesTypeFullEntity.Category)).
-            ResultCurryOkBind(GenderFromComposites(clothesTypeFullEntity.ClothesTypeGenderComposites)).
+        public override IResultValue<IClothesTypeFullDomain> FromEntity(IClothesTypeEntity clothesTypeEntity) =>
+            GetClothesTypeFunc(clothesTypeEntity.Name).
+            ResultCurryOkBind(GetCategory(clothesTypeEntity.Category)).
+            ResultCurryOkBind(GenderFromComposites(clothesTypeEntity.ClothesTypeGenderComposites)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>
         /// Преобразовать вид одежды в модель базы данных
         /// </summary>
-        public override ClothesTypeFullEntity ToEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
-            new ClothesTypeFullEntity(clothesTypeFullDomain.Name,
+        public override ClothesTypeEntity ToEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
+            new ClothesTypeEntity(clothesTypeFullDomain.Name,
                                       clothesTypeFullDomain.Category.Name,
                                       _categoryEntityConverter.ToEntity(clothesTypeFullDomain.Category),
                                       GenderToComposites(clothesTypeFullDomain.Genders, clothesTypeFullDomain.Name),
@@ -65,14 +65,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать в базовую модель вида одежды из модели базы данных
         /// </summary>
-        public IResultValue<IClothesTypeShortDomain> FromEntityShort(IClothesTypeFullEntity clothesTypeFullEntity) =>
-            FromEntity(clothesTypeFullEntity).
+        public IResultValue<IClothesTypeShortDomain> FromEntityShort(IClothesTypeEntity clothesTypeEntity) =>
+            FromEntity(clothesTypeEntity).
             ResultValueBindOk(clothesTypeFullDomain => clothesTypeFullDomain.ToClothesTypeShort());
 
         /// <summary>
         /// Преобразовать в базовые модели вида одежды из моделей базы данных
         /// </summary>
-        public IResultCollection<IClothesTypeShortDomain> FromEntityShorts(IEnumerable<IClothesTypeFullEntity> clothesTypeFullEntities) =>
+        public IResultCollection<IClothesTypeShortDomain> FromEntityShorts(IEnumerable<IClothesTypeEntity> clothesTypeFullEntities) =>
             clothesTypeFullEntities.
             Select(FromEntityShort).
             ToResultCollection();

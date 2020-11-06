@@ -11,16 +11,16 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEn
     /// <summary>
     /// Преобразования модели вида одежды в модель базы данных
     /// </summary>
-    public interface IClothesTypeEntityConverter : IEntityConverter<string, IClothesTypeFullDomain, IClothesTypeFullEntity, Models.Implementations.Entities.Clothes.ClothesTypeEntities.ClothesTypeFullEntity>
+    public interface IClothesTypeEntityConverter : IEntityConverter<string, IClothesTypeFullDomain, IClothesTypeEntity, Models.Implementations.Entities.Clothes.ClothesTypeEntities.ClothesTypeEntity>
     {
         /// <summary>
         /// Преобразовать в базовую модель вида одежды из модели базы данных
         /// </summary>
-        public IResultValue<IClothesTypeShortDomain> FromEntityShort(IClothesTypeFullEntity clothesTypeFullEntity);
+        public IResultValue<IClothesTypeShortDomain> FromEntityShort(IClothesTypeEntity clothesTypeEntity);
 
         /// <summary>
         /// Преобразовать в базовые модели вида одежды из моделей базы данных
         /// </summary>
-        public IResultCollection<IClothesTypeShortDomain> FromEntityShorts(IEnumerable<IClothesTypeFullEntity> clothesTypeFullEntities);
+        public IResultCollection<IClothesTypeShortDomain> FromEntityShorts(IEnumerable<IClothesTypeEntity> clothesTypeFullEntities);
     }
 }

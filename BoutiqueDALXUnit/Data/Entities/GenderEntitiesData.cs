@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности типа пола c видом одежды
         /// </summary>
         public static List<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                          IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities) =>
+                                                                          IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               ClothesTypeEntitiesData.GetClothesTypeGenderCompositeEntities(gender, clothesTypeEntities),

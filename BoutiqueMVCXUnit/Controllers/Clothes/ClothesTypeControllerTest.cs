@@ -36,10 +36,10 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(ClothesTypeData.GetClothesTypeShortDomain());
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
-            var clothesTypeFullTransferConverter = ClothesTypeTransferConverter;
+            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
             var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
-                                                                  clothesTypeShortTransferConverter,
-                                                                  clothesTypeFullTransferConverter);
+                                                                  clothesTypeTransferConverter,
+                                                                  clothesTypeShortTransferConverter);
 
             var clothesTypeTransfers = await clothesTypeController.GetByGenderCategory(genderType, category);
             var clothesTypeAfter = clothesTypeShortTransferConverter.FromTransfers(clothesTypeTransfers.Value);
@@ -59,10 +59,10 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
-            var clothesTypeFullTransferConverter = ClothesTypeTransferConverter;
+            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
             var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
-                                                                  clothesTypeShortTransferConverter,
-                                                                  clothesTypeFullTransferConverter);
+                                                                  clothesTypeTransferConverter, 
+                                                                  clothesTypeShortTransferConverter);
 
             var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
@@ -85,10 +85,10 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeShortTransferConverter = ClothesTypeShortTransferConverter;
-            var clothesTypeFullTransferConverter = ClothesTypeTransferConverter;
-            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object,
-                                                                  clothesTypeShortTransferConverter,
-                                                                  clothesTypeFullTransferConverter);
+            var clothesTypeTransferConverter = ClothesTypeTransferConverter;
+            var clothesTypeController = new ClothesTypeController(clothesTypeDatabaseService.Object, 
+                                                                  clothesTypeTransferConverter,
+                                                                  clothesTypeShortTransferConverter);
 
             var actionResult = await clothesTypeController.GetByGenderCategory(genderType, category);
 
@@ -109,7 +109,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
         private static IClothesTypeShortTransferConverter ClothesTypeShortTransferConverter =>
-            new ClothesTypeShortTransferConverter(new CategoryTransferConverter(), new GenderTransferConverter());
+            new ClothesTypeShortTransferConverter(new CategoryTransferConverter());
 
         /// <summary>
         /// Конвертер полной информации вида одежды в трансферную модель

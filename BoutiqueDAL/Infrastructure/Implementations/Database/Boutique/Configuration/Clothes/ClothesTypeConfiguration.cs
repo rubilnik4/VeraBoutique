@@ -8,9 +8,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Вид одежды.Схема базы данных
     /// </summary>
-    public class ClothesTypeConfiguration : IEntityTypeConfiguration<ClothesTypeFullEntity>
+    public class ClothesTypeConfiguration : IEntityTypeConfiguration<ClothesTypeEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesTypeFullEntity> builder)
+        public void Configure(EntityTypeBuilder<ClothesTypeEntity> builder)
         {
             builder.HasKey(t => t.Name);
 

@@ -149,7 +149,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes
         /// <summary>
         /// Преобразовать тип одежды в доменную модель
         /// </summary>
-        private IResultValue<IClothesTypeFullDomain> GetClothedType(IClothesTypeFullEntity? clothesTypeEntity) =>
+        private IResultValue<IClothesTypeFullDomain> GetClothedType(IClothesTypeEntity? clothesTypeEntity) =>
             clothesTypeEntity.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesTypeEntity))).
             ResultValueBindOk(clothesType => _clothesTypeEntityConverter.FromEntity(clothesType));

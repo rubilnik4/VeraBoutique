@@ -20,7 +20,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         }
 
         public ClothesTypeGenderCompositeEntity(string clothesType, GenderType genderType,
-                                        ClothesTypeFullEntity? clothesTypeEntity, GenderEntity? genderEntity)
+                                        ClothesTypeEntity? clothesTypeEntity, GenderEntity? genderEntity)
         {
             ClothesType = clothesType;
             ClothesTypeEntity = clothesTypeEntity;
@@ -46,7 +46,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Вид одежды
         /// </summary>
-        public ClothesTypeFullEntity? ClothesType { get; }
+        public ClothesTypeEntity? ClothesType { get; }
 
         /// <summary>
         /// Пол одежды

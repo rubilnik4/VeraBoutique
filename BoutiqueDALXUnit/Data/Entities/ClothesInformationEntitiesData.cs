@@ -51,8 +51,8 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущность типа одежды
         /// </summary>
-        private static ClothesTypeFullEntity GetClothesTypeEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
-             new ClothesTypeFullEntity(clothesTypeFullDomain.Name, clothesTypeFullDomain.Name,
+        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
+             new ClothesTypeEntity(clothesTypeFullDomain.Name, clothesTypeFullDomain.Name,
                                    new CategoryEntity(clothesTypeFullDomain.Category.Name),
                                    Enumerable.Empty<ClothesEntity>(),
                                    Enumerable.Empty<ClothesTypeGenderCompositeEntity>());

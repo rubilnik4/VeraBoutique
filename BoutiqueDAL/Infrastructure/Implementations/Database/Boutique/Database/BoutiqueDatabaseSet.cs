@@ -30,7 +30,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
-        public DbSet<ClothesTypeFullEntity> ClothesTypes { get; set; } = null!;
+        public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных размеров одежды

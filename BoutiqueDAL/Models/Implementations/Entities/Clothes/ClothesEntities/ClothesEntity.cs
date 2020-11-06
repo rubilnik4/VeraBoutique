@@ -12,7 +12,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
     /// <summary>
     /// Одежда. Информация. Сущность базы данных
     /// </summary>
-    public class ClothesEntity : ClothesMain, IClothesEntity
+    public class ClothesEntity : ClothesShortEntity, IClothesEntity
     {
         public ClothesEntity(IClothesShort clothesShort, string description,
                              GenderType genderType, string clothesTypeName)
@@ -28,39 +28,44 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
                    Enumerable.Empty<ClothesSizeGroupCompositeEntity>())
         { }
 
-        public ClothesEntity(IClothesShort clothesShort, string description,
-                             GenderEntity gender, ClothesTypeFullEntity clothesType,
+        public ClothesEntity(IClothesMain clothesMain,
+                             GenderEntity gender, ClothesTypeShortEntity clothesTypeShort,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
-       : this(clothesShort, description, 
-              gender.GenderType, gender, clothesType.Name, clothesType,
+       : this(clothesMain, gender.GenderType, gender, clothesTypeShort.Name, clothesTypeShort,
               clothesColorComposites, clothesSizeGroupComposites)
         { }
 
-        public ClothesEntity(IClothesShort clothesShort, string description,
+        public ClothesEntity(IClothesMain clothesMain,
                              GenderType genderType, GenderEntity? gender,
-                             string clothesTypeName, ClothesTypeFullEntity? clothesType,
+                             string clothesTypeName, ClothesTypeShortEntity? clothesTypeShort,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
-      : this(clothesShort.Id, clothesShort.Name, clothesShort.Price, clothesShort.Image, description,
-             genderType, gender, clothesTypeName, clothesType,
-             clothesColorComposites, clothesSizeGroupComposites)
+            : this(clothesMain.Id, clothesMain.Name, clothesMain.Price, clothesMain.Image, clothesMain.Description,
+                   genderType, gender, clothesTypeName, clothesTypeShort,
+                   clothesColorComposites, clothesSizeGroupComposites)
         { }
 
         public ClothesEntity(int id, string name, decimal price, byte[]? image, string description,
                              GenderType genderType, GenderEntity? gender,
-                             string clothesTypeName, ClothesTypeFullEntity? clothesType,
+                             string clothesTypeName, ClothesTypeShortEntity? clothesTypeShort,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
-          : base(id, name, description, price, image)
+          : base(id, name, price, image)
         {
+            Description = description;
             GenderType = genderType;
             Gender = gender;
             ClothesTypeName = clothesTypeName;
-            ClothesType = clothesType;
+            ClothesTypeShort = clothesTypeShort;
             ClothesColorComposites = clothesColorComposites?.ToList();
             ClothesSizeGroupComposites = clothesSizeGroupComposites?.ToList();
         }
+
+        /// <summary>
+        /// Описание
+        /// </summary>
+        public string Description { get; }
 
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
@@ -80,7 +85,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>
-        public ClothesTypeFullEntity? ClothesType { get; }
+        public ClothesTypeShortEntity? ClothesTypeShort { get; }
 
         /// <summary>
         /// Связующая сущность одежды и цвета

@@ -12,10 +12,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class CategoryEntity : Category, ICategoryEntity
     {
         public CategoryEntity(string name)
-            : this(name, Enumerable.Empty<ClothesTypeFullEntity>())
+            : this(name, Enumerable.Empty<ClothesTypeEntity>())
         { }
 
-        public CategoryEntity(string name, IEnumerable<ClothesTypeFullEntity>? clothesTypeEntities)
+        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypeEntities)
             : base(name)
         {
             ClothesTypes = clothesTypeEntities?.ToList();
@@ -24,6 +24,6 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Связующие сущности категории и вида одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeFullEntity>? ClothesTypes { get; }
+        public IReadOnlyCollection<ClothesTypeEntity>? ClothesTypes { get; }
     }
 }

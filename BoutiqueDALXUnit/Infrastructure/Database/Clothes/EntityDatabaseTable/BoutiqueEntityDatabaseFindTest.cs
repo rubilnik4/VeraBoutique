@@ -84,7 +84,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Clothes.EntityDatabaseTable
         /// <summary>
         /// Получить сущности по идентификаторам. Добавочные элементы не найдены
         /// </summary>
-        public static async Task FindByIds_NotFound(IBoutiqueDatabase database, IReadOnlyCollection<ClothesTypeFullEntity> clothesTypeEntities)
+        public static async Task FindByIds_NotFound(IBoutiqueDatabase database, IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities)
         {
             var testFind = await database.ClotheTypeTable.FindAsync(new List<string> {"NotFound", clothesTypeEntities .First().Name});
 
