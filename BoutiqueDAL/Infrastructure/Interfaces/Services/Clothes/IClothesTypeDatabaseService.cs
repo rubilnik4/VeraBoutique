@@ -17,6 +17,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
         /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
-        Task<IResultCollection<IClothesTypeShortDomain>> GetByGenderCategory(GenderType genderType, string category);
+        Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category);
     }
 }

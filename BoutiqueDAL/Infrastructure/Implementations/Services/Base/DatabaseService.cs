@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async;
@@ -31,7 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
        where TId : notnull
     {
         protected DatabaseService(IDatabase database,
-                                  IDatabaseTable<TId, TEntityOut> dataTable,
+                                  IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
                                   IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> entityConverter)
         {
             _database = database;
@@ -47,7 +49,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Таблица базы данных
         /// </summary>
-        private readonly IDatabaseTable<TId, TEntityOut> _dataTable;
+        private readonly IDatabaseTable<TId, TDomain, TEntityOut> _dataTable;
 
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
@@ -65,14 +67,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
-            await _dataTable.FindAsync(id).
+            await _dataTable.FindIdAsync(id).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
         public virtual async Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindAsync(models.Select(model => model.Id)).
+            await _dataTable.FindIdsAsync(models.Select(model => model.Id)).
             ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
                 okFunc: _ => AddRangeWithSaving(_dataTable, models),
                 badFunc: ids => GetDuplicateErrorResult(ids, _dataTable.TableName));
@@ -81,7 +83,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TDomain model) =>
-            await _dataTable.FindAsync(model.Id).
+            await _dataTable.FindIdAsync(model.Id).
             ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Update(_entityConverter.ToEntity(model))).
             ToResultErrorTaskAsync().
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
@@ -90,21 +92,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.FindAsync(id).
+            await _dataTable.FindIdAsync(id).
             ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
-        /// Проверить наличие моделей
+        /// Проверить наличие моделей 
         /// </summary>
-        public virtual async Task<IResultError> CheckEntities(IEnumerable<TDomain> models) =>
-            await CheckEntitiesCollection(models.Distinct().ToList());
+        public async Task<IResultError> CheckEntities(IEnumerable<TDomain> models) =>
+            await CheckEntitiesCollection(models.ToList());
+
+        /// <summary>
+        /// Функция выбора сущностей для проверки наличия
+        /// </summary>
+        protected virtual IQueryable<TEntityOut> CheckFilter(IQueryable<TEntityOut> entities, 
+                                                             IReadOnlyCollection<TDomain> domains) =>
+           entities.Where(_dataTable.DomainsCheck(domains));
 
         /// <summary>
         /// Добавить модели в базу и сохранить
         /// </summary>
-        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TEntityOut> dataTable,
+        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
                                                                       IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
@@ -123,15 +132,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateError(ids, tableName));
 
         /// <summary>
-        /// Проверить наличие моделей
+        /// Проверить наличие коллекции моделей 
         /// </summary>
         private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindAsync(models.Select(model => model.Id)).
-            ResultCollectionOkTaskAsync(entities => models.Where(model => entities.All(entity => !entity.Id.Equals(model.Id)))).
+            await _dataTable.FindExpressionAsync(CheckQuery(models)).
+            ResultCollectionOkTaskAsync(ids => models.Where(model => !ids.Contains(model.Id))).
             ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound =>
                 entitiesNotFound.
                 Select(entityNotFound => DatabaseErrors.ValueNotFoundError(entityNotFound.Id?.ToString() ?? String.Empty,
                                                                            _dataTable.GetType().Name)).
                 Map(errors => new ResultError(errors)));
+
+        /// <summary>
+        /// Запрос проверки наличия сущностей
+        /// </summary>
+        private Func<IQueryable<TEntityOut>, IQueryable<TId>> CheckQuery(IReadOnlyCollection<TDomain> domains) =>
+            entities => CheckFilter(entities, domains).Select(_dataTable.IdSelect());
     }
 }

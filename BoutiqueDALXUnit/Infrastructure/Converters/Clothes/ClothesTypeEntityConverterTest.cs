@@ -3,7 +3,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDALXUnit.Data;

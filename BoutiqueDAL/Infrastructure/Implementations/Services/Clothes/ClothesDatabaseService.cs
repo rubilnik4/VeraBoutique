@@ -8,7 +8,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;

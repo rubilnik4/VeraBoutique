@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -172,9 +172,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static IClothesEntityConverter ClothesEntityConverter =>
             new ClothesEntityConverter(new ClothesShortEntityConverter(),
-                                                  new GenderEntityConverter(),
-                                                  new ClothesTypeEntityConverter(new CategoryEntityConverter()),
-                                                  new ColorClothesEntityConverter(),
-                                                  new SizeGroupEntityConverter(new SizeEntityConverter()));
+                                       new GenderEntityConverter(),
+                                       new ClothesTypeEntityConverter(new GenderEntityConverter(), 
+                                                                      new CategoryEntityConverter()),
+                                       new ColorClothesEntityConverter(),
+                                       new SizeGroupEntityConverter(new SizeEntityConverter()));
     }
 }

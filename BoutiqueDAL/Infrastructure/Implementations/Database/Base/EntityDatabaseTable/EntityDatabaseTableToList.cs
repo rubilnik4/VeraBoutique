@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
@@ -13,7 +14,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
     /// <summary>
     /// Таблица базы данных EntityFramework. Функции выгрузки данных
     /// </summary>
-    public abstract partial class EntityDatabaseTable<TId, TEntity>
+    public abstract partial class EntityDatabaseTable<TId, TDomain, TEntity>
+        where TDomain : IDomainModel<TId>
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
     {

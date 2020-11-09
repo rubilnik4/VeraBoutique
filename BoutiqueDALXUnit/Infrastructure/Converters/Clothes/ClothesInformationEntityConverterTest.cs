@@ -2,10 +2,10 @@
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;

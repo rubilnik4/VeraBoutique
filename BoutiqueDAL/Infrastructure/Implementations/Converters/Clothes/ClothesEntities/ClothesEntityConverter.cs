@@ -8,8 +8,8 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -21,9 +21,9 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities
 {
-    using ClothesInformationFunc = Func<IClothesShortDomain, IGenderDomain, IClothesTypeFullDomain, 
+    using ClothesInformationFunc = Func<IClothesShortDomain, IGenderDomain, IClothesTypeDomain, 
                                         IEnumerable<IColorClothesDomain>, IEnumerable<ISizeGroupDomain>, 
                                         IClothesDomain>;
 

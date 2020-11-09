@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
@@ -14,22 +15,35 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных вида одежды
     /// </summary>
-    public class ClothesTypeTable : EntityDatabaseTable<string, ClothesTypeEntity>, IClothesTypeTable
+    public class ClothesTypeTable : EntityDatabaseTable<string, IClothesTypeDomain, ClothesTypeEntity>, IClothesTypeTable
     {
         public ClothesTypeTable(DbSet<ClothesTypeEntity> clothesTypeSet)
          : base(clothesTypeSet)
         { }
 
         /// <summary>
+        /// Выгрузка идентификатора
+        /// </summary>
+        public override Expression<Func<ClothesTypeEntity, string>> IdSelect() =>
+            clothesType => clothesType.Name;
+
+        /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> IdPredicate(string id) =>
-            entity => entity.Name == id;
+        public override Expression<Func<ClothesTypeEntity, bool>> IdPredicate(string id) =>
+            clothesType => clothesType.Name == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
-            entity => ids.Contains(entity.Name);
+        public override Expression<Func<ClothesTypeEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
+            clothesType => ids.Contains(clothesType.Name);
+
+        /// <summary>
+        /// Поиск для проверки сущностей
+        /// </summary>
+        public override Expression<Func<ClothesTypeEntity, bool>> DomainsCheck(IReadOnlyCollection<IClothesTypeDomain> domains) =>
+            clothesType => IdsPredicate(domains.Select(domain => domain.Id)).Compile()(clothesType) &&
+                           domains.Select(domain => domain.Category.Name).Contains(clothesType.Name);
     }
 }

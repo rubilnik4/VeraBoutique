@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
     /// <summary>
     /// Таблица базы данных EntityFramework. Функции поиска данных
     /// </summary>
-    public abstract partial class EntityDatabaseTable<TId, TEntity>
+    public abstract partial class EntityDatabaseTable<TId, TDomain, TEntity>
+        where TDomain : IDomainModel<TId>
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
     {

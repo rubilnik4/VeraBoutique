@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes

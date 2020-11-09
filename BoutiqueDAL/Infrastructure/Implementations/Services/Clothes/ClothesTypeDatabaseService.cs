@@ -10,7 +10,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
@@ -34,25 +34,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис вида одежды в базе данных
     /// </summary>
-    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeFullDomain, IClothesTypeEntity, ClothesTypeEntity>, 
+    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IDatabase database,
-                                          ICategoryDatabaseService categoryDatabaseService,
                                           IClothesTypeTable clothesTypeTable, IGenderTable genderTable, ICategoryTable categoryTable,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter)
             : base(database, clothesTypeTable, clothesTypeEntityConverter)
         {
-            _categoryDatabaseService = categoryDatabaseService;
             _genderTable = genderTable;
             _categoryTable = categoryTable;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
         }
-
-        /// <summary>
-        /// Сервис вида одежды в базе данных
-        /// </summary>
-        private readonly ICategoryDatabaseService _categoryDatabaseService;
 
         /// <summary>
         /// Таблица базы данных типа пола
@@ -69,21 +62,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
 
-        public override async Task<IResultError> CheckEntities(IEnumerable<IClothesTypeFullDomain> clothesTypeDomains) =>
-            await CheckEntitiesCollection(clothesTypeDomains.ToList());
-
-        private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<IClothesTypeFullDomain> clothesTypeDomains) =>
-           await base.CheckEntities(clothesTypeDomains).
-           ResultErrorBindOkBindAsync(() => _categoryDatabaseService.
-                                            CheckEntities(clothesTypeDomains.Select(clothesType => clothesType.Category)));
-
         /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
-        public async Task<IResultCollection<IClothesTypeShortDomain>> GetByGenderCategory(GenderType genderType, string category) =>
+        public async Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category) =>
             await ResultCollectionTryAsync(() => GetClothesTypes(genderType, category),
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
             ResultCollectionBindOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
+
+        /// <summary>
+        /// Функция выбора сущностей для проверки наличия
+        /// </summary>
+        protected override IQueryable<ClothesTypeEntity> CheckFilter(IQueryable<ClothesTypeEntity> entities,
+                                                                     IReadOnlyCollection<IClothesTypeDomain> domains) =>
+            base.CheckFilter(entities, domains).
+            Include(clothesType => clothesType.Category);
 
         /// <summary>
         /// Получить вид одежды

@@ -1,9 +1,9 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesType;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntity;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntity;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
