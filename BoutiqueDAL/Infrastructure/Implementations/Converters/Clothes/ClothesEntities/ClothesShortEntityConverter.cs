@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;

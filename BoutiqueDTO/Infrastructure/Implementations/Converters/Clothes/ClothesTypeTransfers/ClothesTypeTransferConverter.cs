@@ -11,10 +11,10 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     /// Конвертер вида одежды в трансферную модель
     /// </summary>
     public class ClothesTypeTransferConverter : TransferConverter<string, IClothesTypeDomain, ClothesTypeTransfer>,
-                                                    IClothesTypeTransferConverter
+                                                IClothesTypeTransferConverter
     {
         public ClothesTypeTransferConverter(ICategoryTransferConverter categoryTransferConverter, 
-                                                IGenderTransferConverter genderTransferConverter)
+                                            IGenderTransferConverter genderTransferConverter)
         {
             _categoryTransferConverter = categoryTransferConverter;
             _genderTransferConverter = genderTransferConverter;

@@ -14,13 +14,13 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         { }
 
         public ClothesColorCompositeEntity(int clothesId, string colorName,
-                                           ClothesEntity? clothesInformationEntity, 
-                                           ColorClothesEntity? colorClothesEntity)
+                                           ClothesEntity? clothes, 
+                                           ColorClothesEntity? colorClothes)
         {
             ClothesId = clothesId;
             ColorName = colorName;
-            Clothes = clothesInformationEntity;
-            ColorClothes = colorClothesEntity;
+            Clothes = clothes;
+            ColorClothes = colorClothes;
         }
 
         /// <summary>

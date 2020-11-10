@@ -22,7 +22,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, ITestEntity, TestEntity>
     {
         public TestDatabaseService(IDatabase database,
-                                   IDatabaseTable<TestEnum, TestEntity> testDatabaseTable,
+                                   IDatabaseTable<TestEnum, ITestDomain, TestEntity> testDatabaseTable,
                                    IEntityConverter<TestEnum, ITestDomain, ITestEntity, TestEntity> testEntityConverter)
             : base(database, testDatabaseTable, testEntityConverter)
         { }

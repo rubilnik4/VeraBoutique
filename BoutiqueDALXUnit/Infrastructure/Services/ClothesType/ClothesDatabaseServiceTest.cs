@@ -43,7 +43,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
             var clothesType = clothesTypeEntities.First().Name;
-            var clothesInformationEntities = ClothesInformationEntitiesData.ClothesInformationEntities;
+            var clothesInformationEntities = ClothesEntitiesData.ClothesInformationEntities;
             var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities,
                                                                                             clothesInformationEntities);
             var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
@@ -75,7 +75,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
             var clothesType = clothesTypeEntities.First().Name;
-            var clothesInformationEntities = ClothesInformationEntitiesData.ClothesInformationEntities;
+            var clothesInformationEntities = ClothesEntitiesData.ClothesInformationEntities;
             var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
                                                                                                            clothesInformationEntities);
             var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
@@ -99,7 +99,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         public async Task GetIncludesById_Ok()
         {
             var clothesInformationDomains = ClothesData.ClothesInformationDomains;
-            var clothesInformationEntities = ClothesInformationEntitiesData.ClothesInformationEntities;
+            var clothesInformationEntities = ClothesEntitiesData.ClothesInformationEntities;
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
             var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
                                                                     new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,

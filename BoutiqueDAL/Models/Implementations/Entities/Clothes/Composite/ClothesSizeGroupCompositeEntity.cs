@@ -15,14 +15,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         { }
 
         public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize,
-                                               ClothesEntity? clothesInformationEntity,
-                                               SizeGroupEntity? sizeGroupEntity)
+                                               ClothesEntity? clothes,
+                                               SizeGroupEntity? sizeGroup)
         {
             ClothesId = clothesId;
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
-            Clothes = clothesInformationEntity;
-            SizeGroup = sizeGroupEntity;
+            Clothes = clothes;
+            SizeGroup = sizeGroup;
         }
 
         /// <summary>

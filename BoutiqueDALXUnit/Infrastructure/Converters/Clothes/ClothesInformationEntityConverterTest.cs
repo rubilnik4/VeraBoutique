@@ -41,7 +41,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void FromEntity_GenderNotFound()
         {
-            var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
+            var clothesInformation = ClothesEntitiesData.ClothesInformationEntities.First();
             var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description, 
                                                                             clothesInformation.GenderType, null,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,
@@ -61,7 +61,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void FromEntity_ClothesTypeNotFound()
         {
-            var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
+            var clothesInformation = ClothesEntitiesData.ClothesInformationEntities.First();
             var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
                                                                             clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, null,
@@ -81,7 +81,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void FromEntity_ColorNotFound()
         {
-            var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
+            var clothesInformation = ClothesEntitiesData.ClothesInformationEntities.First();
             var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
                                                                             clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,
@@ -101,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void FromEntity_SizeGroupNotFound()
         {
-            var clothesInformation = ClothesInformationEntitiesData.ClothesInformationEntities.First();
+            var clothesInformation = ClothesEntitiesData.ClothesInformationEntities.First();
             var clothesInformationNull = new ClothesEntity(clothesInformation, clothesInformation.Description,
                                                                             clothesInformation.GenderType, clothesInformation.Gender,
                                                                             clothesInformation.ClothesTypeName, clothesInformation.ClothesTypeEntity,

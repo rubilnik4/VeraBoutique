@@ -12,26 +12,23 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Конструктор для базы данных с отсутствующими сущностями
         /// </summary>
-        public ClothesTypeGenderCompositeEntity(string clothesType, GenderType genderType)
-            : this(clothesType, genderType, null, null)
-        {
-            ClothesType = clothesType;
-            GenderType = genderType;
-        }
+        public ClothesTypeGenderCompositeEntity(string clothesTypeName, GenderType genderType)
+            : this(clothesTypeName, genderType, null, null)
+        { }
 
-        public ClothesTypeGenderCompositeEntity(string clothesType, GenderType genderType,
-                                        ClothesTypeEntity? clothesTypeEntity, GenderEntity? genderEntity)
+        public ClothesTypeGenderCompositeEntity(string clothesTypeName, GenderType genderType,
+                                                ClothesTypeEntity? clothesType, GenderEntity? gender)
         {
+            ClothesTypeName = clothesTypeName;
             ClothesType = clothesType;
-            ClothesTypeEntity = clothesTypeEntity;
             GenderType = genderType;
-            Gender = genderEntity;
+            Gender = gender;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (string, GenderType) Id => (ClothesType,  GenderType);
+        public (string, GenderType) Id => (ClothesTypeName,  GenderType);
 
         /// <summary>
         /// Идентификатор вида одежды

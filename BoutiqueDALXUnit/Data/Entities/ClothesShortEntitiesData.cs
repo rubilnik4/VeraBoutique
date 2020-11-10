@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {

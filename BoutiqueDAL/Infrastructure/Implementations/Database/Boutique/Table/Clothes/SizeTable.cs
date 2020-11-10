@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -14,22 +15,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных размеров одежды
     /// </summary>
-    public class SizeTable : EntityDatabaseTable<(SizeType, string), SizeEntity>, ISizeTable
+    public class SizeTable : EntityDatabaseTable<(SizeType, string), ISizeDomain, SizeEntity>, ISizeTable
     {
         public SizeTable(DbSet<SizeEntity> sizeSet)
             : base(sizeSet)
         { }
 
         /// <summary>
+        /// Выгрузка идентификатора
+        /// </summary>
+        public override Expression<Func<SizeEntity, (SizeType, string)>> IdSelect() =>
+            entity => new Tuple<SizeType, string>(entity.SizeType, entity.SizeName).ToValueTuple();
+
+        /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        protected override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
+        public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
             entity => entity.SizeType == id.Item1 && entity.SizeName == id.Item2;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        protected override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
+        public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
             entity => ids.Contains(new Tuple<SizeType, string>(entity.SizeType, entity.SizeName).ToValueTuple());
     }
 }

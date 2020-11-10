@@ -39,12 +39,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public ClothesTypeDatabaseService(IDatabase database,
                                           IClothesTypeTable clothesTypeTable, IGenderTable genderTable, ICategoryTable categoryTable,
-                                          IClothesTypeEntityConverter clothesTypeEntityConverter)
+                                          IClothesTypeEntityConverter clothesTypeEntityConverter,
+                                          IClothesTypeShortEntityConverter clothesTypeShortEntityConverter)
             : base(database, clothesTypeTable, clothesTypeEntityConverter)
         {
             _genderTable = genderTable;
             _categoryTable = categoryTable;
-            _clothesTypeEntityConverter = clothesTypeEntityConverter;
+            _clothesTypeShortEntityConverter = clothesTypeShortEntityConverter;
         }
 
         /// <summary>
@@ -60,15 +61,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
-        private readonly IClothesTypeEntityConverter _clothesTypeEntityConverter;
+        private readonly IClothesTypeShortEntityConverter _clothesTypeShortEntityConverter;
 
         /// <summary>
         /// Получить вид одежды по типу пола и категории
         /// </summary>
-        public async Task<IResultCollection<IClothesTypeDomain>> GetByGenderCategory(GenderType genderType, string category) =>
+        public async Task<IResultCollection<IClothesTypeShortDomain>> GetByGenderCategory(GenderType genderType, string category) =>
             await ResultCollectionTryAsync(() => GetClothesTypes(genderType, category),
                                            DatabaseErrors.TableAccessError(nameof(_genderTable))).
-            ResultCollectionBindOkTaskAsync(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
+            ResultCollectionBindOkTaskAsync(clothesTypeShorts => _clothesTypeShortEntityConverter.FromEntities(clothesTypeShorts));
 
         /// <summary>
         /// Функция выбора сущностей для проверки наличия
@@ -81,12 +82,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить вид одежды
         /// </summary>
-        private async Task<IReadOnlyCollection<ClothesTypeEntity>> GetClothesTypes(GenderType genderType, string category) =>
+        private async Task<IReadOnlyCollection<ClothesTypeShortEntity>> GetClothesTypes(GenderType genderType, string category) =>
             await GetClothesTypeByGender(genderType).
             Join(GetClothesTypeByCategory(category),
                  clothesTypeGender => clothesTypeGender.Name,
                  clothesTypeCategory => clothesTypeCategory.Name,
                  (clothesTypeGender, clothesTypeCategory) => clothesTypeGender).
+            Select(clothesType => new ClothesTypeShortEntity(clothesType.Name, clothesType.CategoryName, clothesType.Category,
+                                                             clothesType.Clothes)).
             AsNoTracking().
             ToListAsync();
 

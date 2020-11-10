@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
@@ -20,5 +21,10 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities
         /// Связующая сущность категории одежды
         /// </summary>
         CategoryEntity? Category { get; }
+
+        /// <summary>
+        /// Связующие сущности категории и одежды
+        /// </summary>
+        IReadOnlyCollection<ClothesEntity>? Clothes { get; }
     }
 }

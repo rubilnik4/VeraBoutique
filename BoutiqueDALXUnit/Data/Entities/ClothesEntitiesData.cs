@@ -13,20 +13,19 @@ namespace BoutiqueDALXUnit.Data.Entities
     /// <summary>
     /// Данные сущностей информации об одежде
     /// </summary>
-    public class ClothesInformationEntitiesData
+    public class ClothesEntitiesData
     {
         /// <summary>
         /// Сущности информации об одежде
         /// </summary>
         public static List<ClothesEntity> ClothesInformationEntities =>
             ClothesData.ClothesInformationDomains.
-            Select(clothesInformation =>
-                new ClothesEntity(clothesInformation, clothesInformation.Description,
-                                             new GenderEntity(clothesInformation.Gender.GenderType, clothesInformation.Gender.Name),
-                                             GetClothesTypeEntity(clothesInformation.ClothesTypeFull), 
-                                             GetClothesColorCompositeEntities(clothesInformation.Colors, clothesInformation.Id),
-                                             GetClothesSizeGroupCompositeEntities(clothesInformation.SizeGroups,
-                                                                                  clothesInformation.Id))).
+            Select(clothes =>
+                new ClothesEntity(clothes,
+                                  new GenderEntity(clothes.Gender.GenderType, clothes.Gender.Name),
+                                  GetClothesTypeEntity(clothes.ClothesTypeShort),
+                                  GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),
+                                  GetClothesSizeGroupCompositeEntities(clothes.SizeGroups, clothes.Id))).
             ToList();
 
         /// <summary>
@@ -51,9 +50,9 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущность типа одежды
         /// </summary>
-        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeFullDomain clothesTypeFullDomain) =>
-             new ClothesTypeEntity(clothesTypeFullDomain.Name, clothesTypeFullDomain.Name,
-                                   new CategoryEntity(clothesTypeFullDomain.Category.Name),
+        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
+             new ClothesTypeEntity(clothesTypeShort.Name, clothesTypeShort.Category.Name,
+                                   new CategoryEntity(clothesTypeShort.Category.Name),
                                    Enumerable.Empty<ClothesEntity>(),
                                    Enumerable.Empty<ClothesTypeGenderCompositeEntity>());
     }

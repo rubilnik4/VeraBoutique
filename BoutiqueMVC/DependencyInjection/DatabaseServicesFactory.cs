@@ -79,8 +79,11 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static IClothesDatabaseService GetClothesService(IServiceProvider serviceProvider) =>
             serviceProvider.GetService<IBoutiqueDatabase>().
-            Map(boutiqueDatabase => new ClothesDatabaseService(boutiqueDatabase, boutiqueDatabase.ClothesTable,
+            Map(boutiqueDatabase => new ClothesDatabaseService(boutiqueDatabase,
+                                                               boutiqueDatabase.ClothesTable,
                                                                boutiqueDatabase.GendersTable, boutiqueDatabase.ClotheTypeTable,
+                                                               serviceProvider.GetService<IGenderDatabaseService>(),
+                                                               serviceProvider.GetService<IClothesTypeDatabaseService>(),
                                                                serviceProvider.GetService<IClothesShortEntityConverter>(),
                                                                serviceProvider.GetService<IClothesEntityConverter>()));
     }

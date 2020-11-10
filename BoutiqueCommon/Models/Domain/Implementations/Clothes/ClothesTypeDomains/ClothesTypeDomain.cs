@@ -22,6 +22,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
             : this(clothesType.Name, category, genders)
         { }
 
+        public ClothesTypeDomain(IClothesTypeShortDomain clothesTypeShort, IEnumerable<IGenderDomain> genders)
+        : this(clothesTypeShort.Name, clothesTypeShort.Category, genders)
+        { }
+
         public ClothesTypeDomain(string name, ICategoryDomain category, IEnumerable<IGenderDomain> genders)
         : base(name, category)
         {

@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Выгрузка идентификатора
         /// </summary>
         public override Expression<Func<ClothesTypeEntity, string>> IdSelect() =>
-            clothesType => clothesType.Name;
+            entity => entity.Name;
 
         /// <summary>
         /// Функция поиска по идентификатору
@@ -43,7 +43,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Поиск для проверки сущностей
         /// </summary>
         public override Expression<Func<ClothesTypeEntity, bool>> DomainsCheck(IReadOnlyCollection<IClothesTypeDomain> domains) =>
-            clothesType => IdsPredicate(domains.Select(domain => domain.Id)).Compile()(clothesType) &&
+            clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Name) &&
                            domains.Select(domain => domain.Category.Name).Contains(clothesType.Name);
     }
 }
