@@ -77,7 +77,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         protected override IQueryable<ClothesTypeEntity> CheckFilter(IQueryable<ClothesTypeEntity> entities,
                                                                      IReadOnlyCollection<IClothesTypeDomain> domains) =>
             base.CheckFilter(entities, domains).
-            Include(clothesType => clothesType.Category);
+            Include(clothesType => clothesType.ClothesTypeGenderComposites).
+            Where(entity => entity.ClothesTypeGenderComposites.
+                            Select(clothesTypeGender => clothesTypeGender.GenderType).
+                            SequenceEqual(domains.First(domain => domain.Id == entity.Id).Genders.
+                                                  Select(gender => gender.GenderType)));
 
         /// <summary>
         /// Получить вид одежды

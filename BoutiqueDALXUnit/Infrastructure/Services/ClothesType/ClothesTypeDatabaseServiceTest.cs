@@ -53,7 +53,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter);
+                                                                            ClothesTypeEntityConverter,
+                                                                            ClothesTypeShortEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
             var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypeEntities);
@@ -77,10 +78,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
             var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
             var categoryTable = CategoryTableMock.GetCategoryTable(CategoryTableMock.GetCategoryOk(categoryEntitiesWithClothesType));
-            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(Database.Object, ClothesTypeTable.Object,
                                                                             genderTable.Object, categoryTable.Object,
-                                                                            clothesTypeEntityConverter);
+                                                                            ClothesTypeEntityConverter,
+                                                                            ClothesTypeShortEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
 
@@ -104,6 +105,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         private static IClothesTypeEntityConverter ClothesTypeEntityConverter => 
-            new ClothesTypeEntityConverter(new CategoryEntityConverter());
+            new ClothesTypeEntityConverter(ClothesTypeShortEntityConverter, new GenderEntityConverter());
+
+        /// <summary>
+        /// Преобразования модели вида одежды в модель базы данных
+        /// </summary>
+        private static IClothesTypeShortEntityConverter ClothesTypeShortEntityConverter =>
+            new ClothesTypeShortEntityConverter(new CategoryEntityConverter());
     }
 }

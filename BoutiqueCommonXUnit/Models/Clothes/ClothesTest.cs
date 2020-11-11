@@ -35,7 +35,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности полной информации об одежде
         /// </summary>
         [Fact]
-        public void ClothesFull_Equal_Ok()
+        public void Clothes_Equal_Ok()
         {
             const int id = 1;
             const string name = "Полушубок";
@@ -48,8 +48,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var sizeGroups = new List<ISizeGroupDomain> {new SizeGroupDomain(ClothesSizeType.Shirt , 1 , sizes) };
             var clothesShort = new ClothesDomain(id, name, price, null, description, gender, clothesType, colors, sizeGroups);
 
-            int clothesHash = HashCode.Combine(id, name, price, description, 
-                                               clothesType.GetHashCode(), gender.GetHashCode(),
+            int clothesHash = HashCode.Combine(id, name, price, description,
+                                               gender.GetHashCode(), clothesType.GetHashCode(),
                                                colors.Average(color => color.GetHashCode()),
                                                sizeGroups.Average(size => size.GetHashCode()));
             Assert.Equal(clothesHash, clothesShort.GetHashCode());

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
@@ -7,7 +8,7 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains
     /// <summary>
     /// Одежда. Трансферная модель
     /// </summary>
-    public interface IClothesDomain : IClothesShortDomain, IClothesMain
+    public interface IClothesDomain : IClothesShortDomain, IClothesMain, IEquatable<IClothesDomain>
     {
         /// <summary>
         /// Тип пола

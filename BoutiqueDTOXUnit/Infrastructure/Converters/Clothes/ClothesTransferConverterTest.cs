@@ -33,7 +33,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void Clothes_ToTransfer_FromTransfer()
         {
-            var clothesInformation = ClothesData.ClothesInformationDomains.First();
+            var clothesInformation = ClothesData.ClothesDomains.First();
             var clothesShortTransferConverter = new ClothesShortTransferConverter();
             var genderTransferConverter = new GenderTransferConverter();
             var clothesTypeShortTransferConverter = new ClothesTypeShortTransferConverter(new CategoryTransferConverter());

@@ -8,6 +8,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -27,22 +28,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
     public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
                                               IClothesTypeEntityConverter
     {
-        public ClothesTypeEntityConverter(IGenderEntityConverter genderEntityConverter,
-                                          IClothesTypeShortEntityConverter clothesTypeShortEntityConverter)
+        public ClothesTypeEntityConverter(IClothesTypeShortEntityConverter clothesTypeShortEntityConverter,
+                                          IGenderEntityConverter genderEntityConverter)
         {
-            _genderEntityConverter = genderEntityConverter;
             _clothesTypeShortEntityConverter = clothesTypeShortEntityConverter;
+            _genderEntityConverter = genderEntityConverter;
         }
-
-        /// <summary>
-        /// Преобразования модели типа пола и модель базы данных
-        /// </summary>
-        private readonly IGenderEntityConverter _genderEntityConverter;
 
         /// <summary>
         /// Преобразования модели категории одежды в модель базы данных
         /// </summary>
         private readonly IClothesTypeShortEntityConverter _clothesTypeShortEntityConverter;
+
+        /// <summary>
+        /// Преобразования модели типа пола и модель базы данных
+        /// </summary>
+        private readonly IGenderEntityConverter _genderEntityConverter;
 
         /// <summary>
         /// Преобразовать вид одежды из модели базы данных
@@ -59,7 +60,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         public override ClothesTypeEntity ToEntity(IClothesTypeDomain clothesTypeDomain) =>
             _clothesTypeShortEntityConverter.ToEntity(clothesTypeDomain).
             Map(clothesTypeShort => new ClothesTypeEntity(clothesTypeShort,
-                                                          GenderToComposites(clothesTypeDomain.Genders, clothesTypeShort.Name)));
+                                                          GenderToComposites(clothesTypeDomain.Genders,
+                                                                             clothesTypeDomain.Name,
+                                                                             clothesTypeDomain.Category.Name)));
 
         /// <summary>
         /// Функция получения типа одежды
@@ -72,8 +75,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Получить связующие сущности пола и вида одежды
         /// </summary>>
         private static IEnumerable<ClothesTypeGenderCompositeEntity> GenderToComposites(IEnumerable<IGenderDomain> genders,
-                                                                                                  string clothesType) =>
-            genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesType, gender.GenderType));
+                                                                                        string clothesTypeName, 
+                                                                                        string categoryName) =>
+            genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesTypeName, gender.GenderType, 
+                                                                          new ClothesTypeEntity(clothesTypeName, categoryName), 
+                                                                          new GenderEntity(gender.GenderType, gender.Name)));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию типа пола

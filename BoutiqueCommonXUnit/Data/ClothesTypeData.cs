@@ -21,9 +21,9 @@ namespace BoutiqueCommonXUnit.Data
             new List<IClothesTypeDomain>()
             {
                 new ClothesTypeDomain("Пиджак", new CategoryDomain("Верхняя одежда"),
-                                          new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
+                                      new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
                 new ClothesTypeDomain("Брюки", new CategoryDomain("Штаны"),
-                                          new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
+                                      new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужик") }),
             };
 
         /// <summary>

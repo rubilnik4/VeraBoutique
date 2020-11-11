@@ -45,7 +45,8 @@ namespace BoutiqueMVC.DependencyInjection
                                                                    boutiqueDatabase.ClotheTypeTable,
                                                                    boutiqueDatabase.GendersTable,
                                                                    boutiqueDatabase.CategoryTable,
-                                                                   serviceProvider.GetService<IClothesTypeEntityConverter>()));
+                                                                   serviceProvider.GetService<IClothesTypeEntityConverter>(),
+                                                                   serviceProvider.GetService<IClothesTypeShortEntityConverter>()));
 
         /// <summary>
         /// Получить сервис для размеров одежды

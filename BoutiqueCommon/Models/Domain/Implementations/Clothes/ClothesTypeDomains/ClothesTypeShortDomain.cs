@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
     /// <summary>
     /// Вид одежды. Базовая доменная модель
     /// </summary>
-    public class ClothesTypeShortDomain : ClothesType, IClothesTypeShortDomain, IEquatable<IClothesTypeShortDomain>
+    public class ClothesTypeShortDomain : ClothesType, IClothesTypeShortDomain
     {
         public ClothesTypeShortDomain(IClothesType clothesType, ICategoryDomain category)
             : this(clothesType.Name, category)

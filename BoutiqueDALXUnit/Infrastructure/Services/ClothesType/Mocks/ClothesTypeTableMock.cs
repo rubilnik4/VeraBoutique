@@ -13,7 +13,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
     /// <summary>
     /// Тестовые данные таблицы типа одежды
     /// </summary>
-    public static class ClothesTypeTable
+    public static class ClothesTypeTableMock
     {
         /// <summary>
         /// Таблица базы данных типа пола одежды

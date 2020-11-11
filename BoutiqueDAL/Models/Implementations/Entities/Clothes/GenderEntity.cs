@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;

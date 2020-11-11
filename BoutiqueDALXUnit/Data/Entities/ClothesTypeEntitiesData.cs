@@ -18,8 +18,10 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// </summary>
         public static List<ClothesTypeEntity> ClothesTypeEntities =>
             ClothesTypeData.GetClothesTypeDomain().
-            Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain.Name, 
-                                                              new CategoryEntity(clothesTypeDomain.Category.Name))).
+            Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain, 
+                                                              new CategoryEntity(clothesTypeDomain.Category.Name),
+                                                              Enumerable.Empty<ClothesEntity>(),
+                                                              Enumerable.Empty<ClothesTypeGenderCompositeEntity>())).
             ToList();
 
         /// <summary>

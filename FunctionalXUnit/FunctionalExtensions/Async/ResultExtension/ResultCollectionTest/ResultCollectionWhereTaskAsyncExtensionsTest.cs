@@ -109,16 +109,16 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         [Fact]
         public async Task ResultCollectionWhereTaskAsync_Ok_ReturnNewValueByErrors()
         {
-            var errorsInitial = CreateErrorListTwoTest();
-            var resultCollection = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorsInitial);
+            var initialCollection = GetRangeNumber();
+            var resultCollection = ResultCollectionFactory.CreateTaskResultCollection(initialCollection);
 
             var resultAfterWhere = await resultCollection.ResultCollectionWhereTaskAsync(number => false,
                 okFunc: _ => GetEmptyStringList(),
-                badFunc: errors => new List<string> { errors.Count.ToString() });
+                badFunc: numbers => new List<string> { numbers.Count.ToString() });
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Single(resultAfterWhere.Value);
-            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value.First());
+            Assert.Equal(initialCollection.Count.ToString(), resultAfterWhere.Value.First());
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static List<IClothesDomain> ClothesInformationDomains =>
+        public static List<IClothesDomain> ClothesDomains =>
             new List<IClothesDomain>
             {
                 new ClothesDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",

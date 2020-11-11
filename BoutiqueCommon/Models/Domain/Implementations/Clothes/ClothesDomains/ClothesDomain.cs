@@ -9,7 +9,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
-    public class ClothesDomain : ClothesMain, IClothesDomain, IEquatable<IClothesDomain>
+    public class ClothesDomain : ClothesMain, IClothesDomain
     {
         public ClothesDomain(IClothesShort clothesShort, string description,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,

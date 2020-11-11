@@ -15,7 +15,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
     /// <summary>
     /// Вид одежды. Доменная модель
     /// </summary>
-    public class ClothesTypeDomain : ClothesTypeShortDomain, IClothesTypeDomain, IEquatable<IClothesTypeDomain>
+    public class ClothesTypeDomain : ClothesTypeShortDomain, IClothesTypeDomain
     {
         public ClothesTypeDomain(IClothesType clothesType, ICategoryDomain category,
                                      IEnumerable<IGenderDomain> genders)

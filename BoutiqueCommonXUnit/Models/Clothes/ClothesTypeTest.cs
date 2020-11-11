@@ -25,8 +25,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var categoryDomain = new CategoryDomain("Верхушка");
             var clothesTypeDomain = new ClothesTypeShortDomain(clothesType, categoryDomain);
 
-            int clothesTypeHash = HashCode.Combine(clothesType, clothesTypeDomain.GetHashCode(), 
-                                                   categoryDomain.GetHashCode());
+            int clothesTypeHash = HashCode.Combine(clothesType, categoryDomain.GetHashCode());
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
         }
 
@@ -34,14 +33,14 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности поной информации вида одежды
         /// </summary>
         [Fact]
-        public void ClothesTypeFull_Equal_Ok()
+        public void ClothesType_Equal_Ok()
         {
             const string clothesType = "Свитер";
             var categoryDomain = new CategoryDomain("Верхушка");
             var genderDomains = new List<IGenderDomain> { new GenderDomain(GenderType.Male, "Мужичок") };
             var clothesTypeDomain = new ClothesTypeDomain(clothesType, categoryDomain, genderDomains);
 
-            int clothesTypeHash = HashCode.Combine(clothesType, clothesTypeDomain.GetHashCode(), categoryDomain.GetHashCode(),
+            int clothesTypeHash = HashCode.Combine(clothesType, categoryDomain.GetHashCode(),
                                                    genderDomains.Average(gender => gender.GetHashCode()));
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
         }

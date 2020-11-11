@@ -18,8 +18,8 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности информации об одежде
         /// </summary>
-        public static List<ClothesEntity> ClothesInformationEntities =>
-            ClothesData.ClothesInformationDomains.
+        public static List<ClothesEntity> ClothesEntities =>
+            ClothesData.ClothesDomains.
             Select(clothes =>
                 new ClothesEntity(clothes,
                                   new GenderEntity(clothes.Gender.GenderType, clothes.Gender.Name),

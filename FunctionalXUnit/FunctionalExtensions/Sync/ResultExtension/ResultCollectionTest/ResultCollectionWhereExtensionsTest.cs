@@ -107,16 +107,16 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         [Fact]
         public void ResultCollectionWhere_Ok_ReturnNewValueByErrors()
         {
-            var errorsInitial = CreateErrorListTwoTest();
-            var resultCollection = new ResultCollection<int>(errorsInitial);
+            var initialCollection = GetRangeNumber();
+            var resultCollection = new ResultCollection<int>(initialCollection);
 
-            var resultAfterWhere = resultCollection.ResultCollectionWhere(number => false,
+            var resultAfterWhere = resultCollection.ResultCollectionWhere(numbers => false,
                                                                           okFunc: _ => new List<string>(),
-                                                                          badFunc: errors => new List<string> { errors.Count.ToString() });
+                                                                          badFunc: numbers => new List<string> { numbers.Count.ToString() });
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Single(resultAfterWhere.Value);
-            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value.First());
+            Assert.Equal(initialCollection.Count.ToString(), resultAfterWhere.Value.First());
         }
 
         /// <summary>

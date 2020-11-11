@@ -20,6 +20,13 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
                    Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
         { }
 
+
+        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity category,
+                                 IEnumerable<ClothesEntity> clothes,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
+          : this(clothesType, category.Name, category, clothes, clothesTypeGenderComposites)
+        { }
+
         public ClothesTypeEntity(IClothesType clothesType,
                                  string categoryName, CategoryEntity? category,
                                  IEnumerable<ClothesEntity>? clothes,
