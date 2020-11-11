@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
 {
     /// <summary>
-    /// Вид одежды.Схема базы данных
+    /// Вид одежды. Схема базы данных
     /// </summary>
     public class ClothesTypeConfiguration : IEntityTypeConfiguration<ClothesTypeEntity>
     {

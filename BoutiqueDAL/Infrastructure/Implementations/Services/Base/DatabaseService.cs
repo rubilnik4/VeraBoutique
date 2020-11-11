@@ -100,15 +100,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Проверить наличие моделей 
         /// </summary>
-        public async Task<IResultError> CheckEntities(IEnumerable<TDomain> models) =>
-            await CheckEntitiesCollection(models.ToList());
+        public async Task<IResultError> Validate(IEnumerable<TDomain> models) =>
+            await ValidateCollection(models.ToList());
 
         /// <summary>
         /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        protected virtual IQueryable<TEntityOut> CheckFilter(IQueryable<TEntityOut> entities, 
-                                                             IReadOnlyCollection<TDomain> domains) =>
-           entities.Where(_dataTable.DomainsCheck(domains));
+        protected virtual IQueryable<TEntityOut> ValidateFilter(IQueryable<TEntityOut> entities, 
+                                                                IReadOnlyCollection<TDomain> domains) =>
+           entities.Where(_dataTable.ValidateByDomains(domains));
 
         /// <summary>
         /// Добавить модели в базу и сохранить
@@ -134,8 +134,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Проверить наличие коллекции моделей 
         /// </summary>
-        private async Task<IResultError> CheckEntitiesCollection(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindExpressionAsync(CheckQuery(models)).
+        private async Task<IResultError> ValidateCollection(IReadOnlyCollection<TDomain> models) =>
+            await _dataTable.FindExpressionAsync(ValidateQuery(models)).
             ResultCollectionOkTaskAsync(ids => models.Where(model => !ids.Contains(model.Id))).
             ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound =>
                 entitiesNotFound.
@@ -146,7 +146,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Запрос проверки наличия сущностей
         /// </summary>
-        private Func<IQueryable<TEntityOut>, IQueryable<TId>> CheckQuery(IReadOnlyCollection<TDomain> domains) =>
-            entities => CheckFilter(entities, domains).Select(_dataTable.IdSelect());
+        private Func<IQueryable<TEntityOut>, IQueryable<TId>> ValidateQuery(IReadOnlyCollection<TDomain> domains) =>
+            entities => ValidateFilter(entities, domains).Select(_dataTable.IdSelect());
     }
 }

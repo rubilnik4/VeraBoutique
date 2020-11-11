@@ -11,7 +11,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     {
         public void Configure(EntityTypeBuilder<ClothesTypeGenderCompositeEntity> builder)
         {
-            builder.HasKey(t => new { t.ClothesType, t.GenderType });
+            builder.HasKey(t => new { t.ClothesTypeName, t.GenderType });
 
             builder.HasOne(t => t.Gender)
                    .WithMany(s => s!.ClothesTypeGenderComposites)
@@ -20,7 +20,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
 
             builder.HasOne(t => t.ClothesType)
                    .WithMany(s => s!.ClothesTypeGenderComposites)
-                   .HasForeignKey(sc => sc.ClothesType)
+                   .HasForeignKey(sc => sc.ClothesTypeName)
                    .IsRequired();
         }
     }

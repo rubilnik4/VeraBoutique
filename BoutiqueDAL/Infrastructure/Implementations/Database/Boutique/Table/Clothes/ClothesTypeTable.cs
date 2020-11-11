@@ -42,7 +42,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Поиск для проверки сущностей
         /// </summary>
-        public override Expression<Func<ClothesTypeEntity, bool>> DomainsCheck(IReadOnlyCollection<IClothesTypeDomain> domains) =>
+        public override Expression<Func<ClothesTypeEntity, bool>> ValidateByDomains(IReadOnlyCollection<IClothesTypeDomain> domains) =>
             clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Name) &&
                            domains.Select(domain => domain.Category.Name).Contains(clothesType.Name);
     }

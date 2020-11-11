@@ -18,7 +18,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
         /// <summary>
         /// Таблица базы данных типа пола одежды
         /// </summary>
-        public static Mock<IClothesTypeTable> GetClothesTypeTable(Func<string, IQueryable<ClothesTypeEntity>> clothesTypeFunc) =>
+        public static Mock<IClothesTypeTable> GetClothesTypeTable(Func<string, IQueryable<BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities.ClothesTypeEntity>> clothesTypeFunc) =>
             new Mock<IClothesTypeTable>().
             Void(mock => mock.Setup(clothesTypeTable => clothesTypeTable.Where(It.IsAny<string>())).
                               Returns(clothesTypeFunc));
@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
         /// <summary>
         /// Функция поиска информации об одежде
         /// </summary>
-        public static Func<string, IQueryable<ClothesTypeEntity>> GetClothesTypeOk(IEnumerable<ClothesTypeEntity> clothesTypeEntities) =>
+        public static Func<string, IQueryable<BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities.ClothesTypeEntity>> GetClothesTypeOk(IEnumerable<BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities.ClothesTypeEntity> clothesTypeEntities) =>
             clothesType => clothesTypeEntities.Where(clothesTypeEntity => clothesTypeEntity.Id == clothesType).
                                                AsQueryable().BuildMock().Object;
     }

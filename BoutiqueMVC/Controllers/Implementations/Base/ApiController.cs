@@ -91,6 +91,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Заменить данные по идентификатору
         /// </summary>
+        [HttpPut]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -110,6 +111,18 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             await _databaseDatabaseService.Delete(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
+
+        /// <summary>
+        /// Проверить данные
+        /// </summary>
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Validate(IList<TTransfer> transfers) =>
+             await _databaseDatabaseService.Validate(_transferConverter.FromTransfers(transfers)).
+             ToNoContentActionResultTaskAsync();
 
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера

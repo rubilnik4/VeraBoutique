@@ -59,7 +59,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Поиск для проверки сущностей
         /// </summary>
-        public virtual Expression<Func<TEntity, bool>> DomainsCheck(IReadOnlyCollection<TDomain> domains) =>
+        public virtual Expression<Func<TEntity, bool>> ValidateByDomains(IReadOnlyCollection<TDomain> domains) =>
             IdsPredicate(domains.Select(entity => entity.Id));
 
         /// <summary>

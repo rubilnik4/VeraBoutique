@@ -41,6 +41,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Проверить наличие моделей
         /// </summary>
-        Task<IResultError> CheckEntities(IEnumerable<TDomain> models);
+        Task<IResultError> Validate(IEnumerable<TDomain> models);
     }
 }

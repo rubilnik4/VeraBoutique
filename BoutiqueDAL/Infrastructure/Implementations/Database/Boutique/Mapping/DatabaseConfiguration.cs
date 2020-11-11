@@ -36,6 +36,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ColorClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesTypeShortConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeGenderCompositeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesColorCompositeConfiguration());

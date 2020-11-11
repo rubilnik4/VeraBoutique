@@ -43,6 +43,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Поиск для проверки сущностей
         /// </summary>
-        Expression<Func<TEntity, bool>> DomainsCheck(IReadOnlyCollection<TDomain> domains);
+        Expression<Func<TEntity, bool>> ValidateByDomains(IReadOnlyCollection<TDomain> domains);
     }
 }
