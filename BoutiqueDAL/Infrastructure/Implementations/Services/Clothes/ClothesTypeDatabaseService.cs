@@ -12,6 +12,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -37,14 +38,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
                                               IClothesTypeDatabaseService
     {
-        public ClothesTypeDatabaseService(IDatabase database,
-                                          IClothesTypeTable clothesTypeTable, IGenderTable genderTable, ICategoryTable categoryTable,
+        public ClothesTypeDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter,
                                           IClothesTypeShortEntityConverter clothesTypeShortEntityConverter)
-            : base(database, clothesTypeTable, clothesTypeEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.ClotheTypeTable, clothesTypeEntityConverter)
         {
-            _genderTable = genderTable;
-            _categoryTable = categoryTable;
+            _genderTable = boutiqueDatabase.GendersTable;
+            _categoryTable = boutiqueDatabase.CategoryTable;
             _clothesTypeShortEntityConverter = clothesTypeShortEntityConverter;
         }
 

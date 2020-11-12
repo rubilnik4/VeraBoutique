@@ -30,9 +30,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
             new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
 
         /// <summary>
+        /// Дублирование элемента
+        /// </summary>
+        public static IErrorResult DuplicateError<TId>(TId id, string tableName) =>
+            new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элемента {id} в таблице {tableName}");
+
+        /// <summary>
         /// Дублирование элементов
         /// </summary>
-        public static IErrorResult DuplicateError<TId>(IEnumerable<TId> ids, string tableName) =>
+        public static IErrorResult DuplicateErrors<TId>(IEnumerable<TId> ids, string tableName) =>
             new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
 
         /// <summary>

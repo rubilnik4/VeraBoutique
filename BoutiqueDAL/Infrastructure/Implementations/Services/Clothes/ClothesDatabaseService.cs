@@ -10,6 +10,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -35,18 +36,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, IClothesEntity, ClothesEntity>,
                                          IClothesDatabaseService
     {
-        public ClothesDatabaseService(IDatabase database, 
-                                      IClothesTable clothesTable, IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
-                                      IGenderDatabaseService genderDatabaseService, IClothesTypeDatabaseService clothesTypeDatabaseService,
+        public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase, 
+                                      IGenderDatabaseService genderDatabaseService,
+                                      IClothesTypeDatabaseService clothesTypeDatabaseService,
                                       IClothesShortEntityConverter clothesShortEntityConverter,
                                       IClothesEntityConverter clothesEntityConverter)
-          : base(database, clothesTable, clothesEntityConverter)
+          : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesEntityConverter)
         {
             _genderDatabaseService = genderDatabaseService;
             _clothesTypeDatabaseService = clothesTypeDatabaseService;
-            _clothesTable = clothesTable;
-            _genderTable = genderTable;
-            _clothesTypeTable = clothesTypeTable;
+            _clothesTable = boutiqueDatabase.ClothesTable;
+            _genderTable = boutiqueDatabase.GendersTable;
+            _clothesTypeTable = boutiqueDatabase.ClotheTypeTable;
             _clothesShortEntityConverter = clothesShortEntityConverter;
             _clothesEntityConverter = clothesEntityConverter;
         }

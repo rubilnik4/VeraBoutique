@@ -6,26 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace BoutiqueMVC.Models.Implementations.Controller
 {
     /// <summary>
-    /// Информация о создаваемом объекте
+    /// Информация о создаваемом объекте c коллекцией
     /// </summary>
-    public class CreatedActionCollection<TValue>
+    public class CreatedActionCollection<TValue>: CreatedActionBase
+        where TValue: notnull
     {
         public CreatedActionCollection(string actionGetName, string controllerName, IEnumerable<TValue> values)
+            :base(actionGetName, controllerName)
         {
-            ActionGetName = actionGetName;
-            ControllerName = controllerName;
             Values = values.ToList().AsReadOnly();
         }
-
-        /// <summary>
-        /// Наименование пути для получения данных
-        /// </summary>
-        public string ActionGetName { get; }
-
-        /// <summary>
-        /// Наименование контроллера
-        /// </summary>
-        public string ControllerName { get; }
 
         /// <summary>
         /// Записанные значения

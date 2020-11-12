@@ -30,16 +30,16 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>
-        ClothesTypeShortEntity? ClothesTypeShort { get; }
+        ClothesTypeEntity? ClothesType { get; }
 
         /// <summary>
         /// Связующая сущность одежды и цвета
         /// </summary>
-        public IReadOnlyCollection<ClothesColorCompositeEntity>? ClothesColorComposites { get; }
+        IReadOnlyCollection<ClothesColorCompositeEntity>? ClothesColorComposites { get; }
 
         /// <summary>
         /// Связующая сущность одежды и цвета
         /// </summary>
-        public IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? ClothesSizeGroupComposites { get; }
+        IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? ClothesSizeGroupComposites { get; }
     }
 }

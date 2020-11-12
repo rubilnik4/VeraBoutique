@@ -7,7 +7,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities
 {
     /// <summary>
-    /// Преобразования модели одежды в модель базы данных
+    /// Преобразования базовой модели одежды в модель базы данных
     /// </summary>
     public interface IClothesShortEntityConverter : 
         IEntityConverter<int, IClothesShortDomain, IClothesShortEntity, ClothesShortEntity>

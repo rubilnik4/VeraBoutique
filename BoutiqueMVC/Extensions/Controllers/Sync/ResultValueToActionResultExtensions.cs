@@ -38,6 +38,17 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта
         /// </summary>
+        public static ActionResult<TId> ToCreateActionResult<TId, TTransfer>(this IResultValue<TId> @this,
+                                                                             CreatedActionValue<TTransfer> createdActionValue)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
+            @this.OkStatus
+                ? createdActionValue.ToCreatedAtActionResult(@this.Value)
+                : GetBadRequestByErrors<TId>(@this.Errors);
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта
+        /// </summary>
         public static ActionResult<IReadOnlyCollection<TId>> ToCreateActionResult<TId, TTransfer>(this IResultCollection<TId> @this,
                                                                                                   CreatedActionCollection<TTransfer> createdActionCollection)
             where TTransfer : ITransferModel<TId>

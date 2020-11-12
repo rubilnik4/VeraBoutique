@@ -21,6 +21,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         where TId : notnull
     {
         /// <summary>
+        /// Добавить запись в таблицу
+        /// </summary>
+        public async Task<IResultValue<TId>> AddAsync(TEntity entity) =>
+            await ResultErrorTryAsync(() => _databaseSet.AddAsync(entity).AsTask(), TableAccessError).
+                  ToResultValueTaskAsync(entity.Id);
+
+        /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         public async Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities) =>

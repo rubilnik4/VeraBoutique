@@ -57,6 +57,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         public abstract Expression<Func<TEntity, bool>> IdsPredicate(IEnumerable<TId> ids);
 
         /// <summary>
+        /// Поиск для проверки сущности
+        /// </summary>
+        public virtual Expression<Func<TEntity, bool>> ValidateByDomain(TDomain domain) =>
+            IdPredicate(domain.Id);
+
+        /// <summary>
         /// Поиск для проверки сущностей
         /// </summary>
         public virtual Expression<Func<TEntity, bool>> ValidateByDomains(IReadOnlyCollection<TDomain> domains) =>

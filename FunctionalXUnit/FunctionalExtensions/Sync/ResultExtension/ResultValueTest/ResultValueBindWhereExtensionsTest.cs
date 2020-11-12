@@ -156,6 +156,38 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         }
 
         /// <summary>
+        /// Выполнение положительного условия со связыванием в результирующем ответе без ошибки
+        /// </summary>      
+        [Fact]
+        public void ResultValueBindOkBad_Ok_ReturnNewValue()
+        {
+            int initialValue = Numbers.Number;
+            var resultValue = new ResultValue<int>(initialValue);
+
+            var resultAfterWhere = resultValue.ResultValueBindOkBad(okFunc: number => new ResultValue<string>(number.ToString()),
+                                                                    badFunc: _ => new ResultValue<string>(String.Empty));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение негативного условия со связыванием в результирующем ответе с ошибкой
+        /// </summary>      
+        [Fact]
+        public void ResultValueBindOkBad_Bad_ReturnNewValueByErrors()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
+
+            var resultAfterWhere = resultValue.ResultValueBindOkBad(okFunc: _ => new ResultValue<string>(String.Empty),
+                                                                    badFunc: errors => errors.Count.ToString());
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
+        }
+        
+        /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием в результирующем ответе без ошибки
         /// </summary>   
         [Fact]

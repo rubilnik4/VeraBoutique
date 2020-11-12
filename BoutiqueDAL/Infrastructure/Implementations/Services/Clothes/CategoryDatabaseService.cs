@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -19,9 +20,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// </summary>
     public class CategoryDatabaseService : DatabaseService<string, ICategoryDomain, ICategoryEntity, CategoryEntity>, ICategoryDatabaseService
     {
-        public CategoryDatabaseService(IDatabase database, ICategoryTable categoryTable,
+        public CategoryDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                        ICategoryEntityConverter categoryEntityConverter)
-            : base(database, categoryTable, categoryEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.CategoryTable, categoryEntityConverter)
         { }
     }
 }

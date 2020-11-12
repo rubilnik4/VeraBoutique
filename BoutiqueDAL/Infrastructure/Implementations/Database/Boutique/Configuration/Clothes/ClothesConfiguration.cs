@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
                    .HasForeignKey(sc => sc.GenderType)
                    .IsRequired();
 
-            builder.HasOne(t => t.ClothesTypeShort)
+            builder.HasOne(t => t.ClothesType)
                    .WithMany(s => s!.Clothes)
                    .HasForeignKey(sc => sc.ClothesTypeName)
                    .IsRequired();

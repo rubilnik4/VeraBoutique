@@ -39,8 +39,18 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта асинхронно
         /// </summary>
+        public static async Task<ActionResult<TId>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultValue<TId>> @this,
+                                                                                                  CreatedActionValue<TTransfer> createdActionValue)
+            where TTransfer : ITransferModel<TId>
+            where TId : notnull =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult(createdActionValue));
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта асинхронно
+        /// </summary>
         public static async Task<ActionResult<IReadOnlyCollection<TId>>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultCollection<TId>> @this,
-                                                                                                                     CreatedActionCollection<TTransfer> createdActionCollection)
+                                                                                                                       CreatedActionCollection<TTransfer> createdActionCollection)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             await @this.

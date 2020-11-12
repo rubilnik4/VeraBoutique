@@ -38,6 +38,17 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
              : new ResultValue<TValueOut>(@this.Errors);
 
         /// <summary>
+        /// Выполнение условия положительного или негативного условия со связыванием в результирующем ответе
+        /// </summary>      
+        public static IResultValue<TValueOut> ResultValueBindOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                        Func<TValueIn, IResultValue<TValueOut>> okFunc,
+                                                                                        Func<TValueIn, IResultValue<TValueOut>> badFunc) =>
+         @this.OkStatus
+             ? okFunc.Invoke(@this.Value)
+             : badFunc.Invoke(@this.Value);
+
+
+        /// <summary>
         /// Выполнение положительного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static IResultValue<TValueOut> ResultValueBindOk<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,

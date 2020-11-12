@@ -83,8 +83,20 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
+            await _transferConverter.FromTransfer(transfer).
+            MapAsync(domain => _databaseDatabaseService.Post(domain).
+                                ToCreateActionResultTaskAsync(GetCreateAction(transfer)));
+
+        /// <summary>
+        /// Записать данные
+        /// </summary>
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
-            await _transferConverter.FromTransfers(transfers).ToList().
+            await _transferConverter.FromTransfers(transfers).
             MapAsync(domains => _databaseDatabaseService.Post(domains).
                                 ToCreateActionResultTaskAsync(GetCreateAction(transfers)));
 
@@ -120,9 +132,27 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Validate(TTransfer transfer) =>
+             await _databaseDatabaseService.Validate(_transferConverter.FromTransfer(transfer)).
+             ToNoContentActionResultTaskAsync();
+
+        /// <summary>
+        /// Проверить данные
+        /// </summary>
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Validate(IList<TTransfer> transfers) =>
              await _databaseDatabaseService.Validate(_transferConverter.FromTransfers(transfers)).
              ToNoContentActionResultTaskAsync();
+
+        /// <summary>
+        /// Получить информацию о создаваемом объекте на основе контроллера
+        /// </summary>
+        private CreatedActionValue<TTransfer> GetCreateAction(TTransfer transfer) =>
+            new CreatedActionValue<TTransfer>(nameof(Get), GetType().Name, transfer);
 
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -25,6 +26,18 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
         /// Категория одежды. Доменная модель
         /// </summary>
         public ICategoryDomain Category { get; }
+
+        /// <summary>
+        /// Преобразовать в полную версию
+        /// </summary>
+        public IClothesTypeDomain ToClothesTypeDomain(IGenderDomain genders) =>
+            ToClothesTypeDomain(new List<IGenderDomain> { genders });
+
+        /// <summary>
+        /// Преобразовать в полную версию
+        /// </summary>
+        public IClothesTypeDomain ToClothesTypeDomain(IEnumerable<IGenderDomain> genders) =>
+            new ClothesTypeDomain(this, genders);
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is IClothesTypeShortDomain clothesTypeDomain && Equals(clothesTypeDomain);

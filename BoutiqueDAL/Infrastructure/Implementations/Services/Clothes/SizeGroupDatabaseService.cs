@@ -7,6 +7,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
@@ -29,11 +30,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class SizeGroupDatabaseService : DatabaseService<(ClothesSizeType, int), ISizeGroupDomain, ISizeGroupEntity, SizeGroupEntity>,
                                             ISizeGroupDatabaseService
     {
-        public SizeGroupDatabaseService(IDatabase database, ISizeGroupTable sizeGroupTable,
+        public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                         ISizeGroupEntityConverter sizeGroupEntityConverter)
-            : base(database, sizeGroupTable, sizeGroupEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupEntityConverter)
         {
-            _sizeGroupTable = sizeGroupTable;
+            _sizeGroupTable =  boutiqueDatabase.SizeGroupTable;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
         }
 

@@ -39,6 +39,16 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
                 : new ResultValue<TValueOut>(@this.Errors);
 
         /// <summary>
+        /// Выполнение положительного или негативного условия в асинхронном результирующем ответе со значением
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindOkBadAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
+                                                                                                         Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                         Func<TValueIn, Task<IResultValue<TValueOut>>> badFunc) =>
+            @this.OkStatus
+                ? await okFunc.Invoke(@this.Value)
+                : await badFunc.Invoke(@this.Value);
+
+        /// <summary>
         /// Выполнение положительного условия результирующего асинхронного ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkAsync<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,

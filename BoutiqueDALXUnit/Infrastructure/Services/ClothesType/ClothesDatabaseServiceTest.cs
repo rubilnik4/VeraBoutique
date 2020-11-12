@@ -13,6 +13,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -20,6 +21,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
@@ -52,13 +54,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderOk(genderWithClothesEntities));
             var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(ClothesTypeTableMock.GetClothesTypeOk(clothesTypeWithClothesEntities));
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
-            var clothesShortEntityConverter = ClothesShortEntityConverter;
-
-            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
-                                                                    genderTable.Object, clothesTypeTable.Object,
-                                                                    GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
-                                                                    clothesShortEntityConverter,
-                                                                    ClothesEntityConverter);
+            var clothesShortEntityConverter = ClothesShortEntityConverterMock.ClothesShortEntityConverter;
+            var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
+                                                                    GenderDatabaseService.Object, 
+                                                                    ClothesTypeDatabaseService.Object,
+                                                                    clothesShortEntityConverter, 
+                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
 
             var clothesResults = await clothesDatabaseService.GetClothesShorts(genderType, clothesType);
             var clothesShortDomains = clothesShortEntityConverter.FromEntities(clothesInformationEntities);
@@ -83,11 +85,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
             var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(ClothesTypeTableMock.GetClothesTypeOk(clothesTypeWithClothesEntities));
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
-            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
-                                                                    genderTable.Object, clothesTypeTable.Object,
+            var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
                                                                     GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
-                                                                    ClothesShortEntityConverter,
-                                                                    ClothesEntityConverter);
+                                                                    ClothesShortEntityConverterMock.ClothesShortEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
 
             var clothesResults = await clothesDatabaseService.GetClothesShorts(genderType, clothesType);
 
@@ -101,19 +103,20 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetIncludesById_Ok()
         {
-            var clothesInformationDomains = ClothesData.ClothesDomains;
-            var clothesInformationEntities = ClothesEntitiesData.ClothesEntities;
-            var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
-            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
-                                                                    GenderTable.Object, ClothesTypeTable.Object,
+            var clothesDomains = ClothesData.ClothesDomains;
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesEntities));
+            var database = GetDatabase(new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,
+                                       clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
                                                                     GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
-                                                                    ClothesShortEntityConverter,
-                                                                    ClothesEntityConverter);
+                                                                    ClothesShortEntityConverterMock.ClothesShortEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
 
-            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesDomains.Last().Id);
 
             Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.Equals(clothesInformationDomains.Last()));
+            Assert.True(clothesResults.Value.Equals(clothesDomains.Last()));
         }
 
         /// <summary>
@@ -122,16 +125,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetIncludesById_NotFound()
         {
-            var clothesInformationDomains = ClothesData.ClothesDomains;
+            var clothesDomains = ClothesData.ClothesDomains;
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationNotFound());
+            var database = GetDatabase(new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,
+                                       clothesTable.Object);
 
-            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
-                                                                    GenderTable.Object, ClothesTypeTable.Object,
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
                                                                     GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
-                                                                    ClothesShortEntityConverter,
-                                                                    ClothesEntityConverter);
+                                                                    ClothesShortEntityConverterMock.ClothesShortEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
 
-            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesDomains.Last().Id);
 
             Assert.True(clothesResults.HasErrors);
             Assert.Equal(ErrorResultType.ValueNotFound, clothesResults.Errors.First().ErrorResultType);
@@ -143,16 +147,16 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetIncludesById_Exception()
         {
-            var clothesInformationDomains = ClothesData.ClothesDomains;
+            var clothesDomains = ClothesData.ClothesDomains;
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationException());
-
-            var clothesDatabaseService = new ClothesDatabaseService(Database.Object, clothesTable.Object,
-                                                                    GenderTable.Object, ClothesTypeTable.Object,
+            var database = GetDatabase(new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,
+                                       clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
                                                                     GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
-                                                                    ClothesShortEntityConverter,
-                                                                    ClothesEntityConverter);
+                                                                    ClothesShortEntityConverterMock.ClothesShortEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
 
-            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesInformationDomains.Last().Id);
+            var clothesResults = await clothesDatabaseService.GetIncludesById(clothesDomains.Last().Id);
 
             Assert.True(clothesResults.HasErrors);
             Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesResults.Errors.First().ErrorResultType);
@@ -161,17 +165,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// <summary>
         /// База данных
         /// </summary>
-        private static Mock<IDatabase> Database => new Mock<IDatabase>();
-
-        /// <summary>
-        /// Таблица базы данных типа пола
-        /// </summary>
-        private static Mock<IGenderTable> GenderTable => new Mock<IGenderTable>();
-
-        /// <summary>
-        /// Таблица базы данных вида одежды
-        /// </summary>
-        private static Mock<IClothesTypeTable> ClothesTypeTable => new Mock<IClothesTypeTable>();
+        private static Mock<IBoutiqueDatabase> GetDatabase(IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
+                                                           IClothesTable clothesTable) => 
+            new Mock<IBoutiqueDatabase>().
+            Void(mock => mock.Setup(database => database.GendersTable).Returns(genderTable)).
+            Void(mock => mock.Setup(database => database.ClotheTypeTable).Returns(clothesTypeTable)).
+            Void(mock => mock.Setup(database => database.ClothesTable).Returns(clothesTable));
 
         /// <summary>
         /// Сервис типа пола одежды в базе данных
@@ -184,21 +183,5 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// </summary>
         private static Mock<IClothesTypeDatabaseService> ClothesTypeDatabaseService =>
              new Mock<IClothesTypeDatabaseService>();
-
-        /// <summary>
-        /// Преобразования модели одежды в модель базы данных
-        /// </summary>
-        private static IClothesShortEntityConverter ClothesShortEntityConverter =>
-            new ClothesShortEntityConverter();
-
-        /// <summary>
-        /// Преобразования модели одежды в модель базы данных
-        /// </summary>
-        private static IClothesEntityConverter ClothesEntityConverter =>
-            new ClothesEntityConverter(new ClothesShortEntityConverter(),
-                                       new GenderEntityConverter(),
-                                       new ClothesTypeShortEntityConverter(new CategoryEntityConverter()),
-                                       new ColorClothesEntityConverter(),
-                                       new SizeGroupEntityConverter(new SizeEntityConverter()));
     }
 }

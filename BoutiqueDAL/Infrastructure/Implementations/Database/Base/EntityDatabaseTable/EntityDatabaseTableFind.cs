@@ -11,6 +11,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueBindTryAsyncExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
@@ -58,9 +59,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        public async Task<IResultCollection<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
+        public async Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
             where TOut : notnull =>
-            await FindOutAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync());
+            await FindOutAsync(() => queryFunc(_databaseSet.AsNoTracking()).FirstOrDefaultAsync());
+
+        /// <summary>
+        /// Выполнить запрос в таблице и выгрузить сущности
+        /// </summary>
+        public async Task<IResultCollection<TOut>> FindsExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
+            where TOut : notnull =>
+            await FindsOutAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync());
 
 
         /// <summary>
@@ -78,9 +86,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
             await ResultCollectionTryAsync(getEntities, TableAccessError);
 
         /// <summary>
+        /// Найти запись в таблице по идентификаторам
+        /// </summary>
+        private async Task<IResultValue<TOut>> FindOutAsync<TOut>(Func<Task<TOut>> getEntity)
+            where TOut : notnull =>
+            await ResultValueTryAsync(getEntity, TableAccessError);
+
+        /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        private async Task<IResultCollection<TOut>> FindOutAsync<TOut>(Func<Task<List<TOut>>> getEntities)
+        private async Task<IResultCollection<TOut>> FindsOutAsync<TOut>(Func<Task<List<TOut>>> getEntities)
             where TOut : notnull =>
             await ResultCollectionTryAsync(getEntities, TableAccessError);
     }

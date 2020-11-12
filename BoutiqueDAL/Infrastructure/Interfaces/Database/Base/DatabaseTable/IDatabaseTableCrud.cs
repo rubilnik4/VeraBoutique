@@ -13,6 +13,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         where TId : notnull
     {
         /// <summary>
+        /// Добавить запись в таблицу
+        /// </summary>
+        Task<IResultValue<TId>> AddAsync(TEntity entity);
+
+        /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);

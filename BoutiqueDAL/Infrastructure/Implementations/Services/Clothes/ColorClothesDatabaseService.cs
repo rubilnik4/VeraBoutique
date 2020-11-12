@@ -2,6 +2,7 @@
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -16,9 +17,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ColorClothesDatabaseService : DatabaseService<string, IColorClothesDomain, IColorClothesEntity, ColorClothesEntity>,
                                                IColorClothesDatabaseService
     {
-        public ColorClothesDatabaseService(IDatabase database, IColorClothesTable colorClothesTable,
+        public ColorClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                            IColorClothesEntityConverter colorClothesEntityConverter)
-            : base(database, colorClothesTable, colorClothesEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.ColorClothesTable, colorClothesEntityConverter)
         { }
     }
 }

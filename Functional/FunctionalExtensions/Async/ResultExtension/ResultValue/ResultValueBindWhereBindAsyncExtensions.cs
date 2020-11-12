@@ -35,6 +35,15 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
             MapBindAsync(awaitedThis => awaitedThis.ResultValueBindWhereAsync(predicate, okFunc, badFunc));
 
         /// <summary>
+        /// Выполнение условия положительного или негативного условия в результирующем ответе со значение задачи-объекта
+        /// </summary>      
+        public static async Task<IResultValue<TValueOut>> ResultValueBindOkBadBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
+                                                                                                             Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
+                                                                                                             Func<TValueIn, Task<IResultValue<TValueOut>>> badFunc) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.ResultValueBindOkBadAsync(okFunc, badFunc));
+
+        /// <summary>
         /// Выполнение асинхронного положительного условия результирующего ответа или возвращение предыдущей ошибки в результирующем ответе для задачи-объекта
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,

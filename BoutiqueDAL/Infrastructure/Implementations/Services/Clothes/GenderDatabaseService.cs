@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
@@ -24,8 +25,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class GenderDatabaseService : DatabaseService<GenderType, IGenderDomain, IGenderEntity, GenderEntity>, 
                                          IGenderDatabaseService
     {
-        public GenderDatabaseService(IDatabase database, IGenderTable genderTable, IGenderEntityConverter genderEntityConverter)
-            : base(database, genderTable, genderEntityConverter)
+        public GenderDatabaseService(IBoutiqueDatabase boutiqueDatabase, IGenderEntityConverter genderEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.GendersTable, genderEntityConverter)
         { }
     }
 }

@@ -33,13 +33,13 @@ namespace BoutiqueMVC.DependencyInjection
         {
             ConverterServices.InjectEntityConverters(services);
 
-            services.AddTransient(DatabaseServicesFactory.GetGenderService);
-            services.AddTransient(DatabaseServicesFactory.GetCategoryService);
-            services.AddTransient(DatabaseServicesFactory.GetClothesTypeService);
-            services.AddTransient(DatabaseServicesFactory.GetSizeService);
-            services.AddTransient(DatabaseServicesFactory.GetSizeGroupService);
-            services.AddTransient(DatabaseServicesFactory.GetColorClothesService);
-            services.AddTransient(DatabaseServicesFactory.GetClothesService);
+            services.AddTransient<IGenderDatabaseService, GenderDatabaseService>();
+            services.AddTransient<ICategoryDatabaseService, CategoryDatabaseService>();
+            services.AddTransient<IClothesTypeDatabaseService, ClothesTypeDatabaseService>();
+            services.AddTransient<ISizeDatabaseService, SizeDatabaseService>();
+            services.AddTransient<ISizeGroupDatabaseService, SizeGroupDatabaseService>();
+            services.AddTransient<IColorClothesDatabaseService, ColorClothesDatabaseService>();
+            services.AddTransient<IClothesDatabaseService, ClothesDatabaseService>();
             InjectDatabase(services);
         }
 

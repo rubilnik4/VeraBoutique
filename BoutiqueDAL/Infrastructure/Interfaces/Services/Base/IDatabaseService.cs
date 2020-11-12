@@ -24,9 +24,14 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         Task<IResultValue<TDomain>> Get(TId id);
 
         /// <summary>
+        /// Загрузить модель в базу
+        /// </summary>
+        Task<IResultValue<TId>> Post(TDomain model);
+
+        /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        Task<IResultCollection<TId>> Post(IReadOnlyCollection<TDomain> models);
+        Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models);
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
@@ -37,6 +42,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         Task<IResultValue<TDomain>> Delete(TId id);
+
+        /// <summary>
+        /// Проверить наличие моделей
+        /// </summary>
+        Task<IResultError> Validate(TDomain model);
 
         /// <summary>
         /// Проверить наличие моделей

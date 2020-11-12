@@ -6,9 +6,11 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntit
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
 using Xunit;
 
@@ -43,7 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesNull = new ClothesEntity(clothes, clothes.GenderType, null,
-                                                clothes.ClothesTypeName, clothes.ClothesTypeShort,
+                                                clothes.ClothesTypeName, clothes.ClothesType,
                                                 clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -80,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesNull = new ClothesEntity(clothes,
                                                 clothes.GenderType, clothes.Gender,
-                                                clothes.ClothesTypeName, clothes.ClothesTypeShort,
+                                                clothes.ClothesTypeName, clothes.ClothesType,
                                                 null, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -98,7 +100,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesNull = new ClothesEntity(clothes, clothes.GenderType, clothes.Gender,
-                                                clothes.ClothesTypeName, clothes.ClothesTypeShort,
+                                                clothes.ClothesTypeName, clothes.ClothesType,
                                                 clothes.ClothesColorComposites, null);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -109,12 +111,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         }
 
         /// <summary>
-        /// Конвертер модели цвета одежды в модель базы данных
+        /// Преобразования модели информации об одежде в модель базы данных
         /// </summary>
         private static IClothesEntityConverter ClothesEntityConverter =>
-            new ClothesEntityConverter(new ClothesShortEntityConverter(), new GenderEntityConverter(),
-                                       new ClothesTypeShortEntityConverter(new CategoryEntityConverter()),
-                                       new ColorClothesEntityConverter(),
-                                       new SizeGroupEntityConverter(new SizeEntityConverter()));
+            ClothesEntityConverterMock.ClothesEntityConverter;
     }
 }
