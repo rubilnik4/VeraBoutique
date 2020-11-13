@@ -43,6 +43,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// </summary>
         public override Expression<Func<ClothesEntity, bool>> ValidateByDomains(IReadOnlyCollection<IClothesDomain> domains) =>
             clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Id);
-            //IdsPredicate(domains.Select(domain => domain.Id)).Compile()(clothesType);
     }
 }

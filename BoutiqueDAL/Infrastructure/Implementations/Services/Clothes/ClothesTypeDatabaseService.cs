@@ -75,7 +75,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Функция выбора сущностей для проверки наличия
         /// </summary>
         protected override IQueryable<ClothesTypeEntity> ValidateFilter(IQueryable<ClothesTypeEntity> entities,
-                                                                     IReadOnlyCollection<IClothesTypeDomain> domains) =>
+                                                                        IReadOnlyCollection<IClothesTypeDomain> domains) =>
             base.ValidateFilter(entities, domains).
             Include(clothesType => clothesType.ClothesTypeGenderComposites).
             Where(entity => entity.ClothesTypeGenderComposites.

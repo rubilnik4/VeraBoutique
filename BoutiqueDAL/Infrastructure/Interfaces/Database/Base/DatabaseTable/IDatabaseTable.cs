@@ -39,15 +39,14 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// Поиск по параметрам
         /// </summary>
         Expression<Func<TEntity, bool>> IdsPredicate(IEnumerable<TId> ids);
+        /// <summary>
+        /// Функция выбора сущностей для проверки наличия
+        /// </summary>
+        IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, TDomain domain);
 
         /// <summary>
-        /// Поиск для проверки сущности
+        /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        Expression<Func<TEntity, bool>> ValidateByDomain(TDomain domain);
-
-        /// <summary>
-        /// Поиск для проверки сущностей
-        /// </summary>
-        Expression<Func<TEntity, bool>> ValidateByDomains(IReadOnlyCollection<TDomain> domains);
+        IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains);
     }
 }

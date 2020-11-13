@@ -39,6 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             _database = database;
             _dataTable = dataTable;
             _entityConverter = entityConverter;
+            _databaseValidateService = new DatabaseValidateService<TId, TDomain, TEntityOut>(dataTable);
         }
 
         /// <summary>
@@ -57,6 +58,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private readonly IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> _entityConverter;
 
         /// <summary>
+        /// Базовый сервис проверки данных из базы
+        /// </summary>
+        private readonly IDatabaseValidateService<TId, TDomain> _databaseValidateService;
+
+        /// <summary>
         /// Получить модели из базы
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
@@ -73,11 +79,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модель в базу
         /// </summary>
-        public virtual async Task<IResultValue<TId>> Post(TDomain model) =>
-            await _dataTable.FindIdAsync(model.Id).
-            ResultValueBindWhereBindAsync(entity => entity == null,
-                okFunc: _ => AddWithSaving(_dataTable, model),
-                badFunc: entity => GetDuplicateErrorResult(entity, _dataTable.TableName));
+        public virtual async Task<IResultValue<TId>> Post(TDomain domain) =>
+            await new ResultValue<TDomain>(domain).
+            ResultValueBindErrorsOkAsync(_ => _databaseValidateService.ValidateDuplicate(domain)).
+            ResultValueBindErrorsOkBindAsync(_ => _databaseValidateService.ValidateValue(domain)).
+            ResultValueBindOkBindAsync(_ => AddWithSaving(_dataTable, domain));
 
         /// <summary>
         /// Загрузить модели в базу
@@ -88,11 +94,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        private async Task<IResultCollection<TId>> PostCollection(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindIdsAsync(models.Select(model => model.Id)).
-            ResultCollectionBindWhereBindAsync(entities => entities.Count == 0,
-                okFunc: _ => AddRangeWithSaving(_dataTable, models),
-                badFunc: ids => GetDuplicateErrorsResult(ids, _dataTable.TableName));
+        private async Task<IResultCollection<TId>> PostCollection(IReadOnlyCollection<TDomain> domains) =>
+            await new ResultCollection<TDomain>(domains).
+            ResultCollectionBindErrorsOkAsync(_ => _databaseValidateService.ValidateDuplicates(domains)).
+            ResultCollectionBindErrorsOkBindAsync(_ => _databaseValidateService.ValidateCollection(domains)).
+            ResultCollectionBindOkBindAsync(_ => AddRangeWithSaving(_dataTable, domains));
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
@@ -116,27 +122,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Проверить наличие моделей 
         /// </summary>
         public async Task<IResultError> Validate(TDomain model) =>
-            await ValidateValue(model);
+            await _databaseValidateService.ValidateValue(model);
 
         /// <summary>
         /// Проверить наличие моделей 
         /// </summary>
         public async Task<IResultError> Validate(IEnumerable<TDomain> models) =>
-            await ValidateCollection(models.ToList());
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        protected virtual IQueryable<TEntityOut> ValidateFilter(IQueryable<TEntityOut> entities, TDomain domain) =>
-           entities.Where(_dataTable.ValidateByDomain(domain));
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        protected virtual IQueryable<TEntityOut> ValidateFilter(IQueryable<TEntityOut> entities, 
-                                                                IReadOnlyCollection<TDomain> domains) =>
-           entities.Where(_dataTable.ValidateByDomains(domains));
-
+            await _databaseValidateService.ValidateCollection(models.ToList());
+        
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
@@ -159,48 +152,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private async Task<IResultError> DatabaseSaveChanges() =>
             await _database.SaveChangesAsync();
 
-        /// <summary>
-        /// Получить ошибку двойной записи
-        /// </summary>
-        private static async Task<IResultValue<TId>> GetDuplicateErrorResult(TEntityOut id, string tableName) =>
-            await ResultValueFactory.
-            CreateTaskResultValueError<TId>(DatabaseErrors.DuplicateError(id, tableName));
 
-        /// <summary>
-        /// Получить ошибки двойной записи
-        /// </summary>
-        private static async Task<IResultCollection<TId>> GetDuplicateErrorsResult(IEnumerable<TEntityOut> ids, string tableName) =>
-            await ResultCollectionFactory.
-            CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateErrors(ids, tableName));
-
-        /// <summary>
-        /// Проверить наличие модели
-        /// </summary>
-        private async Task<IResultError> ValidateValue(TDomain model) =>
-            await _dataTable.FindExpressionAsync(ValidateQuery(model));
-
-        /// <summary>
-        /// Проверить наличие коллекции моделей 
-        /// </summary>
-        private async Task<IResultError> ValidateCollection(IReadOnlyCollection<TDomain> models) =>
-            await _dataTable.FindsExpressionAsync(ValidateQuery(models)).
-            ResultCollectionOkTaskAsync(ids => models.Where(model => !ids.Contains(model.Id))).
-            ResultCollectionBindErrorsOkTaskAsync(entitiesNotFound =>
-                entitiesNotFound.
-                Select(entityNotFound => DatabaseErrors.ValueNotFoundError(entityNotFound.Id?.ToString() ?? String.Empty,
-                                                                           _dataTable.GetType().Name)).
-                Map(errors => new ResultError(errors)));
-
-        /// <summary>
-        /// Запрос проверки наличия сущностей
-        /// </summary>
-        private Func<IQueryable<TEntityOut>, IQueryable<TId>> ValidateQuery(TDomain domain) =>
-            entities => ValidateFilter(entities, domain).Select(_dataTable.IdSelect());
-
-        /// <summary>
-        /// Запрос проверки наличия сущностей
-        /// </summary>
-        private Func<IQueryable<TEntityOut>, IQueryable<TId>> ValidateQuery(IReadOnlyCollection<TDomain> domains) =>
-            entities => ValidateFilter(entities, domains).Select(_dataTable.IdSelect());
     }
 }

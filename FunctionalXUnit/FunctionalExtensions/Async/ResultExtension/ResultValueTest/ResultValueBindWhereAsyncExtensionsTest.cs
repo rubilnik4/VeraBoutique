@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
@@ -156,6 +157,40 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Single(resultAfterWhere.Errors);
+        }
+
+        /// <summary>
+        /// Выполнение положительного условия со связыванием в асинхронном результирующем ответе без ошибки
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueBindOkBadAsync_Ok_ReturnNewValue()
+        {
+            int initialValue = Numbers.Number;
+            var resultValue = new ResultValue<int>(initialValue);
+
+            var resultAfterWhere = await resultValue.ResultValueBindOkBadAsync(
+                okFunc: number => ResultValueFactory.CreateTaskResultValue(number.ToString()),
+                badFunc: _ => ResultValueFactory.CreateTaskResultValue(String.Empty));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение негативного условия со связыванием в асинхронном результирующем ответе с ошибкой
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueBindOkBadAsync_Bad_ReturnNewValueByErrors()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = new ResultValue<int>(errorsInitial);
+
+            var resultAfterWhere = await resultValue.ResultValueBindOkBadAsync(
+                okFunc: _ => ResultValueFactory.CreateTaskResultValue(String.Empty),
+                badFunc: errors => ResultValueFactory.CreateTaskResultValue(errors.Count.ToString()));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
         }
 
         /// <summary>

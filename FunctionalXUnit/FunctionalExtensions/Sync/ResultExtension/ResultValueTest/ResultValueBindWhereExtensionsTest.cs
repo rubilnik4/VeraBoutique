@@ -181,7 +181,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValue = new ResultValue<int>(errorsInitial);
 
             var resultAfterWhere = resultValue.ResultValueBindOkBad(okFunc: _ => new ResultValue<string>(String.Empty),
-                                                                    badFunc: errors => errors.Count.ToString());
+                                                                    badFunc: errors => new ResultValue<string>(errors.Count.ToString()));
 
             Assert.True(resultAfterWhere.OkStatus);
             Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);

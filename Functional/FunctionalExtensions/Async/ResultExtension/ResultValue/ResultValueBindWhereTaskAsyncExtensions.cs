@@ -38,7 +38,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// </summary>      
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkBadTaskAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
                                                                                                              Func<TValueIn, IResultValue<TValueOut>> okFunc,
-                                                                                                             Func<TValueIn, IResultValue<TValueOut>> badFunc) =>
+                                                                                                             Func<IReadOnlyCollection<IErrorResult>, IResultValue<TValueOut>> badFunc) =>
             await @this.
             MapTaskAsync(awaitedThis => awaitedThis.ResultValueBindOkBad(okFunc, badFunc));
 

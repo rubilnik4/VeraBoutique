@@ -39,7 +39,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// </summary>      
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkBadBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
                                                                                                              Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc,
-                                                                                                             Func<TValueIn, Task<IResultValue<TValueOut>>> badFunc) =>
+                                                                                                             Func<IReadOnlyCollection<IErrorResult>, Task<IResultValue<TValueOut>>> badFunc) =>
             await @this.
             MapBindAsync(awaitedThis => awaitedThis.ResultValueBindOkBadAsync(okFunc, badFunc));
 
@@ -47,7 +47,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Выполнение асинхронного положительного условия результирующего ответа или возвращение предыдущей ошибки в результирующем ответе для задачи-объекта
         /// </summary>   
         public static async Task<IResultValue<TValueOut>> ResultValueBindOkBindAsync<TValueIn, TValueOut>(this Task<IResultValue<TValueIn>> @this,
-                                                                                                      Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc) =>
+                                                                                                          Func<TValueIn, Task<IResultValue<TValueOut>>> okFunc) =>
             await @this.
             MapBindAsync(awaitedThis => awaitedThis.ResultValueBindOkAsync(okFunc));
 
@@ -55,7 +55,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Выполнение асинхронного негативного условия результирующего ответа или возвращение положительного в результирующем ответе для задачи-объекта
         /// </summary>   
         public static async Task<IResultValue<TValue>> ResultValueBindBadBindAsync<TValue>(this Task<IResultValue<TValue>> @this,
-                                                                                       Func<IReadOnlyCollection<IErrorResult>, Task<IResultValue<TValue>>> badFunc) =>
+                                                                                           Func<IReadOnlyCollection<IErrorResult>, Task<IResultValue<TValue>>> badFunc) =>
             await @this.
             MapBindAsync(awaitedThis => awaitedThis.ResultValueBindBadAsync(badFunc));
 

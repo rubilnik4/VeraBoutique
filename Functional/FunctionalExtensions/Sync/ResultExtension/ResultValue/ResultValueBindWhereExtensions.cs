@@ -42,10 +42,10 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// </summary>      
         public static IResultValue<TValueOut> ResultValueBindOkBad<TValueIn, TValueOut>(this IResultValue<TValueIn> @this,
                                                                                         Func<TValueIn, IResultValue<TValueOut>> okFunc,
-                                                                                        Func<TValueIn, IResultValue<TValueOut>> badFunc) =>
+                                                                                        Func<IReadOnlyCollection<IErrorResult>, IResultValue<TValueOut>> badFunc) =>
          @this.OkStatus
              ? okFunc.Invoke(@this.Value)
-             : badFunc.Invoke(@this.Value);
+             : badFunc.Invoke(@this.Errors);
 
 
         /// <summary>

@@ -157,6 +157,39 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             Assert.Single(resultAfterWhere.Errors);
         }
 
+        /// <summary>
+        /// Выполнение положительного условия со связыванием в асинхронном результирующем ответе без ошибки
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueBindOkBadBindAsync_Ok_ReturnNewValue()
+        {
+            int initialValue = Numbers.Number;
+            var resultValue = ResultValueFactory.CreateTaskResultValue(initialValue);
+
+            var resultAfterWhere = await resultValue.ResultValueBindOkBadBindAsync(
+                okFunc: number => ResultValueFactory.CreateTaskResultValue(number.ToString()),
+                badFunc: _ => ResultValueFactory.CreateTaskResultValue(String.Empty));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(initialValue.ToString(), resultAfterWhere.Value);
+        }
+
+        /// <summary>
+        /// Выполнение негативного условия со связыванием в асинхронном результирующем ответе с ошибкой
+        /// </summary>      
+        [Fact]
+        public async Task ResultValueBindOkBadBindAsync_Bad_ReturnNewValueByErrors()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultValue = ResultValueFactory.CreateTaskResultValueError<int>(errorsInitial);
+
+            var resultAfterWhere = await resultValue.ResultValueBindOkBadBindAsync(
+                okFunc: _ => ResultValueFactory.CreateTaskResultValue(String.Empty),
+                badFunc: errors => ResultValueFactory.CreateTaskResultValue(errors.Count.ToString()));
+
+            Assert.True(resultAfterWhere.OkStatus);
+            Assert.Equal(errorsInitial.Count.ToString(), resultAfterWhere.Value);
+        }
 
         /// <summary>
         /// Выполнение положительного условия асинхронного результирующего ответа со связыванием в результирующем ответе без ошибки для задачи-объекта

@@ -57,16 +57,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         public abstract Expression<Func<TEntity, bool>> IdsPredicate(IEnumerable<TId> ids);
 
         /// <summary>
-        /// Поиск для проверки сущности
+        /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public virtual Expression<Func<TEntity, bool>> ValidateByDomain(TDomain domain) =>
-            IdPredicate(domain.Id);
+        public virtual IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, TDomain domain) =>
+           entities.Where(IdPredicate(domain.Id));
 
         /// <summary>
-        /// Поиск для проверки сущностей
+        /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public virtual Expression<Func<TEntity, bool>> ValidateByDomains(IReadOnlyCollection<TDomain> domains) =>
-            IdsPredicate(domains.Select(entity => entity.Id));
+        public virtual IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains) =>
+           entities.Where(IdsPredicate(domains.Select(entity => entity.Id)));
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных
