@@ -72,18 +72,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             ResultCollectionBindOkTaskAsync(clothesTypeShorts => _clothesTypeShortEntityConverter.FromEntities(clothesTypeShorts));
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        protected override IQueryable<ClothesTypeEntity> ValidateFilter(IQueryable<ClothesTypeEntity> entities,
-                                                                        IReadOnlyCollection<IClothesTypeDomain> domains) =>
-            base.ValidateFilter(entities, domains).
-            Include(clothesType => clothesType.ClothesTypeGenderComposites).
-            Where(entity => entity.ClothesTypeGenderComposites.
-                            Select(clothesTypeGender => clothesTypeGender.GenderType).
-                            SequenceEqual(domains.First(domain => domain.Id == entity.Id).Genders.
-                                                  Select(gender => gender.GenderType)));
-
-        /// <summary>
         /// Получить вид одежды
         /// </summary>
         private async Task<IReadOnlyCollection<ClothesTypeShortEntity>> GetClothesTypes(GenderType genderType, string category) =>

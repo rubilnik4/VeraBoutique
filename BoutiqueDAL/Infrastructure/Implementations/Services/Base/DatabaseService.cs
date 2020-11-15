@@ -134,7 +134,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Добавить модель в базу и сохранить
         /// </summary>
         private async Task<IResultValue<TId>> AddWithSaving(IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
-                                                                 TDomain model) =>
+                                                            TDomain model) =>
             await dataTable.AddAsync(_entityConverter.ToEntity(model)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 

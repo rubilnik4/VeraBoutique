@@ -37,11 +37,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         public override Expression<Func<ClothesEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
             entity => ids.Contains(entity.Id);
 
+        /// <summary>
+        /// Функция выбора сущностей для проверки наличия
+        /// </summary>
+        public override IQueryable<ClothesEntity> ValidateFilter(IQueryable<ClothesEntity> entities, IClothesDomain domain) =>
+           entities.Where(IdPredicate(domain.Id));
 
         /// <summary>
-        /// Поиск для проверки сущностей
+        /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public override Expression<Func<ClothesEntity, bool>> ValidateByDomains(IReadOnlyCollection<IClothesDomain> domains) =>
-            clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Id);
+        public override IQueryable<ClothesEntity> ValidateFilter(IQueryable<ClothesEntity> entities, IReadOnlyCollection<IClothesDomain> domains) =>
+           entities.Where(IdsPredicate(domains.Select(entity => entity.Id)));
     }
 }

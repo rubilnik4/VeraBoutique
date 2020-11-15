@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
@@ -40,10 +43,34 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
             clothesType => ids.Contains(clothesType.Name);
 
         /// <summary>
-        /// Поиск для проверки сущностей
+        /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public override Expression<Func<ClothesTypeEntity, bool>> ValidateByDomains(IReadOnlyCollection<IClothesTypeDomain> domains) =>
-            clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Name) &&
-                           domains.Select(domain => domain.Category.Name).Contains(clothesType.Name);
+        public override IQueryable<ClothesTypeEntity> ValidateFilter(IQueryable<ClothesTypeEntity> entities, IClothesTypeDomain domain) =>
+           entities.Where(clothesType => domain.Id == clothesType.Name &&
+                                         domain.Category.Name == clothesType.CategoryName).
+           Map(clothesTypes => ClothesTypeGenderValidate(clothesTypes, 
+                                                         new List<IClothesTypeDomain> { domain }));
+
+        /// <summary>
+        /// Функция выбора сущностей для проверки наличия
+        /// </summary>
+        public override IQueryable<ClothesTypeEntity> ValidateFilter(IQueryable<ClothesTypeEntity> entities,
+                                                                     IReadOnlyCollection<IClothesTypeDomain> domains) =>
+           entities.
+           Where(clothesType => domains.Select(domain => domain.Id).Contains(clothesType.Name) &&
+                                domains.Select(domain => domain.Category.Name).Contains(clothesType.CategoryName)).
+           Map(clothesTypes => ClothesTypeGenderValidate(clothesTypes, domains));
+
+        /// <summary>
+        /// Проверить наличие связующей сущности вида одежды и типа пола
+        /// </summary>
+        private static IQueryable<ClothesTypeEntity> ClothesTypeGenderValidate(IQueryable<ClothesTypeEntity> entities,
+                                                                               IReadOnlyCollection<IClothesTypeDomain> domains) =>
+            entities.
+            Include(clothesType => clothesType.ClothesTypeGenderComposites).
+            Where(entity => entity.ClothesTypeGenderComposites.
+                            Select(clothesTypeGender => clothesTypeGender.GenderType).
+                            SequenceEqual(domains.First(domain => domain.Id == entity.Id).
+                                          Genders.Select(gender => gender.GenderType)));
     }
 }
