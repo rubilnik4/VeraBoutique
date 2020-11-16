@@ -356,6 +356,110 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         }
 
         /// <summary>
+        /// Проверить модель в базе. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task Validate_Value_Ok()
+        {
+            var testDomain = TestData.TestResultDomain;
+            var testDomains = TestData.TestResultDomains;
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
+            var actionResult = await testController.Validate(testTransfer);
+
+            Assert.IsType<NoContentResult>(actionResult);
+            var noContentResult = (NoContentResult)actionResult;
+            Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Проверить модель в базе. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task Validate_Value_ErrorDatabase()
+        {
+            var initialError = ErrorData.DatabaseError;
+            var testDomain = new ResultValue<ITestDomain>(initialError);
+            var testDomains = TestData.TestResultDomains;
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
+            var actionResult = await testController.Validate(testTransfer);
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Проверить модель в базе. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task Validate_NotFound()
+        {
+            var testDomains = TestData.TestResultDomains;
+            var testPost = testDomains.Value.Last();
+            var testService = GetTestDatabaseTableValidateValue(testDomains, ValidateValueFoundFunc());
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testPost);
+            var actionResult = await testController.Validate(testTransfer);
+
+            Assert.IsType<NotFoundResult>(actionResult);
+            var notFoundResult = (NotFoundResult)actionResult;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Проверить модели в базе. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task Validate_Collection_Ok()
+        {
+            var testDomains = TestData.TestResultDomains;
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfers = testTransferConverter.ToTransfers(testDomains.Value).ToList();
+            var actionResult = await testController.Validate(testTransfers);
+
+            Assert.IsType<NoContentResult>(actionResult);
+            var noContentResult = (NoContentResult)actionResult;
+            Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Проверить модели в базе. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task Validate_Collection_ErrorDatabase()
+        {
+            var initialError = ErrorData.DatabaseError;
+            var testDomains = new ResultCollection<ITestDomain>(initialError);
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfers = testTransferConverter.ToTransfers(testDomains.Value).ToList();
+            var actionResult = await testController.Validate(testTransfers);
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
         /// Конвертер в трансферную модель
         /// </summary>
         private static ITestTransferConverter TestTransferConverter => new TestTransferConverter();

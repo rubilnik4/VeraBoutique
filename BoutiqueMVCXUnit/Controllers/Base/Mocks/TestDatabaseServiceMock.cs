@@ -22,7 +22,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains) =>
             GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
                                  PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains),
-                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains));
+                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains),
+                                 ValidateValueOkFunc(testDomains),ValidateCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
@@ -31,7 +32,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                          Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc) =>
             GetTestDatabaseTable(testDomains, getByIdFunc,
                                  PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains), 
-                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains));
+                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains),
+                                 ValidateValueOkFunc(testDomains), ValidateCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
@@ -40,7 +42,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                                Func<ITestDomain, IResultValue<TestEnum>> postValueFunc) =>
             GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
                                  postValueFunc, PostCollectionOkFunc(testDomains),
-                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains));
+                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains),
+                                 ValidateValueOkFunc(testDomains), ValidateCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
@@ -49,7 +52,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                          Func<IResultError> putFunc) =>
             GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
                                  PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains), 
-                                 putFunc, DeleteOkFunc(testDomains));
+                                 putFunc, DeleteOkFunc(testDomains),
+                                 ValidateValueOkFunc(testDomains), ValidateCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
@@ -58,30 +62,49 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                             Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
             GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
                                  PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains),
-                                 PutOkFunc(testDomains), deleteFunc);
+                                 PutOkFunc(testDomains), deleteFunc,
+                                 ValidateValueOkFunc(testDomains),ValidateCollectionOkFunc(testDomains));
+
+
+        /// <summary>
+        /// Получить тестовый сервис работы с базой данных в стандартном исполнении
+        /// </summary>
+        public static Mock<ITestDatabaseService> GetTestDatabaseTableValidateValue(IResultCollection<ITestDomain> testDomains,
+                                                                                   Func<ITestDomain, IResultError> validValueFunc) =>
+            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
+                                 PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains),
+                                 PutOkFunc(testDomains), DeleteOkFunc(testDomains),
+                                 validValueFunc, ValidateCollectionOkFunc(testDomains));
+
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc,
-                                                                      Func<ITestDomain, IResultValue<TestEnum>> postFunc,
+                                                                      Func<ITestDomain, IResultValue<TestEnum>> postValueFunc,
                                                                       Func<IResultCollection<TestEnum>> postCollectionFunc,
                                                                       Func<IResultError> putFunc,
-                                                                      Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
+                                                                      Func<TestEnum, IResultValue<ITestDomain>> deleteFunc,
+                                                                      Func<ITestDomain, IResultError> validValueFunc,
+                                                                      Func<IResultError> validCollectionFunc) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Get()).
                                             ReturnsAsync(testDomains)).
             Void(serviceMock => serviceMock.Setup(service => service.Get(It.IsAny<TestEnum>())).
                                             ReturnsAsync(getByIdFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<ITestDomain>())).
-                                            ReturnsAsync(postFunc)).
+                                            ReturnsAsync(postValueFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
                                             ReturnsAsync(postCollectionFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Put(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(putFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).
-                                            ReturnsAsync(deleteFunc));
+                                            ReturnsAsync(deleteFunc)).
+            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<ITestDomain>())).
+                                            ReturnsAsync(validValueFunc)).
+            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+                                            ReturnsAsync(validCollectionFunc));
 
         /// <summary>
         /// Функция поиска по идентификатору
@@ -136,5 +159,23 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> DeleteNotFoundFunc() =>
             id => new ResultValue<ITestDomain>(ErrorData.NotFoundError);
+
+        /// <summary>
+        /// Функция проверки значения
+        /// </summary>
+        public static Func<ITestDomain, IResultError> ValidateValueOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            domain => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, domain.Id).Id);
+
+        /// <summary>
+        /// Функция проверки значения. Элемент не найден
+        /// </summary>
+        public static Func<ITestDomain, IResultError> ValidateValueFoundFunc() =>
+            _ => new ResultValue<TestEnum>(ErrorData.NotFoundError);
+
+        /// <summary>
+        /// Функция проверки коллекции
+        /// </summary>
+        public static Func<IResultError> ValidateCollectionOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            () => testDomains.ResultCollectionOk(TestData.GetTestIds);
     }
 }
