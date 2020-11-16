@@ -40,13 +40,36 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public override IQueryable<ClothesEntity> ValidateFilter(IQueryable<ClothesEntity> entities, IClothesDomain domain) =>
-           entities.Where(IdPredicate(domain.Id));
+        protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
+                                                                               IClothesDomain domain) =>
+           clothes => domain.Id == clothes.Id &&
+                      domain.Gender.GenderType == clothes.GenderType &&
+                      domain.ClothesTypeShort.Name == clothes.ClothesTypeName;
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
+        /// Функция для проверки наличия
         /// </summary>
-        public override IQueryable<ClothesEntity> ValidateFilter(IQueryable<ClothesEntity> entities, IReadOnlyCollection<IClothesDomain> domains) =>
-           entities.Where(IdsPredicate(domains.Select(entity => entity.Id)));
+        protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
+                                                                               IReadOnlyCollection<IClothesDomain> domains) =>
+           clothes => domains.Select(domain => domain.Id).Contains(clothes.Id) &&
+                      domains.Select(domain => domain.Gender.GenderType).Contains(clothes.GenderType) &&
+                      domains.Select(domain => domain.ClothesTypeShort.Name).Contains(clothes.ClothesTypeName);
+
+        /// <summary>
+        /// Функция проверки наличия вложенных сущностей
+        /// </summary>
+        protected override IQueryable<ClothesEntity> ValidateInclude(IQueryable<ClothesEntity> entities,
+                                                                     IReadOnlyCollection<IClothesDomain> domains) =>
+            entities.
+            Include(clothes => clothes.ClothesColorComposites).
+            Include(clothes => clothes.ClothesSizeGroupComposites).
+            Where(clothes => clothes.ClothesColorComposites.
+                             Select(clothesColor => clothesColor.ColorName).
+                             SequenceEqual(domains.First(domain => domain.Id == clothes.Id).
+                                           Colors.Select(color => color.Name)) &&
+                             clothes.ClothesSizeGroupComposites.
+                             Select(clothesSizeGroup => new { clothesSizeGroup.ClothesSizeType, clothesSizeGroup.SizeNormalize }).
+                             SequenceEqual(domains.First(domain => domain.Id == clothes.Id).
+                                           SizeGroups.Select(sizeGroup => new { sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize })));
     }
 }

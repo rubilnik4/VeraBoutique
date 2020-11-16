@@ -7,24 +7,36 @@ namespace BoutiqueMVC.Models.Implementations.Controller
     /// <summary>
     /// Информация о создаваемом объекте cо значением
     /// </summary>
-    public class CreatedActionValue<TValue> : CreatedActionBase
+    public class CreatedActionValue<TId, TValue> : CreatedActionBase
+        where TId : notnull
         where TValue : notnull
     {
-        public CreatedActionValue(string actionGetName, string controllerName, TValue value)
+        public CreatedActionValue(string actionGetName, string controllerName,
+                                  (TId, TValue) idValue)
             : base(actionGetName, controllerName)
         {
-            Value = value;
+            IdValue = idValue;
         }
 
         /// <summary>
-        /// Записанные значения
+        /// Записанные значения с идентификатором
         /// </summary>
-        public TValue Value { get; }
+        public (TId Id, TValue Value) IdValue { get; }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public TId Id => IdValue.Id;
+
+        /// <summary>
+        /// Значение
+        /// </summary>
+        public TValue Value => IdValue.Value;
 
         /// <summary>
         /// Преобразовать в ответ контроллера о создании объекта
         /// </summary>
-        public CreatedAtActionResult ToCreatedAtActionResult<TId>(TId idResult) =>
-            new CreatedAtActionResult(ActionGetName, ControllerName, new { id = idResult }, Value);
+        public CreatedAtActionResult ToCreatedAtActionResult() =>
+            new CreatedAtActionResult(ActionGetName, ControllerName, new { id = IdValue.Id }, IdValue.Value);
     }
 }

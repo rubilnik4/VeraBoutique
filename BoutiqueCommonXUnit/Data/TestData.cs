@@ -32,6 +32,12 @@ namespace BoutiqueCommonXUnit.Data
             testDomains.Select(test => test.Id).ToList().AsReadOnly();
 
         /// <summary>
+        /// Тестовая сущность в результирующем значении
+        /// </summary>
+        public static IResultValue<ITestDomain> TestResultDomain =>
+            new ResultValue<ITestDomain>(GetTestDomains().First());
+
+        /// <summary>
         /// Тестовые сущности в результирующей коллекции
         /// </summary>
         public static IResultCollection<ITestDomain> TestResultDomains =>

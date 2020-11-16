@@ -11,6 +11,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,14 +60,35 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public virtual IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, TDomain domain) =>
-           entities.Where(IdPredicate(domain.Id));
+        public IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, TDomain domain) =>
+           entities.Where(ValidateQuery(entities, domain)).
+           Map(entitiesQuery => ValidateInclude(entitiesQuery, new List<TDomain> { domain }));
 
         /// <summary>
         /// Функция выбора сущностей для проверки наличия
         /// </summary>
-        public virtual IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains) =>
-           entities.Where(IdsPredicate(domains.Select(entity => entity.Id)));
+        public IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains) =>
+           entities.Where(ValidateQuery(entities, domains)).
+           Map(entitiesQuery => ValidateInclude(entitiesQuery, domains));
+
+        /// <summary>
+        /// Функция для проверки наличия
+        /// </summary>
+        protected virtual Expression<Func<TEntity, bool>>  ValidateQuery(IQueryable<TEntity> entities, TDomain domain) =>
+            IdPredicate(domain.Id);
+
+        /// <summary>
+        /// Функция для проверки наличия
+        /// </summary>
+        protected virtual Expression<Func<TEntity, bool>> ValidateQuery(IQueryable<TEntity> entities,
+                                                                        IReadOnlyCollection<TDomain> domains) =>
+           IdsPredicate(domains.Select(domain => domain.Id));
+
+        /// <summary>
+        /// Функция проверки наличия вложенных сущностей
+        /// </summary>
+        protected virtual IQueryable<TEntity> ValidateInclude(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains) =>
+            entities;
 
         /// <summary>
         /// Ошибка доступа к таблице базы данных

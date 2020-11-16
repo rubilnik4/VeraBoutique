@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -85,8 +87,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
             await _transferConverter.FromTransfer(transfer).
-            MapAsync(domain => _databaseDatabaseService.Post(domain).
-                                ToCreateActionResultTaskAsync(GetCreateAction(transfer)));
+            MapAsync(domain => _databaseDatabaseService.Post(domain)).
+            ResultValueOkTaskAsync(id => GetCreateAction(id, transfer)).
+            ToCreateActionResultTaskAsync();
 
         /// <summary>
         /// Записать данные
@@ -97,8 +100,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).
-            MapAsync(domains => _databaseDatabaseService.Post(domains).
-                                ToCreateActionResultTaskAsync(GetCreateAction(transfers)));
+            MapAsync(domains => _databaseDatabaseService.Post(domains)).
+            ResultCollectionOkToValueTaskAsync(ids => GetCreateAction(ids, transfers)).
+            ToCreateActionResultTaskAsync();
 
         /// <summary>
         /// Заменить данные по идентификатору
@@ -151,13 +155,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
-        private CreatedActionValue<TTransfer> GetCreateAction(TTransfer transfer) =>
-            new CreatedActionValue<TTransfer>(nameof(Get), GetType().Name, transfer);
+        private CreatedActionValue<TId, TTransfer> GetCreateAction(TId id, TTransfer transfer) =>
+            new CreatedActionValue<TId, TTransfer>(nameof(Get), GetType().Name, (id, transfer));
 
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
-        private CreatedActionCollection<TTransfer> GetCreateAction(IEnumerable<TTransfer> transfers) =>
-            new CreatedActionCollection<TTransfer>(nameof(Get), GetType().Name, transfers);
+        private CreatedActionCollection<TId, TTransfer> GetCreateAction(IEnumerable<TId> ids,
+                                                                        IEnumerable<TTransfer> transfers) =>
+            new CreatedActionCollection<TId, TTransfer>(nameof(Get), GetType().Name, ids.Zip(transfers));
     }
 }

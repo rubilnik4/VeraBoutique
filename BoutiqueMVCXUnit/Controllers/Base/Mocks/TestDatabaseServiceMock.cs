@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
@@ -19,39 +20,44 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains) =>
-            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains), PostOkFunc(testDomains), 
+            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
+                                 PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains),
                                  PutOkFunc(testDomains), DeleteOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTableGet(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc) =>
-            GetTestDatabaseTable(testDomains, getByIdFunc, PostOkFunc(testDomains), 
+                                                                         Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc) =>
+            GetTestDatabaseTable(testDomains, getByIdFunc,
+                                 PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains), 
                                  PutOkFunc(testDomains), DeleteOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
         /// </summary>
-        public static Mock<ITestDatabaseService> GetTestDatabaseTablePost(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<IResultCollection<TestEnum>> postFunc) =>
-            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains), postFunc, 
+        public static Mock<ITestDatabaseService> GetTestDatabaseTablePostValue(IResultCollection<ITestDomain> testDomains,
+                                                                               Func<ITestDomain, IResultValue<TestEnum>> postValueFunc) =>
+            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
+                                 postValueFunc, PostCollectionOkFunc(testDomains),
                                  PutOkFunc(testDomains), DeleteOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTablePut(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<IResultError> putFunc) =>
-            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains), PostOkFunc(testDomains), putFunc, 
-                                 DeleteOkFunc(testDomains));
+                                                                         Func<IResultError> putFunc) =>
+            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
+                                 PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains), 
+                                 putFunc, DeleteOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных в стандартном исполнении
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTableDelete(IResultCollection<ITestDomain> testDomains,
                                                                             Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
-            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains), PostOkFunc(testDomains),
+            GetTestDatabaseTable(testDomains, GetByIdOkFunc(testDomains),
+                                 PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains),
                                  PutOkFunc(testDomains), deleteFunc);
 
         /// <summary>
@@ -59,7 +65,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc,
-                                                                      Func<IResultCollection<TestEnum>> postFunc,
+                                                                      Func<ITestDomain, IResultValue<TestEnum>> postFunc,
+                                                                      Func<IResultCollection<TestEnum>> postCollectionFunc,
                                                                       Func<IResultError> putFunc,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
             new Mock<ITestDatabaseService>().
@@ -67,8 +74,10 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                             ReturnsAsync(testDomains)).
             Void(serviceMock => serviceMock.Setup(service => service.Get(It.IsAny<TestEnum>())).
                                             ReturnsAsync(getByIdFunc)).
-            Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+            Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(postFunc)).
+            Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+                                            ReturnsAsync(postCollectionFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Put(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(putFunc)).
             Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).
@@ -81,15 +90,27 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
             id => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, id));
 
         /// <summary>
-        /// Функция поиска по идентификатору.Элемент не найден
+        /// Функция поиска по идентификатору. Элемент не найден
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> GetByIdNotFoundFunc() =>
             id =>  new ResultValue<ITestDomain>(ErrorData.NotFoundError);
 
         /// <summary>
-        /// Функция записи
+        /// Функция записи значения
         /// </summary>
-        public static Func<IResultCollection<TestEnum>> PostOkFunc(IResultCollection<ITestDomain> testDomains) =>
+        public static Func<ITestDomain, IResultValue<TestEnum>> PostValueOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            domain => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, domain.Id).Id);
+
+        /// <summary>
+        /// Функция записи значения. Элемент не найден
+        /// </summary>
+        public static Func<ITestDomain, IResultValue<TestEnum>> PostValueFoundFunc() =>
+            _ => new ResultValue<TestEnum>(ErrorData.NotFoundError);
+
+        /// <summary>
+        /// Функция записи коллекции
+        /// </summary>
+        public static Func<IResultCollection<TestEnum>> PostCollectionOkFunc(IResultCollection<ITestDomain> testDomains) =>
             () => testDomains.ResultCollectionOk(TestData.GetTestIds);
 
         /// <summary>

@@ -120,10 +120,77 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         }
 
         /// <summary>
+        /// Записать модель в базу. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task Post_Value_Ok()
+        {
+            var testDomain = TestData.TestResultDomain;
+            var testDomains = TestData.TestResultDomains;
+            var testDomainsId = testDomain.Value.Id;
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
+            var actionResult = await testController.Post(testTransfer);
+
+            Assert.IsType<CreatedAtActionResult>(actionResult.Result);
+            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
+            Assert.IsAssignableFrom<TestEnum>(createdAtActionResult.RouteValues.Values.First());
+            var testId = (TestEnum)createdAtActionResult.RouteValues.Values.First();
+            Assert.True(testDomainsId.Equals(testId));
+        }
+
+        /// <summary>
+        /// Записать модель в базу. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task Post_Value_ErrorDatabase()
+        {
+            var initialError = ErrorData.DatabaseError;
+            var testDomain = new ResultValue<ITestDomain>(initialError);
+            var testDomains = TestData.TestResultDomains;
+            var testService = GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
+            var actionResult = await testController.Post(testTransfer);
+
+            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Изменить модель в базе. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task PostValue_NotFound()
+        {
+            var testDomains = TestData.TestResultDomains;
+            var testPost = testDomains.Value.Last();
+            var testService = GetTestDatabaseTablePostValue(testDomains, PostValueFoundFunc());
+            var testTransferConverter = TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var testTransfer = testTransferConverter.ToTransfer(testPost);
+            var actionResult = await testController.Post(testTransfer);
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+            var notFoundResult = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+        }
+
+        /// <summary>
         /// Записать модели в базу. Корректный вариант
         /// </summary>
         [Fact]
-        public async Task Post_Ok()
+        public async Task Post_Collection_Ok()
         {
             var testDomains = TestData.TestResultDomains;
             var testDomainsIds = TestData.GetTestIds(testDomains.Value);
@@ -146,7 +213,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         /// Записать модели в базу. Ошибка базы данных
         /// </summary>
         [Fact]
-        public async Task Post_ErrorDatabase()
+        public async Task Post_Collection_ErrorDatabase()
         {
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
@@ -215,7 +282,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         {
             var testDomains = TestData.TestResultDomains;
             var testPut = testDomains.Value.Last();
-            var testPutId = testPut.Id;
             var testService = GetTestDatabaseTablePut(testDomains, PutNotFoundFunc());
             var testTransferConverter = TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);

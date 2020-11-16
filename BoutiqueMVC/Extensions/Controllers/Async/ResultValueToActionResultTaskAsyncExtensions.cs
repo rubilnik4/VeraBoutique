@@ -39,22 +39,20 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта асинхронно
         /// </summary>
-        public static async Task<ActionResult<TId>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultValue<TId>> @this,
-                                                                                                  CreatedActionValue<TTransfer> createdActionValue)
+        public static async Task<ActionResult<TId>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultValue<CreatedActionValue<TId, TTransfer>>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult(createdActionValue));
+            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult());
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта асинхронно
         /// </summary>
-        public static async Task<ActionResult<IReadOnlyCollection<TId>>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultCollection<TId>> @this,
-                                                                                                                       CreatedActionCollection<TTransfer> createdActionCollection)
+        public static async Task<ActionResult<IReadOnlyCollection<TId>>> ToCreateActionResultTaskAsync<TId, TTransfer>(this Task<IResultValue<CreatedActionCollection<TId, TTransfer>>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             await @this.
-            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult(createdActionCollection));
+            MapTaskAsync(thisAwaited => thisAwaited.ToCreateActionResult());
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о изменении объекта асинхронно

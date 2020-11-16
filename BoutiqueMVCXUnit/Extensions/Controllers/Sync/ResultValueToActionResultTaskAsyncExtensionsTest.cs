@@ -119,40 +119,66 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
         /// </summary>
         [Fact]
-        public void ToPostActionResult_Created()
+        public void ToPostActionResultValue_Created()
         {
-            var initialTransfer = TransferData.GetTestTransfers();
-            var ids = TransferData.GetTestIds(initialTransfer);
-            var idsResult = new ResultCollection<TestEnum>(ids);
-            var createdActionCollection = new CreatedActionCollection<ITestTransfer>("action", "controller", initialTransfer);
+            var createdActionValue = CreateActionData.CreatedActionValue;
+            var createdResult = new ResultValue<CreatedActionValue<TestEnum, ITestTransfer>>(createdActionValue);
 
-            var actionResult = idsResult.ToCreateActionResult(createdActionCollection);
-
-            Assert.IsType<CreatedAtActionResult>(actionResult.Result);
+            var actionResult = createdResult.ToCreateActionResult();
             var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
+
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
-            Assert.IsAssignableFrom<IEnumerable<ITestTransfer>>(createdAtActionResult.Value);
-            Assert.True(initialTransfer.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
-            Assert.IsAssignableFrom<IEnumerable<TestEnum>>(createdAtActionResult.RouteValues.Values.First());
-            Assert.True(ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+            Assert.True(createdActionValue.Value.Equals((ITestTransfer)createdAtActionResult.Value));
+            Assert.True(createdActionValue.Id.Equals((TestEnum)createdAtActionResult.RouteValues.Values.First()));
         }
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть объект с ошибкой
         /// </summary>
         [Fact]
-        public void ToPostActionResult_BadRequest()
+        public void ToPostActionResultValue_BadRequest()
         {
-            var initialTransfer = TransferData.GetTestTransfers();
             var initialError = ErrorData.ErrorTest;
-            var idsResult = new ResultCollection<TestEnum>(initialError);
-            var createdActionCollection = new CreatedActionCollection<ITestTransfer>("action", "controller", initialTransfer);
+            var createdResult = new ResultValue<CreatedActionValue<TestEnum, ITestTransfer>>(initialError);
 
-            var actionResult = idsResult.ToCreateActionResult(createdActionCollection);
-
-            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var actionResult = createdResult.ToCreateActionResult();
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
+
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
+        /// </summary>
+        [Fact]
+        public void ToPostActionResultCollection_Created()
+        {
+            var createdActionCollection = CreateActionData.CreatedActionCollection;
+            var createdResult = new ResultValue<CreatedActionCollection<TestEnum, ITestTransfer>>(createdActionCollection);
+
+            var actionResult = createdResult.ToCreateActionResult();
+            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
+
+            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
+            Assert.True(createdActionCollection.Values.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
+            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToPostActionResultCollection_BadRequest()
+        {
+            var initialError = ErrorData.ErrorTest;
+            var createdResult = new ResultValue<CreatedActionCollection<TestEnum, ITestTransfer>>(initialError);
+
+            var actionResult = createdResult.ToCreateActionResult();
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
         }

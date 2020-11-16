@@ -7,6 +7,7 @@ using BoutiqueDTO.Data.Models.Interfaces;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Controller;
 using BoutiqueMVCXUnit.Data;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -120,40 +121,66 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Async
         /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно. Вернуть корректный ответ
         /// </summary>
         [Fact]
-        public async Task ToPostActionResultAsync_Created()
+        public async Task ToPostActionResultValueAsync_Created()
         {
-            var initialTransfer = TransferData.GetTestTransfers();
-            var ids = TransferData.GetTestIds(initialTransfer);
-            var idsResult = ResultCollectionFactory.CreateTaskResultCollection(ids);
-            var createdActionCollection = new CreatedActionCollection<ITestTransfer>("action", "controller", initialTransfer);
+            var createdActionValue = CreateActionData.CreatedActionValue;
+            var createdResult = ResultValueFactory.CreateTaskResultValue(createdActionValue);
 
-            var actionResult = await idsResult.ToCreateActionResultTaskAsync(createdActionCollection);
-
-            Assert.IsType<CreatedAtActionResult>(actionResult.Result);
+            var actionResult = await createdResult.ToCreateActionResultTaskAsync();
             var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
+
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
-            Assert.IsAssignableFrom<IEnumerable<ITestTransfer>>(createdAtActionResult.Value);
-            Assert.True(initialTransfer.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
-            Assert.IsAssignableFrom<IEnumerable<TestEnum>>(createdAtActionResult.RouteValues.Values.First());
-            Assert.True(ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+            Assert.True(createdActionValue.Value.Equals((ITestTransfer)createdAtActionResult.Value));
+            Assert.True(createdActionValue.Id.Equals((TestEnum)createdAtActionResult.RouteValues.Values.First()));
         }
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно. Вернуть объект с ошибкой
         /// </summary>
         [Fact]
-        public async Task ToPostActionResultAsync_BadRequest()
+        public async Task ToPostActionResultValueAsync_BadRequest()
         {
-            var initialTransfer = TransferData.GetTestTransfers();
             var initialError = ErrorData.ErrorTest;
-            var idsResult = ResultCollectionFactory.CreateTaskResultCollectionError<TestEnum>(initialError);
-            var createdActionCollection = new CreatedActionCollection<ITestTransfer>("action", "controller", initialTransfer);
+            var createdResult = ResultValueFactory.CreateTaskResultValueError<CreatedActionValue<TestEnum, ITestTransfer>>(initialError);
 
-            var actionResult = await idsResult.ToCreateActionResultTaskAsync(createdActionCollection);
-
-            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var actionResult = await createdResult.ToCreateActionResultTaskAsync();
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
+            
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно. Вернуть корректный ответ
+        /// </summary>
+        [Fact]
+        public async Task ToPostActionResultCollectionAsync_Created()
+        {
+            var createdActionCollection = CreateActionData.CreatedActionCollection;
+            var createdResult = ResultValueFactory.CreateTaskResultValue(createdActionCollection);
+
+            var actionResult = await createdResult.ToCreateActionResultTaskAsync();
+            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
+
+            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
+            Assert.True(createdActionCollection.Values.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
+            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ со значением в post ответ контроллера асинхронно. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public async Task ToPostActionResultCollectionAsync_BadRequest()
+        {
+            var initialError = ErrorData.ErrorTest;
+            var createdResult = ResultValueFactory.CreateTaskResultValueError<CreatedActionCollection<TestEnum, ITestTransfer>>(initialError);
+
+            var actionResult = await createdResult.ToCreateActionResultTaskAsync();
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+            
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
         }

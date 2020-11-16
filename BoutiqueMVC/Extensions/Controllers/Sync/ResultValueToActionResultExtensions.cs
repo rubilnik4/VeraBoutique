@@ -38,23 +38,21 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта
         /// </summary>
-        public static ActionResult<TId> ToCreateActionResult<TId, TTransfer>(this IResultValue<TId> @this,
-                                                                             CreatedActionValue<TTransfer> createdActionValue)
+        public static ActionResult<TId> ToCreateActionResult<TId, TTransfer>(this IResultValue<CreatedActionValue<TId, TTransfer>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             @this.OkStatus
-                ? createdActionValue.ToCreatedAtActionResult(@this.Value)
+                ? @this.Value.ToCreatedAtActionResult()
                 : GetBadRequestByErrors<TId>(@this.Errors);
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в ответ контроллера о создании объекта
         /// </summary>
-        public static ActionResult<IReadOnlyCollection<TId>> ToCreateActionResult<TId, TTransfer>(this IResultCollection<TId> @this,
-                                                                                                  CreatedActionCollection<TTransfer> createdActionCollection)
+        public static ActionResult<IReadOnlyCollection<TId>> ToCreateActionResult<TId, TTransfer>(this IResultValue<CreatedActionCollection<TId, TTransfer>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             @this.OkStatus
-                ? createdActionCollection.ToCreatedAtActionResult(@this.Value)
+                ? @this.Value.ToCreatedAtActionResult()
                 : GetBadRequestByErrors<IReadOnlyCollection<TId>>(@this.Errors);
 
         /// <summary>
