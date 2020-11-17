@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
@@ -28,7 +29,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Ok()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupDomain = new ResultValue<ISizeGroupDomain>(sizeGroupInitial);
@@ -49,7 +50,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetByGender_ErrorDatabase()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var initialError = ErrorData.DatabaseError;
@@ -73,7 +74,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetByGender_NotFound()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var initialError = ErrorData.NotFoundError;

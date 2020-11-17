@@ -1,20 +1,14 @@
 ﻿using System.Linq;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommonXUnit.Data;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
-using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
 using Xunit;
 
-namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
+namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
 {
     /// <summary>
     /// Преобразования модели одежды в модель базы данных. Тесты

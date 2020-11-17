@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 
-namespace BoutiqueCommonXUnit.Data
+namespace BoutiqueCommonXUnit.Data.Clothes
 {
     /// <summary>
     /// Данные цвета одежды
@@ -12,7 +12,7 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить категории одежды
         /// </summary>
-        public static List<IColorClothesDomain> GetColorClothesDomain() =>
+        public static List<IColorClothesDomain> ColorClothesDomain =>
             new List<IColorClothesDomain>()
             {
                 new ColorClothesDomain("Черный"),

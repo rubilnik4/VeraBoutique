@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
@@ -42,7 +43,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Ok()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupEntities = SizeGroupEntitiesData.SizeGroupEntities;
@@ -62,7 +63,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Exception()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupException());
@@ -81,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_NotFound()
         {
-            var sizeGroupInitial = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupNotFound());

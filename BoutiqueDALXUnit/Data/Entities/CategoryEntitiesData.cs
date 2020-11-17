@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 
@@ -15,7 +16,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности категорий одежды
         /// </summary>
         public static List<CategoryEntity> CategoryEntities =>
-            CategoryData.GetCategoryDomain().
+            CategoryData.CategoryDomain.
                          Select(categoryDomain => new CategoryEntity(categoryDomain.Name)).
                          ToList();
 

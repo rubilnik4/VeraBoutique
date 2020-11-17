@@ -15,6 +15,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
     public interface IDatabaseTable<TId, in TDomain, TEntity>: 
         IDatabaseTableCrud<TId, TEntity>, IDatabaseTableFind<TId, TEntity>,
         IDatabaseTableSelect<TId, TEntity>, IDatabaseTableToList<TId, TEntity>,
+        IDatabaseTableValidate<TId, TDomain, TEntity>,
         IDatabaseTableWhere<TId, TEntity> 
         where TDomain: IDomainModel<TId>
         where TEntity : IEntityModel<TId>
@@ -39,14 +40,5 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// Поиск по параметрам
         /// </summary>
         Expression<Func<TEntity, bool>> IdsPredicate(IEnumerable<TId> ids);
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, TDomain domain);
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        IQueryable<TEntity> ValidateFilter(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains);
     }
 }

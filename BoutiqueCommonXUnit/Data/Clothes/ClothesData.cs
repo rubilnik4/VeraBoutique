@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 
-namespace BoutiqueCommonXUnit.Data
+namespace BoutiqueCommonXUnit.Data.Clothes
 {
     /// <summary>
     /// Данные одежды
@@ -33,13 +31,13 @@ namespace BoutiqueCommonXUnit.Data
                 new ClothesDomain(1, "Верхонки", 55.55m, null,"Верхонки батраческие",
                                              new GenderDomain(GenderType.Male, "Мужик"), 
                                              new ClothesTypeShortDomain("Перчатки", new CategoryDomain("Напалечники")),
-                                             ColorClothesData.GetColorClothesDomain(),
-                                             SizeGroupData.GetSizeGroupDomain()),
+                                             ColorClothesData.ColorClothesDomain,
+                                             SizeGroupData.SizeGroupDomain),
                 new ClothesDomain(2, "Варежки", 0.66m, null, "Варежки простолюдинные",
                                              new GenderDomain(GenderType.Female, "Женщина"),
                                              new ClothesTypeShortDomain("Перчатки", new CategoryDomain("Напалечники")),
-                                             ColorClothesData.GetColorClothesDomain(),
-                                             SizeGroupData.GetSizeGroupDomain()),
+                                             ColorClothesData.ColorClothesDomain,
+                                             SizeGroupData.SizeGroupDomain),
             };
     }
 }

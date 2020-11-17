@@ -2,6 +2,7 @@
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDALXUnit.Data;
 using Xunit;
@@ -19,7 +20,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var genderDomain = GenderData.GetGendersDomain().First(); 
+            var genderDomain = GenderData.GendersDomain.First(); 
             var genderEntityConverter = new GenderEntityConverter();
 
             var genderEntity = genderEntityConverter.ToEntity(genderDomain);

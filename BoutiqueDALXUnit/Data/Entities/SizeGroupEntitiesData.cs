@@ -3,6 +3,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 
@@ -17,7 +18,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности группы размеров
         /// </summary>
         public static List<SizeGroupEntity> SizeGroupEntities =>
-            SizeGroupData.GetSizeGroupDomain().
+            SizeGroupData.SizeGroupDomain.
             Select(GetSizeGroupEntity).
             ToList();
 

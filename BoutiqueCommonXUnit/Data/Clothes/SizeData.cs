@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 
-namespace BoutiqueCommonXUnit.Data
+namespace BoutiqueCommonXUnit.Data.Clothes
 {
     /// <summary>
     /// Данные размера одежды
@@ -15,7 +13,7 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить размеры одежды
         /// </summary>
-        public static List<ISizeDomain> GetSizeDomain() =>
+        public static List<ISizeDomain> SizeDomain =>
             new List<ISizeDomain>()
             {
                 new SizeDomain(SizeType.American, "M"),

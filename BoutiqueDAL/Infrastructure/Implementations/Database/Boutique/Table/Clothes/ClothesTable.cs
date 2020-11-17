@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
 {
+    /// <summary>
+    /// Таблица базы данных одежды
+    /// </summary>
     public class ClothesTable : EntityDatabaseTable<int, IClothesDomain, ClothesEntity>, IClothesTable
     {
         public ClothesTable(DbSet<ClothesEntity> clothesInformationSet)

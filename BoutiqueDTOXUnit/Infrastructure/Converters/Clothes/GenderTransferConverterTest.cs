@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTOXUnit.Data;
@@ -22,7 +23,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var gender = GenderData.GetGendersDomain().First();
+            var gender = GenderData.GendersDomain.First();
             var genderEntityConverter = new GenderTransferConverter();
 
             var genderTransfer = genderEntityConverter.ToTransfer(gender);

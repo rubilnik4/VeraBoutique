@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
@@ -18,7 +19,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности типа пола
         /// </summary>
         public static List<GenderEntity> GenderEntities =>
-            GenderData.GetGendersDomain().
+            GenderData.GendersDomain.
             Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
             ToList();
 

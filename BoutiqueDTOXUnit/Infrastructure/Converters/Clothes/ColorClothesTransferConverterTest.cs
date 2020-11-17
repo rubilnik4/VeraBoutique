@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var colors = ColorClothesData.GetColorClothesDomain().First();
+            var colors = ColorClothesData.ColorClothesDomain.First();
             var colorClothesTransferConverter = new ColorClothesTransferConverter();
 
             var colorsTransfer = colorClothesTransferConverter.ToTransfer(colors);

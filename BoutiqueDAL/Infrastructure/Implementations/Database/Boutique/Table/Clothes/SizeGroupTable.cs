@@ -47,9 +47,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
             entities.
             Include(sizeGroup => sizeGroup.SizeGroupComposites).
             Where(sizeGroup => sizeGroup.SizeGroupComposites.
-                            Select(sizeGroupComposite => new { sizeGroupComposite.SizeType, sizeGroupComposite.SizeName }).
-                            SequenceEqual(domains.First(domain => domain.ClothesSizeType == sizeGroup.ClothesSizeType &&
+                               Select(sizeGroupComposite => new { sizeGroupComposite.SizeType, sizeGroupComposite.SizeName }).
+                               SequenceEqual(domains.First(domain => domain.ClothesSizeType == sizeGroup.ClothesSizeType &&
                                                                   domain.SizeNormalize == sizeGroup.SizeNormalize).
-                                          Sizes.Select(size => new { size.SizeType, size.SizeName })));
+                                             Sizes.Select(size => new { size.SizeType, size.SizeName })));
     }
 }

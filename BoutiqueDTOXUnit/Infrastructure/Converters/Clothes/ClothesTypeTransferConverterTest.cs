@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using Xunit;
@@ -17,7 +18,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ClothesTypeShort_ToTransfer_FromTransfer()
         {
-            var clothesType = ClothesTypeData.GetClothesTypeShortDomain().First();
+            var clothesType = ClothesTypeData.ClothesTypeShortDomain.First();
             var clothesTypeShortTransferConverter = new ClothesTypeShortTransferConverter(new CategoryTransferConverter());
 
             var clothesTypeShortTransfer = clothesTypeShortTransferConverter.ToTransfer(clothesType);
@@ -32,7 +33,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ClothesType_ToTransfer_FromTransfer()
         {
-            var clothesType = ClothesTypeData.GetClothesTypeDomain().First();
+            var clothesType = ClothesTypeData.ClothesTypeDomain.First();
             var clothesTypeTransferConverter = new ClothesTypeTransferConverter(new CategoryTransferConverter(),
                                                                                 new GenderTransferConverter());
 

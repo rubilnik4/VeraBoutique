@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var sizeDomain = SizeData.GetSizeDomain().First();
+            var sizeDomain = SizeData.SizeDomain.First();
             var sizeEntityConverter = new SizeEntityConverter();
 
             var sizeEntity = sizeEntityConverter.ToEntity(sizeDomain);

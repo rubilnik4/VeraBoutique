@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -22,7 +23,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
             const int sizeNormalize = 72;
-            var sizes = SizeData.GetSizeDomain();
+            var sizes = SizeData.SizeDomain;
 
             var clothesSizeDomain = new SizeGroupDomain(clothesSizeType, sizeNormalize, sizes);
 
@@ -39,8 +40,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
             const int sizeNormalize = 72;
             
-            var clothesSizeDomainFirst = new SizeGroupDomain(clothesSizeType, sizeNormalize, SizeData.GetSizeDomain());
-            var clothesSizeDomainSecond = new SizeGroupDomain(clothesSizeType, sizeNormalize, SizeData.GetSizeDomain());
+            var clothesSizeDomainFirst = new SizeGroupDomain(clothesSizeType, sizeNormalize, SizeData.SizeDomain);
+            var clothesSizeDomainSecond = new SizeGroupDomain(clothesSizeType, sizeNormalize, SizeData.SizeDomain);
 
             Assert.True(clothesSizeDomainFirst.Equals(clothesSizeDomainSecond));
         }
@@ -53,7 +54,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const string expectedGroupName = "M (EU 72/74, RU 156/158)";
             const SizeType sizeType = SizeType.American;
-            var sizeGroupDomain = SizeGroupData.GetSizeGroupDomain().First();
+            var sizeGroupDomain = SizeGroupData.SizeGroupDomain.First();
 
             string sizeBaseGroupName = sizeGroupDomain.GetBaseGroupName(sizeType);
             string sizeGroupName = SizeNaming.GetGroupName(sizeType, sizeGroupDomain.Sizes);
