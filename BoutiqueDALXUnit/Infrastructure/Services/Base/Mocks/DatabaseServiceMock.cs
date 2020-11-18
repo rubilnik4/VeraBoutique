@@ -14,8 +14,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// <summary>
         /// Получить базовый сервис получения данных из базы
         /// </summary>
-        public static TestDatabaseService GetTestDatabaseService(ITestDatabase testDatabase, ITestDatabaseTable testDatabaseTable,
+        public static TestDatabaseService GetTestDatabaseService(ITestDatabase testDatabase, ITestTable testTable,
                                                                  ITestEntityConverter testConverter) =>
-            new TestDatabaseService(testDatabase, testDatabaseTable, testConverter);
+            new TestDatabaseService(testDatabase, testTable, testConverter);
     }
 }

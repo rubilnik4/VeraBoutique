@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Sync;
 using MockQueryable.Moq;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
 {
     /// <summary>
     /// Тестовые данные таблицы одежды

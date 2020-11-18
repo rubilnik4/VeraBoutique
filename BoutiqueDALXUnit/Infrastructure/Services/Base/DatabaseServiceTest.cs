@@ -110,7 +110,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Post_OK()
         {
-            var testDomains = TestData.GetTestDomains();
+            var testDomains = TestData.TestDomains;
             var testResultEntities = TestResultEntitiesEmpty;
             var testTableMock = GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
@@ -129,7 +129,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Post_ErrorDuplicate()
         {
-            var testDomains = TestData.GetTestDomains();
+            var testDomains = TestData.TestDomains;
             var testResultEntities = TestResultEntities;
             var testTableMock = GetTestDatabaseTable(testResultEntities, FindDuplicateFunc(testResultEntities));
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
@@ -148,7 +148,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Put_Ok()
         {
-            var testDomainPut = TestData.GetTestDomains().First();
+            var testDomainPut = TestData.TestDomains.First();
             testDomainPut.Name = "ChangeName";
 
             var testResultEntities = TestResultEntities;
@@ -168,7 +168,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Put_NotFound()
         {
-            var testDomainPut = TestData.GetTestDomains().First();
+            var testDomainPut = TestData.TestDomains.First();
             testDomainPut.Name = "ChangeName";
 
             var testResultEntities = TestResultEntitiesEmpty;
@@ -189,7 +189,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Delete_Ok()
         {
-            var testDelete = TestData.GetTestDomains().Last();
+            var testDelete = TestData.TestDomains.Last();
             var testResultEntities = TestResultEntities;
             var testTableMock = GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);
@@ -208,7 +208,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Delete_NotFound()
         {
-            var testDelete = TestData.GetTestDomains().Last();
+            var testDelete = TestData.TestDomains.Last();
             var testResultEntities = TestResultEntities;
             var testTableMock = GetTestDatabaseTable(testResultEntities, FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = GetTestDatabase(testTableMock.Object);

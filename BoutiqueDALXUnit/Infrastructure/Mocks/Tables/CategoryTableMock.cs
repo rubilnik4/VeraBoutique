@@ -7,7 +7,7 @@ using Functional.FunctionalExtensions.Sync;
 using MockQueryable.Moq;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
 {
     /// <summary>
     /// Тестовые данные таблицы категории одежды

@@ -14,6 +14,6 @@ namespace BoutiqueDALXUnit.Data.Database.Interfaces
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        ITestDatabaseTable TestTable { get; }
+        ITestTable TestTable { get; }
     }
 }

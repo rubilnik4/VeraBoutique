@@ -16,7 +16,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности для теста
         /// </summary>
         public static List<TestEntity> TestEntities =>
-            TestData.GetTestDomains().
+            TestData.TestDomains.
                      Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
                      ToList();
 

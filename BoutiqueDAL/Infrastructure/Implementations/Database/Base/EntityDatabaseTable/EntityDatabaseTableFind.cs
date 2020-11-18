@@ -8,6 +8,8 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
@@ -59,16 +61,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        public async Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
+        public async Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc, TId id)
             where TOut : notnull =>
-            await FindOutAsync(() => queryFunc(_databaseSet.AsNoTracking()).FirstOrDefaultAsync());
+            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync().
+                                                ToResultValueWhereTaskAsync(ids => ids.Count > 0,
+                                                                            _ => DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)).
+                                                ResultValueOkTaskAsync(ids => ids.First()), 
+                                          TableAccessError);
 
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
         public async Task<IResultCollection<TOut>> FindsExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
             where TOut : notnull =>
-            await FindsOutAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync());
+            await ResultCollectionTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync(), TableAccessError);
 
 
         /// <summary>
@@ -85,18 +91,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         private async Task<IResultCollection<TEntity>> FindEntityAsync(Func<Task<List<TEntity>>> getEntities) =>
             await ResultCollectionTryAsync(getEntities, TableAccessError);
 
-        /// <summary>
-        /// Найти запись в таблице по идентификаторам
-        /// </summary>
-        private async Task<IResultValue<TOut>> FindOutAsync<TOut>(Func<Task<TOut>> getEntity)
-            where TOut : notnull =>
-            await ResultValueTryAsync(getEntity, TableAccessError);
+        ///// <summary>
+        ///// Найти запись в таблице по идентификаторам
+        ///// </summary>
+        //private async Task<IResultValue<TOut>> FindOutAsync<TOut>(Func<Task<TOut>> getEntity)
+        //    where TOut : notnull =>
+        //    await ResultValueTryAsync(getEntity, TableAccessError);
 
-        /// <summary>
-        /// Найти записи в таблице по идентификаторам
-        /// </summary>
-        private async Task<IResultCollection<TOut>> FindsOutAsync<TOut>(Func<Task<List<TOut>>> getEntities)
-            where TOut : notnull =>
-            await ResultCollectionTryAsync(getEntities, TableAccessError);
+        ///// <summary>
+        ///// Найти записи в таблице по идентификаторам
+        ///// </summary>
+        //private async Task<IResultCollection<TOut>> FindsOutAsync<TOut>(Func<Task<List<TOut>>> getEntities)
+        //    where TOut : notnull =>
+        //    await ResultCollectionTryAsync(getEntities, TableAccessError);
     }
 }

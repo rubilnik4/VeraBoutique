@@ -5,7 +5,7 @@ namespace Functional.FunctionalExtensions.Sync
     /// <summary>
     /// Методы расширения для проверки условий
     /// </summary>
-    public static class WhereExtensions
+    public static class WhereTaskExtensions
     {
         /// <summary>
         /// Условие продолжающее действие

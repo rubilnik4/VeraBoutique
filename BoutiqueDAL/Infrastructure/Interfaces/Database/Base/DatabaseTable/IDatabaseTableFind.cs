@@ -43,7 +43,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
+        Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc, TId id)
             where TOut : notnull;
 
         /// <summary>

@@ -15,6 +15,26 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
     public static class ResultCollectionBindWhereTaskAsyncExtensions
     {
         /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе с коллекцией задачи-объекта
+        /// </summary>      
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionBindContinueTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> okFunc,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IEnumerable<IErrorResult>> badFunc) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionBindContinue(predicate, okFunc, badFunc));
+
+        /// <summary>
+        /// Выполнение условия или возвращение предыдущей ошибки в результирующем ответе с коллекцией задачи-объекта
+        /// </summary>      
+        public static async Task<IResultCollection<TValueOut>> ResultCollectionBindWhereTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, bool> predicate,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> okFunc,
+                                                                                                            Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> badFunc) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionBindWhere(predicate, okFunc, badFunc));
+
+        /// <summary>
         /// Выполнение положительного условия результирующего ответа или возвращение предыдущей ошибки в результирующем ответе с коллекцией для задачи-объекта
         /// </summary>   
         public static async Task<IResultCollection<TValueOut>> ResultCollectionBindOkTaskAsync<TValueIn, TValueOut>(this Task<IResultCollection<TValueIn>> @this,

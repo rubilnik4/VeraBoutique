@@ -20,7 +20,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Base
         [Fact]
         public void ToEntities_FromEntities()
         {
-            var testDomains = TestData.GetTestDomains();
+            var testDomains = TestData.TestDomains;
             var testEntityConverter = new TestEntityConverter();
 
             var testEntities = testEntityConverter.ToEntities(testDomains);

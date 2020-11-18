@@ -23,30 +23,30 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
-        public static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities) =>
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities) =>
             GetTestDatabaseTable(testEntities, FirstOkFunc(testEntities), FindOkFunc(testEntities));
 
         /// <summary>
         /// Получить тестовую таблицу в исполнении с функцией поиска элемента
         /// </summary>
-        public static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
                                                                      Func<TestEnum, IResultValue<TestEntity>> firstFunc) =>
             GetTestDatabaseTable(testEntities, firstFunc, FindOkFunc(testEntities));
 
         /// <summary>
         /// Получить тестовую таблицу в исполнении с функцией поиска элементов
         /// </summary>
-        public static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
                                                                     Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
             GetTestDatabaseTable(testEntities, FirstOkFunc(testEntities), findFunc);
 
         /// <summary>
         /// Получить тестовую таблицу
         /// </summary>
-        private static Mock<ITestDatabaseTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
+        private static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
                                                                      Func<TestEnum, IResultValue<TestEntity>> firstFunc,
                                                                      Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
-            new Mock<ITestDatabaseTable>().
+            new Mock<ITestTable>().
             Void(tableMock => tableMock.Setup(table => table.ToListAsync()).ReturnsAsync(testEntities)).
             Void(tableMock => tableMock.Setup(table => table.FindIdAsync(It.IsAny<TestEnum>())).
                                         ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => firstFunc(id)))).

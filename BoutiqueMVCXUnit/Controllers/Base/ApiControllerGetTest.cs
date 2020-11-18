@@ -80,7 +80,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task GetById_ErrorDatabase()
         {
-            var testGetId = TestData.GetTestDomains().Last().Id;
+            var testGetId = TestData.TestDomains().Last().Id;
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
@@ -102,7 +102,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task GetById_NotFound()
         {
-            var testGetId = TestData.GetTestDomains().Last().Id;
+            var testGetId = TestData.TestDomains().Last().Id;
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains, DatabaseServiceGetMock.GetByIdNotFoundFunc());

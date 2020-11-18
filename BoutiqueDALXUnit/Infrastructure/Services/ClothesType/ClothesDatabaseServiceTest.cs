@@ -23,7 +23,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
-using BoutiqueDALXUnit.Infrastructure.Services.ClothesType.Mocks;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using MockQueryable.Moq;

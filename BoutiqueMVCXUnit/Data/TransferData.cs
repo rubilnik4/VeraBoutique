@@ -13,7 +13,7 @@ namespace BoutiqueMVCXUnit.Data
         /// Получить трансферные модели для теста
         /// </summary>
         public static IList<ITestTransfer> GetTestTransfers() =>
-            TestData.GetTestDomains().
+            TestData.TestDomains().
             Select(testDomain => (ITestTransfer)new TestTransfer(testDomain.TestEnum, testDomain.Name)).
             ToList();
 

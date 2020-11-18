@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
@@ -39,23 +40,25 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить ошибку дублирования
         /// </summary>
         public async Task<IResultError> ValidateDuplicate(TDomain domain) =>
-             await _dataTable.FindExpressionAsync(ValidateDuplicateQuery(domain)).
-             ResultValueOkBindAsync(id => GetDuplicateErrorResult(id, _dataTable.GetType().Name));
+             await _dataTable.FindExpressionAsync(ValidateDuplicateQuery(domain), domain.Id).
+             ResultValueBindOkBadTaskAsync(
+                okFunc: id => GetDuplicateErrorResult(id, _dataTable.GetType().Name), 
+                badFunc: _ => new ResultValue<TId>(Enumerable.Empty<IErrorResult>()));
 
         /// <summary>
         /// Получить ошибки дублирования
         /// </summary>
         public async Task<IResultError> ValidateDuplicates(IReadOnlyCollection<TDomain> domains) =>
              await _dataTable.FindsExpressionAsync(ValidateDuplicatesQuery(domains)).
-             ResultCollectionBindWhereBindAsync(ids => ids.Count == 0,
-                okFunc: ResultCollectionFactory.CreateTaskResultCollectionAsync,
+             ResultCollectionBindWhereTaskAsync(ids => ids.Count == 0,
+                okFunc: ids => new ResultCollection<TId>(ids),
                 badFunc: ids => GetDuplicateErrorsResult(ids, _dataTable.TableName));
 
         /// <summary>
         /// Проверить наличие модели
         /// </summary>
         public async Task<IResultError> ValidateValue(TDomain domain) =>
-            await _dataTable.FindExpressionAsync(ValidateQuery(domain));
+            await _dataTable.FindExpressionAsync(ValidateQuery(domain), domain.Id);
 
         /// <summary>
         /// Проверить наличие коллекции моделей 
@@ -97,15 +100,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Получить ошибку двойной записи
         /// </summary>
-        private static async Task<IResultValue<TId>> GetDuplicateErrorResult(TId id, string tableName) =>
-            await ResultValueFactory.
-            CreateTaskResultValueError<TId>(DatabaseErrors.DuplicateError(id, tableName));
+        private static IResultValue<TId> GetDuplicateErrorResult(TId id, string tableName) =>
+            new ResultValue<TId>(DatabaseErrors.DuplicateError(id, tableName));
 
         /// <summary>
         /// Получить ошибки двойной записи
         /// </summary>
-        private static async Task<IResultCollection<TId>> GetDuplicateErrorsResult(IEnumerable<TId> ids, string tableName) =>
-            await ResultCollectionFactory.
-            CreateTaskResultCollectionError<TId>(DatabaseErrors.DuplicateErrors(ids, tableName));
+        private static IResultCollection<TId> GetDuplicateErrorsResult(IEnumerable<TId> ids, string tableName) =>
+            new ResultCollection<TId>(DatabaseErrors.DuplicateErrors(ids, tableName));
     }
 }

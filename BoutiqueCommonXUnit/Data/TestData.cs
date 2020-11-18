@@ -18,7 +18,7 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Получить тестовые модели
         /// </summary>
-        public static List<ITestDomain> GetTestDomains() =>
+        public static List<ITestDomain> TestDomains =>
             new List<ITestDomain>()
             {
                 new TestDomain(TestEnum.First, "First" ),
@@ -35,12 +35,12 @@ namespace BoutiqueCommonXUnit.Data
         /// Тестовая сущность в результирующем значении
         /// </summary>
         public static IResultValue<ITestDomain> TestResultDomain =>
-            new ResultValue<ITestDomain>(GetTestDomains().First());
+            new ResultValue<ITestDomain>(TestDomains.First());
 
         /// <summary>
         /// Тестовые сущности в результирующей коллекции
         /// </summary>
         public static IResultCollection<ITestDomain> TestResultDomains =>
-            new ResultCollection<ITestDomain>(GetTestDomains());
+            new ResultCollection<ITestDomain>(TestDomains);
     }
 }

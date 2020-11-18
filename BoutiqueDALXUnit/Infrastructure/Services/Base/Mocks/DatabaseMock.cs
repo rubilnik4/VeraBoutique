@@ -13,9 +13,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// <summary>
         /// Получить тестовую базу данных
         /// </summary>
-        public static Mock<ITestDatabase> GetTestDatabase(ITestDatabaseTable testDatabaseTable) =>
+        public static Mock<ITestDatabase> GetTestDatabase(ITestTable testTable) =>
             new Mock<ITestDatabase>().
-            Void(databaseMock => databaseMock.Setup(database => database.TestTable).Returns(testDatabaseTable)).
+            Void(databaseMock => databaseMock.Setup(database => database.TestTable).Returns(testTable)).
             Void(databaseMock => databaseMock.Setup(database => database.SaveChangesAsync()).
                                               ReturnsAsync(new ResultError()));
     }
