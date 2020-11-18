@@ -17,7 +17,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
                                                                       Func<TValue, IErrorResult> badFunc)
             where TValue : notnull =>
           @this.WhereContinue(predicate,
-            okFunc: value => (IResultValue<TValue>)new ResultValue<TValue>(value),
-            badFunc: value => new ResultValue<TValue>(badFunc(value)));
+                              value => (IResultValue<TValue>)new ResultValue<TValue>(value),
+                              value => new ResultValue<TValue>(badFunc(value)));
     }
 }
