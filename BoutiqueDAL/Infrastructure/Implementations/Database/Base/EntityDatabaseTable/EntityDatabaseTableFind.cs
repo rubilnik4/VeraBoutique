@@ -90,19 +90,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// </summary>
         private async Task<IResultCollection<TEntity>> FindEntityAsync(Func<Task<List<TEntity>>> getEntities) =>
             await ResultCollectionTryAsync(getEntities, TableAccessError);
-
-        ///// <summary>
-        ///// Найти запись в таблице по идентификаторам
-        ///// </summary>
-        //private async Task<IResultValue<TOut>> FindOutAsync<TOut>(Func<Task<TOut>> getEntity)
-        //    where TOut : notnull =>
-        //    await ResultValueTryAsync(getEntity, TableAccessError);
-
-        ///// <summary>
-        ///// Найти записи в таблице по идентификаторам
-        ///// </summary>
-        //private async Task<IResultCollection<TOut>> FindsOutAsync<TOut>(Func<Task<List<TOut>>> getEntities)
-        //    where TOut : notnull =>
-        //    await ResultCollectionTryAsync(getEntities, TableAccessError);
     }
 }

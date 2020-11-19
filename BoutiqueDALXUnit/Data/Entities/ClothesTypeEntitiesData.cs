@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
@@ -22,7 +23,8 @@ namespace BoutiqueDALXUnit.Data.Entities
             Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain, 
                                                               new CategoryEntity(clothesTypeDomain.Category.Name),
                                                               Enumerable.Empty<ClothesEntity>(),
-                                                              Enumerable.Empty<ClothesTypeGenderCompositeEntity>())).
+                                                              GetClothesTypeGenderCompositeEntities(clothesTypeDomain.Genders,
+                                                                                                    clothesTypeDomain.Name))).
             ToList();
 
         /// <summary>
@@ -32,18 +34,27 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                                                     IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             clothesTypeEntities.
             Select(clothesTypeEntity => new ClothesTypeGenderCompositeEntity(clothesTypeEntity.Id, genderEntity.Id,
-                                                                    clothesTypeEntity, genderEntity)).
+                                                                             clothesTypeEntity, genderEntity)).
             ToList();
 
         /// <summary>
         /// Получить сущности типа одежды c информацией об одежде
         /// </summary>
         public static List<ClothesTypeEntity> GetClothesTypeEntitiesWithClothes(IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                                                           IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
+                                                                                IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
             clothesTypeEntities.
             Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName, clothesType.Category,
                                                         clothesInformationEntities,
                                                         Enumerable.Empty<ClothesTypeGenderCompositeEntity>())).
             ToList();
+
+        /// <summary>
+        /// Получить пол с видом одежды
+        /// </summary>
+        private static IEnumerable<ClothesTypeGenderCompositeEntity> GetClothesTypeGenderCompositeEntities(IEnumerable<IGenderDomain> genderDomains,
+                                                                                                           string clothesTypeName) =>
+            genderDomains.
+            Select(genderDomain => new ClothesTypeGenderCompositeEntity(clothesTypeName, genderDomain.GenderType, 
+                                                                        null, new GenderEntity(genderDomain.GenderType, genderDomain.Name)));
     }
 }

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using static BoutiqueDALXUnit.Data.Services.Implementation.SearchInModels;
 
@@ -44,14 +48,16 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// Получить тестовую таблицу
         /// </summary>
         private static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
-                                                                     Func<TestEnum, IResultValue<TestEntity>> firstFunc,
-                                                                     Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
+                                                             Func<TestEnum, IResultValue<TestEntity>> firstFunc,
+                                                             Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
             new Mock<ITestTable>().
             Void(tableMock => tableMock.Setup(table => table.ToListAsync()).ReturnsAsync(testEntities)).
             Void(tableMock => tableMock.Setup(table => table.FindIdAsync(It.IsAny<TestEnum>())).
                                         ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => firstFunc(id)))).
             Void(tableMock => tableMock.Setup(table => table.FindIdsAsync(It.IsAny<IEnumerable<TestEnum>>())).
                                         ReturnsAsync((IEnumerable<TestEnum> ids) => testEntities.ResultCollectionBindOk(_ => findFunc(ids)))).
+            Void(tableMock => tableMock.Setup(table => table.FindExpressionAsync(It.IsAny<Func<IQueryable<TestEntity>, IQueryable<TestEnum>>>(), It.IsAny<TestEnum>())).
+                                        ReturnsAsync((Func<IQueryable<TestEntity>, IQueryable<TestEnum>> func, TestEnum id) => FindExpression(testEntities.Value, func, id))).
             Void(tableMock => tableMock.Setup(table => table.AddRangeAsync(It.IsAny<IEnumerable<TestEntity>>())).
                                         ReturnsAsync((IEnumerable<TestEntity> entities) => AddRangeIdOk(entities))).
             Void(tableMock => tableMock.Setup(table => table.Update(It.IsAny<TestEntity>())).
@@ -89,5 +95,16 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// </summary>
         public static Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> FindDuplicateFunc(IResultCollection<TestEntity> entitiesResult) =>
             ids => entitiesResult.ResultCollectionBindOk(entities => new ResultCollection<TestEntity>(Errors.GetDuplicateError(ids)));
+
+        /// <summary>
+        /// Выполнить запрос в таблице и выгрузить сущности
+        /// </summary>
+        private static IResultValue<TestEnum> FindExpression(IEnumerable<TestEntity> testEntities,
+                                                             Func<IQueryable<TestEntity>, IQueryable<TestEnum>> queryFunc, 
+                                                             TestEnum id) =>
+            queryFunc(testEntities.AsQueryable()).
+            ToResultValueWhere(ids => ids.Any(),
+                               _ => DatabaseErrors.ValueNotFoundError(id.ToString()!, String.Empty)).
+            ResultValueOk(ids => ids.First());
     }
 }

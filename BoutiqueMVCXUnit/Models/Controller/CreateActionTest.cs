@@ -40,7 +40,7 @@ namespace BoutiqueMVCXUnit.Models.Controller
             const string controllerName = "controller";
             var values = new List<int> { 1, 2, 3 };
             var ids = new List<int> { 4, 5, 6 };
-            var idValues = values.Zip(ids);
+            var idValues = ids.Zip(values);
             var createdActionValue = new CreatedActionCollection<int, int>(actionName, controllerName, idValues);
 
             var createdActionResult = createdActionValue.ToCreatedAtActionResult();
