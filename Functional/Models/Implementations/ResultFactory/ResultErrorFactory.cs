@@ -29,6 +29,12 @@ namespace Functional.Models.Implementations.ResultFactory
             Task.FromResult((IResultError)new ResultError(errors));
 
         /// <summary>
+        /// Создать асинхронный результирующий ответ с ошибкой
+        /// </summary>
+        public static Task<IResultError> CreateTaskResultError(IResultError error) =>
+            Task.FromResult(error);
+
+        /// <summary>
         /// Создать асинхронный результирующий ответ
         /// </summary>
         public static async Task<IResultError> CreateTaskResultErrorAsync() =>

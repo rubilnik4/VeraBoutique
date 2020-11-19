@@ -57,6 +57,37 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         }
 
         /// <summary>
+        /// Получить ошибки дублирования. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task ValidateDuplicates_Ok()
+        {
+            var testDomains = TestData.TestDomains;
+            var tests = Enumerable.Empty<TestEntity>();
+            var databaseValidateService = GetDatabaseValidateService(tests);
+
+            var result = await databaseValidateService.ValidateDuplicates(testDomains);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Получить ошибки дублирования. Ошибки дублирования
+        /// </summary>
+        [Fact]
+        public async Task ValidateDuplicates_ErrorDuplicate()
+        {
+            var testDomains = TestData.TestDomains;
+            var tests = TestEntitiesData.TestEntities;
+            var databaseValidateService = GetDatabaseValidateService(tests);
+
+            var result = await databaseValidateService.ValidateDuplicates(testDomains);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueDuplicate);
+        }
+
+        /// <summary>
         /// Сущность базы данных
         /// </summary>
         private static Mock<DbSet<TestEntity>> GetDbSet(IEnumerable<TestEntity> testEntities) =>

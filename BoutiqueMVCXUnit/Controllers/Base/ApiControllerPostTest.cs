@@ -49,14 +49,14 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task Post_Value_ErrorDatabase()
         {
+            var testDomain = TestData.TestDomains.First();
             var initialError = ErrorData.DatabaseError;
-            var testDomain = new ResultValue<ITestDomain>(initialError);
-            var testDomains = TestData.TestResultDomains;
+            var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServicePostMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = new TestTransferConverter();
             var testController = new TestController(testService.Object, testTransferConverter);
 
-            var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
+            var testTransfer = testTransferConverter.ToTransfer(testDomain);
             var actionResult = await testController.Post(testTransfer);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);

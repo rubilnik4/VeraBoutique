@@ -40,7 +40,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(postValueFunc)).
-            Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+            Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<IEnumerable<ITestDomain>>())).
                                             ReturnsAsync(postCollectionFunc));
 
         /// <summary>

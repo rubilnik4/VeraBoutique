@@ -58,8 +58,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesShortEntityConverter = ClothesShortEntityConverterMock.ClothesShortEntityConverter;
             var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GenderDatabaseService.Object, 
-                                                                    ClothesTypeDatabaseService.Object,
                                                                     clothesShortEntityConverter, 
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -88,7 +86,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
             var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
                                                                     ClothesShortEntityConverterMock.ClothesShortEntityConverter,
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -110,7 +107,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var database = GetDatabase(new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,
                                        clothesTable.Object);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
                                                                     ClothesShortEntityConverterMock.ClothesShortEntityConverter,
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -132,7 +128,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                        clothesTable.Object);
 
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
                                                                     ClothesShortEntityConverterMock.ClothesShortEntityConverter,
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -153,7 +148,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var database = GetDatabase(new Mock<IGenderTable>().Object, new Mock<IClothesTypeTable>().Object,
                                        clothesTable.Object);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GenderDatabaseService.Object, ClothesTypeDatabaseService.Object,
                                                                     ClothesShortEntityConverterMock.ClothesShortEntityConverter,
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -172,17 +166,5 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             Void(mock => mock.Setup(database => database.GendersTable).Returns(genderTable)).
             Void(mock => mock.Setup(database => database.ClotheTypeTable).Returns(clothesTypeTable)).
             Void(mock => mock.Setup(database => database.ClothesTable).Returns(clothesTable));
-
-        /// <summary>
-        /// Сервис типа пола одежды в базе данных
-        /// </summary>
-        private static Mock<IGenderDatabaseService> GenderDatabaseService =>
-             new Mock<IGenderDatabaseService>();
-
-        /// <summary>
-        /// Сервис вида одежды в базе данных
-        /// </summary>
-        private static Mock<IClothesTypeDatabaseService> ClothesTypeDatabaseService =>
-             new Mock<IClothesTypeDatabaseService>();
     }
 }

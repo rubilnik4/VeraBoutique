@@ -30,14 +30,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// Получить тестовую таблицу в исполнении с функцией поиска элемента
         /// </summary>
         public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
-                                                                     Func<TestEnum, IResultValue<TestEntity>> firstFunc) =>
+                                                            Func<TestEnum, IResultValue<TestEntity>> firstFunc) =>
             GetTestDatabaseTable(testEntities, firstFunc, FindOkFunc(testEntities));
 
         /// <summary>
         /// Получить тестовую таблицу в исполнении с функцией поиска элементов
         /// </summary>
         public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
-                                                                    Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
+                                                            Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
             GetTestDatabaseTable(testEntities, FirstOkFunc(testEntities), findFunc);
 
         /// <summary>

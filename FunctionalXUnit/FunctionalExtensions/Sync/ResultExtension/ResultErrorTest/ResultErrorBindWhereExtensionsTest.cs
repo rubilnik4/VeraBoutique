@@ -12,6 +12,38 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
     public class ResultErrorBindWhereExtensionsTest
     {
         /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public void ResultErrorBindOkBad_Ok()
+        {
+            var initialResult = new ResultError();
+            var addingResult = new ResultError();
+
+            var result = initialResult.ResultErrorBindOkBad(() => addingResult,
+                                                            errors => new ResultError(CreateErrorTest()));
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public void ResultErrorBindOkBad_Error()
+        {
+            var initialResult = new ResultError(CreateErrorListTwoTest());
+            var addingResult = new ResultError();
+            var addingResultBad = new ResultError(CreateErrorTest());
+
+            var result = initialResult.ResultErrorBindOkBad(() => addingResult,
+                                                            errors => addingResultBad);
+
+            Assert.True(result.HasErrors);
+            Assert.Equal(addingResultBad.Errors.Count, result.Errors.Count);
+        }
+
+        /// <summary>
         /// Результирующий ответ без ошибок и добавление объекта без ошибки
         /// </summary>
         [Fact]

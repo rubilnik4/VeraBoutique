@@ -22,7 +22,7 @@ namespace Functional.FunctionalExtensions.Async
         /// <summary>
         /// Обработка позитивного условия
         /// </summary>      
-        public static async Task<TSource> WhereTaskAsync<TSource>(this Task<TSource> @this,
+        public static async Task<TSource> WhereOkTaskAsync<TSource>(this Task<TSource> @this,
                                                                   Func<TSource, bool> predicate,
                                                                   Func<TSource, TSource> okFunc) =>
             await @this.

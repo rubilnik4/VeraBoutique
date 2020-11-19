@@ -15,6 +15,40 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
     public class ResultErrorBindWhereTaskAsyncExtensionsTest
     {
         /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public async Task ResultErrorBindOkBadTaskAsync_Ok()
+        {
+            var initialResult = new ResultError();
+            var addingResult = new ResultError();
+
+            var result = await ResultErrorFactory.CreateTaskResultError(initialResult).
+                               ResultErrorBindOkBadTaskAsync(() => addingResult,
+                                                             errors => new ResultError(CreateErrorTest()));
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public async Task ResultErrorBindOkBadTaskAsync_Error()
+        {
+            var initialResult = new ResultError(CreateErrorListTwoTest());
+            var addingResult = new ResultError();
+            var addingResultBad = new ResultError(CreateErrorTest());
+
+            var result = await ResultErrorFactory.CreateTaskResultError(initialResult).
+                               ResultErrorBindOkBadTaskAsync(() => addingResult,
+                                                             errors => addingResultBad);
+
+            Assert.True(result.HasErrors);
+            Assert.Equal(addingResultBad.Errors.Count, result.Errors.Count);
+        }
+
+        /// <summary>
         /// Результирующий ответ без ошибок и добавление объекта без ошибки
         /// </summary>
         [Fact]
@@ -68,7 +102,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
         {
             var initialError = CreateErrorTest();
             var initialResult = ResultErrorFactory.CreateTaskResultError(initialError);
-            var addingResult =new ResultError(initialError);
+            var addingResult = new ResultError(initialError);
 
             var result = await initialResult.ResultErrorBindOkTaskAsync(() => addingResult);
 

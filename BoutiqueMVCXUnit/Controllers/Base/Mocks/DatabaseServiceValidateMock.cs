@@ -42,7 +42,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                             ReturnsAsync(testDomains)).
             Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(validateValueFunc)).
-            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<IEnumerable<ITestDomain>>())).
                                             ReturnsAsync(validateCollectionFunc));
 
         /// <summary>

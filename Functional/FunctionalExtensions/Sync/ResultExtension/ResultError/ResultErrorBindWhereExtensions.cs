@@ -14,7 +14,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
         /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
         public static IResultError ResultErrorBindOkBad(this IResultError @this, Func<IResultError> okFunc, 
-                                                     Func<IReadOnlyCollection<IErrorResult>, IResultError> badFunc) =>
+                                                        Func<IReadOnlyCollection<IErrorResult>, IResultError> badFunc) =>
             @this.OkStatus
                 ? okFunc.Invoke()
                 : badFunc.Invoke(@this.Errors);

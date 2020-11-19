@@ -43,7 +43,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         {
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
-            var testDelete = TestData.TestDomains().Last();
+            var testDelete = TestData.TestDomains.Last();
             var testDeleteId = testDelete.Id;
             var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = new TestTransferConverter();

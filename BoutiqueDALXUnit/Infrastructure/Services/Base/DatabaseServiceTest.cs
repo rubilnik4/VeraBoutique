@@ -108,7 +108,64 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         /// Проверить запись
         /// </summary>
         [Fact]
-        public async Task Post_OK()
+        public async Task Post_Value_OK()
+        {
+            var testDomain = TestData.TestDomains.First();
+            var testResultEntities = TestResultEntitiesEmpty;
+            var testTableMock = GetTestDatabaseTable(testResultEntities);
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var resultId = await testService.Post(testDomain);
+
+            Assert.True(resultId.OkStatus);
+            Assert.True(resultId.Value.Equals(testDomain.Id));
+        }
+
+        /// <summary>
+        /// Проверить запись. Ошибка дублирования
+        /// </summary>
+        [Fact]
+        public async Task Post_Value_ErrorDuplicate()
+        {
+            var testDomain = TestData.TestDomains.First();
+            var testResultEntities = TestResultEntities;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FindDuplicateFunc(testResultEntities));
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var resultId = await testService.Post(testDomain);
+
+            Assert.True(resultId.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseValueDuplicate, resultId.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Проверить запись. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task Post_NotFound()
+        {
+            var testDomainPut = TestData.TestDomains.First();
+            var testResultEntities = TestResultEntitiesEmpty;
+            var testTableMock = GetTestDatabaseTable(testResultEntities, FirstNotFoundFunc(testResultEntities));
+            var testDatabaseMock = GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverter;
+            var testService = GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, testConverter);
+
+            var result = await testService.Post(testDomainPut);
+
+            Assert.True(result.HasErrors);
+            Assert.Equal(ErrorResultType.ValueNotFound, result.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Проверить запись
+        /// </summary>
+        [Fact]
+        public async Task Post_Collection_OK()
         {
             var testDomains = TestData.TestDomains;
             var testResultEntities = TestResultEntitiesEmpty;
@@ -127,7 +184,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         /// Проверить запись. Ошибка дублирования
         /// </summary>
         [Fact]
-        public async Task Post_ErrorDuplicate()
+        public async Task Post_Collection_ErrorDuplicate()
         {
             var testDomains = TestData.TestDomains;
             var testResultEntities = TestResultEntities;

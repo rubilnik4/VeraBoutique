@@ -36,15 +36,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, IClothesEntity, ClothesEntity>,
                                          IClothesDatabaseService
     {
-        public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase, 
-                                      IGenderDatabaseService genderDatabaseService,
-                                      IClothesTypeDatabaseService clothesTypeDatabaseService,
+        public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                       IClothesShortEntityConverter clothesShortEntityConverter,
                                       IClothesEntityConverter clothesEntityConverter)
           : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesEntityConverter)
         {
-            _genderDatabaseService = genderDatabaseService;
-            _clothesTypeDatabaseService = clothesTypeDatabaseService;
             _clothesTable = boutiqueDatabase.ClothesTable;
             _genderTable = boutiqueDatabase.GendersTable;
             _clothesTypeTable = boutiqueDatabase.ClotheTypeTable;
@@ -66,16 +62,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Таблица базы данных одежды
         /// </summary>
         private readonly IClothesTypeTable _clothesTypeTable;
-
-        /// <summary>
-        /// Сервис типа пола одежды в базе данных
-        /// </summary>
-        private readonly IGenderDatabaseService _genderDatabaseService;
-
-        /// <summary>
-        /// Сервис типа пола одежды в базе данных
-        /// </summary>
-        private readonly IClothesTypeDatabaseService _clothesTypeDatabaseService;
 
         /// <summary>
         /// Преобразования модели одежды в модель базы данных
@@ -104,11 +90,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                                                                                                   nameof(IClothesTable))),
                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesEntityConverter.FromEntity(clothesInformationDomain));
-
-        //public override async Task<IResultCollection<int>> Post(IReadOnlyCollection<IClothesDomain> clothesInformationDomains) =>
-        //    _genderDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.Gender)).
-        //    ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseService.CheckEntities(clothesInformationDomains.Select(clothes => clothes.ClothesTypeFull)))
-            
+        
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>

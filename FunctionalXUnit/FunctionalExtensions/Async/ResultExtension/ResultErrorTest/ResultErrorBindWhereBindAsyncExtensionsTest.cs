@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using Xunit;
@@ -13,6 +14,41 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultError
     /// </summary>
     public class ResultErrorBindWhereBindAsyncExtensionsTest
     {
+        /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public async Task ResultErrorBindOkBadBindAsync_Ok()
+        {
+            var initialResult = new ResultError();
+            var addingResult = new ResultError();
+
+            var result = await ResultErrorFactory.CreateTaskResultError(initialResult).
+                               ResultErrorBindOkBadBindAsync(() => ResultErrorFactory.CreateTaskResultError(addingResult),
+                                                            errors => ResultErrorFactory.CreateTaskResultErrorAsync(CreateErrorTest()));
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
+        /// </summary>   
+        [Fact]
+        public async Task ResultErrorBindOkBadBindAsync_Error()
+        {
+            var initialResult = new ResultError(CreateErrorListTwoTest());
+            var addingResult = new ResultError();
+            var addingResultBad = new ResultError(CreateErrorTest());
+
+            var result = await ResultErrorFactory.CreateTaskResultError(initialResult).
+                               ResultErrorBindOkBadBindAsync(() => ResultErrorFactory.CreateTaskResultError(addingResult),
+                                                            errors => ResultErrorFactory.CreateTaskResultError(addingResultBad));
+
+            Assert.True(result.HasErrors);
+            Assert.Equal(addingResultBad.Errors.Count, result.Errors.Count);
+        }
+
+
         /// <summary>
         /// Результирующий ответ без ошибок и добавление объекта без ошибки
         /// </summary>

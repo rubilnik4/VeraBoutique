@@ -14,7 +14,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Выполнение положительного или негативного условия результирующего ответа со связыванием или возвращение предыдущей ошибки в результирующем ответе
         /// </summary>   
-        public static async Task<IResultError> ResultErrorBindOkBadBindAsync(this Task<IResultError> @this,
+        public static async Task<IResultError> ResultErrorBindOkBadTaskAsync(this Task<IResultError> @this,
                                                              Func<IResultError> okFunc,
                                                              Func<IReadOnlyCollection<IErrorResult>, IResultError> badFunc) =>
            await @this.

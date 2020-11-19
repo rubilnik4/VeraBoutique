@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
         [Fact]
         public void ToEntities_FromEntities()
         {
-            var testDomains = TestData.TestDomains();
+            var testDomains = TestData.TestDomains;
             var testEntityConverter = new TestTransferConverter();
 
             var testEntities = testEntityConverter.ToTransfers(testDomains);

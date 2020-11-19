@@ -79,7 +79,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модель в базу
         /// </summary>
-        public virtual async Task<IResultValue<TId>> Post(TDomain domain) =>
+        public async Task<IResultValue<TId>> Post(TDomain domain) =>
             await new ResultValue<TDomain>(domain).
             ResultValueBindErrorsOkAsync(_ => _databaseValidateService.ValidateDuplicate(domain)).
             ResultValueBindErrorsOkBindAsync(_ => _databaseValidateService.ValidateValue(domain)).
@@ -88,7 +88,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        public virtual async Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models) =>
+        public async Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models) =>
             await PostCollection(models.ToList());
 
         /// <summary>
