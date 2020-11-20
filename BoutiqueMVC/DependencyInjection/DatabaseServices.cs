@@ -7,10 +7,12 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueMVC.Factories.Identity;
 using Functional.FunctionalExtensions.Sync;
@@ -40,6 +42,14 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupDatabaseService, SizeGroupDatabaseService>();
             services.AddTransient<IColorClothesDatabaseService, ColorClothesDatabaseService>();
             services.AddTransient<IClothesDatabaseService, ClothesDatabaseService>();
+
+            services.AddTransient<IGenderDatabaseValidateService, GenderDatabaseValidateService>();
+            services.AddTransient<ICategoryDatabaseValidateService, CategoryDatabaseValidateService>();
+            services.AddTransient<IClothesTypeDatabaseValidateService, ClothesTypeDatabaseValidateService>();
+            services.AddTransient<ISizeDatabaseValidateService, SizeDatabaseValidateService>();
+            services.AddTransient<ISizeGroupDatabaseValidateService, SizeGroupDatabaseValidateService>();
+            services.AddTransient<IColorClothesDatabaseValidateService, ColorClothesDatabaseValidateService>();
+            services.AddTransient<IClothesDatabaseValidateService, ClothesDatabaseValidateService>();
             InjectDatabase(services);
         }
 

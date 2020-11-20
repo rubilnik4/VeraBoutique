@@ -17,6 +17,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -39,9 +40,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IBoutiqueDatabase boutiqueDatabase,
+                                          IClothesTypeDatabaseValidateService clothesTypeDatabaseValidateService,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter,
                                           IClothesTypeShortEntityConverter clothesTypeShortEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.ClotheTypeTable, clothesTypeEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.ClotheTypeTable, clothesTypeDatabaseValidateService, clothesTypeEntityConverter)
         {
             _genderTable = boutiqueDatabase.GendersTable;
             _categoryTable = boutiqueDatabase.CategoryTable;

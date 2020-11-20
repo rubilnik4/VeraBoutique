@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
@@ -10,13 +12,16 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
@@ -49,7 +54,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var sizeGroupEntities = SizeGroupEntitiesData.SizeGroupEntities;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupOk(sizeGroupEntities));
             var database = GetDatabase(sizeGroupTable.Object);
-            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object, SizeGroupEntityConverterMock.SizeGroupEntityConverter);
+            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object,
+                                                                   GetDatabaseValidationService(sizeGroupTable.Object),
+                                                                   SizeGroupEntityConverterMock.SizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -68,7 +75,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupException());
             var database = GetDatabase(sizeGroupTable.Object);
-            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object, SizeGroupEntityConverterMock.SizeGroupEntityConverter);
+            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object,
+                                                                   GetDatabaseValidationService(sizeGroupTable.Object),
+                                                                   SizeGroupEntityConverterMock.SizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -87,7 +96,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupNotFound());
             var database = GetDatabase(sizeGroupTable.Object);
-            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object, SizeGroupEntityConverterMock.SizeGroupEntityConverter);
+            var sizeDatabaseService = new SizeGroupDatabaseService(database.Object,
+                                                                   GetDatabaseValidationService(sizeGroupTable.Object),
+                                                                   SizeGroupEntityConverterMock.SizeGroupEntityConverter);
 
             var sizeGroupResults = await sizeDatabaseService.GetSizeGroupIncludeSize(clothesSizeType, sizeNormalize);
 
@@ -101,5 +112,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         private static Mock<IBoutiqueDatabase> GetDatabase(ISizeGroupTable sizeGroupTable) =>
             new Mock<IBoutiqueDatabase>().
             Void(mock => mock.Setup(database => database.SizeGroupTable).Returns(sizeGroupTable));
+
+        /// <summary>
+        /// Сервис проверки данных из базы
+        /// </summary>
+        private static ISizeGroupDatabaseValidateService GetDatabaseValidationService(ISizeGroupTable sizeGroupTable) =>
+            new SizeGroupDatabaseValidateService(sizeGroupTable);
     }
 }

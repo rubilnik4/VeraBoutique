@@ -12,6 +12,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async;
@@ -31,8 +32,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,
+                                        ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService,
                                         ISizeGroupEntityConverter sizeGroupEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupEntityConverter)
         {
             _sizeGroupTable =  boutiqueDatabase.SizeGroupTable;
             _sizeGroupEntityConverter = sizeGroupEntityConverter;
