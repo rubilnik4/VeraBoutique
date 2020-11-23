@@ -8,7 +8,7 @@ namespace BoutiqueCommonXUnit.Data
     /// <summary>
     /// Поиск в моделях
     /// </summary>
-    public static class SearchInModels
+    public static class SearchInDomains
     {
         /// <summary>
         /// Найти модель

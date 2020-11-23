@@ -10,7 +10,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     /// <summary>
     /// Поиск в моделях
     /// </summary>
-    public static class SearchInModels
+    public static class SearchInEntities
     {
         /// <summary>
         /// Найти сущность

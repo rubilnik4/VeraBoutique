@@ -23,7 +23,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
     /// <summary>
     /// Базовый сервис проверки данных из базы. Тесты
     /// </summary>
-    public class DatabaseValidationServiceTest
+    public class DatabaseValidateServiceTest
     {
         /// <summary>
         /// Получить ошибку дублирования. Корректный вариант

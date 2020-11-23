@@ -92,7 +92,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfers = testTransferConverter.ToTransfers(testDomains.Value).ToList();
-            var actionResult = await testController.Validate(testTransfers);
+            var actionResult = await testController.Validates(testTransfers);
 
             Assert.IsType<NoContentResult>(actionResult);
             var noContentResult = (NoContentResult)actionResult;
@@ -112,7 +112,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfers = testTransferConverter.ToTransfers(testDomains.Value).ToList();
-            var actionResult = await testController.Validate(testTransfers);
+            var actionResult = await testController.Validates(testTransfers);
 
             Assert.IsType<BadRequestObjectResult>(actionResult);
             var badRequest = (BadRequestObjectResult)actionResult;

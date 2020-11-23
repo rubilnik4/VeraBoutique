@@ -131,7 +131,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Проверить данные
         /// </summary>
-        [HttpPost]
+        [HttpPost("validate")]
         [Consumes(MediaTypeNames.Application.Json)]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -143,12 +143,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Проверить данные
         /// </summary>
-        [HttpPost]
+        [HttpPost("validates")]
         [Consumes(MediaTypeNames.Application.Json)]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Validate(IList<TTransfer> transfers) =>
+        public async Task<IActionResult> Validates(IList<TTransfer> transfers) =>
              await _databaseDatabaseService.Validate(_transferConverter.FromTransfers(transfers)).
              ToNoContentActionResultTaskAsync();
 

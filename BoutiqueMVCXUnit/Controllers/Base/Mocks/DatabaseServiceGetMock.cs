@@ -38,7 +38,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция поиска по идентификатору
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> GetByIdOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            id => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, id));
+            id => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, id));
 
         /// <summary>
         /// Функция поиска по идентификатору. Элемент не найден

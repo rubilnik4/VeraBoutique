@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Функция для проверки наличия
         /// </summary>
         protected override Expression<Func<ClothesTypeEntity, bool>> ValidateQuery(IQueryable<ClothesTypeEntity> entities,
-                                                                                IReadOnlyCollection<IClothesTypeDomain> domains) =>
+                                                                                   IReadOnlyCollection<IClothesTypeDomain> domains) =>
            clothesType => domains.Select(domain => domain.Name).Contains(clothesType.Name) &&
                           domains.Select(domain => domain.Category.Name).Contains(clothesType.CategoryName);
 

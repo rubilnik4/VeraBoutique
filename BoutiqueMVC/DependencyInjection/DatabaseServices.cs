@@ -43,13 +43,21 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IColorClothesDatabaseService, ColorClothesDatabaseService>();
             services.AddTransient<IClothesDatabaseService, ClothesDatabaseService>();
 
-            services.AddTransient<IGenderDatabaseValidateService, GenderDatabaseValidateService>();
-            services.AddTransient<ICategoryDatabaseValidateService, CategoryDatabaseValidateService>();
-            services.AddTransient<IClothesTypeDatabaseValidateService, ClothesTypeDatabaseValidateService>();
-            services.AddTransient<ISizeDatabaseValidateService, SizeDatabaseValidateService>();
-            services.AddTransient<ISizeGroupDatabaseValidateService, SizeGroupDatabaseValidateService>();
-            services.AddTransient<IColorClothesDatabaseValidateService, ColorClothesDatabaseValidateService>();
-            services.AddTransient<IClothesDatabaseValidateService, ClothesDatabaseValidateService>();
+            services.AddTransient<IGenderDatabaseValidateService>(
+                service => new GenderDatabaseValidateService(service.GetService<IBoutiqueDatabase>().GendersTable));
+            services.AddTransient<ICategoryDatabaseValidateService>(
+                service => new CategoryDatabaseValidateService(service.GetService<IBoutiqueDatabase>().CategoryTable));
+            services.AddTransient<IClothesTypeDatabaseValidateService>(
+                service => new ClothesTypeDatabaseValidateService(service.GetService<IBoutiqueDatabase>().ClotheTypeTable));
+            services.AddTransient<ISizeDatabaseValidateService>(
+                service => new SizeDatabaseValidateService(service.GetService<IBoutiqueDatabase>().SizeTable));
+            services.AddTransient<ISizeGroupDatabaseValidateService>(
+                service => new SizeGroupDatabaseValidateService(service.GetService<IBoutiqueDatabase>().SizeGroupTable));
+            services.AddTransient<IColorClothesDatabaseValidateService>(
+                service => new ColorClothesDatabaseValidateService(service.GetService<IBoutiqueDatabase>().ColorClothesTable));
+            services.AddTransient<IClothesDatabaseValidateService>(
+                service => new ClothesDatabaseValidateService(service.GetService<IBoutiqueDatabase>().ClothesTable));
+
             InjectDatabase(services);
         }
 

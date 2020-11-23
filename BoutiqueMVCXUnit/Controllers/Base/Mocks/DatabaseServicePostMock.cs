@@ -47,7 +47,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция записи значения
         /// </summary>
         public static Func<ITestDomain, IResultValue<TestEnum>> PostValueOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            domain => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, domain.Id).Id);
+            domain => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, domain.Id).Id);
 
         /// <summary>
         /// Функция записи значения. Элемент не найден

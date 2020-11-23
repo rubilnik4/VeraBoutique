@@ -38,7 +38,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция удаления по идентификатору
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> DeleteOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            id => testDomains.ResultValueOk(tests => SearchInModels.FirstDomain(tests, id));
+            id => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, id));
 
         /// <summary>
         /// Функция удаления по идентификатору.Элемент не найден
