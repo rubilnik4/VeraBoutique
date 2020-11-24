@@ -44,6 +44,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
             await FindAsyncWrapper(() => _databaseSet.AsNoTracking().Include(include).FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
+        /// Вернуть полную запись из таблицы по идентификатору асинхронно
+        /// </summary>
+        public async Task<IResultValue<TEntity>> FindIdMainAsync(TId id) =>
+            await FindAsyncWrapper(() => GetInclude(_databaseSet.AsNoTracking()).
+                                         FirstOrDefaultAsync(IdPredicate(id))!, id);
+
+        /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids) =>
@@ -76,6 +83,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
             where TOut : notnull =>
             await ResultCollectionTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync(), TableAccessError);
 
+        /// <summary>
+        /// Включение сущностей при загрузке полных данных
+        /// </summary>
+        protected virtual IQueryable<TEntity> GetInclude(IQueryable<TEntity> entities) =>
+            entities;
 
         /// <summary>
         /// Поиск элемента с проверкой

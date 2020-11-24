@@ -25,5 +25,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
+
+        /// <summary>
+        /// Вернуть полные записи из таблицы асинхронно
+        /// </summary>
+        Task<IResultCollection<TEntity>> ToListMainAsync();
     }
 }

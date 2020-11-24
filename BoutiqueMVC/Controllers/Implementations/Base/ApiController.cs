@@ -79,6 +79,31 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
+        /// Базовый метод полных получения данных
+        /// </summary>
+        [HttpGet("main")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> GetMain() =>
+            await _databaseDatabaseService.GetMain().
+            ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
+            ToActionResultCollectionTaskAsync<TId, TTransfer>();
+
+        /// <summary>
+        /// Базовый метод получения полных данных по идентификатору
+        /// </summary>
+        [HttpGet("main/{id}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<TTransfer>> GetMain(TId id) =>
+            await _databaseDatabaseService.GetMain(id).
+            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
+            ToActionResultValueTaskAsync<TId, TTransfer>();
+
+        /// <summary>
         /// Записать данные
         /// </summary>
         [HttpPost]

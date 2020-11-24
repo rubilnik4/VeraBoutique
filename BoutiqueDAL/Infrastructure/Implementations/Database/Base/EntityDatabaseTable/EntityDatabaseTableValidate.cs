@@ -48,6 +48,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// </summary>
         protected virtual IQueryable<TEntity> ValidateInclude(IQueryable<TEntity> entities, IReadOnlyCollection<TDomain> domains) =>
             entities;
-
     }
 }

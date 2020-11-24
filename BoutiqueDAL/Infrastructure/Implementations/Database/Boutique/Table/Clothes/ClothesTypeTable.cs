@@ -51,6 +51,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
                           domain.Category.Name == clothesType.CategoryName;
 
         /// <summary>
+        /// Включение сущностей при загрузке полных данных
+        /// </summary>
+        protected override IQueryable<ClothesTypeEntity> GetInclude(IQueryable<ClothesTypeEntity> entities) =>
+            entities.Include(entity => entity.Category).
+                     Include(entity => entity.ClothesTypeGenderComposites);
+
+        /// <summary>
         /// Функция для проверки наличия
         /// </summary>
         protected override Expression<Func<ClothesTypeEntity, bool>> ValidateQuery(IQueryable<ClothesTypeEntity> entities,

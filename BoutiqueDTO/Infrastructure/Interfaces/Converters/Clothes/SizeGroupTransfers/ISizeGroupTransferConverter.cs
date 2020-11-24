@@ -1,9 +1,9 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes
+namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers
 {
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель

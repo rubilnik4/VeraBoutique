@@ -24,6 +24,16 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         Task<IResultValue<TDomain>> Get(TId id);
 
         /// <summary>
+        /// Получить полные модели из базы
+        /// </summary>
+        Task<IResultCollection<TDomain>> GetMain();
+
+        /// <summary>
+        /// Получить  полную модель из базы по идентификатору
+        /// </summary>
+        Task<IResultValue<TDomain>> GetMain(TId id);
+
+        /// <summary>
         /// Загрузить модель в базу
         /// </summary>
         Task<IResultValue<TId>> Post(TDomain model);

@@ -28,6 +28,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
             where TIdOut : notnull;
 
         /// <summary>
+        /// Вернуть полную запись из таблицы по идентификатору асинхронно
+        /// </summary>
+        Task<IResultValue<TEntity>> FindIdMainAsync(TId id);
+
+        /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
         Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids);

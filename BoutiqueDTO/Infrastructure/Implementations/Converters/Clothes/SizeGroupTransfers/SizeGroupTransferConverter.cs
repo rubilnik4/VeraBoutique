@@ -1,11 +1,12 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
+namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers
 {
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель
@@ -27,14 +28,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
         public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
-            new SizeGroupTransfer(sizeGroupDomain.ClothesSizeType, sizeGroupDomain.SizeNormalize,
+            new SizeGroupTransfer(sizeGroupDomain,
                                   _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
         public override ISizeGroupDomain FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
-            new SizeGroupDomain(sizeGroupTransfer.ClothesSizeType, sizeGroupTransfer.SizeNormalize,
+            new SizeGroupDomain(sizeGroupTransfer,
                                 _sizeTransferConverter.FromTransfers(sizeGroupTransfer.Sizes));
     }
 }
