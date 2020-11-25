@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Base;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
@@ -6,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Цвет одежды
     /// </summary>
-    public interface IColorClothes : IModel<string>
+    public interface IColorClothes : IModel<string>, IEquatable<IColorClothes>
     {
         /// <summary>
         /// Наименование

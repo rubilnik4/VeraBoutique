@@ -5,6 +5,9 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers
 {
@@ -20,7 +23,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override ISizeGroupShortDomain FromTransfer(SizeGroupShortTransfer sizeGroupShortTransfer) =>
-            new SizeGroupShortDomain(sizeGroupShortTransfer);
+        public override IResultValue<ISizeGroupShortDomain> FromTransfer(SizeGroupShortTransfer sizeGroupShortTransfer) =>
+            new SizeGroupShortDomain(sizeGroupShortTransfer).
+            Map(sizeGroupShortDomain => new ResultValue<ISizeGroupShortDomain>(sizeGroupShortDomain));
     }
 }

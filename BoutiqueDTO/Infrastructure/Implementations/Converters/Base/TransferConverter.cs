@@ -3,6 +3,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
@@ -18,7 +19,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
         /// <summary>
         /// Преобразовать модель базы данных в доменную
         /// </summary>
-        public abstract TDomain FromTransfer(TTransfer entity);
+        public abstract IResultValue<TDomain> FromTransfer(TTransfer entity);
 
         /// <summary>
         /// Преобразовать доменную модель в модель базы данных
@@ -28,8 +29,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
         /// <summary>
         /// Преобразовать модели базы данных в доменные
         /// </summary>
-        public IEnumerable<TDomain> FromTransfers(IEnumerable<TTransfer> entities) =>
-            entities.Select(FromTransfer);
+        public IResultCollection<TDomain> FromTransfers(IEnumerable<TTransfer> entities) =>
+            entities.Select(FromTransfer).ToResultCollection();
 
         /// <summary>
         /// Преобразовать доменные модели в модели базы данных

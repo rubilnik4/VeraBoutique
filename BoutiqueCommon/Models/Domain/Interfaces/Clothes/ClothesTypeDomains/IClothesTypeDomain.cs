@@ -11,6 +11,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
     public interface IClothesTypeDomain : IClothesTypeShortDomain, IEquatable<IClothesTypeDomain>
     {
         /// <summary>
+        /// Категория одежды. Доменная модель
+        /// </summary>
+        ICategoryDomain Category { get; }
+
+        /// <summary>
         /// Типы пола. Доменная модель
         /// </summary>
         IReadOnlyCollection<IGenderDomain> Genders { get; }

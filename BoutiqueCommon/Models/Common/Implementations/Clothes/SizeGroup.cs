@@ -13,7 +13,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public abstract class SizeGroup: ISizeGroup, IEquatable<ISizeGroup>
+    public abstract class SizeGroup: ISizeGroup
     {
         protected SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize)
         {

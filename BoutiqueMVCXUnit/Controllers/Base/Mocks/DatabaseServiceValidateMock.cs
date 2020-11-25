@@ -38,7 +38,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                       Func<ITestDomain, IResultError> validateValueFunc,
                                                                       Func<IResultError> validateCollectionFunc) =>
             new Mock<ITestDatabaseService>().
-            Void(serviceMock => serviceMock.Setup(service => service.Get()).
+            Void(serviceMock => serviceMock.Setup(service => service.GetShort()).
                                             ReturnsAsync(testDomains)).
             Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(validateValueFunc)).

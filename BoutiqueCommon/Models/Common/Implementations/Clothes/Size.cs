@@ -15,7 +15,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public abstract class Size : ISize, IEquatable<ISize>
+    public abstract class Size : ISize
     {
         protected Size(SizeType sizeType, string sizeName)
         {

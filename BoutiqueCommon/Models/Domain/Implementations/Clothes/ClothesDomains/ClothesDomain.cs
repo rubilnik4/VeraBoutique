@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
@@ -12,11 +12,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
     public class ClothesDomain : ClothesMain, IClothesDomain
     {
-        public ClothesDomain(IClothesShort clothesShort, string description,
+        public ClothesDomain(IClothesMain clothes, string description,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
-           : this(clothesShort.Id, clothesShort.Name,
-                  clothesShort.Price, clothesShort.Image,
+           : this(clothes.Id, clothes.Name, clothes.Price, clothes.Image,
                   description, gender, clothesTypeShort, colors, sizeGroups)
         { }
 

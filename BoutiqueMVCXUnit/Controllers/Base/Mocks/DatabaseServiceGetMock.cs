@@ -29,9 +29,9 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> getByIdFunc) =>
             new Mock<ITestDatabaseService>().
-            Void(serviceMock => serviceMock.Setup(service => service.Get()).
+            Void(serviceMock => serviceMock.Setup(service => service.GetShort()).
                                             ReturnsAsync(testDomains)).
-            Void(serviceMock => serviceMock.Setup(service => service.Get(It.IsAny<TestEnum>())).
+            Void(serviceMock => serviceMock.Setup(service => service.GetShort(It.IsAny<TestEnum>())).
                                             ReturnsAsync(getByIdFunc));
 
         /// <summary>

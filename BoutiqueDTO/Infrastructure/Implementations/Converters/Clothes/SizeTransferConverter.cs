@@ -4,6 +4,9 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
 {
@@ -22,7 +25,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override ISizeDomain FromTransfer(SizeTransfer sizeTransfer) =>
-            new SizeDomain(sizeTransfer.SizeType, sizeTransfer.SizeName);
+        public override IResultValue<ISizeDomain> FromTransfer(SizeTransfer sizeTransfer) =>
+            new SizeDomain(sizeTransfer.SizeType, sizeTransfer.SizeName).
+            Map(sizeDomain => new ResultValue<ISizeDomain>(sizeDomain));
     }
 }

@@ -4,6 +4,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers
 {
@@ -33,7 +34,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
-        public override IClothesTypeShortDomain FromTransfer(ClothesTypeShortTransfer clothesTypeShortTransfer) =>
+        public override IResultValue<IClothesTypeShortDomain> FromTransfer(ClothesTypeShortTransfer clothesTypeShortTransfer) =>
             new ClothesTypeShortDomain(clothesTypeShortTransfer, 
                                        _categoryTransferConverter.FromTransfer(clothesTypeShortTransfer.Category));
     }

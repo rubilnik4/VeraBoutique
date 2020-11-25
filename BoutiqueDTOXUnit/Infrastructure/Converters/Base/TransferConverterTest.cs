@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
-using BoutiqueDTO.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Implementations;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base

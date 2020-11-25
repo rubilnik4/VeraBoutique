@@ -7,6 +7,9 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
 {
@@ -25,7 +28,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
-        public override IGenderDomain FromTransfer(GenderTransfer genderTransfer) =>
-            new GenderDomain(genderTransfer.GenderType, genderTransfer.Name);
+        public override IResultValue<IGenderDomain> FromTransfer(GenderTransfer genderTransfer) =>
+            new GenderDomain(genderTransfer.GenderType, genderTransfer.Name).
+            Map(genderDomain => new ResultValue<IGenderDomain>(genderDomain));
     }
 }

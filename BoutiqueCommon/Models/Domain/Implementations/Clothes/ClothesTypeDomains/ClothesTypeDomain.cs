@@ -15,22 +15,23 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
     /// <summary>
     /// Вид одежды. Доменная модель
     /// </summary>
-    public class ClothesTypeDomain : ClothesTypeShortDomain, IClothesTypeDomain
+    public class ClothesTypeDomain : ClothesTypeShortDomain, IClothesTypeDomain, IEquatable<IClothesTypeDomain>
     {
-        public ClothesTypeDomain(IClothesType clothesType, ICategoryDomain category,
-                                     IEnumerable<IGenderDomain> genders)
+        public ClothesTypeDomain(IClothesType clothesType, ICategoryDomain category, IEnumerable<IGenderDomain> genders)
             : this(clothesType.Name, category, genders)
         { }
 
-        public ClothesTypeDomain(IClothesTypeShortDomain clothesTypeShort, IEnumerable<IGenderDomain> genders)
-        : this(clothesTypeShort.Name, clothesTypeShort.Category, genders)
-        { }
-
         public ClothesTypeDomain(string name, ICategoryDomain category, IEnumerable<IGenderDomain> genders)
-        : base(name, category)
+            : base(name)
         {
+            Category = category;
             Genders = genders.ToList();
         }
+
+        /// <summary>
+        /// Категория одежды. Доменная модель
+        /// </summary>
+        public ICategoryDomain Category { get; }
 
         /// <summary>
         /// Типы пола. Доменная модель

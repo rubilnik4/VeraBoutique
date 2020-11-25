@@ -31,9 +31,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
     [ApiController]
-    public abstract class ApiController<TId, TTransfer, TDomain> : ControllerBase, IApiController<TId, TTransfer>
-        where TTransfer : ITransferModel<TId>
-        where TDomain : IDomainModel<TId>
+    public abstract class ApiController<TId, TTransferShort, TTransfer, TDomainShort, TDomain> : 
+        ControllerBase, IApiController<TId, TTransfer>
+        where TTransferShort : ITransferModel<TId>
+        where TTransfer : TTransferShort
+        where TDomainShort : IDomainModel<TId>
+        where TDomain : TDomainShort
         where TId : notnull
     {
         protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,
@@ -79,27 +82,27 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
-        /// Базовый метод полных получения данных
+        /// Базовый метод получения базовых данных
         /// </summary>
-        [HttpGet("main")]
+        [HttpGet("short")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> GetMain() =>
-            await _databaseDatabaseService.GetMain().
+        public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> GetShort() =>
+            await _databaseDatabaseService.GetShort().
             ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
 
         /// <summary>
-        /// Базовый метод получения полных данных по идентификатору
+        /// Базовый метод получения базовых данных по идентификатору
         /// </summary>
-        [HttpGet("main/{id}")]
+        [HttpGet("short/{id}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TTransfer>> GetMain(TId id) =>
-            await _databaseDatabaseService.GetMain(id).
+        public async Task<ActionResult<TTransfer>> GetShort(TId id) =>
+            await _databaseDatabaseService.GetShort(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 

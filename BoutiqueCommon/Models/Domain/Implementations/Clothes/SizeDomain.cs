@@ -2,6 +2,7 @@
 using System.Globalization;
 using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 
@@ -12,6 +13,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// </summary>
     public class SizeDomain : Size, ISizeDomain, IFormattable
     {
+        public SizeDomain(ISize size)
+           : base(size.SizeType, size.SizeName)
+        { }
+
         public SizeDomain(SizeType sizeType, string sizeName)
             : base(sizeType, sizeName)
         { }

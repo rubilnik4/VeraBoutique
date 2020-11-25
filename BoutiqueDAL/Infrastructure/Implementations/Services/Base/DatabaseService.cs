@@ -66,28 +66,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Получить модели из базы
         /// </summary>
-        public async Task<IResultCollection<TDomain>> Get() =>
+        public async Task<IResultCollection<TDomain>> GetShort() =>
             await _dataTable.ToListAsync().
             ResultCollectionBindOkTaskAsync(entities => _entityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить модель из базы по идентификатору
         /// </summary>
-        public async Task<IResultValue<TDomain>> Get(TId id) =>
+        public async Task<IResultValue<TDomain>> GetShort(TId id) =>
             await _dataTable.FindIdAsync(id).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
         /// Получить полные модели из базы
         /// </summary>
-        public async Task<IResultCollection<TDomain>> GetMain() =>
+        public async Task<IResultCollection<TDomain>> Get() =>
             await _dataTable.ToListMainAsync().
             ResultCollectionBindOkTaskAsync(entities => _entityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить  полную модель из базы по идентификатору
         /// </summary>
-        public async Task<IResultValue<TDomain>> GetMain(TId id) =>
+        public async Task<IResultValue<TDomain>> Get(TId id) =>
             await _dataTable.FindIdMainAsync(id).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 

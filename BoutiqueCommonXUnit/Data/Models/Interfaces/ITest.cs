@@ -7,7 +7,7 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая базовая модель
     /// </summary>
-    public interface ITest : IModel<TestEnum>, IEquatable<ITest>
+    public interface ITest : IModel<TestEnum>
     {
         /// <summary>
         /// Тестовое перечисление
@@ -17,6 +17,6 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
         /// <summary>
         /// Тестовое поле
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
     }
 }

@@ -16,22 +16,22 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Получить модели из базы
         /// </summary>
-        Task<IResultCollection<TDomain>> Get();
+        Task<IResultCollection<TDomain>> GetShort();
 
         /// <summary>
         /// Получить модель из базы по идентификатору
         /// </summary>
-        Task<IResultValue<TDomain>> Get(TId id);
+        Task<IResultValue<TDomain>> GetShort(TId id);
 
         /// <summary>
         /// Получить полные модели из базы
         /// </summary>
-        Task<IResultCollection<TDomain>> GetMain();
+        Task<IResultCollection<TDomain>> Get();
 
         /// <summary>
         /// Получить  полную модель из базы по идентификатору
         /// </summary>
-        Task<IResultValue<TDomain>> GetMain(TId id);
+        Task<IResultValue<TDomain>> Get(TId id);
 
         /// <summary>
         /// Загрузить модель в базу

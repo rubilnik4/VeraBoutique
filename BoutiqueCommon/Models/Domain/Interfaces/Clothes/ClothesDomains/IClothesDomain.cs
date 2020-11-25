@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 

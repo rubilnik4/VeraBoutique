@@ -28,7 +28,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<IResultError> putFunc) =>
             new Mock<ITestDatabaseService>().
-            Void(serviceMock => serviceMock.Setup(service => service.Get()).
+            Void(serviceMock => serviceMock.Setup(service => service.GetShort()).
                                             ReturnsAsync(testDomains)).
             Void(serviceMock => serviceMock.Setup(service => service.Put(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(putFunc));

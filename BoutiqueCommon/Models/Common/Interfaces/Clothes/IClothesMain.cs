@@ -1,16 +1,22 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Base;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 
-namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
+namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
 {
     /// <summary>
     /// Одежда
     /// </summary>
-    public interface IClothesShort : IModel<int>
+    public interface IClothesMain : IModel<int>, IEquatable<IClothesMain>
     {
         /// <summary>
         /// Наименование
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Описание
+        /// </summary>
+        string Description { get; }
 
         /// <summary>
         /// Цена

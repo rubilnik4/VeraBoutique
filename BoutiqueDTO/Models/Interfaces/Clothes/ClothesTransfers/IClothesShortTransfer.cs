@@ -1,5 +1,4 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
-using BoutiqueDTO.Models.Interfaces.Base;
+﻿using BoutiqueDTO.Models.Interfaces.Base;
 
 namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers
 {

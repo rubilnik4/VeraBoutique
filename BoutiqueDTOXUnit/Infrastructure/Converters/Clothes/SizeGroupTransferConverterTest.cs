@@ -13,10 +13,25 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
     public class SizeGroupTransferConverterTest
     {
         /// <summary>
+        /// Преобразования модели базовых данных размеров одежды в трансферную модель
+        /// </summary>
+        [Fact]
+        public void SizeGroupShort_ToTransfer_FromTransfer()
+        {
+            var sizeGroup = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupShortTransferConverter = new SizeGroupShortTransferConverter();
+
+            var sizeGroupTransfer = sizeGroupShortTransferConverter.ToTransfer(sizeGroup);
+            var sizeGroupAfterConverter = sizeGroupShortTransferConverter.FromTransfer(sizeGroupTransfer);
+
+            Assert.True(sizeGroup.Equals(sizeGroupAfterConverter));
+        }
+
+        /// <summary>
         /// Преобразования модели размеров одежды в трансферную модель
         /// </summary>
         [Fact]
-        public void ToTransfer_FromTransfer()
+        public void SizeGroup_ToTransfer_FromTransfer()
         {
             var sizeGroup = SizeGroupData.SizeGroupDomain.First();
             var sizeTransferConverter = new SizeTransferConverter();

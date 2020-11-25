@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Категория одежды
     /// </summary>
-    public abstract class Category : ICategory, IEquatable<ICategory>
+    public abstract class Category : ICategory
     {
         protected Category(string name)
         {

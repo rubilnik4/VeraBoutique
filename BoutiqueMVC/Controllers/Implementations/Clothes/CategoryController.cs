@@ -17,7 +17,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи категорий одежды
     /// </summary>
-    public class CategoryController : ApiController<string, CategoryTransfer, ICategoryDomain>
+    public class CategoryController : ApiController<string, CategoryTransfer, CategoryTransfer, ICategoryDomain, ICategoryDomain>
     {
         public CategoryController(ICategoryDatabaseService categoryDatabaseService,
                                   ICategoryTransferConverter categoryTransferConverter)

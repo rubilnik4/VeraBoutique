@@ -6,7 +6,7 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
     /// <summary>
     /// Тестовая вложенная базовая модель
     /// </summary>
-    public class TestInclude : ITestInclude
+    public class TestInclude : ITestInclude, IEquatable<ITestInclude>
     {
         public TestInclude(string name)
         {

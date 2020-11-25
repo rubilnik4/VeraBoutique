@@ -22,7 +22,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать трансферную модель в доменную
         /// </summary>
-        TDomain FromTransfer(TTransfer transfer);
+        IResultValue<TDomain> FromTransfer(TTransfer transfer);
 
         /// <summary>
         /// Преобразовать доменную модель в трансферную модель
@@ -32,7 +32,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать трансферные модели в доменные
         /// </summary>
-        IEnumerable<TDomain> FromTransfers(IEnumerable<TTransfer> transfers);
+        IResultCollection<TDomain> FromTransfers(IEnumerable<TTransfer> transfers);
 
         /// <summary>
         /// Преобразовать доменные модели в трансферную модели

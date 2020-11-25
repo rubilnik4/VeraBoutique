@@ -10,7 +10,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи размеров одежды
     /// </summary>
-    public class SizeController : ApiController<(SizeType, string), SizeTransfer, ISizeDomain>
+    public class SizeController : ApiController<(SizeType, string), SizeTransfer, SizeTransfer, ISizeDomain, ISizeDomain>
     {
         public SizeController(ISizeDatabaseService sizeDatabaseService,
                               ISizeTransferConverter sizeTransferConverter)

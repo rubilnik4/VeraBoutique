@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;

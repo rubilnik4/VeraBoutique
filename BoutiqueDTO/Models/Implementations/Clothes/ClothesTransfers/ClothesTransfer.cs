@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
@@ -57,12 +56,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         /// Вид одежды
         /// </summary>
         [Required]
-        public IReadOnlyCollection<ColorClothesTransfer> Colors { get; } = new List<ColorClothesTransfer>();
+        public IReadOnlyCollection<ColorClothesTransfer> Colors { get; } = null!;
 
         /// <summary>
         /// Размеры
         /// </summary>
         [Required]
-        public IReadOnlyCollection<SizeGroupTransfer> SizeGroups { get; } = new List<SizeGroupTransfer>();
+        public IReadOnlyCollection<SizeGroupTransfer> SizeGroups { get; } = null!;
     }
 }

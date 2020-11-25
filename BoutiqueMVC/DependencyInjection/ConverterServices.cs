@@ -31,6 +31,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IClothesTypeShortTransferConverter, ClothesTypeShortTransferConverter>();
             services.AddTransient<ICategoryTransferConverter, CategoryTransferConverter>();
             services.AddTransient<ISizeTransferConverter, SizeTransferConverter>();
+            services.AddTransient<ISizeGroupShortTransferConverter, SizeGroupShortTransferConverter>();
             services.AddTransient<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
             services.AddTransient<IColorClothesTransferConverter, ColorClothesTransferConverter>();
             services.AddTransient<IClothesShortTransferConverter, ClothesShortTransferConverter>();

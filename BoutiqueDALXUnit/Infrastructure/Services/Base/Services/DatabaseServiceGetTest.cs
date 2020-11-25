@@ -32,7 +32,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.Get();
+            var testResult = await testService.GetShort();
             var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value);
 
             Assert.True(testResult.OkStatus);
@@ -53,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.Get();
+            var testResult = await testService.GetShort();
 
             Assert.True(testResult.HasErrors);
             Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
@@ -72,7 +72,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.Get(It.IsAny<TestEnum>());
+            var testResult = await testService.GetShort(It.IsAny<TestEnum>());
             var testEntitiesGet = testConverter.FromEntity(SearchInEntities.FirstEntity(testResultEntities.Value, 
                                                                                         testResult.Value.Id));
 
@@ -94,7 +94,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, 
                                                                          testConverter);
 
-            var testResult = await testService.Get(It.IsAny<TestEnum>());
+            var testResult = await testService.GetShort(It.IsAny<TestEnum>());
 
             Assert.True(testResult.HasErrors);
             Assert.Equal(ErrorResultType.ValueNotFound, testResult.Errors.First().ErrorResultType);

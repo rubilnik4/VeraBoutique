@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;

@@ -7,11 +7,11 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая вложенная базовая модель
     /// </summary>
-    public interface ITestInclude : IModel<string>, IEquatable<ITestInclude>
+    public interface ITestInclude : IModel<string>
     {
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; }
+        string Name { get; }
     }
 }

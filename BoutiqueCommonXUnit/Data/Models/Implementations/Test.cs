@@ -6,7 +6,7 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
     /// <summary>
     /// Тестовая базовая модель
     /// </summary>
-    public class Test: ITest 
+    public class Test: ITest, IEquatable<ITest>
     {
         public Test(TestEnum testEnum, string name)
         {
@@ -27,14 +27,14 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
         /// <summary>
         /// Тестовое поле
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object obj) => obj is ITest testEntity && Equals(testEntity);
+        public override bool Equals(object? obj) => obj is ITest testEntity && Equals(testEntity);
 
-        public bool Equals(ITest other) =>
+        public bool Equals(ITest? other) =>
             other?.TestEnum == TestEnum &&
-            other.Name == Name;
+            other?.Name == Name;
 
         // ReSharper disable once NonReadonlyMemberInGetHashCode
         public override int GetHashCode() => HashCode.Combine(TestEnum, Name);

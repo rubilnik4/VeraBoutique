@@ -12,41 +12,12 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
     /// </summary>
     public class ClothesTypeShortDomain : ClothesType, IClothesTypeShortDomain
     {
-        public ClothesTypeShortDomain(IClothesType clothesType, ICategoryDomain category)
-            : this(clothesType.Name, category)
+        public ClothesTypeShortDomain(IClothesType clothesType)
+            : this(clothesType.Name)
         { }
 
-        public ClothesTypeShortDomain(string name, ICategoryDomain category)
+        public ClothesTypeShortDomain(string name)
           : base(name)
-        {
-            Category = category;
-        }
-
-        /// <summary>
-        /// Категория одежды. Доменная модель
-        /// </summary>
-        public ICategoryDomain Category { get; }
-
-        /// <summary>
-        /// Преобразовать в полную версию
-        /// </summary>
-        public IClothesTypeDomain ToClothesTypeDomain(IGenderDomain genders) =>
-            ToClothesTypeDomain(new List<IGenderDomain> { genders });
-
-        /// <summary>
-        /// Преобразовать в полную версию
-        /// </summary>
-        public IClothesTypeDomain ToClothesTypeDomain(IEnumerable<IGenderDomain> genders) =>
-            new ClothesTypeDomain(this, genders);
-
-        #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesTypeShortDomain clothesTypeDomain && Equals(clothesTypeDomain);
-
-        public bool Equals(IClothesTypeShortDomain? other) =>
-            other?.Id == Id &&
-            other?.Category.Equals(Category) == true;
-
-        public override int GetHashCode() => HashCode.Combine(Name, Category.GetHashCode());
-        #endregion
+        { }
     }
 }
