@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Группа размеров одежды разного типа
     /// </summary>
-    public interface ISizeGroup: IModel<(ClothesSizeType, int)>, IEquatable<ISizeGroup>
+    public interface ISizeGroup: IModel<(ClothesSizeType, int)>
     {
         /// <summary>
         /// Тип одежды для определения размера

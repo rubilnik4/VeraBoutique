@@ -33,8 +33,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [ApiController]
     public abstract class ApiController<TId, TTransferShort, TTransfer, TDomainShort, TDomain> : 
         ControllerBase, IApiController<TId, TTransfer>
-        where TTransferShort : ITransferModel<TId>
-        where TTransfer : TTransferShort
+        where TTransferShort : 
+        where TTransfer : ITransferModel<TId>
         where TDomainShort : IDomainModel<TId>
         where TDomain : TDomainShort
         where TId : notnull

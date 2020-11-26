@@ -16,7 +16,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
     /// </summary>
     public interface ITransferConverter<TId, TDomain, TTransfer>
         where TDomain : IDomainModel<TId>
-        where TTransfer : ITransferModel<TId>
+        where TTransfer : class, ITransferModel<TId>
         where TId: notnull
     {
         /// <summary>
@@ -38,5 +38,15 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         /// Преобразовать доменные модели в трансферную модели
         /// </summary>
         IEnumerable<TTransfer> ToTransfers(IEnumerable<TDomain> domains);
+
+        /// <summary>
+        /// Преобразовать тип пола одежды в доменную модель
+        /// </summary>
+        IResultValue<TDomain> GetDomain(TTransfer? transfer);
+
+        /// <summary>
+        /// Преобразовать типы пола одежды в доменную модель
+        /// </summary>
+        IResultCollection<TDomain> GetDomains(IEnumerable<TTransfer>? transfers);
     }
 }

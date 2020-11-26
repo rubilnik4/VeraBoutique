@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Одежда
     /// </summary>
-    public abstract class ClothesMain : IClothesMain
+    public abstract class ClothesMain : IClothesMain, IEquatable<IClothesMain>
     {
         protected ClothesMain(int id, string name, string description, decimal price, byte[]? image)
         {

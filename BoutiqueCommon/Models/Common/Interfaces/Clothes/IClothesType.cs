@@ -8,7 +8,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Вид одежды
     /// </summary>
-    public interface IClothesType : IModel<string>, IEquatable<IClothesType>
+    public interface IClothesType : IModel<string>
     {
         /// <summary>
         /// Наименование

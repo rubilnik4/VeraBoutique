@@ -9,6 +9,11 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers
     public interface IClothesTypeTransfer : IClothesTypeShortTransfer
     {
         /// <summary>
+        /// Категория одежды. Трансферная модель
+        /// </summary>
+        CategoryTransfer Category { get; }
+
+        /// <summary>
         /// Типы пола. Трансферная модель
         /// </summary>
         IReadOnlyCollection<GenderTransfer> Genders { get; }

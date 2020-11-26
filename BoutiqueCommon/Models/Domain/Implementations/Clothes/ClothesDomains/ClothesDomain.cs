@@ -12,14 +12,14 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
     public class ClothesDomain : ClothesMain, IClothesDomain
     {
-        public ClothesDomain(IClothesMain clothes, string description,
+        public ClothesDomain(IClothesMain clothes, 
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
-           : this(clothes.Id, clothes.Name, clothes.Price, clothes.Image,
-                  description, gender, clothesTypeShort, colors, sizeGroups)
+           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
+                  gender, clothesTypeShort, colors, sizeGroups)
         { }
 
-        public ClothesDomain(int id, string name, decimal price, byte[]? image, string description,
+        public ClothesDomain(int id, string name, string description, decimal price, byte[]? image,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
             : base(id, name, description, price, image)

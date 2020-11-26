@@ -4,6 +4,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers
@@ -14,28 +16,17 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     public class ClothesTypeShortTransferConverter : TransferConverter<string, IClothesTypeShortDomain, ClothesTypeShortTransfer>,
                                                      IClothesTypeShortTransferConverter
     {
-        public ClothesTypeShortTransferConverter(ICategoryTransferConverter categoryTransferConverter)
-        {
-            _categoryTransferConverter = categoryTransferConverter;
-        }
-
-        /// <summary>
-        /// Конвертер категорий одежды в трансферную модель
-        /// </summary>
-        private readonly ICategoryTransferConverter _categoryTransferConverter;
-
         /// <summary>
         /// Преобразовать пол в трансферную модель
         /// </summary>
         public override ClothesTypeShortTransfer ToTransfer(IClothesTypeShortDomain clothesTypeShortDomain) =>
-            new ClothesTypeShortTransfer(clothesTypeShortDomain,
-                                         _categoryTransferConverter.ToTransfer(clothesTypeShortDomain.Category));
+            new ClothesTypeShortTransfer(clothesTypeShortDomain);
 
         /// <summary>
         /// Преобразовать пол из трансферной модели
         /// </summary>
         public override IResultValue<IClothesTypeShortDomain> FromTransfer(ClothesTypeShortTransfer clothesTypeShortTransfer) =>
-            new ClothesTypeShortDomain(clothesTypeShortTransfer, 
-                                       _categoryTransferConverter.FromTransfer(clothesTypeShortTransfer.Category));
+            new ClothesTypeShortDomain(clothesTypeShortTransfer).
+            Map(clothesTypeShort => new ResultValue<IClothesTypeShortDomain>(clothesTypeShort));
     }
 }

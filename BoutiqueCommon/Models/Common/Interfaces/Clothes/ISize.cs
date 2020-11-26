@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public interface ISize: IModel<(SizeType, string)>, IEquatable<ISize>
+    public interface ISize: IModel<(SizeType, string)>
     {
         /// <summary>
         /// Тип размера одежды

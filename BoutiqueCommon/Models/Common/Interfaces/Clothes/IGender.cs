@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Тип пола
     /// </summary>
-    public interface IGender: IModel<GenderType>, IEquatable<IGender>
+    public interface IGender: IModel<GenderType>
     {
         /// <summary>
         /// Тип пола

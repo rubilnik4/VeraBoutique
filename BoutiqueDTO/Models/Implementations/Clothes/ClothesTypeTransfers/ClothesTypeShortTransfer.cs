@@ -12,14 +12,13 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
         public ClothesTypeShortTransfer()
         { }
 
-        public ClothesTypeShortTransfer(IClothesType clothesType, CategoryTransfer category)
-          : this(clothesType.Name, category)
+        public ClothesTypeShortTransfer(IClothesType clothesType)
+          : this(clothesType.Name)
         { }
 
-        public ClothesTypeShortTransfer(string name, CategoryTransfer category)
+        public ClothesTypeShortTransfer(string name)
         {
             Name = name;
-            Category = category;
         }
 
         /// <summary>
@@ -32,11 +31,5 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
         /// </summary>
         [Required]
         public string Name { get; set; } = null!;
-
-        /// <summary>
-        /// Категория одежды. Трансферная модель
-        /// </summary>
-        [Required]
-        public CategoryTransfer Category { get; } = null!;
     }
 }

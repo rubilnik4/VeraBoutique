@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Вид одежды
     /// </summary>
-    public abstract class ClothesType: IClothesType
+    public abstract class ClothesType: IClothesType, IEquatable<IClothesType>
     {
         protected ClothesType(string name)
         {

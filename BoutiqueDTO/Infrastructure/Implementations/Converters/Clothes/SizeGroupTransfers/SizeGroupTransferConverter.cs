@@ -49,7 +49,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         public override IResultValue<ISizeGroupDomain> FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
             GetSizeGroupFunc(sizeGroupTransfer).
-            ResultCurryOkBind(GetSizes(sizeGroupTransfer.Sizes)).
+            ResultCurryOkBind(_sizeTransferConverter.GetDomains(sizeGroupTransfer.Sizes)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>
@@ -58,13 +58,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroup sizeGroup) =>
             new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
                 sizes => new SizeGroupDomain(sizeGroup, sizes));
-
-        /// <summary>
-        /// Преобразовать пол одежды в доменную модель
-        /// </summary>
-        private IResultCollection<ISizeDomain> GetSizes(IEnumerable<SizeTransfer>? sizeTransfers) =>
-            sizeTransfers.
-            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeTransfers))).
-            ResultValueBindOkToCollection(sizes => _sizeTransferConverter.FromTransfers(sizes));
     }
 }

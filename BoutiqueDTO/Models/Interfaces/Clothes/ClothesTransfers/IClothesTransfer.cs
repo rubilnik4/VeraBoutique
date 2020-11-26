@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
@@ -8,7 +9,7 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers
     /// <summary>
     /// Одежда. Доменная модель
     /// </summary>
-    public interface IClothesTransfer: IClothesMain, IClothesShortTransfer
+    public interface IClothesTransfer: IClothesShortTransfer
     {
         /// <summary>
         /// Пол одежды

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
@@ -15,30 +16,23 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesTransfer()
         { }
 
-        public ClothesTransfer(IClothesShort clothesShort, string description,
+        public ClothesTransfer(IClothesMain clothes,
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
                                IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
-            :this(clothesShort.Id, clothesShort.Name, clothesShort.Price, clothesShort.Image,
-                  description, gender, clothesTypeShort, colors, sizes)
+            :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
+                  gender, clothesTypeShort, colors, sizes)
         { }
 
-        public ClothesTransfer(int id, string name, decimal price, byte[]? image, string description,
+        public ClothesTransfer(int id, string name, string description, decimal price, byte[]? image, 
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort, 
                                IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
-            : base(id, name, price, image)
+            : base(id, name, description, price, image)
         {
-            Description = description;
             Gender = gender;
             ClothesTypeShort = clothesTypeShort;
             Colors = colors.ToList();
             SizeGroups = sizes.ToList();
         }
-
-        /// <summary>
-        /// Описание
-        /// </summary>
-        [Required]
-        public string Description { get; } = null!;
 
         /// <summary>
         /// Пол одежды

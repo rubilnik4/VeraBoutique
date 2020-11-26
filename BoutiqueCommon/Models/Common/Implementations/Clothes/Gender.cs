@@ -11,7 +11,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Пол для одежды
     /// </summary>
-    public abstract class Gender: IGender
+    public abstract class Gender: IGender, IEquatable<IGender>
     {
         protected Gender(GenderType genderType, string name)
         {

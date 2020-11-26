@@ -3,6 +3,9 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers
 {
@@ -16,14 +19,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
         public override ClothesShortTransfer ToTransfer(IClothesShortDomain clothesShortDomain) =>
-            new ClothesShortTransfer(clothesShortDomain.Id, clothesShortDomain.Name, 
-                                     clothesShortDomain.Price, clothesShortDomain.Image);
+            new ClothesShortTransfer(clothesShortDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
-        public override IClothesShortDomain FromTransfer(ClothesShortTransfer clothesShortTransfer) =>
+        public override IResultValue<IClothesShortDomain> FromTransfer(ClothesShortTransfer clothesShortTransfer) =>
             new ClothesShortDomain(clothesShortTransfer.Id, clothesShortTransfer.Name,
-                                   clothesShortTransfer.Price, clothesShortTransfer.Image);
+                                   clothesShortTransfer.Price, clothesShortTransfer.Image).
+            Map(clothesShort => new ResultValue<IClothesShortDomain>(clothesShort));
     }
 }

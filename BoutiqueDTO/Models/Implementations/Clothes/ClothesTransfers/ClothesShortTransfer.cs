@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
@@ -11,10 +12,15 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesShortTransfer()
         { }
 
-        public ClothesShortTransfer(int id, string name, decimal price, byte[]? image)
+        public ClothesShortTransfer(IClothesMain clothes)
+            :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image)
+        { }
+
+        public ClothesShortTransfer(int id, string name, string description, decimal price, byte[]? image)
         {
             Id = id;
             Name = name;
+            Description = description;
             Price = price;
             Image = image;
         }
@@ -32,6 +38,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public string Name { get; } = null!;
 
         /// <summary>
+        /// Описание
+        /// </summary>
+        [Required]
+        public string Description { get; } = null!;
+
+        /// <summary>
         /// Цена
         /// </summary>
         [Required]
@@ -40,6 +52,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         /// <summary>
         /// Изображение
         /// </summary>
+        [Required]
         public byte[]? Image { get; }
     }
 }
