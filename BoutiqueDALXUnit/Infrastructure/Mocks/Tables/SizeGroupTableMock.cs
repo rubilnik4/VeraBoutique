@@ -4,6 +4,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using Functional.FunctionalExtensions.Sync;
 using MockQueryable.Moq;
 using Moq;

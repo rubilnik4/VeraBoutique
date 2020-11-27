@@ -31,12 +31,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
     [ApiController]
-    public abstract class ApiController<TId, TTransferShort, TTransfer, TDomainShort, TDomain> : 
+    public abstract class ApiController<TId, TTransfer,  TDomain> : 
         ControllerBase, IApiController<TId, TTransfer>
-        where TTransferShort : 
-        where TTransfer : ITransferModel<TId>
-        where TDomainShort : IDomainModel<TId>
-        where TDomain : TDomainShort
+        where TTransfer : class, ITransferModel<TId>
+        where TDomain : IDomainModel<TId>
         where TId : notnull
     {
         protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,
@@ -82,31 +80,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
-        /// Базовый метод получения базовых данных
-        /// </summary>
-        [HttpGet("short")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> GetShort() =>
-            await _databaseDatabaseService.GetShort().
-            ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
-            ToActionResultCollectionTaskAsync<TId, TTransfer>();
-
-        /// <summary>
-        /// Базовый метод получения базовых данных по идентификатору
-        /// </summary>
-        [HttpGet("short/{id}")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TTransfer>> GetShort(TId id) =>
-            await _databaseDatabaseService.GetShort(id).
-            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
-            ToActionResultValueTaskAsync<TId, TTransfer>();
-
-        /// <summary>
         /// Записать данные
         /// </summary>
         [HttpPost]
@@ -115,7 +88,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
             await _transferConverter.FromTransfer(transfer).
-            MapAsync(domain => _databaseDatabaseService.Post(domain)).
+            ResultValueBindOkAsync(domain => _databaseDatabaseService.Post(domain)).
             ResultValueOkTaskAsync(id => GetCreateAction(id, transfer)).
             ToCreateActionResultTaskAsync();
 
@@ -128,7 +101,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).
-            MapAsync(domains => _databaseDatabaseService.Post(domains)).
+            ResultCollectionBindOkAsync(domains => _databaseDatabaseService.Post(domains)).
             ResultCollectionOkToValueTaskAsync(ids => GetCreateAction(ids, transfers)).
             ToCreateActionResultTaskAsync();
 
@@ -141,7 +114,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(TTransfer transfer) =>
-             await _databaseDatabaseService.Put(_transferConverter.FromTransfer(transfer)).
+             await _transferConverter.FromTransfer(transfer).
+             ResultValueBindErrorsOkAsync(domain => _databaseDatabaseService.Put(domain)).
+             ToResultErrorTaskAsync().
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
@@ -165,7 +140,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Validate(TTransfer transfer) =>
-             await _databaseDatabaseService.Validate(_transferConverter.FromTransfer(transfer)).
+             await _transferConverter.FromTransfer(transfer).
+             ResultValueBindErrorsOkAsync(domain => _databaseDatabaseService.Validate(domain)).
+             ToResultErrorTaskAsync().
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
@@ -177,7 +154,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Validates(IList<TTransfer> transfers) =>
-             await _databaseDatabaseService.Validate(_transferConverter.FromTransfers(transfers)).
+             await _transferConverter.FromTransfers(transfers).
+             ResultCollectionBindErrorsOkAsync(domains => _databaseDatabaseService.Validate(domains)).
+             ToResultErrorTaskAsync().
              ToNoContentActionResultTaskAsync();
 
         /// <summary>

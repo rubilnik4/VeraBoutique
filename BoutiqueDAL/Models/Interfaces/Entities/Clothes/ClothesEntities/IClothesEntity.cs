@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
@@ -9,7 +10,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
     /// <summary>
     /// Одежда. Информация. Сущность базы данных
     /// </summary>
-    public interface IClothesEntity : IClothesMain, IClothesShortEntity
+    public interface IClothesEntity : IClothesShortEntity
     {
         /// <summary>
         /// Идентификатор связующей сущности типа одежды

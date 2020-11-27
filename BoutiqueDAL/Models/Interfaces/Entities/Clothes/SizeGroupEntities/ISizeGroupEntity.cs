@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
-namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
+namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.SizeGroupEntities
 {
     /// <summary>
     /// Группа размеров одежды. Сущность базы данных

@@ -14,39 +14,33 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
-        public ClothesTypeEntity(string name, string categoryName)
-            : this(name, categoryName, null,
-                   Enumerable.Empty<ClothesEntity>(),
-                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>())
-        { }
-
-
-        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity category,
-                                 IEnumerable<ClothesEntity> clothes,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
-          : this(clothesType, category.Name, category, clothes, clothesTypeGenderComposites)
-        { }
-
         public ClothesTypeEntity(IClothesType clothesType,
-                                 string categoryName, CategoryEntity? category,
-                                 IEnumerable<ClothesEntity>? clothes,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
-          : this(clothesType.Name, categoryName, category, clothes, clothesTypeGenderComposites)
+                                 string categoryName, CategoryEntity category,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites, 
+                                 IEnumerable<ClothesEntity> clothes)
+          : this(clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes)
         { }
 
-        public ClothesTypeEntity(IClothesTypeShortEntity clothesTypeShort,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
-        : this(clothesTypeShort.Name, clothesTypeShort.CategoryName, clothesTypeShort.Category,
-               clothesTypeShort.Clothes, clothesTypeGenderComposites)
-        { }
-
-        public ClothesTypeEntity(string name, string categoryName, CategoryEntity? category,
-                                 IEnumerable<ClothesEntity>? clothes,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
-           : base(name, categoryName, category, clothes)
+        public ClothesTypeEntity(string name, string categoryName,
+                                 CategoryEntity? category,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites,
+                                 IEnumerable<ClothesEntity>? clothes)
+           : base(name, clothes)
         {
+            CategoryName = categoryName;
+            Category = category;
             ClothesTypeGenderComposites = clothesTypeGenderComposites?.ToList();
         }
+
+        /// <summary>
+        /// Идентификатор связующей сущности категории одежды
+        /// </summary>
+        public string CategoryName { get; }
+
+        /// <summary>
+        /// Связующая сущность категории одежды
+        /// </summary>
+        public CategoryEntity? Category { get; }
 
         /// <summary>
         /// Связующие сущности пола и вида одежды

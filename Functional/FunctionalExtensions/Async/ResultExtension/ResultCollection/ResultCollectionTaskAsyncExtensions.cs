@@ -14,5 +14,12 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
        /// </summary>
         public static async Task<IResultValue<IReadOnlyCollection<TValue>>> ToResultValue<TValue>(this Task<IResultCollection<TValue>> @this) =>
             await @this.MapTaskAsync(awaitedThis => awaitedThis.ToResultValue());
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ
+        /// </summary>      
+        public static async Task<IResultError> ToResultErrorTaskAsync<TValue>(this Task<IResultCollection<TValue>> @this) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis);
     }
 }

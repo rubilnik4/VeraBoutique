@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTab
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes

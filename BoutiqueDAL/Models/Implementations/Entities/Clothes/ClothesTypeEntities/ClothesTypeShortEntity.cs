@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
@@ -12,28 +13,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeShortEntity : ClothesType, IClothesTypeShortEntity
     {
-        public ClothesTypeShortEntity(string name, string categoryName)
-          : this(name, categoryName, null, Enumerable.Empty<ClothesEntity>())
+        public ClothesTypeShortEntity(IClothesType clothesType, IEnumerable<ClothesEntity> clothesEntities)
+            : this(clothesType.Name, clothesEntities)
         { }
 
-        public ClothesTypeShortEntity(string name, string categoryName, CategoryEntity? category,
-                                      IEnumerable<ClothesEntity>? clothes)
+        public ClothesTypeShortEntity(string name, IEnumerable<ClothesEntity>? clothes)
            : base(name)
         {
-            CategoryName = categoryName;
-            Category = category;
             Clothes = clothes?.ToList();
         }
-
-        /// <summary>
-        /// Идентификатор связующей сущности категории одежды
-        /// </summary>
-        public string CategoryName { get; }
-
-        /// <summary>
-        /// Связующая сущность категории одежды
-        /// </summary>
-        public CategoryEntity? Category { get; }
 
         /// <summary>
         /// Связующие сущности категории и одежды

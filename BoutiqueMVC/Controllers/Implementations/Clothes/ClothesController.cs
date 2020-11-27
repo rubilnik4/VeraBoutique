@@ -24,7 +24,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи информации об одежде
     /// </summary>
-    public class ClothesController : ApiController<int, ClothesShortTransfer, ClothesTransfer, IClothesShortDomain, IClothesDomain>
+    public class ClothesController : ApiController<int, ClothesTransfer, IClothesDomain>
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesShortTransferConverter clothesShortTransferConverter,

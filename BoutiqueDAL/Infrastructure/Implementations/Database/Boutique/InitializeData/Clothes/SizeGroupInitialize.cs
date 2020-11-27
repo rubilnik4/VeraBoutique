@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using Functional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes

@@ -14,6 +14,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Async;
 using Functional.Models.Interfaces.Result;

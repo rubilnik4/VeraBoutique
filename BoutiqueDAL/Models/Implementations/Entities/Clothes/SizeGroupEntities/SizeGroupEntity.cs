@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes.SizeGroupEntities;
 
-namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
+namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
 {
     /// <summary>
     /// Группа размеров одежды. Сущность базы данных
     /// </summary>
-    public class SizeGroupEntity : SizeGroup, ISizeGroupEntity
+    public class SizeGroupEntity : SizeGroupShortEntity, ISizeGroupEntity
     {
-        public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
-           : this(clothesSizeType, sizeNormalize, 
-                  Enumerable.Empty<SizeGroupCompositeEntity>(), Enumerable.Empty<ClothesSizeGroupCompositeEntity>())
-        { }
-
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,
                                IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-         : this(clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, Enumerable.Empty<ClothesSizeGroupCompositeEntity>())
+         : this(clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, null)
         { }
 
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,

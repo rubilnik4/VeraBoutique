@@ -2,7 +2,9 @@
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using Functional.Models.Enums;
 using Xunit;

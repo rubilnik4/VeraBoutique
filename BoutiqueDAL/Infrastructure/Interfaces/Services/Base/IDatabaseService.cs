@@ -14,16 +14,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         where TId : notnull
     {
         /// <summary>
-        /// Получить модели из базы
-        /// </summary>
-        Task<IResultCollection<TDomain>> GetShort();
-
-        /// <summary>
-        /// Получить модель из базы по идентификатору
-        /// </summary>
-        Task<IResultValue<TDomain>> GetShort(TId id);
-
-        /// <summary>
         /// Получить полные модели из базы
         /// </summary>
         Task<IResultCollection<TDomain>> Get();
