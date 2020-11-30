@@ -38,6 +38,6 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                                   IEnumerable<ISizeDomain> sizes) =>
             sizes.Select(size => new SizeGroupCompositeEntity(size.SizeType, size.SizeName, clothesSizeType, sizeNormalize,
                                                               new SizeEntity(size.SizeType, size.SizeName),
-                                                              new SizeGroupEntity(clothesSizeType, sizeNormalize)));
+                                                              null));
     }
 }

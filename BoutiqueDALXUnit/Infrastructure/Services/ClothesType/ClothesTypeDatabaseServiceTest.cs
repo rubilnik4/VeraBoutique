@@ -64,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(database.Object,
                                                                             GetDatabaseValidationService(),
                                                                             clothesTypeEntityConverter,
-                                                                            ClothesTypeShortEntityConverterMock.ClothesTypeShortEntityConverter);
+                                                                            ClothesTypeEntityConverterMock.ClothesTypeShortEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
             var clothesTypesDomains = clothesTypeEntityConverter.FromEntities(clothesTypeEntities);
@@ -92,7 +92,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(database.Object,
                                                                             GetDatabaseValidationService(),
                                                                             ClothesTypeEntityConverterMock.ClothesTypeEntityConverter,
-                                                                            ClothesTypeShortEntityConverterMock.ClothesTypeShortEntityConverter);
+                                                                            ClothesTypeEntityConverterMock.ClothesTypeShortEntityConverter);
 
             var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
 

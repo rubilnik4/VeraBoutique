@@ -86,7 +86,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesDomain clothesDomain) =>
-            new ClothesEntity(clothesDomain,
+            ClothesEntity.GetClothesEntity(clothesDomain,
                               _genderEntityConverter.ToEntity(clothesDomain.Gender),
                               ToClothesTypeEntity(clothesDomain.ClothesTypeShort),
                               ColorClothesToComposite(clothesDomain.Colors, clothesDomain.Id),

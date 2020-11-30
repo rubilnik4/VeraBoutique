@@ -54,18 +54,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// </summary>
         protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
                                                                                IClothesDomain domain) =>
-           clothes => domain.Id == clothes.Id &&
-                      domain.Gender.GenderType == clothes.GenderType &&
-                      domain.ClothesTypeShort.Name == clothes.ClothesTypeName;
+           clothes => domain.Id == clothes.Id;
 
         /// <summary>
         /// Функция для проверки наличия
         /// </summary>
         protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
                                                                                IReadOnlyCollection<IClothesDomain> domains) =>
-           clothes => domains.Select(domain => domain.Id).Contains(clothes.Id) &&
-                      domains.Select(domain => domain.Gender.GenderType).Contains(clothes.GenderType) &&
-                      domains.Select(domain => domain.ClothesTypeShort.Name).Contains(clothes.ClothesTypeName);
+           clothes => domains.Select(domain => domain.Id).Contains(clothes.Id);
 
         /// <summary>
         /// Функция проверки наличия вложенных сущностей

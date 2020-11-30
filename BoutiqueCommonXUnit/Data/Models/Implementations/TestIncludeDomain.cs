@@ -7,6 +7,10 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
     /// </summary>
     public class TestIncludeDomain: TestInclude, ITestIncludeDomain
     {
+        public TestIncludeDomain(ITestInclude testInclude)
+          : base(testInclude.Name)
+        { }
+
         public TestIncludeDomain(string name) 
             :base(name)
         { }

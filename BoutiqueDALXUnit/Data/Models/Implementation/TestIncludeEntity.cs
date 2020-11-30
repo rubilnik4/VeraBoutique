@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDALXUnit.Data.Models.Implementation
@@ -9,12 +10,16 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
     /// </summary>
     public class TestIncludeEntity : TestInclude, IEntityModel<string>
     {
-        public TestIncludeEntity(string name)
-            :this(name,  null)
+        public TestIncludeEntity(ITestInclude testInclude)
+           : this(testInclude.Name)
         { }
 
-        public TestIncludeEntity(string name,TestEntity? testEntity )
-            :base(name)
+        public TestIncludeEntity(string name)
+            : this(name, null)
+        { }
+
+        public TestIncludeEntity(string name, TestEntity? testEntity)
+            : base(name)
         {
             TestId = testEntity?.Id;
             TestEntity = testEntity;

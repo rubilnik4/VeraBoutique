@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables;
 using Functional.Models.Enums;
@@ -25,7 +26,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateService();
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, 
                                                                          validateService.Object, testConverter);
 
@@ -45,7 +46,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateServiceDuplicate(DatabaseValidateServiceMock.DuplicateFunc());
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 
@@ -65,7 +66,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateServiceValidateValue(DatabaseValidateServiceMock.NonValidFunc());
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 
@@ -85,7 +86,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateService();
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 
@@ -105,7 +106,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateServiceDuplicates(DatabaseValidateServiceMock.DuplicatesFunc());
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 
@@ -125,7 +126,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var validateService = DatabaseValidateServiceMock.GetDatabaseValidateServiceValidateCollection(DatabaseValidateServiceMock.NonValidCollectionFunc());
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 

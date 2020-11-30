@@ -5,6 +5,7 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables;
 using Functional.Models.Enums;
@@ -28,11 +29,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testResultEntities = TestEntitiesData.TestResultEntities;
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.GetShort();
+            var testResult = await testService.Get();
             var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value);
 
             Assert.True(testResult.OkStatus);
@@ -49,11 +50,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.GetShort();
+            var testResult = await testService.Get();
 
             Assert.True(testResult.HasErrors);
             Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
@@ -68,11 +69,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testResultEntities = TestEntitiesData.TestResultEntities;
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
-            var testResult = await testService.GetShort(It.IsAny<TestEnum>());
+            var testResult = await testService.Get(It.IsAny<TestEnum>());
             var testEntitiesGet = testConverter.FromEntity(SearchInEntities.FirstEntity(testResultEntities.Value, 
                                                                                         testResult.Value.Id));
 
@@ -90,11 +91,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities,
                                                                           DatabaseTableGetMock.FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, 
                                                                          testConverter);
 
-            var testResult = await testService.GetShort(It.IsAny<TestEnum>());
+            var testResult = await testService.Get(It.IsAny<TestEnum>());
 
             Assert.True(testResult.HasErrors);
             Assert.Equal(ErrorResultType.ValueNotFound, testResult.Errors.First().ErrorResultType);

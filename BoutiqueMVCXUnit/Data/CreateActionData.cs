@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDTO.Data.Models.Interfaces;
+using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Sync;
 

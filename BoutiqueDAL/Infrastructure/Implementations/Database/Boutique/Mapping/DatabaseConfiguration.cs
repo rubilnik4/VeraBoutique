@@ -62,7 +62,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.Entity<ClothesTypeGenderCompositeEntity>().HasData(ClothesTypeInitialize.ClothesTypeData);
             modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);
             modelBuilder.Entity<SizeGroupEntity>().HasData(SizeGroupInitialize.SizeGroupData);
-            modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupCompositeInitialize.CompositeSizeData);
+            modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupInitialize.CompositeSizeData);
         }
     }
 }

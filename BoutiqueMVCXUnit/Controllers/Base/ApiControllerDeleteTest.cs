@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDTO.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
@@ -27,12 +29,13 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDelete = testDomains.Value.Last();
             var testDeleteId = testDelete.Id;
             var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Delete(testDeleteId);
+            var testsAfter = testTransferConverter.FromTransfer(actionResult.Value);
 
-            Assert.True(actionResult.Value.Equals(testDelete));
+            Assert.True(testsAfter.Value.Equals(testDelete));
         }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDelete = TestData.TestDomains.Last();
             var testDeleteId = testDelete.Id;
             var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Delete(testDeleteId);
@@ -68,7 +71,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDelete = testDomains.Value.Last();
             var testDeleteId = testDelete.Id;
             var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains, DatabaseServiceDeleteMock.DeleteNotFoundFunc());
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Delete(testDeleteId);

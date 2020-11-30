@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDTO.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
@@ -25,13 +27,13 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         {
             var testDomains = TestData.TestResultDomains;
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Get();
             var testsAfter = testTransferConverter.FromTransfers(actionResult.Value);
 
-            Assert.True(testsAfter.SequenceEqual(testDomains.Value));
+            Assert.True(testsAfter.Value.SequenceEqual(testDomains.Value));
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Get();
@@ -65,13 +67,13 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testGet = testDomains.Value.Last();
             var testGetId = testGet.Id;
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Get(testGetId);
             var testAfter = testTransferConverter.FromTransfer(actionResult.Value);
 
-            Assert.True(testAfter.Equals(testGet));
+            Assert.True(testAfter.Value.Equals(testGet));
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Get(testGetId);
@@ -106,7 +108,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var initialError = ErrorData.DatabaseError;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains, DatabaseServiceGetMock.GetByIdNotFoundFunc());
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Get(testGetId);

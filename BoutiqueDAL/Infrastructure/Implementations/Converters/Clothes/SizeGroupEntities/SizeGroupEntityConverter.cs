@@ -58,7 +58,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroup sizeGroup) =>
             new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
-                sizeDomains => new SizeGroupDomain(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeDomains));
+                sizeDomains => new SizeGroupDomain(sizeGroup, sizeDomains));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию размеров

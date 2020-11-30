@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables;
 using Functional.Models.Enums;
@@ -23,12 +24,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
         public async Task Put_Ok()
         {
             var testDomainPut = TestData.TestDomains.First();
-            testDomainPut.Name = "ChangeName";
-
             var testResultEntities = TestEntitiesData.TestResultEntities;
             var testTableMock = DatabaseTablePutMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
@@ -44,13 +43,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
         public async Task Put_NotFound()
         {
             var testDomainPut = TestData.TestDomains.First();
-            testDomainPut.Name = "ChangeName";
-
             var testResultEntities = TestEntitiesData.TestResultEntitiesEmpty;
             var testTableMock = DatabaseTablePutMock.GetTestDatabaseTable(testResultEntities,
                                                                           DatabaseTableGetMock.FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 

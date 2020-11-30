@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables;
 using Functional.Models.Enums;
@@ -22,7 +23,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testResultEntities = TestEntitiesData.TestResultEntities;
             var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 
@@ -43,7 +44,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
             var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities,
                                                                              DatabaseTableGetMock.FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
-            var testConverter = new TestEntityConverter();
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          testConverter);
 

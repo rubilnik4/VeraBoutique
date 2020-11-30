@@ -29,10 +29,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
             new Mock<ITestDatabaseService>().
-            Void(serviceMock => serviceMock.Setup(service => service.GetShort()).
-                                            ReturnsAsync(testDomains)).
-            Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).
-                                            ReturnsAsync(deleteFunc));
+            Void(serviceMock => serviceMock.Setup(service => service.Get()).ReturnsAsync(testDomains)).
+            Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).ReturnsAsync(deleteFunc));
 
         /// <summary>
         /// Функция удаления по идентификатору

@@ -2,19 +2,20 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDTO.Data.Models.Implementations;
-using BoutiqueDTO.Data.Models.Interfaces;
+using BoutiqueDTOXUnit.Data.Models.Implementations;
+using BoutiqueDTOXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueMVCXUnit.Data
 {
     public class TransferData
     {
-        /// <summary>
+        /// <summary>   
         /// Получить трансферные модели для теста
         /// </summary>
-        public static IList<ITestTransfer> GetTestTransfers() =>
+        public static IReadOnlyCollection<ITestTransfer> GetTestTransfers() =>
             TestData.TestDomains.
-            Select(testDomain => (ITestTransfer)new TestTransfer(testDomain.TestEnum, testDomain.Name)).
+            Select(testDomain => new TestTransfer(testDomain, 
+                                                  testDomain.TestIncludes.Select(testInclude => new TestIncludeTransfer(testInclude)))).
             ToList();
 
         /// <summary>

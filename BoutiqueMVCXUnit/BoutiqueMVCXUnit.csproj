@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BoutiqueDTOXUnit\BoutiqueDTOXUnit.csproj" />
     <ProjectReference Include="..\BoutiqueMVC\BoutiqueMVC.csproj" />
   </ItemGroup>
 

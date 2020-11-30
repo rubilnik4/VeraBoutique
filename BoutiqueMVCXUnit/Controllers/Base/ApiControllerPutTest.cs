@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDTO.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
@@ -26,7 +28,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDomains = TestData.TestResultDomains;
             var testPut = testDomains.Value.Last();
             var testService = DatabaseServicePutMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);
@@ -47,7 +49,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testPut = TestData.TestResultDomains.Value.Last();
             var testService = DatabaseServicePutMock.GetTestDatabaseTable(testDomains);
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);
@@ -69,7 +71,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testDomains = TestData.TestResultDomains;
             var testPut = testDomains.Value.Last();
             var testService = DatabaseServicePutMock.GetTestDatabaseTable(testDomains, DatabaseServicePutMock.PutNotFoundFunc());
-            var testTransferConverter = new TestTransferConverter();
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var testTransfer = testTransferConverter.ToTransfer(testPut);

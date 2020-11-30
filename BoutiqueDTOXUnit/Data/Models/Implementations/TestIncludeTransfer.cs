@@ -1,4 +1,5 @@
-﻿using BoutiqueDTOXUnit.Data.Models.Interfaces;
+﻿using BoutiqueCommonXUnit.Data.Models.Interfaces;
+using BoutiqueDTOXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueDTOXUnit.Data.Models.Implementations
 {
@@ -8,6 +9,10 @@ namespace BoutiqueDTOXUnit.Data.Models.Implementations
     public class TestIncludeTransfer:  ITestIncludeTransfer
     {
         public TestIncludeTransfer() { }
+
+        public TestIncludeTransfer(ITestInclude testInclude)
+            :this(testInclude.Name)
+        { }
 
         public TestIncludeTransfer(string name) 
         {
