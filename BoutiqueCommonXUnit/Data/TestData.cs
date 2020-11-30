@@ -21,8 +21,18 @@ namespace BoutiqueCommonXUnit.Data
         public static List<ITestDomain> TestDomains =>
             new List<ITestDomain>()
             {
-                new TestDomain(TestEnum.First, "First" ),
-                new TestDomain(TestEnum.Second, "Second"),
+                new TestDomain(TestEnum.First, "First", TestIncludeDomains ),
+                new TestDomain(TestEnum.Second, "Second", TestIncludeDomains),
+            };
+
+        /// <summary>
+        /// Получить тестовые вложенные модели
+        /// </summary>
+        public static List<ITestIncludeDomain> TestIncludeDomains =>
+            new List<ITestIncludeDomain>()
+            {
+                new TestIncludeDomain("FirstInclude"),
+                new TestIncludeDomain("SecondInclude"),
             };
 
         /// <summary>

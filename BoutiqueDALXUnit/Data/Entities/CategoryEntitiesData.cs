@@ -15,7 +15,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности категорий одежды
         /// </summary>
-        public static List<CategoryEntity> CategoryEntities =>
+        public static IReadOnlyCollection<CategoryEntity> CategoryEntities =>
             CategoryData.CategoryDomain.
                          Select(categoryDomain => new CategoryEntity(categoryDomain.Name)).
                          ToList();
@@ -23,7 +23,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущности категорий c видом одежды
         /// </summary>
-        public static List<CategoryEntity> GetCategoryEntitiesWithClothesType(IReadOnlyCollection<CategoryEntity> categoryEntities,
+        public static IReadOnlyCollection<CategoryEntity> GetCategoryEntitiesWithClothesType(IReadOnlyCollection<CategoryEntity> categoryEntities,
                                                                               IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
             categoryEntities.
                 Select(category => new CategoryEntity(category.Name, clothesTypeEntities)).

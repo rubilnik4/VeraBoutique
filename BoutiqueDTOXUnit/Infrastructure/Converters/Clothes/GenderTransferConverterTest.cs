@@ -29,7 +29,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
             var genderTransfer = genderEntityConverter.ToTransfer(gender);
             var genderAfterConverter = genderEntityConverter.FromTransfer(genderTransfer);
 
-            Assert.True(gender.Equals(genderAfterConverter));
+            Assert.True(genderAfterConverter.OkStatus);
+            Assert.True(gender.Equals(genderAfterConverter.Value));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности информации об одежде
         /// </summary>
-        public static List<ClothesEntity> ClothesEntities =>
+        public static IReadOnlyCollection<ClothesEntity> ClothesEntities =>
             ClothesData.ClothesDomains.
             Select(clothes =>
                 new ClothesEntity(clothes,
@@ -53,9 +53,6 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность типа одежды
         /// </summary>
         private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
-             new ClothesTypeEntity(clothesTypeShort.Name, clothesTypeShort.Category.Name,
-                                   new CategoryEntity(clothesTypeShort.Category.Name),
-                                   Enumerable.Empty<ClothesEntity>(),
-                                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>());
+             new ClothesTypeEntity(clothesTypeShort, null, null);
     }
 }

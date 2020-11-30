@@ -37,11 +37,26 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// Преобразования модели вида одежды в модель базы данных. Ошибка пола одежды
         /// </summary>
         [Fact]
+        public void FromEntity_CategoryNotFound()
+        {
+            var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
+            var clothesTypeNull = new ClothesTypeEntity(clothesType, null, clothesType.ClothesTypeGenderComposites);
+            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+
+            var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
+
+            Assert.True(clothesTypeAfterConverter.HasErrors);
+            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
+        /// Преобразования модели вида одежды в модель базы данных. Ошибка пола одежды
+        /// </summary>
+        [Fact]
         public void FromEntity_GendersNotFound()
         {
             var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeNull = new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName, clothesType.Category,
-                                                        clothesType.Clothes, null);
+            var clothesTypeNull = new ClothesTypeEntity(clothesType, clothesType.Category, null);
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
@@ -54,7 +69,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         private static IClothesTypeEntityConverter ClothesTypeEntityConverter =>
-            new ClothesTypeEntityConverter(new ClothesTypeShortEntityConverter(new CategoryEntityConverter()),
-                                           new GenderEntityConverter());
+            new ClothesTypeEntityConverter(new CategoryEntityConverter(), new GenderEntityConverter());
     }
 }

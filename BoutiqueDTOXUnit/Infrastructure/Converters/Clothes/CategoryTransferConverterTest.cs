@@ -23,7 +23,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
             var categoriesTransfer = categoryEntityConverter.ToTransfer(categories);
             var categoriesAfterConverter = categoryEntityConverter.FromTransfer(categoriesTransfer);
 
-            Assert.True(categories.Equals(categoriesAfterConverter));
+            Assert.True(categoriesAfterConverter.OkStatus);
+            Assert.True(categories.Equals(categoriesAfterConverter.Value));
         }
     }
 }

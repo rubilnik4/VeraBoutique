@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes
@@ -9,6 +10,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     public class ColorClothesTransfer : IColorClothesTransfer
     {
         public ColorClothesTransfer()
+        { }
+
+        public ColorClothesTransfer(IColorClothes color)
+            :this (color.Name)
         { }
 
         public ColorClothesTransfer(string name)

@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить виды одежды
         /// </summary>
-        public static List<IClothesTypeDomain> ClothesTypeDomain =>
+        public static IReadOnlyCollection<IClothesTypeDomain> ClothesTypeDomain =>
             new List<IClothesTypeDomain>()
             {
                 new ClothesTypeDomain("Пиджак", new CategoryDomain("Верхняя одежда"),

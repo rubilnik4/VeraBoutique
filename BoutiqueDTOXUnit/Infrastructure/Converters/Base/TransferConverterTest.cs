@@ -17,12 +17,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
         public void ToEntities_FromEntities()
         {
             var testDomains = TestData.TestDomains;
-            var testEntityConverter = new TestTransferConverter();
+            var testEntityConverter = new TestTransferConverter(new TestIncludesTransferConverter());
 
             var testEntities = testEntityConverter.ToTransfers(testDomains);
             var testDomainsAfterConverter = testEntityConverter.FromTransfers(testEntities);
 
-            Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter));
+            Assert.True(testDomainsAfterConverter.OkStatus);
+            Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter.Value));
         }
     }
 }

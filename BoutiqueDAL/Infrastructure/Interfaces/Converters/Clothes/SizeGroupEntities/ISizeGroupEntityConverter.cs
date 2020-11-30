@@ -10,6 +10,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEnti
     /// Преобразования модели категории одежды в модель базы данных
     /// </summary>
     public interface ISizeGroupEntityConverter : 
-        IEntityConverter<(ClothesSizeType, int), ISizeGroupDomain, ISizeGroupEntity, SizeGroupEntity>
+        IEntityConverter<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>
     { }
 }

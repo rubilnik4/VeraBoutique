@@ -15,7 +15,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
         /// </summary>
-        GenderType GenderType { get; }
+        GenderType? GenderType { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды
@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
         /// </summary>
-        string ClothesTypeName { get; }
+        string? ClothesTypeName { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

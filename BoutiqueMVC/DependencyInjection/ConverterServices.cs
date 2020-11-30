@@ -51,6 +51,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ICategoryEntityConverter, CategoryEntityConverter>();
             services.AddTransient<ISizeEntityConverter, SizeEntityConverter>();
             services.AddTransient<ISizeGroupEntityConverter, SizeGroupEntityConverter>();
+            services.AddTransient<ISizeGroupShortEntityConverter, SizeGroupShortEntityConverter>();
             services.AddTransient<IColorClothesEntityConverter, ColorClothesEntityConverter>();
             services.AddTransient<IClothesShortEntityConverter, ClothesShortEntityConverter>();
             services.AddTransient<IClothesEntityConverter, ClothesEntityConverter>();

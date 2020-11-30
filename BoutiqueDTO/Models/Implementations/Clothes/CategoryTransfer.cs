@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes
@@ -9,6 +10,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     public class CategoryTransfer : ICategoryTransfer
     {
         public CategoryTransfer()
+        { }
+
+        public CategoryTransfer(ICategory category)
+            :this(category.Name)
         { }
 
         public CategoryTransfer(string name)

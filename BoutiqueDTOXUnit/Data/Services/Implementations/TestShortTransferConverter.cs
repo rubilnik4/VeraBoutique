@@ -6,6 +6,9 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTOXUnit.Data.Services.Implementations
 {
@@ -18,8 +21,9 @@ namespace BoutiqueDTOXUnit.Data.Services.Implementations
         /// <summary>
         /// Преобразовать из модели базы данных
         /// </summary>
-        public override ITestShortDomain FromTransfer(TestShortTransfer testShortTransfer) =>
-            new TestShortDomain(testShortTransfer.TestEnum, testShortTransfer.Name);
+        public override IResultValue<ITestShortDomain> FromTransfer(TestShortTransfer testShortTransfer) =>
+            new TestShortDomain(testShortTransfer.TestEnum, testShortTransfer.Name).
+            Map(testShort => new ResultValue<ITestShortDomain>(testShort));
 
         /// <summary>
         /// Преобразовать  в модель базы данных

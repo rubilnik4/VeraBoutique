@@ -71,8 +71,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         protected override IQueryable<ClothesTypeEntity> ValidateInclude(IQueryable<ClothesTypeEntity> entities, 
                                                                          IReadOnlyCollection<IClothesTypeDomain> domains) =>
             entities.
+            Include(clothesType => clothesType.Category).
             Include(clothesType => clothesType.ClothesTypeGenderComposites).
-            Where(clothesType => clothesType.ClothesTypeGenderComposites.
+            Where(clothesType => clothesType.Category!.Name == domains.First(domain => domain.Name == clothesType.Name).Category.Name &&
+                                 clothesType.ClothesTypeGenderComposites.
                                  Select(clothesTypeGender => clothesTypeGender.GenderType).
                                  SequenceEqual(domains.First(domain => domain.Name == clothesType.Name).
                                                Genders.Select(gender => gender.GenderType)));

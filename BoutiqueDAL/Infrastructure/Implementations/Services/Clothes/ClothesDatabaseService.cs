@@ -99,11 +99,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private async Task<IReadOnlyCollection<ClothesShortEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
             await GetClothesInformationByGender(genderType).
             Join(GetClothesInformationByClothesType(clothesType),
-                 clothesInformationGender => clothesInformationGender.Id,
-                 clothesInformationClothesType => clothesInformationClothesType.Id,
-                 (clothesInformationGender, clothesInformationClothesType) => clothesInformationGender).
-            Select(clothesInformationEntity => new ClothesShortEntity(clothesInformationEntity.Id, clothesInformationEntity.Name,
-                                                                      clothesInformationEntity.Price, clothesInformationEntity.Image)).
+                 clothesGender => clothesGender.Id,
+                 clothesClothesType => clothesClothesType.Id,
+                 (clothesGender, clothesClothesType) => clothesGender).
+            Select(clothesEntity => new ClothesShortEntity(clothesEntity.Id, clothesEntity.Name, clothesEntity.Description,
+                                                           clothesEntity.Price, clothesEntity.Image)).
             AsNoTracking().
             ToListAsync();
 

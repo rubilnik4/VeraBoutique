@@ -35,7 +35,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         protected DatabaseService(IDatabase database,
                                   IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
                                   IDatabaseValidateService<TId, TDomain> databaseValidateService,
-                                  IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> entityConverter)
+                                  IEntityConverter<TId, TDomain, TEntityOut> entityConverter)
         {
             _database = database;
             _dataTable = dataTable;
@@ -61,7 +61,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
-        private readonly IEntityConverter<TId, TDomain, TEntityIn, TEntityOut> _entityConverter;
+        private readonly IEntityConverter<TId, TDomain, TEntityOut> _entityConverter;
 
         /// <summary>
         /// Получить полные модели из базы

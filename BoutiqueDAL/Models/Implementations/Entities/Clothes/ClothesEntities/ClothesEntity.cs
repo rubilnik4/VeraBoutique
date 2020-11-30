@@ -14,17 +14,17 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
     public class ClothesEntity : ClothesShortEntity, IClothesEntity
     {
         public ClothesEntity(IClothesMain clothesMain,
-                             GenderEntity gender, ClothesTypeEntity clothesType,
-                             IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
-                             IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
+                             GenderEntity? gender, ClothesTypeEntity? clothesType,
+                             IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
+                             IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
             : this(clothesMain.Id, clothesMain.Name, clothesMain.Description, clothesMain.Price, clothesMain.Image,
-                   gender.GenderType, gender, clothesType.Name, clothesType,
+                   gender?.GenderType, gender, clothesType?.Name, clothesType,
                    clothesColorComposites, clothesSizeGroupComposites)
         { }
 
         public ClothesEntity(int id, string name, string description, decimal price, byte[]? image,
-                             GenderType genderType, GenderEntity? gender,
-                             string clothesTypeName, ClothesTypeEntity? clothesType,
+                             GenderType? genderType, GenderEntity? gender,
+                             string? clothesTypeName, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
           : base(id, name, description, price, image)
@@ -40,7 +40,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
         /// </summary>
-        public GenderType GenderType { get; }
+        public GenderType? GenderType { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды
@@ -50,7 +50,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
         /// <summary>
         /// Идентификатор связующей сущности типа одежды
         /// </summary>
-        public string ClothesTypeName { get; }
+        public string? ClothesTypeName { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

@@ -9,6 +9,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes
     /// <summary>
     /// Преобразования модели типа пола и модель базы данных
     /// </summary>
-    public interface IGenderEntityConverter: IEntityConverter<GenderType, IGenderDomain, IGenderEntity, GenderEntity>
+    public interface IGenderEntityConverter: IEntityConverter<GenderType, IGenderDomain, GenderEntity>
     { }
 }

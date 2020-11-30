@@ -16,13 +16,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели типа пола в модель базы данных
     /// </summary>
-    public class GenderEntityConverter: EntityConverter<GenderType, IGenderDomain, IGenderEntity, GenderEntity>,
+    public class GenderEntityConverter: EntityConverter<GenderType, IGenderDomain, GenderEntity>,
                                         IGenderEntityConverter
     {
         /// <summary>
         /// Преобразовать тип пола из модели базы данных
         /// </summary>
-        public override IResultValue<IGenderDomain> FromEntity(IGenderEntity genderEntity) =>
+        public override IResultValue<IGenderDomain> FromEntity(GenderEntity genderEntity) =>
             new GenderDomain(genderEntity.GenderType, genderEntity.Name).
             Map(gender => new ResultValue<IGenderDomain>(gender));
 

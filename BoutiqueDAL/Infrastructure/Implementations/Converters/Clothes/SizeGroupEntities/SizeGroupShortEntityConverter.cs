@@ -12,13 +12,13 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEntities
 {
     public class SizeGroupShortEntityConverter : 
-        EntityConverter<(ClothesSizeType, int), ISizeGroupShortDomain, ISizeGroupShortEntity, SizeGroupShortEntity>,
+        EntityConverter<(ClothesSizeType, int), ISizeGroupShortDomain, SizeGroupShortEntity>,
         ISizeGroupShortEntityConverter
     {
         /// <summary>
         /// Преобразовать группу размеров одежды из модели базы данных
         /// </summary>
-        public override IResultValue<ISizeGroupShortDomain> FromEntity(ISizeGroupShortEntity sizeGroupShortEntity) =>
+        public override IResultValue<ISizeGroupShortDomain> FromEntity(SizeGroupShortEntity sizeGroupShortEntity) =>
             new SizeGroupShortDomain(sizeGroupShortEntity).
             Map(sizeGroup => new ResultValue<ISizeGroupShortDomain>(sizeGroup));
 

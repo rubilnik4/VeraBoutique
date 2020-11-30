@@ -3,6 +3,9 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTOXUnit.Data.Services.Implementations
 {
@@ -15,8 +18,9 @@ namespace BoutiqueDTOXUnit.Data.Services.Implementations
         /// <summary>
         /// Преобразовать из модели базы данных
         /// </summary>
-        public override ITestIncludeDomain FromTransfer(TestIncludeTransfer testIncludeTransfer) =>
-            new TestIncludeDomain(testIncludeTransfer.Name);
+        public override IResultValue<ITestIncludeDomain> FromTransfer(TestIncludeTransfer testIncludeTransfer) =>
+            new TestIncludeDomain(testIncludeTransfer.Name).
+            Map(testInclude => new ResultValue<ITestIncludeDomain>(testInclude));
 
         /// <summary>
         /// Преобразовать  в модель базы данных

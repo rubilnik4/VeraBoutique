@@ -25,7 +25,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
         public override IResultValue<IClothesShortDomain> FromTransfer(ClothesShortTransfer clothesShortTransfer) =>
-            new ClothesShortDomain(clothesShortTransfer.Id, clothesShortTransfer.Name,
+            new ClothesShortDomain(clothesShortTransfer.Id, clothesShortTransfer.Name, clothesShortTransfer.Description,
                                    clothesShortTransfer.Price, clothesShortTransfer.Image).
             Map(clothesShort => new ResultValue<IClothesShortDomain>(clothesShort));
     }

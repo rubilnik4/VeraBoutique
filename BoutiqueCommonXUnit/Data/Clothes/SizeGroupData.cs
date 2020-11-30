@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -15,7 +16,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить группы размеров одежды
         /// </summary>
-        public static List<ISizeGroupDomain> SizeGroupDomain =>
+        public static IReadOnlyCollection<ISizeGroupDomain> SizeGroupDomain =>
             new List<ISizeGroupDomain>()
             {
                 new SizeGroupDomain(ClothesSizeType.Shirt, 46, SizeData.SizeDomain),

@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using static BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes.CategoryInitialize;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Clothes
@@ -14,28 +15,45 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Начальные данные вида одежды, совмещенные с полом
         /// </summary>
-        public static IReadOnlyCollection<(ClothesTypeEntity ClothesType, IReadOnlyCollection<GenderEntity> Genders)> ClothesTypeWithGenderData =>
-            new List<(ClothesTypeEntity ClothesType, IReadOnlyCollection<GenderEntity> Genders)>
+        public static IReadOnlyCollection<ClothesTypeEntity> ClothesTypeData =>
+            new List<ClothesTypeEntity>
             {
-                (new ClothesTypeEntity("Пальто", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Куртки", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Толстовки", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Свитера", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Рубашки", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Футболки", Outerwear), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Брюки", Pants), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Джинсы", Pants), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Шорты", Pants), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Кроссовки", Shoes), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Туфли", Shoes), GenderInitialize.MaleAndFemale),
-                (new ClothesTypeEntity("Платья", Dress), new List<GenderEntity> {GenderInitialize.Female}),
-                (new ClothesTypeEntity("Юбки", Dress), new List<GenderEntity> {GenderInitialize.Female}),
+                ToClothesTypeEntity("Пальто", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Куртки", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Толстовки", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Свитера", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Рубашки", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Футболки", Outerwear, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Брюки", Pants, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Джинсы", Pants, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Шорты", Pants, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Кроссовки", Shoes, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Туфли", Shoes, GenderInitialize.MaleAndFemale),
+                ToClothesTypeEntity("Платья", Dress, new List<GenderEntity> {GenderInitialize.Female}),
+                ToClothesTypeEntity("Юбки", Dress, new List<GenderEntity> {GenderInitialize.Female}),
             }.AsReadOnly();
 
         /// <summary>
-        /// Начальные данные вида одежды
+        /// Связующие сущности типа одежды и пола
         /// </summary>
-        public static IReadOnlyCollection<ClothesTypeEntity> ClothesTypeData =>
-            ClothesTypeWithGenderData.Select(clothesTypeWithGender => clothesTypeWithGender.ClothesType).ToList().AsReadOnly();
+        public static IReadOnlyCollection<ClothesTypeGenderCompositeEntity> CompositeGenderData =>
+            ClothesTypeData.
+            SelectMany(clothesType => clothesType.ClothesTypeGenderComposites).
+            Distinct().
+            ToList();
+
+        /// <summary>
+        /// Преобразовать в сущность типа одежды
+        /// </summary>
+        private static ClothesTypeEntity ToClothesTypeEntity(string clothesTypeName, string categoryName, 
+                                                             IEnumerable<GenderEntity> genders) =>
+             new ClothesTypeEntity(clothesTypeName, new CategoryEntity(categoryName), ToGenderComposites(genders, clothesTypeName));
+
+        /// <summary>
+        /// Связующие сущности типа одежды и пола
+        /// </summary>
+        private static IEnumerable<ClothesTypeGenderCompositeEntity> ToGenderComposites(IEnumerable<GenderEntity> genders,
+                                                                                        string clothesTypeName) =>
+            genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesTypeName, gender.GenderType));
     }
 }

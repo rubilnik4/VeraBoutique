@@ -18,20 +18,20 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
 
         public ClothesTransfer(IClothesMain clothes,
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
-                               IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
+                               IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizeGroups)
             :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                  gender, clothesTypeShort, colors, sizes)
+                  gender, clothesTypeShort, colors, sizeGroups)
         { }
 
         public ClothesTransfer(int id, string name, string description, decimal price, byte[]? image, 
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort, 
-                               IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizes)
+                               IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizeGroups)
             : base(id, name, description, price, image)
         {
             Gender = gender;
             ClothesTypeShort = clothesTypeShort;
             Colors = colors.ToList();
-            SizeGroups = sizes.ToList();
+            SizeGroups = sizeGroups.ToList();
         }
 
         /// <summary>

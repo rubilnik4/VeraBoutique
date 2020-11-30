@@ -38,8 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_GenderNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.GenderType, null,
-                                                clothes.ClothesTypeName, clothes.ClothesType,
+            var clothesNull = new ClothesEntity(clothes, null, clothes.ClothesType,
                                                 clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -56,8 +55,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ClothesTypeNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.GenderType, clothes.Gender,
-                                                clothes.ClothesTypeName, null,
+            var clothesNull = new ClothesEntity(clothes, clothes.Gender, null,
                                                 clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -74,9 +72,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ColorNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes,
-                                                clothes.GenderType, clothes.Gender,
-                                                clothes.ClothesTypeName, clothes.ClothesType,
+            var clothesNull = new ClothesEntity(clothes, clothes.Gender, clothes.ClothesType,
                                                 null, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
@@ -93,8 +89,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_SizeGroupNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.GenderType, clothes.Gender,
-                                                clothes.ClothesTypeName, clothes.ClothesType,
+            var clothesNull = new ClothesEntity(clothes, clothes.Gender, clothes.ClothesType,
                                                 clothes.ClothesColorComposites, null);
             var clothesEntityConverter = ClothesEntityConverter;
 

@@ -11,6 +11,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntiti
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
 using Functional.FunctionalExtensions.Sync;
@@ -23,14 +24,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
     /// <summary>
     /// Преобразования модели основных данных вида одежды в модель базы данных
     /// </summary>
-    public class ClothesTypeShortEntityConverter : EntityConverter<string, IClothesTypeShortDomain, IClothesTypeShortEntity, ClothesTypeShortEntity>,
+    public class ClothesTypeShortEntityConverter : EntityConverter<string, IClothesTypeShortDomain, ClothesTypeShortEntity>,
                                                    IClothesTypeShortEntityConverter
     {
         /// <summary>
         /// Преобразовать вид одежды из модели базы данных
         /// </summary>
-        public override IResultValue<IClothesTypeShortDomain> FromEntity(IClothesTypeShortEntity clothesTypeShortEntity) =>
+        public override IResultValue<IClothesTypeShortDomain> FromEntity(ClothesTypeShortEntity clothesTypeShortEntity) =>
             new ClothesTypeShortDomain(clothesTypeShortEntity).
             Map(clothesTypeShort => new ResultValue<IClothesTypeShortDomain>(clothesTypeShort));
+
+        /// <summary>
+        /// Преобразовать группу размеров одежды в модель базы данных
+        /// </summary>
+        public override ClothesTypeShortEntity ToEntity(IClothesTypeShortDomain clothesTypeShortDomain) =>
+            new ClothesTypeShortEntity(clothesTypeShortDomain, Enumerable.Empty<ClothesEntity>());
     }
 }

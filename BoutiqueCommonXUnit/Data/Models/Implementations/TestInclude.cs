@@ -24,10 +24,10 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
         public string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object obj) => obj is ITestInclude testIncludeEntity && Equals(testIncludeEntity);
+        public override bool Equals(object? obj) => obj is ITestInclude testIncludeEntity && Equals(testIncludeEntity);
 
-        public bool Equals(ITestInclude other) =>
-            other?.Name== Name ;
+        public bool Equals(ITestInclude? other) =>
+            other?.Name == Name ;
 
         // ReSharper disable once NonReadonlyMemberInGetHashCode
         public override int GetHashCode() => HashCode.Combine( Name);

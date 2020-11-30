@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
     /// <summary>
     /// Преобразования модели вида одежды в модель базы данных
     /// </summary>
-    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
+    public class ClothesTypeEntityConverter : EntityConverter<string, IClothesTypeDomain, ClothesTypeEntity>,
                                               IClothesTypeEntityConverter
     {
         public ClothesTypeEntityConverter(ICategoryEntityConverter categoryEntityConverter,
@@ -49,7 +49,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать вид одежды из модели базы данных
         /// </summary>
-        public override IResultValue<IClothesTypeDomain> FromEntity(IClothesTypeEntity clothesTypeEntity) =>
+        public override IResultValue<IClothesTypeDomain> FromEntity(ClothesTypeEntity clothesTypeEntity) =>
             GetClothesTypeFunc(clothesTypeEntity).
             ResultCurryOkBind(GetCategory(clothesTypeEntity.Category)).
             ResultCurryOkBind(GenderFromComposites(clothesTypeEntity.ClothesTypeGenderComposites)).
@@ -59,8 +59,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать вид одежды в модель базы данных
         /// </summary>
         public override ClothesTypeEntity ToEntity(IClothesTypeDomain clothesTypeDomain) =>
-             new ClothesTypeEntity(clothesTypeDomain, , GenderToComposites(clothesTypeDomain.Genders,
-                                                                           clothesTypeDomain));
+             new ClothesTypeEntity(clothesTypeDomain, 
+                                   _categoryEntityConverter.ToEntity(clothesTypeDomain.Category),
+                                   GenderToComposites(clothesTypeDomain.Genders, clothesTypeDomain));
 
         /// <summary>
         /// Функция получения типа одежды
@@ -68,15 +69,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         private static IResultValue<Func<ICategoryDomain, IEnumerable<IGenderDomain>, IClothesTypeDomain>> GetClothesTypeFunc(IClothesType clothesType) =>
             new ResultValue<Func<ICategoryDomain, IEnumerable<IGenderDomain>, IClothesTypeDomain>>(
                 (category, genderDomains) => new ClothesTypeDomain(clothesType, category, genderDomains));
-
-        /// <summary>
-        /// Получить связующие сущности пола и вида одежды
-        /// </summary>
-        private static IEnumerable<ClothesTypeGenderCompositeEntity> GenderToComposites(IEnumerable<IGenderDomain> genders,
-                                                                                        IClothesType clothesType) =>
-            genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesType.Name, gender.GenderType,
-                                                                          null,
-                                                                          new GenderEntity(gender.GenderType, gender.Name)));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию типа пола
@@ -90,7 +82,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Получить сущности размера типа пола
         /// </summary>
-        private static IResultCollection<IGenderEntity> GetGenders(IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites) =>
+        private static IResultCollection<GenderEntity> GetGenders(IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites) =>
             clothesTypeGenderComposites.
             Select(clothesTypeGender => clothesTypeGender.Gender.
                                         ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesTypeGender.Gender)))).
@@ -99,9 +91,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать пол одежды в доменную модель
         /// </summary>
-        private IResultValue<ICategoryDomain> GetCategory(ICategoryEntity? categoryEntity) =>
+        private IResultValue<ICategoryDomain> GetCategory(CategoryEntity? categoryEntity) =>
             categoryEntity.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(categoryEntity))).
             ResultValueBindOk(category => _categoryEntityConverter.FromEntity(category));
+
+        /// <summary>
+        /// Получить связующие сущности пола и вида одежды
+        /// </summary>
+        private static IEnumerable<ClothesTypeGenderCompositeEntity> GenderToComposites(IEnumerable<IGenderDomain> genders,
+                                                                                        IClothesType clothesType) =>
+            genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesType.Name, gender.GenderType,
+                                                                          null,
+                                                                          new GenderEntity(gender.GenderType, gender.Name)));
     }
 }

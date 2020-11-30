@@ -14,14 +14,17 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
-        public ClothesTypeEntity(IClothesType clothesType,
-                                 string categoryName, CategoryEntity category,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites, 
-                                 IEnumerable<ClothesEntity> clothes)
-          : this(clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes)
+        public ClothesTypeEntity(string name, CategoryEntity category,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
+            : this(name, category.Name, category, clothesTypeGenderComposites, null)
         { }
 
-        public ClothesTypeEntity(string name, string categoryName,
+        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity? category,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
+        : this(clothesType.Name, category?.Name, category, clothesTypeGenderComposites, null)
+        { }
+
+        public ClothesTypeEntity(string name, string? categoryName,
                                  CategoryEntity? category,
                                  IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites,
                                  IEnumerable<ClothesEntity>? clothes)
@@ -35,7 +38,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
         /// <summary>
         /// Идентификатор связующей сущности категории одежды
         /// </summary>
-        public string CategoryName { get; }
+        public string? CategoryName { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

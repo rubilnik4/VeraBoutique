@@ -23,7 +23,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
             var clothesSizeTransfer = clothesSizeTransferConverter.ToTransfer(clothesSize);
             var clothesSizeAfterConverter = clothesSizeTransferConverter.FromTransfer(clothesSizeTransfer);
 
-            Assert.True(clothesSize.Equals(clothesSizeAfterConverter));
+            Assert.True(clothesSizeAfterConverter.OkStatus);
+            Assert.True(clothesSize.Equals(clothesSizeAfterConverter.Value));
         }
     }
 }

@@ -15,10 +15,11 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущности для теста
         /// </summary>
-        public static List<TestEntity> TestEntities =>
+        public static IReadOnlyCollection<TestEntity> TestEntities =>
             TestData.TestDomains.
-                     Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name)).
-                     ToList();
+            Select(testDomain => new TestEntity(testDomain.TestEnum, testDomain.Name,
+                                                testDomain.TestIncludes.Select(test => new TestIncludeEntity(test.Name)))).
+            ToList();
 
         /// <summary>
         /// Тестовые сущности в результирующей коллекции

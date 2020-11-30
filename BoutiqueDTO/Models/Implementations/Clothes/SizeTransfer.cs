@@ -15,6 +15,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public SizeTransfer()
         { }
 
+        public SizeTransfer(ISize size)
+            :this(size.SizeType, size.SizeName)
+        { }
+
         public SizeTransfer(SizeType clothesSizeType, string sizeName)
         {
             SizeType = clothesSizeType;

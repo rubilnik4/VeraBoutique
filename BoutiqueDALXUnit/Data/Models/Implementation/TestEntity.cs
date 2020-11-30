@@ -12,10 +12,6 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
     /// </summary>
     public class TestEntity : Test, ITestEntity
     {
-        public TestEntity(TestEnum testEnum, string name)
-            : this(testEnum, name, Enumerable.Empty<TestIncludeEntity> ())
-        { }
-
         public TestEntity(TestEnum testEnum, string name, IEnumerable<TestIncludeEntity> testIncludeEntities)
             : base(testEnum, name)
         {

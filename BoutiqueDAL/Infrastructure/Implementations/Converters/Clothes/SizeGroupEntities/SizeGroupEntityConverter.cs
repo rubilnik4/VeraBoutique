@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
     /// <summary>
     /// Преобразования модели категории одежды в модель базы данных
     /// </summary>
-    public class SizeGroupEntityConverter : EntityConverter<(ClothesSizeType, int), ISizeGroupDomain, ISizeGroupEntity, SizeGroupEntity>,
+    public class SizeGroupEntityConverter : EntityConverter<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
                                             ISizeGroupEntityConverter
     {
         public SizeGroupEntityConverter(ISizeEntityConverter sizeEntityConverter)
@@ -41,7 +41,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Преобразовать группу размеров одежды из модели базы данных
         /// </summary>
-        public override IResultValue<ISizeGroupDomain> FromEntity(ISizeGroupEntity sizeGroupEntity) =>
+        public override IResultValue<ISizeGroupDomain> FromEntity(SizeGroupEntity sizeGroupEntity) =>
             GetSizeGroupFunc(sizeGroupEntity).           
             ResultCurryOkBind(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupComposites)).
             ResultValueOk(func => func.Invoke());
@@ -82,7 +82,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Получить сущности размера одежды
         /// </summary>
-        private static IResultCollection<ISizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
+        private static IResultCollection<SizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
             Select(sizeGroup => sizeGroup.Size.
                                 ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroup.Size)))).

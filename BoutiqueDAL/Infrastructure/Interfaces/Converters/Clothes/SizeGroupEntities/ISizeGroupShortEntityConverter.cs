@@ -7,6 +7,6 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes.SizeGroupEntities;
 namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities
 {
     public interface ISizeGroupShortEntityConverter :
-        IEntityConverter<(ClothesSizeType, int), ISizeGroupShortDomain, ISizeGroupShortEntity, SizeGroupShortEntity>
+        IEntityConverter<(ClothesSizeType, int), ISizeGroupShortDomain, SizeGroupShortEntity>
     { }
 }

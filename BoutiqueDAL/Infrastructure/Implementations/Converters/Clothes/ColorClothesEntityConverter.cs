@@ -13,13 +13,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели цвета одежды в модель базы данных
     /// </summary>
-    public class ColorClothesEntityConverter : EntityConverter<string, IColorClothesDomain, IColorClothesEntity, ColorClothesEntity>,
+    public class ColorClothesEntityConverter : EntityConverter<string, IColorClothesDomain, ColorClothesEntity>,
                                                IColorClothesEntityConverter
     {
         /// <summary>
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
-        public override IResultValue<IColorClothesDomain> FromEntity(IColorClothesEntity colorClothesEntity) =>
+        public override IResultValue<IColorClothesDomain> FromEntity(ColorClothesEntity colorClothesEntity) =>
             new ColorClothesDomain(colorClothesEntity.Name).
             Map(category => new ResultValue<IColorClothesDomain>(category));
 

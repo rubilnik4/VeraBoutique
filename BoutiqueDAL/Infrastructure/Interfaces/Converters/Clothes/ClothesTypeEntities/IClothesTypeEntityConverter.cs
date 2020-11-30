@@ -10,6 +10,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEn
     /// <summary>
     /// Преобразования модели вида одежды в модель базы данных
     /// </summary>
-    public interface IClothesTypeEntityConverter : IEntityConverter<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>
+    public interface IClothesTypeEntityConverter : IEntityConverter<string, IClothesTypeDomain, ClothesTypeEntity>
     { }
 }

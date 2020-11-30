@@ -13,7 +13,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить типы пола
         /// </summary>
-        public static List<IGenderDomain> GendersDomain =>
+        public static IReadOnlyCollection<IGenderDomain> GendersDomain =>
             new List<IGenderDomain>()
             {
                 new GenderDomain(GenderType.Male, "Мужик" ),

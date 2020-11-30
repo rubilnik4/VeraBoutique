@@ -1,15 +1,13 @@
 ﻿using System.Linq;
-using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using Functional.Models.Enums;
 using Xunit;
 
-namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
+namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
 {
     /// <summary>
     /// Преобразования модели группы размера одежды в модель базы данных. Тесты
@@ -40,8 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         public void FromEntity_SizesNotFound()
         {
             var sizeGroup = SizeGroupEntitiesData.SizeGroupEntities.First();
-            var sizeGroupNull = new SizeGroupEntity(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
-                                                    null, sizeGroup.ClothesSizeGroupComposites);
+            var sizeGroupNull = new SizeGroupEntity(sizeGroup, null!);
             var sizeEntityConverter = new SizeEntityConverter();
             var sizeGroupEntityConverter = new SizeGroupEntityConverter(sizeEntityConverter);
 

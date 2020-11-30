@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 
@@ -11,6 +12,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     public class GenderTransfer: IGenderTransfer
     {
         public GenderTransfer()
+        { }
+
+        public GenderTransfer(IGender gender)
+            :this(gender.GenderType, gender.Name)
         { }
 
         public GenderTransfer(GenderType genderType, string name)

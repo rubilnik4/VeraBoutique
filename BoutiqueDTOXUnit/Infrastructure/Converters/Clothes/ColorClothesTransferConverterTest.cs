@@ -23,7 +23,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
             var colorsTransfer = colorClothesTransferConverter.ToTransfer(colors);
             var colorsAfterConverter = colorClothesTransferConverter.FromTransfer(colorsTransfer);
 
-            Assert.True(colors.Equals(colorsAfterConverter));
+            Assert.True(colorsAfterConverter.OkStatus);
+            Assert.True(colors.Equals(colorsAfterConverter.Value));
         }
     }
 }
