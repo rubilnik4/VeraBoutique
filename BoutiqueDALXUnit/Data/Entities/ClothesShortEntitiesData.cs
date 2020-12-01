@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// </summary>
         public static IReadOnlyCollection<ClothesShortEntity> ClothesShortEntities =>
             ClothesData.ClothesShortDomains.
-            Select(clothesShort => new ClothesShortEntity(clothesShort)).
+            Select(clothesShort => new ClothesShortEntity(clothesShort, clothesShort.GenderType, clothesShort.ClothesTypeName)).
             ToList();
     }
 }

@@ -40,9 +40,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain
         public override bool Equals(object? obj) => obj is ISizeGroupDomain sizeGroup && Equals(sizeGroup);
 
         public bool Equals(ISizeGroupDomain? other) =>
-            other?.Id == Id && Sizes.SequenceEqual(other?.Sizes);
+            ((ISizeGroupShortDomain?)other)?.Equals(this) == true &&
+            other?.Sizes.SequenceEqual(Sizes) == true;
 
-        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize, Size.GetSizesHashCodes(Sizes));
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Size.GetSizesHashCodes(Sizes));
         #endregion
     }
 }

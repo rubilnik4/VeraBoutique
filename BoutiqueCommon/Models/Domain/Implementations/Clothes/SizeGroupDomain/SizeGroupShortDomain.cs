@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
@@ -20,5 +21,14 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain
         public SizeGroupShortDomain(ClothesSizeType clothesSizeType, int sizeNormalize)
          : base(clothesSizeType, sizeNormalize)
         { }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is ISizeGroupShortDomain sizeGroupShort && Equals(sizeGroupShort);
+
+        public bool Equals(ISizeGroupShortDomain? other) =>
+            base.Equals(other);
+
+        public override int GetHashCode() => base.GetHashCode();
+        #endregion
     }
 }

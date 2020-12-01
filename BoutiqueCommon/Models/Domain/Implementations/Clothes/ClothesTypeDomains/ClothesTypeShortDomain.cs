@@ -32,10 +32,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
         public override bool Equals(object? obj) => obj is IClothesTypeShortDomain clothesTypeDomain && Equals(clothesTypeDomain);
 
         public bool Equals(IClothesTypeShortDomain? other) =>
-            other?.Id == Id &&
+            ((IClothesType?)other)?.Equals(this) == true &&
             other?.CategoryName.Equals(CategoryName) == true;
 
-        public override int GetHashCode() => HashCode.Combine(Name, CategoryName);
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), CategoryName);
         #endregion
     }
 }

@@ -102,8 +102,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                  clothesGender => clothesGender.Id,
                  clothesClothesType => clothesClothesType.Id,
                  (clothesGender, clothesClothesType) => clothesGender).
-            Select(clothesEntity => new ClothesShortEntity(clothesEntity.Id, clothesEntity.Name, clothesEntity.Description,
-                                                           clothesEntity.Price, clothesEntity.Image)).
+            Select(clothesEntity => new ClothesShortEntity(clothesEntity, clothesEntity.GenderType, clothesEntity.ClothesTypeName)).
             AsNoTracking().
             ToListAsync();
 

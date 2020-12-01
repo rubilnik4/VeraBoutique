@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
@@ -12,17 +13,21 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesShortTransfer()
         { }
 
-        public ClothesShortTransfer(IClothesMain clothes)
-            :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image)
+        public ClothesShortTransfer(IClothesMain clothes, GenderType genderType, string clothesTypeName)
+            :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
+                  genderType, clothesTypeName)
         { }
 
-        public ClothesShortTransfer(int id, string name, string description, decimal price, byte[]? image)
+        public ClothesShortTransfer(int id, string name, string description, decimal price, byte[]? image, 
+                                    GenderType genderType, string clothesTypeName)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
             Image = image;
+            GenderType = genderType;
+            ClothesTypeName = clothesTypeName;
         }
 
         /// <summary>
@@ -54,5 +59,17 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         /// </summary>
         [Required]
         public byte[]? Image { get; }
+
+        /// <summary>
+        /// Тип пола одежды
+        /// </summary>
+        [Required]
+        public GenderType GenderType { get; }
+
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        [Required]
+        public string ClothesTypeName { get; } = null!;
     }
 }

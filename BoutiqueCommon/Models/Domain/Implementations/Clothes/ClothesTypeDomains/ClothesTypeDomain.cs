@@ -42,11 +42,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
         public override bool Equals(object? obj) => obj is IClothesTypeDomain clothesTypeDomain && Equals(clothesTypeDomain);
 
         public bool Equals(IClothesTypeDomain? other) =>
-            other?.Id == Id &&
+            ((IClothesTypeShortDomain?)other)?.Equals(this) == true &&
             other?.Category.Equals(Category) == true &&
             other?.Genders.SequenceEqual(Genders) == true;
 
-        public override int GetHashCode() => HashCode.Combine(Name, Category.GetHashCode(),
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Category.GetHashCode(),
                                                               Gender.GetGendersHashCodes(Genders));
         #endregion
     }

@@ -32,30 +32,18 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
                              GenderEntity? gender, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
-          : base(id, name, description, price, image)
+          : base(id, name, description, price, image, genderType, clothesTypeName)
         {
-            GenderType = genderType;
             Gender = gender;
-            ClothesTypeName = clothesTypeName;
             ClothesType = clothesType;
             ClothesColorComposites = clothesColorComposites?.ToList();
             ClothesSizeGroupComposites = clothesSizeGroupComposites?.ToList();
         }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        public GenderType GenderType { get; }
-
+        
         /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>
         public GenderEntity? Gender { get; }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        public string ClothesTypeName { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

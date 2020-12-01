@@ -28,7 +28,9 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок дерзкий";
             const decimal price = 0.55m;
-            var clothesShort = new ClothesShortDomain(id, name, description, price, null);
+            const GenderType genderType = GenderType.Child;
+            const string categoryName = "Одежа";
+            var clothesShort = new ClothesShortDomain(id, name, description, price, null, genderType, categoryName);
 
             int clothesHash = HashCode.Combine(id, name, price);
             Assert.Equal(clothesHash, clothesShort.GetHashCode());
@@ -47,8 +49,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeShortDomain("Тряпье нательное", "Тряпье");
             var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
-            var sizes = new List<ISizeDomain> {new SizeDomain(SizeType.American, "1")};
-            var sizeGroups = new List<ISizeGroupDomain> {new SizeGroupDomain(ClothesSizeType.Shirt , 1 , sizes) };
+            var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
+            var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
             var clothesShort = new ClothesDomain(id, name, description, price, null, gender, clothesType, colors, sizeGroups);
 
             int clothesHash = HashCode.Combine(id, name, price, description,

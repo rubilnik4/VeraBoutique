@@ -26,7 +26,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesTransfer(int id, string name, string description, decimal price, byte[]? image, 
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort, 
                                IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizeGroups)
-            : base(id, name, description, price, image)
+            : base(id, name, description, price, image, gender.GenderType, clothesTypeShort.Name)
         {
             Gender = gender;
             ClothesTypeShort = clothesTypeShort;
