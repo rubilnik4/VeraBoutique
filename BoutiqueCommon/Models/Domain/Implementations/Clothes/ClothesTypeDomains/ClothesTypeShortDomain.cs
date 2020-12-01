@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -12,12 +13,29 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
     /// </summary>
     public class ClothesTypeShortDomain : ClothesType, IClothesTypeShortDomain
     {
-        public ClothesTypeShortDomain(IClothesType clothesType)
-            : this(clothesType.Name)
+        public ClothesTypeShortDomain(IClothesType clothesType, string categoryName)
+            : this(clothesType.Name, categoryName)
         { }
 
-        public ClothesTypeShortDomain(string name)
+        public ClothesTypeShortDomain(string name, string categoryName)
           : base(name)
-        { }
+        {
+            CategoryName = categoryName;
+        }
+
+        /// <summary>
+        /// Категория
+        /// </summary>
+        public string CategoryName { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is IClothesTypeShortDomain clothesTypeDomain && Equals(clothesTypeDomain);
+
+        public bool Equals(IClothesTypeShortDomain? other) =>
+            other?.Id == Id &&
+            other?.CategoryName.Equals(CategoryName) == true;
+
+        public override int GetHashCode() => HashCode.Combine(Name, CategoryName);
+        #endregion
     }
 }

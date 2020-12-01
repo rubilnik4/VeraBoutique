@@ -18,7 +18,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
 
         public ClothesTypeTransfer(string name, CategoryTransfer category,
                                    IEnumerable<GenderTransfer> genders)
-            :base(name)
+            :base(name, category.Name)
         {
             Category = category;
             Genders = genders.ToList();

@@ -8,6 +8,11 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains
     /// <summary>
     /// Вид одежды. Базовая доменная модель
     /// </summary>
-    public interface IClothesTypeShortDomain : IClothesType, IDomainModel<string>
-    { }
+    public interface IClothesTypeShortDomain : IClothesType, IDomainModel<string>, IEquatable<IClothesTypeShortDomain>
+    {
+        /// <summary>
+        /// Категория
+        /// </summary>
+        string CategoryName { get; }
+    }
 }

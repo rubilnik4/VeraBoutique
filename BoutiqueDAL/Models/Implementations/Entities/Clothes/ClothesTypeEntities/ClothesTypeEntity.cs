@@ -14,31 +14,29 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
-        public ClothesTypeEntity(string name, CategoryEntity category,
+        public ClothesTypeEntity(string name, string categoryName)
+           : this(name, categoryName, null, null, null)
+        { }
+
+        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity category,
                                  IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
-            : this(name, category.Name, category, clothesTypeGenderComposites, null)
+        : this(clothesType.Name, category, clothesTypeGenderComposites)
         { }
 
-        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity? category,
-                                 IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites)
-        : this(clothesType.Name, category?.Name, category, clothesTypeGenderComposites, null)
+        public ClothesTypeEntity(string name, CategoryEntity category,
+                                IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
+           : this(name, category.Name, category, clothesTypeGenderComposites, null)
         { }
 
-        public ClothesTypeEntity(string name, string? categoryName,
-                                 CategoryEntity? category,
+        public ClothesTypeEntity(string name, 
+                                 string categoryName, CategoryEntity? category,
                                  IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites,
                                  IEnumerable<ClothesEntity>? clothes)
-           : base(name, clothes)
+           : base(name, categoryName, clothes)
         {
-            CategoryName = categoryName;
             Category = category;
             ClothesTypeGenderComposites = clothesTypeGenderComposites?.ToList();
         }
-
-        /// <summary>
-        /// Идентификатор связующей сущности категории одежды
-        /// </summary>
-        public string? CategoryName { get; }
 
         /// <summary>
         /// Связующая сущность категории одежды

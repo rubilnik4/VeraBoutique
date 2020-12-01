@@ -45,7 +45,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Включение сущностей при загрузке полных данных
         /// </summary>
         protected override IQueryable<SizeGroupEntity> GetInclude(IQueryable<SizeGroupEntity> entities) =>
-            entities.Include(entity => entity.SizeGroupComposites);
+            entities.Include(entity => entity.SizeGroupComposites).
+                     ThenInclude(composite => composite.Size);
 
         /// <summary>
         /// Функция проверки наличия вложенных сущностей

@@ -23,12 +23,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public GenderEntity(GenderType genderType, string name,
-                            IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderEntities,
-                            IEnumerable<ClothesEntity>? clothesInformationEntities)
+                            IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites,
+                            IEnumerable<ClothesEntity>? clothes)
            : base(genderType, name)
         {
-            ClothesTypeGenderComposites = clothesTypeGenderEntities?.ToList();
-            Clothes = clothesInformationEntities?.ToList();
+            ClothesTypeGenderComposites = clothesTypeGenderComposites?.ToList();
+            Clothes = clothes?.ToList();
         }
 
         /// <summary>

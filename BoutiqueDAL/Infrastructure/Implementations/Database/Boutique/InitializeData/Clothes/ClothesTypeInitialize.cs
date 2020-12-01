@@ -36,6 +36,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Связующие сущности типа одежды и пола
         /// </summary>
+        public static IReadOnlyCollection<ClothesTypeEntity> ClothesTypeCategoryData =>
+            ClothesTypeData.
+            Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName)).
+            ToList();
+
+        /// <summary>
+        /// Связующие сущности типа одежды и пола
+        /// </summary>
         public static IReadOnlyCollection<ClothesTypeGenderCompositeEntity> CompositeGenderData =>
             ClothesTypeData.
             SelectMany(clothesType => clothesType.ClothesTypeGenderComposites).

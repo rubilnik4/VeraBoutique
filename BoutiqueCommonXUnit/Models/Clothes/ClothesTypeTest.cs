@@ -22,9 +22,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesTypeShort_Equal_Ok()
         {
             const string clothesType = "Свитер";
-            var clothesTypeDomain = new ClothesTypeShortDomain(clothesType);
+            const string categoryName = "Нательное";
+            var clothesTypeDomain = new ClothesTypeShortDomain(clothesType, categoryName);
 
-            int clothesTypeHash = HashCode.Combine(clothesType);
+            int clothesTypeHash = HashCode.Combine(clothesType, categoryName);
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
         }
 

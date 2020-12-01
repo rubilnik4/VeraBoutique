@@ -31,13 +31,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать вид одежды из модели базы данных
         /// </summary>
         public override IResultValue<IClothesTypeShortDomain> FromEntity(ClothesTypeShortEntity clothesTypeShortEntity) =>
-            new ClothesTypeShortDomain(clothesTypeShortEntity).
+            new ClothesTypeShortDomain(clothesTypeShortEntity, clothesTypeShortEntity.CategoryName).
             Map(clothesTypeShort => new ResultValue<IClothesTypeShortDomain>(clothesTypeShort));
 
         /// <summary>
         /// Преобразовать группу размеров одежды в модель базы данных
         /// </summary>
         public override ClothesTypeShortEntity ToEntity(IClothesTypeShortDomain clothesTypeShortDomain) =>
-            new ClothesTypeShortEntity(clothesTypeShortDomain, Enumerable.Empty<ClothesEntity>());
+            new ClothesTypeShortEntity(clothesTypeShortDomain, clothesTypeShortDomain.CategoryName);
     }
 }

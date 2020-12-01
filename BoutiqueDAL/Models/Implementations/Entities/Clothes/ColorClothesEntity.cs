@@ -15,10 +15,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             : this(name, Enumerable.Empty<ClothesColorCompositeEntity>())
         { }
         
-        public ColorClothesEntity(string name, IEnumerable<ClothesColorCompositeEntity> clothesColorCompositeEntities)
+        public ColorClothesEntity(string name, IEnumerable<ClothesColorCompositeEntity> clothesColorComposites)
             : base(name)
         {
-            ClothesColorComposites = clothesColorCompositeEntities.ToList();
+            ClothesColorComposites = clothesColorComposites.ToList();
         }
 
         /// <summary>

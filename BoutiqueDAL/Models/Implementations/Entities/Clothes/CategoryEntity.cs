@@ -20,10 +20,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
            : this(name, Enumerable.Empty<ClothesTypeEntity>())
         { }
 
-        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypeEntities)
+        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypes)
             : base(name)
         {
-            ClothesTypes = clothesTypeEntities?.ToList();
+            ClothesTypes = clothesTypes?.ToList();
         }
 
         /// <summary>

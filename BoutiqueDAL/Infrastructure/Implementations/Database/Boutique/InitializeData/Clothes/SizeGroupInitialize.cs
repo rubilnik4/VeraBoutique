@@ -93,8 +93,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             CompositeSizeData.
             GroupBy(sizeComposite => new { sizeComposite.ClothesSizeType, sizeComposite.SizeNormalize }).
             Select(sizeCompositeGroup => new SizeGroupEntity(sizeCompositeGroup.First().ClothesSizeType,
-                                                             sizeCompositeGroup.First().SizeNormalize,
-                                                             sizeCompositeGroup)).
+                                                             sizeCompositeGroup.First().SizeNormalize)).
             ToList().AsReadOnly();
 
         /// <summary>

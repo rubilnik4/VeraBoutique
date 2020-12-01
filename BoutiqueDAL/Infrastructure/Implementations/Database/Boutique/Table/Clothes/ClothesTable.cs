@@ -47,7 +47,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
             entities.Include(entity => entity.Gender).
                      Include(entity => entity.ClothesType).
                      Include(entity => entity.ClothesColorComposites).
-                     Include(entity => entity.ClothesSizeGroupComposites);
+                     ThenInclude(composite => composite.ColorClothes).
+                     Include(entity => entity.ClothesSizeGroupComposites).
+                     ThenInclude(composite => composite.SizeGroup).
+                     ThenInclude(composite => composite!.SizeGroupComposites).
+                     ThenInclude(composite => composite.Size);
 
         /// <summary>
         /// Функция выбора сущностей для проверки наличия

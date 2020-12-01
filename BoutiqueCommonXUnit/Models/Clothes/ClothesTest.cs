@@ -45,7 +45,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
             var gender = new GenderDomain(GenderType.Male, "Мужик");
-            var clothesType = new ClothesTypeShortDomain("Тряпье нательное");
+            var clothesType = new ClothesTypeShortDomain("Тряпье нательное", "Тряпье");
             var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
             var sizes = new List<ISizeDomain> {new SizeDomain(SizeType.American, "1")};
             var sizeGroups = new List<ISizeGroupDomain> {new SizeGroupDomain(ClothesSizeType.Shirt , 1 , sizes) };

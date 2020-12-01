@@ -13,13 +13,17 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
     /// </summary>
     public class SizeGroupEntity : SizeGroupShortEntity, ISizeGroupEntity
     {
+        public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
+            : this(clothesSizeType, sizeNormalize, null, null)
+        { }
+
         public SizeGroupEntity(ISizeGroup sizeGroup, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-        : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities, null)
+            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities)
         { }
 
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,
                                IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-         : this(clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, null)
+            : this(clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, null)
         { }
 
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,

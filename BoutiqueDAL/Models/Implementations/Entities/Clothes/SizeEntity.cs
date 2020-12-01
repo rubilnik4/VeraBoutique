@@ -19,10 +19,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public SizeEntity(SizeType sizeType, string sizeName, 
-                          IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
+                          IEnumerable<SizeGroupCompositeEntity> sizeGroupComposites)
             : base(sizeType,  sizeName)
         {
-            SizeGroupComposites = sizeGroupCompositeEntities.ToList();
+            SizeGroupComposites = sizeGroupComposites.ToList();
         }
 
         /// <summary>

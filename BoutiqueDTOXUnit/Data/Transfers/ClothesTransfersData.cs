@@ -22,7 +22,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers
             Select(clothes => 
                 new ClothesTransfer(clothes, 
                                     new GenderTransfer(clothes.Gender), 
-                                    new ClothesTypeShortTransfer(clothes.ClothesTypeShort),
+                                    new ClothesTypeShortTransfer(clothes.ClothesTypeShort, clothes.ClothesTypeShort.CategoryName),
                                     clothes.Colors.Select(color => new ColorClothesTransfer(color)),
                                     clothes.SizeGroups.Select(sizeGroup => new SizeGroupTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
             ToList();

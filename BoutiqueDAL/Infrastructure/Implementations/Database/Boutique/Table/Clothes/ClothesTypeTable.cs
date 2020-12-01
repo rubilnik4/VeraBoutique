@@ -55,7 +55,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// </summary>
         protected override IQueryable<ClothesTypeEntity> GetInclude(IQueryable<ClothesTypeEntity> entities) =>
             entities.Include(entity => entity.Category).
-                     Include(entity => entity.ClothesTypeGenderComposites);
+                     Include(entity => entity.ClothesTypeGenderComposites).
+                     ThenInclude(composite => composite.Gender);
 
         /// <summary>
         /// Функция для проверки наличия

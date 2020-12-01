@@ -13,6 +13,11 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities
     public interface IClothesTypeShortEntity: IClothesType, IEntityModel<string>
     {
         /// <summary>
+        /// Идентификатор связующей сущности категории одежды
+        /// </summary>
+        string CategoryName { get; }
+
+        /// <summary>
         /// Связующие сущности категории и одежды
         /// </summary>
         IReadOnlyCollection<ClothesEntity>? Clothes { get; }
