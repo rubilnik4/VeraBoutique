@@ -14,6 +14,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
+        public ClothesTypeEntity(IClothesType clothesType, string categoryName)
+           : this(clothesType.Name, categoryName)
+        { }
+
         public ClothesTypeEntity(string name, string categoryName)
            : this(name, categoryName, null, null, null)
         { }

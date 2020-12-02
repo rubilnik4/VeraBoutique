@@ -1,8 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
@@ -38,8 +44,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_GenderNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, null, clothes.ClothesType,
-                                                clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
+            var clothesNull = GetClothesEntity(clothes, clothes.GenderType, clothes.ClothesTypeName,
+                                               null, clothes.ClothesType,
+                                               clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
@@ -55,8 +62,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ClothesTypeNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.Gender, null,
-                                                clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
+            var clothesNull = GetClothesEntity(clothes, clothes.GenderType, clothes.ClothesTypeName,
+                                               clothes.Gender, null,
+                                               clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
@@ -72,8 +80,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ColorNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.Gender, clothes.ClothesType,
-                                                null, clothes.ClothesSizeGroupComposites);
+            var clothesNull = GetClothesEntity(clothes, clothes.GenderType, clothes.ClothesTypeName,
+                                               clothes.Gender, clothes.ClothesType,
+                                               null, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
@@ -89,8 +98,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_SizeGroupNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = new ClothesEntity(clothes, clothes.Gender, clothes.ClothesType,
-                                                clothes.ClothesColorComposites, null);
+            var clothesNull = GetClothesEntity(clothes, clothes.GenderType, clothes.ClothesTypeName,
+                                               clothes.Gender, clothes.ClothesType,
+                                               clothes.ClothesColorComposites, null);
             var clothesEntityConverter = ClothesEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
@@ -104,5 +114,17 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         /// </summary>
         private static IClothesEntityConverter ClothesEntityConverter =>
             ClothesEntityConverterMock.ClothesEntityConverter;
+
+        /// <summary>
+        /// Получить сущность одежды
+        /// </summary>
+        private static ClothesEntity GetClothesEntity(IClothesMain clothesMain,
+                                                      GenderType genderType, string clothesTypeName,
+                                                      GenderEntity? gender, ClothesTypeEntity? clothesType,
+                                                      IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
+                                                      IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites) =>
+            new ClothesEntity(clothesMain.Id, clothesMain.Name, clothesMain.Description, clothesMain.Price, clothesMain.Image,
+                              genderType, clothesTypeName, gender, clothesType,
+                              clothesColorComposites, clothesSizeGroupComposites);
     }
 }

@@ -1,5 +1,11 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
@@ -7,6 +13,13 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -16,8 +29,44 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     public class ClothesTypeDatabaseValidateService : DatabaseValidateService<string, IClothesTypeDomain, ClothesTypeEntity>,
                                                       IClothesTypeDatabaseValidateService
     {
-        public ClothesTypeDatabaseValidateService(IClothesTypeTable clothesTypeTable)
+        public ClothesTypeDatabaseValidateService(IClothesTypeTable clothesTypeTable,
+                                                  ICategoryDatabaseValidateService categoryDatabaseValidateService,
+                                                  IGenderDatabaseValidateService genderDatabaseValidateService)
             : base(clothesTypeTable)
-        { }
+        {
+            _categoryDatabaseValidateService = categoryDatabaseValidateService;
+            _genderDatabaseValidateService = genderDatabaseValidateService;
+        }
+
+        /// <summary>
+        /// Сервис проверки данных из базы категорий одежды
+        /// </summary>
+        private readonly ICategoryDatabaseValidateService _categoryDatabaseValidateService;
+
+        /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private readonly IGenderDatabaseValidateService _genderDatabaseValidateService;
+
+        /// <summary>
+        /// Проверить наличие вложенных моделей
+        /// </summary>
+        public override async Task<IResultError> ValidateIncludes(IClothesTypeDomain clothesType) =>
+            await new ResultError().
+            ResultErrorBindOkAsync(() => _categoryDatabaseValidateService.ValidateFind(clothesType.Category.Id)).
+            ResultErrorBindOkBindAsync(() => clothesType.Genders.Select(gender => gender.Id).
+                                             Map(ids => _genderDatabaseValidateService.ValidateFinds(ids)));
+
+        /// <summary>
+        /// Проверить наличие вложенных моделей
+        /// </summary>
+        public override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesTypeDomain> clothesTypes) =>
+            await new ResultError().
+            ResultErrorBindOkAsync(() => clothesTypes.Select(clothesType => clothesType.Category.Id).
+                                                      Distinct().
+                                         Map(ids => _categoryDatabaseValidateService.ValidateFinds(ids))).
+            ResultErrorBindOkBindAsync(() => clothesTypes.SelectMany(clothesType => clothesType.Genders.Select(gender => gender.Id)).
+                                                          Distinct().
+                                             Map(ids => _genderDatabaseValidateService.ValidateFinds(ids)));
     }
 }

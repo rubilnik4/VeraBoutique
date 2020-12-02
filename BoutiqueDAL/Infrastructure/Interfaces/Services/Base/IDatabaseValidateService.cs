@@ -14,28 +14,48 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
     /// <summary>
     /// Базовый сервис проверки данных из базы
     /// </summary>
-    public interface IDatabaseValidateService<TId, in TDomain>
+    public interface IDatabaseValidateService<in TId, in TDomain>
        where TDomain : IDomainModel<TId>
        where TId : notnull
     {
         /// <summary>
         /// Получить ошибку дублирования
         /// </summary>
-        Task<IResultError> ValidateDuplicate(TDomain domain);
+        Task<IResultError> ValidateDuplicate(TId id);
 
         /// <summary>
         /// Получить ошибки дублирования
         /// </summary>
-        Task<IResultError> ValidateDuplicates(IReadOnlyCollection<TDomain> domains);
+        Task<IResultError> ValidateDuplicates(IEnumerable<TId> ids);
 
         /// <summary>
-        /// Проверить наличие модели
+        /// Проверить наличие сущности
         /// </summary>
-        Task<IResultError> ValidateValue(TDomain domain);
+        Task<IResultError> ValidateFind(TId id);
 
         /// <summary>
-        /// Проверить наличие коллекции моделей 
+        /// Проверить наличие сущностей
         /// </summary>
-        Task<IResultError> ValidateCollection(IReadOnlyCollection<TDomain> domains);
+        Task<IResultError> ValidateFinds(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Проверить количество вложенных моделей
+        /// </summary>
+        IResultError ValidateQuantity(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Проверить вложенные моделей
+        /// </summary>
+        Task<IResultError> ValidateQuantityFind(IEnumerable<TId> ids);
+
+        /// <summary>
+        /// Проверить наличие вложенных моделей
+        /// </summary>
+        Task<IResultError> ValidateIncludes(TDomain domain);
+
+        /// <summary>
+        /// Проверить наличие коллекции вложенных моделей 
+        /// </summary>
+        Task<IResultError> ValidateIncludes(IEnumerable<TDomain> domains);
     }
 }

@@ -53,6 +53,6 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность типа одежды
         /// </summary>
         private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
-             new ClothesTypeEntity(clothesTypeShort, null, null);
+             new ClothesTypeEntity(clothesTypeShort, clothesTypeShort.CategoryName);
     }
 }
