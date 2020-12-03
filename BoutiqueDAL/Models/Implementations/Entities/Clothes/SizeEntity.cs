@@ -14,13 +14,13 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class SizeEntity : Size, ISizeEntity
     {
 
-        public SizeEntity(SizeType sizeType,  string sizeName)
-            : this(sizeType, sizeName, Enumerable.Empty<SizeGroupCompositeEntity>())
+        public SizeEntity(SizeType sizeType,  string name)
+            : this(sizeType, name, Enumerable.Empty<SizeGroupCompositeEntity>())
         { }
 
-        public SizeEntity(SizeType sizeType, string sizeName, 
+        public SizeEntity(SizeType sizeType, string name, 
                           IEnumerable<SizeGroupCompositeEntity> sizeGroupComposites)
-            : base(sizeType,  sizeName)
+            : base(sizeType, name)
         {
             SizeGroupComposites = sizeGroupComposites.ToList();
         }

@@ -132,34 +132,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
-        /// Проверить данные
-        /// </summary>
-        [HttpPost("validate")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Validate(TTransfer transfer) =>
-             await _transferConverter.FromTransfer(transfer).
-             ResultValueBindErrorsOkAsync(domain => _databaseDatabaseService.Validate(domain)).
-             ToResultErrorTaskAsync().
-             ToNoContentActionResultTaskAsync();
-
-        /// <summary>
-        /// Проверить данные
-        /// </summary>
-        [HttpPost("validates")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Validates(IList<TTransfer> transfers) =>
-             await _transferConverter.FromTransfers(transfers).
-             ResultCollectionBindErrorsOkAsync(domains => _databaseDatabaseService.Validate(domains)).
-             ToResultErrorTaskAsync().
-             ToNoContentActionResultTaskAsync();
-
-        /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
         private CreatedActionValue<TId, TTransfer> GetCreateAction(TId id, TTransfer transfer) =>

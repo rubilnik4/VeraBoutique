@@ -39,11 +39,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
                                                                       Func<IResultError> validateCollectionFunc) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Get()).
-                                            ReturnsAsync(testDomains)).
-            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<ITestDomain>())).
-                                            ReturnsAsync(validateValueFunc)).
-            Void(serviceMock => serviceMock.Setup(service => service.Validate(It.IsAny<IEnumerable<ITestDomain>>())).
-                                            ReturnsAsync(validateCollectionFunc));
+                                            ReturnsAsync(testDomains));
 
         /// <summary>
         /// Функция проверки значения

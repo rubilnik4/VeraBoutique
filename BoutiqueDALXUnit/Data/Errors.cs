@@ -18,13 +18,15 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Ошибка дублирующего элемента
         /// </summary>
-        public static IErrorResult GetDuplicateError<TId>(TId id) =>
+        public static IErrorResult GetDuplicateError<TId>(TId id)
+            where TId : notnull =>
             DatabaseErrors.DuplicateError(id, String.Empty);
 
         /// <summary>
         /// Ошибка дублирующего элемента
         /// </summary>
-        public static IErrorResult GetDuplicateError<TId>(IEnumerable<TId> ids) => 
+        public static IErrorResult GetDuplicateError<TId>(IEnumerable<TId> ids)
+            where TId : notnull =>
             DatabaseErrors.DuplicateErrors(ids, String.Empty);
     }
 }

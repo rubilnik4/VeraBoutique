@@ -22,6 +22,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         }
 
         /// <summary>
+        /// Минимальное значение номинального размера
+        /// </summary>
+        public const int SIZE_NORMALIZE_MIN = 1;
+
+        /// <summary>
+        /// Максимальное значение номинального размера
+        /// </summary>
+        public const int SIZE_NORMALIZE_MAX = 299;
+
+        /// <summary>
         /// Идентификатор
         /// </summary>
         public (ClothesSizeType, int) Id => (ClothesSizeType, SizeNormalize);

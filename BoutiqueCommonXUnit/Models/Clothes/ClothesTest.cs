@@ -9,6 +9,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -32,7 +33,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string categoryName = "Одежа";
             var clothesShort = new ClothesShortDomain(id, name, description, price, null, genderType, categoryName);
 
-            int clothesHash = HashCode.Combine(id, name, price);
+            int clothesHash = HashCode.Combine(id, name, description, price, genderType, categoryName);
             Assert.Equal(clothesHash, clothesShort.GetHashCode());
         }
 
@@ -51,13 +52,37 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
             var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
             var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothesShort = new ClothesDomain(id, name, description, price, null, gender, clothesType, colors, sizeGroups);
+            var clothes = new ClothesDomain(id, name, description, price, null, gender, clothesType, colors, sizeGroups);
 
             int clothesHash = HashCode.Combine(id, name, price, description,
                                                gender.GetHashCode(), clothesType.GetHashCode(),
                                                colors.Average(color => color.GetHashCode()),
                                                sizeGroups.Average(size => size.GetHashCode()));
-            Assert.Equal(clothesHash, clothesShort.GetHashCode());
+            Assert.Equal(clothesHash, clothes.GetHashCode());
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void Clothes_Equal_Clothes()
+        {
+            var first = ClothesData.ClothesDomains.First();
+            var second = ClothesData.ClothesDomains.First();
+
+            Assert.True(first.Equals(second));
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void ClothesShort_Equal_ClothesShort()
+        {
+            var first = ClothesData.ClothesShortDomains.First();
+            var second = ClothesData.ClothesShortDomains.First();
+
+            Assert.True(first.Equals(second));
         }
     }
 }

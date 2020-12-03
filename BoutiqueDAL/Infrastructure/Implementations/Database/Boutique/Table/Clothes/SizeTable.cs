@@ -25,18 +25,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Выгрузка идентификатора
         /// </summary>
         public override Expression<Func<SizeEntity, (SizeType, string)>> IdSelect() =>
-            entity => new Tuple<SizeType, string>(entity.SizeType, entity.SizeName).ToValueTuple();
+            entity => new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple();
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
         public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
-            entity => entity.SizeType == id.Item1 && entity.SizeName == id.Item2;
+            entity => entity.SizeType == id.Item1 && entity.Name == id.Item2;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
         public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
-            entity => ids.Contains(new Tuple<SizeType, string>(entity.SizeType, entity.SizeName).ToValueTuple());
+            entity => ids.Contains(new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple());
     }
 }

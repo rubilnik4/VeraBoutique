@@ -61,44 +61,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         }
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateValueFilter()
-        {
-            var categoryDomain = CategoryData.CategoryDomain.First();
-            var categories = CategoryEntitiesData.CategoryEntities.AsQueryable();
-            var categoryTable = CategoryTable;
-            var categoryEntityConverter = CategoryEntityConverterMock.CategoryEntityConverter;
-
-            var entities = categoryTable.ValidateFilter(categories, categoryDomain);
-            var domains = categoryEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(1, domains.Value.Count);
-            Assert.True(categoryDomain.Equals(domains.Value.First()));
-        }
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateCollectionFilter()
-        {
-            var categoryDomains = CategoryData.CategoryDomain;
-            var categories = CategoryEntitiesData.CategoryEntities.AsQueryable();
-            var categoryTable = CategoryTable;
-            var categoryEntityConverter = CategoryEntityConverterMock.CategoryEntityConverter;
-
-            var entities = categoryTable.ValidateFilter(categories, categoryDomains);
-            var domains = categoryEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(categoryDomains.Count, domains.Value.Count);
-            Assert.True(categoryDomains.SequenceEqual(domains.Value));
-        }
-
-        /// <summary>
         /// Сущность базы данных
         /// </summary>
         private static Mock<DbSet<CategoryEntity>> DbSet =>

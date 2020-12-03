@@ -52,40 +52,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
                      ThenInclude(composite => composite.SizeGroup).
                      ThenInclude(composite => composite!.SizeGroupComposites).
                      ThenInclude(composite => composite.Size);
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
-                                                                               IClothesDomain domain) =>
-           clothes => domain.Id == clothes.Id;
-
-        /// <summary>
-        /// Функция для проверки наличия
-        /// </summary>
-        protected override Expression<Func<ClothesEntity, bool>> ValidateQuery(IQueryable<ClothesEntity> entities,
-                                                                               IReadOnlyCollection<IClothesDomain> domains) =>
-           clothes => domains.Select(domain => domain.Id).Contains(clothes.Id);
-
-        /// <summary>
-        /// Функция проверки наличия вложенных сущностей
-        /// </summary>
-        protected override IQueryable<ClothesEntity> ValidateInclude(IQueryable<ClothesEntity> entities,
-                                                                     IReadOnlyCollection<IClothesDomain> domains) =>
-            entities.
-            Include(clothes => clothes.Gender).
-            Include(clothes => clothes.ClothesType).
-            Include(clothes => clothes.ClothesColorComposites).
-            Include(clothes => clothes.ClothesSizeGroupComposites).
-            Where(clothes => clothes.Gender!.GenderType == domains.First(domain => domain.Id == clothes.Id).Gender.GenderType &&
-                             clothes.ClothesType!.Name == domains.First(domain => domain.Id == clothes.Id).ClothesTypeShort.Name &&
-                             clothes.ClothesColorComposites.
-                             Select(clothesColor => clothesColor.ColorName).
-                             SequenceEqual(domains.First(domain => domain.Id == clothes.Id).
-                                           Colors.Select(color => color.Name)) &&
-                             clothes.ClothesSizeGroupComposites.
-                             Select(clothesSizeGroup => new { clothesSizeGroup.ClothesSizeType, clothesSizeGroup.SizeNormalize }).
-                             SequenceEqual(domains.First(domain => domain.Id == clothes.Id).
-                                           SizeGroups.Select(sizeGroup => new { sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize })));
     }
 }

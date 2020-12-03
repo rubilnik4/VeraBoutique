@@ -7,6 +7,7 @@ using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
+using Moq;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
 {
@@ -20,7 +21,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// </summary>
         public static ITestDatabaseService GetTestDatabaseService(ITestDatabase testDatabase, ITestTable testTable,
                                                                   ITestEntityConverter testConverter) =>
-            new TestDatabaseService(testDatabase, testTable, GetDatabaseValidateService(testTable), testConverter);
+            new TestDatabaseService(testDatabase, testTable, GetTestDatabaseValidateService(testTable), testConverter);
 
         /// <summary>
         /// Получить базовый сервис получения данных из базы
@@ -33,7 +34,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
         /// <summary>
         /// Получить тестовый сервис проверки данных
         /// </summary>
-        public static ITestDatabaseValidateService GetDatabaseValidateService(ITestTable testTable) =>
-            new TestDatabaseValidateService(testTable);
+        public static ITestDatabaseValidateService GetTestDatabaseValidateService(ITestTable testTable) =>
+            new TestDatabaseValidateService(testTable, new Mock<ITestIncludeDatabaseValidateService>().Object);
     }
 }

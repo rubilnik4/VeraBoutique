@@ -32,19 +32,22 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// <summary>
         /// Дублирование элемента
         /// </summary>
-        public static IErrorResult DuplicateError<TId>(TId id, string tableName) =>
+        public static IErrorResult DuplicateError<TId>(TId id, string tableName)
+            where TId : notnull =>
             new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элемента {id} в таблице {tableName}");
 
         /// <summary>
         /// Дублирование элементов
         /// </summary>
-        public static IErrorResult DuplicateErrors<TId>(IEnumerable<TId> ids, string tableName) =>
+        public static IErrorResult DuplicateErrors<TId>(IEnumerable<TId> ids, string tableName)
+            where TId : notnull =>
             new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
 
         /// <summary>
         /// Преобразовать список элементов в строку
         /// </summary>
-        private static string AggregateIdsToString<TId>(IEnumerable<TId> ids) =>
+        private static string AggregateIdsToString<TId>(IEnumerable<TId> ids)
+             where TId : notnull =>
             String.Join(",", ids);
     }
 }

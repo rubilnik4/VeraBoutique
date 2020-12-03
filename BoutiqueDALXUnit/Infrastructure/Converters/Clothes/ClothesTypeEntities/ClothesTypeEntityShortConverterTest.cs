@@ -23,14 +23,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var clothesTypeDomain = ClothesTypeData.ClothesTypeDomain.First();
-            var clothesTypeShortEntityConverter = ClothesTypeEntityConverterMock.ClothesTypeShortEntityConverter;
+            var clothesTypeShortDomain = ClothesTypeData.ClothesTypeShortDomains.First();
+            var clothesTypeShortEntityConverter = new ClothesTypeShortEntityConverter();
 
-            var clothesTypeEntity = clothesTypeShortEntityConverter.ToEntity(clothesTypeDomain);
-            var clothesTypeAfterConverter = clothesTypeShortEntityConverter.FromEntity(clothesTypeEntity);
+            var clothesTypeShortEntity = clothesTypeShortEntityConverter.ToEntity(clothesTypeShortDomain);
+            var clothesTypeAfterConverter = clothesTypeShortEntityConverter.FromEntity(clothesTypeShortEntity);
 
             Assert.True(clothesTypeAfterConverter.OkStatus);
-            Assert.True(clothesTypeDomain.Equals(clothesTypeAfterConverter.Value));
+            Assert.True(clothesTypeShortEntity.Equals(clothesTypeAfterConverter.Value));
         }
     }
 }

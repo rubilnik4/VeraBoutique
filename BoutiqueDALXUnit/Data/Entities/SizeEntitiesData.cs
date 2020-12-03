@@ -24,6 +24,6 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность группы размеров
         /// </summary>
         public static SizeEntity GetSizeEntity(ISizeDomain size) =>
-             new SizeEntity(size.SizeType, size.SizeName);
+             new SizeEntity(size.SizeType, size.Name);
     }
 }

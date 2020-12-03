@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers
         /// Типы одежды. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<ClothesTypeTransfer> ClothesTypeTransfers =>
-            ClothesTypeData.ClothesTypeDomain.
+            ClothesTypeData.ClothesTypeDomains.
             Select(clothesType => new ClothesTypeTransfer(clothesType,
                                                           new CategoryTransfer(clothesType.Category),
                                                           clothesType.Genders.Select(gender => new GenderTransfer(gender)))).

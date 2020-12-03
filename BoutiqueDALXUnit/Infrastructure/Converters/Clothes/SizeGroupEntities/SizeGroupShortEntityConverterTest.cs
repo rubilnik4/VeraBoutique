@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
         [Fact]
         public void ToEntityShort_FromEntityShort()
         {
-            var sizeGroupShortDomain = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupShortDomain = SizeGroupData.SizeGroupShortDomains.First();
             var sizeGroupShortEntityConverter = new SizeGroupShortEntityConverter();
 
             var sizeGroupEntity = sizeGroupShortEntityConverter.ToEntity(sizeGroupShortDomain);

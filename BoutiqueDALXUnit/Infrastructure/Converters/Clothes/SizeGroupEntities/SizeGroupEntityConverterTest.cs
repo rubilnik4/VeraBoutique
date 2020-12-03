@@ -20,7 +20,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var sizeGroupDomain = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupDomain = SizeGroupData.SizeGroupDomains.First();
             var sizeEntityConverter = new SizeEntityConverter();
             var sizeGroupEntityConverter = new SizeGroupEntityConverter(sizeEntityConverter);
 

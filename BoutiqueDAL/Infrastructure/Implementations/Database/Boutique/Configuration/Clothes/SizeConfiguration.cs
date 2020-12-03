@@ -11,9 +11,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     {
         public void Configure(EntityTypeBuilder<SizeEntity> builder)
         {
-            builder.HasKey(t => new {t.SizeType, t.SizeName });
+            builder.HasKey(t => new {t.SizeType, SizeName = t.Name });
             builder.Property(t => t.SizeType).IsRequired();
-            builder.Property(t => t.SizeName).IsRequired();
+            builder.Property(t => t.Name).IsRequired();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
             other?.Category.Equals(Category) == true &&
             other?.Genders.SequenceEqual(Genders) == true;
 
-        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), Category.GetHashCode(),
+        public override int GetHashCode() => HashCode.Combine(Name, Category.GetHashCode(),
                                                               Gender.GetGendersHashCodes(Genders));
         #endregion
     }

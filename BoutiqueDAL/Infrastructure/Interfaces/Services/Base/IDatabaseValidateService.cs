@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
@@ -18,6 +20,26 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
        where TDomain : IDomainModel<TId>
        where TId : notnull
     {
+        /// <summary>
+        /// Комплексная проверка сущности
+        /// </summary>
+        Task<IResultError> Validate(TDomain domain);
+
+        /// <summary>
+        /// Комплексная проверка сущностей
+        /// </summary>
+        Task<IResultError> Validate(IEnumerable<TDomain> domains);
+
+        /// <summary>
+        /// Проверить модель
+        /// </summary>
+        IResultError ValidateModel(TDomain domain);
+
+        /// <summary>
+        /// Проверить модели
+        /// </summary>
+        IResultError ValidateModels(IEnumerable<TDomain> domains);
+
         /// <summary>
         /// Получить ошибку дублирования
         /// </summary>
@@ -39,16 +61,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         Task<IResultError> ValidateFinds(IEnumerable<TId> ids);
 
         /// <summary>
-        /// Проверить количество вложенных моделей
-        /// </summary>
-        IResultError ValidateQuantity(IEnumerable<TId> ids);
-
-        /// <summary>
-        /// Проверить вложенные моделей
-        /// </summary>
-        Task<IResultError> ValidateQuantityFind(IEnumerable<TId> ids);
-
-        /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
         Task<IResultError> ValidateIncludes(TDomain domain);
@@ -57,5 +69,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// Проверить наличие коллекции вложенных моделей 
         /// </summary>
         Task<IResultError> ValidateIncludes(IEnumerable<TDomain> domains);
+
+        /// <summary>
+        /// Проверить количество вложенных моделей
+        /// </summary>
+        IResultError ValidateQuantity(IEnumerable<TDomain> domains);
     }
 }

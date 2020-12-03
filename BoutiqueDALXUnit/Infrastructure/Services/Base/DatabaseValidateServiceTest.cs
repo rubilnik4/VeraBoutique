@@ -11,12 +11,15 @@ using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base
 {
@@ -35,7 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var tests = Enumerable.Empty<TestEntity>();
             var databaseValidateService = GetDatabaseValidateService(tests);
 
-            var result = await databaseValidateService.ValidateDuplicate(testDomain);
+            var result = await databaseValidateService.ValidateDuplicate(testDomain.Id);
 
             Assert.True(result.OkStatus);
         }
@@ -50,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var tests = TestEntitiesData.TestEntities;
             var databaseValidateService = GetDatabaseValidateService(tests);
 
-            var result = await databaseValidateService.ValidateDuplicate(testDomain);
+            var result = await databaseValidateService.ValidateDuplicate(testDomain.Id);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueDuplicate);
@@ -66,7 +69,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var tests = Enumerable.Empty<TestEntity>();
             var databaseValidateService = GetDatabaseValidateService(tests);
 
-            var result = await databaseValidateService.ValidateDuplicates(testDomains);
+            var result = await databaseValidateService.ValidateDuplicates(testDomains.Select(domain => domain.Id));
 
             Assert.True(result.OkStatus);
         }
@@ -81,7 +84,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var tests = TestEntitiesData.TestEntities;
             var databaseValidateService = GetDatabaseValidateService(tests);
 
-            var result = await databaseValidateService.ValidateDuplicates(testDomains);
+            var result = await databaseValidateService.ValidateDuplicates(testDomains.Select(domain => domain.Id));
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueDuplicate);
@@ -100,9 +103,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             new TestTable(GetDbSet(testEntities).Object);
 
         /// <summary>
+        /// Тестовый сервис проверки вложенных данных
+        /// </summary>
+        private static Mock<ITestIncludeDatabaseValidateService> TestIncludeDatabaseValidateService =>
+            new Mock<ITestIncludeDatabaseValidateService>();
+
+        /// <summary>
         /// Тестовый сервис проверки данных из базы
         /// </summary>
-        private static IDatabaseValidateService<TestEnum, ITestDomain> GetDatabaseValidateService(IEnumerable<TestEntity> testEntities) =>
-             new DatabaseValidateService<TestEnum, ITestDomain, TestEntity>(GetTestTable(testEntities));
+        private static ITestDatabaseValidateService GetDatabaseValidateService(IEnumerable<TestEntity> testEntities) =>
+             new TestDatabaseValidateService(GetTestTable(testEntities), TestIncludeDatabaseValidateService.Object);
     }
 }

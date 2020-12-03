@@ -43,41 +43,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
             clothesType => ids.Contains(clothesType.Name);
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> ValidateQuery(IQueryable<ClothesTypeEntity> entities,
-                                                                                   IClothesTypeDomain domain) =>
-           clothesType => domain.Name == clothesType.Name &&
-                          domain.Category.Name == clothesType.CategoryName;
-
-        /// <summary>
         /// Включение сущностей при загрузке полных данных
         /// </summary>
         protected override IQueryable<ClothesTypeEntity> GetInclude(IQueryable<ClothesTypeEntity> entities) =>
             entities.Include(entity => entity.Category).
                      Include(entity => entity.ClothesTypeGenderComposites).
                      ThenInclude(composite => composite.Gender);
-
-        /// <summary>
-        /// Функция для проверки наличия
-        /// </summary>
-        protected override Expression<Func<ClothesTypeEntity, bool>> ValidateQuery(IQueryable<ClothesTypeEntity> entities,
-                                                                                   IReadOnlyCollection<IClothesTypeDomain> domains) =>
-           clothesType => domains.Select(domain => domain.Name).Contains(clothesType.Name) &&
-                          domains.Select(domain => domain.Category.Name).Contains(clothesType.CategoryName);
-
-        /// <summary>
-        /// Функция проверки наличия вложенных сущностей
-        /// </summary>
-        protected override IQueryable<ClothesTypeEntity> ValidateInclude(IQueryable<ClothesTypeEntity> entities, 
-                                                                         IReadOnlyCollection<IClothesTypeDomain> domains) =>
-            entities.
-            Include(clothesType => clothesType.Category).
-            Include(clothesType => clothesType.ClothesTypeGenderComposites).
-            Where(clothesType => clothesType.Category!.Name == domains.First(domain => domain.Name == clothesType.Name).Category.Name &&
-                                 clothesType.ClothesTypeGenderComposites.
-                                 Select(clothesTypeGender => clothesTypeGender.GenderType).
-                                 SequenceEqual(domains.First(domain => domain.Name == clothesType.Name).
-                                               Genders.Select(gender => gender.GenderType)));
     }
 }

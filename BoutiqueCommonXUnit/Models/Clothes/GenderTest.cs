@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -24,6 +26,18 @@ namespace BoutiqueCommonXUnit.Models.Clothes
 
             int genderHash = HashCode.Combine(genderType);
             Assert.Equal(genderHash, genderDomain.GetHashCode());
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void Gender_Equal_Gender()
+        {
+            var first = GenderData.GendersDomain.First();
+            var second = GenderData.GendersDomain.First();
+
+            Assert.True(first.Equals(second));
         }
     }
 }

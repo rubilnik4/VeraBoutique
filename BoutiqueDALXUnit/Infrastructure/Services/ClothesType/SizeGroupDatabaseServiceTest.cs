@@ -48,7 +48,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Ok()
         {
-            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomains.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupEntities = SizeGroupEntitiesData.SizeGroupEntities;
@@ -70,7 +70,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_Exception()
         {
-            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomains.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupException());
@@ -91,7 +91,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         [Fact]
         public async Task GetSizeGroupsIncludeSize_NotFound()
         {
-            var sizeGroupInitial = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroupInitial = SizeGroupData.SizeGroupDomains.First();
             var clothesSizeType = sizeGroupInitial.ClothesSizeType;
             int sizeNormalize = sizeGroupInitial.SizeNormalize;
             var sizeGroupTable = SizeGroupTableMock.GetSizeGroupTable(SizeGroupTableMock.SizeGroupNotFound());
@@ -114,9 +114,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             Void(mock => mock.Setup(database => database.SizeGroupTable).Returns(sizeGroupTable));
 
         /// <summary>
-        /// Сервис проверки данных из базы
+        /// Сервис проверки данных из базы размера одежды
+        /// </summary>
+        private static Mock<ISizeDatabaseValidateService> SizeDatabaseValidateService =>
+            new Mock<ISizeDatabaseValidateService>();
+
+        /// <summary>
+        /// Сервис проверки данных из базы группы размера одежды
         /// </summary>
         private static ISizeGroupDatabaseValidateService GetDatabaseValidationService(ISizeGroupTable sizeGroupTable) =>
-            new SizeGroupDatabaseValidateService(sizeGroupTable);
+            new SizeGroupDatabaseValidateService(sizeGroupTable, SizeDatabaseValidateService.Object);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -21,6 +23,18 @@ namespace BoutiqueCommonXUnit.Models.Clothes
 
             int categoryHash = HashCode.Combine(category);
             Assert.Equal(categoryHash, categoryDomain.GetHashCode());
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void Color_Equal_Color()
+        {
+            var first = CategoryData.CategoryDomain.First();
+            var second = CategoryData.CategoryDomain.First();
+
+            Assert.True(first.Equals(second));
         }
     }
 }

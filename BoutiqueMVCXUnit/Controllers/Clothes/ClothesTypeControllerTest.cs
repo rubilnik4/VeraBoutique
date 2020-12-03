@@ -35,7 +35,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             const GenderType genderType = GenderType.Male;
             string category = CategoryData.CategoryDomain.First().Name;
-            var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(ClothesTypeData.ClothesTypeShortDomain);
+            var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(ClothesTypeData.ClothesTypeShortDomains);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeShortTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeShortTransferConverter;
             var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;

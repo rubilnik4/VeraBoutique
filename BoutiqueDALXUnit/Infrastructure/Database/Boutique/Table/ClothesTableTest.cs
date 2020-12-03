@@ -60,44 +60,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         }
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateValueFilter()
-        {
-            var clothesDomain = ClothesData.ClothesDomains.First();
-            var clothes = ClothesEntitiesData.ClothesEntities.AsQueryable();
-            var clothesTable = ClothesTable;
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
-
-            var entities = clothesTable.ValidateFilter(clothes, clothesDomain);
-            var domains = clothesEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(1, domains.Value.Count);
-            Assert.True(clothesDomain.Equals(domains.Value.First()));
-        }
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateCollectionFilter()
-        {
-            var clothesDomains = ClothesData.ClothesDomains;
-            var clothes = ClothesEntitiesData.ClothesEntities.AsQueryable();
-            var clothesTable = ClothesTable;
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
-
-            var entities = clothesTable.ValidateFilter(clothes, clothesDomains);
-            var domains = clothesEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(clothesDomains.Count, domains.Value.Count);
-            Assert.True(clothesDomains.SequenceEqual(domains.Value));
-        }
-
-        /// <summary>
         /// Сущность базы данных
         /// </summary>
         private static Mock<DbSet<ClothesEntity>> DbSet =>

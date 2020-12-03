@@ -47,18 +47,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         protected override IQueryable<SizeGroupEntity> GetInclude(IQueryable<SizeGroupEntity> entities) =>
             entities.Include(entity => entity.SizeGroupComposites).
                      ThenInclude(composite => composite.Size);
-
-        /// <summary>
-        /// Функция проверки наличия вложенных сущностей
-        /// </summary>
-        protected override IQueryable<SizeGroupEntity> ValidateInclude(IQueryable<SizeGroupEntity> entities,
-                                                                       IReadOnlyCollection<ISizeGroupDomain> domains) =>
-            entities.
-            Include(sizeGroup => sizeGroup.SizeGroupComposites).
-            Where(sizeGroup => sizeGroup.SizeGroupComposites.
-                               Select(sizeGroupComposite => new { sizeGroupComposite.SizeType, sizeGroupComposite.SizeName }).
-                               SequenceEqual(domains.First(domain => domain.ClothesSizeType == sizeGroup.ClothesSizeType &&
-                                                                     domain.SizeNormalize == sizeGroup.SizeNormalize).
-                                             Sizes.Select(size => new { size.SizeType, size.SizeName })));
     }
 }

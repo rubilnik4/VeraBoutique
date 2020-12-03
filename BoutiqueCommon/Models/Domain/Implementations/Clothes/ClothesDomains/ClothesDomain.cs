@@ -62,7 +62,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(base.GetHashCode(),
+            HashCode.Combine(Id, Name, Price, Description,
                              Gender.GetHashCode(), ClothesTypeShort.GetHashCode(),
                              Colors.Average(color => color.GetHashCode()),
                              SizeGroups.Average(size => size.GetHashCode()));

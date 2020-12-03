@@ -61,44 +61,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         }
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateValueFilter()
-        {
-            var sizeGroupDomain = SizeGroupData.SizeGroupDomain.First();
-            var sizeGroups = SizeGroupEntitiesData.SizeGroupEntities.AsQueryable();
-            var sizeGroupTable = SizeGroupTable;
-            var sizeGroupEntityConverter = SizeGroupEntityConverterMock.SizeGroupEntityConverter;
-
-            var entities = sizeGroupTable.ValidateFilter(sizeGroups, sizeGroupDomain);
-            var domains = sizeGroupEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(1, domains.Value.Count);
-            Assert.True(sizeGroupDomain.Equals(domains.Value.First()));
-        }
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateCollectionFilter()
-        {
-            var sizeGroupDomains = SizeGroupData.SizeGroupDomain;
-            var sizeGroups = SizeGroupEntitiesData.SizeGroupEntities.AsQueryable();
-            var sizeGroupTable = SizeGroupTable;
-            var sizeGroupEntityConverter = SizeGroupEntityConverterMock.SizeGroupEntityConverter;
-
-            var entities = sizeGroupTable.ValidateFilter(sizeGroups, sizeGroupDomains);
-            var domains = sizeGroupEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(sizeGroupDomains.Count, domains.Value.Count);
-            Assert.True(sizeGroupDomains.SequenceEqual(domains.Value));
-        }
-
-        /// <summary>
         /// Сущность базы данных
         /// </summary>
         private static Mock<DbSet<SizeGroupEntity>> DbSet =>

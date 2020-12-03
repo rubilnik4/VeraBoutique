@@ -17,16 +17,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// </summary>
     public abstract class Size : ISize, IEquatable<ISize>
     {
-        protected Size(SizeType sizeType, string sizeName)
+        protected Size(SizeType sizeType, string name)
         {
             SizeType = sizeType;
-            SizeName = sizeName;
+            Name = name;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (SizeType, string) Id => (SizeType, SizeName);
+        public (SizeType, string) Id => (SizeType, Name);
 
         /// <summary>
         /// Тип размера одежды
@@ -36,7 +36,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Размер
         /// </summary>
-        public string SizeName { get; }
+        public string Name { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is ISize clothesSize && Equals(clothesSize);
@@ -44,7 +44,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public bool Equals(ISize? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(SizeType, SizeName);
+        public override int GetHashCode() => HashCode.Combine(SizeType, Name);
         #endregion
 
         /// <summary>

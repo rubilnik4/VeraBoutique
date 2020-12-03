@@ -23,18 +23,18 @@ namespace BoutiqueCommonXUnit.Data.Clothes
                                   new GenderDomain(GenderType.Male, "Мужик"), 
                                   new ClothesTypeShortDomain("Перчатки", "Нарукавники"),
                                   ColorClothesData.ColorClothesDomain,
-                                  SizeGroupData.SizeGroupDomain),
+                                  SizeGroupData.SizeGroupDomains),
                 new ClothesDomain(2, "Варежки", "Варежки простолюдинные", 0.66m, null,
                                   new GenderDomain(GenderType.Female, "Женщина"), 
                                   new ClothesTypeShortDomain("Перчатки", "Нарукавники"),
                                   ColorClothesData.ColorClothesDomain,
-                                  SizeGroupData.SizeGroupDomain),
+                                  SizeGroupData.SizeGroupDomains),
             };
 
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static List<IClothesShortDomain> ClothesShortDomains =>
-            ClothesDomains.Select(clothes => (IClothesShortDomain)clothes).ToList();
+        public static IReadOnlyCollection<IClothesShortDomain> ClothesShortDomains =>
+            ClothesDomains;
     }
 }

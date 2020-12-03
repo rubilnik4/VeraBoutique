@@ -40,6 +40,35 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private readonly IDatabaseTable<TId, TDomain, TEntity> _dataTable;
 
         /// <summary>
+        /// Комплексная проверка сущности
+        /// </summary>
+        public async Task<IResultError> Validate(TDomain domain) =>
+            await new ResultError().
+            ResultErrorBindOk(() => ValidateModel(domain)).
+            ResultErrorBindOkAsync(() => ValidateDuplicate(domain.Id)).
+            ResultErrorBindOkBindAsync(() => ValidateIncludes(domain));
+
+        /// <summary>
+        /// Комплексная проверка сущностей
+        /// </summary>
+        public async Task<IResultError> Validate(IEnumerable<TDomain> domains) =>
+            await new ResultError().
+            ResultErrorBindOk(() => ValidateModels(domains)).
+            ResultErrorBindOkAsync(() => ValidateDuplicates(domains.Select(domain => domain.Id))).
+            ResultErrorBindOkBindAsync(() => ValidateIncludes(domains));
+
+        /// <summary>
+        /// Проверить модель
+        /// </summary>
+        public abstract IResultError ValidateModel(TDomain domain);
+
+        /// <summary>
+        /// Проверить модели
+        /// </summary>
+        public IResultError ValidateModels(IEnumerable<TDomain> domains) =>
+            domains.Select(ValidateModel).ToResultError();
+
+        /// <summary>
         /// Получить ошибку дублирования
         /// </summary>
         public async Task<IResultError> ValidateDuplicate(TId id) =>
@@ -70,23 +99,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
            await _dataTable.FindsExpressionAsync(ValidateIdsQuery(ids));
 
         /// <summary>
-        /// Проверить количество вложенных моделей
-        /// </summary>
-        public IResultError ValidateQuantity(IEnumerable<TId> ids) =>
-           ids.
-           ToResultCollectionWhere(
-               idsValidate => idsValidate.Any(),
-               _ => DatabaseErrors.ValueNotFoundError(typeof(TDomain).Name, _dataTable.TableName));
-
-        /// <summary>
-        /// Проверить вложенные моделей
-        /// </summary>
-        public async Task<IResultError> ValidateQuantityFind(IEnumerable<TId> ids) =>
-            await new ResultError().
-            ResultErrorBindOk(() => ValidateQuantity(ids)).
-            ResultErrorBindOkAsync(() => ValidateFinds(ids));
-
-        /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
         public virtual async Task<IResultError> ValidateIncludes(TDomain domain) =>
@@ -97,6 +109,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         public virtual async Task<IResultError> ValidateIncludes(IEnumerable<TDomain> domains) =>
             await Task.FromResult(new ResultError());
+
+        /// <summary>
+        /// Проверить количество вложенных моделей
+        /// </summary>
+        public IResultError ValidateQuantity(IEnumerable<TDomain> domains) =>
+           domains.ToResultCollectionWhere(
+            idsValidate => idsValidate.Any(),
+            _ => DatabaseErrors.ValueNotFoundError(typeof(TDomain).Name, _dataTable.TableName));
 
         /// <summary>
         /// Запрос проверки наличия дублирующей сущности

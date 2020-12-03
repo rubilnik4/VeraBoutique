@@ -13,7 +13,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         [Fact]
         public void SizeGroupShort_ToTransfer_FromTransfer()
         {
-            var sizeGroup = SizeGroupData.SizeGroupDomain.First();
+            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
             var sizeGroupShortTransferConverter = new SizeGroupShortTransferConverter();
 
             var sizeGroupTransfer = sizeGroupShortTransferConverter.ToTransfer(sizeGroup);

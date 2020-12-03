@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDALXUnit.Data;
@@ -58,14 +59,20 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
                                                                                     Func<IReadOnlyCollection<ITestDomain>, IResultError> duplicatesFunc,
                                                                                     Func<IReadOnlyCollection<ITestDomain>, IResultError> validateCollectionFunc) =>
             new Mock<ITestDatabaseValidateService>().
-            Void(validateMock => validateMock.Setup(validate => validate.ValidateDuplicate(It.IsAny<ITestDomain>())).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateDuplicate(It.IsAny<TestEnum>())).
                                               ReturnsAsync(duplicateFunc)).
-            Void(validateMock => validateMock.Setup(validate => validate.ValidateValue(It.IsAny<ITestDomain>())).
-                                              ReturnsAsync(validateValueFunc)).
-            Void(validateMock => validateMock.Setup(validate => validate.ValidateDuplicates(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateDuplicates(It.IsAny<IEnumerable<TestEnum>>())).
                                               ReturnsAsync(duplicatesFunc)).
-            Void(validateMock => validateMock.Setup(validate => validate.ValidateCollection(It.IsAny<IReadOnlyCollection<ITestDomain>>())).
-                                              ReturnsAsync(validateCollectionFunc));
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateFind(It.IsAny<TestEnum>())).
+                                              ReturnsAsync(validateValueFunc)).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateFinds(It.IsAny<IEnumerable<TestEnum>>())).
+                                              ReturnsAsync(validateValueFunc)).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateModel(It.IsAny<ITestDomain>())).
+                                              Returns(validateValueFunc)).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateModels(It.IsAny<IEnumerable<ITestDomain>>())).
+                                              Returns(validateCollectionFunc)).
+            Void(validateMock => validateMock.Setup(validate => validate.ValidateIncludes(It.IsAny<IEnumerable<ITestDomain>>())).
+                                              Returns(validateCollectionFunc));
 
         /// <summary>
         /// Отсутствие дублирующих записей

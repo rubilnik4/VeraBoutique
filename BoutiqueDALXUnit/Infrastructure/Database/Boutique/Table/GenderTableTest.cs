@@ -60,45 +60,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         }
 
         /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateValueFilter()
-        {
-            var genderDomain = GenderData.GendersDomain.First();
-            var genders = GenderEntitiesData.GenderEntities.AsQueryable();
-            var genderTable = GenderTable;
-            var genderEntityConverter = GenderEntityConverterMock.GenderEntityConverter;
-
-            var entities = genderTable.ValidateFilter(genders, genderDomain);
-            var domains = genderEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(1, domains.Value.Count);
-            Assert.True(genderDomain.Equals(domains.Value.First()));
-        }
-
-        /// <summary>
-        /// Функция выбора сущностей для проверки наличия
-        /// </summary>
-        [Fact]
-        public void ValidateCollectionFilter()
-        {
-            var genderDomains = GenderData.GendersDomain;
-            var genders = GenderEntitiesData.GenderEntities.AsQueryable();
-            var genderTable = GenderTable;
-            var genderEntityConverter = GenderEntityConverterMock.GenderEntityConverter;
-
-
-            var entities = genderTable.ValidateFilter(genders, genderDomains);
-            var domains = genderEntityConverter.FromEntities(entities);
-
-            Assert.True(domains.OkStatus);
-            Assert.Equal(genderDomains.Count, domains.Value.Count);
-            Assert.True(genderDomains.SequenceEqual(domains.Value));
-        }
-
-        /// <summary>
         /// Сущность базы данных
         /// </summary>
         private static Mock<DbSet<GenderEntity>> DbSet =>

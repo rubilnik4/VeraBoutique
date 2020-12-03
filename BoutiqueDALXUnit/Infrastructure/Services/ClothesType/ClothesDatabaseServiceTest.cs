@@ -177,9 +177,37 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             Void(mock => mock.Setup(database => database.ClothesTable).Returns(clothesTable));
 
         /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private static Mock<IGenderDatabaseValidateService> GenderDatabaseValidateService =>
+            new Mock<IGenderDatabaseValidateService>();
+
+        /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private static Mock<IClothesTypeDatabaseValidateService> ClothesTypeDatabaseValidateService =>
+            new Mock<IClothesTypeDatabaseValidateService>();
+
+        /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private static Mock<IColorClothesDatabaseValidateService> ColorClothesDatabaseValidateService =>
+            new Mock<IColorClothesDatabaseValidateService>();
+
+        /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private static Mock<ISizeGroupDatabaseValidateService> SizeGroupDatabaseValidateService =>
+            new Mock<ISizeGroupDatabaseValidateService>();
+
+        /// <summary>
         /// Сервис проверки данных из базы
         /// </summary>
         private static IClothesDatabaseValidateService GetDatabaseValidationService(IClothesTable clothesTable) =>
-            new ClothesDatabaseValidateService(clothesTable);
+            new ClothesDatabaseValidateService(clothesTable,
+                                               GenderDatabaseValidateService.Object,
+                                               ClothesTypeDatabaseValidateService.Object,
+                                               ColorClothesDatabaseValidateService.Object,
+                                               SizeGroupDatabaseValidateService.Object);
     }
 }

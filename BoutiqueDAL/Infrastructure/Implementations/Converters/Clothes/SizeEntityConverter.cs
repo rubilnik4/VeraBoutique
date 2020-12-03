@@ -21,13 +21,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать размер одежды из модели базы данных
         /// </summary>
         public override IResultValue<ISizeDomain> FromEntity(SizeEntity sizeEntity) =>
-            new SizeDomain(sizeEntity.SizeType,  sizeEntity.SizeName).
+            new SizeDomain(sizeEntity.SizeType,  sizeEntity.Name).
             Map(size => new ResultValue<ISizeDomain>(size));
 
         /// <summary>
         /// Преобразовать размер одежды в модель базы данных
         /// </summary>
         public override SizeEntity ToEntity(ISizeDomain sizeDomain) =>
-            new SizeEntity(sizeDomain.SizeType, sizeDomain.SizeName);
+            new SizeEntity(sizeDomain.SizeType, sizeDomain.Name);
     }
 }

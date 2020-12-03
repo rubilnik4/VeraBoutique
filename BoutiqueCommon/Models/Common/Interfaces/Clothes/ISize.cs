@@ -17,6 +17,6 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// <summary>
         /// Наименование размера
         /// </summary>
-        string SizeName { get; }
+        string Name { get; }
     }
 }

@@ -23,12 +23,12 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain
         { }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroupShortDomain sizeGroupShort && Equals(sizeGroupShort);
+        public override bool Equals(object? obj) => obj is ISizeGroupShortDomain sizeGroup && Equals(sizeGroup);
 
         public bool Equals(ISizeGroupShortDomain? other) =>
             base.Equals(other);
 
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize);
         #endregion
     }
 }

@@ -28,7 +28,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var clothesTypeDomain = ClothesTypeData.ClothesTypeDomain.First();
+            var clothesTypeDomain = ClothesTypeData.ClothesTypeDomains.First();
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
 
             var clothesTypeEntity = clothesTypeEntityConverter.ToEntity(clothesTypeDomain);

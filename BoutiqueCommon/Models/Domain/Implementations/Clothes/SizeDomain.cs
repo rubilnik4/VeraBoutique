@@ -14,7 +14,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     public class SizeDomain : Size, ISizeDomain, IFormattable
     {
         public SizeDomain(ISize size)
-           : base(size.SizeType, size.SizeName)
+           : base(size.SizeType, size.Name)
         { }
 
         public SizeDomain(SizeType sizeType, string sizeName)
@@ -24,7 +24,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, SizeName);
+        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, Name);
 
         #region IFormattable Support
         public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);

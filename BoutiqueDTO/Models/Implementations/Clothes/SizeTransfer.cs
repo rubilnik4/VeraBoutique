@@ -16,19 +16,19 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         { }
 
         public SizeTransfer(ISize size)
-            :this(size.SizeType, size.SizeName)
+            :this(size.SizeType, size.Name)
         { }
 
         public SizeTransfer(SizeType clothesSizeType, string sizeName)
         {
             SizeType = clothesSizeType;
-            SizeName = sizeName;
+            Name = sizeName;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (SizeType, string) Id => (SizeType, SizeName);
+        public (SizeType, string) Id => (SizeType, Name);
 
         /// <summary>
         /// Тип размера одежды
@@ -40,6 +40,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         /// Наименование размера
         /// </summary>
         [Required]
-        public string SizeName { get; set; } = null!;
+        public string Name { get; set; } = null!;
     }
 }

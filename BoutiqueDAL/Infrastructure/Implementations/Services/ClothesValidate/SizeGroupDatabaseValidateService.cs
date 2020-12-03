@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -40,11 +42,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private readonly ISizeDatabaseValidateService _sizeDatabaseValidateService;
 
         /// <summary>
+        /// Проверить модель
+        /// </summary>
+        public override IResultError ValidateModel(ISizeGroupDomain sizeGroup) =>
+            new ResultError().
+            ResultErrorBindOk(() => ValidateSizeNormalized(sizeGroup)).
+            ResultErrorBindOk(() => ValidateSizes(sizeGroup));
+
+
+        /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
         public override async Task<IResultError> ValidateIncludes(ISizeGroupDomain sizeGroup) =>
              await new ResultError().
-            ResultErrorBindOkAsync(() => _sizeDatabaseValidateService.ValidateQuantityFind(sizeGroup.Sizes.Select(size => size.Id)));
+            ResultErrorBindOkAsync(() => _sizeDatabaseValidateService.ValidateFinds(sizeGroup.Sizes.Select(size => size.Id)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
@@ -54,5 +65,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             ResultErrorBindOkAsync(() => sizeGroups.SelectMany(sizeGroup => sizeGroup.Sizes.Select(size => size.Id)).
                                                     Distinct().
                                          Map(ids => _sizeDatabaseValidateService.ValidateFinds(ids)));
+
+        /// <summary>
+        /// Проверка имени
+        /// </summary>
+        private static IResultError ValidateSizeNormalized(ISizeGroupDomain sizeGroup) =>
+            sizeGroup.SizeNormalize.ToResultValueWhere(
+                sizeNormalized => sizeNormalized >= SizeGroup.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroup.SIZE_NORMALIZE_MAX,
+                _ => ModelsErrors.FieldNotValid<(ClothesSizeType, int), ISizeGroupDomain>(SizeGroup.SIZE_NORMALIZE_MIN, SizeGroup.SIZE_NORMALIZE_MAX,
+                                                                                          nameof(sizeGroup.SizeNormalize), sizeGroup));
+
+        /// <summary>
+        /// Проверка размеров
+        /// </summary>
+        private IResultError ValidateSizes(ISizeGroupDomain sizeGroup) =>
+            _sizeDatabaseValidateService.ValidateQuantity(sizeGroup.Sizes);
     }
 }
