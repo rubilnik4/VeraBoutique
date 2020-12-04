@@ -3,6 +3,7 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueDTOXUnit.Data.Transfers;
 using Functional.Models.Enums;
 using Xunit;
@@ -21,8 +22,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         public void SizeGroup_ToTransfer_FromTransfer()
         {
             var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeTransferConverter = new SizeTransferConverter();
-            var sizeGroupTransferConverter = new SizeGroupTransferConverter(sizeTransferConverter);
+            var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupTransferConverter;
 
             var sizeGroupTransfer = sizeGroupTransferConverter.ToTransfer(sizeGroup);
             var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupTransfer);
@@ -38,11 +38,26 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         public void SizeGroup_ToTransfer_SizeError()
         {
             var sizeGroup = SizeGroupTransfersData.SizeGroupTransfers.First();
-            var sizeGroupSizeNull = new SizeGroupTransfer(sizeGroup, null!);
-            var sizeTransferConverter = new SizeTransferConverter();
-            var sizeGroupTransferConverter = new SizeGroupTransferConverter(sizeTransferConverter);
+            sizeGroup.Sizes = null!;
+            var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupTransferConverter;
 
-            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupSizeNull);
+            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroup);
+
+            Assert.True(sizeGroupAfterConverter.HasErrors);
+            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
+        /// Преобразования модели размеров одежды в трансферную модель. Ошибка размера
+        /// </summary>
+        [Fact]
+        public void SizeGroup_ToTransfer_SizeCollectionError()
+        {
+            var sizeGroup = SizeGroupTransfersData.SizeGroupTransfers.First();
+            sizeGroup.Sizes = sizeGroup.Sizes.Append(null).ToList();
+            var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupTransferConverter;
+
+            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroup);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
             Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);

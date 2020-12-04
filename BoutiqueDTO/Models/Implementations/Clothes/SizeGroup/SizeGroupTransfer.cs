@@ -14,6 +14,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroup
     {
         public SizeGroupTransfer()
         { }
+
         public SizeGroupTransfer(ISizeGroup sizeGroup, IEnumerable<SizeTransfer> sizes)
           : this (sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizes)
         { }
@@ -28,6 +29,6 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroup
         /// Дополнительные размеры одежды
         /// </summary>
         [Required]
-        public IReadOnlyCollection<SizeTransfer> Sizes { get; } = null!;
+        public IReadOnlyCollection<SizeTransfer> Sizes { get; set; } = null!;
     }
 }

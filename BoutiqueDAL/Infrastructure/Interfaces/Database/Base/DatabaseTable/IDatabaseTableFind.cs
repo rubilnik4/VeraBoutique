@@ -18,37 +18,27 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FindIdAsync(TId id);
-
-        /// <summary>
-        /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
-        /// </summary>
-        Task<IResultValue<TEntity>> FindIdIncludeAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull;
+        Task<IResultValue<TEntity>> FindShortIdAsync(TId id);
 
         /// <summary>
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FindIdMainAsync(TId id);
+        Task<IResultValue<TEntity>> FindIdAsync(TId id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids);
+        Task<IResultCollection<TEntity>> FindShortIdsAsync(IEnumerable<TId> ids);
 
         /// <summary>
-        /// Найти записи в таблице по идентификаторам с включением сущностей
+        /// Вернуть полные записи из таблицы по идентификаторам асинхронно
         /// </summary>
-        Task<IResultCollection<TEntity>> FindIdsIncludeAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                                              Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull;
+        Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids);
 
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc, TId id)
+        Task <IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc, TId id)
             where TOut : notnull;
 
         /// <summary>

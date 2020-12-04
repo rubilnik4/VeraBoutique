@@ -28,12 +28,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
         /// Категория одежды. Трансферная модель
         /// </summary>
         [Required]
-        public CategoryTransfer Category { get; } = null!;
+        public CategoryTransfer Category { get; set; } = null!;
 
         /// <summary>
         /// Типы пола. Трансферная модель
         /// </summary>
         [Required]
-        public IReadOnlyCollection<GenderTransfer> Genders { get; } = null!;
+        public IReadOnlyCollection<GenderTransfer> Genders { get; set; } = null!;
     }
 }

@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 
@@ -42,7 +43,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
             domains.Select(ToTransfer);
 
         /// <summary>
-        /// Преобразовать тип пола одежды в доменную модель
+        /// Преобразовать в доменную модель
         /// </summary>
         public IResultValue<TDomain> GetDomain(TTransfer? transfer) =>
             transfer.
@@ -50,11 +51,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
             ResultValueBindOk(FromTransfer);
 
         /// <summary>
-        /// Преобразовать типы пола одежды в доменную модель
+        /// Преобразовать в доменные модели
         /// </summary>
         public IResultCollection<TDomain> GetDomains(IEnumerable<TTransfer>? transfers) =>
             transfers.
-            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(typeof(IEnumerable<TTransfer>).Name)).
-            ResultValueBindOkToCollection(FromTransfers);
+            ToResultCollectionNullCheck(ConverterErrors.ValueNotFoundError(typeof(IEnumerable<TTransfer>).Name)).
+            ResultCollectionBindOk(FromTransfers);
     }
 }

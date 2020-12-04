@@ -22,21 +22,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
-        public async Task<IResultCollection<TEntity>> ToListAsync() =>
+        public async Task<IResultCollection<TEntity>> ToListShortAsync() =>
             await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().ToListAsync(), TableAccessError);
-
-        /// <summary>
-        /// Вернуть записи из таблицы асинхронно с включением сущностей
-        /// </summary>
-        public async Task<IResultCollection<TEntity>> ToListAsync<TIdOut, TEntityOut>(Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull =>
-            await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().Include(include).ToListAsync(), TableAccessError);
 
         /// <summary>
         /// Вернуть полные записи из таблицы асинхронно
         /// </summary>
-        public async Task<IResultCollection<TEntity>> ToListMainAsync() =>
+        public async Task<IResultCollection<TEntity>> ToListAsync() =>
             await ResultCollectionTryAsync(() => GetInclude(_databaseSet.AsNoTracking()).
                                                  ToListAsync(), 
                                            TableAccessError);

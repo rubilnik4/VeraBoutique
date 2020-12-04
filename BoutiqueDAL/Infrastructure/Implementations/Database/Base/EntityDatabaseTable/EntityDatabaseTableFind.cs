@@ -32,38 +32,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TEntity>> FindIdAsync(TId id) =>
+        public async Task<IResultValue<TEntity>> FindShortIdAsync(TId id) =>
             await FindAsyncWrapper(() => _databaseSet.AsNoTracking().FirstOrDefaultAsync(IdPredicate(id))!, id);
-
-        /// <summary>
-        /// Вернуть запись из таблицы по идентификатору асинхронно с включением сущностей
-        /// </summary>
-        public async Task<IResultValue<TEntity>> FindIdIncludeAsync<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull =>
-            await FindAsyncWrapper(() => _databaseSet.AsNoTracking().Include(include).FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TEntity>> FindIdMainAsync(TId id) =>
+        public async Task<IResultValue<TEntity>> FindIdAsync(TId id) =>
             await FindAsyncWrapper(() => GetInclude(_databaseSet.AsNoTracking()).
-                                         FirstOrDefaultAsync(IdPredicate(id))!, id);
+                                         FirstOrDefaultAsync(IdPredicate(id))!,
+                                   id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        public async Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids) =>
+        public async Task<IResultCollection<TEntity>> FindShortIdsAsync(IEnumerable<TId> ids) =>
             await FindEntityAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
-        /// Найти записи в таблице по идентификаторам с включением сущностей
+        /// Вернуть полные записи из таблицы по идентификаторам асинхронно
         /// </summary>
-        public async Task<IResultCollection<TEntity>> FindIdsIncludeAsync<TIdOut, TEntityOut>(IEnumerable<TId> ids,
-                                                                                              Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
-            where TEntityOut : IEntityModel<TIdOut>
-            where TIdOut : notnull =>
-            await FindEntityAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).Include(include).ToListAsync());
+        public async Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids) =>
+            await FindEntityAsync(() => GetInclude(_databaseSet.AsNoTracking()).Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности

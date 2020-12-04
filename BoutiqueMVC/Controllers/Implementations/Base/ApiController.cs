@@ -31,7 +31,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
     [ApiController]
-    public abstract class ApiController<TId, TTransfer,  TDomain> : 
+    public abstract class ApiController<TId, TTransfer, TDomain> : 
         ControllerBase, IApiController<TId, TTransfer>
         where TTransfer : class, ITransferModel<TId>
         where TDomain : IDomainModel<TId>
@@ -95,7 +95,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Записать данные
         /// </summary>
-        [HttpPost]
+        [HttpPost("collection")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

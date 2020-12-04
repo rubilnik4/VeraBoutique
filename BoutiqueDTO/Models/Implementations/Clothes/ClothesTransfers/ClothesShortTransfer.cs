@@ -34,42 +34,42 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         /// Идентификатор
         /// </summary>
         [Required]
-        public int Id { get; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Наименование
         /// </summary>
         [Required]
-        public string Name { get; } = null!;
+        public string Name { get; set; } = null!;
 
         /// <summary>
         /// Описание
         /// </summary>
         [Required]
-        public string Description { get; } = null!;
+        public string Description { get; set; } = null!;
 
         /// <summary>
         /// Цена
         /// </summary>
         [Required]
-        public decimal Price { get; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Изображение
         /// </summary>
         [Required]
-        public byte[]? Image { get; }
+        public byte[]? Image { get; set; }
 
         /// <summary>
         /// Тип пола одежды
         /// </summary>
         [Required]
-        public GenderType GenderType { get; }
+        public GenderType GenderType { get; set; }
 
         /// <summary>
         /// Тип одежды
         /// </summary>
         [Required]
-        public string ClothesTypeName { get; } = null!;
+        public string ClothesTypeName { get; set; } = null!;
     }
 }

@@ -32,7 +32,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables
             new Mock<ITestTable>().
             Void(tableMock => tableMock.Setup(table => table.Remove(It.IsAny<TestEntity>())).
                                         Returns((TestEntity entity) => new ResultValue<TestEntity>(entity))).
-            Void(tableMock => tableMock.Setup(table => table.FindIdAsync(It.IsAny<TestEnum>())).
+            Void(tableMock => tableMock.Setup(table => table.FindShortIdAsync(It.IsAny<TestEnum>())).
                                         ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
     }
 }

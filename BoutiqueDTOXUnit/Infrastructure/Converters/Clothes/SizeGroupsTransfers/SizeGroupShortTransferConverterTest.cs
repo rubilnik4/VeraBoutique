@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
@@ -14,7 +15,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         public void SizeGroupShort_ToTransfer_FromTransfer()
         {
             var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeGroupShortTransferConverter = new SizeGroupShortTransferConverter();
+            var sizeGroupShortTransferConverter = SizeGroupTransferConverterMock.SizeGroupShortTransferConverter;
 
             var sizeGroupTransfer = sizeGroupShortTransferConverter.ToTransfer(sizeGroup);
             var sizeGroupAfterConverter = sizeGroupShortTransferConverter.FromTransfer(sizeGroupTransfer);

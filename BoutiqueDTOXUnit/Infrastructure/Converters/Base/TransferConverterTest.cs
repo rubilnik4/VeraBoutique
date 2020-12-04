@@ -1,6 +1,10 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueDTOXUnit.Data;
+using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
+using Functional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
@@ -14,16 +18,89 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
         /// Преобразования модели в трансферную модель
         /// </summary>
         [Fact]
-        public void ToEntities_FromEntities()
+        public void ToTransfer_FromTransfer()
         {
             var testDomains = TestData.TestDomains;
-            var testEntityConverter = new TestTransferConverter(new TestIncludesTransferConverter());
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
 
             var testEntities = testEntityConverter.ToTransfers(testDomains);
             var testDomainsAfterConverter = testEntityConverter.FromTransfers(testEntities);
 
             Assert.True(testDomainsAfterConverter.OkStatus);
             Assert.True(testDomains.SequenceEqual(testDomainsAfterConverter.Value));
+        }
+
+        /// <summary>
+        /// Преобразования в доменную модель
+        /// </summary>
+        [Fact]
+        public void GetDomain_Ok()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
+
+            var testDomainAfterConverter = testEntityConverter.GetDomain(testTransfer);
+
+            Assert.True(testDomainAfterConverter.OkStatus);
+            Assert.True(TestData.TestDomains.First().Equals(testDomainAfterConverter.Value));
+        }
+
+        /// <summary>
+        /// Преобразования в доменную модель. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void GetDomain_NullValue()
+        {
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
+
+            var testDomainAfterConverter = testEntityConverter.GetDomain(null);
+
+            Assert.True(testDomainAfterConverter.HasErrors);
+            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
+        /// Преобразования в доменную модель
+        /// </summary>
+        [Fact]
+        public void GetDomains_Ok()
+        {
+            var testTransfers = TestTransferData.TestTransfers;
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
+
+            var testDomainsAfterConverter = testEntityConverter.GetDomains(testTransfers);
+
+            Assert.True(testDomainsAfterConverter.OkStatus);
+            Assert.True(TestData.TestDomains.SequenceEqual(testDomainsAfterConverter.Value));
+        }
+
+        /// <summary>
+        /// Преобразования в доменную модель. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void GetDomains_NullValue()
+        {
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
+
+            var testDomainAfterConverter = testEntityConverter.GetDomains(null);
+
+            Assert.True(testDomainAfterConverter.HasErrors);
+            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
+        /// Преобразования в доменную модель. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void GetDomains_NullCollection()
+        {
+            var testTransfers = TestTransferData.TestTransfers.Append(null);
+            var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
+
+            var testDomainAfterConverter = testEntityConverter.GetDomains(testTransfers);
+
+            Assert.True(testDomainAfterConverter.HasErrors);
+            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
     }
 }

@@ -38,24 +38,24 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         /// Пол одежды
         /// </summary>
         [Required]
-        public GenderTransfer Gender { get; } = null!;
+        public GenderTransfer Gender { get; set; } = null!;
 
         /// <summary>
         /// Вид одежды
         /// </summary>
         [Required]
-        public ClothesTypeShortTransfer ClothesTypeShort { get; } = null!;
+        public ClothesTypeShortTransfer ClothesTypeShort { get; set; } = null!;
 
         /// <summary>
         /// Вид одежды
         /// </summary>
         [Required]
-        public IReadOnlyCollection<ColorClothesTransfer> Colors { get; } = null!;
+        public IReadOnlyCollection<ColorClothesTransfer> Colors { get; set; } = null!;
 
         /// <summary>
         /// Размеры
         /// </summary>
         [Required]
-        public IReadOnlyCollection<SizeGroupTransfer> SizeGroups { get; } = null!;
+        public IReadOnlyCollection<SizeGroupTransfer> SizeGroups { get; set; } = null!;
     }
 }

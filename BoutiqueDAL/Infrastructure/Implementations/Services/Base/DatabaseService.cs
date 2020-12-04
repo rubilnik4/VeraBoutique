@@ -67,14 +67,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить полные модели из базы
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
-            await _dataTable.ToListMainAsync().
+            await _dataTable.ToListAsync().
             ResultCollectionBindOkTaskAsync(entities => _entityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить  полную модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
-            await _dataTable.FindIdMainAsync(id).
+            await _dataTable.FindIdAsync(id).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity));
 
         /// <summary>
@@ -103,17 +103,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TDomain domain) =>
-            await _dataTable.FindIdAsync(domain.Id).
-            ResultValueBindErrorsOkBindAsync(_ => _databaseValidateService.Validate(domain)).
-            ResultValueBindErrorsOkTaskAsync(_ => _dataTable.Update(_entityConverter.ToEntity(domain))).
-            ToResultErrorTaskAsync().
+            await _databaseValidateService.ValidateFind(domain.Id).
+            ResultErrorBindOkBindAsync(() => _databaseValidateService.Validate(domain)).
+            ResultErrorBindOkTaskAsync(() => _dataTable.Update(_entityConverter.ToEntity(domain))).
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
 
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.FindIdAsync(id).
+            await _dataTable.FindShortIdAsync(id).
             ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
             ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());

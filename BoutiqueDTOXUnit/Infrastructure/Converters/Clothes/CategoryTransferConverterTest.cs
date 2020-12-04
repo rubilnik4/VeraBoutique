@@ -2,6 +2,7 @@
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
@@ -18,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var categories =CategoryData.CategoryDomain.First();
-            var categoryEntityConverter = new CategoryTransferConverter();
+            var categoryEntityConverter = CategoryTransferConverterMock.CategoryTransferConverter;
 
             var categoriesTransfer = categoryEntityConverter.ToTransfer(categories);
             var categoriesAfterConverter = categoryEntityConverter.FromTransfer(categoriesTransfer);

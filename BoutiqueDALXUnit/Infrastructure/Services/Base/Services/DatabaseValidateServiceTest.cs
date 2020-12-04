@@ -2,26 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
-using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Xunit;
-using Xunit.Sdk;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.Base
+namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
 {
     /// <summary>
     /// Базовый сервис проверки данных из базы. Тесты

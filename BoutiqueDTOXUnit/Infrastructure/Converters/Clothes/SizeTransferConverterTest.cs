@@ -2,6 +2,7 @@
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
@@ -18,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var clothesSize = SizeData.SizeDomain.First();
-            var clothesSizeTransferConverter = new SizeTransferConverter();
+            var clothesSizeTransferConverter = SizeTransferConverterMock.SizeTransferConverter;
 
             var clothesSizeTransfer = clothesSizeTransferConverter.ToTransfer(clothesSize);
             var clothesSizeAfterConverter = clothesSizeTransferConverter.FromTransfer(clothesSizeTransfer);

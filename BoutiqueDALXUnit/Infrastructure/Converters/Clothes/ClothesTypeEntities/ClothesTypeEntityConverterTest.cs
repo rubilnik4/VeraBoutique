@@ -45,8 +45,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         public void FromEntity_CategoryNotFound()
         {
             var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, clothesType.Category,
-                                                 clothesType.ClothesTypeGenderComposites, null);
+            var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, null,
+                                                 clothesType.ClothesTypeGenderComposites, clothesType.Clothes);
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);

@@ -16,7 +16,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroup
         { }
 
         public SizeGroupShortTransfer(ISizeGroup sizeGroup)
-            :this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
+            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
         { }
 
         public SizeGroupShortTransfer(ClothesSizeType clothesSizeType, int sizeNormalize)
@@ -34,12 +34,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroup
         /// Тип одежды для определения размера
         /// </summary>
         [Required]
-        public ClothesSizeType ClothesSizeType { get; }
+        public ClothesSizeType ClothesSizeType { get; set; }
 
         /// <summary>
         /// Номинальное значение размера
         /// </summary>
         [Required]
-        public int SizeNormalize { get; }
+        public int SizeNormalize { get; set; }
     }
 }
