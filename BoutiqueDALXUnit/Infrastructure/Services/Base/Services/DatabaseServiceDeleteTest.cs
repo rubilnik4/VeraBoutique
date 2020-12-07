@@ -4,8 +4,8 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable;
 using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
-using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables;
 using Functional.Models.Enums;
 using Xunit;
 

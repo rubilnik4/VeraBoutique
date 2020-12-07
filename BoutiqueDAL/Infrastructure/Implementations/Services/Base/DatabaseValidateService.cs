@@ -40,22 +40,31 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private readonly IDatabaseTable<TId, TDomain, TEntity> _dataTable;
 
         /// <summary>
-        /// Комплексная проверка сущности
+        /// Комплексная проверка сущности для записи
         /// </summary>
-        public async Task<IResultError> Validate(TDomain domain) =>
+        public async Task<IResultError> ValidatePost(TDomain domain) =>
             await new ResultError().
             ResultErrorBindOk(() => ValidateModel(domain)).
             ResultErrorBindOkAsync(() => ValidateDuplicate(domain.Id)).
             ResultErrorBindOkBindAsync(() => ValidateIncludes(domain));
 
         /// <summary>
-        /// Комплексная проверка сущностей
+        /// Комплексная проверка сущностей для записи
         /// </summary>
-        public async Task<IResultError> Validate(IEnumerable<TDomain> domains) =>
+        public async Task<IResultError> ValidatePost(IEnumerable<TDomain> domains) =>
             await new ResultError().
             ResultErrorBindOk(() => ValidateModels(domains)).
             ResultErrorBindOkAsync(() => ValidateDuplicates(domains.Select(domain => domain.Id))).
             ResultErrorBindOkBindAsync(() => ValidateIncludes(domains));
+
+        /// <summary>
+        /// Комплексная проверка сущности для обновления
+        /// </summary>
+        public async Task<IResultError> ValidatePut(TDomain domain) =>
+            await new ResultError().
+            ResultErrorBindOk(() => ValidateModel(domain)).
+            ResultErrorBindOkAsync(() => ValidateFind(domain.Id)).
+            ResultErrorBindOkBindAsync(() => ValidateIncludes(domain));
 
         /// <summary>
         /// Проверить модель

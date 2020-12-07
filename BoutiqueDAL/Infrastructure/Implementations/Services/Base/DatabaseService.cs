@@ -82,7 +82,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         public async Task<IResultValue<TId>> Post(TDomain domain) =>
             await new ResultValue<TDomain>(domain).
-            ResultValueBindErrorsOkAsync(_ => _databaseValidateService.Validate(domain)).
+            ResultValueBindErrorsOkAsync(_ => _databaseValidateService.ValidatePost(domain)).
             ResultValueBindOkBindAsync(_ => AddWithSaving(_dataTable, domain));
 
         /// <summary>
@@ -96,15 +96,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         private async Task<IResultCollection<TId>> PostCollection(IReadOnlyCollection<TDomain> domains) =>
             await new ResultCollection<TDomain>(domains).
-            ResultCollectionBindErrorsOkAsync(_ => _databaseValidateService.Validate(domains)).
+            ResultCollectionBindErrorsOkAsync(_ => _databaseValidateService.ValidatePost(domains)).
             ResultCollectionBindOkBindAsync(_ => AddRangeWithSaving(_dataTable, domains));
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
         /// </summary>
         public async Task<IResultError> Put(TDomain domain) =>
-            await _databaseValidateService.ValidateFind(domain.Id).
-            ResultErrorBindOkBindAsync(() => _databaseValidateService.Validate(domain)).
+            await _databaseValidateService.ValidatePut(domain).
             ResultErrorBindOkTaskAsync(() => _dataTable.Update(_entityConverter.ToEntity(domain))).
             ResultErrorBindOkBindAsync(DatabaseSaveChanges);
 

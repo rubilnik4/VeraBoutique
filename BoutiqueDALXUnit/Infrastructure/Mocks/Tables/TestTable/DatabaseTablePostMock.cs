@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
-using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
 {
     /// <summary>
     /// Таблицы баз данных. Отправка

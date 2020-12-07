@@ -21,14 +21,19 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
        where TId : notnull
     {
         /// <summary>
-        /// Комплексная проверка сущности
+        /// Комплексная проверка сущности для записи
         /// </summary>
-        Task<IResultError> Validate(TDomain domain);
+        Task<IResultError> ValidatePost(TDomain domain);
 
         /// <summary>
-        /// Комплексная проверка сущностей
+        /// Комплексная проверка сущностей для записи
         /// </summary>
-        Task<IResultError> Validate(IEnumerable<TDomain> domains);
+        Task<IResultError> ValidatePost(IEnumerable<TDomain> domains);
+
+        /// <summary>
+        /// Комплексная проверка сущности для обновления
+        /// </summary>
+        Task<IResultError> ValidatePut(TDomain domain);
 
         /// <summary>
         /// Проверить модель

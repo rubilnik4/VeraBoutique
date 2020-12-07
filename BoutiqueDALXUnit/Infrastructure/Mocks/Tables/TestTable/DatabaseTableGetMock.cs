@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
@@ -13,7 +12,7 @@ using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks.Tables
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
 {
     /// <summary>
     /// Таблицы баз данных. Получение
