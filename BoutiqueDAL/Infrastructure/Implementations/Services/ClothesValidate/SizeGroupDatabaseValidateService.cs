@@ -44,7 +44,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        public override IResultError ValidateModel(ISizeGroupDomain sizeGroup) =>
+        protected override IResultError ValidateModel(ISizeGroupDomain sizeGroup) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateSizeNormalized(sizeGroup)).
             ResultErrorBindOk(() => ValidateSizes(sizeGroup));
@@ -53,14 +53,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(ISizeGroupDomain sizeGroup) =>
+        protected override async Task<IResultError> ValidateIncludes(ISizeGroupDomain sizeGroup) =>
              await new ResultError().
             ResultErrorBindOkAsync(() => _sizeDatabaseValidateService.ValidateFinds(sizeGroup.Sizes.Select(size => size.Id)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(IEnumerable<ISizeGroupDomain> sizeGroups) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<ISizeGroupDomain> sizeGroups) =>
             await new ResultError().
             ResultErrorBindOkAsync(() => sizeGroups.SelectMany(sizeGroup => sizeGroup.Sizes.Select(size => size.Id)).
                                                     Distinct().

@@ -18,9 +18,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// </summary>
     public class ClothesTable : EntityDatabaseTable<int, IClothesDomain, ClothesEntity>, IClothesTable
     {
-        public ClothesTable(DbSet<ClothesEntity> clothesInformationSet)
-            : base(clothesInformationSet)
-        { }
+        public ClothesTable(DbSet<ClothesEntity> clothesSet)
+            : base(clothesSet)
+        {
+            _clothesSet = clothesSet;
+        }
+
+        /// <summary>
+        /// Экземпляр таблицы базы данных
+        /// </summary>
+        private readonly DbSet<ClothesEntity> _clothesSet;
 
         /// <summary>
         /// Выгрузка идентификатора
@@ -43,14 +50,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Включение сущностей при загрузке полных данных
         /// </summary>
-        protected override IQueryable<ClothesEntity> GetInclude(IQueryable<ClothesEntity> entities) =>
-            entities.Include(entity => entity.Gender).
-                     Include(entity => entity.ClothesType).
-                     Include(entity => entity.ClothesColorComposites).
-                     ThenInclude(composite => composite.ColorClothes).
-                     Include(entity => entity.ClothesSizeGroupComposites).
-                     ThenInclude(composite => composite.SizeGroup).
-                     ThenInclude(composite => composite!.SizeGroupComposites).
-                     ThenInclude(composite => composite.Size);
+        protected override IQueryable<ClothesEntity> EntitiesIncludes =>
+            _clothesSet.Include(entity => entity.Gender).
+                        Include(entity => entity.ClothesType).
+                        Include(entity => entity.ClothesColorComposites).
+                        ThenInclude(composite => composite.ColorClothes).
+                        Include(entity => entity.ClothesSizeGroupComposites).
+                        ThenInclude(composite => composite.SizeGroup).
+                        ThenInclude(composite => composite!.SizeGroupComposites).
+                        ThenInclude(composite => composite.Size);
     }
 }

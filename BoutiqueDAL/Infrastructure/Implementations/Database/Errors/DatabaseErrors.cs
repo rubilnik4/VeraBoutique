@@ -15,7 +15,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// Ошибка сохранения изменений
         /// </summary>
         public static IErrorResult DatabaseSaveError() =>
-            new ErrorResult(ErrorResultType.DatabaseSave, $"Ошибка сохранения базы");
+            new ErrorResult(ErrorResultType.DatabaseSave, "Ошибка сохранения базы");
 
         /// <summary>
         /// Ошибка доступа
@@ -26,8 +26,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// <summary>
         /// Элемент не найден
         /// </summary>
-        public static IErrorResult ValueNotFoundError(string id, string tableName) =>
+        public static IErrorResult ValueNotFoundError<TId>(TId id, string tableName) 
+            where TId : notnull =>
             new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент {id} в таблице {tableName} не найден");
+
+        /// <summary>
+        /// Элементы не найден
+        /// </summary>
+        public static IErrorResult ValuesNotFoundError<TId>(IEnumerable<TId> ids, string tableName)
+            where TId : notnull =>
+            new ErrorResult(ErrorResultType.ValueNotFound, $"Элементы {AggregateIdsToString(ids)} в таблице {tableName} не найден");
 
         /// <summary>
         /// Дублирование элемента
@@ -47,7 +55,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// Преобразовать список элементов в строку
         /// </summary>
         private static string AggregateIdsToString<TId>(IEnumerable<TId> ids)
-             where TId : notnull =>
+            where TId : notnull =>
             String.Join(",", ids);
     }
 }

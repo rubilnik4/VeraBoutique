@@ -47,7 +47,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             _genderTable = boutiqueDatabase.GendersTable;
             _clothesTypeTable = boutiqueDatabase.ClotheTypeTable;
             _clothesShortEntityConverter = clothesShortEntityConverter;
-            _clothesEntityConverter = clothesEntityConverter;
         }
 
         /// <summary>
@@ -71,11 +70,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IClothesShortEntityConverter _clothesShortEntityConverter;
 
         /// <summary>
-        /// Преобразования модели одежды в модель базы данных
-        /// </summary>
-        private readonly IClothesEntityConverter _clothesEntityConverter;
-
-        /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         public async Task<IResultCollection<IClothesShortDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
@@ -84,21 +78,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
 
         /// <summary>
-        /// Получить информацию об одежде по идентификатору
-        /// </summary>
-        public async Task<IResultValue<IClothesDomain>> GetIncludesById(int id) =>
-            await ResultValueBindTryAsync(() => GetClothesInformationIncludesById(id).
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString(),
-                                                                                                                  nameof(IClothesTable))),
-                                          DatabaseErrors.TableAccessError(nameof(_clothesTable))).
-            ResultValueBindOkTaskAsync(clothesInformationDomain => _clothesEntityConverter.FromEntity(clothesInformationDomain));
-        
-        /// <summary>
         /// Получить одежду без изображений
         /// </summary>
         private async Task<IReadOnlyCollection<ClothesShortEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
             await GetClothesInformationByGender(genderType).
-            Join(GetClothesInformationByClothesType(clothesType),
+            Join(GetClothesByClothesType(clothesType),
                  clothesGender => clothesGender.Id,
                  clothesClothesType => clothesClothesType.Id,
                  (clothesGender, clothesClothesType) => clothesGender).
@@ -118,24 +102,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesEntity> GetClothesInformationByClothesType(string clothesType) =>
+        private IQueryable<ClothesEntity> GetClothesByClothesType(string clothesType) =>
             _clothesTypeTable.
             Where(clothesType).
             Include(clothesTypeEntity => clothesTypeEntity.Clothes).
             SelectMany(genderEntity => genderEntity.Clothes);
-
-        /// <summary>
-        /// Получить информацию об одежде по идентификатору
-        /// </summary>
-        private async Task<ClothesEntity?> GetClothesInformationIncludesById(int id) =>
-            await _clothesTable.Where(id).
-            Include(clothesInformationEntity => clothesInformationEntity.ClothesColorComposites).
-            ThenInclude(clothesColorCompositeEntity => clothesColorCompositeEntity.ColorClothes).
-            Include(clothesInformationEntity => clothesInformationEntity.ClothesSizeGroupComposites).
-            ThenInclude(clothesSizeGroupCompositeEntity => clothesSizeGroupCompositeEntity.SizeGroup).
-            ThenInclude(sizeGroupEntity => sizeGroupEntity!.SizeGroupComposites).
-            ThenInclude(sizeGroupCompositeEntity => sizeGroupCompositeEntity.Size).
-            AsNoTracking().
-            FirstOrDefaultAsync();
     }
 }

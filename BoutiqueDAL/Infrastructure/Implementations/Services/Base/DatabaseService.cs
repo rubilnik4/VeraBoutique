@@ -16,6 +16,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
@@ -83,7 +84,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         public async Task<IResultValue<TId>> Post(TDomain domain) =>
             await new ResultValue<TDomain>(domain).
             ResultValueBindErrorsOkAsync(_ => _databaseValidateService.ValidatePost(domain)).
-            ResultValueBindOkBindAsync(_ => AddWithSaving(_dataTable, domain));
+            ResultValueBindOkBindAsync(_ => AddWithSaving(domain));
 
         /// <summary>
         /// Загрузить модели в базу
@@ -104,24 +105,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         public async Task<IResultError> Put(TDomain domain) =>
             await _databaseValidateService.ValidatePut(domain).
-            ResultErrorBindOkTaskAsync(() => _dataTable.Update(_entityConverter.ToEntity(domain))).
-            ResultErrorBindOkBindAsync(DatabaseSaveChanges);
+            ResultErrorBindOkBindAsync(() => UpdateWithSaving(domain));
 
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.FindShortIdAsync(id).
-            ResultValueBindErrorsOkTaskAsync(entity => _dataTable.Remove(entity)).
-            ResultValueBindOkTaskAsync(entity => _entityConverter.FromEntity(entity)).
-            ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+            ResultValueBindOkBindAsync(DeleteWithSaving);
         
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
-        private async Task<IResultValue<TId>> AddWithSaving(IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
-                                                            TDomain model) =>
-            await dataTable.AddAsync(_entityConverter.ToEntity(model)).
+        private async Task<IResultValue<TId>> AddWithSaving(TDomain model) =>
+            await _dataTable.AddAsync(_entityConverter.ToEntity(model)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
@@ -131,6 +128,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
                                                                       IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_entityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
+
+        /// <summary>
+        /// Добавить модель в базу и сохранить
+        /// </summary>
+        private async Task<IResultError> UpdateWithSaving(TDomain domain) =>
+            await _dataTable.Update(_entityConverter.ToEntity(domain)).
+            ResultErrorBindOkAsync(DatabaseSaveChanges);
+
+        /// <summary>
+        /// Добавить модель в базу и сохранить
+        /// </summary>
+        private async Task<IResultValue<TDomain>> DeleteWithSaving(TEntityOut entity) =>
+            await _dataTable.Remove(entity).
+            ResultValueBindOk(_entityConverter.FromEntity).
+            ResultValueBindErrorsOkAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
         /// Сохранить изменения в базе или вернуть ошибки

@@ -21,7 +21,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     {
         public SizeGroupTable(DbSet<SizeGroupEntity> sizeGroupSet)
             : base(sizeGroupSet)
-        { }
+        {
+            _sizeGroupSet = sizeGroupSet;
+        }
+
+        /// <summary>
+        /// Экземпляр таблицы базы данных
+        /// </summary>
+        private readonly DbSet<SizeGroupEntity> _sizeGroupSet;
 
         /// <summary>
         /// Выгрузка идентификатора
@@ -44,8 +51,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Включение сущностей при загрузке полных данных
         /// </summary>
-        protected override IQueryable<SizeGroupEntity> GetInclude(IQueryable<SizeGroupEntity> entities) =>
-            entities.Include(entity => entity.SizeGroupComposites).
+        protected override IQueryable<SizeGroupEntity> EntitiesIncludes =>
+            _sizeGroupSet.Include(entity => entity.SizeGroupComposites).
                      ThenInclude(composite => composite.Size);
     }
 }

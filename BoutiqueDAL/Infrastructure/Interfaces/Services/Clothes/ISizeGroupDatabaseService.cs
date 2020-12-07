@@ -11,11 +11,5 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
     public interface ISizeGroupDatabaseService : IDatabaseService<(ClothesSizeType, int), ISizeGroupDomain>
-    {
-        /// <summary>
-        /// Получить группу размеров совместно со списком размеров
-        /// </summary>
-        Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
-                                                                     int sizeNormalize);
-    }
+    { }
 }

@@ -1,15 +1,9 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
-using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDALXUnit.Data.Database.Interfaces;
+﻿using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base
 {
     /// <summary>
     /// Базовый сервис получения данных из базы

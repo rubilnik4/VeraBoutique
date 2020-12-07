@@ -4,8 +4,9 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable;
-using BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks;
 using Functional.Models.Enums;
 using Xunit;
 
@@ -52,6 +53,26 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Services
 
             Assert.True(resultEntity.HasErrors);
             Assert.Equal(ErrorResultType.ValueNotFound, resultEntity.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Проверить удаление. Ошибка удаления
+        /// </summary>
+        [Fact]
+        public async Task Delete_DeleteError()
+        {
+            var testDelete = TestData.TestDomains.Last();
+            var testResultEntities = TestEntitiesData.TestResultEntities;
+            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities, DatabaseTableDeleteTest.DeleteErrorFunc());
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+                                                                         testConverter);
+
+            var resultEntity = await testService.Delete(testDelete.Id);
+
+            Assert.True(resultEntity.HasErrors);
+            Assert.Equal(ErrorResultType.DatabaseTableAccess, resultEntity.Errors.First().ErrorResultType);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesDomain = ClothesDomainOk;
             var genderType = clothesDomain.Value.Gender.GenderType;
             var clothesType = clothesDomain.Value.ClothesTypeShort.Name;
-            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, clothesDomain);
+            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains);
             var clothesShortTransferConverter = ClothesTransferConverterMock.ClothesShortTransferConverter;
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                clothesShortTransferConverter,
@@ -62,7 +62,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesDomain = ClothesDomainOk;
             var genderType = clothesDomain.Value.Gender.GenderType;
             var clothesType = clothesDomain.Value.ClothesTypeShort.Name;
-            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains, clothesDomain);
+            var clothesShortDatabaseService = GetClothesDatabaseService(clothesShortDomains);
             var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
                                                                ClothesTransferConverterMock.ClothesShortTransferConverter,
                                                                ClothesTransferConverterMock.ClothesTransferConverter);
@@ -77,75 +77,12 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         }
 
         /// <summary>
-        /// Получить информацию об одежде по идентификатору. Корректный вариант
-        /// </summary>
-        [Fact]
-        public async Task GetIncludesById_Ok()
-        {
-            var clothesDomain = ClothesDomainOk;
-            var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesDomain);
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-            var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
-                                                               ClothesTransferConverterMock.ClothesShortTransferConverter,
-                                                               clothesTransferConverter);
-
-            var clothesTransfer = await clothesShortController.GetIncludesById(clothesDomain.Value.Id);
-            var clothesAfter = clothesTransferConverter.FromTransfer(clothesTransfer.Value);
-
-            Assert.True(clothesAfter.Value.Equals(clothesDomain.Value));
-        }
-
-        /// <summary>
-        /// Получить информацию об одежде по идентификатору. Ошибка базы данных
-        /// </summary>
-        [Fact]
-        public async Task GetIncludesById_ErrorDatabase()
-        {
-            var initialError = ErrorData.DatabaseError;
-            var clothesDomain = new ResultValue<IClothesDomain>(initialError);
-            var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesDomain);
-            var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
-                                                               ClothesTransferConverterMock.ClothesShortTransferConverter,
-                                                               ClothesTransferConverterMock.ClothesTransferConverter);
-
-            var actionResult = await clothesShortController.GetIncludesById(ClothesDomainOk.Value.Id);
-
-            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-            var badRequest = (BadRequestObjectResult)actionResult.Result;
-            var errors = (SerializableError)badRequest.Value;
-            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
-        }
-
-        /// <summary>
-        /// Получить группу размеров одежды совместно с размерами. Ошибка базы данных
-        /// </summary>
-        [Fact]
-        public async Task GetIncludesById_NotFound()
-        {
-            var initialError = ErrorData.NotFoundError;
-            var clothesDomain = new ResultValue<IClothesDomain>(initialError);
-            var clothesShortDatabaseService = GetClothesDatabaseService(ClothesShortDomainsOk, clothesDomain);
-            var clothesShortController = new ClothesController(clothesShortDatabaseService.Object,
-                                                               ClothesTransferConverterMock.ClothesShortTransferConverter,
-                                                               ClothesTransferConverterMock.ClothesTransferConverter);
-
-            var actionResult = await clothesShortController.GetIncludesById(ClothesDomainOk.Value.Id);
-
-            Assert.IsType<NotFoundResult>(actionResult.Result);
-            var notFoundResult = (NotFoundResult)actionResult.Result;
-            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
-        }
-
-        /// <summary>
         /// Сервис одежды в базе данных
         /// </summary>
-        private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesShortDomain> clothesShortDomains,
-                                                                               IResultValue<IClothesDomain> clothesDomain) =>
+        private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesShortDomain> clothesShortDomains) =>
             new Mock<IClothesDatabaseService>().
             Void(mock => mock.Setup(service => service.GetClothesShorts(It.IsAny<GenderType>(), It.IsAny<string>())).
-                              ReturnsAsync(clothesShortDomains)).
-            Void(mock => mock.Setup(service => service.GetIncludesById(It.IsAny<int>())).ReturnsAsync(clothesDomain));
+                              ReturnsAsync(clothesShortDomains));
 
         /// <summary>
         /// Данные одежды. Корректный вариант

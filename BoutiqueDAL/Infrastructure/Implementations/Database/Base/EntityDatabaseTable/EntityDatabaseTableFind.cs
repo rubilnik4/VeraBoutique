@@ -39,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FindIdAsync(TId id) =>
-            await FindAsyncWrapper(() => GetInclude(_databaseSet.AsNoTracking()).
+            await FindAsyncWrapper(() => EntitiesIncludes.AsNoTracking().
                                          FirstOrDefaultAsync(IdPredicate(id))!,
                                    id);
 
@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Вернуть полные записи из таблицы по идентификаторам асинхронно
         /// </summary>
         public async Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids) =>
-            await FindEntityAsync(() => GetInclude(_databaseSet.AsNoTracking()).Where(IdsPredicate(ids)).ToListAsync());
+            await FindEntityAsync(() => EntitiesIncludes.AsNoTracking().Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
@@ -74,10 +74,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
             await ResultCollectionTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync(), TableAccessError);
 
         /// <summary>
-        /// Включение сущностей при загрузке полных данных
+        /// Выгрузка сущностей с включенными данными
         /// </summary>
-        protected virtual IQueryable<TEntity> GetInclude(IQueryable<TEntity> entities) =>
-            entities;
+        protected virtual IQueryable<TEntity> EntitiesIncludes =>
+            _databaseSet;
 
         /// <summary>
         /// Поиск элемента с проверкой

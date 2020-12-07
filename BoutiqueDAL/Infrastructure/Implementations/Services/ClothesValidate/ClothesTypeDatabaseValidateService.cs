@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        public override IResultError ValidateModel(IClothesTypeDomain clothesType) =>
+        protected override IResultError ValidateModel(IClothesTypeDomain clothesType) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateName(clothesType)).
             ResultErrorBindOk(() => ValidateCategoryName(clothesType)).
@@ -63,7 +63,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(IClothesTypeDomain clothesType) =>
+        protected override async Task<IResultError> ValidateIncludes(IClothesTypeDomain clothesType) =>
             await new ResultError().
             ResultErrorBindOkAsync(() => _categoryDatabaseValidateService.ValidateFind(clothesType.Category.Id)).
             ResultErrorBindOkBindAsync(() => clothesType.Genders.Select(gender => gender.Id).
@@ -72,7 +72,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesTypeDomain> clothesTypes) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesTypeDomain> clothesTypes) =>
             await new ResultError().
             ResultErrorBindOkAsync(() => clothesTypes.Select(clothesType => clothesType.Category.Id).
                                                       Distinct().

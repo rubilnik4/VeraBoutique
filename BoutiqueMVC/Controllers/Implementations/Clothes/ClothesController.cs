@@ -33,7 +33,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         {
             _clothesDatabaseService = clothesDatabaseService;
             _clothesShortTransferConverter = clothesShortTransferConverter;
-            _clothesTransferConverter = clothesTransferConverter;
         }
 
         /// <summary>
@@ -47,11 +46,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         private readonly IClothesShortTransferConverter _clothesShortTransferConverter;
 
         /// <summary>
-        /// Конвертер информации об одежде в трансферную модель
-        /// </summary>
-        private readonly IClothesTransferConverter _clothesTransferConverter;
-
-        /// <summary>
         /// Получить одежду без изображений
         /// </summary>
         [HttpGet("clothesShorts/{genderType}/{clothesType}")]
@@ -62,18 +56,5 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
             await _clothesDatabaseService.GetClothesShorts(genderType, clothesType).
             ResultCollectionOkTaskAsync(clothes => _clothesShortTransferConverter.ToTransfers(clothes)).
             ToActionResultCollectionTaskAsync<int, ClothesShortTransfer>();
-
-        /// <summary>
-        /// Получить информацию об одежде по идентификатору
-        /// </summary>
-        [HttpGet("includes/{id}")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ClothesTransfer>> GetIncludesById(int id) =>
-            await _clothesDatabaseService.GetIncludesById(id).
-            ResultValueOkTaskAsync(clothesInformation => _clothesTransferConverter.ToTransfer(clothesInformation)).
-            ToActionResultValueTaskAsync<int, ClothesTransfer>();
     }
 }

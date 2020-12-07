@@ -1,11 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Microsoft.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 using Xunit;
 
@@ -20,7 +25,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// Выгрузка идентификатора
         /// </summary>
         [Fact]
-        public void IdSelect()
+        public void IdSelect_Ok()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesTable = ClothesTable;
@@ -34,7 +39,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// Функция поиска по идентификатору
         /// </summary>
         [Fact]
-        public void IdPredicate()
+        public void IdPredicate_Ok()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesTable = ClothesTable;
@@ -48,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// Функция поиска по идентификаторам
         /// </summary>
         [Fact]
-        public void IdsPredicate()
+        public void IdsPredicate_Ok()
         {
             var clothes = ClothesEntitiesData.ClothesEntities;
             var clothesTable = ClothesTable;

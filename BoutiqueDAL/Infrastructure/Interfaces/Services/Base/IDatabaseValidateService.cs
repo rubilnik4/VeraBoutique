@@ -36,26 +36,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         Task<IResultError> ValidatePut(TDomain domain);
 
         /// <summary>
-        /// Проверить модель
-        /// </summary>
-        IResultError ValidateModel(TDomain domain);
-
-        /// <summary>
-        /// Проверить модели
-        /// </summary>
-        IResultError ValidateModels(IEnumerable<TDomain> domains);
-
-        /// <summary>
-        /// Получить ошибку дублирования
-        /// </summary>
-        Task<IResultError> ValidateDuplicate(TId id);
-
-        /// <summary>
-        /// Получить ошибки дублирования
-        /// </summary>
-        Task<IResultError> ValidateDuplicates(IEnumerable<TId> ids);
-
-        /// <summary>
         /// Проверить наличие сущности
         /// </summary>
         Task<IResultError> ValidateFind(TId id);
@@ -64,16 +44,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// Проверить наличие сущностей
         /// </summary>
         Task<IResultError> ValidateFinds(IEnumerable<TId> ids);
-
-        /// <summary>
-        /// Проверить наличие вложенных моделей
-        /// </summary>
-        Task<IResultError> ValidateIncludes(TDomain domain);
-
-        /// <summary>
-        /// Проверить наличие коллекции вложенных моделей 
-        /// </summary>
-        Task<IResultError> ValidateIncludes(IEnumerable<TDomain> domains);
 
         /// <summary>
         /// Проверить количество вложенных моделей

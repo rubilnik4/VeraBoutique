@@ -28,7 +28,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        public override IResultError ValidateModel(IColorClothesDomain color) =>
+        protected override IResultError ValidateModel(IColorClothesDomain color) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateSizeName(color));
 

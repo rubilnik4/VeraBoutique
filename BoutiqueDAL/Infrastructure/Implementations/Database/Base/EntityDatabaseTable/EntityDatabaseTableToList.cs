@@ -29,8 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Вернуть полные записи из таблицы асинхронно
         /// </summary>
         public async Task<IResultCollection<TEntity>> ToListAsync() =>
-            await ResultCollectionTryAsync(() => GetInclude(_databaseSet.AsNoTracking()).
-                                                 ToListAsync(), 
+            await ResultCollectionTryAsync(() => EntitiesIncludes.ToListAsync(), 
                                            TableAccessError);
     }
 }

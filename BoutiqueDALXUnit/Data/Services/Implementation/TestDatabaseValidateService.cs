@@ -45,23 +45,22 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// <summary>
         /// Проверить модель
         /// </summary>
-        public override IResultError ValidateModel(ITestDomain test) =>
+        protected override IResultError ValidateModel(ITestDomain test) =>
             new ResultError().
-            ResultErrorBindOk(() => ValidateName(test)).
-            ResultErrorBindOk(() => ValidateTestIncludes(test));
-
+            ResultErrorBindOk(() => ValidateName(test));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(ITestDomain test) =>
-             await new ResultError().
-            ResultErrorBindOkAsync(() => _testIncludeDatabaseValidateService.ValidateFinds(test.TestIncludes.Select(testInclude => testInclude.Id)));
+        protected override async Task<IResultError> ValidateIncludes(ITestDomain test) =>
+            await new ResultError().
+            ResultErrorBindOkAsync(() => test.TestIncludes.Select(testInclude => testInclude.Id).
+                                         Map(ids => _testIncludeDatabaseValidateService.ValidateFinds(ids)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        public override async Task<IResultError> ValidateIncludes(IEnumerable<ITestDomain> tests) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<ITestDomain> tests) =>
             await new ResultError().
             ResultErrorBindOkAsync(() => tests.SelectMany(test => test.TestIncludes.Select(testInclude => testInclude.Id)).
                                                Distinct().
@@ -74,11 +73,5 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
             test.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
                 _ => ModelsErrors.FieldNotValid<TestEnum, ITestDomain>(nameof(test.Name), test));
-
-        /// <summary>
-        /// Проверка размеров
-        /// </summary>
-        private IResultError ValidateTestIncludes(ITestDomain test) =>
-            _testIncludeDatabaseValidateService.ValidateQuantity(test.TestIncludes);
     }
 }

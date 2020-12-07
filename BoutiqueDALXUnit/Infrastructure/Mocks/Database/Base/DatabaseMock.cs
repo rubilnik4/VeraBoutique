@@ -1,10 +1,9 @@
 ﻿using BoutiqueDALXUnit.Data.Database.Interfaces;
-using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Services.Base.Mocks
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base
 {
     /// <summary>
     /// Тестовую база данных

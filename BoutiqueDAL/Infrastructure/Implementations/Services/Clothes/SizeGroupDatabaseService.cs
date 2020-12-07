@@ -39,40 +39,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                         ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService,
                                         ISizeGroupEntityConverter sizeGroupEntityConverter)
             : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupEntityConverter)
-        {
-            _sizeGroupTable =  boutiqueDatabase.SizeGroupTable;
-            _sizeGroupEntityConverter = sizeGroupEntityConverter;
-        }
-
-        /// <summary>
-        /// Таблица базы данных группы размеров
-        /// </summary>
-        private readonly ISizeGroupTable _sizeGroupTable;
-
-        /// <summary>
-        /// Преобразования модели категории одежды в модель базы данных
-        /// </summary>
-        private readonly ISizeGroupEntityConverter _sizeGroupEntityConverter;
-
-        /// <summary>
-        /// Получить группу размеров совместно со списком размеров
-        /// </summary>
-        public async Task<IResultValue<ISizeGroupDomain>> GetSizeGroupIncludeSize(ClothesSizeType clothesSizeType,
-                                                                                  int sizeNormalize) =>
-            await ResultValueBindTryAsync(() => GetSizeGroup(clothesSizeType, sizeNormalize).
-                                            ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(clothesSizeType.ToString() + sizeNormalize, 
-                                                                                                              nameof(ISizeGroupTable))),
-                                           DatabaseErrors.TableAccessError(nameof(_sizeGroupTable))).
-            ResultValueBindOkTaskAsync(sizeGroup => _sizeGroupEntityConverter.FromEntity(sizeGroup));
-
-        /// <summary>
-        /// Получить группу размеров совместно со списком размеров
-        /// </summary>
-        private async Task<SizeGroupEntity?> GetSizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize) =>
-            await _sizeGroupTable.Where((clothesSizeType, sizeNormalize)).
-            Include(sizeGroupEntity => sizeGroupEntity.SizeGroupComposites).
-            ThenInclude(sizeGroupComposite => sizeGroupComposite.Size).
-            AsNoTracking().
-            FirstOrDefaultAsync();
+        { }
     }
 }
