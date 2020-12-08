@@ -20,7 +20,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// Сервис проверки данных из базы категорий одежды
     /// </summary>
     public class CategoryDatabaseValidateService : DatabaseValidateService<string, ICategoryDomain, CategoryEntity>,
-                                                  ICategoryDatabaseValidateService
+                                                   ICategoryDatabaseValidateService
     {
         public CategoryDatabaseValidateService(ICategoryTable categoryTable)
             : base(categoryTable)

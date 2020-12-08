@@ -11,6 +11,7 @@
         DatabaseTableAccess,
         ValueNotFound,
         ValueNotValid,
+        CollectionEmpty,
         DatabaseValueDuplicate,
         JsonConvertion,
         UserDefaultNotFound,

@@ -76,6 +76,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
             errors.First().ErrorResultType switch
             {
                 ErrorResultType.ValueNotFound => new NotFoundResult(),
+                ErrorResultType.CollectionEmpty => new NotFoundResult(),
                 _ => new BadRequestObjectResult(errors.ToModelState()),
             };
     }

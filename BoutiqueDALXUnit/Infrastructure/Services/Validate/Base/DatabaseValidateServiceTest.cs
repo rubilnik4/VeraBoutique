@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommonXUnit.Data;
+using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
@@ -25,7 +27,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var testEntities = TestEntitiesData.TestEntities;
             var id = testEntities.First().Id;
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -43,7 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var testEntities = Enumerable.Empty<TestEntity>();
             var id = TestEntitiesData.TestEntities.First().Id;
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -62,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var testEntities = TestEntitiesData.TestEntities;
             var ids = testEntities.Select(testEntity => testEntity.Id);
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -80,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var testEntities = Enumerable.Empty<TestEntity>().ToList();
             var ids = TestEntitiesData.TestEntities.Select(testEntity => testEntity.Id);
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -88,6 +90,43 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
+        /// Проверка количества элементов
+        /// </summary>
+        [Fact]
+        public void ValidateQuantity_Ok()
+        {
+            var tests = TestData.TestDomains;
+            var testEntities = Enumerable.Empty<TestEntity>().ToList();
+            var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
+            var testTable = new TestTable(dbSetTest.Object);
+            var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
+
+            var result = testValidateService.ValidateQuantity(tests);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Проверка количества элементов. Ошибка
+        /// </summary>
+        [Fact]
+        public void ValidateQuantity_ErrorCollectionEmpty()
+        {
+            var tests = Enumerable.Empty<ITestDomain>().ToList();
+            var testEntities = Enumerable.Empty<TestEntity>().ToList();
+            var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
+            var testTable = new TestTable(dbSetTest.Object);
+            var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
+
+            var result = testValidateService.ValidateQuantity(tests);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
         }
     }
 }

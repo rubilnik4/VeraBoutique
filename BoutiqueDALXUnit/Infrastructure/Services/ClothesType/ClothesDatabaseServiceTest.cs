@@ -56,13 +56,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                                                                             clothesInformationEntities);
             var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
                                                                                                            clothesInformationEntities);
-            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderOk(genderWithClothesEntities));
-            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(ClothesTypeTableMock.GetClothesTypeOk(clothesTypeWithClothesEntities));
-            var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
+            var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
+            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesInformationEntities);
             var clothesShortEntityConverter = ClothesEntityConverterMock.ClothesShortEntityConverter;
-            var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
+            var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GetDatabaseValidationService(clothesTable.Object), 
+                                                                    GetDatabaseValidationService(clothesTable), 
                                                                     clothesShortEntityConverter, 
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
@@ -71,34 +71,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 
             Assert.True(clothesResults.OkStatus);
             Assert.True(clothesResults.Value.SequenceEqual(clothesShortDomains.Value));
-        }
-
-        /// <summary>
-        /// Получить одежду без изображений. Ошибка
-        /// </summary>
-        [Fact]
-        public async Task GetClothesShort_Exception()
-        {
-            var genderEntities = GenderEntitiesData.GenderEntities;
-            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
-            var genderType = genderEntities.First().GenderType;
-            var clothesType = clothesTypeEntities.First().Name;
-            var clothesInformationEntities = ClothesEntitiesData.ClothesEntities;
-            var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
-                                                                                                           clothesInformationEntities);
-            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
-            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(ClothesTypeTableMock.GetClothesTypeOk(clothesTypeWithClothesEntities));
-            var clothesTable = ClothesTableMock.GetClothesTable(ClothesTableMock.GetClothesInformationOk(clothesInformationEntities));
-            var database = GetDatabase(genderTable.Object, clothesTypeTable.Object, clothesTable.Object);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GetDatabaseValidationService(clothesTable.Object),
-                                                                    ClothesEntityConverterMock.ClothesShortEntityConverter,
-                                                                    ClothesEntityConverterMock.ClothesEntityConverter);
-
-            var clothesResults = await clothesDatabaseService.GetClothesShorts(genderType, clothesType);
-
-            Assert.True(clothesResults.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

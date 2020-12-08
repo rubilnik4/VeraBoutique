@@ -58,9 +58,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 
             var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypeEntities);
             var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypeEntities);
-            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderOk(genderWithClothesTypeEntities));
-            var categoryTable = CategoryTableMock.GetCategoryTable(CategoryTableMock.GetCategoryOk(categoryEntitiesWithClothesType));
-            var database = GetDatabase(genderTable.Object, categoryTable.Object);
+            var genderTable = GenderTableMock.GetGenderTable(genderWithClothesTypeEntities);
+            var categoryTable = CategoryTableMock.GetCategoryTable(categoryEntitiesWithClothesType);
+            var database = GetDatabase(genderTable, categoryTable);
             var clothesTypeEntityConverter = ClothesTypeEntityConverterMock.ClothesTypeEntityConverter;
             var clothesTypeDatabaseService = new ClothesTypeDatabaseService(database.Object,
                                                                             ClothesTypeDatabaseValidateService,
@@ -72,33 +72,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
 
             Assert.True(clothesTypesResults.OkStatus);
             Assert.True(clothesTypesResults.Value.SequenceEqual(clothesTypesDomains.Value));
-        }
-
-        /// <summary>
-        /// Получить вид одежды по типу пола и категории. Ошибка
-        /// </summary>
-        [Fact]
-        public async Task GetByGenderCategory_Exception()
-        {
-            var genderEntities = GenderEntitiesData.GenderEntities;
-            var clothesTypes = ClothesTypeEntitiesData.ClothesTypeEntities;
-            var categories = CategoryEntitiesData.CategoryEntities;
-            var gender = genderEntities.First().GenderType;
-            string category = categories.First().Name;
-
-            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypes);
-            var genderTable = GenderTableMock.GetGenderTable(GenderTableMock.GetGenderException());
-            var categoryTable = CategoryTableMock.GetCategoryTable(CategoryTableMock.GetCategoryOk(categoryEntitiesWithClothesType));
-            var database = GetDatabase(genderTable.Object, categoryTable.Object);
-            var clothesTypeDatabaseService = new ClothesTypeDatabaseService(database.Object,
-                                                                            ClothesTypeDatabaseValidateService,
-                                                                            ClothesTypeEntityConverterMock.ClothesTypeEntityConverter,
-                                                                            ClothesTypeEntityConverterMock.ClothesTypeShortEntityConverter);
-
-            var clothesTypesResults = await clothesTypeDatabaseService.GetByGenderCategory(gender, category);
-
-            Assert.True(clothesTypesResults.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseTableAccess, clothesTypesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

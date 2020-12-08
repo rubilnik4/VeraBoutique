@@ -10,7 +10,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet
     /// <summary>
     /// Тестовые сущности базы данных
     /// </summary>
-    public static class TestDatabaseSet
+    public static class TestDatabaseSetMock
     {
         /// <summary>
         /// Получить тестовые сущности базы данных

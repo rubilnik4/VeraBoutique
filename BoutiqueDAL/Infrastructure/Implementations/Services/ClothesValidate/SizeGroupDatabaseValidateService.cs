@@ -49,7 +49,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             ResultErrorBindOk(() => ValidateSizeNormalized(sizeGroup)).
             ResultErrorBindOk(() => ValidateSizes(sizeGroup));
 
-
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>

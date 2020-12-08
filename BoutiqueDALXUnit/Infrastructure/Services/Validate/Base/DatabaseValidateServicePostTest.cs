@@ -36,7 +36,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var test = TestData.TestDomains.First();
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -55,7 +55,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var testInvalidName = new TestDomain(TestEnum.First, String.Empty, test.TestIncludes);
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -74,7 +74,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var test = TestData.TestDomains.First();
             var testEntities = TestEntitiesData.TestEntities;
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -93,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var test = TestData.TestDomains.First();
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService(TestIncludeValidateServiceMock.ValidateFindsError());
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -112,7 +112,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var tests = TestData.TestDomains;
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -131,7 +131,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var tests = TestData.TestDomains.Append(testInvalidName);
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService();
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 
@@ -150,7 +150,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var tests = TestData.TestDomains;
             var testEntities = Enumerable.Empty<TestEntity>();
             var testIncludeValidateService = TestIncludeValidateServiceMock.GetTestIncludeValidateService(TestIncludeValidateServiceMock.ValidateFindsError());
-            var dbSetTest = TestDatabaseSet.GetDbSetTest(testEntities);
+            var dbSetTest = TestDatabaseSetMock.GetDbSetTest(testEntities);
             var testTable = new TestTable(dbSetTest.Object);
             var testValidateService = new TestDatabaseValidateService(testTable, testIncludeValidateService.Object);
 

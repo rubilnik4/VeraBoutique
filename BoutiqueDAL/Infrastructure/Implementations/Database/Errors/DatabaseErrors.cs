@@ -52,6 +52,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
             new ErrorResult(ErrorResultType.DatabaseValueDuplicate, $"Дублирование элементов {AggregateIdsToString(ids)} в таблице {tableName}");
 
         /// <summary>
+        /// Коллекция пуста
+        /// </summary>
+        public static IErrorResult CollectionEmpty(string collectionType, string tableName) =>
+            new ErrorResult(ErrorResultType.CollectionEmpty, $"Коллекция типа {collectionType} в таблице {tableName} пуста");
+
+        /// <summary>
         /// Преобразовать список элементов в строку
         /// </summary>
         private static string AggregateIdsToString<TId>(IEnumerable<TId> ids)

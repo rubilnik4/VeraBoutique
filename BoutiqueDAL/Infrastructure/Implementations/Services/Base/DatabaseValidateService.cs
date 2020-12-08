@@ -94,7 +94,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         public IResultError ValidateQuantity(IEnumerable<TDomain> domains) =>
            domains.ToResultCollectionWhere(
             idsValidate => idsValidate.Any(),
-            _ => DatabaseErrors.ValueNotFoundError(typeof(TDomain).Name, _dataTable.TableName));
+            _ => DatabaseErrors.CollectionEmpty(typeof(TDomain).Name, _dataTable.TableName));
 
         /// <summary>
         /// Проверить модель
