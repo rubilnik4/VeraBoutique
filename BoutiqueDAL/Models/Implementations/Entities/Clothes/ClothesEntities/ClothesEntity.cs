@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -18,11 +19,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
             :this(id, name, description, price, image, genderType, clothesTypeName, null, null, null, null)
         { }
 
-        public ClothesEntity(IClothesMain clothesMain,
+        public ClothesEntity(IClothesShortBase clothesShort,
                              GenderEntity gender, ClothesTypeEntity clothesType,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
-            : this(clothesMain.Id, clothesMain.Name, clothesMain.Description, clothesMain.Price, clothesMain.Image,
+            : this(clothesShort.Id, clothesShort.Name, clothesShort.Description, clothesShort.Price, clothesShort.Image,
                    gender.GenderType,  clothesType.Name, gender, clothesType,
                    clothesColorComposites, clothesSizeGroupComposites)
         { }

@@ -15,9 +15,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public abstract class Size : ISize, IEquatable<ISize>
+    public abstract class SizeBase : ISizeBase, IEquatable<ISizeBase>, IFormattable
     {
-        protected Size(SizeType sizeType, string name)
+        protected SizeBase(SizeType sizeType, string name)
         {
             SizeType = sizeType;
             Name = name;
@@ -38,20 +38,31 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public string Name { get; }
 
-        #region IEquatable
-        public override bool Equals(object? obj) => obj is ISize clothesSize && Equals(clothesSize);
+        /// <summary>
+        /// Укороченное наименование размера
+        /// </summary>
+        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, Name);
 
-        public bool Equals(ISize? other) =>
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is ISizeBase clothesSize && Equals(clothesSize);
+
+        public bool Equals(ISizeBase? other) =>
             other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(SizeType, Name);
+        #endregion
+
+        #region IFormattable Support
+        public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);
+
+        public string ToString(string? format, IFormatProvider? formatProvider) => SizeNameShort;
         #endregion
 
         /// <summary>
         /// Получить хэш-код коллекции размеров одежды
         /// </summary>
         public static double GetSizesHashCodes<TSize>(IEnumerable<TSize> sizes)
-            where TSize: ISize=>
+            where TSize: ISizeBase=>
             sizes.Average(size => size.GetHashCode());
     }
 }

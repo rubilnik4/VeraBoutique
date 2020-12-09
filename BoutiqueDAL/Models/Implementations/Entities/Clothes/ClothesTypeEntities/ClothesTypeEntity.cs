@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -14,7 +15,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeEntity : ClothesTypeShortEntity, IClothesTypeEntity
     {
-        public ClothesTypeEntity(IClothesType clothesType, string categoryName)
+        public ClothesTypeEntity(IClothesTypeShortBase clothesType, string categoryName)
            : this(clothesType.Name, categoryName)
         { }
 
@@ -22,7 +23,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
            : this(name, categoryName, null, null, null)
         { }
 
-        public ClothesTypeEntity(IClothesType clothesType, CategoryEntity category,
+        public ClothesTypeEntity(IClothesTypeShortBase clothesType, CategoryEntity category,
                                  IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
         : this(clothesType.Name, category, clothesTypeGenderComposites)
         { }

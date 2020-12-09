@@ -45,7 +45,7 @@ namespace FunctionalXUnit.Models.Result
         /// Преобразование в множество с одним элементом
         /// </summary>
         [Fact]
-        public void IsEnumrableType_HasOne()
+        public void IsEnumerableType_HasOne()
         {
             var error = CreateErrorTest();
 

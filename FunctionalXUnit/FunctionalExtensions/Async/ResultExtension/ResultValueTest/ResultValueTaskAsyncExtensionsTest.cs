@@ -118,7 +118,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         {
             var initialString = Task.FromResult("NotNull");
 
-            var resultString = await initialString.ToResultValueNullCheckTaskAsync(CreateErrorTest());
+            var resultString = await initialString!.ToResultValueNullCheckTaskAsync(CreateErrorTest());
 
             Assert.True(resultString.OkStatus);
             Assert.Equal(initialString.Result, resultString.Value);
@@ -130,9 +130,9 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         [Fact]
         public async Task ToResultValueNullCheckTaskAsync_ErrorNull()
         {
-            var initialString = Task.FromResult<string>(null);
+            var initialString = Task.FromResult<string?>(null);
             var initialError = CreateErrorTest();
-            var resultString = await initialString.ToResultValueNullCheckTaskAsync(initialError);
+            var resultString = await initialString!.ToResultValueNullCheckTaskAsync(initialError);
 
             Assert.True(resultString.HasErrors);
             Assert.True(resultString.Errors.First().Equals(initialError));

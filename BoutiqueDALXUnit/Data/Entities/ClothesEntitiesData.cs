@@ -33,7 +33,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить связующие сущности одежды и цвета
         /// </summary>
-        private static IEnumerable<ClothesColorCompositeEntity> GetClothesColorCompositeEntities(IEnumerable<IColorClothesDomain> colorClothesDomains,
+        private static IEnumerable<ClothesColorCompositeEntity> GetClothesColorCompositeEntities(IEnumerable<IColorDomain> colorClothesDomains,
                                                                                                  int clothesId) =>
             colorClothesDomains.
             Select(colorClothesDomain => new ClothesColorCompositeEntity(clothesId, colorClothesDomain.Name,

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Authors>Ivan Rubilnik</Authors>
     <Copyright>Ivan Rubilnik</Copyright>
     <Description>Data transfer models</Description>
@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BoutiqueCommonXUnit\BoutiqueCommonXUnit.csproj" />
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>

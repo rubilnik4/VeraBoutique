@@ -6,6 +6,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Цвет одежды. Доменная модель
     /// </summary>
-    public interface IColorClothesDomain : IColorClothes, IDomainModel<string>
+    public interface IColorDomain : IColorBase, IDomainModel<string>
     { }
 }

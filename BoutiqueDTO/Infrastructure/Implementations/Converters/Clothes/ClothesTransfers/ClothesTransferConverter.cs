@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -19,7 +20,7 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers
 {
-    using ClothesFunc = Func<IGenderDomain, IClothesTypeShortDomain, IEnumerable<IColorClothesDomain>, IEnumerable<ISizeGroupDomain>, IClothesDomain>;
+    using ClothesFunc = Func<IGenderDomain, IClothesTypeShortDomain, IEnumerable<IColorDomain>, IEnumerable<ISizeGroupDomain>, IClothesDomain>;
    
     /// <summary>
     /// Конвертер информации об одежде в трансферную модель
@@ -82,7 +83,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Функция получения одежды
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesMain clothes) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesShortBase clothes) =>
             new ResultValue<ClothesFunc>(
                 (gender, clothesTypeShort, colors, sizeGroups) => new ClothesDomain(clothes, gender, clothesTypeShort, 
                                                                                     colors, sizeGroups));

@@ -6,6 +6,6 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     /// <summary>
     /// Категория одежды. Трансферная модель
     /// </summary>
-    public interface ICategoryTransfer : ICategory, ITransferModel<string>
+    public interface ICategoryTransfer : ICategoryBase, ITransferModel<string>
     { }
 }

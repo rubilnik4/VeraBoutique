@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных цвета одежды
     /// </summary>
-    public class ColorClothesTable : EntityDatabaseTable<string, IColorClothesDomain, ColorClothesEntity>, IColorClothesTable
+    public class ColorClothesTable : EntityDatabaseTable<string, IColorDomain, ColorClothesEntity>, IColorClothesTable
     {
         public ColorClothesTable(DbSet<ColorClothesEntity> colorClothesEntity)
             : base(colorClothesEntity)

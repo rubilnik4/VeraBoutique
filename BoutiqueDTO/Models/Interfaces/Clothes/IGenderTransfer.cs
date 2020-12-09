@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes
     /// <summary>
     /// Тип пола. Трансферная модель
     /// </summary>
-    public interface IGenderTransfer: IGender, ITransferModel<GenderType>
+    public interface IGenderTransfer: IGenderBase, ITransferModel<GenderType>
     { }
 }

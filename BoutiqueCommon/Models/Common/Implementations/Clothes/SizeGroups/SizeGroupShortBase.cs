@@ -4,18 +4,18 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
 using Functional.FunctionalExtensions.Sync;
 
-namespace BoutiqueCommon.Models.Common.Implementations.Clothes
+namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
 {
     /// <summary>
-    /// Группа размеров одежды разного типа
+    /// Группа размеров одежды. Базовые данные
     /// </summary>
-    public abstract class SizeGroup: ISizeGroup, IEquatable<ISizeGroup>
+    public abstract class SizeGroupShortBase : ISizeGroupShortBase, IEquatable<ISizeGroupShortBase>
     {
-        protected SizeGroup(ClothesSizeType clothesSizeType, int sizeNormalize)
+        protected SizeGroupShortBase(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
@@ -47,9 +47,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public int SizeNormalize { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroup sizeGroup && Equals(sizeGroup);
+        public override bool Equals(object? obj) => obj is ISizeGroupShortBase sizeGroup && Equals(sizeGroup);
 
-        public bool Equals(ISizeGroup? other) =>
+        public bool Equals(ISizeGroupShortBase? other) =>
             other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize);

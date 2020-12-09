@@ -5,15 +5,10 @@ using BoutiqueCommon.Models.Enums.Clothes;
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
 {
     /// <summary>
-    /// Тип пола
+    /// Цвет одежды
     /// </summary>
-    public interface IGender: IModel<GenderType>
+    public interface IColorBase : IModel<string>
     {
-        /// <summary>
-        /// Тип пола
-        /// </summary>
-        GenderType GenderType { get; }
-
         /// <summary>
         /// Наименование
         /// </summary>

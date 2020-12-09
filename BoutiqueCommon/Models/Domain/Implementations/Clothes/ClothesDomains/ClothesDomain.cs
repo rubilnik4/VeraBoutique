@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
@@ -11,61 +13,20 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
-    public class ClothesDomain : ClothesShortDomain, IClothesDomain
+    public class ClothesDomain : ClothesBase<IGenderDomain, IClothesTypeShortDomain, IColorDomain, ISizeGroupDomain, ISizeDomain>, 
+                                 IClothesDomain
     {
-        public ClothesDomain(IClothesMain clothes,
+        public ClothesDomain(IClothesShortBase clothesShort,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
-                             IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
-           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
+                             IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
+           : this(clothesShort.Id, clothesShort.Name, clothesShort.Description, clothesShort.Price, clothesShort.Image,
                   gender, clothesTypeShort, colors, sizeGroups)
         { }
 
         public ClothesDomain(int id, string name, string description, decimal price, byte[]? image,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
-                             IEnumerable<IColorClothesDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
-            : base(id, name, description, price, image, gender.GenderType, clothesTypeShort.Name)
-        {
-            ClothesTypeShort = clothesTypeShort;
-            Gender = gender;
-            Colors = colors.ToList();
-            SizeGroups = sizeGroups.ToList();
-        }
-
-        /// <summary>
-        /// Тип пола
-        /// </summary>
-        public IGenderDomain Gender { get; }
-
-        /// <summary>
-        /// Вид одежды
-        /// </summary>
-        public IClothesTypeShortDomain ClothesTypeShort { get; }
-
-        /// <summary>
-        /// Цвета одежды
-        /// </summary>
-        public IReadOnlyCollection<IColorClothesDomain> Colors { get; }
-
-        /// <summary>
-        /// Размеры
-        /// </summary>
-        public IReadOnlyCollection<ISizeGroupDomain> SizeGroups { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesDomain clothes && Equals(clothes);
-
-        public bool Equals(IClothesDomain? other) =>
-            ((IClothesShortDomain?)other)?.Equals(other) == true &&
-            other?.Gender.Equals(Gender) == true &&
-            other?.ClothesTypeShort.Equals(ClothesTypeShort) == true &&
-            other?.Colors.SequenceEqual(Colors) == true &&
-            other?.SizeGroups.SequenceEqual(SizeGroups) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description,
-                             Gender.GetHashCode(), ClothesTypeShort.GetHashCode(),
-                             Colors.Average(color => color.GetHashCode()),
-                             SizeGroups.Average(size => size.GetHashCode()));
-        #endregion
+                             IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
+            : base(id, name, description, price, image, gender, clothesTypeShort, colors, sizeGroups)
+        { }
     }
 }

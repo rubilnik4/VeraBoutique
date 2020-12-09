@@ -12,7 +12,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public CategoryTransfer()
         { }
 
-        public CategoryTransfer(ICategory category)
+        public CategoryTransfer(ICategoryBase category)
             :this(category.Name)
         { }
 

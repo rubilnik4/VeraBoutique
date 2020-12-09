@@ -11,9 +11,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Пол для одежды
     /// </summary>
-    public abstract class Gender: IGender, IEquatable<IGender>
+    public abstract class GenderBase: IGenderBase, IEquatable<IGenderBase>
     {
-        protected Gender(GenderType genderType, string name)
+        protected GenderBase(GenderType genderType, string name)
         {
             GenderType = genderType;
             Name = name;
@@ -35,9 +35,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IGender gender && Equals(gender);
+        public override bool Equals(object? obj) => obj is IGenderBase gender && Equals(gender);
 
-        public bool Equals(IGender? other) =>
+        public bool Equals(IGenderBase? other) =>
             other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(GenderType);
@@ -46,7 +46,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Получить хэш-код коллекции пола одежды
         /// </summary>
-        public static double GetGendersHashCodes(IEnumerable<IGender> genders) =>
+        public static double GetGendersHashCodes<TGender>(IEnumerable<TGender> genders)
+            where TGender: IGenderBase =>
             genders.Average(gender => gender.GetHashCode());
     }
 }

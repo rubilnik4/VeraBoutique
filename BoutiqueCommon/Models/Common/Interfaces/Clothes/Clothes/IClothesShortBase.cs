@@ -1,12 +1,12 @@
-﻿using System;
-using BoutiqueCommon.Models.Common.Interfaces.Base;
+﻿using BoutiqueCommon.Models.Common.Interfaces.Base;
+using BoutiqueCommon.Models.Enums.Clothes;
 
-namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
+namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
 {
     /// <summary>
     /// Одежда
     /// </summary>
-    public interface IClothesMain : IModel<int>
+    public interface IClothesShortBase : IModel<int>
     {
         /// <summary>
         /// Наименование
@@ -27,5 +27,15 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
         /// Изображение
         /// </summary>
         byte[]? Image { get; }
+
+        /// <summary>
+        /// Тип пола одежды
+        /// </summary>
+        GenderType GenderType { get; }
+
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        string ClothesTypeName { get; }
     }
 }

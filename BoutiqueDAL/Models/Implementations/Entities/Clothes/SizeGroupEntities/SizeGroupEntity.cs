@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.SizeGroupEntities;
@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
             : this(clothesSizeType, sizeNormalize, null, null)
         { }
 
-        public SizeGroupEntity(ISizeGroup sizeGroup, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
+        public SizeGroupEntity(ISizeGroupShortBase sizeGroup, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
             : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities)
         { }
 

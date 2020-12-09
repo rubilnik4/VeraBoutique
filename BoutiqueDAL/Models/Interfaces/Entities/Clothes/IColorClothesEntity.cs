@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// <summary>
     /// Цвет одежды. Сущность базы данных
     /// </summary>
-    public interface IColorClothesEntity : IColorClothes, IEntityModel<string>
+    public interface IColorClothesEntity : IColorBase, IEntityModel<string>
     {
         /// <summary>
         /// Связующая сущность одежды и цвета

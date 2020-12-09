@@ -7,9 +7,9 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// <summary>
     /// Категория одежды. Доменная модель
     /// </summary>
-    public class CategoryDomain : Category, ICategoryDomain
+    public class CategoryDomain : CategoryBase, ICategoryDomain
     {
-        public CategoryDomain(ICategory category)
+        public CategoryDomain(ICategoryBase category)
           : base(category.Name)
         { }
 

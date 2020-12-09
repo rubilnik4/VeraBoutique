@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -10,7 +11,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities
     /// <summary>
     /// Вид одежды. Базовая сущность базы данных
     /// </summary>
-    public interface IClothesTypeShortEntity: IClothesType, IEntityModel<string>
+    public interface IClothesTypeShortEntity: IClothesTypeShortBase, IEntityModel<string>
     {
         /// <summary>
         /// Идентификатор связующей сущности категории одежды

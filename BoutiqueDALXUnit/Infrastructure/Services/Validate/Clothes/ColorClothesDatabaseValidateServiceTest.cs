@@ -38,7 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_NameError()
         {
-            var colorEmptyName = new ColorClothesDomain(String.Empty);
+            var colorEmptyName = new ColorDomain(String.Empty);
 
             var result = ValidateModel(colorEmptyName);
 

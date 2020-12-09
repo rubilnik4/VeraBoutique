@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
@@ -11,7 +12,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
         public ClothesTypeTransfer()
         { }
 
-        public ClothesTypeTransfer(IClothesType clothesType, CategoryTransfer category, 
+        public ClothesTypeTransfer(IClothesTypeShortBase clothesType, CategoryTransfer category, 
                                    IEnumerable<GenderTransfer> genders)
           : this(clothesType.Name, category, genders)
         { }

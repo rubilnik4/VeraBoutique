@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 
@@ -13,7 +14,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesShortTransfer()
         { }
 
-        public ClothesShortTransfer(IClothesMain clothes, GenderType genderType, string clothesTypeName)
+        public ClothesShortTransfer(IClothesShortBase clothes, GenderType genderType, string clothesTypeName)
             :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
                   genderType, clothesTypeName)
         { }

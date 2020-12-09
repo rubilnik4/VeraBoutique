@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
@@ -81,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// <summary>
         /// Получить тип одежды
         /// </summary>
-        private static ClothesTypeEntity GetClothesType(IClothesType clothesType,
+        private static ClothesTypeEntity GetClothesType(IClothesTypeShortBase clothesType,
                                                         string categoryName, CategoryEntity? category, 
                                                         IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites, 
                                                         IEnumerable<ClothesEntity>? clothes) =>

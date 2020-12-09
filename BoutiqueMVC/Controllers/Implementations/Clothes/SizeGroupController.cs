@@ -7,7 +7,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;

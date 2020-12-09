@@ -24,7 +24,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущность цвета одежды
         /// </summary>
-        public static ColorClothesEntity GetColorClothesEntity(IColorClothesDomain colorClothes) =>
-             new ColorClothesEntity(colorClothes.Name);
+        public static ColorClothesEntity GetColorClothesEntity(IColorDomain color) =>
+             new ColorClothesEntity(color.Name);
     }
 }

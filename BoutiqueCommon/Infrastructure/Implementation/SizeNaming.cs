@@ -24,7 +24,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation
         /// </summary>
         public static string GetGroupName<TSize>(SizeType sizeTypeBase,
                                           IReadOnlyCollection<TSize> sizes)
-            where TSize :ISize =>
+            where TSize :ISizeBase =>
             (sizes.FirstOrDefault(size => size.SizeType == sizeTypeBase)?.ToString() ?? String.Empty) +
             GetSizeGroupSubName(sizes.Where(size => size.SizeType != sizeTypeBase));
 
@@ -44,7 +44,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation
         /// Получить наименование дополнительной группы размеров
         /// </summary>
         private static string GetSizeGroupSubName<TSize>(IEnumerable<TSize> sizesAdditional)
-            where TSize : ISize =>
+            where TSize : ISizeBase =>
             sizesAdditional.ToList().
             WhereContinue(clothesSize => clothesSize.Count > 0,
                 okFunc: clothesSizeCollection => $" ({String.Join(", ", clothesSizeCollection)})",

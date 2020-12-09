@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Errors;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
@@ -14,7 +14,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -55,7 +55,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Функция получения группы размеров
         /// </summary>
-        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroup sizeGroup) =>
+        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroupShortBase sizeGroup) =>
             new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
                 sizes => new SizeGroupDomain(sizeGroup, sizes));
     }

@@ -7,6 +7,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Тип пола. Доменная модель
     /// </summary>
-    public interface IGenderDomain: IGender, IDomainModel<GenderType>
+    public interface IGenderDomain: IGenderBase, IDomainModel<GenderType>
     { }
 }

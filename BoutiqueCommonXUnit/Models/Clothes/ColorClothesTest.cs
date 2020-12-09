@@ -20,7 +20,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const string name = "дрисливый";
 
-            var colorClothesDomain = new ColorClothesDomain(name);
+            var colorClothesDomain = new ColorDomain(name);
 
             int colorClothesHash = HashCode.Combine(name);
             Assert.Equal(colorClothesHash, colorClothesDomain.GetHashCode());

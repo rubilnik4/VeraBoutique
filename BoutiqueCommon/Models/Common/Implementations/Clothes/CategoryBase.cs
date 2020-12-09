@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 {
     /// <summary>
-    /// Вид одежды
+    /// Категория одежды
     /// </summary>
-    public abstract class ClothesType: IClothesType, IEquatable<IClothesType>
+    public abstract class CategoryBase : ICategoryBase, IEquatable<ICategoryBase>
     {
-        protected ClothesType(string name)
+        protected CategoryBase(string name)
         {
             Name = name;
         }
@@ -27,10 +24,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesType clothesType && Equals(clothesType);
+        public override bool Equals(object? obj) => obj is ICategoryBase category && Equals(category);
 
-        public bool Equals(IClothesType? other) =>
-            other?.Id == Id ;
+        public bool Equals(ICategoryBase? other) =>
+            other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(Name);
         #endregion

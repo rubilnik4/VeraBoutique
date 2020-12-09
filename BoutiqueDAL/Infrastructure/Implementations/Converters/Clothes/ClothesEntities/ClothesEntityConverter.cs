@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -31,7 +32,7 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities
 {
     using ClothesFunc = Func<IGenderDomain, IClothesTypeShortDomain,
-                             IEnumerable<IColorClothesDomain>, IEnumerable<ISizeGroupDomain>,
+                             IEnumerable<IColorDomain>, IEnumerable<ISizeGroupDomain>,
                              IClothesDomain>;
 
     /// <summary>
@@ -95,14 +96,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Функция получения информации об одежде
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesMain clothes) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesShortBase clothes) =>
             new ResultValue<ClothesFunc>(
                 (gender, clothesType, colors, sizes) => new ClothesDomain(clothes, gender, clothesType, colors, sizes));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов
         /// </summary>
-        private IResultCollection<IColorClothesDomain> ColorClothesFromComposite(IEnumerable<ClothesColorCompositeEntity>? clothesColorCompositeEntities) =>
+        private IResultCollection<IColorDomain> ColorClothesFromComposite(IEnumerable<ClothesColorCompositeEntity>? clothesColorCompositeEntities) =>
             clothesColorCompositeEntities.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesColorCompositeEntities))).
             ResultValueBindOkToCollection(GetColorClothes).
@@ -120,7 +121,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Преобразовать цвета в связующую сущность
         /// </summary>
-        private IEnumerable<ClothesColorCompositeEntity> ColorClothesToComposite(IEnumerable<IColorClothesDomain> colorClothesDomains,
+        private IEnumerable<ClothesColorCompositeEntity> ColorClothesToComposite(IEnumerable<IColorDomain> colorClothesDomains,
                                                                                          int clothesId) =>
             _colorClothesEntityConverter.ToEntities(colorClothesDomains).
             Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name, null,

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
 
@@ -8,7 +9,7 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers
     /// <summary>
     /// Вид одежды. Базовая трансферная модель
     /// </summary>
-    public interface IClothesTypeShortTransfer : IClothesType, ITransferModel<string>
+    public interface IClothesTypeShortTransfer : IClothesTypeShortBase, ITransferModel<string>
     {
         /// <summary>
         /// Категория

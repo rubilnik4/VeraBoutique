@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
 {
     /// <summary>
-    /// Вид одежды
+    /// Тип пола
     /// </summary>
-    public interface IClothesType : IModel<string>
+    public interface IGenderBase: IModel<GenderType>
     {
+        /// <summary>
+        /// Тип пола
+        /// </summary>
+        GenderType GenderType { get; }
+
         /// <summary>
         /// Наименование
         /// </summary>

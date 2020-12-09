@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -70,8 +70,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// </summary>
         private static IResultError ValidateSizeNormalized(ISizeGroupDomain sizeGroup) =>
             sizeGroup.SizeNormalize.ToResultValueWhere(
-                sizeNormalized => sizeNormalized >= SizeGroup.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroup.SIZE_NORMALIZE_MAX,
-                _ => ModelsErrors.FieldNotValid<(ClothesSizeType, int), ISizeGroupDomain>(SizeGroup.SIZE_NORMALIZE_MIN, SizeGroup.SIZE_NORMALIZE_MAX,
+                sizeNormalized => sizeNormalized >= SizeGroupShortBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupShortBase.SIZE_NORMALIZE_MAX,
+                _ => ModelsErrors.FieldNotValid<(ClothesSizeType, int), ISizeGroupDomain>(SizeGroupShortBase.SIZE_NORMALIZE_MIN, SizeGroupShortBase.SIZE_NORMALIZE_MAX,
                                                                                           nameof(sizeGroup.SizeNormalize), sizeGroup));
 
         /// <summary>

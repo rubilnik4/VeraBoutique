@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -11,9 +13,9 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
     /// <summary>
     /// Одежда. Базовая сущность базы данных
     /// </summary>
-    public class ClothesShortEntity : ClothesMain, IClothesShortEntity
+    public class ClothesShortEntity : ClothesShortBase, IClothesShortEntity
     {
-        public ClothesShortEntity(IClothesMain clothes, GenderType genderType, string clothesTypeName)
+        public ClothesShortEntity(IClothesShortBase clothes, GenderType genderType, string clothesTypeName)
             : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
                    genderType, clothesTypeName)
         { }

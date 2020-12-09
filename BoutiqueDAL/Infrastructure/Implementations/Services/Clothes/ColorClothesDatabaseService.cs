@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис цвета одежды в базе данных
     /// </summary>
-    public class ColorClothesDatabaseService : DatabaseService<string, IColorClothesDomain, IColorClothesEntity, ColorClothesEntity>,
+    public class ColorClothesDatabaseService : DatabaseService<string, IColorDomain, IColorClothesEntity, ColorClothesEntity>,
                                                IColorClothesDatabaseService
     {
         public ColorClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,

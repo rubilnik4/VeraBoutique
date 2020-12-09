@@ -12,7 +12,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public ColorClothesTransfer()
         { }
 
-        public ColorClothesTransfer(IColorClothes color)
+        public ColorClothesTransfer(IColorBase color)
             :this (color.Name)
         { }
 

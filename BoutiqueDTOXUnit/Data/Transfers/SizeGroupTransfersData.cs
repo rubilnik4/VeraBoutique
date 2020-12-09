@@ -2,7 +2,7 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 
 namespace BoutiqueDTOXUnit.Data.Transfers
 {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
@@ -9,36 +11,15 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
     /// <summary>
     /// Тип пола. Трансферная модель
     /// </summary>
-    public class GenderTransfer: IGenderTransfer
+    public class GenderTransfer : GenderBase, IGenderTransfer
     {
-        public GenderTransfer()
+        public GenderTransfer(IGenderBase gender)
+            : this(gender.GenderType, gender.Name)
         { }
 
-        public GenderTransfer(IGender gender)
-            :this(gender.GenderType, gender.Name)
-        { }
-
+        [JsonConstructor]
         public GenderTransfer(GenderType genderType, string name)
-        {
-            GenderType = genderType;
-            Name = name;
-        }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public GenderType Id => GenderType;
-
-        /// <summary>
-        /// Тип пола
-        /// </summary>
-        [Required]
-        public GenderType GenderType { get; set; }
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        [Required]
-        public string Name { get; set; } = null!;
+            :base(genderType, name)
+        { }
     }
 }

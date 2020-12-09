@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueMVC.Models.Interfaces.Identity;
-using Castle.Core.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;

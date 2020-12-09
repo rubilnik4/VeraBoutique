@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Пол. Структура базы данных
     /// </summary>
-    public class GenderEntity : Gender, IGenderEntity
+    public class GenderEntity : GenderBase, IGenderEntity
     {
         public GenderEntity(GenderType genderType, string name)
             : this(genderType, name,

@@ -96,7 +96,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         [Fact]
         public void ToResultValueNullCheck_ErrorNull()
         {
-            const string initialString = null;
+            const string? initialString = null;
             var initialError = CreateErrorTest();
             var resultString = initialString.ToResultValueNullCheck(initialError);
 

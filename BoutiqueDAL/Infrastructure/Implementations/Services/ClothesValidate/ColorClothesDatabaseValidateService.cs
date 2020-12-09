@@ -18,7 +18,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы цвета одежды
     /// </summary>
-    public class ColorClothesDatabaseValidateService : DatabaseValidateService<string, IColorClothesDomain, ColorClothesEntity>,
+    public class ColorClothesDatabaseValidateService : DatabaseValidateService<string, IColorDomain, ColorClothesEntity>,
                                                       IColorClothesDatabaseValidateService
     {
         public ColorClothesDatabaseValidateService(IColorClothesTable colorClothesTable)
@@ -28,16 +28,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(IColorClothesDomain color) =>
+        protected override IResultError ValidateModel(IColorDomain color) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateSizeName(color));
 
         /// <summary>
         /// Проверка имени
         /// </summary>
-        private static IResultError ValidateSizeName(IColorClothesDomain color) =>
+        private static IResultError ValidateSizeName(IColorDomain color) =>
             color.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<string, IColorClothesDomain>(nameof(color.Name), color));
+                _ => ModelsErrors.FieldNotValid<string, IColorDomain>(nameof(color.Name), color));
     }
 }

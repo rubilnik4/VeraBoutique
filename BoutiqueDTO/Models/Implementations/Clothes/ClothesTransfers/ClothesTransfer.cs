@@ -2,8 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
@@ -16,7 +17,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         public ClothesTransfer()
         { }
 
-        public ClothesTransfer(IClothesMain clothes,
+        public ClothesTransfer(IClothesShortBase clothes,
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
                                IEnumerable<ColorClothesTransfer> colors, IEnumerable<SizeGroupTransfer> sizeGroups)
             :this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,

@@ -6,6 +6,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Категория одежды. Доменная модель
     /// </summary>
-    public interface ICategoryDomain : ICategory, IDomainModel<string>
+    public interface ICategoryDomain : ICategoryBase, IDomainModel<string>
     { }
 }

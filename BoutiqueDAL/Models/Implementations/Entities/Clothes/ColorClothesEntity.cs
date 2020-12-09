@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Цвет одежды. Сущность базы данных
     /// </summary>
-    public class ColorClothesEntity : ColorClothes, IColorClothesEntity
+    public class ColorClothesEntity : ColorBase, IColorClothesEntity
     {
         public ColorClothesEntity(string name)
             : this(name, Enumerable.Empty<ClothesColorCompositeEntity>())

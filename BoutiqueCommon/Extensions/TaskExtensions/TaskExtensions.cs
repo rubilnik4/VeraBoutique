@@ -26,6 +26,6 @@ namespace BoutiqueCommon.Extensions.TaskExtensions
         /// Преобразовать множество в задачу
         /// </summary>
         public static Task<IEnumerable<TValue>> ToTaskEnumerable<TValue>(IEnumerable<TValue> collection) =>
-            Task.FromResult((IEnumerable<TValue>)collection);
+            Task.FromResult(collection);
     }
 }

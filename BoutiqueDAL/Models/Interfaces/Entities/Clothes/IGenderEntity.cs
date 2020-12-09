@@ -11,7 +11,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// <summary>
     /// Пол. Сущность базы данных
     /// </summary>
-    public interface IGenderEntity: IGender, IEntityModel<GenderType>
+    public interface IGenderEntity: IGenderBase, IEntityModel<GenderType>
     {
         /// <summary>
         /// Связующие сущности пола и вида одежды

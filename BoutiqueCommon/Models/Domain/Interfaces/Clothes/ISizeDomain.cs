@@ -7,11 +7,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes
     /// <summary>
     /// Размер одежды. Доменная модель
     /// </summary>
-    public interface ISizeDomain : ISize, IDomainModel<(SizeType, string)>
-    {
-        /// <summary>
-        /// Укороченное наименование размера
-        /// </summary>
-        string SizeNameShort { get; }
-    }
+    public interface ISizeDomain : ISizeBase, IDomainModel<(SizeType, string)>
+    { }
 }

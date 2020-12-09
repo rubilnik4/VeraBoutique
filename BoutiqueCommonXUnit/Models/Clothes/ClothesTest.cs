@@ -49,7 +49,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const decimal price = (decimal)0.55;
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeShortDomain("Тряпье нательное", "Тряпье");
-            var colors = new List<IColorClothesDomain> { new ColorClothesDomain("Бежевый") };
+            var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
             var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
             var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
             var clothes = new ClothesDomain(id, name, description, price, null, gender, clothesType, colors, sizeGroups);

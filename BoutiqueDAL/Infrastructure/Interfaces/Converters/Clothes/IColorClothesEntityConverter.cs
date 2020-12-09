@@ -8,6 +8,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes
     /// <summary>
     /// Преобразования модели цвета одежды в модель базы данных
     /// </summary>
-    public interface IColorClothesEntityConverter : IEntityConverter<string, IColorClothesDomain, ColorClothesEntity>
+    public interface IColorClothesEntityConverter : IEntityConverter<string, IColorDomain, ColorClothesEntity>
     { }
 }

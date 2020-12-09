@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     /// <summary>
     /// Категория одежды. Сущность базы данных
     /// </summary>
-    public interface ICategoryEntity : ICategory, IEntityModel<string>
+    public interface ICategoryEntity : ICategoryBase, IEntityModel<string>
     {
         /// <summary>
         /// Связующие сущности категории и вида одежды

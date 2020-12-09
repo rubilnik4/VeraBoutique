@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesTypeEntities;
@@ -11,9 +13,9 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// <summary>
     /// Вид одежды. Базовая сущность базы данных
     /// </summary>
-    public class ClothesTypeShortEntity : ClothesType, IClothesTypeShortEntity
+    public class ClothesTypeShortEntity : ClothesTypeShortBase, IClothesTypeShortEntity
     {
-        public ClothesTypeShortEntity(IClothesType clothesType, string categoryName)
+        public ClothesTypeShortEntity(IClothesTypeShortBase clothesType, string categoryName)
             : this(clothesType.Name, categoryName, null)
         { }
 

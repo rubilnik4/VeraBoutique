@@ -11,7 +11,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Размер одежды. Сущность базы данных
     /// </summary>
-    public class SizeEntity : Size, ISizeEntity
+    public class SizeEntity : SizeBase, ISizeEntity
     {
 
         public SizeEntity(SizeType sizeType,  string name)

@@ -10,9 +10,9 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// <summary>
     /// Категория одежды. Сущность базы данных
     /// </summary>
-    public class CategoryEntity : Category, ICategoryEntity
+    public class CategoryEntity : CategoryBase, ICategoryEntity
     {
-        public CategoryEntity(ICategory category)
+        public CategoryEntity(ICategoryBase category)
            : this(category.Name)
         { }
 

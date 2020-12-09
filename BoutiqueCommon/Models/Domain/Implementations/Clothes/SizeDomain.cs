@@ -11,26 +11,14 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
     /// <summary>
     /// Размер одежды. Доменная модель
     /// </summary>
-    public class SizeDomain : Size, ISizeDomain, IFormattable
+    public class SizeDomain : SizeBase, ISizeDomain
     {
-        public SizeDomain(ISize size)
+        public SizeDomain(ISizeBase size)
            : base(size.SizeType, size.Name)
         { }
 
         public SizeDomain(SizeType sizeType, string sizeName)
             : base(sizeType, sizeName)
         { }
-
-        /// <summary>
-        /// Укороченное наименование размера
-        /// </summary>
-        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, Name);
-
-        #region IFormattable Support
-        public override string ToString() => ToString(String.Empty, CultureInfo.CurrentCulture);
-
-        public string ToString(string? format, IFormatProvider? formatProvider) => SizeNameShort;
-        #endregion
-
     }
 }

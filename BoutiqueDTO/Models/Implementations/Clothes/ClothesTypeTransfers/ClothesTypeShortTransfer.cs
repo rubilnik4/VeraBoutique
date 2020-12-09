@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
@@ -12,7 +13,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
         public ClothesTypeShortTransfer()
         { }
 
-        public ClothesTypeShortTransfer(IClothesType clothesType, string categoryName)
+        public ClothesTypeShortTransfer(IClothesTypeShortBase clothesType, string categoryName)
           : this(clothesType.Name, categoryName)
         { }
 
