@@ -11,11 +11,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Начальные данные таблицы категорий одежды
         /// </summary>
-        public static IReadOnlyCollection<ColorClothesEntity> ColorClothesData =>
-            new List<ColorClothesEntity>
+        public static IReadOnlyCollection<ColorEntity> ColorClothesData =>
+            new List<ColorEntity>
             {
-                new ColorClothesEntity("Белый"),
-                new ColorClothesEntity("Черный"),
+                new ColorEntity("Белый"),
+                new ColorEntity("Черный"),
             }.AsReadOnly();
     }
 }

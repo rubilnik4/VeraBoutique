@@ -45,8 +45,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// Обновить схемы базы данных
         /// </summary>
         public static async Task UpdateSchema(IServiceProvider serviceProvider) =>
-            await serviceProvider.GetService<IBoutiqueDatabase>().
-            UpdateSchema(serviceProvider.GetService<UserManager<IdentityUser>>(),
+            await serviceProvider.GetService<IBoutiqueDatabase>()!.
+            UpdateSchema(serviceProvider.GetService<UserManager<IdentityUser>>()!,
                          IdentityUserFactory.DefaultUsers);
 
         /// <summary>

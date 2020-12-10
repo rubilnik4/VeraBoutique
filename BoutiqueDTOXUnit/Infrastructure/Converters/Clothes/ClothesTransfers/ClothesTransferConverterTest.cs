@@ -34,55 +34,6 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             Assert.True(clothes.Equals(clothesAfterConverter.Value));
         }
 
-
-        /// <summary>
-        /// Преобразования модели информации об одежде в трансферную модель. Ошибка пола
-        /// </summary>
-        [Fact]
-        public void Clothes_ToTransfer_GenderNull()
-        {
-            var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.Gender = null!;
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели информации об одежде в трансферную модель. Ошибка типа одежды
-        /// </summary>
-        [Fact]
-        public void Clothes_ToTransfer_ClothesTypeNull()
-        {
-            var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.ClothesTypeShort = null!;
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели информации об одежде в трансферную модель. Ошибка цветов
-        /// </summary>
-        [Fact]
-        public void Clothes_ToTransfer_ColorsNull()
-        {
-            var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.Colors = null!;
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
         /// <summary>
         /// Преобразования модели информации об одежде в трансферную модель. Ошибка цветов
         /// </summary>
@@ -90,26 +41,11 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_ColorsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.Colors = clothes.Colors.Append(null).ToList();
+            var clothesNull = new ClothesTransfer(clothes, clothes.Gender, clothes.ClothesTypeShort,
+                                                  clothes.Colors.Append(null), clothes.SizeGroups);
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
 
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели информации об одежде в трансферную модель. Ошибка размеров
-        /// </summary>
-        [Fact]
-        public void Clothes_ToTransfer_SizeGroupsNull()
-        {
-            var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.SizeGroups = null!;
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
+            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
             Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
@@ -122,10 +58,11 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_SizeGroupsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesTransfers.First();
-            clothes.SizeGroups = clothes.SizeGroups.Append(null).ToList();
+            var clothesNull = new ClothesTransfer(clothes, clothes.Gender, clothes.ClothesTypeShort, 
+                                                  clothes.Colors, clothes.SizeGroups.Append(null));
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
 
-            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothes);
+            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
             Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);

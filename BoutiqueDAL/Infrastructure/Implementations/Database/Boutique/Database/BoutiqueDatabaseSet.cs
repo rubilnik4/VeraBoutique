@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ColorClothesEntity> ColorClothes { get; set; } = null!;
+        public DbSet<ColorEntity> ColorClothes { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных вида одежды

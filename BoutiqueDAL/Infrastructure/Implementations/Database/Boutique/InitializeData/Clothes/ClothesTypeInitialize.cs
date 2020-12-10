@@ -38,7 +38,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// </summary>
         public static IReadOnlyCollection<ClothesTypeEntity> ClothesTypeCategoryData =>
             ClothesTypeData.
-            Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName)).
+            Select(clothesType => new ClothesTypeEntity(clothesType)).
             ToList();
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// </summary>
         public static IReadOnlyCollection<ClothesTypeGenderCompositeEntity> CompositeGenderData =>
             ClothesTypeData.
-            SelectMany(clothesType => clothesType.ClothesTypeGenderComposites).
+            SelectMany(clothesType => clothesType.ClothesTypeGenderComposites!).
             Distinct().
             ToList();
 
@@ -55,7 +55,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// </summary>
         private static ClothesTypeEntity ToClothesTypeEntity(string clothesTypeName, string categoryName, 
                                                              IEnumerable<GenderEntity> genders) =>
-             new ClothesTypeEntity(clothesTypeName, new CategoryEntity(categoryName), ToGenderComposites(genders, clothesTypeName));
+             new (clothesTypeName, new CategoryEntity(categoryName), ToGenderComposites(genders, clothesTypeName));
 
         /// <summary>
         /// Связующие сущности типа одежды и пола

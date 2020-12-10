@@ -10,7 +10,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups
     /// <summary>
     /// Группа размеров одежды. Базовые данные
     /// </summary>
-    public interface ISizeGroupBase<out TSize> : ISizeGroupShortBase
+    public interface ISizeGroupBase<TSize> : ISizeGroupShortBase, IEquatable<ISizeGroupBase<TSize>>
         where TSize: ISizeBase
     {
         /// <summary>

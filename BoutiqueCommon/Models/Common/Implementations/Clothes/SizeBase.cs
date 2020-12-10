@@ -15,7 +15,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Размер одежды
     /// </summary>
-    public abstract class SizeBase : ISizeBase, IEquatable<ISizeBase>, IFormattable
+    public abstract class SizeBase : ISizeBase
     {
         protected SizeBase(SizeType sizeType, string name)
         {

@@ -7,9 +7,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Цвет одежды. Схема базы данных
     /// </summary>
-    public class ColorClothesConfiguration : IEntityTypeConfiguration<ColorClothesEntity>
+    public class ColorClothesConfiguration : IEntityTypeConfiguration<ColorEntity>
     {
-        public void Configure(EntityTypeBuilder<ColorClothesEntity> builder)
+        public void Configure(EntityTypeBuilder<ColorEntity> builder)
         {
             builder.HasKey(t => t.Name);
         }

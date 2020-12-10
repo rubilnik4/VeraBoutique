@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Категория одежды
     /// </summary>
-    public interface ICategoryBase : IModel<string>
+    public interface ICategoryBase : IModel<string>, IEquatable<ICategoryBase>
     {
         /// <summary>
         /// Наименование

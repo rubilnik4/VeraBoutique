@@ -22,12 +22,12 @@ namespace BoutiqueCommonXUnit.Data.Clothes
                 new ClothesDomain(1, "Верхонки", "Верхонки батраческие", 55.55m, null,
                                   GenderData.GendersDomain.First(), 
                                   ClothesTypeData.ClothesTypeShortDomains.First(),
-                                  ColorClothesData.ColorClothesDomain,
+                                  ColorData.ColorDomain,
                                   SizeGroupData.SizeGroupDomains),
                 new ClothesDomain(2, "Варежки", "Варежки простолюдинные", 0.66m, null,
                                   GenderData.GendersDomain.Last(),
                                   ClothesTypeData.ClothesTypeShortDomains.Last(),
-                                  ColorClothesData.ColorClothesDomain,
+                                  ColorData.ColorDomain,
                                   SizeGroupData.SizeGroupDomains),
             };
 

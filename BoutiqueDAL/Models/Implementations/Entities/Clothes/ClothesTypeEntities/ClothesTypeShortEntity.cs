@@ -15,21 +15,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
     /// </summary>
     public class ClothesTypeShortEntity : ClothesTypeShortBase, IClothesTypeShortEntity
     {
-        public ClothesTypeShortEntity(IClothesTypeShortBase clothesType, string categoryName)
-            : this(clothesType.Name, categoryName, null)
+        public ClothesTypeShortEntity(IClothesTypeShortBase clothesTypeShort)
+            : this(clothesTypeShort.Name, clothesTypeShort.CategoryName, null)
         { }
 
         public ClothesTypeShortEntity(string name, string categoryName, IEnumerable<ClothesEntity>? clothes)
-           : base(name)
+           : base(name, categoryName)
         {
-            CategoryName = categoryName;
             Clothes = clothes?.ToList();
         }
-
-        /// <summary>
-        /// Идентификатор связующей сущности категории одежды
-        /// </summary>
-        public string CategoryName { get; }
 
         /// <summary>
         /// Связующие сущности категории и одежды

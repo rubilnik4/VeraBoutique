@@ -34,8 +34,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, IClothesEntity, ClothesEntity>,
-                                         IClothesDatabaseService
+    public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, ClothesEntity>,
+                                          IClothesDatabaseService
     {
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                       IClothesDatabaseValidateService clothesDatabaseValidateService,
@@ -81,23 +81,23 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить одежду без изображений
         /// </summary>
         private async Task<IReadOnlyCollection<ClothesShortEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
-            await GetClothesInformationByGender(genderType).
+            await GetClothesByGender(genderType).
             Join(GetClothesByClothesType(clothesType),
                  clothesGender => clothesGender.Id,
                  clothesClothesType => clothesClothesType.Id,
                  (clothesGender, clothesClothesType) => clothesGender).
-            Select(clothesEntity => new ClothesShortEntity(clothesEntity, clothesEntity.GenderType, clothesEntity.ClothesTypeName)).
+            Select(clothesEntity => new ClothesShortEntity(clothesEntity)).
             AsNoTracking().
             ToListAsync();
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesEntity> GetClothesInformationByGender(GenderType genderType) =>
+        private IQueryable<ClothesEntity> GetClothesByGender(GenderType genderType) =>
             _genderTable.
             Where(genderType).
             Include(genderEntity => genderEntity.Clothes).
-            SelectMany(genderEntity => genderEntity.Clothes);
+            SelectMany(genderEntity => genderEntity.Clothes!);
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
@@ -106,6 +106,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             _clothesTypeTable.
             Where(clothesType).
             Include(clothesTypeEntity => clothesTypeEntity.Clothes).
-            SelectMany(genderEntity => genderEntity.Clothes);
+            SelectMany(genderEntity => genderEntity.Clothes!);
     }
 }

@@ -16,10 +16,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// </summary>
     public class GenderEntity : GenderBase, IGenderEntity
     {
+        public GenderEntity(IGenderBase gender)
+            : this(gender.GenderType, gender.Name)
+        { }
+
         public GenderEntity(GenderType genderType, string name)
-            : this(genderType, name,
-                   Enumerable.Empty<ClothesTypeGenderCompositeEntity>(),
-                   Enumerable.Empty<ClothesEntity>())
+            : this(genderType, name, null, null)
         { }
 
         public GenderEntity(GenderType genderType, string name,

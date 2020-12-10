@@ -24,7 +24,7 @@ namespace BoutiqueDALXUnit.Data.Entities
             ClothesData.ClothesDomains.
             Select(clothes =>
                 new ClothesEntity(clothes,
-                                  new GenderEntity(clothes.Gender.GenderType, clothes.Gender.Name),
+                                  new GenderEntity(clothes.Gender),
                                   GetClothesTypeEntity(clothes.ClothesTypeShort),
                                   GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),
                                   GetClothesSizeGroupCompositeEntities(clothes.SizeGroups, clothes.Id))).
@@ -37,7 +37,7 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                                                  int clothesId) =>
             colorClothesDomains.
             Select(colorClothesDomain => new ClothesColorCompositeEntity(clothesId, colorClothesDomain.Name,
-                                                                         null, new ColorClothesEntity(colorClothesDomain.Name)));
+                                                                         null, new ColorEntity(colorClothesDomain)));
 
         /// <summary>
         /// Получить связующие сущности размера и цвета
@@ -53,6 +53,6 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность типа одежды
         /// </summary>
         private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
-             new ClothesTypeEntity(clothesTypeShort, clothesTypeShort.CategoryName);
+             new (clothesTypeShort);
     }
 }

@@ -13,20 +13,20 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Конвертер цвета одежды в трансферную модель
     /// </summary>
-    public class ColorClothesTransferConverter : TransferConverter<string, IColorDomain, ColorClothesTransfer>,
+    public class ColorClothesTransferConverter : TransferConverter<string, IColorDomain, ColorTransfer>,
                                                  IColorClothesTransferConverter
     {
         /// <summary>
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
-        public override ColorClothesTransfer ToTransfer(IColorDomain colorDomain) =>
-            new ColorClothesTransfer(colorDomain.Name);
+        public override ColorTransfer ToTransfer(IColorDomain colorDomain) =>
+            new ColorTransfer(colorDomain.Name);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
-        public override IResultValue<IColorDomain> FromTransfer(ColorClothesTransfer colorClothesTransfer) =>
-            new ColorDomain(colorClothesTransfer.Name).
+        public override IResultValue<IColorDomain> FromTransfer(ColorTransfer colorTransfer) =>
+            new ColorDomain(colorTransfer.Name).
             Map(colorClothesDomain => new ResultValue<IColorDomain>(colorClothesDomain));
     }
 }

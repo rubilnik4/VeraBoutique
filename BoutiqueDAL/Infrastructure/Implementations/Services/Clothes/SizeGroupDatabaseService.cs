@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
-    public class SizeGroupDatabaseService : DatabaseService<(ClothesSizeType, int), ISizeGroupDomain, ISizeGroupEntity, SizeGroupEntity>,
+    public class SizeGroupDatabaseService : DatabaseService<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,

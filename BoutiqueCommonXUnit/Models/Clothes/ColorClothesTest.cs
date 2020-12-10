@@ -32,8 +32,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void Color_Equal_Color()
         {
-            var first = ColorClothesData.ColorClothesDomain.First();
-            var second = ColorClothesData.ColorClothesDomain.First();
+            var first = ColorData.ColorDomain.First();
+            var second = ColorData.ColorDomain.First();
 
             Assert.True(first.Equals(second));
         }

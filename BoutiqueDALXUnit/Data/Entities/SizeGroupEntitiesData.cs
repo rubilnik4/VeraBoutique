@@ -28,8 +28,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность группы размеров
         /// </summary>
         public static SizeGroupEntity GetSizeGroupEntity(ISizeGroupDomain sizeGroup) =>
-             new SizeGroupEntity(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
-                                 GetSizeGroupComposite(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroup.Sizes));
+             new (sizeGroup, GetSizeGroupComposite(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroup.Sizes));
 
         /// <summary>
         /// Получить связующую сущность группы размеров
@@ -37,7 +36,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IEnumerable<SizeGroupCompositeEntity> GetSizeGroupComposite(ClothesSizeType clothesSizeType, int sizeNormalize,
                                                                                   IEnumerable<ISizeDomain> sizes) =>
             sizes.Select(size => new SizeGroupCompositeEntity(size.SizeType, size.Name, clothesSizeType, sizeNormalize,
-                                                              new SizeEntity(size.SizeType, size.Name),
+                                                              new SizeEntity(size),
                                                               null));
     }
 }

@@ -22,7 +22,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         [Fact]
         public void IdSelect()
         {
-            var colorClothes = ColorClothesEntityData.ColorClothesEntities.First();
+            var colorClothes = ColorEntityData.ColorEntities.First();
             var colorClothesTable = ColorClothesTable;
 
             var id = colorClothesTable.IdSelect().Compile()(colorClothes);
@@ -36,7 +36,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         [Fact]
         public void IdPredicate()
         {
-            var colorClothes = ColorClothesEntityData.ColorClothesEntities.First();
+            var colorClothes = ColorEntityData.ColorEntities.First();
             var colorClothesTable = ColorClothesTable;
 
             bool isFound = colorClothesTable.IdPredicate(colorClothes.Id).Compile()(colorClothes);
@@ -50,7 +50,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         [Fact]
         public void IdsPredicate()
         {
-            var colorsClothes = ColorClothesEntityData.ColorClothesEntities;
+            var colorsClothes = ColorEntityData.ColorEntities;
             var colorClothesTable = ColorClothesTable;
 
             bool isFound = colorClothesTable.IdsPredicate(colorsClothes.Select(category => category.Id)).
@@ -62,8 +62,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// <summary>
         /// Сущность базы данных
         /// </summary>
-        private static Mock<DbSet<ColorClothesEntity>> DbSet =>
-            new Mock<DbSet<ColorClothesEntity>>();
+        private static Mock<DbSet<ColorEntity>> DbSet =>
+            new Mock<DbSet<ColorEntity>>();
 
         /// <summary>
         /// Таблица базы данных категорий одежды

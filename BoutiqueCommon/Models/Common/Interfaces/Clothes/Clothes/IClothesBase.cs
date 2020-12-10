@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -7,7 +8,9 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
 {
-    public interface IClothesBase<out TGender, out TClothesType, out TColor, out TSizeGroup, out TSize> : IClothesShortBase
+    public interface IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
+        IClothesShortBase,
+        IEquatable<IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>>
         where TGender : IGenderBase
         where TClothesType : IClothesTypeShortBase
         where TColor : IColorBase

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
@@ -13,21 +14,23 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     /// </summary>
     public class SizeEntity : SizeBase, ISizeEntity
     {
-
+        public SizeEntity(ISizeBase size)
+          : this(size.SizeType, size.Name)
+        { }
+        
         public SizeEntity(SizeType sizeType,  string name)
-            : this(sizeType, name, Enumerable.Empty<SizeGroupCompositeEntity>())
+            : this(sizeType, name, null)
         { }
 
-        public SizeEntity(SizeType sizeType, string name, 
-                          IEnumerable<SizeGroupCompositeEntity> sizeGroupComposites)
+        public SizeEntity(SizeType sizeType, string name, IEnumerable<SizeGroupCompositeEntity>? sizeGroupComposites)
             : base(sizeType, name)
         {
-            SizeGroupComposites = sizeGroupComposites.ToList();
+            SizeGroupComposites = sizeGroupComposites?.ToList();
         }
 
         /// <summary>
         /// Связующая сущность размера одежды
         /// </summary>
-        public IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupComposites { get; }
+        public IReadOnlyCollection<SizeGroupCompositeEntity>? SizeGroupComposites { get; }
     }
 }

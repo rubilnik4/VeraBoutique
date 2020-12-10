@@ -24,7 +24,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис типа пола одежды в базе данных
     /// </summary>
-    public class GenderDatabaseService : DatabaseService<GenderType, IGenderDomain, IGenderEntity, GenderEntity>, 
+    public class GenderDatabaseService : DatabaseService<GenderType, IGenderDomain, GenderEntity>, 
                                          IGenderDatabaseService
     {
         public GenderDatabaseService(IBoutiqueDatabase boutiqueDatabase,

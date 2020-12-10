@@ -19,5 +19,13 @@ namespace BoutiqueDTOXUnit.Data.Transfers
             Select(sizeGroup => new SizeGroupTransfer(sizeGroup,
                                                       sizeGroup.Sizes.Select(size => new SizeTransfer(size)))).
             ToList();
+
+        /// <summary>
+        /// Группа размеров. Трансферные модели
+        /// </summary>
+        public static IReadOnlyCollection<SizeGroupShortTransfer> SizeGroupShortTransfers =>
+            SizeGroupData.SizeGroupShortDomains.
+            Select(sizeGroupShort => new SizeGroupShortTransfer(sizeGroupShort)).
+            ToList();
     }
 }

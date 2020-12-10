@@ -9,8 +9,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
 {
-    public abstract class ClothesTypeBase<TCategory, TGender> : ClothesTypeShortBase, IClothesTypeBase<TCategory, TGender>,
-                                                                IEquatable<IClothesTypeBase<TCategory, TGender>>
+    public abstract class ClothesTypeBase<TCategory, TGender> : ClothesTypeShortBase, IClothesTypeBase<TCategory, TGender>
         where TCategory : ICategoryBase
         where TGender : IGenderBase
     {

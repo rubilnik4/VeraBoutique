@@ -43,7 +43,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ColorClothesEntity> ColorClothes { get; set; } = null!;
+        public DbSet<ColorEntity> ColorClothes { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных вида одежды EntityFramework

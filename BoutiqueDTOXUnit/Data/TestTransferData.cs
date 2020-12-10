@@ -7,7 +7,6 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 
 namespace BoutiqueDTOXUnit.Data
@@ -23,8 +22,7 @@ namespace BoutiqueDTOXUnit.Data
         public static IReadOnlyCollection<TestTransfer> TestTransfers =>
             TestData.TestDomains.
             Select(test =>
-                new TestTransfer(test, test.TestIncludes.
-                                       Select(testInclude => new TestIncludeTransfer(testInclude)))).
+                new TestTransfer(test, test.TestIncludes.Select(testInclude => new TestIncludeTransfer(testInclude)))).
             ToList();
     }
 }

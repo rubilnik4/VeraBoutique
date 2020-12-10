@@ -16,13 +16,13 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void InjectDatabaseTables(IServiceCollection services)
         {
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().CategoryTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().ClothesTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().ClotheTypeTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().ColorClothesTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().GendersTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().SizeTable);
-            services.AddTransient(service => service.GetService<IBoutiqueDatabase>().SizeGroupTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.CategoryTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClothesTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClotheTypeTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ColorClothesTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.GendersTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.SizeTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.SizeGroupTable);
         }
     }
 }

@@ -15,8 +15,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
     /// </summary>
     public abstract class ClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
         ClothesShortBase,
-        IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>,
-        IEquatable<IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>>
+        IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>
         where TGender : IGenderBase
         where TClothesType : IClothesTypeShortBase
         where TColor : IColorBase

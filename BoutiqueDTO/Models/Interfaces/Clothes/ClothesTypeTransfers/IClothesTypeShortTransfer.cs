@@ -10,10 +10,5 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers
     /// Вид одежды. Базовая трансферная модель
     /// </summary>
     public interface IClothesTypeShortTransfer : IClothesTypeShortBase, ITransferModel<string>
-    {
-        /// <summary>
-        /// Категория
-        /// </summary>
-        string CategoryName { get; set; }
-    }
+    { }
 }

@@ -15,6 +15,6 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Связующая сущность размера одежды
         /// </summary>
-        IReadOnlyCollection<SizeGroupCompositeEntity> SizeGroupComposites { get; }
+        IReadOnlyCollection<SizeGroupCompositeEntity>? SizeGroupComposites { get; }
     }
 }

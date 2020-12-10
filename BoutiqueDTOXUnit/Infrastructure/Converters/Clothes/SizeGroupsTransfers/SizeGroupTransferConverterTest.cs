@@ -2,7 +2,7 @@
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueDTOXUnit.Data.Transfers;
 using Functional.Models.Enums;
@@ -35,29 +35,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         /// Преобразования модели размеров одежды в трансферную модель. Ошибка размера
         /// </summary>
         [Fact]
-        public void SizeGroup_ToTransfer_SizeError()
-        {
-            var sizeGroup = SizeGroupTransfersData.SizeGroupTransfers.First();
-            sizeGroup.Sizes = null!;
-            var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupTransferConverter;
-
-            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroup);
-
-            Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели размеров одежды в трансферную модель. Ошибка размера
-        /// </summary>
-        [Fact]
         public void SizeGroup_ToTransfer_SizeCollectionError()
         {
             var sizeGroup = SizeGroupTransfersData.SizeGroupTransfers.First();
-            sizeGroup.Sizes = sizeGroup.Sizes.Append(null).ToList();
+            var sizeGroupNull = new SizeGroupTransfer(sizeGroup, sizeGroup.Sizes.Append(null));
             var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupTransferConverter;
 
-            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroup);
+            var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
             Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);

@@ -22,7 +22,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, ITestEntity, TestEntity>, ITestDatabaseService
+    public class TestDatabaseService : DatabaseService<TestEnum, ITestDomain, TestEntity>, ITestDatabaseService
     {
         public TestDatabaseService(IDatabase database,
                                    IDatabaseTable<TestEnum, ITestDomain, TestEntity> testDatabaseTable,

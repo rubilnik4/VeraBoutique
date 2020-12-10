@@ -57,7 +57,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
         {
             modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
             modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
-            modelBuilder.Entity<ColorClothesEntity>().HasData(ColorClothesInitialize.ColorClothesData);
+            modelBuilder.Entity<ColorEntity>().HasData(ColorClothesInitialize.ColorClothesData);
             modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeCategoryData);
             modelBuilder.Entity<ClothesTypeGenderCompositeEntity>().HasData(ClothesTypeInitialize.CompositeGenderData);
             modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);

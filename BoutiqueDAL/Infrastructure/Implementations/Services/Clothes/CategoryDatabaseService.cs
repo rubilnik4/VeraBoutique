@@ -21,7 +21,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис категорий одежды в базе данных
     /// </summary>
-    public class CategoryDatabaseService : DatabaseService<string, ICategoryDomain, ICategoryEntity, CategoryEntity>, ICategoryDatabaseService
+    public class CategoryDatabaseService : DatabaseService<string, ICategoryDomain, CategoryEntity>, ICategoryDatabaseService
     {
         public CategoryDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                        ICategoryDatabaseValidateService categoryDatabaseValidateService,

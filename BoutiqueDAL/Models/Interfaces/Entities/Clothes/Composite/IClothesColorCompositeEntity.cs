@@ -28,6 +28,6 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Цвет одежды
         /// </summary>
-        ColorClothesEntity? ColorClothes { get; }
+        ColorEntity? ColorClothes { get; }
     }
 }

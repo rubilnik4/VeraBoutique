@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
     /// <summary>
     /// Цвет одежды
     /// </summary>
-    public abstract class ColorBase : IColorBase, IEquatable<IColorBase>
+    public abstract class ColorBase : IColorBase
     {
         protected ColorBase(string name)
         {

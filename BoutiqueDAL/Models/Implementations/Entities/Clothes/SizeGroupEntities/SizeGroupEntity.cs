@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.SizeGroupEntities;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
@@ -13,12 +16,16 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
     /// </summary>
     public class SizeGroupEntity : SizeGroupShortEntity, ISizeGroupEntity
     {
+        public SizeGroupEntity(ISizeGroupShortBase sizeGroupShort)
+          : this(sizeGroupShort.ClothesSizeType, sizeGroupShort.SizeNormalize)
+        { }
+        
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
             : this(clothesSizeType, sizeNormalize, null, null)
         { }
 
-        public SizeGroupEntity(ISizeGroupShortBase sizeGroup, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities)
+        public SizeGroupEntity(ISizeGroupShortBase sizeGroupShort, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
+            : this(sizeGroupShort.ClothesSizeType, sizeGroupShort.SizeNormalize, sizeGroupCompositeEntities)
         { }
 
         public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,

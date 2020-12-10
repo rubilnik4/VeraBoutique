@@ -53,6 +53,6 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                                                            string clothesTypeName) =>
             genderDomains.
             Select(genderDomain => new ClothesTypeGenderCompositeEntity(clothesTypeName, genderDomain.GenderType, 
-                                                                        null, new GenderEntity(genderDomain.GenderType, genderDomain.Name)));
+                                                                        null, new GenderEntity(genderDomain)));
     }
 }

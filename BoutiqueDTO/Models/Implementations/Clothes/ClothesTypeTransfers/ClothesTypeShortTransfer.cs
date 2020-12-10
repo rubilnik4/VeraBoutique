@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
@@ -8,36 +10,15 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
     /// <summary>
     /// Вид одежды. Базовая трансферная модель
     /// </summary>
-    public class ClothesTypeShortTransfer : IClothesTypeShortTransfer
+    public class ClothesTypeShortTransfer : ClothesTypeShortBase, IClothesTypeShortTransfer
     {
-        public ClothesTypeShortTransfer()
+        public ClothesTypeShortTransfer(IClothesTypeShortBase clothesType)
+          : this(clothesType.Name, clothesType.CategoryName)
         { }
 
-        public ClothesTypeShortTransfer(IClothesTypeShortBase clothesType, string categoryName)
-          : this(clothesType.Name, categoryName)
-        { }
-
+        [JsonConstructor]
         public ClothesTypeShortTransfer(string name, string categoryName)
-        {
-            Name = name;
-            CategoryName = categoryName;
-        }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public string Id => Name;
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        [Required]
-        public string Name { get; set; } = null!;
-
-        /// <summary>
-        /// Категория
-        /// </summary>
-        [Required]
-        public string CategoryName { get; set; } = null!;
+            :base(name, categoryName)
+        { }
     }
 }

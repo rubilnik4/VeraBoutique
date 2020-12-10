@@ -104,6 +104,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
                                                                                         IClothesTypeShortBase clothesType) =>
             genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesType.Name, gender.GenderType,
                                                                           null,
-                                                                          new GenderEntity(gender.GenderType, gender.Name)));
+                                                                          new GenderEntity(gender)));
     }
 }

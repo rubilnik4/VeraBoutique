@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public CategoryEntity(string name)
-           : this(name, Enumerable.Empty<ClothesTypeEntity>())
+           : this(name, null)
         { }
 
         public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypes)

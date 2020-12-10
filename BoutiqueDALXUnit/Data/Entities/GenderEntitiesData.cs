@@ -20,7 +20,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// </summary>
         public static IReadOnlyCollection<GenderEntity> GenderEntities =>
             GenderData.GendersDomain.
-            Select(genderDomain => new GenderEntity(genderDomain.GenderType, genderDomain.Name)).
+            Select(genderDomain => new GenderEntity(genderDomain)).
             ToList();
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace BoutiqueDALXUnit.Data.Entities
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               ClothesTypeEntitiesData.GetClothesTypeGenderCompositeEntities(gender, clothesTypeEntities),
-                                              Enumerable.Empty<ClothesEntity>())).
+                                              null)).
             ToList();
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BoutiqueDALXUnit.Data.Entities
                                                                                  IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                              Enumerable.Empty<ClothesTypeGenderCompositeEntity>(),
+                                              null,
                                               clothesInformationEntities)).
             ToList();
     }

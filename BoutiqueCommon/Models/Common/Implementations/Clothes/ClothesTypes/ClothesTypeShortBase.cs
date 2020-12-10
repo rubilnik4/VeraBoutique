@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
     /// <summary>
     /// Вид одежды. Базовые данные
     /// </summary>
-    public abstract class ClothesTypeShortBase: IClothesTypeShortBase, IEquatable<IClothesTypeShortBase>
+    public abstract class ClothesTypeShortBase: IClothesTypeShortBase
     {
         protected ClothesTypeShortBase(string name, string categoryName)
         {

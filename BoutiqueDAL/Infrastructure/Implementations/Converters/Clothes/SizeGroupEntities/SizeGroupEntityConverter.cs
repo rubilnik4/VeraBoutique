@@ -50,8 +50,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// Преобразовать группу размеров одежды в модель базы данных
         /// </summary>
         public override SizeGroupEntity ToEntity(ISizeGroupDomain sizeGroupDomain) =>
-            new SizeGroupEntity(sizeGroupDomain.ClothesSizeType, sizeGroupDomain.SizeNormalize,
-                                SizeToCompositeEntities(sizeGroupDomain.Sizes, sizeGroupDomain));
+            new (sizeGroupDomain, SizeToCompositeEntities(sizeGroupDomain.Sizes, sizeGroupDomain));
 
         /// <summary>
         /// Функция получения группы размеров одежды
@@ -77,7 +76,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
             _sizeEntityConverter.ToEntities(sizeDomains).
             Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.Name,
                                                               sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
-                                                              new SizeEntity(sizeEntity.SizeType, sizeEntity.Name), null));
+                                                              new SizeEntity(sizeEntity), null));
 
         /// <summary>
         /// Получить сущности размера одежды

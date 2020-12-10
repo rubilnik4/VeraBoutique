@@ -5,7 +5,7 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroup;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 
 namespace BoutiqueDTOXUnit.Data.Transfers
 {
@@ -22,9 +22,17 @@ namespace BoutiqueDTOXUnit.Data.Transfers
             Select(clothes => 
                 new ClothesTransfer(clothes, 
                                     new GenderTransfer(clothes.Gender), 
-                                    new ClothesTypeShortTransfer(clothes.ClothesTypeShort, clothes.ClothesTypeShort.CategoryName),
-                                    clothes.Colors.Select(color => new ColorClothesTransfer(color)),
+                                    new ClothesTypeShortTransfer(clothes.ClothesTypeShort),
+                                    clothes.Colors.Select(color => new ColorTransfer(color)),
                                     clothes.SizeGroups.Select(sizeGroup => new SizeGroupTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
+            ToList();
+
+        /// <summary>
+        /// Типы одежды. Трансферные модели
+        /// </summary>
+        public static IReadOnlyCollection<ClothesShortTransfer> ClothesShortTransfers =>
+            ClothesData.ClothesShortDomains.
+            Select(clothesShort => new ClothesShortTransfer(clothesShort)).
             ToList();
 
         /// <summary>

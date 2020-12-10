@@ -35,45 +35,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
         /// Преобразования модели вида одежды в трансферную модель. Ошибка категории
         /// </summary>
         [Fact]
-        public void ClothesType_ToTransfer_CategoryNull()
-        {
-            var clothesType = ClothesTypeTransfersData.ClothesTypeTransfers.First();
-            clothesType.Category = null!;
-            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
-
-            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesType);
-
-            Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели вида одежды в трансферную модель. Ошибка категории
-        /// </summary>
-        [Fact]
-        public void ClothesType_ToTransfer_GendersNull()
-        {
-            var clothesType = ClothesTypeTransfersData.ClothesTypeTransfers.First();
-            clothesType.Genders = null!;
-             var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
-
-            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesType);
-
-            Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели вида одежды в трансферную модель. Ошибка категории
-        /// </summary>
-        [Fact]
         public void ClothesType_ToTransfer_GendersCollectionNull()
         {
             var clothesType = ClothesTypeTransfersData.ClothesTypeTransfers.First();
-            clothesType.Genders = clothesType.Genders.Append(null).ToList();
+            var clothesTypeNull = new ClothesTypeTransfer(clothesType, clothesType.Category, clothesType.Genders.Append(null));
             var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
 
-            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesType);
+            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeNull);
 
             Assert.True(clothesTypeAfterConverter.HasErrors);
             Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);

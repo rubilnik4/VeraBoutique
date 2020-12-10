@@ -18,7 +18,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы цвета одежды
     /// </summary>
-    public class ColorClothesDatabaseValidateService : DatabaseValidateService<string, IColorDomain, ColorClothesEntity>,
+    public class ColorClothesDatabaseValidateService : DatabaseValidateService<string, IColorDomain, ColorEntity>,
                                                       IColorClothesDatabaseValidateService
     {
         public ColorClothesDatabaseValidateService(IColorClothesTable colorClothesTable)

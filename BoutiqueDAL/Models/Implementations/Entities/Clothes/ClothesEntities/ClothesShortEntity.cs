@@ -15,27 +15,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
     /// </summary>
     public class ClothesShortEntity : ClothesShortBase, IClothesShortEntity
     {
-        public ClothesShortEntity(IClothesShortBase clothes, GenderType genderType, string clothesTypeName)
-            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
-                   genderType, clothesTypeName)
+        public ClothesShortEntity(IClothesShortBase clothes)
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
+                   clothes.GenderType, clothes.ClothesTypeName)
         { }
 
         public ClothesShortEntity (int id, string name,  string description, decimal price, byte[]? image, 
                                    GenderType genderType, string clothesTypeName)
-            : base(id, name, description, price, image)
-        {
-            GenderType = genderType;
-            ClothesTypeName = clothesTypeName;
-        }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        public GenderType GenderType { get; }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        public string ClothesTypeName { get; }
+            : base(id, name, description, price, image, genderType, clothesTypeName)
+        { }
     }
 }

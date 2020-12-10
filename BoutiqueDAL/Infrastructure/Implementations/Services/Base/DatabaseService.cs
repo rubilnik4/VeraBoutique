@@ -27,10 +27,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public abstract class DatabaseService<TId, TDomain, TEntityIn, TEntityOut> : IDatabaseService<TId, TDomain>
+    public abstract class DatabaseService<TId, TDomain, TEntityOut> : IDatabaseService<TId, TDomain>
        where TDomain : IDomainModel<TId>
-       where TEntityIn : IEntityModel<TId>
-       where TEntityOut : class, TEntityIn
+       where TEntityOut : class, IEntityModel<TId>
        where TId : notnull
     {
         protected DatabaseService(IDatabase database,

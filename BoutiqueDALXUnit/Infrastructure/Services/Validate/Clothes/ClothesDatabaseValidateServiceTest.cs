@@ -30,7 +30,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             : base(ClothesTable.Object,
                    GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(GenderEntitiesData.GenderEntities),
                    ClothesTypeDatabaseValidateServiceMock.GetClothesTypeDatabaseValidateService(ClothesTypeEntitiesData.ClothesTypeEntities),
-                   ColorClothesDatabaseValidateServiceMock.GetColorClothesDatabaseValidateService(ColorClothesEntityData.ColorClothesEntities),
+                   ColorClothesDatabaseValidateServiceMock.GetColorClothesDatabaseValidateService(ColorEntityData.ColorEntities),
                    SizeGroupDatabaseValidateServiceMock.GetSizeGroupDatabaseValidateService(SizeGroupEntitiesData.SizeGroupEntities))
         { }
 
@@ -182,7 +182,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_ColorsNotFound()
         {
-            var colors = ColorClothesData.ColorClothesDomain.Append(new ColorDomain("NotFound"));
+            var colors = ColorData.ColorDomain.Append(new ColorDomain("NotFound"));
             var clothes = ClothesData.ClothesDomains.First();
             var clothesNotFound = new ClothesDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, colors, clothes.SizeGroups);
 
@@ -261,7 +261,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_ColorsNotFound()
         {
-            var colors = ColorClothesData.ColorClothesDomain.Append(new ColorDomain("NotFound"));
+            var colors = ColorData.ColorDomain.Append(new ColorDomain("NotFound"));
             var clothes = ClothesData.ClothesDomains.First();
             var clothesNotFound = ClothesData.ClothesDomains.
                                   Append(new ClothesDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, colors, clothes.SizeGroups));

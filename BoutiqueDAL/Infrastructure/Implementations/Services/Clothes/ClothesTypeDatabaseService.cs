@@ -36,7 +36,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис вида одежды в базе данных
     /// </summary>
-    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, IClothesTypeEntity, ClothesTypeEntity>,
+    public class ClothesTypeDatabaseService : DatabaseService<string, IClothesTypeDomain, ClothesTypeEntity>,
                                               IClothesTypeDatabaseService
     {
         public ClothesTypeDatabaseService(IBoutiqueDatabase boutiqueDatabase,
@@ -92,7 +92,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private IQueryable<ClothesTypeEntity> GetClothesTypeByGender(GenderType genderType) =>
             _genderTable.Where(genderType).
             Include(genderEntity => genderEntity.ClothesTypeGenderComposites).
-            SelectMany(genderEntity => genderEntity.ClothesTypeGenderComposites).
+            SelectMany(genderEntity => genderEntity.ClothesTypeGenderComposites!).
             Select(clothesTypeGenderEntity => clothesTypeGenderEntity.ClothesType!);
 
         /// <summary>
@@ -101,6 +101,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private IQueryable<ClothesTypeEntity> GetClothesTypeByCategory(string category) =>
            _categoryTable.Where(category).
            Include(categoryEntity => categoryEntity.ClothesTypes).
-           SelectMany(categoryEntity => categoryEntity.ClothesTypes);
+           SelectMany(categoryEntity => categoryEntity.ClothesTypes!);
     }
 }

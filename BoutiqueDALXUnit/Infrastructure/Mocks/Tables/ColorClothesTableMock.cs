@@ -14,7 +14,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public static IColorClothesTable GetColorClothesTable(IEnumerable<ColorClothesEntity> colors) =>
+        public static IColorClothesTable GetColorClothesTable(IEnumerable<ColorEntity> colors) =>
             new ColorClothesTable(ColorClothesDatabaseSetMock.GetColorClothesDbSet(colors).Object);
     }
 }

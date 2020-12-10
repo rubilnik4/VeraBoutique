@@ -9,15 +9,5 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities
     /// Одежда. Базовая сущность базы данных
     /// </summary>
     public interface IClothesShortEntity : IClothesShortBase, IEntityModel<int>
-    {
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        GenderType GenderType { get; }
-
-        /// <summary>
-        /// Идентификатор связующей сущности типа одежды
-        /// </summary>
-        string ClothesTypeName { get; }
-    }
+    { }
 }

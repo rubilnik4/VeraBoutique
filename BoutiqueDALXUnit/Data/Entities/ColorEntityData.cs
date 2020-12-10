@@ -11,20 +11,20 @@ namespace BoutiqueDALXUnit.Data.Entities
     /// <summary>
     /// Данные сущностей цвета одежды
     /// </summary>
-    public class ColorClothesEntityData
+    public class ColorEntityData
     {
         /// <summary>
         /// Сущности цвета одежды
         /// </summary>
-        public static IReadOnlyCollection<ColorClothesEntity> ColorClothesEntities =>
-            ColorClothesData.ColorClothesDomain.
-            Select(GetColorClothesEntity).
+        public static IReadOnlyCollection<ColorEntity> ColorEntities =>
+            ColorData.ColorDomain.
+            Select(GetColorEntity).
             ToList();
 
         /// <summary>
         /// Получить сущность цвета одежды
         /// </summary>
-        public static ColorClothesEntity GetColorClothesEntity(IColorDomain color) =>
-             new ColorClothesEntity(color.Name);
+        public static ColorEntity GetColorEntity(IColorDomain color) =>
+             new (color);
     }
 }

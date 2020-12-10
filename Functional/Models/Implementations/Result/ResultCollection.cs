@@ -25,7 +25,7 @@ namespace Functional.Models.Implementations.Result
         { }
 
         protected ResultCollection([AllowNull] IEnumerable<TValue> valueCollection, IEnumerable<IErrorResult> errors)
-            : base(valueCollection.ToList().AsReadOnly(), errors)
+            : base(valueCollection!.ToList().AsReadOnly(), errors)
         { }
 
         /// <summary>

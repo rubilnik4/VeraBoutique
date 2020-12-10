@@ -14,7 +14,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate
         /// <summary>
         /// Сервис проверки данных из базы цвета одежды
         /// </summary>
-        public static IColorClothesDatabaseValidateService GetColorClothesDatabaseValidateService(IEnumerable<ColorClothesEntity> colors) =>
+        public static IColorClothesDatabaseValidateService GetColorClothesDatabaseValidateService(IEnumerable<ColorEntity> colors) =>
             new ColorClothesDatabaseValidateService(ColorClothesTableMock.GetColorClothesTable(colors));
     }
 }

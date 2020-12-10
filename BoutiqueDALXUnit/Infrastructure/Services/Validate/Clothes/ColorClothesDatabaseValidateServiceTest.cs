@@ -25,7 +25,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var color = ColorClothesData.ColorClothesDomain.First();
+            var color = ColorData.ColorDomain.First();
 
             var result = ValidateModel(color);
 

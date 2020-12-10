@@ -32,4 +32,8 @@
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Json\Clothes\Clothes\" />
+  </ItemGroup>
+
 </Project>

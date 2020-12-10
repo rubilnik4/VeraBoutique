@@ -38,7 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
         public void FromEntity_SizesNotFound()
         {
             var sizeGroup = SizeGroupEntitiesData.SizeGroupEntities.First();
-            var sizeGroupNull = new SizeGroupEntity(sizeGroup, null!);
+            var sizeGroupNull = new SizeGroupEntity(sizeGroup);
             var sizeEntityConverter = new SizeEntityConverter();
             var sizeGroupEntityConverter = new SizeGroupEntityConverter(sizeEntityConverter);
 

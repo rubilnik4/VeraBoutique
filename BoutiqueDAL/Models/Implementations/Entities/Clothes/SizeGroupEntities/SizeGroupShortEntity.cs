@@ -13,12 +13,12 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
     /// </summary>
     public class SizeGroupShortEntity : SizeGroupShortBase, ISizeGroupShortEntity
     {
-        public SizeGroupShortEntity(ISizeGroupShortBase sizeGroup)
-            :this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
+        public SizeGroupShortEntity(ISizeGroupShortBase sizeGroupShort)
+            : this(sizeGroupShort.ClothesSizeType, sizeGroupShort.SizeNormalize)
         { }
 
         public SizeGroupShortEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
-              : base(clothesSizeType, sizeNormalize)
+            : base(clothesSizeType, sizeNormalize)
         { }
     }
 }

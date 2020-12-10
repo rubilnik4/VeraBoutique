@@ -14,28 +14,28 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных цвета одежды
     /// </summary>
-    public class ColorClothesTable : EntityDatabaseTable<string, IColorDomain, ColorClothesEntity>, IColorClothesTable
+    public class ColorClothesTable : EntityDatabaseTable<string, IColorDomain, ColorEntity>, IColorClothesTable
     {
-        public ColorClothesTable(DbSet<ColorClothesEntity> colorClothesEntity)
+        public ColorClothesTable(DbSet<ColorEntity> colorClothesEntity)
             : base(colorClothesEntity)
         { }
 
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<ColorClothesEntity, string>> IdSelect() =>
+        public override Expression<Func<ColorEntity, string>> IdSelect() =>
             entity => entity.Name;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public override Expression<Func<ColorClothesEntity, bool>> IdPredicate(string id) =>
+        public override Expression<Func<ColorEntity, bool>> IdPredicate(string id) =>
             entity => entity.Name == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<ColorClothesEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
+        public override Expression<Func<ColorEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
             entity => ids.Contains(entity.Name);
     }
 }

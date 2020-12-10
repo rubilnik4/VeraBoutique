@@ -57,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
             string category = categories.First().Name;
 
             var genderWithClothesTypeEntities = GenderEntitiesData.GetGenderEntitiesWithClothesType(genderEntities, clothesTypeEntities);
-            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryEntitiesWithClothesType(categories, clothesTypeEntities);
+            var categoryEntitiesWithClothesType = CategoryEntitiesData.GetCategoryClothesTypeEntities(categories, clothesTypeEntities);
             var genderTable = GenderTableMock.GetGenderTable(genderWithClothesTypeEntities);
             var categoryTable = CategoryTableMock.GetCategoryTable(categoryEntitiesWithClothesType);
             var database = GetDatabase(genderTable, categoryTable);
