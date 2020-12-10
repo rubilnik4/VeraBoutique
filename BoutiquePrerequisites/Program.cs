@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace _06_BoutiquePrerequisites
+namespace BoutiquePrerequisites
 {
     class Program
     {

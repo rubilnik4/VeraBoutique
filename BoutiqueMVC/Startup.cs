@@ -38,6 +38,7 @@ namespace BoutiqueMVC
             AuthServices.InjectJwtServices(services, Configuration);
             AuthServices.InjectDatabaseIdentities(services);
             services.AddControllers();
+            services.AddSwaggerDocument();
         }
 
         /// <summary>
@@ -54,6 +55,9 @@ namespace BoutiqueMVC
             app.UseHsts();
 
             app.UseRouting();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseAuthentication();
             app.UseAuthorization();
