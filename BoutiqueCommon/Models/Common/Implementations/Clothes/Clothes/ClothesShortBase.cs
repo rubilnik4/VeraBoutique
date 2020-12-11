@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -10,7 +11,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
     /// </summary>
     public abstract class ClothesShortBase : IClothesShortBase
     {
-        protected ClothesShortBase(int id, string name, string description, decimal price, byte[]? image, 
+        protected ClothesShortBase(int id, string name, string description, decimal price, byte[] image, 
                                    GenderType genderType, string clothesTypeName)
         {
             Id = id;
@@ -45,7 +46,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        public byte[]? Image { get; }
+        public byte[] Image { get; }
 
         /// <summary>
         /// Тип пола одежды
@@ -65,10 +66,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
             other?.Name == Name && 
             other?.Description == Description && 
             other?.Price == Price &&
+            other?.Image.SequenceEqual(Image) == true &&
             GenderType == other.GenderType &&
             ClothesTypeName == other.ClothesTypeName;
 
-        public override int GetHashCode() => HashCode.Combine(Id, Name, Description, Price, GenderType, ClothesTypeName);
+        public override int GetHashCode() => HashCode.Combine(Id, Name, Description, Price, Image, GenderType, ClothesTypeName);
         #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         where TSizeGroup : ISizeGroupBase<TSize>
         where TSize : ISizeBase
     {
-        protected ClothesBase(int id, string name, string description, decimal price, byte[]? image,
+        protected ClothesBase(int id, string name, string description, decimal price, byte[] image,
                               TGender gender, TClothesType clothesTypeShort,
                               IEnumerable<TColor> colors, IEnumerable<TSizeGroup> sizeGroups)
             : base(id, name, description, price, image, gender.GenderType, clothesTypeShort.Name)
@@ -65,7 +65,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Price, Description,
+            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description, Image),
                              Gender.GetHashCode(), ClothesTypeShort.GetHashCode(),
                              ColorBase.GetColorClothesHashCodes(Colors),
                              SizeGroupBase<TSize>.GetSizeGroupHashCodes(SizeGroups));

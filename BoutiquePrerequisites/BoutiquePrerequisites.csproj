@@ -6,10 +6,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -20,7 +35,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Implementations\" />
+    <Folder Include="Models\Interfaces\Connection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
 </Project>

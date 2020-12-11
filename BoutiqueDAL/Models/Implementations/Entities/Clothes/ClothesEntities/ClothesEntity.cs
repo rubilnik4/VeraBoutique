@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
     /// </summary>
     public class ClothesEntity : ClothesShortEntity, IClothesEntity
     {
-        public ClothesEntity(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesEntity(int id, string name, string description, decimal price, byte[] image,
                              GenderType genderType, string clothesTypeName)
             :this(id, name, description, price, image, genderType, clothesTypeName, null, null, null, null)
         { }
@@ -28,7 +28,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
                    clothesColorComposites, clothesSizeGroupComposites)
         { }
 
-        public ClothesEntity(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesEntity(int id, string name, string description, decimal price, byte[] image,
                              GenderType genderType, string clothesTypeName,
                              GenderEntity? gender, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,

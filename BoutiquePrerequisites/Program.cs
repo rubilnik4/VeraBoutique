@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using BoutiquePrerequisites.Boutique;
+using BoutiquePrerequisites.Factories.Client;
+using BoutiquePrerequisites.Factories.Connection;
 
 namespace BoutiquePrerequisites
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        public static async Task Main() =>
+            BoutiqueClientFactory.BoutiqueClient;
+        //{
+        //    var boutiqueClient = ;
+
+
+        //    var genders = await boutiqueClient.ApiGenderGetAsync();
+        //}
     }
 }

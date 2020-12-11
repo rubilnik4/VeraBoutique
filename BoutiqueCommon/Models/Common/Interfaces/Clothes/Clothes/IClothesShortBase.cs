@@ -27,7 +27,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        byte[]? Image { get; }
+        byte[] Image { get; }
 
         /// <summary>
         /// Тип пола одежды

@@ -23,7 +23,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
                   gender, clothesTypeShort, colors, sizeGroups)
         { }
 
-        public ClothesDomain(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesDomain(int id, string name, string description, decimal price, byte[] image,
                              IGenderDomain gender, IClothesTypeShortDomain clothesTypeShort,
                              IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupDomain> sizeGroups)
             : base(id, name, description, price, image, gender, clothesTypeShort, colors, sizeGroups)

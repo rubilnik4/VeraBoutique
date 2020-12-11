@@ -20,7 +20,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
                    clothes.GenderType, clothes.ClothesTypeName)
         { }
 
-        public ClothesShortEntity (int id, string name,  string description, decimal price, byte[]? image, 
+        public ClothesShortEntity (int id, string name,  string description, decimal price, byte[] image, 
                                    GenderType genderType, string clothesTypeName)
             : base(id, name, description, price, image, genderType, clothesTypeName)
         { }

@@ -29,7 +29,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         { }
 
         [JsonConstructor]
-        public ClothesTransfer(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesTransfer(int id, string name, string description, decimal price, byte[] image,
                                GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
                                IReadOnlyCollection<ColorTransfer> colors, IReadOnlyCollection<SizeGroupTransfer> sizeGroups)
             : base(id, name, description, price, image, gender, clothesTypeShort, colors, sizeGroups)

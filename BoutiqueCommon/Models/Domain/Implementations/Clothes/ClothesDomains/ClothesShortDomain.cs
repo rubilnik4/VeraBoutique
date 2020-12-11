@@ -19,7 +19,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
                   clothesShort.GenderType, clothesShort.ClothesTypeName)
         { }
 
-        public ClothesShortDomain(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesShortDomain(int id, string name, string description, decimal price, byte[] image,
                                   GenderType genderType, string clothesTypeName)
             : base(id, name, description, price, image, genderType, clothesTypeName)
         { }

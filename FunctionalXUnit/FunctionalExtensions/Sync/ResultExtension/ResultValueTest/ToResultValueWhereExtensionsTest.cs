@@ -40,5 +40,37 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().Equals(errorInitial));
         }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Положительное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereOkBad_Ok()
+        {
+            const int number = 1;
+
+            var result = number.ToResultValueWhereOkBad(_ => true,
+                                                        value => value.ToString(),
+                                                        _ => CreateErrorTest());
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(number.ToString(), result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereOkBad_BadError()
+        {
+            const int number = 1;
+            var errorInitial = CreateErrorTest();
+            var result = number.ToResultValueWhereOkBad(_ => false,
+                                                        value => value.ToString(),
+                                                        _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
     }
 }

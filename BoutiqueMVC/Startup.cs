@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueDAL.Factories.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueMVC.DependencyInjection;
+using BoutiqueMVC.Factories.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,7 @@ namespace BoutiqueMVC
             AuthServices.InjectJwtServices(services, Configuration);
             AuthServices.InjectDatabaseIdentities(services);
             services.AddControllers();
-            services.AddSwaggerDocument();
+            services.AddSwaggerDocument(SwaggerConfiguration.ConfigSwagger);
         }
 
         /// <summary>

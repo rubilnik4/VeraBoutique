@@ -19,7 +19,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         { }
         
         [JsonConstructor]
-        public ClothesShortTransfer(int id, string name, string description, decimal price, byte[]? image,
+        public ClothesShortTransfer(int id, string name, string description, decimal price, byte[] image,
                                     GenderType genderType, string clothesTypeName)
             : base(id, name, description, price, image, genderType, clothesTypeName)
         { }

@@ -31,9 +31,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const decimal price = 0.55m;
             const GenderType genderType = GenderType.Child;
             const string categoryName = "Одежа";
-            var clothesShort = new ClothesShortDomain(id, name, description, price, null, genderType, categoryName);
+            byte[] image = Properties.Resources.TestImage;
+            var clothesShort = new ClothesShortDomain(id, name, description, price, image, genderType, categoryName);
 
-            int clothesHash = HashCode.Combine(id, name, description, price, genderType, categoryName);
+            int clothesHash = HashCode.Combine(id, name, description, price, image, genderType, categoryName);
             Assert.Equal(clothesHash, clothesShort.GetHashCode());
         }
 
@@ -47,14 +48,15 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
+            byte[] image = Properties.Resources.TestImage;
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeShortDomain("Тряпье нательное", "Тряпье");
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
             var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
             var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothes = new ClothesDomain(id, name, description, price, null, gender, clothesType, colors, sizeGroups);
+            var clothes = new ClothesDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
 
-            int clothesHash = HashCode.Combine(id, name, price, description,
+            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description, image),
                                                gender.GetHashCode(), clothesType.GetHashCode(),
                                                colors.Average(color => color.GetHashCode()),
                                                sizeGroups.Average(size => size.GetHashCode()));
