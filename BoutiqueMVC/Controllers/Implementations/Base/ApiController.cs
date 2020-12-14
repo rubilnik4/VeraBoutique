@@ -135,13 +135,13 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
         private CreatedActionValue<TId, TTransfer> GetCreateAction(TId id, TTransfer transfer) =>
-            new CreatedActionValue<TId, TTransfer>(nameof(Get), GetType().Name, (id, transfer));
+            new (nameof(Get), GetType().Name, (id, transfer));
 
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
         private CreatedActionCollection<TId, TTransfer> GetCreateAction(IEnumerable<TId> ids,
                                                                         IEnumerable<TTransfer> transfers) =>
-            new CreatedActionCollection<TId, TTransfer>(nameof(Get), GetType().Name, ids.Zip(transfers));
+            new (nameof(Get), GetType().Name, ids.Zip(transfers));
     }
 }

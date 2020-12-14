@@ -49,20 +49,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.HasPostgresEnum<SizeType>();
             modelBuilder.HasPostgresEnum<ClothesSizeType>();
         }
-
-        /// <summary>
-        /// Инициализация данными таблиц
-        /// </summary> 
-        public static void InitializeEntityData(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<GenderEntity>().HasData(GenderInitialize.GenderData);
-            modelBuilder.Entity<CategoryEntity>().HasData(CategoryInitialize.CategoryData);
-            modelBuilder.Entity<ColorEntity>().HasData(ColorClothesInitialize.ColorClothesData);
-            modelBuilder.Entity<ClothesTypeEntity>().HasData(ClothesTypeInitialize.ClothesTypeCategoryData);
-            modelBuilder.Entity<ClothesTypeGenderCompositeEntity>().HasData(ClothesTypeInitialize.CompositeGenderData);
-            modelBuilder.Entity<SizeEntity>().HasData(SizeInitialize.SizeData);
-            modelBuilder.Entity<SizeGroupEntity>().HasData(SizeGroupInitialize.SizeGroupData);
-            modelBuilder.Entity<SizeGroupCompositeEntity>().HasData(SizeGroupInitialize.CompositeSizeData);
-        }
     }
 }

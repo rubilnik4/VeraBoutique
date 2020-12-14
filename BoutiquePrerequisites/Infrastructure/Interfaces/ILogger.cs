@@ -10,11 +10,11 @@ namespace BoutiquePrerequisites.Infrastructure.Interfaces
         /// <summary>
         /// Показать сообщение
         /// </summary>
-        string ShowMessage(string message);
+        void ShowMessage(string message);
 
         /// <summary>
         /// Показать ошибку
         /// </summary>
-        string ShowError(IResultError resultError);
+        void ShowError(IResultError resultError);
     }
 }

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Refit" Version="6.0.0-preview.37" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>

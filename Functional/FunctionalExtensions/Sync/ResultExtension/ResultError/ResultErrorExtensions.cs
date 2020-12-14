@@ -18,6 +18,14 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
                 : new ResultValue<TValue>(@this.Errors);
 
         /// <summary>
+        /// Преобразовать в результирующий ответ со значением результирующего ответа
+        /// </summary>      
+        public static IResultValue<TValue> ToResultValueBind<TValue>(this IResultError @this, IResultValue<TValue> resultValue) =>
+            @this.OkStatus
+                ? resultValue
+                : new ResultValue<TValue>(@this.Errors);
+
+        /// <summary>
         /// Преобразовать в результирующий ответ со значением
         /// </summary>      
         public static IResultCollection<TValue> ToResultCollection<TValue>(this IResultError @this, IReadOnlyCollection<TValue> value) =>
