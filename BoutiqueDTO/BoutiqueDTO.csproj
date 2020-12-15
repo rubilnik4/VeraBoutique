@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Implementations\Services\Base\" />
+    <Folder Include="Infrastructure\Implementations\Services\Clothes\" />
+  </ItemGroup>
+
 </Project>

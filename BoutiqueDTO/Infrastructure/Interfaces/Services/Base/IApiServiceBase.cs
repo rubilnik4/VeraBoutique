@@ -40,6 +40,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Удаление данных
         /// </summary>
-        Task<IResultValue<TTransfer>> Delete(TTransfer transfer);
+        Task<IResultValue<TTransfer>> Delete(TId id);
     }
 }

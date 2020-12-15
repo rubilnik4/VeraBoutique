@@ -5,6 +5,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Refit.Base
     /// <summary>
     /// Базовый интерфейс для Api методов
     /// </summary>
-    public interface IRefitApiBase
+    public interface IApiBase
     { }
 }
