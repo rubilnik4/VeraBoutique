@@ -45,7 +45,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         {
             base.OnModelCreating(modelBuilder);
             DatabaseConfiguration.ApplyConfiguration(modelBuilder);
-            DatabaseConfiguration.InitializeEntityData(modelBuilder);
         }
     }
 }

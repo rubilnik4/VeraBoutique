@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using BoutiqueDTO.Models.Implementations.Connection;
+using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.Configuration;
-using BoutiquePrerequisites.Models.Implementations.Connection;
-using BoutiquePrerequisites.Models.Interfaces.Connection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;

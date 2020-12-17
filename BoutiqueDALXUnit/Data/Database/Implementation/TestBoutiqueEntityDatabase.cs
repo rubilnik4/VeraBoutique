@@ -128,7 +128,6 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         {
             base.OnModelCreating(modelBuilder); 
             DatabaseConfiguration.ApplyConfiguration(modelBuilder);
-            DatabaseConfiguration.InitializeEntityData(modelBuilder);
         }
     }
 }

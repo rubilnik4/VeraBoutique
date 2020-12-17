@@ -27,12 +27,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Тип пола
         /// </summary>
-        public GenderType GenderType { get; }
+        public virtual GenderType GenderType { get; }
 
         /// <summary>
         /// Наименование
         /// </summary>
-        public string Name { get; }
+        public virtual string Name { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) => obj is IGenderBase gender && Equals(gender);

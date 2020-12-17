@@ -9,17 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Refit" Version="6.0.0-preview.37" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Implementations\Services\Base\" />
-    <Folder Include="Infrastructure\Implementations\Services\Clothes\" />
+    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.11" />
   </ItemGroup>
 
 </Project>

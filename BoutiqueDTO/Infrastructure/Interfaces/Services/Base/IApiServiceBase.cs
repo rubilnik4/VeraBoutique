@@ -30,7 +30,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Добавление коллекции данных
         /// </summary>
-        Task<IResultCollection<TId>> Post(IReadOnlyCollection<TTransfer> transfers);
+        Task<IResultCollection<TId>> PostCollection(IEnumerable<TTransfer> transfers);
 
         /// <summary>
         /// Добавление данных

@@ -1,59 +1,69 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Refit.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Interfaces.Clothes;
+using BoutiqueDTO.Models.Interfaces.Connection;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
+using RestSharp;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Clothes
 {
-    public class GenderApiService : ApiServiceBase<GenderType, GenderTransfer, IGenderApi>
+    /// <summary>
+    /// Api сервис типа пола
+    /// </summary>
+    public class GenderApiService : ApiServiceBase<GenderType, GenderTransfer>, IGenderApiService
     {
-        public GenderApiService(IGenderApi genderApi)
+        public GenderApiService(IHostConnection hostConnection)
         {
-            ApiBase = genderApi;
+            _client = new RestClient(hostConnection.Host) { Timeout = hostConnection.TimeOut * 1000 };
         }
 
         /// <summary>
-        /// Интерфейс для Api методов
+        /// Api сервис. Тип пола
         /// </summary>
-        protected override IGenderApi ApiBase { get; }
+        private readonly RestClient _client;
 
         /// <summary>
-        /// Получение данных
+        /// Получить данные Api
         /// </summary>
         protected override async Task<IReadOnlyCollection<GenderTransfer>> GetApi() =>
-            await ApiBase.Get();
+            await _client.GetAsync<List<GenderTransfer>>(new RestRequest("api/gender", DataFormat.Json));
 
         /// <summary>
-        /// Получение данных по идентификатору
+        /// Получить данные по идентификатору Api
         /// </summary>
         protected override async Task<GenderTransfer> GetApi(GenderType id) =>
-            await ApiBase.Get(id);
+            throw new Exception();
 
         /// <summary>
-        /// Добавление данных
+        /// Добавить данные Api
         /// </summary>
         protected override async Task<GenderType> PostApi(GenderTransfer transfer) =>
-            await ApiBase.Post(transfer);
+             (await _client.ExecuteGetAsync<GenderType>(new RestRequest("api/gender").AddJsonBody(transfer))).;
 
         /// <summary>
-        /// Добавление коллекции данных
+        /// Добавить коллекцию данных Api
         /// </summary>
-        protected override async Task<IReadOnlyCollection<GenderType>> PostApi(IReadOnlyCollection<GenderTransfer> transfers) =>
-           await ApiBase.PostCollection(transfers);
+        protected override async Task<IReadOnlyCollection<GenderType>> PostCollectionApi(IEnumerable<GenderTransfer> transfers) =>
+            throw new Exception();
 
         /// <summary>
-        /// Добавление данных
+        /// Обновить данные Api
         /// </summary>
         protected override async Task PutApi(GenderTransfer transfer) =>
-            await ApiBase.Put(transfer);
+             throw new Exception();
 
         /// <summary>
-        /// Удаление данных
+        /// Удалить данные по идентификатору Api
         /// </summary>
         protected override async Task<GenderTransfer> DeleteApi(GenderType id) =>
-            await ApiBase.Delete(id);
+            throw new Exception();
     }
 }

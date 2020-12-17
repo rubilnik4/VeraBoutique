@@ -17,5 +17,13 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
             MapTaskAsync(thisAwaited => thisAwaited.OkStatus
                                         ? new ResultValue<TValue>(value)
                                         : new ResultValue<TValue>(thisAwaited.Errors));
+
+        /// <summary>
+        /// Преобразовать в результирующий ответ со значением результирующего ответа асинхронно
+        /// </summary>      
+        public static async Task<IResultValue<TValue>> ToResultValueBindAsync<TValue>(this IResultError @this, Task<IResultValue<TValue>> resultValue) =>
+            @this.OkStatus
+                ? await resultValue
+                : new ResultValue<TValue>(@this.Errors);
     }
 }

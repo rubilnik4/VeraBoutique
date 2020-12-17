@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Net.Http;
 
-namespace BoutiquePrerequisites.Models.Interfaces.Connection
+namespace BoutiqueDTO.Models.Interfaces.Connection
 {
     /// <summary>
     /// Параметры подключения
@@ -16,5 +17,10 @@ namespace BoutiquePrerequisites.Models.Interfaces.Connection
         /// Время ожидания
         /// </summary>
         int TimeOut { get; }
+
+        /// <summary>
+        /// Преобразовать в http клиент
+        /// </summary>
+        HttpClient ToHttpClient();
     }
 }

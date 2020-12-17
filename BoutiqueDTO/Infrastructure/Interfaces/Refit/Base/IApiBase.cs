@@ -1,4 +1,6 @@
-﻿using BoutiqueDTO.Models.Interfaces.Base;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BoutiqueDTO.Models.Interfaces.Base;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Refit.Base
 {
