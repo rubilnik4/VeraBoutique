@@ -27,6 +27,11 @@ namespace BoutiqueMVC.Controllers.Interfaces.Base
         /// <summary>
         /// Записать данные
         /// </summary>
+        Task<ActionResult<TId>> Post(TTransfer transfer);
+
+        /// <summary>
+        /// Записать данные
+        /// </summary>
         Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers);
 
         /// <summary>

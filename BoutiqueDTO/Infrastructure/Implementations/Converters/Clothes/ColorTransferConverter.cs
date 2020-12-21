@@ -13,8 +13,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Конвертер цвета одежды в трансферную модель
     /// </summary>
-    public class ColorClothesTransferConverter : TransferConverter<string, IColorDomain, ColorTransfer>,
-                                                 IColorClothesTransferConverter
+    public class ColorTransferConverter : TransferConverter<string, IColorDomain, ColorTransfer>,
+                                                 IColorTransferConverter
     {
         /// <summary>
         /// Преобразовать категории одежды в трансферную модель

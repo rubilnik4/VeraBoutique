@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\StringExtensions\" />
+  </ItemGroup>
+
 </Project>

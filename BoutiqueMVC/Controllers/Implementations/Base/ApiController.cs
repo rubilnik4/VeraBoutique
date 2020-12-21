@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Enums.Identity;
@@ -135,13 +136,18 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
         private CreatedActionValue<TId, TTransfer> GetCreateAction(TId id, TTransfer transfer) =>
-            new (nameof(Get), GetType().Name, (id, transfer));
+            new (nameof(Get), ControllerName, (id, transfer));
 
         /// <summary>
         /// Получить информацию о создаваемом объекте на основе контроллера
         /// </summary>
         private CreatedActionCollection<TId, TTransfer> GetCreateAction(IEnumerable<TId> ids,
                                                                         IEnumerable<TTransfer> transfers) =>
-            new (nameof(Get), GetType().Name, ids.Zip(transfers));
+            new (nameof(Get), ControllerName, ids.Zip(transfers));
+
+        /// <summary>
+        /// Имя контроллера
+        /// </summary>
+        private string ControllerName => GetType().Name.SubstringRemove("Controller");
     }
 }

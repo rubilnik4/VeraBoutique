@@ -70,7 +70,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IClothesTypeDatabaseService, ClothesTypeDatabaseService>();
             services.AddTransient<ISizeDatabaseService, SizeDatabaseService>();
             services.AddTransient<ISizeGroupDatabaseService, SizeGroupDatabaseService>();
-            services.AddTransient<IColorClothesDatabaseService, ColorClothesDatabaseService>();
+            services.AddTransient<IColorDatabaseService, ColorDatabaseService>();
             services.AddTransient<IClothesDatabaseService, ClothesDatabaseService>();
         }
 

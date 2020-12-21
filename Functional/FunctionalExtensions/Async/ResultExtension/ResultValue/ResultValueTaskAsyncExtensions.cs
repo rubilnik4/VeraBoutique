@@ -35,6 +35,13 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
             MapTaskAsync(awaitedThis => awaitedThis.ToResultCollection());
 
         /// <summary>
+        /// Преобразовать в результирующий ответ со значением в коллекцию задачи-объекта
+        /// </summary>      
+        public static async Task<IResultCollection<TValue>> ToResultCollectionTaskAsync<TValue>(this Task<IResultValue<List<TValue>>> @this) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ToResultCollection());
+
+        /// <summary>
         /// Преобразовать в результирующий ответ
         /// </summary>      
         public static async Task<IResultError> ToResultErrorTaskAsync<TValue>(this Task<IResultValue<TValue>> @this) =>

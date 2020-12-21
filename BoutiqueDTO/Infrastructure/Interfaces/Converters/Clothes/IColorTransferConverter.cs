@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes
     /// <summary>
     /// Конвертер цвета одежды в трансферную модель
     /// </summary>
-    public interface IColorClothesTransferConverter : ITransferConverter<string, IColorDomain, ColorTransfer>
+    public interface IColorTransferConverter : ITransferConverter<string, IColorDomain, ColorTransfer>
     { }
 }

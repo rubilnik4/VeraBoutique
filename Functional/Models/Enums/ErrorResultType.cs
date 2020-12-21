@@ -23,5 +23,6 @@
         InternalServerError,
         RequestTimeOut,
         Unauthorized,
+        UnknownRestStatus,
     }
 }

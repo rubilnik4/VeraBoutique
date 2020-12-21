@@ -21,7 +21,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Преобразовать в результирующий ответ со значением результирующего ответа асинхронно
         /// </summary>      
-        public static async Task<IResultValue<TValue>> ToResultValueBindAsync<TValue>(this IResultError @this, Task<IResultValue<TValue>> resultValue) =>
+        public static async Task<IResultValue<TValue>> ToResultBindValueAsync<TValue>(this IResultError @this, Task<IResultValue<TValue>> resultValue) =>
             @this.OkStatus
                 ? await resultValue
                 : new ResultValue<TValue>(@this.Errors);

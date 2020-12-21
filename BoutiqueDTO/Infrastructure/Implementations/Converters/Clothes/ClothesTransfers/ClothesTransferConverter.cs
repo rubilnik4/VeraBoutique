@@ -30,12 +30,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     {
         public ClothesTransferConverter(IGenderTransferConverter genderTransferConverter,
                                         IClothesTypeShortTransferConverter clothesTypeShortTransferConverter,
-                                        IColorClothesTransferConverter colorClothesTransferConverter,
+                                        IColorTransferConverter colorTransferConverter,
                                         ISizeGroupTransferConverter sizeGroupTransferConverter)
         {
             _genderTransferConverter = genderTransferConverter;
             _clothesTypeShortTransferConverter = clothesTypeShortTransferConverter;
-            _colorClothesTransferConverter = colorClothesTransferConverter;
+            _colorTransferConverter = colorTransferConverter;
             _sizeGroupTransferConverter = sizeGroupTransferConverter;
         }
 
@@ -52,7 +52,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Конвертер цвета одежды в трансферную модель
         /// </summary>
-        private readonly IColorClothesTransferConverter _colorClothesTransferConverter;
+        private readonly IColorTransferConverter _colorTransferConverter;
 
         /// <summary>
         /// Конвертер цвета одежды в трансферную модель
@@ -66,7 +66,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
             new ClothesTransfer(clothesDomain,
                                 _genderTransferConverter.ToTransfer(clothesDomain.Gender),
                                 _clothesTypeShortTransferConverter.ToTransfer(clothesDomain.ClothesTypeShort),
-                                _colorClothesTransferConverter.ToTransfers(clothesDomain.Colors),
+                                _colorTransferConverter.ToTransfers(clothesDomain.Colors),
                                 _sizeGroupTransferConverter.ToTransfers(clothesDomain.SizeGroups));
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
               GetClothesFunc(clothesTransfer).
               ResultCurryOkBind(_genderTransferConverter.GetDomain(clothesTransfer.Gender)).
               ResultCurryOkBind(_clothesTypeShortTransferConverter.GetDomain(clothesTransfer.ClothesTypeShort)).
-              ResultCurryOkBind(_colorClothesTransferConverter.GetDomains(clothesTransfer.Colors)).
+              ResultCurryOkBind(_colorTransferConverter.GetDomains(clothesTransfer.Colors)).
               ResultCurryOkBind(_sizeGroupTransferConverter.GetDomains(clothesTransfer.SizeGroups)).
               ResultValueOk(func => func.Invoke());
 

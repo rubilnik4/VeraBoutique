@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Models.Implementations.Controller
@@ -37,6 +39,6 @@ namespace BoutiqueMVC.Models.Implementations.Controller
         /// Преобразовать в ответ контроллера о создании объекта
         /// </summary>
         public CreatedAtActionResult ToCreatedAtActionResult() =>
-            new CreatedAtActionResult(ActionGetName, ControllerName, new { id = IdValue.Id }, IdValue.Value);
+            new (ActionGetName, ControllerName, new { id = IdValue.Id }, IdValue.Value);
     }
 }

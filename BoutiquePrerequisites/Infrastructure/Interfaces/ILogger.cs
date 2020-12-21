@@ -1,4 +1,5 @@
-﻿using Functional.Models.Interfaces.Result;
+﻿using System.Collections.Generic;
+using Functional.Models.Interfaces.Result;
 
 namespace BoutiquePrerequisites.Infrastructure.Interfaces
 {
@@ -16,5 +17,10 @@ namespace BoutiquePrerequisites.Infrastructure.Interfaces
         /// Показать ошибку
         /// </summary>
         void ShowError(IResultError resultError);
+
+        /// <summary>
+        /// Показать ошибки
+        /// </summary>
+        void ShowErrors(IEnumerable<IErrorResult> errors);
     }
 }

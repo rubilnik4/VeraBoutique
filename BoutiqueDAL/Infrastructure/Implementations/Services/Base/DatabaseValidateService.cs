@@ -114,7 +114,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
              await _dataTable.FindExpressionAsync(ValidateIdQuery(id), id).
              ResultValueBindOkBadTaskAsync(
                 okFunc: idValidate => GetDuplicateErrorResult(idValidate, _dataTable.GetType().Name),
-                badFunc: _ => new ResultValue<TId>(Enumerable.Empty<IErrorResult>()));
+                badFunc: _ => new ResultValue<TId>(id));
 
         /// <summary>
         /// Получить ошибки дублирования

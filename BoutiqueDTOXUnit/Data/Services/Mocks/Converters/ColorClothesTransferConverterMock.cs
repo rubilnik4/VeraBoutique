@@ -11,7 +11,7 @@ namespace BoutiqueDTOXUnit.Data.Services.Mocks.Converters
         /// <summary>
         /// Конвертер цвета одежды в трансферную модель
         /// </summary>
-        public static IColorClothesTransferConverter ColorClothesTransferConverter =>
-            new ColorClothesTransferConverter();
+        public static IColorTransferConverter ColorTransferConverter =>
+            new ColorTransferConverter();
     }
 }

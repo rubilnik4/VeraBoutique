@@ -6,6 +6,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис цвета одежды в базе данных
     /// </summary>
-    public interface IColorClothesDatabaseService : IDatabaseService<string, IColorDomain>
+    public interface IColorDatabaseService : IDatabaseService<string, IColorDomain>
     { }
 }

@@ -32,7 +32,11 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase
             await new ResultValue<IGenderApiService>(new GenderApiService(hostConnection)).
             ResultValueVoidOk(_ => logger.ShowMessage("Загрузка типа пола в базу")).
             ResultValueBindOkAsync(api => api.Post(GenderTransfers.First())).
-            ResultValueVoidOkTaskAsync(_ => logger.ShowMessage("Загрузка типа пола завершена"));
+            ResultValueOkBadTaskAsync(genderType => genderType.
+                                                    Void(_ => logger.ShowMessage("Загрузка типа пола завершена успешно")),
+                                      errors => GenderType.Male.
+                                                Void(_ => logger.ShowMessage("Ошибка загрузки типа пола")).
+                                                Void(_ => logger.ShowErrors(errors)));
 
         /// <summary>
         /// Конвертер типа пола в трансферную модель

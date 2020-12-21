@@ -14,7 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Services.Mocks.Converters
         public static IClothesTransferConverter ClothesTransferConverter =>
             new ClothesTransferConverter(GenderTransferConverterMock.GenderTransferConverter,
                                          ClothesTypeTransferConverterMock.ClothesTypeShortTransferConverter,
-                                         ColorClothesTransferConverterMock.ColorClothesTransferConverter,
+                                         ColorClothesTransferConverterMock.ColorTransferConverter,
                                          SizeGroupTransferConverterMock.SizeGroupTransferConverter);
 
         /// <summary>

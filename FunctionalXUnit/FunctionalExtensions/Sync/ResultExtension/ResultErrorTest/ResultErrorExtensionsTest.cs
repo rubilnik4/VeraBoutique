@@ -54,7 +54,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
             const string value = "OkStatus";
             var resultValue = new ResultValue<string>(value);
 
-            var resultValueAfter = resultNoError.ToResultValueBind(resultValue);
+            var resultValueAfter = resultNoError.ToResultBindValue(resultValue);
 
             Assert.True(resultValueAfter.OkStatus);
             Assert.Equal(value, resultValueAfter.Value);
@@ -71,7 +71,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
             const string value = "BadStatus";
             var resultValue = new ResultValue<string>(value);
             
-            var resultValueAfter = resultHasError.ToResultValueBind(resultValue);
+            var resultValueAfter = resultHasError.ToResultBindValue(resultValue);
 
             Assert.True(resultValueAfter.HasErrors);
             Assert.Single(resultValueAfter.Errors);
@@ -88,7 +88,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
             var error = CreateErrorTest();
             var resultValue = new ResultValue<string>(error);
 
-            var resultValueAfter = resultNoError.ToResultValueBind(resultValue);
+            var resultValueAfter = resultNoError.ToResultBindValue(resultValue);
 
             Assert.True(resultValueAfter.HasErrors);
             Assert.Single(resultValueAfter.Errors);
@@ -106,7 +106,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
             var errors = CreateErrorListTwoTest();
             var resultValue = new ResultValue<string>(errors);
 
-            var resultValueAfter = resultHasError.ToResultValueBind(resultValue);
+            var resultValueAfter = resultHasError.ToResultBindValue(resultValue);
 
             Assert.True(resultValueAfter.HasErrors);
             Assert.Single(resultValueAfter.Errors);

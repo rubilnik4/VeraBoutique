@@ -19,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         public void ToTransfer_FromTransfer()
         {
             var colors = ColorData.ColorDomain.First();
-            var colorClothesTransferConverter = ColorClothesTransferConverterMock.ColorClothesTransferConverter;
+            var colorClothesTransferConverter = ColorClothesTransferConverterMock.ColorTransferConverter;
 
             var colorsTransfer = colorClothesTransferConverter.ToTransfer(colors);
             var colorsAfterConverter = colorClothesTransferConverter.FromTransfer(colorsTransfer);

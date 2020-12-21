@@ -20,7 +20,7 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
         /// <summary>
         /// Преобразовать в результирующий ответ со значением результирующего ответа
         /// </summary>      
-        public static IResultValue<TValue> ToResultValueBind<TValue>(this IResultError @this, IResultValue<TValue> resultValue) =>
+        public static IResultValue<TValue> ToResultBindValue<TValue>(this IResultError @this, IResultValue<TValue> resultValue) =>
             @this.OkStatus
                 ? resultValue
                 : new ResultValue<TValue>(@this.Errors);

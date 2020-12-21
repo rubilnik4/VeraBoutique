@@ -53,6 +53,11 @@ namespace Functional.Models.Implementations.Result
         /// </summary>      
         public IResultValue<TValue> ToResultValue<TValue>() => new ResultValue<TValue>(this);
 
+        /// <summary>
+        /// Преобразовать в ответ с вложенной коллекцией
+        /// </summary>      
+        public IResultCollection<TValue> ToResultCollection<TValue>() => new ResultCollection<TValue>(this);
+
         #region IEnumerable Support
         /// <summary>
         /// Реализация перечисления
