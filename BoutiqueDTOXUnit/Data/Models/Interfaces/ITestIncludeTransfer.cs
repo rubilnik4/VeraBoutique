@@ -6,6 +6,6 @@ namespace BoutiqueDTOXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая вложенная трансферная модель
     /// </summary>
-    public interface ITestIncludeTransfer : ITestInclude, ITransferModel<string>
+    public interface ITestIncludeTransfer : ITestIncludeBase, ITransferModel<string>
     { }
 }

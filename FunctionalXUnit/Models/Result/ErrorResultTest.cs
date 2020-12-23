@@ -35,10 +35,24 @@ namespace FunctionalXUnit.Models.Result
         {
             var error = CreateErrorTest();
 
-            var resultError = error.ToResultValue<string>();
+            var resultValue = error.ToResultValue<string>();
 
-            Assert.True(resultError.HasErrors);
-            Assert.Equal(1, resultError.Errors.Count);
+            Assert.True(resultValue.HasErrors);
+            Assert.Equal(1, resultValue.Errors.Count);
+        }
+
+        /// <summary>
+        /// Вернуть результирующий ответ с одной ошибкой
+        /// </summary>
+        [Fact]
+        public void ToResultCollection_HasStringType_HasOneError()
+        {
+            var error = CreateErrorTest();
+
+            var resultCollection = error.ToResultCollection<string>();
+
+            Assert.True(resultCollection.HasErrors);
+            Assert.Equal(1, resultCollection.Errors.Count);
         }
 
         /// <summary>

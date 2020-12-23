@@ -8,9 +8,9 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
     /// <summary>
     /// Тестовая сущность для включения в запрос
     /// </summary>
-    public class TestIncludeEntity : TestInclude, IEntityModel<string>
+    public class TestIncludeEntity : TestIncludeBase, IEntityModel<string>
     {
-        public TestIncludeEntity(ITestInclude testInclude)
+        public TestIncludeEntity(ITestIncludeBase testInclude)
            : this(testInclude.Name)
         { }
 

@@ -5,9 +5,9 @@ namespace BoutiqueCommonXUnit.Data.Models.Implementations
     /// <summary>
     /// Тестовая включенная доменная модель
     /// </summary>
-    public class TestIncludeDomain: TestInclude, ITestIncludeDomain
+    public class TestIncludeDomain: TestIncludeBase, ITestIncludeDomain
     {
-        public TestIncludeDomain(ITestInclude testInclude)
+        public TestIncludeDomain(ITestIncludeBase testInclude)
           : base(testInclude.Name)
         { }
 

@@ -7,7 +7,7 @@ namespace BoutiqueDTOXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая трансферная модель основных данных
     /// </summary>
-    public interface ITestShortTransfer : ITest, ITransferModel<TestEnum>
+    public interface ITestShortTransfer : ITestShortBase, ITransferModel<TestEnum>
     {
         
     }

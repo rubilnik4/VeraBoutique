@@ -6,6 +6,6 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая включенная доменная модель
     /// </summary>
-    public interface ITestIncludeDomain : ITestInclude, IDomainModel<string>
+    public interface ITestIncludeDomain : ITestIncludeBase, IDomainModel<string>
     { }
 }

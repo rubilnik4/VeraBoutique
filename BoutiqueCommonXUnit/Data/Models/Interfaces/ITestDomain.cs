@@ -8,11 +8,6 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая включенная модель
     /// </summary>
-    public interface ITestDomain : ITestShortDomain
-    {
-        /// <summary>
-        /// Включенные сущности
-        /// </summary>
-        IReadOnlyCollection<ITestIncludeDomain> TestIncludes { get; }
-    }
+    public interface ITestDomain : ITestBase<ITestIncludeDomain>, ITestShortDomain
+    { }
 }

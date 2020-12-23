@@ -6,30 +6,10 @@ namespace BoutiqueDTOXUnit.Data.Models.Implementations
     /// <summary>
     /// Тестовая трансферная модель основных данных
     /// </summary>
-    public class TestShortTransfer : ITestShortTransfer
+    public class TestShortTransfer : TestShortBase, ITestShortTransfer
     {
-        public TestShortTransfer()
-        { }
-
         public TestShortTransfer(TestEnum testEnum, string name)
-        {
-            TestEnum = testEnum;
-            Name = name;
-        }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public TestEnum Id => TestEnum;
-
-        /// <summary>
-        /// Тестовое перечисление
-        /// </summary>
-        public TestEnum TestEnum { get; set; }
-
-        /// <summary>
-        /// Тестовое поле
-        /// </summary>
-        public string Name { get; set; } = null!;
+            :base(testEnum, name)
+        { }
     }
 }

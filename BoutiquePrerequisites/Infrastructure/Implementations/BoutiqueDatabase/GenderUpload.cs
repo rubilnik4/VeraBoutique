@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDTO.Factory.Rest;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Models.Interfaces.Connection;
@@ -26,10 +27,10 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase
     public static class GenderUpload
     {
         /// <summary>
-        /// 
+        /// Загрузить типы пола
         /// </summary>
         public static async Task<IResultError> Upload(IHostConnection hostConnection, ILogger logger) =>
-            await new ResultValue<IGenderApiService>(new GenderApiService(hostConnection)).
+            await new ResultValue<IGenderApiService>(GenderApiService.GetGenderApiService(hostConnection)).
             ResultValueVoidOk(_ => logger.ShowMessage("Загрузка типа пола в базу")).
             ResultValueBindOkAsync(api => api.Post(GenderTransfers.First())).
             ResultValueOkBadTaskAsync(genderType => genderType.

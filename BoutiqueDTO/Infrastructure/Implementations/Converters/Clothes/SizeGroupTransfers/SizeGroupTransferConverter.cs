@@ -55,8 +55,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Функция получения группы размеров
         /// </summary>
-        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroupShortBase sizeGroup) =>
+        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroupShortBase sizeGroupShort) =>
             new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
-                sizes => new SizeGroupDomain(sizeGroup, sizes));
+                sizes => new SizeGroupDomain(sizeGroupShort, sizes));
     }
 }

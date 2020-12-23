@@ -16,12 +16,13 @@
         JsonConvertion,
         UserDefaultNotFound,
         Unknown,
-        
+
+        ServerNotFound,
         BadGateway,
         BadRequest,
         GatewayTimeout,
         InternalServerError,
-        RequestTimeOut,
+        RequestTimeout,
         Unauthorized,
         UnknownRestStatus,
     }

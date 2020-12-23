@@ -6,6 +6,6 @@ namespace BoutiqueCommonXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая доменная модель основных данных
     /// </summary>
-    public interface ITestShortDomain : ITest, IDomainModel<TestEnum>
+    public interface ITestShortDomain : ITestShortBase, IDomainModel<TestEnum>
     { }
 }

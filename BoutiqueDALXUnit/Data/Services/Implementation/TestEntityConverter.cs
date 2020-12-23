@@ -41,7 +41,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// </summary>
         public override IResultValue<ITestDomain> FromEntity(TestEntity testEntity) =>
             GetTestFunc(testEntity).
-            ResultCurryOkBind(_testIncludeEntityConverter.FromEntities(testEntity.TestIncludeEntities)).
+            ResultCurryOkBind(_testIncludeEntityConverter.FromEntities(testEntity.TestIncludes)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// <summary>
         /// Функция получения тестовых сущностей
         /// </summary>
-        private static IResultValue<Func<IEnumerable<ITestIncludeDomain>, ITestDomain>> GetTestFunc(ITest test) =>
+        private static IResultValue<Func<IEnumerable<ITestIncludeDomain>, ITestDomain>> GetTestFunc(ITestShortBase testShort) =>
             new ResultValue<Func<IEnumerable<ITestIncludeDomain>, ITestDomain>>(
-                testDomains => new TestDomain(test, testDomains));
+                testDomains => new TestDomain(testShort, testDomains));
     }
 }

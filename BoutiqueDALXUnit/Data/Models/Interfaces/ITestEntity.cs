@@ -9,11 +9,6 @@ namespace BoutiqueDALXUnit.Data.Models.Interfaces
     /// <summary>
     /// Тестовая сущность базы данных
     /// </summary>
-    public interface ITestEntity: ITest, IEntityModel<TestEnum>
-    {
-        /// <summary>
-        /// Тестовые связующие сущности
-        /// </summary>
-        IReadOnlyCollection<TestIncludeEntity> TestIncludeEntities { get; set; }
-    }
+    public interface ITestEntity: ITestBase<TestIncludeEntity>, IEntityModel<TestEnum>
+    { }
 }

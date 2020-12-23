@@ -12,21 +12,14 @@ namespace BoutiqueDALXUnit.Data.Models.Implementation
     /// <summary>
     /// Тестовая сущность базы данных
     /// </summary>
-    public class TestEntity : Test, ITestEntity
+    public class TestEntity : TestBase<TestIncludeEntity>, ITestEntity
     {
-        public TestEntity(ITest test, IEnumerable<TestIncludeEntity> testIncludeEntities)
-          : this(test.TestEnum, test.Name, testIncludeEntities)
+        public TestEntity(ITestShortBase testShort, IEnumerable<TestIncludeEntity> testIncludeEntities)
+          : this(testShort.TestEnum, testShort.Name, testIncludeEntities)
         { }
 
         public TestEntity(TestEnum testEnum, string name, IEnumerable<TestIncludeEntity> testIncludeEntities)
-            : base(testEnum, name)
-        {
-            TestIncludeEntities = testIncludeEntities.ToList();
-        }
-
-        /// <summary>
-        /// Тестовые связующие сущности
-        /// </summary>
-        public IReadOnlyCollection<TestIncludeEntity> TestIncludeEntities { get; set; }
+            : base(testEnum, name, testIncludeEntities)
+        { }
     }
 }

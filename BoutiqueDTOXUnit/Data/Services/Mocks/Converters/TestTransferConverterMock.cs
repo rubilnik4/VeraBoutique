@@ -1,5 +1,7 @@
 ﻿using BoutiqueDTOXUnit.Data.Services.Implementations;
+using BoutiqueDTOXUnit.Data.Services.Implementations.Converters;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
+using BoutiqueDTOXUnit.Data.Services.Interfaces.Converters;
 
 namespace BoutiqueDTOXUnit.Data.Services.Mocks.Converters
 {

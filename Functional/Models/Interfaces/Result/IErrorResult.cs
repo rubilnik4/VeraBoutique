@@ -39,5 +39,10 @@ namespace Functional.Models.Interfaces.Result
         /// Преобразовать в ответ с вложенным типом
         /// </summary>      
         IResultValue<TValue> ToResultValue<TValue>();
+
+        /// <summary>
+        /// Преобразовать в ответ с вложенной коллекцией
+        /// </summary>      
+        IResultCollection<TValue> ToResultCollection<TValue>();
     }
 }

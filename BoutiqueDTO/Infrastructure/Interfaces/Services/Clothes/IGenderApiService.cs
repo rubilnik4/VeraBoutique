@@ -8,6 +8,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Api сервис типа пола
     /// </summary>
-    public interface IGenderApiService: IApiServiceBase<GenderType, GenderTransfer>
+    public interface IGenderApiService: IApiService<GenderType, GenderTransfer>
     { }
 }

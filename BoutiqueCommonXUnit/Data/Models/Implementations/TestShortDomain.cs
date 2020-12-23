@@ -4,10 +4,10 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueCommonXUnit.Data.Models.Implementations
 {
-    public class TestShortDomain: Test, ITestShortDomain
+    public class TestShortDomain: TestShortBase, ITestShortDomain
     {
-        public TestShortDomain(TestEnum testEnum, string name)
-           : base(testEnum, name)
-        { }
+       public TestShortDomain(TestEnum testEnum, string name) 
+           :base(testEnum, name)
+       { }
     }
 }

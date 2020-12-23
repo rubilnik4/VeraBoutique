@@ -1,4 +1,5 @@
-﻿using BoutiqueCommonXUnit.Data.Models.Interfaces;
+﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueDTOXUnit.Data.Models.Implementations
@@ -6,27 +7,14 @@ namespace BoutiqueDTOXUnit.Data.Models.Implementations
     /// <summary>
     /// Тестовая вложенная трансферная модель
     /// </summary>
-    public class TestIncludeTransfer:  ITestIncludeTransfer
+    public class TestIncludeTransfer:  TestIncludeBase, ITestIncludeTransfer
     {
-        public TestIncludeTransfer() { }
-
-        public TestIncludeTransfer(ITestInclude testInclude)
+        public TestIncludeTransfer(ITestIncludeBase testInclude)
             :this(testInclude.Name)
         { }
 
         public TestIncludeTransfer(string name) 
-        {
-            Name = name;
-        }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public string Id => Name;
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name { get; set; } = null!;
+            :base(name)
+        {}
     }
 }
