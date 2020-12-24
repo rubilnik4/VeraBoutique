@@ -2,14 +2,20 @@
 using BoutiqueDTO.Models.Interfaces.Connection;
 using RestSharp;
 
-namespace BoutiqueDTO.Factory.Rest
+namespace BoutiqueDTO.Factory.RestSharp
 {
+    /// <summary>
+    /// Фабрика создания api клиента
+    /// </summary>
     public static class RestSharpFactory
     {
+        /// <summary>
+        /// Создать api клиент
+        /// </summary>
         public static IRestClient GetRestClient(IHostConnection hostConnection) =>
              new RestClient(hostConnection.Host)
              {
-                 Timeout = (int)TimeSpan.FromSeconds(hostConnection.TimeOut).TotalMilliseconds,
+                 Timeout = (int)hostConnection.TimeOut.TotalMilliseconds,
              };
     }
 }

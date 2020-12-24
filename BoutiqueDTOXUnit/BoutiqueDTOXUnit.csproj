@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Services\Implementations\Services\Api\" />
+    <Folder Include="Factory\RestSharp\" />
     <Folder Include="Json\Clothes\Clothes\" />
   </ItemGroup>
 

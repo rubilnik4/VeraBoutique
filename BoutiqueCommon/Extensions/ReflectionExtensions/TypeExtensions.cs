@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Extensions.ReflectionExtensions
     /// <summary>
     /// Методы расширения для типов данных
     /// </summary>
-    public static class GetTypeExtensions
+    public static class TypeExtensions
     {
         /// <summary>
         /// Исключить обобщения из типа данных

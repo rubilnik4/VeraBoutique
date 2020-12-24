@@ -2,24 +2,21 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Factory.Rest;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
-using GenderTransfer = BoutiqueDTO.Models.Implementations.Clothes.GenderTransfer;
 
-namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase
+namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes
 {
     /// <summary>
     /// Загрузка данных типа пола

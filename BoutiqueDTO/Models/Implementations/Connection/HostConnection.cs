@@ -9,7 +9,7 @@ namespace BoutiqueDTO.Models.Implementations.Connection
     /// </summary>
     public class HostConnection: IHostConnection
     {
-        public HostConnection(Uri host, int timeOut)
+        public HostConnection(Uri host, TimeSpan timeOut)
         {
             Host = host;
             TimeOut = timeOut;
@@ -23,16 +23,6 @@ namespace BoutiqueDTO.Models.Implementations.Connection
         /// <summary>
         /// Время ожидания
         /// </summary>
-        public int TimeOut { get; }
-
-        /// <summary>
-        /// Преобразовать в http клиент
-        /// </summary>
-        public HttpClient ToHttpClient() =>
-            new ()
-            {
-                BaseAddress = Host,
-                Timeout = TimeSpan.FromSeconds(TimeOut),
-            };
+        public TimeSpan TimeOut { get; }
     }
 }

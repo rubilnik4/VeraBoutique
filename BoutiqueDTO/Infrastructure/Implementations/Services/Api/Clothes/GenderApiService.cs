@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Factory.Rest;
+using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
@@ -27,7 +27,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         { }
 
         /// <summary>
-        /// Получить сервис типа пола
+        /// Получить сервис
         /// </summary>
         public static IGenderApiService GetGenderApiService(IHostConnection hostConnection) =>
             new GenderApiService(RestSharpFactory.GetRestClient(hostConnection));

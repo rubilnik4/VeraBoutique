@@ -31,7 +31,9 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/veraBoutique",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "httpPort": 5000,
+      "sslPort": 5001 
     }
   }
 }

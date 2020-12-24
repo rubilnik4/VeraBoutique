@@ -16,11 +16,6 @@ namespace BoutiqueDTO.Models.Interfaces.Connection
         /// <summary>
         /// Время ожидания
         /// </summary>
-        int TimeOut { get; }
-
-        /// <summary>
-        /// Преобразовать в http клиент
-        /// </summary>
-        HttpClient ToHttpClient();
+        TimeSpan TimeOut { get; }
     }
 }

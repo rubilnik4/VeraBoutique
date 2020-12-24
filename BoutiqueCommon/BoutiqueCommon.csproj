@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\ReflectionExtensions\" />
     <Folder Include="Extensions\StringExtensions\" />
   </ItemGroup>
 

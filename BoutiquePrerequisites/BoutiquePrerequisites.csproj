@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Connected Services\" />
+    <Folder Include="Infrastructure\Interfaces\BoutiqueDatabase\Base\" />
     <Folder Include="Models\Implementations\" />
     <Folder Include="Models\Interfaces\" />
   </ItemGroup>

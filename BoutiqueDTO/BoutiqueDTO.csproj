@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Factory\Rest\" />
+    <Folder Include="Factory\RestSharp\" />
   </ItemGroup>
 
 </Project>

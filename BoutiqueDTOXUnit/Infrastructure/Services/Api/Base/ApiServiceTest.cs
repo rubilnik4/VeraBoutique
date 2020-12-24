@@ -10,6 +10,7 @@ using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Implementations.Services.Api;
 using BoutiqueDTOXUnit.Data.Services.Interfaces.Services.Api;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
 using Moq;
 using RestSharp;
 using Xunit;
@@ -21,11 +22,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
     /// </summary>
     public class ApiServiceTest
     {
+        /// <summary>
+        /// Получение данных
+        /// </summary>
         [Fact]
         public async Task Get_Ok()
         {
             var testTransfers = TestTransferData.TestTransfers.ToList();
-            
             var restRequest = GetRestResponse(HttpStatusCode.OK, testTransfers);
             var restClient = GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
@@ -34,6 +37,200 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
            
             Assert.True(result.OkStatus);
             Assert.True(testTransfers.SequenceEqual(result.Value));
+        }
+
+        /// <summary>
+        /// Получение данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task Get_Error()
+        {
+            var testTransfers = TestTransferData.TestTransfers.ToList();
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testTransfers);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Get();
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Получение данных по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task GetById_Ok()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var restRequest = GetRestResponse(HttpStatusCode.OK, testTransfer);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Get(testTransfer.Id);
+
+            Assert.True(result.OkStatus);
+            Assert.True(testTransfer.Equals(result.Value));
+        }
+
+        /// <summary>
+        /// Получение данных по идентификатору. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetById_Error()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testTransfer);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Get(testTransfer.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Отправка данных
+        /// </summary>
+        [Fact]
+        public async Task Post_Ok()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.OK, testId);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Post(testTransfer);
+
+            Assert.True(result.OkStatus);
+            Assert.True(testId.Equals(result.Value));
+        }
+
+        /// <summary>
+        /// Отправка данных
+        /// </summary>
+        [Fact]
+        public async Task Post_Error()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testId);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Post(testTransfer);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Отправка данных
+        /// </summary>
+        [Fact]
+        public async Task PostCollection_Ok()
+        {
+            var testTransfers = TestTransferData.TestTransfers;
+            var testIds = testTransfers.Select(transfer => transfer.Id).ToList();
+            var restRequest = GetRestResponse(HttpStatusCode.Created, testIds);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.PostCollection(testTransfers);
+
+            Assert.True(result.OkStatus);
+            Assert.True(testIds.SequenceEqual(result.Value));
+        }
+
+        /// <summary>
+        /// Отправка данных
+        /// </summary>
+        [Fact]
+        public async Task PostCollection_Error()
+        {
+            var testTransfers = TestTransferData.TestTransfers;
+            var testIds = testTransfers.Select(transfer => transfer.Id).ToList();
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testIds);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.PostCollection(testTransfers);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Обновление данных
+        /// </summary>
+        [Fact]
+        public async Task Put_Ok()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.NoContent, testId);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Put(testTransfer);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Обновление данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task Put_Error()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testId);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Put(testTransfer);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Удаление данных
+        /// </summary>
+        [Fact]
+        public async Task Delete_Ok()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.OK, testTransfer);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Delete(testId);
+
+            Assert.True(result.OkStatus);
+            Assert.True(testTransfer.Equals(result.Value));
+        }
+
+        /// <summary>
+        /// Удаление данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task Delete_Error()
+        {
+            var testTransfer = TestTransferData.TestTransfers.First();
+            var testId = testTransfer.Id;
+            var restRequest = GetRestResponse(HttpStatusCode.BadRequest, testTransfer);
+            var restClient = GetRestClient(restRequest);
+            var testApiService = new TestApiService(restClient.Object);
+
+            var result = await testApiService.Delete(testId);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
         }
 
         /// <summary>
@@ -54,6 +251,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             where TValue : notnull =>
             new Mock<IRestClient>().
             Void(mock => mock.Setup(client => client.ExecuteAsync<TValue>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).
+                              ReturnsAsync(restResponse)).
+            Void(mock => mock.Setup(client => client.ExecuteAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).
                               ReturnsAsync(restResponse));
     }
 }

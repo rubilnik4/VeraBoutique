@@ -6,6 +6,7 @@ using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.Connection;
 using BoutiquePrerequisites.Infrastructure.Implementations;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase;
+using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
