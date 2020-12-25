@@ -27,6 +27,15 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
             MapBindAsync(awaitedThis => awaitedThis.ResultValueVoidBadAsync(action));
 
         /// <summary>
+        /// Выполнить действие, вернуть результирующий ответ задачи-объекта
+        /// </summary>      
+        public static async Task<IResultValue<TValue>> ResultValueVoidOkBadBindAsync<TValue>(this Task<IResultValue<TValue>> @this,
+                                                                                             Func<TValue, Task> actionOk,
+                                                                                             Func<IReadOnlyCollection<IErrorResult>, Task> actionBad) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.ResultValueVoidOkBadAsync(actionOk, actionBad));
+
+        /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ задачи-объекта
         /// </summary>    
         public static async Task<IResultValue<TValue>> ResultValueVoidOkWhereBindAsync<TValue>(this Task<IResultValue<TValue>> @this,

@@ -29,6 +29,17 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
                 action: _ => action.Invoke(@this.Errors));
 
         /// <summary>
+        /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
+        /// </summary>      
+        public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkBadAsync<TValue>(this IResultCollection<TValue> @this,
+                                                                                                   Func<IReadOnlyCollection<TValue>, Task> actionOk,
+                                                                                                   Func<IReadOnlyCollection<IErrorResult>, Task> actionBad) =>
+            await @this.
+            VoidWhereAsync(_ => @this.HasErrors,
+                actionOk: _ => actionOk.Invoke(@this.Value),
+                actionBad: _ => actionBad.Invoke(@this.Errors));
+
+        /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
         public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkWhereAsync<TValue>(this IResultCollection<TValue> @this,

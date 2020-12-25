@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
+using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiquePrerequisites.Infrastructure.Implementations
+namespace BoutiquePrerequisites.Infrastructure.Implementations.Logger
 {
     /// <summary>
     /// Отображение в консоли

@@ -25,5 +25,16 @@ namespace Functional.FunctionalExtensions.Async
             predicate(@this)
                 ? await @this.VoidAsync(_ => action.Invoke(@this))
                 : @this;
+
+        /// <summary>
+        /// Выполнить асинхронное действие при положительном условии
+        /// </summary>
+        public static async Task<TValue> VoidWhereAsync<TValue>(this TValue @this, 
+                                                                Func<TValue, bool> predicate,
+                                                                Func<TValue, Task> actionOk,
+                                                                Func<TValue, Task> actionBad) =>
+            predicate(@this)
+                ? await @this.VoidAsync(_ => actionOk.Invoke(@this))
+                : await @this.VoidAsync(_ => actionBad.Invoke(@this));
     }
 }

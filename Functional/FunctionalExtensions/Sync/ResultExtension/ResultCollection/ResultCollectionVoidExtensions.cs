@@ -28,6 +28,17 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection
                 action: _ => action.Invoke(@this.Errors));
 
         /// <summary>
+        /// Выполнить действие, вернуть результирующий ответ
+        /// </summary>      
+        public static IResultCollection<TValue> ResultCollectionVoidOkBad<TValue>(this IResultCollection<TValue> @this,
+                                                                                  Action<IReadOnlyCollection<TValue>> actionOk,
+                                                                                  Action<IReadOnlyCollection<IErrorResult>> actionBad) =>
+            @this.
+            VoidWhere(_ => @this.OkStatus,
+                actionOk: _ => actionOk.Invoke(@this.Value),
+                actionBad: _ => actionBad.Invoke(@this.Errors));
+
+        /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
         public static IResultCollection<TValue> ResultCollectionVoidOkWhere<TValue>(this IResultCollection<TValue> @this,

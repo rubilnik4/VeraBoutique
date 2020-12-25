@@ -23,5 +23,14 @@ namespace Functional.FunctionalExtensions.Sync
             predicate(@this)
                 ? @this.Void(_ => action.Invoke(@this))
                 : @this;
+
+        /// <summary>
+        /// Выполнить действие
+        /// </summary>
+        public static TValue VoidWhere<TValue>(this TValue @this, Func<TValue, bool> predicate,
+                                               Action<TValue> actionOk, Action<TValue> actionBad) =>
+            predicate(@this)
+                ? @this.Void(_ => actionOk.Invoke(@this))
+                : @this.Void(_ => actionBad.Invoke(@this));
     }
 }

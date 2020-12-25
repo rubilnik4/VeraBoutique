@@ -11,6 +11,7 @@ using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
 using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Base;
+using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -25,11 +26,12 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
     {
-        protected UploadServiceBase(ITransferConverter<TId, TDomain, TTransfer> transferConverter,
-                                    ILogger logger)
+        protected UploadServiceBase(ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
+                                    IApiService<TId, TTransfer> apiService, ILogger logger)
         {
             _transferConverter = transferConverter;
             _logger = logger;
+            _apiService = apiService;
         }
 
         /// <summary>
@@ -38,25 +40,25 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
+        /// Сервис получения данных по протоколу rest api
+        /// </summary>
+        private readonly IApiService<TId, TTransfer> _apiService;
+
+        /// <summary>
         /// Логгер
         /// </summary>
         private readonly ILogger _logger;
 
         /// <summary>
-        /// Сервис получения данных по протоколу rest api
-        /// </summary>
-        protected abstract IApiService<TId, TTransfer> ApiService { get; }
-
-        /// <summary>
         /// Загрузить типы пола
         /// </summary>
         public async Task<IResultError> Upload(IEnumerable<TDomain> domains) =>
-            await new ResultValue<IApiService<TId, TTransfer>>(ApiService).
+            await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueVoidOk(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] в базу")).
             ResultValueBindOkToCollectionAsync(api => api.PostCollection(_transferConverter.ToTransfers(domains))).
-            ResultCollectionOkBadTaskAsync(ids => ids.Void(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] завершена успешно")),
-                                           errors => domains.Select(domain => domain.Id).
-                                                     Void(_ => _logger.ShowMessage($"Ошибка загрузки [{typeof(TDomain).Name}]")).
-                                                     Void(_ => _logger.ShowErrors(errors)));
+            ResultCollectionVoidOkBadTaskAsync(ids => ids.Void(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] завершена успешно")),
+                                               errors => errors.
+                                                         Void(_ => _logger.ShowMessage($"Ошибка загрузки [{typeof(TDomain).Name}]")).
+                                                         Void(_ => _logger.ShowErrors(errors)));
     }
 }

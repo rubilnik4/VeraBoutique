@@ -23,17 +23,28 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
         public static async Task<IResultValue<TValue>> ResultValueVoidBadAsync<TValue>(this IResultValue<TValue> @this,
-                                                                                  Func<IReadOnlyCollection<IErrorResult>, Task> action) =>
+                                                                                       Func<IReadOnlyCollection<IErrorResult>, Task> action) =>
             await @this.
             VoidOkAsync(_ => @this.HasErrors,
                 action: _ => action.Invoke(@this.Errors));
 
         /// <summary>
+        /// Выполнить действие, вернуть результирующий ответ
+        /// </summary>      
+        public static async Task<IResultValue<TValue>> ResultValueVoidOkBadAsync<TValue>(this IResultValue<TValue> @this,
+                                                                                         Func<TValue, Task> actionOk,
+                                                                                         Func<IReadOnlyCollection<IErrorResult>, Task> actionBad) =>
+            await @this.
+            VoidWhereAsync(_ => @this.HasErrors,
+                actionOk: _ => actionOk.Invoke(@this.Value),
+                actionBad: _ => actionBad.Invoke(@this.Errors));
+
+        /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
         public static async Task<IResultValue<TValue>> ResultValueVoidOkWhereAsync<TValue>(this IResultValue<TValue> @this,
-                                                                          Func<TValue, bool> predicate,
-                                                                          Func<TValue, Task> action) =>
+                                                                                           Func<TValue, bool> predicate,
+                                                                                           Func<TValue, Task> action) =>
             await  @this.
             VoidOkAsync(_ => @this.OkStatus && predicate(@this.Value),
                 action: _ => action.Invoke(@this.Value));

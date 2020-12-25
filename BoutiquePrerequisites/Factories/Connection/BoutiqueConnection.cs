@@ -39,8 +39,12 @@ namespace BoutiquePrerequisites.Factories.Connection
             ResultCurryOkBind(BoutiqueTimeOut).
             ResultValueOk(func => func.Invoke());
 
+        /// <summary>
+        /// Функция получения параметров подключения
+        /// </summary>
         private static IResultValue<Func<Uri, int, IHostConnection>> BoutiqueConnectionFunc =>
-            new ResultValue<Func<Uri, int, IHostConnection>>((host, timeOut) => new HostConnection(host, timeOut));
+            new ResultValue<Func<Uri, int, IHostConnection>>((host, timeOut) =>
+                new HostConnection(host, TimeSpan.FromSeconds(timeOut)));
         
         /// <summary>
         /// Параметры подключения к серверу Boutique

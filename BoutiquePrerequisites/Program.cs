@@ -7,7 +7,9 @@ using BoutiquePrerequisites.Factories.Connection;
 using BoutiquePrerequisites.Infrastructure.Implementations;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes;
+using BoutiquePrerequisites.Infrastructure.Implementations.Logger;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
+using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -33,7 +35,7 @@ namespace BoutiquePrerequisites
         private static async Task<IResultError> BoutiqueClientInitialize(IHostConnection hostConnection, ILogger logger) =>
             await new ResultError().
             Void(_ => logger.ShowMessage("Инициализация клиента отправки")).
-            ResultErrorBindOkAsync(() => GenderUpload.Upload(hostConnection, logger)).
+            ResultErrorBindOkAsync(() => GenderUploadService.Upload(hostConnection, logger)).
             VoidTaskAsync(_ => logger.ShowMessage("Завершено"));
     }
 }

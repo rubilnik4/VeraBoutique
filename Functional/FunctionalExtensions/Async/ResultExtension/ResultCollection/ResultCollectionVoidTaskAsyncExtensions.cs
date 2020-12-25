@@ -29,6 +29,15 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
             MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionVoidBad(action));
 
         /// <summary>
+        /// Выполнить действие при отрицательном значении, вернуть результирующий ответ задачи-объекта
+        /// </summary>      
+        public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkBadTaskAsync<TValue>(this Task<IResultCollection<TValue>> @this,
+                                                                                                     Action<IReadOnlyCollection<TValue>> actionOk,
+                                                                                                     Action<IReadOnlyCollection<IErrorResult>> actionBad) =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ResultCollectionVoidOkBad(actionOk, actionBad));
+
+        /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ задачи-объекта
         /// </summary>    
         public static async Task<IResultCollection<TValue>> ResultCollectionVoidOkWhereTaskAsync<TValue>(this Task<IResultCollection<TValue>> @this,

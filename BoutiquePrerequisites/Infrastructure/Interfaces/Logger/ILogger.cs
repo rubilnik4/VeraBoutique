@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiquePrerequisites.Infrastructure.Interfaces
+namespace BoutiquePrerequisites.Infrastructure.Interfaces.Logger
 {
     /// <summary>
     /// Отображение сообщений

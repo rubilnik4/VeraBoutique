@@ -11,21 +11,24 @@ namespace Functional.FunctionalExtensions.Async
         /// <summary>
         /// Выполнить асинхронное действие, вернуть тот же тип
         /// </summary>       
-        public static async Task<TValue> VoidBindAsync<TValue>(this Task<TValue> @this, Func<TValue, Task> action)
-        {
-            var awaitedThis = await @this;
-            await action.Invoke(awaitedThis);
-            return awaitedThis;
-        }
-
+        public static async Task<TValue> VoidBindAsync<TValue>(this Task<TValue> @this, Func<TValue, Task> action) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.VoidAsync(action));
+       
         /// <summary>
         /// Выполнить асинхронное действие при положительном условии
         /// </summary>
         public static async Task<TValue> VoidOkBindAsync<TValue>(this Task<TValue> @this, Func<TValue, bool> predicate,
                                                                  Func<TValue, Task> action) =>
             await @this.
-            MapBindAsync(awaitedThis => predicate(awaitedThis)
-                    ? awaitedThis.VoidAsync(_ => action.Invoke(awaitedThis))
-                    : Task.FromResult(awaitedThis));
+            MapBindAsync(awaitedThis => awaitedThis.VoidOkAsync(predicate, action));
+
+        /// <summary>
+        /// Выполнить асинхронное действие
+        /// </summary>
+        public static async Task<TValue> VoidWhereBindAsync<TValue>(this Task<TValue> @this, Func<TValue, bool> predicate,
+                                                                 Func<TValue, Task> actionOk, Func<TValue, Task> actionBad) =>
+            await @this.
+            MapBindAsync(awaitedThis => awaitedThis.VoidWhereAsync(predicate, actionOk, actionBad));
     }
 }
