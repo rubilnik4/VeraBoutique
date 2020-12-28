@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using BoutiqueDTO.Factory.RestSharp;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.Connection;
+using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;
+using BoutiquePrerequisites.Factories.Services;
 using BoutiquePrerequisites.Infrastructure.Implementations;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes;
+using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Upload;
 using BoutiquePrerequisites.Infrastructure.Implementations.Logger;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
 using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
@@ -15,8 +21,10 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
+using RestSharp;
 
 namespace BoutiquePrerequisites
 {
@@ -26,16 +34,7 @@ namespace BoutiquePrerequisites
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await BoutiqueConnection.BoutiqueHostConnection.
-           ResultValueBindErrorsOkAsync(hostConnection => BoutiqueClientInitialize(hostConnection, new ConsoleLogger()));
-
-        /// <summary>
-        /// Инициализация клиента
-        /// </summary>
-        private static async Task<IResultError> BoutiqueClientInitialize(IHostConnection hostConnection, ILogger logger) =>
-            await new ResultError().
-            Void(_ => logger.ShowMessage("Инициализация клиента отправки")).
-            ResultErrorBindOkAsync(() => GenderUploadService.Upload(hostConnection, logger)).
-            VoidTaskAsync(_ => logger.ShowMessage("Завершено"));
+           await new ConsoleLogger().
+           MapAsync(BoutiqueUpload.UploadData);
     }
 }

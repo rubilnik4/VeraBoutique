@@ -12,7 +12,7 @@ using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Base;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
-using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Clothes;
+using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.Clothes;
 using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -23,12 +23,12 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes
 {
     /// <summary>
-    /// Сервис загрузки типа пола в базу данных
+    /// Сервис загрузки и получения типа пола в базу данных
     /// </summary>
-    public class GenderUploadService : UploadServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderUploadService
+    public class GenderRestService : RestServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderRestService
     {
-        public GenderUploadService(IGenderTransferConverter genderTransferConverter, 
-                                   IGenderApiService genderApiService, ILogger logger)
+        public GenderRestService(IGenderTransferConverter genderTransferConverter, 
+                                 IGenderApiService genderApiService, ILogger logger)
             :base(genderTransferConverter, genderApiService, logger)
         { }
     }

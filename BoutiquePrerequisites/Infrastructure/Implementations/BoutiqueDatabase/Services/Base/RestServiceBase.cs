@@ -10,7 +10,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
-using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Base;
+using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.Base;
 using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -21,12 +21,15 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Base
 {
-    public abstract class UploadServiceBase<TId, TDomain, TTransfer> : IUploadServiceBase<TId, TDomain>
+    /// <summary>
+    /// Базовый сервис для получения данных Api
+    /// </summary>
+    public abstract class RestServiceBase<TId, TDomain, TTransfer> : IRestServiceBase<TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
     {
-        protected UploadServiceBase(ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
+        protected RestServiceBase(ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
                                     IApiService<TId, TTransfer> apiService, ILogger logger)
         {
             _transferConverter = transferConverter;
