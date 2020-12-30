@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Sync;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;
@@ -61,6 +62,41 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
 
             Assert.Equal(initialNumber, numberAfterVoid);
             voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Never);
+        }
+
+
+        /// <summary>
+        /// Проверка выполнения действия при положительном условии
+        /// </summary>
+        [Fact]
+        public async Task VoidWhereAsync_Ok()
+        {
+            const int initialNumber = 1;
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            int numberAfterVoid =await initialNumber.VoidWhereAsync(_ => true,
+                                                          number => voidObjectMock.Object.TestNumberVoidAsync(number),
+                                                          _ => voidObjectMock.Object.TestVoidAsync());
+
+            Assert.Equal(initialNumber, numberAfterVoid);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка выполнения действия при негативном условии
+        /// </summary>
+        [Fact]
+        public async Task VoidWhereAsync_Bad()
+        {
+            const int initialNumber = 1;
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            int numberAfterVoid = await initialNumber.VoidWhereAsync(_ => false,
+                                                          _ => voidObjectMock.Object.TestVoidAsync(),
+                                                          number => voidObjectMock.Object.TestNumberVoidAsync(number));
+
+            Assert.Equal(initialNumber, numberAfterVoid);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
         }
     }
 }

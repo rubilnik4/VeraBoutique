@@ -9,12 +9,15 @@ using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 
 namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes
 {
-    public class CategoryRestService : RestServiceBase<string, ICategoryDomain, CategoryTransfer>, ICategoryRestService
+    /// <summary>
+    /// Сервис загрузки размера одежды в базу данных
+    /// </summary>
+    public class SizeRestService : RestServiceBase<(SizeType, string), ISizeDomain, SizeTransfer>, ISizeRestService
     {
-        public CategoryRestService(ICategoryApiService categoryApiService, 
-                                   ICategoryTransferConverter categoryTransferConverter,
-                                   ILogger logger)
-            : base(categoryApiService, categoryTransferConverter, logger)
+        public SizeRestService(ISizeApiService sizeApiService,
+                               ISizeTransferConverter sizeTransferConverter,
+                               ILogger logger)
+            : base(sizeApiService, sizeTransferConverter, logger)
         { }
     }
 }

@@ -29,23 +29,24 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
     {
-        protected RestServiceBase(ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
-                                    IApiService<TId, TTransfer> apiService, ILogger logger)
+        protected RestServiceBase(IApiService<TId, TTransfer> apiService, 
+                                  ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
+                                  ILogger logger)
         {
+            _apiService = apiService;
             _transferConverter = transferConverter;
             _logger = logger;
-            _apiService = apiService;
         }
-
-        /// <summary>
-        /// Конвертер из доменной модели в трансферную модель
-        /// </summary>
-        private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
         /// Сервис получения данных по протоколу rest api
         /// </summary>
         private readonly IApiService<TId, TTransfer> _apiService;
+
+        /// <summary>
+        /// Конвертер из доменной модели в трансферную модель
+        /// </summary>
+        private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
         /// Логгер

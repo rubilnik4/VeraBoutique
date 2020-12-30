@@ -14,6 +14,11 @@ namespace FunctionalXUnit.Mocks.Interfaces
         void TestVoid();
 
         /// <summary>
+        /// Тестовый метод
+        /// </summary>
+        Task TestVoidAsync();
+
+        /// <summary>
         /// Тестовый метод с числовым параметром
         /// </summary>
         void TestNumberVoid(int number);

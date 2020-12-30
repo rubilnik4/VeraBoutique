@@ -5,8 +5,8 @@ using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.
 namespace BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.Clothes
 {
     /// <summary>
-    /// Сервис загрузки цвета одежды в базу данных
+    /// Сервис загрузки размера одежды в базу данных
     /// </summary>
-    public interface IColorRestService : IRestServiceBase<string, IColorDomain>
+    public interface ISizeRestService : IRestServiceBase<(SizeType, string), ISizeDomain>
     { }
 }

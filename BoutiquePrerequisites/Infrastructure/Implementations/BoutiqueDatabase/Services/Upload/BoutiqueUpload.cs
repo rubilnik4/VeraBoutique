@@ -24,6 +24,9 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
             ResultValueBindErrorsOkAsync(restClient => GenderUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => CategoryUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => ColorUpload(restClient, logger)).
+            ResultValueBindErrorsOkBindAsync(restClient => ClothesTypeUpload(restClient, logger)).
+            ResultValueBindErrorsOkBindAsync(restClient => SizeUpload(restClient, logger)).
+            ResultValueBindErrorsOkBindAsync(restClient => SizeGroupUpload(restClient, logger)).
             Void(_ => logger.ShowMessage("Загрузка данных завершена"));
 
         /// <summary>
@@ -46,5 +49,26 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         private static async Task<IResultError> ColorUpload(IRestClient restClient, ILogger logger) =>
             await RestServiceFactory.GetColorRestService(restClient, logger).
             Upload(ColorInitialize.ColorClothes);
+
+        /// <summary>
+        /// Загрузить тип одежды в базу
+        /// </summary>
+        private static async Task<IResultError> ClothesTypeUpload(IRestClient restClient, ILogger logger) =>
+            await RestServiceFactory.GetClothesTypeRestService(restClient, logger).
+            Upload(ClothesTypeInitialize.ClothesTypes);
+
+        /// <summary>
+        /// Загрузить тип одежды в базу
+        /// </summary>
+        private static async Task<IResultError> SizeUpload(IRestClient restClient, ILogger logger) =>
+            await RestServiceFactory.GetSizeRestService(restClient, logger).
+            Upload(SizeInitialize.Sizes);
+
+        /// <summary>
+        /// Загрузить тип одежды в базу
+        /// </summary>
+        private static async Task<IResultError> SizeGroupUpload(IRestClient restClient, ILogger logger) =>
+            await RestServiceFactory.GetSizeGroupRestService(restClient, logger).
+            Upload(SizeGroupInitialize.SizeGroups);
     }
 }

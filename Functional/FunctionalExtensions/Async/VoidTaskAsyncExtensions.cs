@@ -27,7 +27,7 @@ namespace Functional.FunctionalExtensions.Async
         /// <summary>
         /// Выполнить действие
         /// </summary>
-        public static async Task<TValue> VoidWhereBindAsync<TValue>(this Task<TValue> @this, Func<TValue, bool> predicate,
+        public static async Task<TValue> VoidWhereTaskAsync<TValue>(this Task<TValue> @this, Func<TValue, bool> predicate,
                                                                     Action<TValue> actionOk, Action<TValue> actionBad) =>
             await @this.
             MapTaskAsync(awaitedThis => awaitedThis.VoidWhere(predicate, actionOk, actionBad));

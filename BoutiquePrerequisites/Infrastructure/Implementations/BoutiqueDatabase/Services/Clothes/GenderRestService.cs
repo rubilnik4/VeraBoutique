@@ -27,9 +27,10 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
     /// </summary>
     public class GenderRestService : RestServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderRestService
     {
-        public GenderRestService(IGenderTransferConverter genderTransferConverter, 
-                                 IGenderApiService genderApiService, ILogger logger)
-            :base(genderTransferConverter, genderApiService, logger)
+        public GenderRestService(IGenderApiService genderApiService, 
+                                 IGenderTransferConverter genderTransferConverter, 
+                                 ILogger logger)
+            :base(genderApiService, genderTransferConverter,  logger)
         { }
     }
 }

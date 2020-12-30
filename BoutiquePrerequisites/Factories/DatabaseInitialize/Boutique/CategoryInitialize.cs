@@ -13,38 +13,43 @@ namespace BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique
         /// Начальные данные таблицы категорий одежды
         /// </summary>
         public static IReadOnlyCollection<ICategoryDomain> Categories =>
-            new List<CategoryDomain>
+            new List<ICategoryDomain>
             {
-                new (Outerwear),
-                new (Dress),
-                new (Pants),
-                new (Shoes),
-                new (Accessories),
+                Outerwear,
+                Dress,
+                Pants,
+                Shoes,
+                Accessories,
             }.AsReadOnly();
 
         /// <summary>
         /// Верхняя одежда
         /// </summary>
-        public static string Outerwear => "Верхняя одежда";
+        public static ICategoryDomain Outerwear =>
+            new CategoryDomain("Верхняя одежда");
 
         /// <summary>
         /// Платья
         /// </summary>
-        public static string Dress => "Платья";
+        public static ICategoryDomain Dress =>
+            new CategoryDomain("Платья");
 
         /// <summary>
         /// Штаны
         /// </summary>
-        public static string Pants => "Штаны";
+        public static ICategoryDomain Pants =>
+            new CategoryDomain("Штаны");
 
         /// <summary>
         /// Обувь
         /// </summary>
-        public static string Shoes => "Обувь";
+        public static ICategoryDomain Shoes =>
+            new CategoryDomain("Обувь");
 
         /// <summary>
         /// Аксессуары
         /// </summary>
-        public static string Accessories => "Аксессуары";
+        public static ICategoryDomain Accessories =>
+            new CategoryDomain("Аксессуары");
     }
 }

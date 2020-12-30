@@ -10,9 +10,10 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
 {
     public class ColorRestService : RestServiceBase<string, IColorDomain, ColorTransfer>, IColorRestService
     {
-        public ColorRestService(IColorTransferConverter colorTransferConverter,
-                                IColorApiService colorApiService, ILogger logger)
-            : base(colorTransferConverter, colorApiService, logger)
+        public ColorRestService(IColorApiService colorApiService, 
+                                IColorTransferConverter colorTransferConverter,
+                                ILogger logger)
+            : base(colorApiService, colorTransferConverter, logger)
         { }
     }
 }

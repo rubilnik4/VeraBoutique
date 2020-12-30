@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.Connection;
@@ -29,18 +31,41 @@ namespace BoutiquePrerequisites.Factories.Services
         /// Получить сервис типа пола
         /// </summary>
         public static IGenderRestService GetGenderRestService(IRestClient restClient, ILogger logger) =>
-             new GenderRestService(new GenderTransferConverter(), new GenderApiService(restClient), logger);
+             new GenderRestService( new GenderApiService(restClient), new GenderTransferConverter(), logger);
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
         public static ICategoryRestService GetCategoryRestService(IRestClient restClient, ILogger logger) =>
-             new CategoryRestService(new CategoryTransferConverter(), new CategoryApiService(restClient), logger);
+             new CategoryRestService( new CategoryApiService(restClient), new CategoryTransferConverter(), logger);
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
         public static IColorRestService GetColorRestService(IRestClient restClient, ILogger logger) =>
-             new ColorRestService(new ColorTransferConverter(), new ColorApiService(restClient), logger);
+             new ColorRestService(new ColorApiService(restClient), new ColorTransferConverter(), logger);
+
+        /// <summary>
+        /// Получить сервис типа одежды
+        /// </summary>
+        public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient, ILogger logger) =>
+             new ClothesTypeRestService(new ClothesTypeApiService(restClient), 
+                                        new ClothesTypeTransferConverter(new CategoryTransferConverter(),
+                                                                         new GenderTransferConverter()), 
+                                        logger);
+
+        /// <summary>
+        /// Получить сервис размера одежды
+        /// </summary>
+        public static ISizeRestService GetSizeRestService(IRestClient restClient, ILogger logger) =>
+             new SizeRestService(new SizeApiService(restClient), new SizeTransferConverter(), logger);
+
+        /// <summary>
+        /// Получить сервис размера одежды
+        /// </summary>
+        public static ISizeGroupRestService GetSizeGroupRestService(IRestClient restClient, ILogger logger) =>
+             new SizeGroupRestService(new SizeGroupApiService(restClient),
+                                      new SizeGroupTransferConverter(new SizeTransferConverter()),
+                                      logger);
     }
 }

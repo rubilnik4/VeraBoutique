@@ -17,23 +17,33 @@ namespace BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique
                 Female,
                 Child
             };
-        
+
         /// <summary>
         /// Мужской пол
         /// </summary>
-        public static IGenderDomain Male => 
+        public static IGenderDomain Male =>
             new GenderDomain(GenderType.Male, "Мужчины");
 
         /// <summary>
         /// Женский пол
         /// </summary>
-        public static IGenderDomain Female => 
+        public static IGenderDomain Female =>
             new GenderDomain(GenderType.Female, "Женщины");
 
         /// <summary>
         /// Детский пол
         /// </summary>
-        public static IGenderDomain Child => 
+        public static IGenderDomain Child =>
             new GenderDomain(GenderType.Child, "Дети");
+
+        /// <summary>
+        /// Мужской и женский пол
+        /// </summary>
+        public static IReadOnlyCollection<IGenderDomain> MaleAndFemale =>
+            new List<IGenderDomain>()
+            {
+                Male,
+                Female
+            };
     }
 }
