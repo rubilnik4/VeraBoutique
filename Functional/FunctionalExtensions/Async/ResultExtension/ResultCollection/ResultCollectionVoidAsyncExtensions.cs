@@ -35,7 +35,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection
                                                                                                    Func<IReadOnlyCollection<TValue>, Task> actionOk,
                                                                                                    Func<IReadOnlyCollection<IErrorResult>, Task> actionBad) =>
             await @this.
-            VoidWhereAsync(_ => @this.HasErrors,
+            VoidWhereAsync(_ => @this.OkStatus,
                 actionOk: _ => actionOk.Invoke(@this.Value),
                 actionBad: _ => actionBad.Invoke(@this.Errors));
 

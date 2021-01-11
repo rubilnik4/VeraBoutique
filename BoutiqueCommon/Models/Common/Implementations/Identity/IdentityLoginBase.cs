@@ -5,13 +5,18 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
     /// <summary>
     /// Имя пользователя и пароль
     /// </summary>
-    public class IdentityLogin : IIdentityLogin
+    public class IdentityLoginBase: IIdentityLoginBase
     {
-        public IdentityLogin(string userName, string password)
+        public IdentityLoginBase(string userName, string password)
         {
             UserName = userName;
             Password = password;
         }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public string Id => UserName;
 
         /// <summary>
         /// Имя пользователя

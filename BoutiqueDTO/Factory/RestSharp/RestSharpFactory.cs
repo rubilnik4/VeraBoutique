@@ -1,6 +1,7 @@
 ﻿using System;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using RestSharp;
+using RestSharp.Authenticators;
 
 namespace BoutiqueDTO.Factory.RestSharp
 {

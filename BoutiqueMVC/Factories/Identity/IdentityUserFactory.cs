@@ -29,7 +29,7 @@ namespace BoutiqueMVC.Factories.Identity
         /// Пользователь администратор по умолчанию
         /// </summary>
         private static IResultValue<BoutiqueUser> DefaultAdminUser =>
-            new ResultValue<Func<IdentityLogin, string, string, BoutiqueUser>>(GetDefaultUser).
+            new ResultValue<Func<IdentityLoginBase, string, string, BoutiqueUser>>(GetDefaultUser).
             ResultCurryOkBind(Login).
             ResultCurryOkBind(Email).
             ResultCurryOkBind(Phone).
@@ -38,8 +38,8 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Имя пользователя и пароль
         /// </summary>
-        private static IResultValue<IdentityLogin> Login =>
-            new ResultValue<Func<string, string, IdentityLogin>>(GetLogin).
+        private static IResultValue<IdentityLoginBase> Login =>
+            new ResultValue<Func<string, string, IdentityLoginBase>>(GetLogin).
             ResultCurryOkBind(UserName).
             ResultCurryOkBind(Password).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
@@ -47,14 +47,14 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Получить пользователя о умолчанию
         /// </summary>
-        private static BoutiqueUser GetDefaultUser(IdentityLogin login, string email, string phone) =>
-            new BoutiqueUser(IdentityRoleTypes.ADMIN_ROLE, login, email, phone);
+        private static BoutiqueUser GetDefaultUser(IdentityLoginBase loginBase, string email, string phone) =>
+            new BoutiqueUser(IdentityRoleTypes.ADMIN_ROLE, loginBase, email, phone);
 
         /// <summary>
         /// Получить имя пользователя и пароль
         /// </summary>
-        private static IdentityLogin GetLogin(string userName, string password) =>
-            new IdentityLogin(userName, password);
+        private static IdentityLoginBase GetLogin(string userName, string password) =>
+            new IdentityLoginBase(userName, password);
 
         /// <summary>
         /// Имя пользователя

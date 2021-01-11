@@ -60,9 +60,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<string>> Login(IdentityLoginTransfer login) =>
-            await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false).
-            MapBindAsync(result => GetLoginAction(result, login.UserName));
+        public async Task<ActionResult<string>> Login(IdentityLoginBaseTransfer loginBase) =>
+            await _signInManager.PasswordSignInAsync(loginBase.UserName, loginBase.Password, false, false).
+            MapBindAsync(result => GetLoginAction(result, loginBase.UserName));
 
         /// <summary>
         /// Сгенерировать токен или вернуть отказ авторизации

@@ -18,7 +18,7 @@ namespace BoutiquePrerequisites.Factories.Services
     /// <summary>
     /// Фабрика создания сервисов для получения и загрузки данных Api
     /// </summary>
-    public static class RestServiceFactory
+    public static class BoutiqueRestServiceFactory
     {
         /// <summary>
         /// Клиент для подключения к сервису одежды

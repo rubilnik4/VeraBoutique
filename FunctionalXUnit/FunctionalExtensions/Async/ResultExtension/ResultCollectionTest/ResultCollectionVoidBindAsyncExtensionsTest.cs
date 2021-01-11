@@ -91,6 +91,43 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
         }
 
         /// <summary>
+        /// Проверка выполнения действия при результирующем ответе. Положительный вариант
+        /// </summary>
+        [Fact]
+        public async Task ResultCollectionVoidOkBadBindAsync_Ok()
+        {
+            var initialCollection = GetRangeNumber();
+            var resultOk = ResultCollectionFactory.CreateTaskResultCollection(initialCollection);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = await resultOk.ResultCollectionVoidOkBadBindAsync(numbers => voidObjectMock.Object.TestNumbersVoidAsync(numbers),
+                                                                     _ => voidObjectMock.Object.TestVoidAsync());
+
+            Assert.True(resultAfterVoid.Equals(resultOk.Result));
+            Assert.Equal(initialCollection, resultAfterVoid.Value);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumbersVoidAsync(initialCollection), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка выполнения действия при результирующем ответе. Негативный вариант
+        /// </summary>
+        [Fact]
+        public async Task ResultCollectionVoidOkBadBindAsync_Bad()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultError = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorsInitial);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = await resultError.ResultCollectionVoidOkBadBindAsync(
+                _ => voidObjectMock.Object.TestVoidAsync(),
+                errors => voidObjectMock.Object.TestNumbersVoidAsync(new List<int> { errors.Count }));
+
+            Assert.True(resultAfterVoid.Equals(resultError.Result));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumbersVoidAsync(It.IsAny<IEnumerable<int>>()), Times.Once);
+        }
+
+        /// <summary>
         /// Проверка выполнения асинхронного действия при результирующем ответе с положительным условием предиката без ошибок с положительным условием
         /// </summary>
         [Fact]
@@ -100,7 +137,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultOkTask = ResultCollectionFactory.CreateTaskResultCollection(initialCollection);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultOkTask.ResultCollectionVoidOkWhereBindAsync(numbers => true,
+            var resultAfterVoid = await resultOkTask.ResultCollectionVoidOkWhereBindAsync(_ => true,
                 numbers => voidObjectMock.Object.TestNumbersVoidAsync(numbers));
 
             Assert.True(resultAfterVoid.Equals(resultOkTask.Result));
@@ -118,7 +155,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultOkTask = ResultCollectionFactory.CreateTaskResultCollection(initialCollection);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultOkTask.ResultCollectionVoidOkWhereBindAsync(numbers => false,
+            var resultAfterVoid = await resultOkTask.ResultCollectionVoidOkWhereBindAsync(_ => false,
                 numbers => voidObjectMock.Object.TestNumbersVoidAsync(numbers));
 
             Assert.True(resultAfterVoid.Equals(resultOkTask.Result));
@@ -136,7 +173,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultErrorTask = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultErrorTask.ResultCollectionVoidOkWhereBindAsync(numbers => true,
+            var resultAfterVoid = await resultErrorTask.ResultCollectionVoidOkWhereBindAsync(_ => true,
                 numbers => voidObjectMock.Object.TestNumbersVoidAsync(numbers));
 
             Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));
@@ -155,7 +192,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultErrorTask = ResultCollectionFactory.CreateTaskResultCollectionError<int>(errorsInitial);
             var voidObjectMock = new Mock<IVoidObject>();
 
-            var resultAfterVoid = await resultErrorTask.ResultCollectionVoidOkWhereBindAsync(numbers => false,
+            var resultAfterVoid = await resultErrorTask.ResultCollectionVoidOkWhereBindAsync(_ => false,
                 numbers => voidObjectMock.Object.TestNumbersVoidAsync(numbers));
 
             Assert.True(resultAfterVoid.Equals(resultErrorTask.Result));

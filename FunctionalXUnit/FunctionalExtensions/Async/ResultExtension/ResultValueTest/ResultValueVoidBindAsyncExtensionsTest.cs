@@ -90,6 +90,42 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         }
 
         /// <summary>
+        /// Проверка выполнения асинхронного действия при результирующем ответе. Положительный вариант
+        /// </summary>
+        [Fact]
+        public async Task ResultValueVoidOkBadBindAsync_Ok()
+        {
+            int initialValue = Numbers.Number;
+            var resultOk = ResultValueFactory.CreateTaskResultValue(initialValue);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = await resultOk.ResultValueVoidOkBadBindAsync(number => voidObjectMock.Object.TestNumberVoidAsync(number),
+                                                                _ => voidObjectMock.Object.TestVoidAsync());
+
+            Assert.True(resultAfterVoid.Equals(resultOk.Result));
+            Assert.Equal(initialValue, resultAfterVoid.Value);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialValue), Times.Once);
+        }
+
+        /// <summary>
+        /// Проверка выполнения асинхронного действия при результирующем ответе. Негативный вариант
+        /// </summary>
+        [Fact]
+        public async Task ResultValueVoidOkBadBindAsync_Bad()
+        {
+            var errorsInitial = CreateErrorListTwoTest();
+            var resultError = ResultValueFactory.CreateTaskResultValueError<int>(errorsInitial);
+            var voidObjectMock = new Mock<IVoidObject>();
+
+            var resultAfterVoid = await resultError.ResultValueVoidOkBadBindAsync(_ => voidObjectMock.Object.TestVoidAsync(),
+                                                                errors => voidObjectMock.Object.TestNumberVoidAsync(errors.Count));
+
+            Assert.True(resultAfterVoid.Equals(resultError.Result));
+            Assert.True(errorsInitial.SequenceEqual(resultAfterVoid.Errors));
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(It.IsAny<int>()), Times.Once);
+        }
+
+        /// <summary>
         /// Проверка выполнения асинхронного действия при результирующем ответе с положительным условием предиката без ошибок с положительным условием
         /// </summary>
         [Fact]

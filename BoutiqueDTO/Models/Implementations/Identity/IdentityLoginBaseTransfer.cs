@@ -7,12 +7,12 @@ namespace BoutiqueDTO.Models.Implementations.Identity
     /// <summary>
     /// 
     /// </summary>
-    public class IdentityLoginTransfer: IIdentityLogin
+    public class IdentityLoginBaseTransfer: IIdentityLoginBase
     {
-        public IdentityLoginTransfer()
+        public IdentityLoginBaseTransfer()
         { }
 
-        public IdentityLoginTransfer(string userName, string password)
+        public IdentityLoginBaseTransfer(string userName, string password)
         {
             UserName = userName;
             Password = password;

@@ -81,7 +81,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
                                                           _ => voidObjectMock.Object.TestVoidAsync());
 
             Assert.Equal(initialNumber, numberAfterVoid);
-            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
                                                           number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
             Assert.Equal(initialNumber, numberAfterVoid);
-            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
     }
 }

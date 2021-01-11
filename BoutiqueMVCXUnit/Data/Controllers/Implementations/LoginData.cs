@@ -12,8 +12,8 @@ namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
         /// <summary>
         /// Имя пользователя и пароль
         /// </summary>
-        public static IdentityLoginTransfer IdentityLogin =>
-          new IdentityLoginTransfer(UserName, "password");
+        public static IdentityLoginBaseTransfer IdentityLoginBase =>
+          new IdentityLoginBaseTransfer(UserName, "password");
 
         /// <summary>
         /// Тестовые пользователи

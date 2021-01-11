@@ -74,12 +74,12 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
             const int initialNumber = 1;
             var voidObjectMock = new Mock<IVoidObject>();
 
-            int numberAfterVoid =await initialNumber.VoidWhereAsync(_ => true,
+            int numberAfterVoid = await initialNumber.VoidWhereAsync(_ => true,
                                                           number => voidObjectMock.Object.TestNumberVoidAsync(number),
                                                           _ => voidObjectMock.Object.TestVoidAsync());
 
             Assert.Equal(initialNumber, numberAfterVoid);
-            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async
                                                           number => voidObjectMock.Object.TestNumberVoidAsync(number));
 
             Assert.Equal(initialNumber, numberAfterVoid);
-            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoid(initialNumber), Times.Once);
+            voidObjectMock.Verify(voidObject => voidObject.TestNumberVoidAsync(initialNumber), Times.Once);
         }
     }
 }

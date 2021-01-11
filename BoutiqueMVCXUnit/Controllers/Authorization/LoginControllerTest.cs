@@ -34,7 +34,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
             var handler = new JwtSecurityTokenHandler();
             var tokenDecode = handler.ReadToken(tokenResult.Value) as JwtSecurityToken;
             var claims = tokenDecode?.Claims.ToList();
@@ -55,7 +55,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
             Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
         }
 
@@ -70,7 +70,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLogin);
+            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
             Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
         }
 

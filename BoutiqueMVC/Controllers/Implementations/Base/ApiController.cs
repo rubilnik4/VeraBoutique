@@ -30,7 +30,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     /// Базовый контроллер для Api
     /// </summary>
     [Route("api/[controller]")]
-  //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
     [ApiController]
     public abstract class ApiController<TId, TTransfer, TDomain> : 
         ControllerBase, IApiController<TId, TTransfer>
