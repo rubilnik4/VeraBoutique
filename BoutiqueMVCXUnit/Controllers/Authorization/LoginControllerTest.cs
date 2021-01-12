@@ -32,9 +32,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInSuccess);
             var jwtSettings = JwtSettings;
-            var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
+            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
             var handler = new JwtSecurityTokenHandler();
             var tokenDecode = handler.ReadToken(tokenResult.Value) as JwtSecurityToken;
             var claims = tokenDecode?.Claims.ToList();
@@ -53,9 +53,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInLockOut);
             var jwtSettings = JwtSettings;
-            var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
+            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
             Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
         }
 
@@ -68,9 +68,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInIncorrectLogin);
             var jwtSettings = JwtSettings;
-            var loginController = new LoginController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.Login(LoginData.IdentityLoginBase);
+            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
             Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
         }
 

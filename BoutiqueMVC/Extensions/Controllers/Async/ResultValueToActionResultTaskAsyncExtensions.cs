@@ -21,11 +21,27 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера со значением для задачи-объекта
         /// </summary>
+        public static async Task<ActionResult<TId>> ToActionResultValueTaskAsync<TId>(this Task<IResultValue<TId>> @this)
+            where TId : notnull =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToActionResultValue());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера со значением для задачи-объекта
+        /// </summary>
         public static async Task<ActionResult<TTransfer>> ToActionResultValueTaskAsync<TId, TTransfer>(this Task<IResultValue<TTransfer>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             await @this.
             MapTaskAsync(thisAwaited => thisAwaited.ToActionResultValue<TId, TTransfer>());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ с коллекцией в ответ контроллера со значением для задачи-объекта
+        /// </summary>
+        public static async Task<ActionResult<IReadOnlyCollection<TId>>> ToActionResultCollectionTaskAsync<TId>(this Task<IResultCollection<TId>> @this)
+            where TId : notnull =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToActionResultCollection());
 
         /// <summary>
         /// Преобразовать результирующий ответ с коллекцией в ответ контроллера со значением для задачи-объекта

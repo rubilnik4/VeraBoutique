@@ -1,8 +1,7 @@
-﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Base;
+﻿using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Implementations.Clothes;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes
+namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes
 {
     /// <summary>
     /// Api сервис категории одежды

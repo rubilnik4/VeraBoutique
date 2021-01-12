@@ -87,8 +87,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesDomain clothesDomain) =>
-            new (clothesDomain, _genderEntityConverter.ToEntity(clothesDomain.Gender),
-                 ToClothesTypeEntity(clothesDomain.ClothesTypeShort),
+            new (clothesDomain, clothesDomain.Gender.GenderType,
+                 clothesDomain.ClothesTypeShort.Name,
                  ColorClothesToComposite(clothesDomain.Colors, clothesDomain.Id),
                  SizeGroupToComposite(clothesDomain.SizeGroups, clothesDomain.Id));
 
@@ -123,8 +123,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         private IEnumerable<ClothesColorCompositeEntity> ColorClothesToComposite(IEnumerable<IColorDomain> colorClothesDomains,
                                                                                          int clothesId) =>
             _colorClothesEntityConverter.ToEntities(colorClothesDomains).
-            Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name, null,
-                                                                         new ColorEntity(colorClothesEntity)));
+            Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name, null, null));
 
         /// <summary>
         /// Преобразовать размеры в связующую сущность
@@ -133,13 +132,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
                                                                                           int clothesId) =>
             _sizeGroupEntityConverter.ToEntities(sizeGroupDomains).
             Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
-                                                                          null, sizeGroupEntity));
-
-        /// <summary>
-        /// Преобразовать тип одежды в сущность
-        /// </summary>
-        private static ClothesTypeEntity ToClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
-            new (clothesTypeShort);
+                                                                          null, null));
 
         /// <summary>
         /// Преобразовать пол одежды в доменную модель

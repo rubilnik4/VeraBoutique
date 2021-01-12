@@ -1,8 +1,7 @@
-﻿using BoutiqueDTO.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDTO.Models.Implementations.Clothes;
+﻿using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes
+namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes
 {
     /// <summary>
     /// Api сервис типа одежды

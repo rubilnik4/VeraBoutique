@@ -37,10 +37,10 @@ namespace BoutiqueMVC.Factories.Database
         /// Параметры авторизации
         /// </summary>
         public static JwtSettings GetJwtSettings(IConfiguration configuration) =>
-            new JwtSettings(GetIssuerConfiguration(configuration),
-                            GetAudienceConfiguration(configuration),
-                            GetExpiresConfiguration(configuration),
-                            SymmetricKey);
+            new(GetIssuerConfiguration(configuration),
+                GetAudienceConfiguration(configuration),
+                GetExpiresConfiguration(configuration),
+                SymmetricKey);
 
         /// <summary>
         /// Получить потребителя токена

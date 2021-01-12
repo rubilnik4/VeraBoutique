@@ -63,7 +63,5 @@ namespace BoutiquePrerequisites.Factories.Connection
             ToResultValueWhereOkBad(timeOut => Int32.TryParse(timeOut, out int _),
                                     Int32.Parse,
                                     _ => new ErrorResult(ErrorResultType.ValueNotFound, "Таймаут не найден"));
-
-
     }
 }

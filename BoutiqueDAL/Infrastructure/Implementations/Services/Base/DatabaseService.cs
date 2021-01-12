@@ -148,7 +148,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         private async Task<IResultError> DatabaseSaveChanges() =>
             await _database.SaveChangesAsync();
-
-
     }
 }

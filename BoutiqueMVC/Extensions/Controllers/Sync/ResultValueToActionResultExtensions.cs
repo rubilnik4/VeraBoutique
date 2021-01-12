@@ -18,12 +18,30 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера со значением
         /// </summary>
+        public static ActionResult<TId> ToActionResultValue<TId>(this IResultValue<TId> @this)
+            where TId : notnull =>
+            @this.OkStatus
+                ? new ActionResult<TId>(@this.Value)
+                : GetBadRequestByErrors<TId>(@this.Errors);
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера со значением
+        /// </summary>
         public static ActionResult<TTransfer> ToActionResultValue<TId, TTransfer>(this IResultValue<TTransfer> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>
             @this.OkStatus
                 ? new ActionResult<TTransfer>(@this.Value)
                 : GetBadRequestByErrors<TTransfer>(@this.Errors);
+
+        /// <summary>
+        /// Преобразовать результирующий ответ с коллекцией в ответ контроллера со значением
+        /// </summary>
+        public static ActionResult<IReadOnlyCollection<TId>> ToActionResultCollection<TId>(this IResultCollection<TId> @this)
+            where TId : notnull =>
+            @this.OkStatus
+                ? new ActionResult<IReadOnlyCollection<TId>>(@this.Value)
+                : GetBadRequestByErrors<IReadOnlyCollection<TId>>(@this.Errors);
 
         /// <summary>
         /// Преобразовать результирующий ответ с коллекцией в ответ контроллера со значением

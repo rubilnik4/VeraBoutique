@@ -13,7 +13,12 @@ namespace BoutiquePrerequisites.Factories.Configuration
         /// Имя файла с параметрами
         /// </summary>
         private const string FILE_SETTINGS_NAME = "appsettings.json";
-        
+
+        /// <summary>
+        /// Имя файла с логином и паролем
+        /// </summary>
+        private const string FILE_LOGIN_NAME = "loginsettings.json";
+
         /// <summary>
         /// Параметры проекта
         /// </summary>
@@ -21,6 +26,7 @@ namespace BoutiquePrerequisites.Factories.Configuration
             new ConfigurationBuilder().
             SetBasePath(Directory.GetParent(AppContext.BaseDirectory)?.FullName).
             AddJsonFile(FILE_SETTINGS_NAME, false).
+            AddJsonFile(FILE_LOGIN_NAME, false).
             Build();
     }
 }

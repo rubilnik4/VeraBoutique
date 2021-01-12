@@ -51,4 +51,10 @@
     <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="loginsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -23,9 +23,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntitie
            : this(name, categoryName, null, null, null)
         { }
 
+        public ClothesTypeEntity(IClothesTypeShortBase clothesTypeShort, string categoryName,
+                                 IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
+           : this(clothesTypeShort.Name, categoryName, null, clothesTypeGenderComposites, null)
+        { }
+
         public ClothesTypeEntity(IClothesTypeShortBase clothesTypeShort, CategoryEntity category,
                                  IEnumerable<ClothesTypeGenderCompositeEntity> clothesTypeGenderComposites)
-        : this(clothesTypeShort.Name, category, clothesTypeGenderComposites)
+            : this(clothesTypeShort.Name, category, clothesTypeGenderComposites)
         { }
 
         public ClothesTypeEntity(string name, CategoryEntity category,

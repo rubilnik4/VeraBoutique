@@ -18,6 +18,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
 {
@@ -83,7 +84,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         private async Task<IResultError> ValidateFindsCollection(IReadOnlyCollection<TId> ids) =>
            await _dataTable.FindsExpressionAsync(ValidateIdsQuery(ids)).
-           ResultCollectionBindWhereTaskAsync(idsFind => idsFind.SequenceEqual(ids),
+           ResultCollectionBindWhereTaskAsync(idsFind => idsFind.OrderBy(idFind => idFind).
+                                                         SequenceEqual(ids.OrderBy(id => id)),
                 okFunc: idsFind => new ResultCollection<TId>(idsFind),
                 badFunc: idsFind => new ResultCollection<TId>(DatabaseErrors.ValuesNotFoundError(ids.Except(idsFind),
                                                                                                  _dataTable.TableName)));

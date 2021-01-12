@@ -109,7 +109,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var sizeGroups = SizeGroupData.SizeGroupDomains;
+            var sizeGroups = SizeGroupData.SizeGroupDomains.
+                             OrderByDescending(sizeGroup => sizeGroup.SizeNormalize);
 
             var result = await ValidateIncludes(sizeGroups);
 
@@ -136,6 +137,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных группы размеров одежды
         /// </summary>
         private static Mock<ISizeGroupTable> SizeGroupTable =>
-            new Mock<ISizeGroupTable>();
+            new ();
     }
 }

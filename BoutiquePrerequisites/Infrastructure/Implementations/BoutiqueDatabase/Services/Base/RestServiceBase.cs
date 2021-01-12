@@ -5,8 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Infrastructure.Interfaces;
@@ -58,7 +57,7 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         /// </summary>
         public async Task<IResultError> Upload(IEnumerable<TDomain> domains) =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
-            ResultValueVoidOk(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] в базу")).
+            ResultValueVoidOk(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}]")).
             ResultValueBindOkToCollectionAsync(api => api.PostCollection(_transferConverter.ToTransfers(domains))).
             ResultCollectionVoidOkBadTaskAsync(ids => ids.Void(_ => _logger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] завершена успешно")),
                                                errors => errors.

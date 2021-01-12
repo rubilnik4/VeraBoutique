@@ -22,7 +22,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
         public override CategoryTransfer ToTransfer(ICategoryDomain categoryDomain) =>
-            new CategoryTransfer(categoryDomain.Name);
+            new (categoryDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели

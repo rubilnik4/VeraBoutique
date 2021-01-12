@@ -1,5 +1,5 @@
 ﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Base;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 
 namespace BoutiqueDTOXUnit.Data.Services.Interfaces.Services.Api

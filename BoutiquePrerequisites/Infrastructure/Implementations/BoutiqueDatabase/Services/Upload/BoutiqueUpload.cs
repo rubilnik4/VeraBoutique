@@ -1,7 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;
 using BoutiquePrerequisites.Factories.Services;
+using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Authorization;
 using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -16,18 +21,25 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
     public static class BoutiqueUpload
     {
         /// <summary>
-        /// Загрузить данных в базу
+        /// Авторизироваться и загрузить данные в базу
         /// </summary>
-        public static async Task<IResultError> UploadData(ILogger logger) =>
+        public static async Task<IResultError> UploadAuthorizeData(ILogger logger) =>
+            await BoutiqueAuthorizeService.AuthorizeJwt(logger).
+            ResultValueBindErrorsOkBindAsync(jwtToken => UploadData(jwtToken, logger));
+
+        /// <summary>
+        /// Авторизироваться и загрузить данные в базу
+        /// </summary>
+        private static async Task<IResultError> UploadData(string jwtToken, ILogger logger) =>
             await logger.Void(_ => logger.ShowMessage("Начало загрузки данных")).
-            Map(_ => BoutiqueRestServiceFactory.BoutiqueRestClient).
+            Map(_ => BoutiqueRestServiceFactory.GetBoutiqueRestClient(jwtToken)).
             ResultValueBindErrorsOkAsync(restClient => GenderUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => CategoryUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => ColorUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => ClothesTypeUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => SizeUpload(restClient, logger)).
             ResultValueBindErrorsOkBindAsync(restClient => SizeGroupUpload(restClient, logger)).
-            Void(_ => logger.ShowMessage("Загрузка данных завершена"));
+            VoidTaskAsync(_ => logger.ShowMessage("Загрузка данных завершена"));
 
         /// <summary>
         /// Загрузить тип пола в базу

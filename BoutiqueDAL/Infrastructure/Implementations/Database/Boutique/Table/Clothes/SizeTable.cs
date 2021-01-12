@@ -31,12 +31,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Функция поиска по идентификатору
         /// </summary>
         public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
-            entity => entity.SizeType == id.Item1 && entity.Name == id.Item2;
+            entity => id.Equals(new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple());
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
         public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
-            entity => ids.Contains(new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple());
+            entity => ids.Any(id => id.Item1 == entity.SizeType && id.Item2 ==  entity.Name);
     }
 }

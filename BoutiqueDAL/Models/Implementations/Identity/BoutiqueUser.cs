@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Implementations.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -11,8 +12,8 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// </summary>
     public sealed class BoutiqueUser: IdentityUser
     {
-        public BoutiqueUser(string identityRoleType, IdentityLoginBase loginBase, string email, string phone)
-            :this(identityRoleType, loginBase.UserName, loginBase.Password, email, phone)
+        public BoutiqueUser(string identityRoleType, IAuthorizeDomain authorizeDomain, string email, string phone)
+            :this(identityRoleType, authorizeDomain.UserName, authorizeDomain.Password, email, phone)
         { }
 
         public BoutiqueUser(string identityRoleType, string userName, string password, string email, string phone)

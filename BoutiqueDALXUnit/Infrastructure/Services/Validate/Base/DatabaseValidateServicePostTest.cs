@@ -159,7 +159,5 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
-
-       
     }
 }

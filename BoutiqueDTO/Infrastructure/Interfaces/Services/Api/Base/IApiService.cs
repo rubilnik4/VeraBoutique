@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Base
+namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base
 {
     /// <summary>
     /// Базовый сервис получения данных по протоколу rest api

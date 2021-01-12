@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Base;

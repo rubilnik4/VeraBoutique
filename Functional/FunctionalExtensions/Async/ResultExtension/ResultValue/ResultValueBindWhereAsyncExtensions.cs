@@ -73,6 +73,6 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
                                                                                             Func<TValue, Task<IResultError>> okFunc) =>
             await @this.
             ResultValueBindOkAsync(value => okFunc.Invoke(value).
-                                                 MapTaskAsync(resultError => resultError.ToResultValue(value)));
+                                            MapTaskAsync(resultError => resultError.ToResultValue(value)));
     }
 }

@@ -60,9 +60,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать вид одежды в модель базы данных
         /// </summary>
         public override ClothesTypeEntity ToEntity(IClothesTypeDomain clothesTypeDomain) =>
-             new ClothesTypeEntity(clothesTypeDomain, 
-                                   _categoryEntityConverter.ToEntity(clothesTypeDomain.Category),
-                                   GenderToComposites(clothesTypeDomain.Genders, clothesTypeDomain));
+             new (clothesTypeDomain, clothesTypeDomain.CategoryName,
+                  GenderToComposites(clothesTypeDomain.Genders, clothesTypeDomain));
 
         /// <summary>
         /// Функция получения типа одежды
@@ -103,7 +102,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         private static IEnumerable<ClothesTypeGenderCompositeEntity> GenderToComposites(IEnumerable<IGenderDomain> genders,
                                                                                         IClothesTypeShortBase clothesType) =>
             genders.Select(gender => new ClothesTypeGenderCompositeEntity(clothesType.Name, gender.GenderType,
-                                                                          null,
-                                                                          new GenderEntity(gender)));
+                                                                          null, null));
     }
 }

@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;

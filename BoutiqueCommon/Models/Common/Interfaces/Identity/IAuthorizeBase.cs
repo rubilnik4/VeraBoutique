@@ -5,7 +5,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identity
     /// <summary>
     /// Имя пользователя и пароль
     /// </summary>
-    public interface IIdentityLoginBase : IModel<string>
+    public interface IAuthorizeBase : IModel<(string, string)>
     {
         /// <summary>
         /// Имя пользователя

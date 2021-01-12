@@ -85,26 +85,24 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// </summary>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
             await _transferConverter.FromTransfer(transfer).
             ResultValueBindOkAsync(domain => _databaseDatabaseService.Post(domain)).
-            ResultValueOkTaskAsync(id => GetCreateAction(id, transfer)).
-            ToCreateActionResultTaskAsync();
+            ToActionResultValueTaskAsync();
 
         /// <summary>
         /// Записать данные
         /// </summary>
         [HttpPost("collection")]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).
             ResultCollectionBindOkAsync(domains => _databaseDatabaseService.Post(domains)).
-            ResultCollectionOkToValueTaskAsync(ids => GetCreateAction(ids, transfers)).
-            ToCreateActionResultTaskAsync();
+            ToActionResultCollectionTaskAsync();
 
         /// <summary>
         /// Заменить данные по идентификатору

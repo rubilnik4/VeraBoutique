@@ -1,12 +1,16 @@
 ﻿using System.Drawing;
 using BoutiqueDTO.Factory.RestSharp;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using BoutiquePrerequisites.Factories.Connection;
+using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Authorization;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes;
+using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.Authorization;
 using BoutiquePrerequisites.Infrastructure.Interfaces.BoutiqueDatabase.Services.Clothes;
 using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -23,10 +27,23 @@ namespace BoutiquePrerequisites.Factories.Services
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static IResultValue<IRestClient> BoutiqueRestClient =>
+        public static IResultValue<IRestClient> GetBoutiqueRestClient() =>
             BoutiqueConnection.BoutiqueHostConnection.
             ResultValueOk(RestSharpFactory.GetRestClient);
-        
+
+        /// <summary>
+        /// Клиент для подключения к сервису одежды
+        /// </summary>
+        public static IResultValue<IRestClient> GetBoutiqueRestClient(string jwtToken) =>
+            BoutiqueConnection.BoutiqueHostConnection.
+            ResultValueOk(hostConnection => RestSharpFactory.GetRestClient(hostConnection, jwtToken));
+
+        /// <summary>
+        ///  Получить сервис авторизации
+        /// </summary>
+        public static IAuthorizeRestService GetAuthorizeRestService(IRestClient restClient, ILogger logger) =>
+             new AuthorizeRestService(new AuthorizeApiService(restClient), new AuthorizeTransferConverter(), logger);
+
         /// <summary>
         /// Получить сервис типа пола
         /// </summary>

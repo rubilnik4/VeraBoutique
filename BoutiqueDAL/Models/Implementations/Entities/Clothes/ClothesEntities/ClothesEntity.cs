@@ -20,6 +20,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities
         { }
 
         public ClothesEntity(IClothesShortBase clothesShort,
+                             GenderType genderType, string clothesTypeName,
+                             IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
+                             IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
+           : this(clothesShort.Id, clothesShort.Name, clothesShort.Description, clothesShort.Price, clothesShort.Image,
+                  genderType, clothesTypeName, null, null,
+                  clothesColorComposites, clothesSizeGroupComposites)
+        { }
+
+        public ClothesEntity(IClothesShortBase clothesShort,
                              GenderEntity gender, ClothesTypeEntity clothesType,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)

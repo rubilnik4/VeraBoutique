@@ -5,9 +5,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
     /// <summary>
     /// Имя пользователя и пароль
     /// </summary>
-    public class IdentityLoginBase: IIdentityLoginBase
+    public abstract class AuthorizeBase : IAuthorizeBase
     {
-        public IdentityLoginBase(string userName, string password)
+        protected AuthorizeBase(string userName, string password)
         {
             UserName = userName;
             Password = password;
@@ -16,7 +16,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => UserName;
+        public (string, string) Id => (UserName, Password);
 
         /// <summary>
         /// Имя пользователя

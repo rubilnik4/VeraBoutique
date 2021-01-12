@@ -35,6 +35,6 @@ namespace BoutiquePrerequisites
         /// </summary>
         public static async Task Main() =>
            await new ConsoleLogger().
-           MapAsync(BoutiqueUpload.UploadData);
+           MapAsync(BoutiqueUpload.UploadAuthorizeData);
     }
 }

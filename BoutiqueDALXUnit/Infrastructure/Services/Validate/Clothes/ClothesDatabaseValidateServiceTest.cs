@@ -214,7 +214,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var clothes = ClothesData.ClothesDomains;
+            var clothes = ClothesData.ClothesDomains.
+                          OrderByDescending(clothesDomain => clothesDomain.ClothesTypeShort);
 
             var result = await ValidateIncludes(clothes);
 

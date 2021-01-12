@@ -25,13 +25,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
     /// <summary>
     /// Контроллер авторизации
     /// </summary>
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("/api/login")]
+   
     [AllowAnonymous]
-    public class LoginController : ControllerBase
+    public class AuthorizeController : ControllerBase
     {
-        public LoginController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager,
-                               JwtSettings jwtSettings)
+        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager,
+                                   JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,20 +55,20 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorization
         private readonly JwtSettings _jwtSettings;
 
         /// <summary>
-        /// Авторизировать
+        /// Авторизоваться через JWT токен
         /// </summary>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<string>> Login(IdentityLoginBaseTransfer loginBase) =>
-            await _signInManager.PasswordSignInAsync(loginBase.UserName, loginBase.Password, false, false).
-            MapBindAsync(result => GetLoginAction(result, loginBase.UserName));
+        public async Task<ActionResult<string>> AuthorizeJwt(AuthorizeTransfer login) =>
+            await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false).
+            MapBindAsync(result => GetAuthorizeAction(result, login.UserName));
 
         /// <summary>
         /// Сгенерировать токен или вернуть отказ авторизации
         /// </summary>
-        private async Task<ActionResult<string>> GetLoginAction(SignInResult signInResult, string userName) =>
+        private async Task<ActionResult<string>> GetAuthorizeAction(SignInResult signInResult, string userName) =>
             signInResult switch
             {
                 _ when signInResult.Succeeded => await GetJwtResult(userName),
