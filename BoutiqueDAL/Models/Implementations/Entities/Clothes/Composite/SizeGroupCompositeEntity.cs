@@ -9,19 +9,16 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
     /// </summary>
     public class SizeGroupCompositeEntity: ISizeGroupCompositeEntity
     {
-        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName,
-                                        ClothesSizeType clothesSizeType, int sizeNormalize)
-            : this(sizeType, sizeName, clothesSizeType, sizeNormalize, null, null)
+        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName, int sizeGroupId)
+            : this(sizeType, sizeName, sizeGroupId, null, null)
         { }
 
-        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName, 
-                                        ClothesSizeType clothesSizeType, int sizeNormalize, 
+        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName, int sizeGroupId, 
                                         SizeEntity? size, SizeGroupEntity? sizeGroup)
         {
             SizeType = sizeType;
             SizeName = sizeName;
-            ClothesSizeType = clothesSizeType;
-            SizeNormalize = sizeNormalize;
+            SizeGroupId = sizeGroupId;
             Size = size;
             SizeGroup = sizeGroup;
         }
@@ -29,7 +26,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public ((SizeType, string), (ClothesSizeType, int)) Id => ((SizeType, SizeName), (ClothesSizeType, SizeNormalize));
+        public ((SizeType, string), int) Id => ((SizeType, SizeName), SizeGroupId);
 
         /// <summary>
         /// Тип размера одежды
@@ -42,14 +39,9 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         public string SizeName { get; }
 
         /// <summary>
-        /// Тип одежды для определения размера
+        /// Идентификатор размера одежды
         /// </summary>
-        public ClothesSizeType ClothesSizeType { get; }
-
-        /// <summary>
-        /// Номинальное значение размера
-        /// </summary>
-        public int SizeNormalize { get; }
+        public int SizeGroupId { get; }
 
         /// <summary>
         /// Размер одежды

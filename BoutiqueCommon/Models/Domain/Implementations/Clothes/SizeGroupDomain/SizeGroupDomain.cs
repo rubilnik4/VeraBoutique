@@ -23,5 +23,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain
         public SizeGroupDomain(ClothesSizeType clothesSizeType, int sizeNormalize, IEnumerable<ISizeDomain> sizes)
             : base(clothesSizeType, sizeNormalize, sizes)
         { }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id => GetIdHashCode(ClothesSizeType, SizeNormalize);
     }
 }

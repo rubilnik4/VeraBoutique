@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -10,6 +11,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
-    public interface ISizeGroupDatabaseService : IDatabaseService<(ClothesSizeType, int), ISizeGroupDomain>
+    public interface ISizeGroupDatabaseService : IDatabaseService<int, ISizeGroupDomain>
     { }
 }

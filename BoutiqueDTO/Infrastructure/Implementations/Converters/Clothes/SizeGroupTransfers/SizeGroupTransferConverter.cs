@@ -24,7 +24,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель
     /// </summary>
-    public class SizeGroupTransferConverter : TransferConverter<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupTransfer>,
+    public class SizeGroupTransferConverter : TransferConverter<int, ISizeGroupDomain, SizeGroupTransfer>,
                                               ISizeGroupTransferConverter
     {
         public SizeGroupTransferConverter(ISizeTransferConverter sizeTransferConverter)
@@ -41,8 +41,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
         public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
-            new SizeGroupTransfer(sizeGroupDomain,
-                                  _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
+            new (sizeGroupDomain, _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели

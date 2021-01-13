@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных группы размеров одежды
     /// </summary>
-    public class SizeGroupTable : EntityDatabaseTable<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>, ISizeGroupTable
+    public class SizeGroupTable : EntityDatabaseTable<int, ISizeGroupDomain, SizeGroupEntity>, ISizeGroupTable
     {
         public SizeGroupTable(DbSet<SizeGroupEntity> sizeGroupSet)
             : base(sizeGroupSet)
@@ -33,26 +33,26 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<SizeGroupEntity, (ClothesSizeType, int)>> IdSelect() =>
-            entity => new Tuple<ClothesSizeType, int>(entity.ClothesSizeType, entity.SizeNormalize).ToValueTuple();
+        public override Expression<Func<SizeGroupEntity, int>> IdSelect() =>
+            entity => entity.Id;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public override Expression<Func<SizeGroupEntity, bool>> IdPredicate((ClothesSizeType, int) id) =>
-            entity => entity.ClothesSizeType == id.Item1 && entity.SizeNormalize == id.Item2;
+        public override Expression<Func<SizeGroupEntity, bool>> IdPredicate(int id) =>
+            entity => entity.Id == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<SizeGroupEntity, bool>> IdsPredicate(IEnumerable<(ClothesSizeType, int)> ids) =>
-            entity => ids.Contains(new Tuple<ClothesSizeType, int>(entity.ClothesSizeType, entity.SizeNormalize).ToValueTuple());
+        public override Expression<Func<SizeGroupEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
+            entity => ids.Contains(entity.Id);
 
         /// <summary>
         /// Включение сущностей при загрузке полных данных
         /// </summary>
         protected override IQueryable<SizeGroupEntity> EntitiesIncludes =>
             _sizeGroupSet.Include(entity => entity.SizeGroupComposites).
-                     ThenInclude(composite => composite.Size);
+                          ThenInclude(composite => composite.Size);
     }
 }

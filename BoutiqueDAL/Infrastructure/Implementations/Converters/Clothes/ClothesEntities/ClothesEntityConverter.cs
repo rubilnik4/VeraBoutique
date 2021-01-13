@@ -129,10 +129,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать размеры в связующую сущность
         /// </summary>
         private IEnumerable<ClothesSizeGroupCompositeEntity> SizeGroupToComposite(IEnumerable<ISizeGroupDomain> sizeGroupDomains,
-                                                                                          int clothesId) =>
+                                                                                  int clothesId) =>
             _sizeGroupEntityConverter.ToEntities(sizeGroupDomains).
-            Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.ClothesSizeType, sizeGroupEntity.SizeNormalize,
-                                                                          null, null));
+            Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.Id, null, null));
 
         /// <summary>
         /// Преобразовать пол одежды в доменную модель

@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
     /// <summary>
     /// Связующая сущность одежды с размером
     /// </summary>
-    public interface IClothesSizeCompositeEntity : IEntityModel<(int, (ClothesSizeType, int))>
+    public interface IClothesSizeCompositeEntity : IEntityModel<(int, int)>
     {
         /// <summary>
         /// Идентификатор одежды
@@ -17,14 +17,9 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         int ClothesId { get; }
 
         /// <summary>
-        /// Тип одежды для определения размера
+        /// Идентификатор размера одежды
         /// </summary>
-        ClothesSizeType ClothesSizeType { get; }
-
-        /// <summary>
-        /// Номинальное значение размера
-        /// </summary>
-        int SizeNormalize { get; }
+        int SizeGroupId { get; }
 
         /// <summary>
         /// Одежда. Информация

@@ -19,6 +19,13 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities
 
         public SizeGroupShortEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
             : base(clothesSizeType, sizeNormalize)
-        { }
+        {
+            Id = GetIdHashCode(clothesSizeType, sizeNormalize);
+        }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id { get; }
     }
 }

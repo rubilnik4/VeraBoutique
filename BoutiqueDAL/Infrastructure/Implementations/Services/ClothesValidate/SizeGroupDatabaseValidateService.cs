@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы группы размера одежды
     /// </summary>
-    public class SizeGroupDatabaseValidateService : DatabaseValidateService<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupDatabaseValidateService : DatabaseValidateService<int, ISizeGroupDomain, SizeGroupEntity>,
                                                     ISizeGroupDatabaseValidateService
     {
         public SizeGroupDatabaseValidateService(ISizeGroupTable sizeGroupTable, 
@@ -71,8 +71,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateSizeNormalized(ISizeGroupDomain sizeGroup) =>
             sizeGroup.SizeNormalize.ToResultValueWhere(
                 sizeNormalized => sizeNormalized >= SizeGroupShortBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupShortBase.SIZE_NORMALIZE_MAX,
-                _ => ModelsErrors.FieldNotValid<(ClothesSizeType, int), ISizeGroupDomain>(SizeGroupShortBase.SIZE_NORMALIZE_MIN, SizeGroupShortBase.SIZE_NORMALIZE_MAX,
-                                                                                          nameof(sizeGroup.SizeNormalize), sizeGroup));
+                _ => ModelsErrors.FieldNotValid<int, ISizeGroupDomain>(SizeGroupShortBase.SIZE_NORMALIZE_MIN, 
+                                                                                               SizeGroupShortBase.SIZE_NORMALIZE_MAX,
+                                                                                               nameof(sizeGroup.SizeNormalize),
+                                                                                               sizeGroup));
 
         /// <summary>
         /// Проверка размеров

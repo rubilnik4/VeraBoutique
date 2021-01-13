@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -16,7 +17,7 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
     /// <summary>
     /// Сервис загрузки размера одежды в базу данных
     /// </summary>
-    public class SizeGroupRestService : RestServiceBase<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupTransfer>, ISizeGroupRestService
+    public class SizeGroupRestService : RestServiceBase<int, ISizeGroupDomain, SizeGroupTransfer>, ISizeGroupRestService
     {
         public SizeGroupRestService(ISizeGroupApiService sizeGroupApiService,
                                     ISizeGroupTransferConverter sizeGroupTransferConverter,

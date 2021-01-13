@@ -11,7 +11,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     {
         public void Configure(EntityTypeBuilder<ClothesSizeGroupCompositeEntity> builder)
         {
-            builder.HasKey(t => new { t.ClothesId, t.ClothesSizeType, t.SizeNormalize });
+            builder.HasKey(t => new { t.ClothesId, t.SizeGroupId });
 
             builder.HasOne(t => t.Clothes)
                    .WithMany(s => s!.ClothesSizeGroupComposites)
@@ -20,7 +20,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
 
             builder.HasOne(t => t.SizeGroup)
                    .WithMany(s => s!.ClothesSizeGroupComposites)
-                   .HasForeignKey(sc => new { sc.ClothesSizeType, sc.SizeNormalize })
+                   .HasForeignKey(sc => sc.SizeGroupId)
                    .IsRequired();
         }
     }

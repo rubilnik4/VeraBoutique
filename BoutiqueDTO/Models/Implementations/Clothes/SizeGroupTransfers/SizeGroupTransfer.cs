@@ -22,5 +22,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers
         public SizeGroupTransfer(ClothesSizeType clothesSizeType, int sizeNormalize, IReadOnlyCollection<SizeTransfer> sizes)
             : base(clothesSizeType, sizeNormalize, sizes)
         { }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id => GetIdHashCode(ClothesSizeType, SizeNormalize);
     }
 }

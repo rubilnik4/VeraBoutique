@@ -11,17 +11,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
     /// </summary>
     public class ClothesSizeGroupCompositeEntity : IClothesSizeCompositeEntity
     {
-        public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize)
-        : this(clothesId, clothesSizeType, sizeNormalize, null, null)
-        { }
+        public ClothesSizeGroupCompositeEntity(int clothesId, int sizeGroupId)
+            : this(clothesId, sizeGroupId, null, null)
+            { }
 
-        public ClothesSizeGroupCompositeEntity(int clothesId, ClothesSizeType clothesSizeType, int sizeNormalize,
-                                               ClothesEntity? clothes,
-                                               SizeGroupEntity? sizeGroup)
+        public ClothesSizeGroupCompositeEntity(int clothesId, int sizeGroupId,
+                                               ClothesEntity? clothes, SizeGroupEntity? sizeGroup)
         {
             ClothesId = clothesId;
-            ClothesSizeType = clothesSizeType;
-            SizeNormalize = sizeNormalize;
+            SizeGroupId = sizeGroupId;
             Clothes = clothes;
             SizeGroup = sizeGroup;
         }
@@ -29,7 +27,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (int, (ClothesSizeType, int)) Id => (ClothesId, (ClothesSizeType, SizeNormalize));
+        public (int, int) Id => (ClothesId, SizeGroupId);
 
         /// <summary>
         /// Идентификатор одежды
@@ -37,14 +35,9 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         public int ClothesId { get; }
 
         /// <summary>
-        /// Тип одежды для определения размера
+        /// Идентификатор размера одежды
         /// </summary>
-        public ClothesSizeType ClothesSizeType { get; }
-
-        /// <summary>
-        /// Номинальное значение размера
-        /// </summary>
-        public int SizeNormalize { get; }
+        public int SizeGroupId { get; }
 
         /// <summary>
         /// Одежда. Информация

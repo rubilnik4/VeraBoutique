@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -32,7 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
-    public class SizeGroupDatabaseService : DatabaseService<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupDatabaseService : DatabaseService<int, ISizeGroupDomain, SizeGroupEntity>,
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,

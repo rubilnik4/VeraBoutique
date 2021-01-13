@@ -21,6 +21,11 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers
         [JsonConstructor]
         public SizeGroupShortTransfer(ClothesSizeType clothesSizeType, int sizeNormalize)
             :base(clothesSizeType, sizeNormalize)
-        { }      
+        { }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id => GetIdHashCode(ClothesSizeType, SizeNormalize);
     }
 }

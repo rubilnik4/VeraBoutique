@@ -8,6 +8,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTab
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using Functional.FunctionalExtensions.Sync;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
@@ -15,7 +16,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных размеров одежды
     /// </summary>
-    public class SizeTable : EntityDatabaseTable<(SizeType, string), ISizeDomain, SizeEntity>, ISizeTable
+    public class SizeTable : EntityDatabaseTable<(SizeType SizeType, string Name), ISizeDomain, SizeEntity>, ISizeTable
     {
         public SizeTable(DbSet<SizeEntity> sizeSet)
             : base(sizeSet)
@@ -30,13 +31,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType, string) id) =>
-            entity => id.Equals(new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple());
+        public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType SizeType, string Name) id) =>
+            entity => id.SizeType == entity.SizeType && id.Name == entity.Name;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType, string)> ids) =>
-            entity => ids.Any(id => id.Item1 == entity.SizeType && id.Item2 ==  entity.Name);
+        public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType SizeType, string Name)> ids) =>
+            entity => ids.Select(id => id.SizeType + id.Name).
+                          Contains(entity.SizeType + entity.Name);
     }
 }

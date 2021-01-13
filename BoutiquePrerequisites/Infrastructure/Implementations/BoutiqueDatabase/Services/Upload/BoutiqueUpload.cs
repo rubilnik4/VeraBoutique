@@ -33,12 +33,12 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.
         private static async Task<IResultError> UploadData(string jwtToken, ILogger logger) =>
             await logger.Void(_ => logger.ShowMessage("Начало загрузки данных")).
             Map(_ => BoutiqueRestServiceFactory.GetBoutiqueRestClient(jwtToken)).
-            ResultValueBindErrorsOkAsync(restClient => GenderUpload(restClient, logger)).
-            ResultValueBindErrorsOkBindAsync(restClient => CategoryUpload(restClient, logger)).
-            ResultValueBindErrorsOkBindAsync(restClient => ColorUpload(restClient, logger)).
-            ResultValueBindErrorsOkBindAsync(restClient => ClothesTypeUpload(restClient, logger)).
-            ResultValueBindErrorsOkBindAsync(restClient => SizeUpload(restClient, logger)).
-            ResultValueBindErrorsOkBindAsync(restClient => SizeGroupUpload(restClient, logger)).
+            //ResultValueBindErrorsOkAsync(restClient => GenderUpload(restClient, logger)).
+            //ResultValueBindErrorsOkBindAsync(restClient => CategoryUpload(restClient, logger)).
+            //ResultValueBindErrorsOkBindAsync(restClient => ColorUpload(restClient, logger)).
+            //ResultValueBindErrorsOkBindAsync(restClient => ClothesTypeUpload(restClient, logger)).
+            //ResultValueBindErrorsOkBindAsync(restClient => SizeUpload(restClient, logger)).
+            ResultValueBindErrorsOkAsync(restClient => SizeGroupUpload(restClient, logger)).
             VoidTaskAsync(_ => logger.ShowMessage("Загрузка данных завершена"));
 
         /// <summary>

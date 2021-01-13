@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
@@ -21,7 +22,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи группы размеров одежды
     /// </summary>
-    public class SizeGroupController : ApiController<(ClothesSizeType, int), SizeGroupTransfer, ISizeGroupDomain>
+    public class SizeGroupController : ApiController<int, SizeGroupTransfer, ISizeGroupDomain>
     {
         public SizeGroupController(ISizeGroupDatabaseService sizeGroupDatabaseService,
                                    ISizeGroupTransferConverter sizeGroupTransferConverter)

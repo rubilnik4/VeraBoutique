@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
@@ -11,7 +12,7 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers
 {
-    public class SizeGroupShortTransferConverter : TransferConverter<(ClothesSizeType, int), ISizeGroupShortDomain, SizeGroupShortTransfer>,
+    public class SizeGroupShortTransferConverter : TransferConverter<int, ISizeGroupShortDomain, SizeGroupShortTransfer>,
                                                    ISizeGroupShortTransferConverter
     {
         /// <summary>

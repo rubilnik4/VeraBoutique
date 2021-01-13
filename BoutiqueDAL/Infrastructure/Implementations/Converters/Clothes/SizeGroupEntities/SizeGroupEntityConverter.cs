@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
     /// <summary>
     /// Преобразования модели категории одежды в модель базы данных
     /// </summary>
-    public class SizeGroupEntityConverter : EntityConverter<(ClothesSizeType, int), ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupEntityConverter : EntityConverter<int, ISizeGroupDomain, SizeGroupEntity>,
                                             ISizeGroupEntityConverter
     {
         public SizeGroupEntityConverter(ISizeEntityConverter sizeEntityConverter)
@@ -74,8 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         private IEnumerable<SizeGroupCompositeEntity> SizeToCompositeEntities(IEnumerable<ISizeDomain> sizeDomains,
                                                                               ISizeGroupShortBase sizeGroup) =>
             _sizeEntityConverter.ToEntities(sizeDomains).
-            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.Name,
-                                                              sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize,
+            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.Name, sizeGroup.Id,
                                                               null, null));
 
         /// <summary>
