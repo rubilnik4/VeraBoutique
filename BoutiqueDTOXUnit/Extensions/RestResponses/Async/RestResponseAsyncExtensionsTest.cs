@@ -100,10 +100,51 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
         }
 
         /// <summary>
+        /// Преобразование в результирующий ответ
+        /// </summary>
+        [Fact]
+        public async Task ToRestResultError()
+        {
+            var restResult = new RestResponse
+            {
+                StatusCode = HttpStatusCode.NoContent,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultCollection = await restResultTask.ToRestResultErrorAsync();
+
+            Assert.True(resultCollection.OkStatus);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task ToRestResultError_Error()
+        {
+            var restResult = new RestResponse
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultCollection = await restResultTask.ToRestResultErrorAsync();
+
+            Assert.True(resultCollection.HasErrors);
+            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
         /// Получить задачу с ответом сервера
         /// </summary>
         private static Task<IRestResponse<TValue>> GetRestResponseTask<TValue>(IRestResponse<TValue> restResponse)
             where TValue : notnull =>
+            Task.FromResult(restResponse);
+
+        /// <summary>
+        /// Получить задачу с ответом сервера
+        /// </summary>
+        private static Task<IRestResponse> GetRestResponseTask(IRestResponse restResponse) =>
             Task.FromResult(restResponse);
     }
 }

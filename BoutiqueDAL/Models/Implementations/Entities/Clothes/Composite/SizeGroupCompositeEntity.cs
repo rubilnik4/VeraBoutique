@@ -7,17 +7,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
     /// <summary>
     /// Связующая сущность размера одежды с группой
     /// </summary>
-    public class SizeGroupCompositeEntity: ISizeGroupCompositeEntity
+    public class SizeGroupCompositeEntity : ISizeGroupCompositeEntity
     {
-        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName, int sizeGroupId)
-            : this(sizeType, sizeName, sizeGroupId, null, null)
+        public SizeGroupCompositeEntity(int sizeId, int sizeGroupId)
+            : this(sizeId, sizeGroupId, null, null)
         { }
 
-        public SizeGroupCompositeEntity(SizeType sizeType, string sizeName, int sizeGroupId, 
-                                        SizeEntity? size, SizeGroupEntity? sizeGroup)
+        public SizeGroupCompositeEntity(int sizeId, int sizeGroupId, SizeEntity? size, SizeGroupEntity? sizeGroup)
         {
-            SizeType = sizeType;
-            SizeName = sizeName;
+            SizeId = sizeId;
             SizeGroupId = sizeGroupId;
             Size = size;
             SizeGroup = sizeGroup;
@@ -26,20 +24,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public ((SizeType, string), int) Id => ((SizeType, SizeName), SizeGroupId);
-
-        /// <summary>
-        /// Тип размера одежды
-        /// </summary>
-        public SizeType SizeType { get; }
-
-        /// <summary>
-        /// Размер
-        /// </summary>
-        public string SizeName { get; }
+        public (int, int) Id => (SizeId, SizeGroupId);
 
         /// <summary>
         /// Идентификатор размера одежды
+        /// </summary>
+        public int SizeId { get; }
+
+        /// <summary>
+        /// Идентификатор группы размеров одежды
         /// </summary>
         public int SizeGroupId { get; }
 

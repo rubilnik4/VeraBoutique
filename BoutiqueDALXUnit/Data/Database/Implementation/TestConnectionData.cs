@@ -13,12 +13,12 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static HostConnection HostConnectionOk => new HostConnection("localhost", 5432);
+        public static HostConnection HostConnectionOk => new ("localhost", 5432);
 
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static Authorization AuthorizationOk => new Authorization("username", "password");
+        public static Authorization AuthorizationOk => new ("username", "password");
 
         /// <summary>
         /// Корректные параметры подключения

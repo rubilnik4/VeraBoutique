@@ -45,8 +45,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         private static IEnumerable<ClothesSizeGroupCompositeEntity> GetClothesSizeGroupCompositeEntities(IEnumerable<ISizeGroupDomain> sizeGroupDomains,
                                                                                                          int clothesId) =>
             sizeGroupDomains.
-            Select(sizeGroupDomain => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupDomain.ClothesSizeType, 
-                                                                          sizeGroupDomain.SizeNormalize,
+            Select(sizeGroupDomain => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupDomain.Id, 
                                                                           null, SizeGroupEntitiesData.GetSizeGroupEntity(sizeGroupDomain)));
 
         /// <summary>

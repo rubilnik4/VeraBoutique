@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Преобразования модели размера одежды в модель базы данных
     /// </summary>
-    public class SizeEntityConverter : EntityConverter<(SizeType, string), ISizeDomain, SizeEntity>,
+    public class SizeEntityConverter : EntityConverter<int, ISizeDomain, SizeEntity>,
                                        ISizeEntityConverter
     {
         /// <summary>

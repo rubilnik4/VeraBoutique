@@ -38,8 +38,13 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base
         Task<IResultError> Put(TTransfer transfer);
 
         /// <summary>
+        /// Удалить все данные Api
+        /// </summary>
+        Task<IResultError> Delete();
+
+        /// <summary>
         /// Удаление данных
         /// </summary>
-        Task<IResultValue<TTransfer>> Delete(TId id);
+        Task <IResultValue<TTransfer>> Delete(TId id);
     }
 }

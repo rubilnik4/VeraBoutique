@@ -1,4 +1,6 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Identity;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Identity;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Identity
 {
@@ -27,5 +29,15 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
         /// Пароль
         /// </summary>
         public string Password { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => 
+            obj is IAuthorizeBase authorize && Equals(authorize);
+
+        public bool Equals(IAuthorizeBase? other) =>
+            other?.Id == Id;
+
+        public override int GetHashCode() => HashCode.Combine(UserName, Password);
+        #endregion
     }
 }

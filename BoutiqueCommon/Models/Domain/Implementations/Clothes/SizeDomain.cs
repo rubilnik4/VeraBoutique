@@ -17,8 +17,13 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes
            : base(size.SizeType, size.Name)
         { }
 
-        public SizeDomain(SizeType sizeType, string sizeName)
-            : base(sizeType, sizeName)
+        public SizeDomain(SizeType sizeType, string name)
+            : base(sizeType, name)
         { }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id => GetIdHashCode(SizeType, Name);
     }
 }

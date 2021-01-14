@@ -16,7 +16,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных размеров одежды
     /// </summary>
-    public class SizeTable : EntityDatabaseTable<(SizeType SizeType, string Name), ISizeDomain, SizeEntity>, ISizeTable
+    public class SizeTable : EntityDatabaseTable<int, ISizeDomain, SizeEntity>, ISizeTable
     {
         public SizeTable(DbSet<SizeEntity> sizeSet)
             : base(sizeSet)
@@ -25,20 +25,19 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<SizeEntity, (SizeType, string)>> IdSelect() =>
-            entity => new Tuple<SizeType, string>(entity.SizeType, entity.Name).ToValueTuple();
+        public override Expression<Func<SizeEntity, int>> IdSelect() =>
+            entity => entity.Id;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public  override Expression<Func<SizeEntity, bool>> IdPredicate((SizeType SizeType, string Name) id) =>
-            entity => id.SizeType == entity.SizeType && id.Name == entity.Name;
+        public  override Expression<Func<SizeEntity, bool>> IdPredicate(int id) =>
+            entity => id == entity.Id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<(SizeType SizeType, string Name)> ids) =>
-            entity => ids.Select(id => id.SizeType + id.Name).
-                          Contains(entity.SizeType + entity.Name);
+        public override Expression<Func<SizeEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
+            entity => ids.Contains(entity.Id);
     }
 }

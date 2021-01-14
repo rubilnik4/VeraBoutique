@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
@@ -27,8 +28,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// </summary>
         public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers)
         {
-            await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
+            await Database.MigrateAsync();
             await IdentityInitialize.Initialize(this, userManager, defaultUsers);
         }
 

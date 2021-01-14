@@ -11,11 +11,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     {
         public void Configure(EntityTypeBuilder<SizeGroupCompositeEntity> builder)
         {
-            builder.HasKey(t => new { t.SizeType, t.SizeName, t.SizeGroupId });
+            builder.HasKey(t => new { t.SizeId, t.SizeGroupId });
 
             builder.HasOne(t => t.Size)
                    .WithMany(s => s!.SizeGroupComposites)
-                   .HasForeignKey(sc => new { sc.SizeType, sc.SizeName })
+                   .HasForeignKey(sc => sc.SizeId)
                    .IsRequired();
 
             builder.HasOne(t => t.SizeGroup)

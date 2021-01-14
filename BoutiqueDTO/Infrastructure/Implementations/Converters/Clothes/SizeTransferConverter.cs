@@ -16,7 +16,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
     /// <summary>
     /// Конвертер размеров одежды в трансферную модель
     /// </summary>
-    public class SizeTransferConverter : TransferConverter<(SizeType, string), ISizeDomain, SizeTransfer>,
+    public class SizeTransferConverter : TransferConverter<int, ISizeDomain, SizeTransfer>,
                                          ISizeTransferConverter
     {
         /// <summary>

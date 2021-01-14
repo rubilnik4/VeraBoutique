@@ -2,6 +2,7 @@
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueDTO.Models.Interfaces.Connection;
+using RestSharp.Authenticators;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Factory.RestSharp
@@ -22,6 +23,23 @@ namespace BoutiqueDTOXUnit.Factory.RestSharp
             
             Assert.Equal(hostConnection.Host, restClient.BaseUrl);
             Assert.Equal(hostConnection.TimeOut.TotalMilliseconds, restClient.Timeout);
+        }
+
+        /// <summary>
+        /// Создать api клиент
+        /// </summary>
+        [Fact]
+        public void GetRestClientAuth_Ok()
+        {
+            var hostConnection = HostConnection;
+            const string jwtToken = "jwtToken";
+
+            var restClient = RestSharpFactory.GetRestClient(hostConnection, jwtToken);
+            var authenticator = (JwtAuthenticator)restClient.Authenticator;
+
+            Assert.Equal(hostConnection.Host, restClient.BaseUrl);
+            Assert.Equal(hostConnection.TimeOut.TotalMilliseconds, restClient.Timeout);
+            Assert.IsType<JwtAuthenticator>(restClient.Authenticator);
         }
 
         /// <summary>

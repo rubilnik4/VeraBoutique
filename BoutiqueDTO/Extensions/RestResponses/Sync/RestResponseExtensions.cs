@@ -37,7 +37,7 @@ namespace BoutiqueDTO.Extensions.RestResponses.Sync
             };
 
         /// <summary>
-        /// Преобразовать ответ сервера в результирующий ответ со значением
+        /// Преобразовать ответ сервера в результирующий ответ
         /// </summary>
         public static IResultError ToRestResultError(this IRestResponse @this) =>
             @this.StatusCode switch

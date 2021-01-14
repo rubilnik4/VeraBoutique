@@ -75,6 +75,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         /// <summary>
         /// Запрос на отправку данных
         /// </summary>
+        public static IRestRequest DeleteJsonRequest(string controllerName)=>
+            new RestRequest(GetApiRoute(controllerName), Method.DELETE);
+
+        /// <summary>
+        /// Запрос на отправку данных
+        /// </summary>
         public static IRestRequest DeleteJsonRequest<TId>(TId id, string controllerName)
             where TId : notnull =>
             new RestRequest(GetApiRoute(controllerName) + $"/{Id}", Method.DELETE).

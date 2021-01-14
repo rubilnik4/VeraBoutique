@@ -7,6 +7,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис размеров одежды в базе данных
     /// </summary>
-    public interface ISizeDatabaseService : IDatabaseService<(SizeType, string), ISizeDomain>
+    public interface ISizeDatabaseService : IDatabaseService<int, ISizeDomain>
     { }
 }

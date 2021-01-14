@@ -8,6 +8,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes
     /// <summary>
     /// Конвертер размеров одежды в трансферную модель
     /// </summary>
-    public interface ISizeTransferConverter : ITransferConverter<(SizeType, string), ISizeDomain, SizeTransfer>
+    public interface ISizeTransferConverter : ITransferConverter<int, ISizeDomain, SizeTransfer>
     { }
 }

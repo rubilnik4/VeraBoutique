@@ -11,11 +11,8 @@ using BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique;
 using BoutiquePrerequisites.Factories.Services;
 using BoutiquePrerequisites.Infrastructure.Implementations;
 using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase;
-using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Clothes;
-using BoutiquePrerequisites.Infrastructure.Implementations.BoutiqueDatabase.Services.Upload;
 using BoutiquePrerequisites.Infrastructure.Implementations.Logger;
-using BoutiquePrerequisites.Infrastructure.Interfaces;
-using BoutiquePrerequisites.Infrastructure.Interfaces.Logger;
+using BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -34,7 +31,7 @@ namespace BoutiquePrerequisites
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await new ConsoleLogger().
+           await new ConsoleBoutiqueLogger().
            MapAsync(BoutiqueUpload.UploadAuthorizeData);
     }
 }

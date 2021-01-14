@@ -28,15 +28,12 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущность группы размеров
         /// </summary>
         public static SizeGroupEntity GetSizeGroupEntity(ISizeGroupDomain sizeGroup) =>
-             new (sizeGroup, GetSizeGroupComposite(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroup.Sizes));
+             new (sizeGroup, GetSizeGroupComposite(sizeGroup.Id, sizeGroup.Sizes));
 
         /// <summary>
         /// Получить связующую сущность группы размеров
         /// </summary>
-        public static IEnumerable<SizeGroupCompositeEntity> GetSizeGroupComposite(ClothesSizeType clothesSizeType, int sizeNormalize,
-                                                                                  IEnumerable<ISizeDomain> sizes) =>
-            sizes.Select(size => new SizeGroupCompositeEntity(size.SizeType, size.Name, clothesSizeType, sizeNormalize,
-                                                              new SizeEntity(size),
-                                                              null));
+        public static IEnumerable<SizeGroupCompositeEntity> GetSizeGroupComposite(int sizeGroupId, IEnumerable<ISizeDomain> sizes) =>
+            sizes.Select(size => new SizeGroupCompositeEntity(size.Id, sizeGroupId, new SizeEntity(size), null));
     }
 }

@@ -59,6 +59,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
             ToRestResultErrorAsync();
 
         /// <summary>
+        /// Удалить все данные Api
+        /// </summary>
+        public async Task<IResultError> Delete() =>
+            await RestClient.ExecuteAsync(ApiRestRequest.DeleteJsonRequest(ControllerName)).
+            ToRestResultErrorAsync();
+
+        /// <summary>
         /// Удалить данные по идентификатору Api
         /// </summary>
         public async Task<IResultValue<TTransfer>> Delete(TId id) =>

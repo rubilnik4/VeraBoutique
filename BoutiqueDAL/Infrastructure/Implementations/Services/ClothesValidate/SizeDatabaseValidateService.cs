@@ -22,7 +22,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы размера одежды
     /// </summary>
-    public class SizeDatabaseValidateService : DatabaseValidateService<(SizeType, string), ISizeDomain, SizeEntity>,
+    public class SizeDatabaseValidateService : DatabaseValidateService<int, ISizeDomain, SizeEntity>,
                                                ISizeDatabaseValidateService
     {
         public SizeDatabaseValidateService(ISizeTable sizeTable)
@@ -42,6 +42,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(ISizeDomain size) =>
             size.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<(SizeType, string), ISizeDomain>(nameof(size.Name), size));
+                _ => ModelsErrors.FieldNotValid<int, ISizeDomain>(nameof(size.Name), size));
     }
 }

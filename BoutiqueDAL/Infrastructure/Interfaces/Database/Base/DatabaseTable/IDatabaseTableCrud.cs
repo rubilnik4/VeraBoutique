@@ -36,5 +36,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// Удалить элементы в таблице
         /// </summary>
         IResultError RemoveRange(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Удалить все элементы в таблице
+        /// </summary>
+        IResultError Remove();
     }
 }

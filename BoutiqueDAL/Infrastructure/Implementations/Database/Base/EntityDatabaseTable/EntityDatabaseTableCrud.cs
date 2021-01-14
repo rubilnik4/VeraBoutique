@@ -52,5 +52,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// </summary>
         public new IResultError RemoveRange(IEnumerable<TEntity> entities) =>
             ResultErrorTry(() => _databaseSet.RemoveRange(entities), TableAccessError);
+
+        /// <summary>
+        /// Удалить все элементы в таблице
+        /// </summary>
+        public IResultError Remove() =>
+            ResultErrorTry(() => _databaseSet.RemoveRange(_databaseSet), TableAccessError);
     }
 }

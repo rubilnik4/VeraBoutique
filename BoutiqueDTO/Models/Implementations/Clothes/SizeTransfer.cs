@@ -21,5 +21,10 @@ namespace BoutiqueDTO.Models.Implementations.Clothes
         public SizeTransfer(SizeType sizeType, string name)
             : base(sizeType, name)
         { }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id => GetIdHashCode(SizeType, Name);
     }
 }

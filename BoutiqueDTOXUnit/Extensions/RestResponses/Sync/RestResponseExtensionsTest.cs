@@ -23,7 +23,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         public void ToRestResultValue(HttpStatusCode httpStatusCode)
         {
             const string value = "test";
-            var restResult = new RestResponse<string>()
+            var restResult = new RestResponse<string>
             {
                 Data = value,
                 StatusCode = httpStatusCode,
@@ -42,7 +42,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         public void ToRestResultValue_Error()
         {
             const string value = "test";
-            var restResult = new RestResponse<string>()
+            var restResult = new RestResponse<string>
             {
                 Data = value,
                 StatusCode = HttpStatusCode.InternalServerError,
@@ -63,7 +63,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         public void ToRestResultCollection(HttpStatusCode httpStatusCode)
         {
             var values = new List<string> { "First", "Second" };
-            var restResult = new RestResponse<List<string>>()
+            var restResult = new RestResponse<List<string>>
             {
                 Data = values,
                 StatusCode = httpStatusCode,
@@ -82,13 +82,46 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         public void ToRestResultCollection_Error()
         {
             var values = new List<string> { "First", "Second" };
-            var restResult = new RestResponse<List<string>>()
+            var restResult = new RestResponse<List<string>>
             {
                 Data = values,
                 StatusCode = HttpStatusCode.InternalServerError,
             };
 
             var resultCollection = restResult.ToRestResultCollection();
+
+            Assert.True(resultCollection.HasErrors);
+            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ
+        /// </summary>
+        [Fact]
+        public void ToRestResultError()
+        {
+            var restResult = new RestResponse
+            {
+                StatusCode = HttpStatusCode.NoContent,
+            };
+
+            var resultCollection = restResult.ToRestResultError();
+
+            Assert.True(resultCollection.OkStatus);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ. Ошибка
+        /// </summary>
+        [Fact]
+        public void ToRestResultError_Error()
+        {
+            var restResult = new RestResponse
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+            };
+
+            var resultCollection = restResult.ToRestResultError();
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);

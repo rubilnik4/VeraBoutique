@@ -112,7 +112,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.FindShortIdAsync(id).
             ResultValueBindOkBindAsync(DeleteWithSaving);
-        
+
+        /// <summary>
+        /// Удалить модель из базы по идентификатору
+        /// </summary>
+        public async Task<IResultError> Delete() =>
+            await _dataTable.Remove().
+            ResultErrorBindOkAsync(DatabaseSaveChanges);
+
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>

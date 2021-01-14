@@ -77,6 +77,20 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         }
 
         /// <summary>
+        /// Проверить объект. Без ошибок
+        /// </summary>
+        [Fact]
+        public void ToResultValue_Ok()
+        {
+            const string initialString = "NotNull";
+
+            var resultString = initialString.ToResultValue();
+
+            Assert.True(resultString.OkStatus);
+            Assert.Equal(initialString, resultString.Value);
+        }
+
+        /// <summary>
         /// Проверить объект на нул. Без ошибок
         /// </summary>
         [Fact]

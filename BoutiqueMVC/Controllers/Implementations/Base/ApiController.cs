@@ -119,6 +119,16 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
              ToNoContentActionResultTaskAsync();
 
         /// <summary>
+        /// Удалить все данные
+        /// </summary>
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Delete() =>
+            await _databaseDatabaseService.Delete().
+            ToNoContentActionResultTaskAsync();
+
+        /// <summary>
         /// Удалить данные по идентификатору
         /// </summary>
         [HttpDelete("{id}")]
@@ -129,23 +139,5 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
             await _databaseDatabaseService.Delete(id).
             ResultValueOkTaskAsync(_transferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
-
-        /// <summary>
-        /// Получить информацию о создаваемом объекте на основе контроллера
-        /// </summary>
-        private CreatedActionValue<TId, TTransfer> GetCreateAction(TId id, TTransfer transfer) =>
-            new (nameof(Get), ControllerName, (id, transfer));
-
-        /// <summary>
-        /// Получить информацию о создаваемом объекте на основе контроллера
-        /// </summary>
-        private CreatedActionCollection<TId, TTransfer> GetCreateAction(IEnumerable<TId> ids,
-                                                                        IEnumerable<TTransfer> transfers) =>
-            new (nameof(Get), ControllerName, ids.Zip(transfers));
-
-        /// <summary>
-        /// Имя контроллера
-        /// </summary>
-        private string ControllerName => GetType().Name.SubstringRemove("Controller");
     }
 }

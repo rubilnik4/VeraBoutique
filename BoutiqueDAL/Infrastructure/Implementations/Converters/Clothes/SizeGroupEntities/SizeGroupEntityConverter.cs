@@ -74,8 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         private IEnumerable<SizeGroupCompositeEntity> SizeToCompositeEntities(IEnumerable<ISizeDomain> sizeDomains,
                                                                               ISizeGroupShortBase sizeGroup) =>
             _sizeEntityConverter.ToEntities(sizeDomains).
-            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.SizeType, sizeEntity.Name, sizeGroup.Id,
-                                                              null, null));
+            Select(sizeEntity => new SizeGroupCompositeEntity(sizeEntity.Id, sizeGroup.Id));
 
         /// <summary>
         /// Получить сущности размера одежды
