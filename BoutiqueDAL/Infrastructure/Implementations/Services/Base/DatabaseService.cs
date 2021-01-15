@@ -107,18 +107,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             ResultErrorBindOkBindAsync(() => UpdateWithSaving(domain));
 
         /// <summary>
+        /// Удалить все модели из базы
+        /// </summary>
+        public async Task<IResultError> Delete() =>
+            await _dataTable.Remove().
+            ResultErrorBindOkAsync(DatabaseSaveChanges);
+
+        /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
             await _dataTable.FindShortIdAsync(id).
             ResultValueBindOkBindAsync(DeleteWithSaving);
-
-        /// <summary>
-        /// Удалить модель из базы по идентификатору
-        /// </summary>
-        public async Task<IResultError> Delete() =>
-            await _dataTable.Remove().
-            ResultErrorBindOkAsync(DatabaseSaveChanges);
 
         /// <summary>
         /// Добавить модель в базу и сохранить

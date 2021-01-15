@@ -16,11 +16,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public ClothesApiService(IRestClient restClient)
             : base(restClient)
         { }
-
-        /// <summary>
-        /// Получить сервис
-        /// </summary>
-        public static IClothesApiService GetClothesApiService(IHostConnection hostConnection) =>
-            new ClothesApiService(RestSharpFactory.GetRestClient(hostConnection));
     }
 }

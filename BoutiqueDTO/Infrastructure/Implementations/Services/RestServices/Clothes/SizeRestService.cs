@@ -9,7 +9,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки размера одежды в базу данных
+    /// Сервис размера одежды
     /// </summary>
     public class SizeRestService : RestServiceBase<int, ISizeDomain, SizeTransfer>, ISizeRestService
     {

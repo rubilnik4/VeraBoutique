@@ -16,7 +16,7 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
 {
     /// <summary>
-    /// Базовый сервис для получения данных Api
+    /// Базовый сервис для данных Api
     /// </summary>
     public abstract class RestServiceBase<TId, TDomain, TTransfer> : IRestServiceBase<TId, TDomain>
         where TDomain : IDomainModel<TId>

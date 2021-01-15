@@ -3,6 +3,7 @@ using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
+using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Clothes.ClothesTypes

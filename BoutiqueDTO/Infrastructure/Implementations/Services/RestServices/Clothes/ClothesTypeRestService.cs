@@ -9,7 +9,7 @@ using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки типа одежды в базу данных
+    /// Сервис типа одежды
     /// </summary>
     public class ClothesTypeRestService : RestServiceBase<string, IClothesTypeDomain, ClothesTypeTransfer>, 
                                           IClothesTypeRestService

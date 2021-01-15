@@ -21,16 +21,31 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains) =>
-            GetTestDatabaseTable(testDomains, DeleteOkFunc(testDomains));
+            GetTestDatabaseTable(testDomains, DeleteOkFunc(testDomains), DeleteAllOk);
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
+            GetTestDatabaseTable(testDomains, deleteFunc, DeleteAllOk);
+
+        /// <summary>
+        /// Получить тестовый сервис работы с базой данных
+        /// </summary>
+        public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
+                                                                      Func<TestEnum, IResultValue<ITestDomain>> deleteFunc,
+                                                                      IResultError deleteAllResult) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Get()).ReturnsAsync(testDomains)).
-            Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).ReturnsAsync(deleteFunc));
+            Void(serviceMock => serviceMock.Setup(service => service.Delete(It.IsAny<TestEnum>())).ReturnsAsync(deleteFunc)).
+            Void(serviceMock => serviceMock.Setup(service => service.Delete()).ReturnsAsync(deleteAllResult));
+
+        /// <summary>
+        /// Удаление всех элементов
+        /// </summary>
+        public static IResultError DeleteAllOk =>
+            new ResultError();
 
         /// <summary>
         /// Функция удаления по идентификатору
@@ -42,7 +57,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция удаления по идентификатору.Элемент не найден
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> DeleteNotFoundFunc() =>
-            id => new ResultValue<ITestDomain>(ErrorData.NotFoundError);
+            _ => new ResultValue<ITestDomain>(ErrorData.NotFoundError);
 
     }
 }

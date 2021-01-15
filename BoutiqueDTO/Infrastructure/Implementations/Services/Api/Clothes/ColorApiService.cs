@@ -16,11 +16,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public ColorApiService(IRestClient restClient)
            : base(restClient)
         { }
-
-        /// <summary>
-        /// Получить сервис
-        /// </summary>
-        public static IColorApiService GetColorApiService(IHostConnection hostConnection) =>
-            new ColorApiService(RestSharpFactory.GetRestClient(hostConnection));
     }
 }

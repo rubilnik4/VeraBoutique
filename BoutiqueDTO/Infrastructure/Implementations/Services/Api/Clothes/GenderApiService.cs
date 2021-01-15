@@ -25,11 +25,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public GenderApiService(IRestClient restClient)
             : base(restClient)
         { }
-
-        /// <summary>
-        /// Получить сервис
-        /// </summary>
-        public static IGenderApiService GetGenderApiService(IHostConnection hostConnection) =>
-            new GenderApiService(RestSharpFactory.GetRestClient(hostConnection));
     }
 }

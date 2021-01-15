@@ -47,7 +47,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await new ResultValue<IAuthorizeApiService>(_authorizeApiService).
             ResultValueVoidOk(_ => _boutiqueLogger.ShowMessage($"Авторизация в сервисе [{_authorizeApiService.ControllerName}]")).
-            ResultValueBindOkAsync(api => api.AuthorizeJwt(_authorizeTransferConverter.ToTransfer(authorizeDomain))).
+            ResultValueBindOkAsync(_ => _authorizeApiService.AuthorizeJwt(_authorizeTransferConverter.ToTransfer(authorizeDomain))).
             ResultValueVoidOkBadTaskAsync(ids => ids.Void(_ => _boutiqueLogger.ShowMessage($"Токен сервиса [{_authorizeApiService.ControllerName}] получен")),
                                                errors => errors.
                                                          Void(_ => _boutiqueLogger.ShowMessage($"Ошибка авторизации в сервисе [{_authorizeApiService.ControllerName}]")).

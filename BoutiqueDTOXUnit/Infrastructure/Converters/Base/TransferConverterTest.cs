@@ -3,7 +3,8 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Implementations;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
+using BoutiqueDTOXUnit.Data.Transfers;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
 using Xunit;
 

@@ -21,32 +21,50 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
         public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities) =>
-            GetTestDatabaseTable(testEntities, DeleteOkFunc(), DatabaseTableGetMock.FindIdOkFunc(testEntities));
+            GetTestDatabaseTable(testEntities, DeleteOk, DeleteOkFunc(), DatabaseTableGetMock.FindIdOkFunc(testEntities));
 
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
         public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities, 
                                                             Func<TestEnum, IResultValue<TestEntity>> findIdFunc) =>
-            GetTestDatabaseTable(testEntities, DeleteOkFunc(), findIdFunc);
+            GetTestDatabaseTable(testEntities, DeleteOk, DeleteOkFunc(), findIdFunc);
 
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities, Func<TestEntity, IResultValue<TestEntity>> deleteFunc) =>
-            GetTestDatabaseTable(testEntities, deleteFunc, DatabaseTableGetMock.FindIdOkFunc(testEntities));
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
+                                                              IResultError resultDelete) =>
+            GetTestDatabaseTable(testEntities, resultDelete, DeleteOkFunc(), DatabaseTableGetMock.FindIdOkFunc(testEntities));
+
+        /// <summary>
+        /// Получить тестовую таблицу в стандартном исполнении
+        /// </summary>
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities, 
+                                                            Func<TestEntity, IResultValue<TestEntity>> deleteFunc) =>
+            GetTestDatabaseTable(testEntities, DeleteOk, deleteFunc, DatabaseTableGetMock.FindIdOkFunc(testEntities));
 
         /// <summary>
         /// Получить тестовую таблицу
         /// </summary>
         public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
+                                                            IResultError resultDelete,
                                                             Func<TestEntity, IResultValue<TestEntity>> deleteFunc,
                                                             Func<TestEnum, IResultValue<TestEntity>> findIdFunc) =>
             new Mock<ITestTable>().
             Void(tableMock => tableMock.Setup(table => table.Remove(It.IsAny<TestEntity>())).
                                         Returns(deleteFunc)).
+            Void(tableMock => tableMock.Setup(table => table.Remove()).
+                                        Returns(resultDelete)).
             Void(tableMock => tableMock.Setup(table => table.FindShortIdAsync(It.IsAny<TestEnum>())).
-                                        ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
+                  
+            ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
+
+        /// <summary>
+        /// Удаление
+        /// </summary>
+        public static IResultError DeleteOk =>
+            new ResultError();
 
         /// <summary>
         /// Функция удаления

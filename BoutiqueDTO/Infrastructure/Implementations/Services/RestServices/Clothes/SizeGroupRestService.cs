@@ -9,7 +9,7 @@ using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки размера одежды в базу данных
+    /// Сервис группы размера одежды
     /// </summary>
     public class SizeGroupRestService : RestServiceBase<int, ISizeGroupDomain, SizeGroupTransfer>, ISizeGroupRestService
     {

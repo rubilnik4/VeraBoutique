@@ -8,6 +8,9 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
+    /// <summary>
+    /// Сервис категорий одежды
+    /// </summary>
     public class CategoryRestService : RestServiceBase<string, ICategoryDomain, CategoryTransfer>, ICategoryRestService
     {
         public CategoryRestService(ICategoryApiService categoryApiService, 

@@ -2,6 +2,7 @@
 using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTOXUnit.Data.Transfers;
+using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Clothes

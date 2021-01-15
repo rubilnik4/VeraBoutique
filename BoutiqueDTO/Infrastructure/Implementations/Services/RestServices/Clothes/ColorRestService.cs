@@ -8,6 +8,9 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
+    /// <summary>
+    /// Сервис цвета одежды
+    /// </summary>
     public class ColorRestService : RestServiceBase<string, IColorDomain, ColorTransfer>, IColorRestService
     {
         public ColorRestService(IColorApiService colorApiService, 

@@ -4,7 +4,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки цвета одежды в базу данных
+    /// Сервис цвета одежды
     /// </summary>
     public interface IColorRestService : IRestServiceBase<string, IColorDomain>
     { }

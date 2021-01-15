@@ -4,6 +4,7 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
+using BoutiqueDTOXUnit.Data.Transfers;
 using RestSharp;
 using Xunit;
 using Xunit.Sdk;

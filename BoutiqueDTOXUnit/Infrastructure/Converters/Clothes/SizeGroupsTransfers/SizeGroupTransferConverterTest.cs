@@ -3,8 +3,9 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using BoutiqueDTOXUnit.Data.Transfers;
+using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
 using Xunit;
 

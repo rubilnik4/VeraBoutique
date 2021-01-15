@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
@@ -18,6 +20,54 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
     /// </summary>
     public class ResultValueToActionResultExtensionsTest
     {
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть корректный объект
+        /// </summary>
+        [Fact]
+        public void ToActionResultValue_Id_OkRequest()
+        {
+            var id = TransferData.GetTestTransfer().Id;
+            var testTransfer = new ResultValue<TestEnum>(id);
+
+            var actionResult = testTransfer.ToActionResultValue();
+
+            Assert.Equal(id, actionResult.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToActionResultValue_Id_BadRequest()
+        {
+            var initialError = ErrorData.ErrorTest;
+            var testTransfer = new ResultValue<TestEnum>(initialError);
+
+            var actionResult = testTransfer.ToActionResultValue();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой не найденного элемента
+        /// </summary>
+        [Fact]
+        public void ToActionResultValue_Id_NotFound()
+        {
+            var initialError = ErrorData.NotFoundError;
+            var testTransfer = new ResultValue<TestEnum>(initialError);
+
+            var actionResult = testTransfer.ToActionResultValue();
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+            var notFoundRequest = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundRequest.StatusCode);
+        }
+
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера. Вернуть корректный объект
         /// </summary>
@@ -116,6 +166,55 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         }
 
         /// <summary>
+        /// Преобразовать результирующий ответ коллекцию в ответ контроллера. Вернуть корректный объект
+        /// </summary>
+        [Fact]
+        public void ToActionResultCollection_Id_OkRequest()
+        {
+            var ids = TransferData.GetTestTransfers().Select(test => test.Id).ToList();
+            var testTransfer = new ResultCollection<TestEnum>(ids);
+
+            var actionResult = testTransfer.ToActionResultCollection();
+
+            Assert.True(ids.SequenceEqual(actionResult.Value));
+        }
+
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToActionResultCollection_Id_BadRequest()
+        {
+            var initialError = ErrorData.ErrorTest;
+            var testTransfer = new ResultCollection<ITestTransfer>(initialError);
+
+            var actionResult = testTransfer.ToActionResultCollection();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой не найденного элемента
+        /// </summary>
+        [Fact]
+        public void ToActionResultCollection_Id_NotFound()
+        {
+            var initialError = ErrorData.NotFoundError;
+            var testTransfer = new ResultCollection<ITestTransfer>(initialError);
+
+            var actionResult = testTransfer.ToActionResultCollection();
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+            var notFoundRequest = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundRequest.StatusCode);
+        }
+
+        /// <summary>
         /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
         /// </summary>
         [Fact]
@@ -129,7 +228,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.True(createdActionValue.Value.Equals((ITestTransfer)createdAtActionResult.Value));
-            Assert.True(createdActionValue.Id.Equals((TestEnum)createdAtActionResult.RouteValues.Values.First()));
+            Assert.True(createdActionValue.Id.Equals((TestEnum)createdAtActionResult.RouteValues.Values.First()!));
         }
 
         /// <summary>
@@ -153,6 +252,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
         /// </summary>
         [Fact]
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public void ToPostActionResultCollection_Created()
         {
             var createdActionCollection = CreateActionData.CreatedActionCollection;
@@ -163,7 +263,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.True(createdActionCollection.Values.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
-            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()));
+            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()!));
         }
 
         /// <summary>

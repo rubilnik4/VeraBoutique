@@ -2,7 +2,6 @@
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Authorization

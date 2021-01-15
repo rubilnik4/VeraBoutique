@@ -39,13 +39,13 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         Task<IResultError> Put(TDomain model);
 
         /// <summary>
-        /// Удалить модель из базы по идентификатору
+        /// Удалить все модели из базы
         /// </summary>
-        Task<IResultValue<TDomain>> Delete(TId id);
+        Task<IResultError> Delete();
 
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
-        Task<IResultError> Delete();
+        Task<IResultValue<TDomain>> Delete(TId id);
     }
 }

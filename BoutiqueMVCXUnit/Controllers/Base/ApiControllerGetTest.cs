@@ -4,7 +4,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Services.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;

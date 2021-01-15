@@ -10,7 +10,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;

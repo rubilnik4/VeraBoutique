@@ -4,7 +4,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки размера одежды в базу данных
+    /// Сервис размера одежды
     /// </summary>
     public interface ISizeRestService : IRestServiceBase<int, ISizeDomain>
     { }

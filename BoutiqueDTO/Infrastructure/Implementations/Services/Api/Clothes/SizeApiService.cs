@@ -16,11 +16,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public SizeApiService(IRestClient restClient)
             : base(restClient)
         { }
-
-        /// <summary>
-        /// Получить сервис
-        /// </summary>
-        public static ISizeApiService GetSizeApiService(IHostConnection hostConnection) =>
-            new SizeApiService(RestSharpFactory.GetRestClient(hostConnection));
     }
 }

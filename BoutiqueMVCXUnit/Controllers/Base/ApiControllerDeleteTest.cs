@@ -4,7 +4,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Services.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
-using BoutiqueDTOXUnit.Data.Services.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.Models.Implementations.Result;
@@ -20,7 +20,47 @@ namespace BoutiqueMVCXUnit.Controllers.Base
     public class ApiControllerDeleteTest
     {
         /// <summary>
-        /// Изменить модель в базе. Корректный вариант
+        /// Удалить все модели в базе. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task DeleteAll_Ok()
+        {
+            var testDomains = TestData.TestResultDomains;
+            var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains);
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var actionResult = await testController.Delete();
+
+            Assert.IsType<NoContentResult>(actionResult);
+            var noContentResult = (NoContentResult)actionResult;
+            Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Удалить все модели в базе. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task DeleteAll_ErrorDatabase()
+        {
+            var initialError = ErrorData.DatabaseError;
+            var testResult = new ResultError(initialError);
+            var testDomains = TestData.TestResultDomains;
+            var testService = DatabaseServiceDeleteMock.GetTestDatabaseTable(testDomains, testResult);
+            var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
+            var testController = new TestController(testService.Object, testTransferConverter);
+
+            var actionResult = await testController.Delete();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Удалить модель в базе. Корректный вариант
         /// </summary>
         [Fact]
         public async Task Delete_Ok()
@@ -39,7 +79,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         }
 
         /// <summary>
-        /// Изменить модель в базе. Ошибка базы данных
+        /// Удалить модель в базе. Ошибка базы данных
         /// </summary>
         [Fact]
         public async Task Delete_ErrorDatabase()
@@ -62,7 +102,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         }
 
         /// <summary>
-        /// Изменить модель в базе. Элемент не найден
+        /// Удалить модель в базе. Элемент не найден
         /// </summary>
         [Fact]
         public async Task Delete_NotFound()

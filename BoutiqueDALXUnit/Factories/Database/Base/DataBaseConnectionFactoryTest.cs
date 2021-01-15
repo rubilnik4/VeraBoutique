@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using BoutiqueDAL.Factories.Implementations.Database.Base;
+using BoutiqueDAL.Factories.Implementations.Database.Connection;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;

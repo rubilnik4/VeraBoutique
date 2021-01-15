@@ -13,26 +13,20 @@ using RestSharp;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization
 {
+    /// <summary>
+    /// Api сервис авторизации
+    /// </summary>
     public class AuthorizeApiService : ApiServiceBase<(string, string), AuthorizeTransfer>, IAuthorizeApiService
     {
-        /// <summary>
-        /// Api сервис авторизации
-        /// </summary>
         public AuthorizeApiService(IRestClient restClient)
             : base(restClient)
         { }
 
         /// <summary>
-        /// Получение данных по идентификатору
+        /// Авторизация через токен
         /// </summary>
         public async Task<IResultValue<string>> AuthorizeJwt(AuthorizeTransfer authorizeTransfer) =>
             await RestClient.ExecuteAsync<string>(ApiRestRequest.PostJsonRequest<(string, string), AuthorizeTransfer>(authorizeTransfer, ControllerName)).
             ToRestResultValueAsync();
-
-        /// <summary>
-        /// Получить сервис
-        /// </summary>
-        public static IAuthorizeApiService GetAuthorizeApiService(IHostConnection hostConnection) =>
-            new AuthorizeApiService(RestSharpFactory.GetRestClient(hostConnection));
     }
 }

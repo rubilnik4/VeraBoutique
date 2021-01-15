@@ -6,7 +6,7 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
 {
     /// <summary>
-    /// Базовый сервис загрузки в базу данных
+    /// Базовый сервис для данных Api
     /// </summary>
     public interface IRestServiceBase<TId, in TDomain>
         where TDomain : IDomainModel<TId>

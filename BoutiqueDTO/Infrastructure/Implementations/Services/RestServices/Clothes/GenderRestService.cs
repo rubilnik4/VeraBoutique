@@ -10,7 +10,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис загрузки и получения типа пола в базу данных
+    /// Сервис типа пола в базу данных
     /// </summary>
     public class GenderRestService : RestServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderRestService
     {
