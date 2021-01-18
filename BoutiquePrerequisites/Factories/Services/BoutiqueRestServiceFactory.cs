@@ -3,6 +3,7 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization;
@@ -84,5 +85,16 @@ namespace BoutiquePrerequisites.Factories.Services
              new SizeGroupRestService(new SizeGroupApiService(restClient),
                                       new SizeGroupTransferConverter(new SizeTransferConverter()),
                                       boutiqueLogger);
+
+        /// <summary>
+        /// Получить сервис одежды
+        /// </summary>
+        public static IClothesRestService GetClothesRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+             new ClothesRestService(new ClothesApiService(restClient),
+                                    new ClothesTransferConverter(new GenderTransferConverter(),
+                                                                 new ClothesTypeShortTransferConverter(),
+                                                                 new ColorTransferConverter(),
+                                                                 new SizeGroupTransferConverter(new SizeTransferConverter())),
+                                    boutiqueLogger);
     }
 }

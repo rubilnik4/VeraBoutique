@@ -22,7 +22,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи группы размеров одежды
     /// </summary>
-    public class SizeGroupController : ApiController<int, SizeGroupTransfer, ISizeGroupDomain>
+    public class SizeGroupController : ApiController<int, ISizeGroupDomain, SizeGroupTransfer>
     {
         public SizeGroupController(ISizeGroupDatabaseService sizeGroupDatabaseService,
                                    ISizeGroupTransferConverter sizeGroupTransferConverter)

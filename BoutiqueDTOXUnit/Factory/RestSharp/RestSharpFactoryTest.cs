@@ -35,7 +35,6 @@ namespace BoutiqueDTOXUnit.Factory.RestSharp
             const string jwtToken = "jwtToken";
 
             var restClient = RestSharpFactory.GetRestClient(hostConnection, jwtToken);
-            var authenticator = (JwtAuthenticator)restClient.Authenticator;
 
             Assert.Equal(hostConnection.Host, restClient.BaseUrl);
             Assert.Equal(hostConnection.TimeOut.TotalMilliseconds, restClient.Timeout);

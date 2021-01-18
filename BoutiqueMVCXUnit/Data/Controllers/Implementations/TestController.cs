@@ -12,7 +12,7 @@ namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
     /// <summary>
     /// Тестовый контроллер
     /// </summary>
-    public class TestController : ApiController<TestEnum, TestTransfer, ITestDomain>
+    public class TestController : ApiController<TestEnum, ITestDomain, TestTransfer>
     {
         public TestController(ITestDatabaseService testDatabaseService, ITestTransferConverter testTransferConverter)
             : base(testDatabaseService, testTransferConverter)

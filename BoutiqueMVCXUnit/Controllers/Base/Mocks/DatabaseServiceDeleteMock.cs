@@ -34,6 +34,13 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
+                                                                      IResultError deleteAllResult) =>
+            GetTestDatabaseTable(testDomains, DeleteOkFunc(testDomains), deleteAllResult);
+
+        /// <summary>
+        /// Получить тестовый сервис работы с базой данных
+        /// </summary>
+        public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<TestEnum, IResultValue<ITestDomain>> deleteFunc,
                                                                       IResultError deleteAllResult) =>
             new Mock<ITestDatabaseService>().

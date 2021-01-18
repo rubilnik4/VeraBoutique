@@ -32,10 +32,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
     [ApiController]
-    public abstract class ApiController<TId, TTransfer, TDomain> : 
+    public abstract class ApiController<TId, TDomain, TTransfer> : 
         ControllerBase, IApiController<TId, TTransfer>
-        where TTransfer : class, ITransferModel<TId>
         where TDomain : IDomainModel<TId>
+        where TTransfer : class, ITransferModel<TId>
         where TId : notnull
     {
         protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,

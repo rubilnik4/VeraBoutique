@@ -33,7 +33,7 @@ namespace BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique
         /// Связующие размеры. Верхняя одежда
         /// </summary>
         private static IReadOnlyCollection<ISizeGroupDomain> OutwearSizes =>
-            new List<SizeGroupDomain>()
+            new List<SizeGroupDomain>
             {
                  new(ClothesSizeType.Outerwear, 38,
                      new List<SizeDomain>
@@ -125,7 +125,7 @@ namespace BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique
         /// Связующие размеры. Рубашки
         /// </summary>
         private static IReadOnlyCollection<ISizeGroupDomain> ShirtSizes =>
-            new List<SizeGroupDomain>()
+            new List<SizeGroupDomain>
             {
                  new(ClothesSizeType.Shirt, 44,
                      new List<SizeDomain>
@@ -174,7 +174,7 @@ namespace BoutiquePrerequisites.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Футболки
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> TshirtSizes =>
+        public static IReadOnlyCollection<ISizeGroupDomain> TshirtSizes =>
             new List<SizeGroupDomain>
             {
                  new(ClothesSizeType.Tshirt, 42,

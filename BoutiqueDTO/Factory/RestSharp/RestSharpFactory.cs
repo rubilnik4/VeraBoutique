@@ -2,6 +2,8 @@
 using BoutiqueDTO.Models.Interfaces.Connection;
 using RestSharp;
 using RestSharp.Authenticators;
+using RestSharp.Serialization.Json;
+using RestSharp.Serializers.SystemTextJson;
 
 namespace BoutiqueDTO.Factory.RestSharp
 {
@@ -17,7 +19,7 @@ namespace BoutiqueDTO.Factory.RestSharp
              new RestClient(hostConnection.Host)
              {
                  Timeout = GetTimeOut(hostConnection.TimeOut),
-             };
+             }.UseSystemTextJson();
 
         /// <summary>
         /// Создать api клиент c jwt токеном
@@ -27,7 +29,7 @@ namespace BoutiqueDTO.Factory.RestSharp
             {
                 Authenticator = new JwtAuthenticator(jwtToken),
                 Timeout = GetTimeOut(hostConnection.TimeOut),
-            };
+            }.UseSystemTextJson();
 
         /// <summary>
         /// Получить время в миллисекундах

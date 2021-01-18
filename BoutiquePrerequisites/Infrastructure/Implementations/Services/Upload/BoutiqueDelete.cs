@@ -27,6 +27,7 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload
             ResultValueBindErrorsOkBindAsync(restClient => CategoryDelete(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => ColorDelete(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => SizeDelete(restClient, boutiqueLogger)).
+            ResultValueBindErrorsOkBindAsync(restClient => ClothesDelete(restClient, boutiqueLogger)).
             VoidTaskAsync(_ => boutiqueLogger.ShowMessage("Удаление данных завершено"));
 
         /// <summary>
@@ -69,6 +70,13 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> SizeGroupDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient, boutiqueLogger).
+            Delete();
+
+        /// <summary>
+        /// Загрузить тип одежды в базу
+        /// </summary>
+        private static async Task<IResultError> ClothesDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+            await BoutiqueRestServiceFactory.GetClothesRestService(restClient, boutiqueLogger).
             Delete();
     }
 }

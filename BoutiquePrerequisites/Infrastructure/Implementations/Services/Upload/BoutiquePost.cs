@@ -28,6 +28,7 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload
             ResultValueBindErrorsOkBindAsync(restClient => ClothesTypeUpload(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => SizeUpload(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => SizeGroupUpload(restClient, boutiqueLogger)).
+            ResultValueBindErrorsOkBindAsync(restClient => ClothesUpload(restClient, boutiqueLogger)).
             VoidTaskAsync(_ => boutiqueLogger.ShowMessage("Загрузка данных завершена"));
 
         /// <summary>
@@ -71,5 +72,12 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload
         private static async Task<IResultError> SizeGroupUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient, boutiqueLogger).
             Upload(SizeGroupInitialize.SizeGroups);
+
+        /// <summary>
+        /// Загрузить одежду в базу
+        /// </summary>
+        private static async Task<IResultError> ClothesUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+            await BoutiqueRestServiceFactory.GetClothesRestService(restClient, boutiqueLogger).
+            Upload(ClothesInitialize.Clothes);
     }
 }

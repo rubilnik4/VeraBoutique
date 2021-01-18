@@ -3,6 +3,7 @@ using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using RestSharp;
+using RestSharp.Serialization.Json;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
 {

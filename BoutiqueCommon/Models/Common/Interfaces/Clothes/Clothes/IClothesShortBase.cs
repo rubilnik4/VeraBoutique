@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;

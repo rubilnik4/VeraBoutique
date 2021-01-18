@@ -9,7 +9,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи цвета одежды
     /// </summary>
-    public class ColorController : ApiController<string, ColorTransfer, IColorDomain>
+    public class ColorController : ApiController<string, IColorDomain, ColorTransfer>
     {
         public ColorController(IColorDatabaseService colorDatabaseService,
                                IColorTransferConverter colorTransferConverter)

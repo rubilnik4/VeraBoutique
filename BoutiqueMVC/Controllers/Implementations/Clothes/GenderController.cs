@@ -19,7 +19,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи пола
     /// </summary>
-    public class GenderController : ApiController<GenderType, GenderTransfer, IGenderDomain>
+    public class GenderController : ApiController<GenderType, IGenderDomain, GenderTransfer>
     {
         public GenderController(IGenderDatabaseService genderDatabaseService, IGenderTransferConverter genderTransferConverter)
             : base(genderDatabaseService, genderTransferConverter)
