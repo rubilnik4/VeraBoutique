@@ -215,7 +215,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_Ok()
         {
             var clothes = ClothesData.ClothesDomains.
-                          OrderByDescending(clothesDomain => clothesDomain.ClothesTypeShort);
+                          OrderByDescending(clothesDomain => clothesDomain.ClothesTypeShort.CategoryName);
 
             var result = await ValidateIncludes(clothes);
 
@@ -294,6 +294,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных одежды
         /// </summary>
         private static Mock<IClothesTable> ClothesTable =>
-            new Mock<IClothesTable>();
+            new ();
     }
 }

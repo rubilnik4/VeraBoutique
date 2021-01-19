@@ -26,16 +26,33 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         /// Преобразования модели цвета одежды в модель базы данных
         /// </summary>
         [Fact]
-        public void ToEntity_FromEntity()
+        public void ToEntity()
         {
             var clothesDomain = ClothesData.ClothesDomains.First();
             var clothesEntityConverter = ClothesEntityConverter;
 
             var clothesEntity = clothesEntityConverter.ToEntity(clothesDomain);
-            var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesEntity);
 
-            Assert.True(clothesAfterConverter.OkStatus);
-            Assert.True(clothesDomain.Equals(clothesAfterConverter.Value));
+            Assert.True(clothesDomain.Equals(clothesEntity));
+            Assert.Null(clothesEntity.Gender);
+            Assert.Null(clothesEntity.ClothesType);
+            Assert.True(clothesEntity.ClothesSizeGroupComposites?.All(composite => composite.SizeGroup == null));
+            Assert.True(clothesEntity.ClothesColorComposites?.All(composite => composite.ColorClothes == null));
+        }
+
+        /// <summary>
+        /// Преобразования модели цвета одежды из модели базы данных
+        /// </summary>
+        [Fact]
+        public void FromEntity()
+        {
+            var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
+            var clothesEntityConverter = ClothesEntityConverter;
+
+            var clothesDomain = clothesEntityConverter.FromEntity(clothesEntity);
+
+            Assert.True(clothesDomain.OkStatus);
+            Assert.True(ClothesData.ClothesDomains.First().Equals(clothesDomain.Value));
         }
 
         /// <summary>
@@ -119,8 +136,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
                                                       GenderEntity? gender, ClothesTypeEntity? clothesType,
                                                       IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                                                       IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites) =>
-            new ClothesEntity(clothesShort.Id, clothesShort.Name, clothesShort.Description, clothesShort.Price, clothesShort.Image,
-                              clothesShort.GenderType, clothesShort.ClothesTypeName, gender, clothesType,
-                              clothesColorComposites, clothesSizeGroupComposites);
+            new(clothesShort.Id, clothesShort.Name, clothesShort.Description, clothesShort.Price, clothesShort.Image,
+                 clothesShort.GenderType, clothesShort.ClothesTypeName, gender, clothesType,
+                 clothesColorComposites, clothesSizeGroupComposites);
     }
 }

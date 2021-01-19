@@ -12,6 +12,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
 using Xunit;
 using Xunit.Sdk;
@@ -27,16 +28,31 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         [Fact]
-        public void ToEntity_FromEntity()
+        public void ToEntity()
         {
             var clothesTypeDomain = ClothesTypeData.ClothesTypeDomains.First();
             var clothesTypeEntityConverter = ClothesTypeEntityConverter;
 
             var clothesTypeEntity = clothesTypeEntityConverter.ToEntity(clothesTypeDomain);
-            var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeEntity);
 
-            Assert.True(clothesTypeAfterConverter.OkStatus);
-            Assert.True(clothesTypeDomain.Equals(clothesTypeAfterConverter.Value));
+            Assert.True(clothesTypeDomain.Equals(clothesTypeEntity));
+            Assert.Null(clothesTypeEntity.Category);
+            Assert.True(clothesTypeEntity.ClothesTypeGenderComposites?.All(composite => composite.Gender == null));
+        }
+
+        /// <summary>
+        /// Преобразования модели вида одежды из модели базы данных
+        /// </summary>
+        [Fact]
+        public void FromEntity()
+        {
+            var clothesTypeEntity = ClothesTypeEntitiesData.ClothesTypeEntities.First();
+            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+
+            var clothesTypeDomain = clothesTypeEntityConverter.FromEntity(clothesTypeEntity);
+
+            Assert.True(clothesTypeDomain.OkStatus);
+            Assert.True(ClothesTypeData.ClothesTypeDomains.First().Equals(clothesTypeDomain.Value));
         }
 
         /// <summary>
@@ -77,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         private static IClothesTypeEntityConverter ClothesTypeEntityConverter =>
-            new ClothesTypeEntityConverter(new CategoryEntityConverter(), new GenderEntityConverter());
+            ClothesTypeEntityConverterMock.ClothesTypeEntityConverter;
 
         /// <summary>
         /// Получить тип одежды
@@ -86,6 +102,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
                                                         string categoryName, CategoryEntity? category, 
                                                         IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites, 
                                                         IEnumerable<ClothesEntity>? clothes) =>
-            new ClothesTypeEntity(clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes);
+            new (clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes);
     }
 }

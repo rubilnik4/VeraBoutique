@@ -37,12 +37,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testTransfer = testTransferConverter.ToTransfer(testDomain.Value);
             var actionResult = await testController.Post(testTransfer);
 
-            Assert.IsType<CreatedAtActionResult>(actionResult.Result);
-            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
-            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
-            Assert.IsAssignableFrom<TestEnum>(createdAtActionResult.RouteValues.Values.First());
-            var testId = (TestEnum)createdAtActionResult.RouteValues.Values.First();
-            Assert.True(testDomainsId.Equals(testId));
+            Assert.True(testDomainsId.Equals(actionResult.Value));
         }
 
         /// <summary>
@@ -103,12 +98,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testTransfers = testTransferConverter.ToTransfers(testDomains.Value).ToList();
             var actionResult = await testController.Post(testTransfers);
 
-            Assert.IsType<CreatedAtActionResult>(actionResult.Result);
-            var createdAtActionResult = (CreatedAtActionResult)actionResult.Result;
-            Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
-            Assert.IsAssignableFrom<IEnumerable<TestEnum>>(createdAtActionResult.RouteValues.Values.First());
-            var testIds = (IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First();
-            Assert.True(testDomainsIds.SequenceEqual(testIds));
+            Assert.True(testDomainsIds.SequenceEqual(actionResult.Value));
         }
 
         /// <summary>
