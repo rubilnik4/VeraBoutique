@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
@@ -11,6 +9,7 @@ using BoutiqueDTO.Models.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.SizeGroup;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
 {

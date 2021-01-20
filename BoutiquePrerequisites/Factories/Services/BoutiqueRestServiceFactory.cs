@@ -49,13 +49,13 @@ namespace BoutiquePrerequisites.Factories.Services
         /// Получить сервис типа пола
         /// </summary>
         public static IGenderRestService GetGenderRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new GenderRestService( new GenderApiService(restClient), new GenderTransferConverter(), boutiqueLogger);
+             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter(), boutiqueLogger);
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
         public static ICategoryRestService GetCategoryRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new CategoryRestService( new CategoryApiService(restClient), new CategoryTransferConverter(), boutiqueLogger);
+             new CategoryRestService(new CategoryApiService(restClient), new CategoryTransferConverter(), boutiqueLogger);
 
         /// <summary>
         /// Получить сервис категорий одежды

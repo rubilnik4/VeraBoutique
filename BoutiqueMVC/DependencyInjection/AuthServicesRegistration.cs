@@ -22,7 +22,7 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Подключение зависимостей для авторизации
     /// </summary>
-    public static class AuthServices
+    public static class AuthServicesRegistration
     {
         /// <summary>
         /// Добавить политики авторизации
@@ -37,7 +37,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Внедрить зависимости авторизации
         /// </summary>
-        public static void InjectJwtServices(IServiceCollection services, IConfiguration configuration) =>
+        public static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration) =>
             JwtSettingsFactory.GetJwtSettings(configuration).
             Map(jwtSettings => services.AddSingleton(jwtSettings).
                                Void(_ => AddJwtAuthentication(services, configuration)));
@@ -45,7 +45,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить сервисы авторизации к базе
         /// </summary>
-        public static void InjectDatabaseIdentities(IServiceCollection services) =>
+        public static void RegisterDatabaseIdentities(IServiceCollection services) =>
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
                 {
                     options.Password.RequiredLength = IdentitySettings.PASSWORD_MINLENGTH;

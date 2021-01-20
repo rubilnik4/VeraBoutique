@@ -2,13 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
-
     <Authors>Ivan Rubilnik</Authors>
-
     <Description>Unit tests for DTO models</Description>
-
     <PackageId>BoutiqueDTOXUnit</PackageId>
   </PropertyGroup>
 

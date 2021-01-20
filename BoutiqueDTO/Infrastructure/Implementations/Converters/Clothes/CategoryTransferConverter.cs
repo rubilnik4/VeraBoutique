@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -22,7 +23,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
         public override CategoryTransfer ToTransfer(ICategoryDomain categoryDomain) =>
-            new (categoryDomain);
+            new CategoryTransfer(categoryDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели

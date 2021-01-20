@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Json.Serialization;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.SizeGroup;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers
 {

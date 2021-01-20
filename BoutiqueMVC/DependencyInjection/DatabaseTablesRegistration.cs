@@ -9,12 +9,12 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Регистрация таблиц для баз данных
     /// </summary>
-    public static class DatabaseTables
+    public static class DatabaseTablesRegistration
     {
         /// <summary>
         /// Внедрить зависимости к таблицам базы данных
         /// </summary>
-        public static void InjectDatabaseTables(IServiceCollection services)
+        public static void RegisterDatabaseTables(IServiceCollection services)
         {
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.CategoryTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClothesTable);

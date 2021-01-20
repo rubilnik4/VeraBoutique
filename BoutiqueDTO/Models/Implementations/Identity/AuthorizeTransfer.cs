@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using BoutiqueCommon.Models.Common.Implementations.Identity;
+﻿using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueCommon.Models.Common.Interfaces.Identity;
 using BoutiqueDTO.Models.Interfaces.Identity;
+using Newtonsoft.Json;
 using static BoutiqueCommon.Models.Common.Implementations.Identity.IdentitySettings;
 
 namespace BoutiqueDTO.Models.Implementations.Identity

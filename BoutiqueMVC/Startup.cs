@@ -33,12 +33,12 @@ namespace BoutiqueMVC
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            ControllerServices.InjectControllerServices(services);
-            DatabaseServices.InjectDatabaseServices(services);
-            AuthServices.AddAuthorization(services);
-            AuthServices.InjectJwtServices(services, Configuration);
-            AuthServices.InjectDatabaseIdentities(services);
-            services.AddControllers();
+            ControllerServicesRegistration.RegistrationControllerServices(services);
+            DatabaseServicesRegistration.RegisterDatabaseServices(services);
+            AuthServicesRegistration.AddAuthorization(services);
+            AuthServicesRegistration.RegisterJwtServices(services, Configuration);
+            AuthServicesRegistration.RegisterDatabaseIdentities(services);
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerDocument(SwaggerConfiguration.ConfigSwagger);
         }
 
@@ -73,6 +73,6 @@ namespace BoutiqueMVC
         /// Стартовые асинхронные операции
         /// </summary>
         public static async Task PreLoadAsync(IServiceProvider serviceProvider) =>
-            await DatabaseServices.UpdateSchema(serviceProvider);
+            await DatabaseServicesRegistration.UpdateSchema(serviceProvider);
     }
 }

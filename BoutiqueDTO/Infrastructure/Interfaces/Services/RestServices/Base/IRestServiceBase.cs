@@ -8,14 +8,19 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
     /// <summary>
     /// Базовый сервис для данных Api
     /// </summary>
-    public interface IRestServiceBase<TId, in TDomain>
+    public interface IRestServiceBase<TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TId : notnull
     {
         /// <summary>
-        /// Загрузить данные
+        /// Получить данные
         /// </summary>
-        Task<IResultError> Upload(IEnumerable<TDomain> domains);
+        Task<IResultCollection<TDomain>> Get();
+
+        /// <summary>
+        /// Отправить данные
+        /// </summary>
+        Task<IResultError> Post(IEnumerable<TDomain> domains);
 
         /// <summary>
         /// Удалить все данные

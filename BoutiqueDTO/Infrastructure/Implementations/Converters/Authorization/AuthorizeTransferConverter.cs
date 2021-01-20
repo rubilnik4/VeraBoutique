@@ -24,7 +24,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
         public override AuthorizeTransfer ToTransfer(IAuthorizeDomain authorizeDomain) =>
-            new (authorizeDomain);
+            new AuthorizeTransfer(authorizeDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели

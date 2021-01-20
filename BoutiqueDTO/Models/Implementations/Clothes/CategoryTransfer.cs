@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using BoutiqueCommon.Models.Common.Implementations.Clothes;
+﻿using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes
 {

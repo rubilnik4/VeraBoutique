@@ -10,14 +10,14 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Регистрация зависимостей для контроллеров
     /// </summary>
-    public static class ControllerServices
+    public static class ControllerServicesRegistration
     {
         /// <summary>
         /// Внедрить зависимости к базе данных
         /// </summary>
-        public static void InjectControllerServices(IServiceCollection services)
+        public static void RegistrationControllerServices(IServiceCollection services)
         {
-            ConverterServices.InjectTransferConverters(services);
+            ConverterServicesRegistration.RegisterTransferConverters(services);
 
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();

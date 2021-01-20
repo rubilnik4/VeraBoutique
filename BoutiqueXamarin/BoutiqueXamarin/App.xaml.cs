@@ -1,5 +1,18 @@
+using System;
+using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueDTO.Factory.RestSharp;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueDTO.Models.Implementations.Connection;
+using BoutiqueXamarin.DependencyInjection;
+using BoutiqueXamarin.Infrastructure.Implementations;
 using BoutiqueXamarin.ViewModels;
 using BoutiqueXamarin.ViewModels.Clothes;
+using BoutiqueXamarin.ViewModels.Clothes.Choice;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
 using Prism;
@@ -35,17 +48,10 @@ namespace BoutiqueXamarin
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
-            RegisterPages(containerRegistry);
-        }
-
-        /// <summary>
-        /// Регистрация видов и моделей
-        /// </summary>
-        private static void RegisterPages(IContainerRegistry containerRegistry)
-        {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<ChoicePage, ChoiceViewModel>();
+            PagesRegistration.RegisterPages(containerRegistry);
+            ConverterServicesRegistration.RegisterTransferConverters(containerRegistry);
+            RestServicesRegistration.RegisterServices(containerRegistry);
+            CommonServicesRegistration.RegisterCommonServices(containerRegistry);
         }
     }
 }

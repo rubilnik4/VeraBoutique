@@ -15,6 +15,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -41,7 +42,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
         public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
-            new (sizeGroupDomain, _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
+            new SizeGroupTransfer(sizeGroupDomain, _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели

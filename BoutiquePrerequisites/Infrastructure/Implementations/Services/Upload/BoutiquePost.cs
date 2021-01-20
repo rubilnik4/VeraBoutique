@@ -36,48 +36,48 @@ namespace BoutiquePrerequisites.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> GenderUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetGenderRestService(restClient, boutiqueLogger).
-            Upload(GenderInitialize.Genders);
+            Post(GenderInitialize.Genders);
 
         /// <summary>
         /// Загрузить категории одежды в базу
         /// </summary>
         private static async Task<IResultError> CategoryUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetCategoryRestService(restClient, boutiqueLogger).
-            Upload(CategoryInitialize.Categories);
+            Post(CategoryInitialize.Categories);
 
         /// <summary>
         /// Загрузить цвет одежды в базу
         /// </summary>
         private static async Task<IResultError> ColorUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetColorRestService(restClient, boutiqueLogger).
-            Upload(ColorInitialize.ColorClothes);
+            Post(ColorInitialize.ColorClothes);
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> ClothesTypeUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesTypeRestService(restClient, boutiqueLogger).
-            Upload(ClothesTypeInitialize.ClothesTypes);
+            Post(ClothesTypeInitialize.ClothesTypes);
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeRestService(restClient, boutiqueLogger).
-            Upload(SizeInitialize.Sizes);
+            Post(SizeInitialize.Sizes);
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeGroupUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient, boutiqueLogger).
-            Upload(SizeGroupInitialize.SizeGroups);
+            Post(SizeGroupInitialize.SizeGroups);
 
         /// <summary>
         /// Загрузить одежду в базу
         /// </summary>
         private static async Task<IResultError> ClothesUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesRestService(restClient, boutiqueLogger).
-            Upload(ClothesInitialize.Clothes);
+            Post(ClothesInitialize.Clothes);
     }
 }

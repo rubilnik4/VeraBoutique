@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
@@ -6,9 +7,11 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -23,8 +26,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
     {
-        protected RestServiceBase(IApiService<TId, TTransfer> apiService, 
-                                  ITransferConverter<TId, TDomain, TTransfer> transferConverter, 
+        protected RestServiceBase(IApiService<TId, TTransfer> apiService,
+                                  ITransferConverter<TId, TDomain, TTransfer> transferConverter,
                                   IBoutiqueLogger boutiqueLogger)
         {
             _apiService = apiService;
@@ -48,27 +51,38 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         private readonly IBoutiqueLogger _boutiqueLogger;
 
         /// <summary>
-        /// Загрузить данные
+        /// Отправить данные
         /// </summary>
-        public async Task<IResultError> Upload(IEnumerable<TDomain> domains) =>
+        public async Task<IResultCollection<TDomain>> Get() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
-            ResultValueVoidOk(_ => _boutiqueLogger.ShowMessage($"Загрузка [{typeof(TDomain).Name}]")).
+            ResultValueBindOkToCollectionAsync(api => api.Get()).
+            ResultCollectionBindOkTaskAsync(transfers => _transferConverter.FromTransfers(transfers)).
+            VoidTaskAsync(result => ServiceLog(result, nameof(Get)));
+
+        /// <summary>
+        /// Отправить данные
+        /// </summary>
+        public async Task<IResultError> Post(IEnumerable<TDomain> domains) =>
+            await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindOkToCollectionAsync(api => api.PostCollection(_transferConverter.ToTransfers(domains))).
-            ResultCollectionVoidOkBadTaskAsync(ids => ids.Void(_ => _boutiqueLogger.ShowMessage($"Загрузка [{typeof(TDomain).Name}] завершена успешно")),
-                                               errors => errors.
-                                                         Void(_ => _boutiqueLogger.ShowMessage($"Ошибка загрузки [{typeof(TDomain).Name}]")).
-                                                         Void(_ => _boutiqueLogger.ShowErrors(errors)));
+            VoidTaskAsync(result => ServiceLog(result, nameof(Post)));
 
         /// <summary>
         /// Удалить все данные
         /// </summary>
         public async Task<IResultError> Delete() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
-            ResultValueVoidOk(_ => _boutiqueLogger.ShowMessage($"Удаление [{typeof(TDomain).Name}]")).
             ResultValueBindErrorsOkAsync(api => api.Delete()).
-            ResultValueVoidOkBadTaskAsync(ids => ids.Void(_ => _boutiqueLogger.ShowMessage($"Удаление [{typeof(TDomain).Name}] завершено успешно")),
-                                               errors => errors.
-                                                         Void(_ => _boutiqueLogger.ShowMessage($"Ошибка удаления [{typeof(TDomain).Name}]")).
-                                                         Void(_ => _boutiqueLogger.ShowErrors(errors)));
+            VoidTaskAsync(result => ServiceLog(result, nameof(Delete)));
+
+        /// <summary>
+        /// Логгирование
+        /// </summary>
+        private void ServiceLog(IResultError result, string actionType) =>
+           result.
+           ResultErrorVoidOkBad(() => _boutiqueLogger.ShowMessage($"{actionType} [{typeof(TDomain).Name}] completed"),
+                                errors => errors.
+                                          Void(_ => _boutiqueLogger.ShowMessage($"Error {actionType} [{typeof(TDomain).Name}]")).
+                                          Void(_ => _boutiqueLogger.ShowErrors(errors)));
     }
 }

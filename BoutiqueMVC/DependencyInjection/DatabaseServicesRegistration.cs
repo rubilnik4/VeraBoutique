@@ -26,19 +26,19 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Регистрация зависимостей для баз данных
     /// </summary>
-    public static class DatabaseServices
+    public static class DatabaseServicesRegistration
     {
         /// <summary>
         /// Внедрить зависимости к базе данных
         /// </summary>
-        public static void InjectDatabaseServices(IServiceCollection services)
+        public static void RegisterDatabaseServices(IServiceCollection services)
         {
-            ConverterServices.InjectEntityConverters(services);
-            DatabaseTables.InjectDatabaseTables(services);
+            ConverterServicesRegistration.RegisterEntityConverters(services);
+            DatabaseTablesRegistration.RegisterDatabaseTables(services);
 
-            InjectCommonServices(services);
-            InjectValidateServices(services);
-            InjectDatabase(services);
+            RegisterCommonServices(services);
+            RegisterValidateServices(services);
+            RegisterDatabase(services);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить сервисы базы данных
         /// </summary>
-        private static void InjectDatabase(IServiceCollection services)
+        private static void RegisterDatabase(IServiceCollection services)
         {
             if (PostgresConnection.HasErrors) throw new ConfigurationErrorsException(nameof(PostgresConnection));
 
@@ -63,7 +63,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить общие сервисы базы данных
         /// </summary>
-        private static void InjectCommonServices(IServiceCollection services)
+        private static void RegisterCommonServices(IServiceCollection services)
         {
             services.AddTransient<IGenderDatabaseService, GenderDatabaseService>();
             services.AddTransient<ICategoryDatabaseService, CategoryDatabaseService>();
@@ -77,7 +77,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить сервисы проверок базы данных
         /// </summary>
-        private static void InjectValidateServices(IServiceCollection services)
+        private static void RegisterValidateServices(IServiceCollection services)
         {
             services.AddTransient<IGenderDatabaseValidateService, GenderDatabaseValidateService>();
             services.AddTransient<ICategoryDatabaseValidateService, CategoryDatabaseValidateService>();

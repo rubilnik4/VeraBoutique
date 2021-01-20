@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;

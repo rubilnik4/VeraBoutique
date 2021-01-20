@@ -16,6 +16,7 @@ namespace BoutiqueCommon.Extensions.CollectionExtensions
                                                                     IReadOnlyCollection<TValueSecond> collectionSecond,
                                                                     Func<TValueFirst, TValueSecond, bool> compareFunc) =>
             collectionFirst.Count == collectionSecond.Count &&
-            collectionFirst.Zip(collectionSecond).All(tuple => compareFunc(tuple.First, tuple.Second));
+            collectionFirst.Zip(collectionSecond, (first, second) => (first, second)).
+                            All(tuple => compareFunc(tuple.first, tuple.second));
     }
 }

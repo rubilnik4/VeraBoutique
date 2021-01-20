@@ -2,17 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
-
     <Authors>Ivan Rubilnik</Authors>
-
     <Company>Ivan Rubilnik</Company>
-
     <Copyright>Ivan Rubilnik</Copyright>
-
     <Description>Functional library tests</Description>
-
     <Nullable>enable</Nullable>
   </PropertyGroup>
 

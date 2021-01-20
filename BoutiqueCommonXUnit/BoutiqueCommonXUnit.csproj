@@ -1,20 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-
+    <TargetFramework>net5.0</TargetFramework> 
     <IsPackable>false</IsPackable>
-
     <Product>VeraBoutique</Product>
-
     <Company>Ivan Rubilnik</Company>
-
     <Authors>Ivan Rubilnik</Authors>
-
     <Copyright>Ivan Rubilnik</Copyright>
-
     <Description>Common library tests</Description>
-
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
