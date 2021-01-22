@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Implementations\" />
+    <Folder Include="Models\Enums\ViewModels\" />
   </ItemGroup>
 
 </Project>

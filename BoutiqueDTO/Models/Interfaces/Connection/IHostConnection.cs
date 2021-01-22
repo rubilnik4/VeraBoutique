@@ -17,5 +17,10 @@ namespace BoutiqueDTO.Models.Interfaces.Connection
         /// Время ожидания
         /// </summary>
         TimeSpan TimeOut { get; }
+
+        /// <summary>
+        /// Отключить проверку сертификата
+        /// </summary>
+        bool DisableSSLValidation { get; }
     }
 }

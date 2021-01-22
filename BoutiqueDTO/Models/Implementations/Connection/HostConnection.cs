@@ -10,9 +10,14 @@ namespace BoutiqueDTO.Models.Implementations.Connection
     public class HostConnection: IHostConnection
     {
         public HostConnection(Uri host, TimeSpan timeOut)
+            :this(host, timeOut, false)
+        { }
+
+        public HostConnection(Uri host, TimeSpan timeOut, bool disableSslValidation)
         {
             Host = host;
             TimeOut = timeOut;
+            DisableSSLValidation = disableSslValidation;
         }
         
         /// <summary>
@@ -24,5 +29,10 @@ namespace BoutiqueDTO.Models.Implementations.Connection
         /// Время ожидания
         /// </summary>
         public TimeSpan TimeOut { get; }
+
+        /// <summary>
+        /// Отключить проверку сертификата
+        /// </summary>
+        public bool DisableSSLValidation { get; }
     }
 }

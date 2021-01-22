@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueDTO.Models.Interfaces.Connection;
+using Functional.FunctionalExtensions.Sync;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Serialization.Json;
@@ -16,10 +17,7 @@ namespace BoutiqueDTO.Factory.RestSharp
         /// Создать api клиент
         /// </summary>
         public static IRestClient GetRestClient(IHostConnection hostConnection) =>
-             new RestClient(hostConnection.Host)
-             {
-                 Timeout = GetTimeOut(hostConnection.TimeOut),
-             }.UseNewtonsoftJson();
+            GetRestClient(hostConnection, String.Empty);
 
         /// <summary>
         /// Создать api клиент c jwt токеном
@@ -27,9 +25,12 @@ namespace BoutiqueDTO.Factory.RestSharp
         public static IRestClient GetRestClient(IHostConnection hostConnection, string jwtToken) =>
             new RestClient(hostConnection.Host)
             {
-                Authenticator = new JwtAuthenticator(jwtToken),
+                Authenticator = String.IsNullOrWhiteSpace(jwtToken) ? null : new JwtAuthenticator(jwtToken),
                 Timeout = GetTimeOut(hostConnection.TimeOut),
-            }.UseNewtonsoftJson();
+            }.UseNewtonsoftJson().
+            VoidOk(_ => hostConnection.DisableSSLValidation,
+                      restClient => restClient.RemoteCertificateValidationCallback =
+                          (sender, certificate, chain, sslPolicyErrors) => true);
 
         /// <summary>
         /// Получить время в миллисекундах

@@ -44,7 +44,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         private static void RegisterApiServices(IContainerRegistry containerRegistry)
         {
-            var hostConnection = new HostConnection(new Uri("https://localhost:5001/"), TimeSpan.FromSeconds(5));
+            var hostConnection = new HostConnection(new Uri("https://10.0.2.2:5001/"), TimeSpan.FromSeconds(5), true);
             var restClient = RestSharpFactory.GetRestClient(hostConnection);
 
             containerRegistry.Register<IGenderApiService>(service => new GenderApiService(restClient));

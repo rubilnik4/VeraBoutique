@@ -21,10 +21,10 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
         public static IResultError ResultErrorVoidBad(this IResultError @this,
-                                                              Action<IReadOnlyCollection<IErrorResult>> action) =>
+                                                      Action<IReadOnlyCollection<IErrorResult>> actionBad) =>
             @this.
             VoidOk(_ => @this.HasErrors,
-                action: _ => action.Invoke(@this.Errors));
+                action: _ => actionBad.Invoke(@this.Errors));
 
         /// <summary>
         /// Выполнить действие, вернуть результирующий ответ
@@ -41,8 +41,8 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultError
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
         public static IResultError ResultErrorVoidOkWhere(this IResultError @this,
-                                                                  Func<bool> predicate,
-                                                                  Action action) =>
+                                                          Func<bool> predicate,
+                                                          Action action) =>
             @this.
             VoidOk(_ => @this.OkStatus && predicate(),
                 action: _ => action.Invoke());

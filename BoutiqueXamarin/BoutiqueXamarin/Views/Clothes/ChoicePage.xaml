@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BoutiqueXamarin.Views.Clothes.ChoicePage"
+             xmlns:viewModel="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice"             
              Title="{Binding Title}">
     <!--<TabbedPage.Content>
         <StackLayout>
@@ -10,5 +11,13 @@
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </TabbedPage.Content>-->
-   
-</TabbedPage>
+    <!--<ContentPage.BindingContext>
+        <viewmodels:ChoiceViewModel/>
+    </ContentPage.BindingContext>-->
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Button Text="Test Api" 
+                Command="{Binding TestApiCommand}"/>
+    </StackLayout>
+
+</ContentPage>
