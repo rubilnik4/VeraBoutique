@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace BoutiqueXamarin.Views.Clothes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ChoicePage : ContentPage
+    public partial class ChoicePage : TabbedPage
     {
         public ChoicePage()
         {

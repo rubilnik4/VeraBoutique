@@ -1,6 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.Models.Interfaces;
 using BoutiqueXamarin.ViewModels.Base;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.Models.Interfaces.Result;
 using Prism.Commands;
 using Prism.Navigation;
 
@@ -11,15 +20,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
     /// </summary>
     public class ChoiceViewModel : ViewModelBase
     {
-
-
-        public ChoiceViewModel(INavigationService navigationService, IGenderRestService genderRestService)
+        public ChoiceViewModel(INavigationService navigationService, IBoutiqueProject boutiqueProject)
           : base(navigationService)
         {
-            _genderRestService = genderRestService;
+            ChoiceViewModelItems = new ObservableCollection<ChoiceViewModelItem>(boutiqueProject.Genders.Select(gender => new ChoiceViewModelItem(gender)));
         }
-
-        private readonly IGenderRestService _genderRestService;
 
         /// <summary>
         /// Заголовок
@@ -27,11 +32,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
         public override string Title => "Выбор категории";
 
         /// <summary>
-        /// Параметры перехода с формы
+        /// Типы пола
         /// </summary>
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            var genders = await _genderRestService.Get();
-        }
+        public ObservableCollection<ChoiceViewModelItem> ChoiceViewModelItems { get; }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
@@ -10,6 +11,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.DependencyInjection;
 using BoutiqueXamarin.Infrastructure.Implementations;
+using BoutiqueXamarin.Models.Interfaces;
 using BoutiqueXamarin.ViewModels;
 using BoutiqueXamarin.ViewModels.Clothes;
 using BoutiqueXamarin.ViewModels.Clothes.Choice;
@@ -37,7 +39,12 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized()
         {
+            var genderRestService = Container.Resolve<IGenderRestService>();
+            var genders = await genderRestService.Get();
+
             InitializeComponent();
+            //var boutiqueProject = Container.Resolve<IBoutiqueProject>();
+            //boutiqueProject.Genders = genders.Value;
 
             await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(ChoicePage)}");
         }
@@ -48,6 +55,7 @@ namespace BoutiqueXamarin
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+            ProjectRegistration.RegisterProject(containerRegistry);
             PagesRegistration.RegisterPages(containerRegistry);
             ConverterServicesRegistration.RegisterTransferConverters(containerRegistry);
             RestServicesRegistration.RegisterServices(containerRegistry);

@@ -38,27 +38,27 @@ namespace BoutiqueXamarin.ViewModels.Base
         protected ViewModelState ViewModelState { get; private set; } = ViewModelState.Ok;
 
         /// <summary>
-        /// Параметры инициализации формы
+        /// Параметры инициализации формы с изменением состояния
         /// </summary>
         public virtual void Initialize(INavigationParameters parameters)
         { }
+            //await new ResultError().
+            //ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
+            //ResultErrorBindOkAsync(InitializeAction).
+            //ResultErrorVoidOkBadTaskAsync(
+            //    actionOk: () => ViewModelState = ViewModelState.Ok,
+            //    actionBad: _ => ViewModelState = ViewModelState.Error);
 
         /// <summary>
-        /// Параметры перехода формы
+        /// Параметры перехода c формы с изменением состояния
         /// </summary>
-        public async void OnNavigatedFrom(INavigationParameters parameters) =>
-            await new ResultError().
-            ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
-            ResultErrorBindOkAsync(NavigatedFromAction).
-            ResultErrorVoidOkBadAsync(
-                actionOk:() => ViewModelState = ViewModelState.Ok,
-                actionBad:_ => ViewModelState = ViewModelState.Error);
-           
+        public virtual void OnNavigatedFrom(INavigationParameters parameters) 
+        { }
 
         /// <summary>
-        /// Параметры перехода с формы
+        /// Параметры перехода на форму с изменением состояния
         /// </summary>
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
         { }
 
         /// <summary>
@@ -66,7 +66,5 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// </summary>
         public virtual void Destroy()
         { }
-
-        protected abstract Task<IResultError> NavigatedFromAction();
     }
 }

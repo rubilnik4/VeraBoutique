@@ -3,18 +3,23 @@
 namespace BoutiqueXamarin.ViewModels.Clothes.Choice
 {
     /// <summary>
-    /// Выбор типа одежды. Вложенная модель
+    /// Тип одежды
     /// </summary>
     public class ChoiceViewModelItem
     {
         public ChoiceViewModelItem(IGenderDomain gender)
         {
-            Gender = gender;
+            _gender = gender;
         }
 
         /// <summary>
         /// Пол
         /// </summary>
-        public IGenderDomain Gender { get; }
+        private readonly IGenderDomain _gender;
+
+        /// <summary>
+        /// Наименование типа пола
+        /// </summary>
+        public string Name => _gender.Name;
     }
 }

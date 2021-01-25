@@ -14,7 +14,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Выполнить действие при положительном значении, вернуть результирующий ответ
         /// </summary>      
-        public static async Task<IResultError> ResultErrorVoidOkAsync(this Task<IResultError> @this, Action action) =>
+        public static async Task<IResultError> ResultErrorVoidOkTaskAsync(this Task<IResultError> @this, Action action) =>
             await @this.
             VoidOkTaskAsync(awaitedThis => awaitedThis.OkStatus,
                 action: _ => action.Invoke());
@@ -22,7 +22,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Выполнить действие при отрицательном значении, вернуть результирующий ответ
         /// </summary>      
-        public static async Task<IResultError> ResultErrorVoidBadAsync(this Task<IResultError> @this,
+        public static async Task<IResultError> ResultErrorVoidBadTaskAsync(this Task<IResultError> @this,
                                                                        Action<IReadOnlyCollection<IErrorResult>> actionBad) =>
             await @this.
             VoidOkTaskAsync(awaitedThis => awaitedThis.HasErrors,
@@ -31,7 +31,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Выполнить действие, вернуть результирующий ответ
         /// </summary>      
-        public static async Task<IResultError> ResultErrorVoidOkBadAsync(this Task<IResultError> @this,
+        public static async Task<IResultError> ResultErrorVoidOkBadTaskAsync(this Task<IResultError> @this,
                                                                          Action actionOk,
                                                                          Action<IReadOnlyCollection<IErrorResult>> actionBad) =>
             await @this.
@@ -42,7 +42,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultError
         /// <summary>
         /// Выполнить действие при положительном значении и выполнении условия вернуть результирующий ответ
         /// </summary>    
-        public static async Task<IResultError> ResultErrorVoidOkWhereAsync(this Task<IResultError> @this,
+        public static async Task<IResultError> ResultErrorVoidOkWhereTaskAsync(this Task<IResultError> @this,
                                                                            Func<bool> predicate,
                                                                            Action action) =>
             await @this.

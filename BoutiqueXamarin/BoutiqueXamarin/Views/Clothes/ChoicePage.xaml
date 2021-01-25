@@ -1,23 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BoutiqueXamarin.Views.Clothes.ChoicePage"
-             xmlns:viewModel="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice"             
-             Title="{Binding Title}">
-    <!--<TabbedPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </TabbedPage.Content>-->
-    <!--<ContentPage.BindingContext>
-        <viewmodels:ChoiceViewModel/>
-    </ContentPage.BindingContext>-->
-
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Button Text="Test Api" 
-                Command="{Binding TestApiCommand}"/>
-    </StackLayout>
-
-</ContentPage>
+             xmlns:viewModel="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice"   
+             ItemsSource="{Binding ChoiceViewModelItems}" x:DataType="viewModel:ChoiceViewModel">
+    <TabbedPage.ItemTemplate>
+        <DataTemplate x:DataType="viewModel:ChoiceViewModelItem">
+            <ContentPage Title="{Binding Name}">
+            </ContentPage>
+        </DataTemplate>
+    </TabbedPage.ItemTemplate>
+</TabbedPage>
