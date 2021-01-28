@@ -52,9 +52,6 @@ namespace BoutiqueMVC
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-            app.UseHsts();
-
             app.UseRouting();
 
             app.UseOpenApi();

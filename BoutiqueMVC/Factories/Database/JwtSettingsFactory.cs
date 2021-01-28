@@ -37,7 +37,7 @@ namespace BoutiqueMVC.Factories.Database
         /// Параметры авторизации
         /// </summary>
         public static JwtSettings GetJwtSettings(IConfiguration configuration) =>
-            new(GetIssuerConfiguration(configuration),
+            new JwtSettings(GetIssuerConfiguration(configuration),
                 GetAudienceConfiguration(configuration),
                 GetExpiresConfiguration(configuration),
                 SymmetricKey);

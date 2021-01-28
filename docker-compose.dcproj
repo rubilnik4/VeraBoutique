@@ -6,19 +6,11 @@
     <ProjectGuid>c0363682-f927-4480-992f-0c334cca8c64</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/gender</DockerServiceUrl>
-    <DockerServiceName>veraboutique</DockerServiceName>
+    <DockerServiceName>boutiquemvc</DockerServiceName>
     <UserSecretsId>2f77cbc9-3cd3-44f0-af7b-f1450b916958</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docker-compose - Copy (2).override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
-    <None Include="docker-compose - Copy - Copy.override.yml">
-      <DependentUpon>docker-compose - Copy.override.yml</DependentUpon>
-    </None>
-    <None Include="docker-compose - Copy.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
+    <None Include="docker-compose.Release" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
@@ -26,6 +18,7 @@
     <None Include=".dockerignore" />
     <None Include="defaultUser.env" />
     <None Include="jwt.env" />
+    <None Include="nginx.conf" />
     <None Include="postgres.env" />
   </ItemGroup>
 </Project>

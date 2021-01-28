@@ -350,3 +350,7 @@ healthchecksdb
 MigrationBackup/
 
 BoutiquePrerequisites/authorize.json
+
+BoutiqueMVC/cert.crt
+
+BoutiqueMVC/cert.rsa

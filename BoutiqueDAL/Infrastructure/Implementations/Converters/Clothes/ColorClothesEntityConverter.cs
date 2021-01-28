@@ -27,6 +27,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ColorEntity ToEntity(IColorDomain colorDomain) =>
-            new (colorDomain);
+            new ColorEntity(colorDomain);
     }
 }

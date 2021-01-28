@@ -38,7 +38,7 @@ namespace BoutiqueMVC.Models.Implementations.Controller
         /// Преобразовать в ответ контроллера о создании объекта
         /// </summary>
         public CreatedAtActionResult ToCreatedAtActionResult() =>
-            new (ActionGetName, ControllerName,
+            new CreatedAtActionResult(ActionGetName, ControllerName,
                  new { ids = IdValues.Select(idValue => idValue.Id) },
                  IdValues.Select(idValue => idValue.Value));
     }

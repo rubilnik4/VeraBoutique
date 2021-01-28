@@ -30,6 +30,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать тип пола в модель базы данных
         /// </summary>
         public override GenderEntity ToEntity(IGenderDomain genderDomain) =>
-            new (genderDomain);
+            new GenderEntity(genderDomain);
     }
 }
