@@ -9,6 +9,7 @@
     <Description>Data access layer for Vera-Boutique application</Description>
     <AssemblyName>BoutiqueDAL</AssemblyName>
     <Copyright>Ivan Rubilnik</Copyright>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

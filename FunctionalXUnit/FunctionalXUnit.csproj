@@ -8,6 +8,7 @@
     <Copyright>Ivan Rubilnik</Copyright>
     <Description>Functional library tests</Description>
     <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

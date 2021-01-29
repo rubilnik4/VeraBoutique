@@ -11,6 +11,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.DependencyInjection;
 using BoutiqueXamarin.Infrastructure.Implementations;
+using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
 using BoutiqueXamarin.Models.Interfaces;
 using BoutiqueXamarin.ViewModels;
 using BoutiqueXamarin.ViewModels.Clothes;
@@ -39,8 +40,8 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized()
         {
-            var genderRestService = Container.Resolve<IGenderRestService>();
-            var genders = await genderRestService.Get();
+            var configManager = Container.Resolve<IConfigManager>();
+            string config = configManager.GetConfiguration();
 
             InitializeComponent();
             //var boutiqueProject = Container.Resolve<IBoutiqueProject>();

@@ -6,6 +6,7 @@
     <Authors>Ivan Rubilnik</Authors>
     <Description>Unit tests for DTO models</Description>
     <PackageId>BoutiqueDTOXUnit</PackageId>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

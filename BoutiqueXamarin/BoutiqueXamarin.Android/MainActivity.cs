@@ -1,14 +1,19 @@
-﻿using Android.App;
+﻿using System.IO;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration;
+using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
 using Prism;
 using Prism.Ioc;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace BoutiqueXamarin.Droid
 {
     [Activity(Theme = "@style/MainTheme",
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -17,11 +22,11 @@ namespace BoutiqueXamarin.Droid
 
             base.OnCreate(savedInstanceState);
 
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -33,7 +38,7 @@ namespace BoutiqueXamarin.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // Register any platform specific implementations
+            containerRegistry.Register<IConfigManager, AndroidConfigManager>();
         }
     }
 }

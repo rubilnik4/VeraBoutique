@@ -16,6 +16,8 @@
     <Copyright>Ivan Rubilnik</Copyright>
 
     <Nullable>enable</Nullable>
+
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

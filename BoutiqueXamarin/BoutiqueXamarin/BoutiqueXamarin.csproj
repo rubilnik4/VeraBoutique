@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <Configurations>Debug;Release;Test</Configurations>
+  </PropertyGroup> 
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
@@ -29,9 +30,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Implementations\" />
+    <Folder Include="Factories\Configuration\" />
     <Folder Include="Models\Enums\ViewModels\" />
-    <Folder Include="Models\Implementation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\5.0.0\ref\net5.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

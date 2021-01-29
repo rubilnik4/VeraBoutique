@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation;
+using BoutiqueCommon.Infrastructure.Implementation.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;

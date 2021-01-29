@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using Functional.FunctionalExtensions.Sync;
 
-namespace BoutiqueCommon.Infrastructure.Implementation
+namespace BoutiqueCommon.Infrastructure.Implementation.Clothes
 {
     /// <summary>
     /// Именование группы размеров одежды

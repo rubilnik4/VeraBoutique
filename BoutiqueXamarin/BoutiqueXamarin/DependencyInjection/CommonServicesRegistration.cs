@@ -1,5 +1,6 @@
 ﻿using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueXamarin.Infrastructure.Implementations;
+using BoutiqueXamarin.Infrastructure.Implementations.Logger;
 using Prism.Ioc;
 
 namespace BoutiqueXamarin.DependencyInjection

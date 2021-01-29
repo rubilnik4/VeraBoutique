@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <AssemblyName>BoutiqueMVCXUnit</AssemblyName>
+
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

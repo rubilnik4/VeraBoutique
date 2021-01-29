@@ -2,7 +2,7 @@
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueXamarin.Infrastructure.Implementations
+namespace BoutiqueXamarin.Infrastructure.Implementations.Logger
 {
     /// <summary>
     /// Логгер для клиента
@@ -10,18 +10,12 @@ namespace BoutiqueXamarin.Infrastructure.Implementations
     public class BoutiqueXamarinLogger: IBoutiqueLogger
     {
         public void ShowMessage(string message)
-        {
-            
-        }
+        { }
 
         public void ShowError(IResultError resultError)
-        {
-           
-        }
+        { }
 
         public void ShowErrors(IEnumerable<IErrorResult> errors)
-        {
-           
-        }
+        { }
     }
 }

@@ -26,6 +26,7 @@
     <JavaOptions />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AndroidUseManagedDesignTimeResourceGenerator>False</AndroidUseManagedDesignTimeResourceGenerator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +58,16 @@
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Test\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DebugType>portable</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <LangVersion>8.0</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />
@@ -70,6 +81,7 @@
     <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\Implementation\Configuration\AndroidConfigManager.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="SplashActivity.cs" />
@@ -77,6 +89,19 @@
     <LinkDescription Include="LinkerSettings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
+    <AndroidAsset Include="Assets\appsettings.Test.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidAsset>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
@@ -116,6 +141,7 @@
       <Name>BoutiqueXamarin</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

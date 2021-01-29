@@ -6,6 +6,7 @@
     <Copyright>Ivan Rubilnik</Copyright>
     <Description>Data transfer models</Description>
     <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

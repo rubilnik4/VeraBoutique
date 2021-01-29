@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation;
+using BoutiqueCommon.Infrastructure.Implementation.Clothes;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Implementation;
+using BoutiqueCommon.Infrastructure.Implementation.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
 {

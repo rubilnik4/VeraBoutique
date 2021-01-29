@@ -9,6 +9,7 @@
     <Description>Functional Library</Description>
     <PackageId>Functional</PackageId>
     <Copyright>Ivan Rubilnik</Copyright>
+    <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
 </Project>
