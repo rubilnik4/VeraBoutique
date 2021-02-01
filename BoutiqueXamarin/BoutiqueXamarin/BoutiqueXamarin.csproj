@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Factories\Configuration\" />
+    <Folder Include="Infrastructure\Implementations\Converters\" />
     <Folder Include="Models\Enums\ViewModels\" />
   </ItemGroup>
 

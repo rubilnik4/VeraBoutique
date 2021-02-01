@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -34,11 +35,14 @@ namespace BoutiqueXamarin.Droid
         }
     }
 
+    /// <summary>
+    /// Регистрация зависимостей
+    /// </summary>
     public class AndroidInitializer : IPlatformInitializer
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IConfigManager, AndroidConfigManager>();
+            containerRegistry.Register<IXamarinConfigurationManager, AndroidConfigurationManager>();
         }
     }
 }

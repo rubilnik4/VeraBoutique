@@ -40,8 +40,8 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized()
         {
-            var configManager = Container.Resolve<IConfigManager>();
-            string config = configManager.GetConfiguration();
+            var configManager = Container.Resolve<IXamarinConfigurationManager>();
+            var config = await configManager.GetConfigurationAsync();
 
             InitializeComponent();
             //var boutiqueProject = Container.Resolve<IBoutiqueProject>();

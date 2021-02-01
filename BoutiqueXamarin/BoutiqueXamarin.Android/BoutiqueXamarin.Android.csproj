@@ -81,7 +81,7 @@
     <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\Implementation\Configuration\AndroidConfigManager.cs" />
+    <Compile Include="Infrastructure\Implementation\Configuration\AndroidConfigurationManager.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="SplashActivity.cs" />
@@ -136,6 +136,18 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BoutiqueCommon\BoutiqueCommon.csproj">
+      <Project>{0b7a2ffe-a950-40ce-a2b7-2e6786539139}</Project>
+      <Name>BoutiqueCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BoutiqueDTO\BoutiqueDTO.csproj">
+      <Project>{D48D711D-A7BC-4266-88C1-987AFE6EFF36}</Project>
+      <Name>BoutiqueDTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Functional\Functional.csproj">
+      <Project>{ba67de52-c056-4c82-875e-d6109f80ad7f}</Project>
+      <Name>Functional</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BoutiqueXamarin\BoutiqueXamarin.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>BoutiqueXamarin</Name>

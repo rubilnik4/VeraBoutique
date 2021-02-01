@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
@@ -8,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.Infrastructure.Implementations;
 using Prism.Ioc;
+using RestSharp;
 
 namespace BoutiqueXamarin.DependencyInjection
 {
@@ -19,7 +21,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        public static void RegisterServices(IContainerRegistry containerRegistry)
+        public static async void RegisterServices(IContainerRegistry containerRegistry)
         {
             RegisterRestServices(containerRegistry);
             RegisterApiServices(containerRegistry);
@@ -42,12 +44,12 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        private static void RegisterApiServices(IContainerRegistry containerRegistry)
+        private static async Task RegisterApiServices(IContainerRegistry containerRegistry)
         {
             var hostConnection = new HostConnection(new Uri("https://10.0.2.2:5001/"), TimeSpan.FromSeconds(5), true);
             var restClient = RestSharpFactory.GetRestClient(hostConnection);
 
-            containerRegistry.Register<IGenderApiService>(service => new GenderApiService(restClient));
+            containerRegistry.Register<IGenderApiService>(async (service) => await GetRestClient(service));
             containerRegistry.Register<ICategoryApiService>(service => new CategoryApiService(restClient));
             containerRegistry.Register<IClothesTypeApiService>(service => new ClothesTypeApiService(restClient));
             containerRegistry.Register<IColorApiService>(service => new ColorApiService(restClient));
@@ -55,5 +57,8 @@ namespace BoutiqueXamarin.DependencyInjection
             containerRegistry.Register<ISizeGroupApiService>(service => new SizeGroupApiService(restClient));
             containerRegistry.Register<IClothesApiService>(service => new ClothesApiService(restClient));
         }
+
+        private static Task<IRestClient> GetRestClient(IContainerProvider containerProvider) =>
+            containerProvider.Resolve()
     }
 }

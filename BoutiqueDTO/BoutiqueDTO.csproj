@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extensions\Json\Async\" />
     <Folder Include="Factory\RestSharp\" />
   </ItemGroup>
 
