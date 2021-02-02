@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Models.Interfaces.Connection;
 using Functional.FunctionalExtensions.Sync;
 using RestSharp;
@@ -16,21 +17,21 @@ namespace BoutiqueDTO.Factory.RestSharp
         /// <summary>
         /// Создать api клиент
         /// </summary>
-        public static IRestClient GetRestClient(IHostConnection hostConnection) =>
-            GetRestClient(hostConnection, String.Empty);
+        public static IRestClient GetRestClient(IHostConfigurationDomain hostConfiguration) =>
+            GetRestClient(hostConfiguration, String.Empty);
 
         /// <summary>
         /// Создать api клиент c jwt токеном
         /// </summary>
-        public static IRestClient GetRestClient(IHostConnection hostConnection, string jwtToken) =>
-            new RestClient(hostConnection.Host)
+        public static IRestClient GetRestClient(IHostConfigurationDomain hostConfiguration, string jwtToken) =>
+            new RestClient(hostConfiguration.Host)
             {
                 Authenticator = String.IsNullOrWhiteSpace(jwtToken) ? null : new JwtAuthenticator(jwtToken),
-                Timeout = GetTimeOut(hostConnection.TimeOut),
+                Timeout = GetTimeOut(hostConfiguration.TimeOut),
             }.UseNewtonsoftJson().
-            VoidOk(_ => hostConnection.DisableSSLValidation,
-                      restClient => restClient.RemoteCertificateValidationCallback =
-                          (sender, certificate, chain, sslPolicyErrors) => true);
+            VoidOk(_ => hostConfiguration.DisableSSL,
+                        restClient => restClient.RemoteCertificateValidationCallback =
+                            (sender, certificate, chain, sslPolicyErrors) => true);
 
         /// <summary>
         /// Получить время в миллисекундах

@@ -3,10 +3,19 @@ using System.IO;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using BoutiqueCommon.Models.Domain.Implementations.Configuration;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration;
+using BoutiqueXamarin.Infrastructure.Implementations.Converters;
 using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
+using BoutiqueXamarin.Infrastructure.Interfaces.Converters;
+using BoutiqueXamarin.Models.Implementation.Configuration;
+using BoutiqueXamarin.Models.Interfaces.Configuration;
 using Prism;
 using Prism.Ioc;
+using Prism.Unity;
+using Unity;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -36,10 +45,13 @@ namespace BoutiqueXamarin.Droid
     }
 
     /// <summary>
-    /// Регистрация зависимостей
+    /// Инициализация
     /// </summary>
     public class AndroidInitializer : IPlatformInitializer
     {
+        /// <summary>
+        /// Регистрация зависимостей
+        /// </summary>
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IXamarinConfigurationManager, AndroidConfigurationManager>();

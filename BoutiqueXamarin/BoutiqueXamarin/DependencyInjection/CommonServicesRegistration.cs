@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+﻿using BoutiqueCommon.Infrastructure.Interfaces.Container;
+using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueXamarin.Infrastructure.Implementations;
 using BoutiqueXamarin.Infrastructure.Implementations.Logger;
 using Prism.Ioc;
@@ -13,9 +14,9 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация общих сервисов
         /// </summary>
-        public static void RegisterCommonServices(IContainerRegistry containerRegistry)
+        public static void RegisterCommonServices(IBoutiqueContainer container)
         {
-            containerRegistry.Register<IBoutiqueLogger, BoutiqueXamarinLogger>();
+            container.Register<IBoutiqueLogger, BoutiqueXamarinLogger>();
         }
     }
 }

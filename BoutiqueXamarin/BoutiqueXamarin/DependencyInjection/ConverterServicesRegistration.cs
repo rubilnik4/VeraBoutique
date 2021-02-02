@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
@@ -31,21 +32,21 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация конвертеров трансферных моделей
         /// </summary>
-        public static void RegisterTransferConverters(IContainerRegistry containerRegistry)
+        public static void RegisterTransferConverters(IBoutiqueContainer container)
         {
-            containerRegistry.Register<IGenderTransferConverter, GenderTransferConverter>();
-            containerRegistry.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
-            containerRegistry.Register<IClothesTypeShortTransferConverter, ClothesTypeShortTransferConverter>();
-            containerRegistry.Register<ICategoryTransferConverter, CategoryTransferConverter>();
-            containerRegistry.Register<ISizeTransferConverter, SizeTransferConverter>();
-            containerRegistry.Register<ISizeGroupShortTransferConverter, SizeGroupShortTransferConverter>();
-            containerRegistry.Register<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
-            containerRegistry.Register<IColorTransferConverter, ColorTransferConverter>();
-            containerRegistry.Register<IClothesShortTransferConverter, ClothesShortTransferConverter>();
-            containerRegistry.Register<IClothesTransferConverter, ClothesTransferConverter>();
+            container.Register<IGenderTransferConverter, GenderTransferConverter>();
+            container.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
+            container.Register<IClothesTypeShortTransferConverter, ClothesTypeShortTransferConverter>();
+            container.Register<ICategoryTransferConverter, CategoryTransferConverter>();
+            container.Register<ISizeTransferConverter, SizeTransferConverter>();
+            container.Register<ISizeGroupShortTransferConverter, SizeGroupShortTransferConverter>();
+            container.Register<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
+            container.Register<IColorTransferConverter, ColorTransferConverter>();
+            container.Register<IClothesShortTransferConverter, ClothesShortTransferConverter>();
+            container.Register<IClothesTransferConverter, ClothesTransferConverter>();
 
-            containerRegistry.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();
-            containerRegistry.Register<IXamarinConfigurationTransferConverter, XamarinConfigurationTransferConverter>();
+            container.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();
+            container.Register<IXamarinConfigurationTransferConverter, XamarinConfigurationTransferConverter>();
         }
     }
 }

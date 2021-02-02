@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -8,6 +9,8 @@ using BoutiqueXamarin.Models.Implementation;
 using BoutiqueXamarin.Models.Interfaces;
 using BoutiqueXamarin.Models.Interfaces.Configuration;
 using Prism.Ioc;
+using Prism.Unity;
+using Prism.Container.Extensions;
 
 namespace BoutiqueXamarin.DependencyInjection
 {
@@ -19,12 +22,9 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация моделей проекта
         /// </summary>
-        public static void RegisterProject(IContainerRegistry containerRegistry)
+        public static void RegisterProject(IBoutiqueContainer container)
         {
-            containerRegistry.RegisterSingleton<IXamarinConfigurationDomain>(
-                service => service.Resolve<IXamarinConfigurationManager>().GetConfiguration());
-
-            containerRegistry.RegisterSingleton<IBoutiqueProject, BoutiqueProject>();
+            container.RegisterSingleton<IBoutiqueProject, BoutiqueProject>();
         }
     }
 }

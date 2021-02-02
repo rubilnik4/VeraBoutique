@@ -17,5 +17,10 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Configuration
         /// Время ожидания
         /// </summary>
         TimeSpan TimeOut { get; }
+
+        /// <summary>
+        /// Отключить проверку сертификата
+        /// </summary>
+        bool DisableSSL { get; }
     }
 }

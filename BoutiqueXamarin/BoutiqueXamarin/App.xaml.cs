@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
@@ -11,6 +12,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.DependencyInjection;
 using BoutiqueXamarin.Infrastructure.Implementations;
+using BoutiqueXamarin.Infrastructure.Implementations.Containers;
 using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
 using BoutiqueXamarin.Models.Interfaces;
 using BoutiqueXamarin.ViewModels;
@@ -18,8 +20,11 @@ using BoutiqueXamarin.ViewModels.Clothes;
 using BoutiqueXamarin.ViewModels.Clothes.Choice;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Prism;
 using Prism.Ioc;
+using Prism.Unity;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -36,19 +41,21 @@ namespace BoutiqueXamarin
         { }
 
         /// <summary>
+        /// Контейнер зависимостей
+        /// </summary>
+        private IBoutiqueContainer BoutiqueContainer =>
+            new BoutiqueUnityContainer(Container.GetContainer());
+
+        /// <summary>
         /// Инициализация
         /// </summary>
-        protected override async void OnInitialized()
-        {
-            var configManager = Container.Resolve<IXamarinConfigurationManager>();
-            var config = await configManager.GetConfigurationAsync();
-
-            InitializeComponent();
-            //var boutiqueProject = Container.Resolve<IBoutiqueProject>();
-            //boutiqueProject.Genders = genders.Value;
-
-            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(ChoicePage)}");
-        }
+        protected override async void OnInitialized() =>
+            await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
+            ResultErrorVoidOkTaskAsync(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
+            VoidTaskAsync(_ => InitializeComponent()).
+            ResultErrorVoidOkBadBindAsync(
+                actionOk: () => NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(ChoicePage)}"),
+                actionBad: errors => throw new NotImplementedException());
 
         /// <summary>
         /// Регистрация типов
@@ -56,11 +63,10 @@ namespace BoutiqueXamarin
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
-            ProjectRegistration.RegisterProject(containerRegistry);
             PagesRegistration.RegisterPages(containerRegistry);
-            ConverterServicesRegistration.RegisterTransferConverters(containerRegistry);
-            RestServicesRegistration.RegisterServices(containerRegistry);
-            CommonServicesRegistration.RegisterCommonServices(containerRegistry);
+            ConverterServicesRegistration.RegisterTransferConverters(BoutiqueContainer);
+            CommonServicesRegistration.RegisterCommonServices(BoutiqueContainer);
+            ProjectRegistration.RegisterProject(BoutiqueContainer);
         }
     }
 }
