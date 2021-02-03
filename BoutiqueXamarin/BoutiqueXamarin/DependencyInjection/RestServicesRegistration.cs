@@ -7,7 +7,6 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.Infrastructure.Implementations;
 using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
 using BoutiqueXamarin.Models.Interfaces.Configuration;

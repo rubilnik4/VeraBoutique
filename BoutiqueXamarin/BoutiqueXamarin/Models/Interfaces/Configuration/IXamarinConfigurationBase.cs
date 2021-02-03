@@ -5,7 +5,7 @@ using BoutiqueCommon.Models.Common.Interfaces.Configuration;
 namespace BoutiqueXamarin.Models.Interfaces.Configuration
 {
     /// <summary>
-    /// Конфигурация
+    /// Конфигурация Xamarin
     /// </summary>
     public interface IXamarinConfigurationBase<out THost> : IModel<Guid>
         where THost: IHostConfigurationBase

@@ -15,6 +15,7 @@
         DatabaseValueDuplicate,
         JsonConvertion,
         UserDefaultNotFound,
+        ConfigurationNotValid,
         Unknown,
 
         ServerNotFound,

@@ -1,7 +1,7 @@
 ﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Configuration;
+using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.RestSharp;
-using BoutiqueDTO.Models.Implementations.Connection;
-using BoutiqueDTO.Models.Interfaces.Connection;
 using RestSharp.Authenticators;
 using Xunit;
 
@@ -44,7 +44,7 @@ namespace BoutiqueDTOXUnit.Factory.RestSharp
         /// <summary>
         /// Параметры подключения
         /// </summary>
-        private static IHostConnection HostConnection =>
-            new HostConnection(new Uri("https://localhost:5001/"), TimeSpan.FromSeconds(5));
+        private static IHostConfigurationDomain HostConnection =>
+            new HostConfigurationDomain(new Uri("https://localhost:5001/"), TimeSpan.FromSeconds(5), false);
     }
 }

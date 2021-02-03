@@ -16,7 +16,6 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfer
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueDTO.Models.Implementations.Connection;
 using BoutiqueXamarin.Infrastructure.Implementations;
 using BoutiqueXamarin.Infrastructure.Implementations.Converters;
 using BoutiqueXamarin.Infrastructure.Interfaces.Converters;

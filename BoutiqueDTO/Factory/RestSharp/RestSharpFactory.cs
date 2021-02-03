@@ -1,6 +1,5 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
-using BoutiqueDTO.Models.Interfaces.Connection;
 using Functional.FunctionalExtensions.Sync;
 using RestSharp;
 using RestSharp.Authenticators;

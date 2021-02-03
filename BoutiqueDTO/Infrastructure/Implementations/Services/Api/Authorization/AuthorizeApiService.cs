@@ -7,7 +7,6 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Identity;
-using BoutiqueDTO.Models.Interfaces.Connection;
 using Functional.Models.Interfaces.Result;
 using RestSharp;
 

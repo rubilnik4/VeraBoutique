@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueXamarin.Models.Interfaces.Configuration;
 
 namespace BoutiqueXamarin.Infrastructure.Interfaces.Configuration

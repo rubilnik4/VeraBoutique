@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Extensions.Json;
 using BoutiqueDTO.Extensions.Json.Async;
 using BoutiqueDTO.Extensions.Json.Sync;
+using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;

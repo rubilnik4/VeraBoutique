@@ -38,11 +38,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueMVCXUnit", "BoutiqueMVCXUnit\BoutiqueMVCXUnit.csproj", "{09B70F81-273A-44E2-AB12-1A0477B3CD03}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06-BoutiquePrerequisites", "06-BoutiquePrerequisites", "{77CE2804-6929-46A6-B146-082CA00CAED4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06-BoutiqueLoader", "06-BoutiqueLoader", "{77CE2804-6929-46A6-B146-082CA00CAED4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiquePrerequisites", "BoutiquePrerequisites\BoutiquePrerequisites.csproj", "{F248F890-E85B-474B-97BF-302A9B88C0BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueLoader", "BoutiqueLoader\BoutiqueLoader.csproj", "{F248F890-E85B-474B-97BF-302A9B88C0BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiquePrerequisitesXUnit", "BoutiquePrerequisitesXUnit\BoutiquePrerequisitesXUnit.csproj", "{56964B7C-DBDE-40BC-9DCD-C2A39ADB6619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueLoaderXUnit", "BoutiqueLoaderXUnit\BoutiqueLoaderXUnit.csproj", "{56964B7C-DBDE-40BC-9DCD-C2A39ADB6619}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-BoutiqueXamarin", "03-BoutiqueXamarin", "{1AC518C9-60C3-4566-9056-13A905E009AF}"
 EndProject

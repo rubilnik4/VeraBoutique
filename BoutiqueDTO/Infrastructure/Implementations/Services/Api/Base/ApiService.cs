@@ -7,7 +7,6 @@ using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
-using BoutiqueDTO.Models.Interfaces.Connection;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using RestSharp;
