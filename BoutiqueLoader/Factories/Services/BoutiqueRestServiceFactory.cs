@@ -41,59 +41,56 @@ namespace BoutiqueLoader.Factories.Services
         /// <summary>
         ///  Получить сервис авторизации
         /// </summary>
-        public static IAuthorizeRestService GetAuthorizeRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new AuthorizeRestService(new AuthorizeApiService(restClient), new AuthorizeTransferConverter(), boutiqueLogger);
+        public static IAuthorizeRestService GetAuthorizeRestService(IRestClient restClient) =>
+             new AuthorizeRestService(new AuthorizeApiService(restClient), new AuthorizeTransferConverter());
 
         /// <summary>
         /// Получить сервис типа пола
         /// </summary>
-        public static IGenderRestService GetGenderRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter(), boutiqueLogger);
+        public static IGenderRestService GetGenderRestService(IRestClient restClient) =>
+             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter());
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
-        public static ICategoryRestService GetCategoryRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new CategoryRestService(new CategoryApiService(restClient), new CategoryTransferConverter(), boutiqueLogger);
+        public static ICategoryRestService GetCategoryRestService(IRestClient restClient) =>
+             new CategoryRestService(new CategoryApiService(restClient), new CategoryTransferConverter());
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
-        public static IColorRestService GetColorRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new ColorRestService(new ColorApiService(restClient), new ColorTransferConverter(), boutiqueLogger);
+        public static IColorRestService GetColorRestService(IRestClient restClient) =>
+             new ColorRestService(new ColorApiService(restClient), new ColorTransferConverter());
 
         /// <summary>
         /// Получить сервис типа одежды
         /// </summary>
-        public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+        public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient) =>
              new ClothesTypeRestService(new ClothesTypeApiService(restClient), 
                                         new ClothesTypeTransferConverter(new CategoryTransferConverter(),
-                                                                         new GenderTransferConverter()), 
-                                        boutiqueLogger);
+                                                                         new GenderTransferConverter()));
 
         /// <summary>
         /// Получить сервис размера одежды
         /// </summary>
-        public static ISizeRestService GetSizeRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-             new SizeRestService(new SizeApiService(restClient), new SizeTransferConverter(), boutiqueLogger);
+        public static ISizeRestService GetSizeRestService(IRestClient restClient) =>
+             new SizeRestService(new SizeApiService(restClient), new SizeTransferConverter());
 
         /// <summary>
         /// Получить сервис размера одежды
         /// </summary>
-        public static ISizeGroupRestService GetSizeGroupRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+        public static ISizeGroupRestService GetSizeGroupRestService(IRestClient restClient) =>
              new SizeGroupRestService(new SizeGroupApiService(restClient),
-                                      new SizeGroupTransferConverter(new SizeTransferConverter()),
-                                      boutiqueLogger);
+                                      new SizeGroupTransferConverter(new SizeTransferConverter()));
 
         /// <summary>
         /// Получить сервис одежды
         /// </summary>
-        public static IClothesRestService GetClothesRestService(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
+        public static IClothesRestService GetClothesRestService(IRestClient restClient) =>
              new ClothesRestService(new ClothesApiService(restClient),
                                     new ClothesTransferConverter(new GenderTransferConverter(),
                                                                  new ClothesTypeShortTransferConverter(),
                                                                  new ColorTransferConverter(),
-                                                                 new SizeGroupTransferConverter(new SizeTransferConverter())),
-                                    boutiqueLogger);
+                                                                 new SizeGroupTransferConverter(new SizeTransferConverter())));
     }
 }

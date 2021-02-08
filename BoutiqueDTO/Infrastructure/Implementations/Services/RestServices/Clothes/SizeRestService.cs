@@ -14,9 +14,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     public class SizeRestService : RestServiceBase<int, ISizeDomain, SizeTransfer>, ISizeRestService
     {
         public SizeRestService(ISizeApiService sizeApiService,
-                               ISizeTransferConverter sizeTransferConverter,
-                               IBoutiqueLogger boutiqueLogger)
-            : base(sizeApiService, sizeTransferConverter, boutiqueLogger)
+                               ISizeTransferConverter sizeTransferConverter)
+            : base(sizeApiService, sizeTransferConverter)
         { }
     }
 }

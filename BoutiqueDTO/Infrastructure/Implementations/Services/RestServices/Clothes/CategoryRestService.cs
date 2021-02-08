@@ -14,9 +14,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     public class CategoryRestService : RestServiceBase<string, ICategoryDomain, CategoryTransfer>, ICategoryRestService
     {
         public CategoryRestService(ICategoryApiService categoryApiService, 
-                                   ICategoryTransferConverter categoryTransferConverter,
-                                   IBoutiqueLogger boutiqueLogger)
-            : base(categoryApiService, categoryTransferConverter, boutiqueLogger)
+                                   ICategoryTransferConverter categoryTransferConverter)
+            : base(categoryApiService, categoryTransferConverter)
         { }
     }
 }

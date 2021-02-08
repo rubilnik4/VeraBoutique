@@ -27,13 +27,13 @@ namespace BoutiqueLoader
 {
     public class Program
     {
+        private static IBoutiqueLogger BoutiqueLogger => LoggerFactory.BoutiqueLogger;
         /// <summary>
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await LoaderConfigurationFactory.GetConfiguration(LoggerFactory.BoutiqueLogger).
-           ResultValueBindErrorsOkBindAsync(configuration => BoutiqueUpload.UploadAuthorizeData(configuration, 
-                                                                                                LoggerFactory.BoutiqueLogger));
+           await LoaderConfigurationFactory.GetConfiguration(BoutiqueLogger).
+           ResultValueBindErrorsOkBindAsync(configuration => BoutiqueUpload.UploadAuthorizeData(configuration, BoutiqueLogger));
 
        
     }

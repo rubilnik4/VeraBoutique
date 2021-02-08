@@ -14,9 +14,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     public class ColorRestService : RestServiceBase<string, IColorDomain, ColorTransfer>, IColorRestService
     {
         public ColorRestService(IColorApiService colorApiService, 
-                                IColorTransferConverter colorTransferConverter,
-                                IBoutiqueLogger boutiqueLogger)
-            : base(colorApiService, colorTransferConverter, boutiqueLogger)
+                                IColorTransferConverter colorTransferConverter)
+            : base(colorApiService, colorTransferConverter)
         { }
     }
 }

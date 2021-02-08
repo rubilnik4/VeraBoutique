@@ -34,49 +34,49 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// Загрузить тип пола в базу
         /// </summary>
         private static async Task<IResultError> GenderDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetGenderRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetGenderRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить категории одежды в базу
         /// </summary>
         private static async Task<IResultError> CategoryDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetCategoryRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetCategoryRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить цвет одежды в базу
         /// </summary>
         private static async Task<IResultError> ColorDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetColorRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetColorRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> ClothesTypeDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetClothesTypeRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetClothesTypeRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetSizeRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetSizeRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeGroupDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient).
             Delete();
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> ClothesDelete(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetClothesRestService(restClient, boutiqueLogger).
+            await BoutiqueRestServiceFactory.GetClothesRestService(restClient).
             Delete();
     }
 }

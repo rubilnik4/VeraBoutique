@@ -15,9 +15,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
                                           IClothesTypeRestService
     {
         public ClothesTypeRestService(IClothesTypeApiService clothesTypeApiService, 
-                                      IClothesTypeTransferConverter clothesTypeTransferConverter,
-                                      IBoutiqueLogger boutiqueLogger)
-            : base(clothesTypeApiService, clothesTypeTransferConverter,  boutiqueLogger)
+                                      IClothesTypeTransferConverter clothesTypeTransferConverter)
+            : base(clothesTypeApiService, clothesTypeTransferConverter)
         { }
     }
 }

@@ -37,9 +37,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorization
             var authorize = AuthorizeData.AuthorizeDomain.First();
             var authorizeApiService = GetAuthorizeApiService(jwtTokenResult);
             var authorizeTransferConverter = AuthorizeTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter,
-                                                                boutiqueLogger.Object);
+            var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter);
 
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
 
@@ -58,9 +56,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorization
             var authorize = AuthorizeData.AuthorizeDomain.First();
             var authorizeApiService = GetAuthorizeApiService(jwtTokenResult);
             var authorizeTransferConverter = AuthorizeTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter,
-                                                                boutiqueLogger.Object);
+            var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter);
 
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
 

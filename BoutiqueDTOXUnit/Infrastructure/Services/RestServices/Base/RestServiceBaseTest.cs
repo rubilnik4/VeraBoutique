@@ -47,9 +47,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var resultIds = new ResultCollection<TestEnum>(testsIds);
             var testApiServicePost = TestApiServiceMock.GetTestApiServicePost(resultIds);
             var testTransferConverter = TestTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter,
-                                                      boutiqueLogger.Object);
+            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
             var result = await testRestService.Post(tests);
 
@@ -67,9 +65,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var resultIds = new ResultCollection<TestEnum>(error);
             var testApiServicePost = TestApiServiceMock.GetTestApiServicePost(resultIds);
             var testTransferConverter = TestTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter,
-                                                      boutiqueLogger.Object);
+            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
             var result = await testRestService.Post(tests);
 
@@ -86,9 +82,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var resultDelete = new ResultError();
             var testApiServicePost = TestApiServiceMock.GetTestApiServiceDelete(resultDelete);
             var testTransferConverter = TestTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter,
-                                                      boutiqueLogger.Object);
+            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
             var result = await testRestService.Delete();
 
@@ -105,9 +99,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var resultDelete = new ResultError(error);
             var testApiServicePost = TestApiServiceMock.GetTestApiServiceDelete(resultDelete);
             var testTransferConverter = TestTransferConverter;
-            var boutiqueLogger = BoutiqueLogger;
-            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter,
-                                                      boutiqueLogger.Object);
+            var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
             var result = await testRestService.Delete();
 

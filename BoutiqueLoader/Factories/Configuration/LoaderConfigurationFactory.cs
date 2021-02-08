@@ -19,14 +19,6 @@ namespace BoutiqueLoader.Factories.Configuration
     public static class LoaderConfigurationFactory
     {
         /// <summary>
-        /// Создать доступа к файлам конфигурации консольного приложения
-        /// </summary>
-        public static ILoaderConfigurationManager LoaderConfigurationManager =>
-            new HostConfigurationTransferConverter().
-            Map(hostConfigurationConverter => new LoaderConfigurationTransferConverter(hostConfigurationConverter)).
-            Map(loaderConfigurationConverter =>new LoaderConfigurationManager(loaderConfigurationConverter));
-
-        /// <summary>
         /// Получить конфигурацию
         /// </summary>
         public static async Task<IResultValue<ILoaderConfigurationDomain>> GetConfiguration(IBoutiqueLogger boutiqueLogger) =>
@@ -34,5 +26,13 @@ namespace BoutiqueLoader.Factories.Configuration
             ResultValueVoidBadTaskAsync(errors => boutiqueLogger.
                                                   Void(_ => boutiqueLogger.ShowMessage("Ошибка конфигурационного файла")).
                                                   Void(_ => boutiqueLogger.ShowErrors(errors)));
+
+        /// <summary>
+        /// Создать доступа к файлам конфигурации консольного приложения
+        /// </summary>
+        private static ILoaderConfigurationManager LoaderConfigurationManager =>
+            new HostConfigurationTransferConverter().
+            Map(hostConfigurationConverter => new LoaderConfigurationTransferConverter(hostConfigurationConverter)).
+            Map(loaderConfigurationConverter => new LoaderConfigurationManager(loaderConfigurationConverter));
     }
 }

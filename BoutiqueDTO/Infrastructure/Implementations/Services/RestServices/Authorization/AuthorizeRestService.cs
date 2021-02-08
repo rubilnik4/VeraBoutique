@@ -18,12 +18,10 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     public class AuthorizeRestService : IAuthorizeRestService
     {
         public AuthorizeRestService(IAuthorizeApiService authorizeApiService,
-                                    IAuthorizeTransferConverter authorizeTransferConverter,
-                                    IBoutiqueLogger boutiqueLogger)
+                                    IAuthorizeTransferConverter authorizeTransferConverter)
         {
             _authorizeApiService = authorizeApiService;
             _authorizeTransferConverter = authorizeTransferConverter;
-            _boutiqueLogger = boutiqueLogger;
         }
 
         /// <summary>
@@ -37,20 +35,10 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         private readonly IAuthorizeTransferConverter _authorizeTransferConverter;
 
         /// <summary>
-        /// Логгер
-        /// </summary>
-        private readonly IBoutiqueLogger _boutiqueLogger;
-
-        /// <summary>
         /// Авторизироваться в сервисе
         /// </summary>
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await new ResultValue<IAuthorizeApiService>(_authorizeApiService).
-            ResultValueVoidOk(_ => _boutiqueLogger.ShowMessage($"Авторизация в сервисе [{_authorizeApiService.ControllerName}]")).
-            ResultValueBindOkAsync(_ => _authorizeApiService.AuthorizeJwt(_authorizeTransferConverter.ToTransfer(authorizeDomain))).
-            ResultValueVoidOkBadTaskAsync(ids => ids.Void(_ => _boutiqueLogger.ShowMessage($"Токен сервиса [{_authorizeApiService.ControllerName}] получен")),
-                                               errors => errors.
-                                                         Void(_ => _boutiqueLogger.ShowMessage($"Ошибка авторизации в сервисе [{_authorizeApiService.ControllerName}]")).
-                                                         Void(_ => _boutiqueLogger.ShowErrors(errors)));
+            ResultValueBindOkAsync(_ => _authorizeApiService.AuthorizeJwt(_authorizeTransferConverter.ToTransfer(authorizeDomain)));
     }
 }
