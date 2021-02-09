@@ -41,7 +41,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// </summary>
         public override IResultValue<ITestDomain> FromEntity(TestEntity testEntity) =>
             GetTestFunc(testEntity).
-            ResultCurryOkBind(_testIncludeEntityConverter.FromEntities(testEntity.TestIncludes)).
+            ResultCurryBindOk(_testIncludeEntityConverter.FromEntities(testEntity.TestIncludes)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

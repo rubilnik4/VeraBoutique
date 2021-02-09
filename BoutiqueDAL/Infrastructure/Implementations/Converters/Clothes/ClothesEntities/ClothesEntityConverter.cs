@@ -77,10 +77,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         public override IResultValue<IClothesDomain> FromEntity(ClothesEntity clothesEntity) =>
             GetClothesFunc(clothesEntity).
-            ResultCurryOkBind(GetGender(clothesEntity.Gender)).
-            ResultCurryOkBind(GetClothesTypeShort(clothesEntity.ClothesType)).
-            ResultCurryOkBind(ColorClothesFromComposite(clothesEntity.ClothesColorComposites)).
-            ResultCurryOkBind(SizeGroupFromComposite(clothesEntity.ClothesSizeGroupComposites)).
+            ResultCurryBindOk(GetGender(clothesEntity.Gender)).
+            ResultCurryBindOk(GetClothesTypeShort(clothesEntity.ClothesType)).
+            ResultCurryBindOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites)).
+            ResultCurryBindOk(SizeGroupFromComposite(clothesEntity.ClothesSizeGroupComposites)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

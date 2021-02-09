@@ -64,15 +64,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultError> Delete() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindErrorsOkAsync(api => api.Delete());
-
-        ///// <summary>
-        ///// Логгирование
-        ///// </summary>
-        //private void ServiceLog(IResultError result, string actionType) =>
-        //   result.
-        //   ResultErrorVoidOkBad(() => _boutiqueLogger.ShowMessage($"{actionType} [{typeof(TDomain).Name}] completed"),
-        //                        errors => errors.
-        //                                  Void(_ => _boutiqueLogger.ShowMessage($"Error {actionType} [{typeof(TDomain).Name}]")).
-        //                                  Void(_ => _boutiqueLogger.ShowErrors(errors)));
     }
 }

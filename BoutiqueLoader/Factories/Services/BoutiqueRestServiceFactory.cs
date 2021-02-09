@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
@@ -12,7 +13,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authoriza
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueLoader.Factories.Connection;
+using BoutiqueLoader.Factories.Configuration;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 using RestSharp;
@@ -27,16 +29,16 @@ namespace BoutiqueLoader.Factories.Services
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static IResultValue<IRestClient> GetBoutiqueRestClient() =>
-            BoutiqueConnection.BoutiqueHostConnection.
-            ResultValueOk(RestSharpFactory.GetRestClient);
+        public static async Task<IResultValue<IRestClient>> GetBoutiqueRestClient(IBoutiqueLogger boutiqueLogger) =>
+            await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
+            ResultValueOkTaskAsync(config => RestSharpFactory.GetRestClient(config.HostConfiguration));
 
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static IResultValue<IRestClient> GetBoutiqueRestClient(string jwtToken) =>
-            BoutiqueConnection.BoutiqueHostConnection.
-            ResultValueOk(hostConnection => RestSharpFactory.GetRestClient(hostConnection, jwtToken));
+        public static async Task<IResultValue<IRestClient>> GetBoutiqueRestClient(string jwtToken, IBoutiqueLogger boutiqueLogger) =>
+            await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
+            ResultValueOkTaskAsync(config => RestSharpFactory.GetRestClient(config.HostConfiguration, jwtToken));
 
         /// <summary>
         ///  Получить сервис авторизации

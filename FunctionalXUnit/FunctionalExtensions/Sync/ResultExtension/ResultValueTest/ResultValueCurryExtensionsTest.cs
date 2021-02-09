@@ -24,7 +24,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, string>>(IntToString);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.OkStatus);
             Assert.Equal(initialValue.ToString(), resultOut.Value.Invoke());
@@ -41,7 +41,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -59,7 +59,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, string>>(errorFunc);
             var resultArgument = new ResultValue<int>(2);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -78,7 +78,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Equal(2, resultOut.Errors.Count);
@@ -97,7 +97,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, string>>(AggregateTwoToString);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.OkStatus);
             Assert.Equal((initialValue + initialValue).ToString(), resultOut.Value.Invoke(2));
@@ -114,7 +114,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -133,7 +133,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, string>>(errorFunc);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -152,7 +152,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Equal(2, resultOut.Errors.Count);
@@ -171,7 +171,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, string>>(AggregateThreeToString);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.OkStatus);
             Assert.Equal((initialValue * 3).ToString(), resultOut.Value.Invoke(initialValue, initialValue));
@@ -188,7 +188,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -207,7 +207,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, string>>(errorFunc);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -226,7 +226,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Equal(2, resultOut.Errors.Count);
@@ -245,7 +245,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, int, string>>(AggregateFourToString);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.OkStatus);
             Assert.Equal((initialValue * 4).ToString(), resultOut.Value.Invoke(initialValue, initialValue, initialValue));
@@ -262,7 +262,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -281,7 +281,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, int, string>>(errorFunc);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -300,7 +300,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Equal(2, resultOut.Errors.Count);
@@ -319,7 +319,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, int, int, string>>(AggregateFiveToString);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.OkStatus);
             Assert.Equal((initialValue * 5).ToString(), resultOut.Value.Invoke(initialValue, initialValue,
@@ -337,7 +337,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -356,7 +356,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValueFunc = new ResultValue<Func<int, int, int, int, int, string>>(errorFunc);
             var resultArgument = new ResultValue<int>(initialValue);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Single(resultOut.Errors);
@@ -375,7 +375,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var errorArgument = CreateErrorTest();
             var resultArgument = new ResultValue<int>(errorArgument);
 
-            var resultOut = resultValueFunc.ResultCurryOkBind(resultArgument);
+            var resultOut = resultValueFunc.ResultCurryBindOk(resultArgument);
 
             Assert.True(resultOut.HasErrors);
             Assert.Equal(2, resultOut.Errors.Count);

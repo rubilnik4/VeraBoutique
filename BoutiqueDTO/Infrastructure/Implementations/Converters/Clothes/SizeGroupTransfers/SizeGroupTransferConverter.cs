@@ -49,7 +49,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         public override IResultValue<ISizeGroupDomain> FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
             GetSizeGroupFunc(sizeGroupTransfer).
-            ResultCurryOkBind(_sizeTransferConverter.GetDomains(sizeGroupTransfer.Sizes)).
+            ResultCurryBindOk(_sizeTransferConverter.GetDomains(sizeGroupTransfer.Sizes)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

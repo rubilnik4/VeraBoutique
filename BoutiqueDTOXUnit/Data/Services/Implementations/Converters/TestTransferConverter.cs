@@ -31,7 +31,7 @@ namespace BoutiqueDTOXUnit.Data.Services.Implementations.Converters
         /// </summary>
         public override IResultValue<ITestDomain> FromTransfer(TestTransfer testTransfer) =>
             GetTestFunc(testTransfer).
-            ResultCurryOkBind(_testIncludesTransferConverter.GetDomains(testTransfer.TestIncludes)).
+            ResultCurryBindOk(_testIncludesTransferConverter.GetDomains(testTransfer.TestIncludes)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

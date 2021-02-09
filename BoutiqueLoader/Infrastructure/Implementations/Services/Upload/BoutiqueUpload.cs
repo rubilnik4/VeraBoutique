@@ -16,9 +16,9 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// <summary>
         /// Авторизироваться и загрузить данные в базу с предварительной очисткой
         /// </summary>
-        public static async Task<IResultError> UploadAuthorizeData(ILoaderConfigurationDomain configuration, IBoutiqueLogger boutiqueLogger) =>
+        public static async Task<IResultError> UploadAuthorizeData(IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueAuthorizeService.AuthorizeJwt(boutiqueLogger).
-            ResultValueBindOkTaskAsync(BoutiqueRestServiceFactory.GetBoutiqueRestClient).
+            ResultValueBindOkBindAsync(token => BoutiqueRestServiceFactory.GetBoutiqueRestClient(boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => BoutiqueDelete.DeleteData(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => BoutiquePost.PostData(restClient, boutiqueLogger));
     }

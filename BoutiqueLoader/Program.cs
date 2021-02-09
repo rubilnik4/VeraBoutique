@@ -6,7 +6,6 @@ using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueLoader.Factories.Configuration;
-using BoutiqueLoader.Factories.Connection;
 using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
 using BoutiqueLoader.Factories.Logger;
 using BoutiqueLoader.Factories.Services;
@@ -28,13 +27,11 @@ namespace BoutiqueLoader
     public class Program
     {
         private static IBoutiqueLogger BoutiqueLogger => LoggerFactory.BoutiqueLogger;
+
         /// <summary>
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await LoaderConfigurationFactory.GetConfiguration(BoutiqueLogger).
-           ResultValueBindErrorsOkBindAsync(configuration => BoutiqueUpload.UploadAuthorizeData(configuration, BoutiqueLogger));
-
-       
+           await BoutiqueUpload.UploadAuthorizeData(BoutiqueLogger);
     }
 }

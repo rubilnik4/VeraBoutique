@@ -56,8 +56,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         ///// </summary>
         public override IResultValue<IClothesTypeDomain> FromTransfer(ClothesTypeTransfer clothesTypeTransfer) =>
             GetClothesTypeFunc(clothesTypeTransfer).
-            ResultCurryOkBind(_categoryTransferConverter.GetDomain(clothesTypeTransfer.Category)).
-            ResultCurryOkBind(_genderTransferConverter.GetDomains(clothesTypeTransfer.Genders)).
+            ResultCurryBindOk(_categoryTransferConverter.GetDomain(clothesTypeTransfer.Category)).
+            ResultCurryBindOk(_genderTransferConverter.GetDomains(clothesTypeTransfer.Genders)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

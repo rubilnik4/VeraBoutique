@@ -1,7 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Base;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
 using BoutiqueLoader.Factories.Services;
+using BoutiqueLoader.Models.Enums;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
@@ -36,48 +41,58 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> GenderUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetGenderRestService(restClient).
-            Post(GenderInitialize.Genders);
+            MapAsync(service => ServiceDeleteAction(service, GenderInitialize.Genders, boutiqueLogger));
 
         /// <summary>
         /// Загрузить категории одежды в базу
         /// </summary>
         private static async Task<IResultError> CategoryUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetCategoryRestService(restClient).
-            Post(CategoryInitialize.Categories);
+            MapAsync(service => ServiceDeleteAction(service, CategoryInitialize.Categories, boutiqueLogger));
 
         /// <summary>
         /// Загрузить цвет одежды в базу
         /// </summary>
         private static async Task<IResultError> ColorUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetColorRestService(restClient).
-            Post(ColorInitialize.ColorClothes);
+            MapAsync(service => ServiceDeleteAction(service, ColorInitialize.ColorClothes, boutiqueLogger));
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> ClothesTypeUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesTypeRestService(restClient).
-            Post(ClothesTypeInitialize.ClothesTypes);
+            MapAsync(service => ServiceDeleteAction(service, ClothesTypeInitialize.ClothesTypes, boutiqueLogger));
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeRestService(restClient).
-            Post(SizeInitialize.Sizes);
+            MapAsync(service => ServiceDeleteAction(service, SizeInitialize.Sizes, boutiqueLogger));
 
         /// <summary>
         /// Загрузить тип одежды в базу
         /// </summary>
         private static async Task<IResultError> SizeGroupUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient).
-            Post(SizeGroupInitialize.SizeGroups);
+            MapAsync(service => ServiceDeleteAction(service, SizeGroupInitialize.SizeGroups, boutiqueLogger));
 
         /// <summary>
         /// Загрузить одежду в базу
         /// </summary>
         private static async Task<IResultError> ClothesUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesRestService(restClient).
-            Post(ClothesInitialize.Clothes);
+            MapAsync(service => ServiceDeleteAction(service, ClothesInitialize.Clothes, boutiqueLogger));
+
+        /// <summary>
+        /// Логгирование загрузки
+        /// </summary>
+        private static async Task<IResultError> ServiceDeleteAction<TId, TDomain>(IRestServiceBase<TId, TDomain> restService,
+                                                                                  IEnumerable<TDomain> domains, IBoutiqueLogger boutiqueLogger)
+             where TDomain : IDomainModel<TId>
+             where TId : notnull =>
+            await restService.Post(domains).
+            VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post));
     }
 }
