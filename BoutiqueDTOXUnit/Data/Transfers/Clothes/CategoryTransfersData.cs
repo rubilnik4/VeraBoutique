@@ -14,7 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// Категория одежды. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<CategoryTransfer> CategoryTransfers =>
-            CategoryData.CategoryDomain.
+            CategoryData.CategoryDomains.
             Select(category => new CategoryTransfer(category)).
             ToList();
     }

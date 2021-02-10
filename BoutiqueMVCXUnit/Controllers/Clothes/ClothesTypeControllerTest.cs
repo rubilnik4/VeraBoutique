@@ -11,6 +11,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeT
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
@@ -34,7 +35,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_Ok()
         {
             const GenderType genderType = GenderType.Male;
-            string category = CategoryData.CategoryDomain.First().Name;
+            string category = CategoryData.CategoryDomains.First().Name;
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(ClothesTypeData.ClothesTypeShortDomains);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
             var clothesTypeShortTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeShortTransferConverter;
@@ -56,7 +57,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_ErrorDatabase()
         {
             const GenderType genderType = GenderType.Male;
-            string category = CategoryData.CategoryDomain.First().Name;
+            string category = CategoryData.CategoryDomains.First().Name;
             var initialError = ErrorData.DatabaseError;
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);
@@ -82,7 +83,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_NotFound()
         {
             const GenderType genderType = GenderType.Male;
-            string category = CategoryData.CategoryDomain.First().Name;
+            string category = CategoryData.CategoryDomains.First().Name;
             var initialError = ErrorData.NotFoundError;
             var clothesTypeDomains = new ResultCollection<IClothesTypeShortDomain>(initialError);
             var clothesTypeDatabaseService = GetClothesTypeDatabaseService(clothesTypeDomains);

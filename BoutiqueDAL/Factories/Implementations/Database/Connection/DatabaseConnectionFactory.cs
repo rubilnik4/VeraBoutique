@@ -21,9 +21,9 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Connection
                                                                              IResultValue<Authorization> authorization) =>
             new ResultValue<Func<HostConnection, string, Authorization, DatabaseConnection>>(
                     (hostConnectionIn, databaseIn, authorizationIn) => new DatabaseConnection(hostConnectionIn, databaseIn, authorizationIn)).
-            ResultCurryBindOk(hostConnection).
-            ResultCurryBindOk(database).
-            ResultCurryBindOk(authorization).
+            ResultValueCurryOk(hostConnection).
+            ResultValueCurryOk(database).
+            ResultValueCurryOk(authorization).
             ResultValueOk(getConfiguration => getConfiguration.Invoke());
 
         /// <summary>
@@ -31,8 +31,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Connection
         /// </summary>
         public static IResultValue<HostConnection> GetHostConnection(string? host, string? port) =>
             new ResultValue<Func<string, int, HostConnection>>((hostIn, portIn) => new HostConnection(hostIn, portIn)).
-            ResultCurryBindOk(GetHost(host)).
-            ResultCurryBindOk(GetPort(port)).
+            ResultValueCurryOk(GetHost(host)).
+            ResultValueCurryOk(GetPort(port)).
             ResultValueOk(getHostConnection => getHostConnection.Invoke());
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Connection
         /// </summary>
         public static IResultValue<Authorization> GetAuthorization(string? username, string? password) =>
             new ResultValue<Func<string, string, Authorization>>((usernameIn, passwordIn) => new Authorization(usernameIn, passwordIn)).
-            ResultCurryBindOk(GetUsername(username)).
-            ResultCurryBindOk(GetPassword(password)).
+            ResultValueCurryOk(GetUsername(username)).
+            ResultValueCurryOk(GetPassword(password)).
             ResultValueOk(getAuthorization => getAuthorization.Invoke());
 
         /// <summary>

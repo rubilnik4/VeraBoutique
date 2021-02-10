@@ -34,8 +34,8 @@ namespace BoutiqueCommonXUnit.Models.Authorize
         [Fact]
         public void Authorize_Equal_Authorize()
         {
-            var first = AuthorizeData.AuthorizeDomain.First();
-            var second = AuthorizeData.AuthorizeDomain.First();
+            var first = AuthorizeData.AuthorizeDomains.First();
+            var second = AuthorizeData.AuthorizeDomains.First();
 
             Assert.True(first.Equals(second));
         }

@@ -16,7 +16,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности категорий одежды
         /// </summary>
         public static IReadOnlyCollection<CategoryEntity> CategoryEntities =>
-            CategoryData.CategoryDomain.
+            CategoryData.CategoryDomains.
                          Select(categoryDomain => new CategoryEntity(categoryDomain.Name)).
                          ToList();
 

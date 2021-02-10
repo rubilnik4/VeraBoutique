@@ -20,7 +20,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var genderDomain = GenderData.GendersDomain.First(); 
+            var genderDomain = GenderData.GenderDomains.First(); 
             var genderEntityConverter = new GenderEntityConverter();
 
             var genderEntity = genderEntityConverter.ToEntity(genderDomain);

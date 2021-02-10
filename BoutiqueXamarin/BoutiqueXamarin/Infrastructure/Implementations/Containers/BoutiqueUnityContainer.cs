@@ -4,6 +4,9 @@ using Unity;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Containers
 {
+    /// <summary>
+    /// Обертка Unity контейнера
+    /// </summary>
     public class BoutiqueUnityContainer: IBoutiqueContainer
     {
         public BoutiqueUnityContainer(IUnityContainer unityContainer)

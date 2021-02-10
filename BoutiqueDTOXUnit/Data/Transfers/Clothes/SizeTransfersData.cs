@@ -14,7 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// Размеры. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<SizeTransfer> SizeTransfers =>
-            SizeData.SizeDomain.
+            SizeData.SizeDomains.
             Select(size => new SizeTransfer(size)).
             ToList();
     }

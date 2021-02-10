@@ -12,7 +12,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить категории одежды
         /// </summary>
-        public static IReadOnlyCollection<IColorDomain> ColorDomain =>
+        public static IReadOnlyCollection<IColorDomain> ColorDomains =>
             new List<IColorDomain>()
             {
                 new ColorDomain("Черный"),

@@ -3,6 +3,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
@@ -18,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var colors = ColorData.ColorDomain.First();
+            var colors = ColorData.ColorDomains.First();
             var colorClothesTransferConverter = ColorClothesTransferConverterMock.ColorTransferConverter;
 
             var colorsTransfer = colorClothesTransferConverter.ToTransfer(colors);

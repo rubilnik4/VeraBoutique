@@ -13,7 +13,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить размеры одежды
         /// </summary>
-        public static IReadOnlyCollection<ISizeDomain> SizeDomain =>
+        public static IReadOnlyCollection<ISizeDomain> SizeDomains =>
             new List<ISizeDomain>()
             {
                 new SizeDomain(SizeType.American, "M"),

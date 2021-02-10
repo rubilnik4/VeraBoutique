@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Authorize
         /// Имя пользователя и пароль. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<AuthorizeTransfer> AuthorizeTransfers =>
-            AuthorizeData.AuthorizeDomain.
+            AuthorizeData.AuthorizeDomains.
             Select(authorize => new AuthorizeTransfer(authorize)).
             ToList();
     }

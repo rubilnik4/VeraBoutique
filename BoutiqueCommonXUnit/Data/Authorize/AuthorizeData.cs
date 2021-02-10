@@ -14,7 +14,7 @@ namespace BoutiqueCommonXUnit.Data.Authorize
         /// <summary>
         /// Получить категории одежды
         /// </summary>
-        public static IReadOnlyCollection<IAuthorizeDomain> AuthorizeDomain =>
+        public static IReadOnlyCollection<IAuthorizeDomain> AuthorizeDomains =>
             new List<IAuthorizeDomain>
             {
                 new AuthorizeDomain("firstLogin", "firstPassword"),

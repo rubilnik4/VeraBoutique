@@ -14,7 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// Тип пола. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<GenderTransfer> GenderTransfers =>
-            GenderData.GendersDomain.
+            GenderData.GenderDomains.
             Select(gender => new GenderTransfer(gender)).
             ToList();
     }

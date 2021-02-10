@@ -34,7 +34,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorization
         {
             const string jwtToken = "jwtToken";
             var jwtTokenResult = jwtToken.ToResultValue();
-            var authorize = AuthorizeData.AuthorizeDomain.First();
+            var authorize = AuthorizeData.AuthorizeDomains.First();
             var authorizeApiService = GetAuthorizeApiService(jwtTokenResult);
             var authorizeTransferConverter = AuthorizeTransferConverter;
             var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter);
@@ -53,7 +53,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorization
         {
             var error = ErrorTransferData.ErrorBadRequest;
             var jwtTokenResult = new ResultValue<string>(error);
-            var authorize = AuthorizeData.AuthorizeDomain.First();
+            var authorize = AuthorizeData.AuthorizeDomains.First();
             var authorizeApiService = GetAuthorizeApiService(jwtTokenResult);
             var authorizeTransferConverter = AuthorizeTransferConverter;
             var authorizeRestService = new AuthorizeRestService(authorizeApiService.Object, authorizeTransferConverter);

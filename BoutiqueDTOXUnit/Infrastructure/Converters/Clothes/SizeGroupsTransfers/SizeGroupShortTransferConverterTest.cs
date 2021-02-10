@@ -2,6 +2,7 @@
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers

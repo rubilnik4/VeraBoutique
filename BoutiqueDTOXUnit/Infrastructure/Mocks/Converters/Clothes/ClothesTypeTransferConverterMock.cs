@@ -1,7 +1,7 @@
 ﻿using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters
+namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
 {
     /// <summary>
     /// Конвертер полной информации вида одежды в трансферную модель

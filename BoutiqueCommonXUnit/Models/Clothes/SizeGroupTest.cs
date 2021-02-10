@@ -43,7 +43,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
             const int sizeNormalize = 72;
-            var sizes = SizeData.SizeDomain;
+            var sizes = SizeData.SizeDomains;
 
             var sizeGroupDomains = new SizeGroupDomain(clothesSizeType, sizeNormalize, sizes);
 

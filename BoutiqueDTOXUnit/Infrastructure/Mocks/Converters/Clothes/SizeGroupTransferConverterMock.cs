@@ -1,7 +1,7 @@
 ﻿using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters
+namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
 {
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель

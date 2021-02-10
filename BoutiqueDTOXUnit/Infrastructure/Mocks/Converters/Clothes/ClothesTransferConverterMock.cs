@@ -1,7 +1,7 @@
 ﻿using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters
+namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
 {
     public class ClothesTransferConverterMock
     {

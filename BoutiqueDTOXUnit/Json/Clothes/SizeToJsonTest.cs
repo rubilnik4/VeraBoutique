@@ -10,7 +10,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes
     /// <summary>
     /// Размеры одежды. Конвертация в Json
     /// </summary>
-    public class SizeToJsonTest
+    public class HostConfigurationToJsonTest
     {
         /// <summary>
         /// Преобразовать в Json

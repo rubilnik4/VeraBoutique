@@ -9,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
@@ -24,7 +25,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var gender = GenderData.GendersDomain.First();
+            var gender = GenderData.GenderDomains.First();
             var genderEntityConverter = GenderTransferConverterMock.GenderTransferConverter;
 
             var genderTransfer = genderEntityConverter.ToTransfer(gender);

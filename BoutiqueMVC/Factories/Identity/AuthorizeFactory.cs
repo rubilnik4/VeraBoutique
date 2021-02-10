@@ -32,9 +32,9 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<BoutiqueUser> DefaultAdminUser =>
             new ResultValue<Func<IAuthorizeDomain, string, string, BoutiqueUser>>(GetDefaultUser).
-            ResultCurryBindOk(Login).
-            ResultCurryBindOk(Email).
-            ResultCurryBindOk(Phone).
+            ResultValueCurryOk(Login).
+            ResultValueCurryOk(Email).
+            ResultValueCurryOk(Phone).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<IAuthorizeDomain> Login =>
             new ResultValue<Func<string, string, IAuthorizeDomain>>(GetAuthorizeLogin).
-            ResultCurryBindOk(UserName).
-            ResultCurryBindOk(Password).
+            ResultValueCurryOk(UserName).
+            ResultValueCurryOk(Password).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
 
         /// <summary>

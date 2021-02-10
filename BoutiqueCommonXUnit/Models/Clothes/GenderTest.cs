@@ -34,8 +34,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void Gender_Equal_Gender()
         {
-            var first = GenderData.GendersDomain.First();
-            var second = GenderData.GendersDomain.First();
+            var first = GenderData.GenderDomains.First();
+            var second = GenderData.GenderDomains.First();
 
             Assert.True(first.Equals(second));
         }

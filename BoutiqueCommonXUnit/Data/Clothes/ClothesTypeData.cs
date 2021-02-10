@@ -19,8 +19,8 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         public static IReadOnlyCollection<IClothesTypeDomain> ClothesTypeDomains =>
             new List<IClothesTypeDomain>()
             {
-                new ClothesTypeDomain("Пиджак", CategoryData.CategoryDomain.First(), GenderData.GendersDomain),
-                new ClothesTypeDomain("Брюки", CategoryData.CategoryDomain.Last(), GenderData.GendersDomain),
+                new ClothesTypeDomain("Пиджак", CategoryData.CategoryDomains.First(), GenderData.GenderDomains),
+                new ClothesTypeDomain("Брюки", CategoryData.CategoryDomains.Last(), GenderData.GenderDomains),
             };
 
         /// <summary>

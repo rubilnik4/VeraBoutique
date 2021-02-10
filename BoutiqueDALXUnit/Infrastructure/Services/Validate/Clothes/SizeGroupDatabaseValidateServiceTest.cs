@@ -93,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_SizesNotFound()
         {
-            var sizes = SizeData.SizeDomain.Append(new SizeDomain(SizeType.American, "NotFound"));
+            var sizes = SizeData.SizeDomains.Append(new SizeDomain(SizeType.American, "NotFound"));
             var sizeGroup = SizeGroupData.SizeGroupDomains.First();
             var sizeGroupNotFound = new SizeGroupDomain(sizeGroup, sizes);
 
@@ -123,7 +123,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_SizesNotFound()
         {
-            var sizes = SizeData.SizeDomain.Append(new SizeDomain(SizeType.American, "NotFound"));
+            var sizes = SizeData.SizeDomains.Append(new SizeDomain(SizeType.American, "NotFound"));
             var sizeGroup = SizeGroupData.SizeGroupDomains.First();
             var sizeGroupsNotFound = SizeGroupData.SizeGroupDomains.Append(new SizeGroupDomain(sizeGroup, sizes));
 

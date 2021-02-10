@@ -17,14 +17,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Authorization
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var authorizes = AuthorizeData.AuthorizeDomain.First();
+            var authorize = AuthorizeData.AuthorizeDomains.First();
             var authorizeTransferConverter = new AuthorizeTransferConverter();
 
-            var authorizesTransfer = authorizeTransferConverter.ToTransfer(authorizes);
+            var authorizesTransfer = authorizeTransferConverter.ToTransfer(authorize);
             var authorizeAfterConverter = authorizeTransferConverter.FromTransfer(authorizesTransfer);
 
             Assert.True(authorizeAfterConverter.OkStatus);
-            Assert.True(authorizes.Equals(authorizeAfterConverter.Value));
+            Assert.True(authorize.Equals(authorizeAfterConverter.Value));
         }
     }
 }

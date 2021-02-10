@@ -34,9 +34,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
         /// </summary>
         public override IResultValue<IHostConfigurationDomain> FromTransfer(HostConfigurationTransfer hostConfigurationTransfer) =>
             GetHostConfigurationFunc(hostConfigurationTransfer).
-            ResultCurryBindOk(hostConfigurationTransfer.Host.
+            ResultValueCurryOk(hostConfigurationTransfer.Host.
                               ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(hostConfigurationTransfer.Host)))).
-            ResultCurryBindOk(hostConfigurationTransfer.TimeOut.
+            ResultValueCurryOk(hostConfigurationTransfer.TimeOut.
                               ToResultValueWhere(timeOut => timeOut.TotalSeconds > 0,
                                                  _ => new ErrorResult(ErrorResultType.ValueNotValid,
                                                                       $"Значение {nameof(hostConfigurationTransfer.TimeOut)} должно быть больше 0"))).

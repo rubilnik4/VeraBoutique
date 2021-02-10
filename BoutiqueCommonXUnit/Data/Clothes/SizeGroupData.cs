@@ -19,8 +19,8 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         public static IReadOnlyCollection<ISizeGroupDomain> SizeGroupDomains =>
             new List<ISizeGroupDomain>()
             {
-                new SizeGroupDomain(ClothesSizeType.Shirt, 46, SizeData.SizeDomain),
-                new SizeGroupDomain(ClothesSizeType.Shirt, 48, SizeData.SizeDomain),
+                new SizeGroupDomain(ClothesSizeType.Shirt, 46, SizeData.SizeDomains),
+                new SizeGroupDomain(ClothesSizeType.Shirt, 48, SizeData.SizeDomains),
             };
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var size = SizeData.SizeDomain.First();
+            var size = SizeData.SizeDomains.First();
 
             var result = ValidateModel(size);
 

@@ -14,7 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// Цвет одежды. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<ColorTransfer> ColorTransfers =>
-            ColorData.ColorDomain.
+            ColorData.ColorDomains.
             Select(color => new ColorTransfer(color)).
             ToList();
     }

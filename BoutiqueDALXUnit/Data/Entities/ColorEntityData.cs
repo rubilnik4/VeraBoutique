@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности цвета одежды
         /// </summary>
         public static IReadOnlyCollection<ColorEntity> ColorEntities =>
-            ColorData.ColorDomain.
+            ColorData.ColorDomains.
             Select(GetColorEntity).
             ToList();
 

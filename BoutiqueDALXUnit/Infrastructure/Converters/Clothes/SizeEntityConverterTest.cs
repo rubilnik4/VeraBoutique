@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToEntity_FromEntity()
         {
-            var sizeDomain = SizeData.SizeDomain.First();
+            var sizeDomain = SizeData.SizeDomains.First();
             var sizeEntityConverter = new SizeEntityConverter();
 
             var sizeEntity = sizeEntityConverter.ToEntity(sizeDomain);

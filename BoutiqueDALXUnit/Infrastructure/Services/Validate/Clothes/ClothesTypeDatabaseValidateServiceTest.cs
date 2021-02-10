@@ -113,7 +113,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_GendersNotFound()
         {
-            var genders = GenderData.GendersDomain.Append(new GenderDomain(GenderType.Female, "NotFound"));
+            var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Female, "NotFound"));
             var clothesType = ClothesTypeData.ClothesTypeDomains.First();
             var clothesTypeNotFound = new ClothesTypeDomain(clothesType, clothesType.Category, genders);
 
@@ -143,7 +143,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_GendersNotFound()
         {
-            var genders = GenderData.GendersDomain.Append(new GenderDomain(GenderType.Child, "NotFound"));
+            var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Child, "NotFound"));
             var clothesType = ClothesTypeData.ClothesTypeDomains.First();
             var clothesTypesNotFound = ClothesTypeData.ClothesTypeDomains.
                                        Append(new ClothesTypeDomain(clothesType, clothesType.Category, genders));

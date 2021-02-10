@@ -9,6 +9,7 @@ using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Functional.Models.Enums;
 using Xunit;
 

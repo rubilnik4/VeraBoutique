@@ -26,8 +26,8 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorization
         /// </summary>
         public static async Task<IResultValue<string>> AuthorizeJwt(IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueAuthorizeFunc(boutiqueLogger).
-            ResultCurryBindOkAsync(BoutiqueRestServiceFactory.GetBoutiqueRestClient(boutiqueLogger)).
-            ResultCurryBindOkBindAsync(AuthorizeConfigurationFactory.GetConfiguration(boutiqueLogger)).
+            ResultValueCurryOkAsync(BoutiqueRestServiceFactory.GetBoutiqueRestClient(boutiqueLogger)).
+            ResultValueCurryOkBindAsync(AuthorizeConfigurationFactory.GetConfiguration(boutiqueLogger)).
             ResultValueBindOkBindAsync(func => func());
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using BoutiqueXamarin.Infrastructure.Implementations.Configuration;
+using BoutiqueDTO.Infrastructure.Implementations.Configuration;
 using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
 using BoutiqueXamarin.Infrastructure.Interfaces.Converters;
 using BoutiqueXamarin.Models.Implementation.Configuration;

@@ -12,7 +12,7 @@ using Functional.Models.Interfaces.Result;
 namespace BoutiqueDTO.Infrastructure.Implementations.Configuration
 {
     /// <summary>
-    /// Доступ к файлам
+    /// Доступ к файлам конфигурации
     /// </summary>
     public abstract class ConfigurationManager<TId, TDomain, TTransfer> : IConfigurationManager<TId, TDomain>
         where TDomain : IDomainModel<TId>

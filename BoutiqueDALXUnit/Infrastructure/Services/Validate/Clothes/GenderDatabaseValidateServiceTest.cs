@@ -26,7 +26,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var gender = GenderData.GendersDomain.First();
+            var gender = GenderData.GenderDomains.First();
 
             var result = ValidateModel(gender);
 

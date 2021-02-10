@@ -16,7 +16,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности группы размеров
         /// </summary>
         public static IReadOnlyCollection<SizeEntity> SizeEntities =>
-            SizeData.SizeDomain.
+            SizeData.SizeDomains.
             Select(GetSizeEntity).
             ToList();
 

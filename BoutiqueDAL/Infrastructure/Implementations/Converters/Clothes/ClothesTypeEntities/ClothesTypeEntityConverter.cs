@@ -52,8 +52,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// </summary>
         public override IResultValue<IClothesTypeDomain> FromEntity(ClothesTypeEntity clothesTypeEntity) =>
             GetClothesTypeFunc(clothesTypeEntity).
-            ResultCurryBindOk(GetCategory(clothesTypeEntity.Category)).
-            ResultCurryBindOk(GenderFromComposites(clothesTypeEntity.ClothesTypeGenderComposites)).
+            ResultValueCurryOk(GetCategory(clothesTypeEntity.Category)).
+            ResultValueCurryOk(GenderFromComposites(clothesTypeEntity.ClothesTypeGenderComposites)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

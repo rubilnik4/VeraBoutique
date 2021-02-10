@@ -45,7 +45,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Converters
         /// </summary>
         public override IResultValue<IXamarinConfigurationDomain> FromTransfer(XamarinConfigurationTransfer xamarinConfigurationTransfer) =>
             GetXamarinConfigurationFunc().
-            ResultCurryBindOk(_hostConfigurationTransferConverter.GetDomain(xamarinConfigurationTransfer.HostConfiguration)).
+            ResultValueCurryOk(_hostConfigurationTransferConverter.GetDomain(xamarinConfigurationTransfer.HostConfiguration)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

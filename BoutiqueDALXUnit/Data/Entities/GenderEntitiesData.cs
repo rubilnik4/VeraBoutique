@@ -19,7 +19,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности типа пола
         /// </summary>
         public static IReadOnlyCollection<GenderEntity> GenderEntities =>
-            GenderData.GendersDomain.
+            GenderData.GenderDomains.
             Select(genderDomain => new GenderEntity(genderDomain)).
             ToList();
 

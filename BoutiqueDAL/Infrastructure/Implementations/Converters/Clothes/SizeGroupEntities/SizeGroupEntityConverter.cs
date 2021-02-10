@@ -43,7 +43,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         public override IResultValue<ISizeGroupDomain> FromEntity(SizeGroupEntity sizeGroupEntity) =>
             GetSizeGroupFunc(sizeGroupEntity).           
-            ResultCurryBindOk(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupComposites)).
+            ResultValueCurryOk(SizeDomainsFromComposite(sizeGroupEntity.SizeGroupComposites)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

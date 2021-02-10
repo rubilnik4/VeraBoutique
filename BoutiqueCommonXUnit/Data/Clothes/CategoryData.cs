@@ -12,7 +12,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить категории одежды
         /// </summary>
-        public static IReadOnlyCollection<ICategoryDomain> CategoryDomain =>
+        public static IReadOnlyCollection<ICategoryDomain> CategoryDomains =>
             new List<ICategoryDomain>
             {
                 new CategoryDomain("Верхняя одежда"),

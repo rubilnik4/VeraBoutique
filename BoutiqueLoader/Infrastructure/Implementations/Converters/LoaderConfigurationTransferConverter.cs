@@ -38,7 +38,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Converters
         /// </summary>
         public override IResultValue<ILoaderConfigurationDomain> FromTransfer(LoaderConfigurationTransfer xamarinConfigurationTransfer) =>
             GetXamarinConfigurationFunc().
-            ResultCurryBindOk(_hostConfigurationTransferConverter.GetDomain(xamarinConfigurationTransfer.HostConfiguration)).
+            ResultValueCurryOk(_hostConfigurationTransferConverter.GetDomain(xamarinConfigurationTransfer.HostConfiguration)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

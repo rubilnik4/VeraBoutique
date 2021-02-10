@@ -36,8 +36,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void Size_Equal_Size()
         {
-            var first = SizeData.SizeDomain.First();
-            var second = SizeData.SizeDomain.First();
+            var first = SizeData.SizeDomains.First();
+            var second = SizeData.SizeDomains.First();
 
             Assert.True(first.Equals(second));
         }
