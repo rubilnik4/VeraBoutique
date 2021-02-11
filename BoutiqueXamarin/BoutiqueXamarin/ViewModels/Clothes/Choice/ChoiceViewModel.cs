@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
-using BoutiqueXamarin.Models.Interfaces;
-using BoutiqueXamarin.Models.Interfaces.Configuration;
 using BoutiqueXamarin.ViewModels.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.Models.Interfaces.Result;
-using Prism.Commands;
+using BoutiqueXamarinCommon.Models.Interfaces;
+using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Prism.Navigation;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Choice

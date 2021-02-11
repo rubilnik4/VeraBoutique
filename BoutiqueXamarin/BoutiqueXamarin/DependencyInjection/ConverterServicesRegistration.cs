@@ -16,9 +16,8 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfer
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Implementations;
-using BoutiqueXamarin.Infrastructure.Implementations.Converters;
-using BoutiqueXamarin.Infrastructure.Interfaces.Converters;
+using BoutiqueXamarinCommon.Infrastructure.Implementations.Converters;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
 using Prism.Ioc;
 
 namespace BoutiqueXamarin.DependencyInjection

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
-using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
-using BoutiqueXamarin.Models.Interfaces.Configuration;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;

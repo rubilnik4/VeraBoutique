@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Data\Services\Implementations\Services\RestService\" />
     <Folder Include="Data\Transfers\Authorize\" />
-    <Folder Include="Data\Transfers\Configuration\" />
     <Folder Include="Extensions\Json\Sync\" />
     <Folder Include="Factory\RestSharp\" />
     <Folder Include="Infrastructure\Configuration\" />

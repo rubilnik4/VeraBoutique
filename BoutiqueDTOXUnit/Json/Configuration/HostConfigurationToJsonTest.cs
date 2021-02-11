@@ -19,7 +19,7 @@ namespace BoutiqueDTOXUnit.Json.Configuration
         [Fact]
         public void ToJson_Ok()
         {
-            var hostConfigurationTransfer = HostConfigurationTransferData.HostConfigurationTransfers.First();
+            var hostConfigurationTransfer = HostConfigurationTransfersData.HostConfigurationTransfers.First();
 
             string json = JsonSerializer.Serialize(hostConfigurationTransfer);
             var hostConfigurationAfterJson = JsonSerializer.Deserialize<HostConfigurationTransfer>(json);

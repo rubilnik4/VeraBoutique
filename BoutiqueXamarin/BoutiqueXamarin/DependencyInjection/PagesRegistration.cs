@@ -1,5 +1,4 @@
-﻿using BoutiqueXamarin.ViewModels;
-using BoutiqueXamarin.ViewModels.Clothes.Choice;
+﻿using BoutiqueXamarin.ViewModels.Clothes.Choice;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
 using Prism.Ioc;
@@ -18,7 +17,6 @@ namespace BoutiqueXamarin.DependencyInjection
         public static void RegisterPages(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<ChoicePage, ChoiceViewModel>();
         }
     }

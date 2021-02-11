@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using BoutiqueDTO.Infrastructure.Implementations.Configuration;
-using BoutiqueXamarin.Infrastructure.Interfaces.Configuration;
-using BoutiqueXamarin.Infrastructure.Interfaces.Converters;
-using BoutiqueXamarin.Models.Implementation.Configuration;
-using BoutiqueXamarin.Models.Interfaces.Configuration;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Configuration;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
+using BoutiqueXamarinCommon.Models.Implementation.Configuration;
+using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Newtonsoft.Json;
 using Xamarin.Forms.Platform.Android;
 

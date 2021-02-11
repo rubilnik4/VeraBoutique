@@ -146,6 +146,10 @@
       <Project>{D48D711D-A7BC-4266-88C1-987AFE6EFF36}</Project>
       <Name>BoutiqueDTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\BoutiqueXamarinCommon\BoutiqueXamarinCommon.csproj">
+      <Project>{3c53a3a1-2e21-4ff1-af40-8dc72c119239}</Project>
+      <Name>BoutiqueXamarinCommon</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Functional\Functional.csproj">
       <Project>{ba67de52-c056-4c82-875e-d6109f80ad7f}</Project>
       <Name>Functional</Name>

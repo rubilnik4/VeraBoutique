@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BoutiqueCommon\BoutiqueCommon.csproj" />
     <ProjectReference Include="..\..\BoutiqueDTO\BoutiqueDTO.csproj" />
+    <ProjectReference Include="..\..\BoutiqueXamarinCommon\BoutiqueXamarinCommon.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,11 +30,6 @@
     <EmbeddedResource Update="Views\Clothes\ChoicePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Implementations\Converters\" />
-    <Folder Include="Models\Enums\ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
