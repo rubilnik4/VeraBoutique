@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Clothes
@@ -20,8 +20,8 @@ namespace BoutiqueDTOXUnit.Json.Clothes
         {
             var genderTransfer = GenderTransfersData.GenderTransfers.First();
 
-            string json = JsonSerializer.Serialize(genderTransfer);
-            var genderAfterJson = JsonSerializer.Deserialize<GenderTransfer>(json);
+            string json = JsonConvert.SerializeObject(genderTransfer);
+            var genderAfterJson = JsonConvert.DeserializeObject<GenderTransfer>(json);
 
             Assert.True(genderAfterJson?.Equals(genderTransfer));
         }

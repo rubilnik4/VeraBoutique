@@ -1,4 +1,9 @@
-﻿using BoutiqueXamarinCommon.Models.Enums.ViewModels;
+﻿using System.Threading.Tasks;
+using BoutiqueXamarinCommon.Models.Enums.ViewModels;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.Models.Implementations.Result;
+using Functional.Models.Interfaces.Result;
 using Prism.Mvvm;
 using Prism.Navigation;
 
@@ -20,11 +25,6 @@ namespace BoutiqueXamarin.ViewModels.Base
         protected INavigationService NavigationService { get; }
 
         /// <summary>
-        /// Заголовок
-        /// </summary>
-        public abstract string Title { get; }
-
-        /// <summary>
         /// Состояние модели
         /// </summary>
         protected ViewModelState ViewModelState { get; private set; } = ViewModelState.Ok;
@@ -32,14 +32,13 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Параметры инициализации формы с изменением состояния
         /// </summary>
-        public virtual void Initialize(INavigationParameters parameters)
-        { }
-            //await new ResultError().
-            //ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
-            //ResultErrorBindOkAsync(InitializeAction).
-            //ResultErrorVoidOkBadTaskAsync(
-            //    actionOk: () => ViewModelState = ViewModelState.Ok,
-            //    actionBad: _ => ViewModelState = ViewModelState.Error);
+        public virtual async void Initialize(INavigationParameters parameters) =>
+            await new ResultError().
+            ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
+            ResultErrorBindOkAsync(InitializeAction).
+            ResultErrorVoidOkBadTaskAsync(
+                actionOk: () => ViewModelState = ViewModelState.Ok,
+                actionBad: _ => ViewModelState = ViewModelState.Error);
 
         /// <summary>
         /// Параметры перехода c формы с изменением состояния
@@ -58,5 +57,11 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// </summary>
         public virtual void Destroy()
         { }
+
+        /// <summary>
+        /// Асинхронная загрузка параметров модели
+        /// </summary>
+        protected virtual async Task<IResultError> InitializeAction() =>
+            await Task.FromResult(new ResultError());
     }
 }

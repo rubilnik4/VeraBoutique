@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
+    <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-
     <Configurations>Debug;Release;Test</Configurations>
   </PropertyGroup>
 
@@ -22,7 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BoutiqueCommonXUnit\BoutiqueCommonXUnit.csproj" />
+    <ProjectReference Include="..\BoutiqueDTOXUnit\BoutiqueDTOXUnit.csproj" />
     <ProjectReference Include="..\BoutiqueLoader\BoutiqueLoader.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Converters\" />
   </ItemGroup>
 
 </Project>

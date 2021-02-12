@@ -37,7 +37,7 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Converters
         [Fact]
         public void ToTransfer_HostError()
         {
-            var hostConfigurationNull = new XamarinConfigurationTransfer(null);
+            var hostConfigurationNull = new XamarinConfigurationTransfer(null!);
             var xamarinConfigurationTransferConverter = XamarinConfigurationTransferConverterMock.XamarinConfigurationTransferConverter;
 
             var xamarinConfigurationAfterConverter = xamarinConfigurationTransferConverter.FromTransfer(hostConfigurationNull);

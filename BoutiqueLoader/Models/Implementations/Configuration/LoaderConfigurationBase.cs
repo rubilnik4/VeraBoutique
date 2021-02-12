@@ -24,5 +24,15 @@ namespace BoutiqueLoader.Models.Implementations.Configuration
         /// Параметры подключения к серверу
         /// </summary>
         public THost HostConfiguration { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is ILoaderConfigurationBase<THost> loaderConfiguration &&
+                                                    Equals(loaderConfiguration);
+
+        public bool Equals(ILoaderConfigurationBase<THost>? other) =>
+            other?.HostConfiguration.Equals(HostConfiguration) == true;
+
+        public override int GetHashCode() => HostConfiguration.GetHashCode();
+        #endregion
     }
 }

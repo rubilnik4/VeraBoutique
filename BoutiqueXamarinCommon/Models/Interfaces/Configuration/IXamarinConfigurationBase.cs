@@ -7,7 +7,7 @@ namespace BoutiqueXamarinCommon.Models.Interfaces.Configuration
     /// <summary>
     /// Конфигурация Xamarin
     /// </summary>
-    public interface IXamarinConfigurationBase<out THost> : IModel<Guid>
+    public interface IXamarinConfigurationBase<THost> : IModel<Guid>, IEquatable<IXamarinConfigurationBase<THost>>
         where THost: IHostConfigurationBase
     {
         /// <summary>

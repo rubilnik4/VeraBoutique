@@ -1,6 +1,7 @@
 ﻿using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTOXUnit.Data.Models.Implementations
 {
@@ -13,6 +14,7 @@ namespace BoutiqueDTOXUnit.Data.Models.Implementations
             :this(testInclude.Name)
         { }
 
+        [JsonConstructor]
         public TestIncludeTransfer(string name) 
             :base(name)
         {}

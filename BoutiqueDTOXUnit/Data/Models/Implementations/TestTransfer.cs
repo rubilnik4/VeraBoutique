@@ -3,6 +3,7 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTOXUnit.Data.Models.Implementations
 {
@@ -15,6 +16,7 @@ namespace BoutiqueDTOXUnit.Data.Models.Implementations
            : this(testShort.TestEnum, testShort.Name, testIncludes)
         { }
 
+        [JsonConstructor]
         public TestTransfer(TestEnum testEnum, string name, IEnumerable<TestIncludeTransfer> testIncludes)
             : base(testEnum, name, testIncludes)
         { }

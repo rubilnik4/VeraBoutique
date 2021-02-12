@@ -23,7 +23,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Configuration
     /// </summary>
     public class ConfigurationManagerTest: ConfigurationManager<TestEnum, ITestDomain, TestTransfer>
     {
-        protected ConfigurationManagerTest()
+        public ConfigurationManagerTest()
             : base(TestTransferConverterMock.TestTransferConverter)
         { }
 
@@ -67,7 +67,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Configuration
         /// Пример текста
         /// </summary>
         private static string ConfigurationTextOk => 
-            TestTransferData.TestTransfers.
-            Map(config => JsonSerializer.Serialize(config));
+            TestTransferData.TestTransfers.First().
+            Map(config => JsonConvert.SerializeObject(config));
     }
 }

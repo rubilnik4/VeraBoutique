@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Configuration;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
@@ -21,7 +22,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         public static async Task<IResultError> RegisterConfiguration(IBoutiqueContainer container) =>
             await container.Resolve<IXamarinConfigurationManager>().
-            Map(manager => manager.GetConfigurationAsync()).
+            MapAsync(manager => manager.GetConfigurationAsync()).
             ResultValueVoidOkTaskAsync(container.Register);
     }
 }

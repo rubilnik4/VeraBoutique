@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Configuration;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Data.Transfers.Configuration;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Configuration
@@ -21,8 +21,8 @@ namespace BoutiqueDTOXUnit.Json.Configuration
         {
             var hostConfigurationTransfer = HostConfigurationTransfersData.HostConfigurationTransfers.First();
 
-            string json = JsonSerializer.Serialize(hostConfigurationTransfer);
-            var hostConfigurationAfterJson = JsonSerializer.Deserialize<HostConfigurationTransfer>(json);
+            string json = JsonConvert.SerializeObject(hostConfigurationTransfer);
+            var hostConfigurationAfterJson = JsonConvert.DeserializeObject<HostConfigurationTransfer>(json);
             
             Assert.True(hostConfigurationAfterJson?.Equals(hostConfigurationTransfer));
         }

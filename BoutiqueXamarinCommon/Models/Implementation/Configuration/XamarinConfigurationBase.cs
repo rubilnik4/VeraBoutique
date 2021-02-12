@@ -24,5 +24,15 @@ namespace BoutiqueXamarinCommon.Models.Implementation.Configuration
         /// Параметры подключения к серверу
         /// </summary>
         public THost HostConfiguration { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is IXamarinConfigurationBase<THost> xamarinConfiguration && 
+                                                    Equals(xamarinConfiguration);
+
+        public bool Equals(IXamarinConfigurationBase<THost>? other) =>
+            other?.HostConfiguration.Equals(HostConfiguration) == true;
+
+        public override int GetHashCode() => HostConfiguration.GetHashCode();
+        #endregion
     }
 }

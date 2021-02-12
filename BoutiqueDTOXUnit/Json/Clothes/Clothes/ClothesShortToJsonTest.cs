@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Clothes.Clothes
@@ -21,8 +21,8 @@ namespace BoutiqueDTOXUnit.Json.Clothes.Clothes
         {
             var clothesShortTransfer = ClothesTransfersData.ClothesShortTransfers.First();
 
-            string json = JsonSerializer.Serialize(clothesShortTransfer);
-            var clothesShortAfterJson = JsonSerializer.Deserialize<ClothesShortTransfer>(json);
+            string json = JsonConvert.SerializeObject(clothesShortTransfer);
+            var clothesShortAfterJson = JsonConvert.DeserializeObject<ClothesShortTransfer>(json);
 
             Assert.True(clothesShortAfterJson?.Equals(clothesShortTransfer));
         }

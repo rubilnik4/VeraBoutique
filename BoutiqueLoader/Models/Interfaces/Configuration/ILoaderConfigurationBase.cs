@@ -7,7 +7,7 @@ namespace BoutiqueLoader.Models.Interfaces.Configuration
     /// <summary>
     /// Конфигурация консольного загрузчика 
     /// </summary>
-    public interface ILoaderConfigurationBase<out THost> : IModel<Guid>
+    public interface ILoaderConfigurationBase<THost> : IModel<Guid>, IEquatable<ILoaderConfigurationBase<THost>>
         where THost : IHostConfigurationBase
     {
         /// <summary>

@@ -30,20 +30,5 @@ namespace BoutiqueDTOXUnit.Extensions.Json.Async
             Assert.True(genderTransferAfter.OkStatus);
             Assert.True(genderTransferAfter.Value.Equals(genderTransfer));
         }
-
-        /// <summary>
-        /// Некорректное преобразование
-        /// </summary>
-        [Fact]
-        public async Task ToTransferJsonAsync_Error()
-        {
-            var genderTransfer = GenderTransfersData.GenderTransfers.First();
-            var genderJson = Task.FromResult(JsonConvert.SerializeObject(genderTransfer));
-
-            var genderTransferAfter = await genderJson.ToTransferJsonAsync<string, ColorTransfer>();
-
-            Assert.True(genderTransferAfter.HasErrors);
-            Assert.True(genderTransferAfter.Errors.First().ErrorResultType == ErrorResultType.JsonConvertion);
-        }
     }
 }

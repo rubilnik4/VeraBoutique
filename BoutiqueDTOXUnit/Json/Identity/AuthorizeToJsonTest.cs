@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Identity
@@ -21,8 +21,8 @@ namespace BoutiqueDTOXUnit.Json.Identity
         {
             var authorizeTransfer = AuthorizeTransfersData.AuthorizeTransfers.First();
 
-            string json = JsonSerializer.Serialize(authorizeTransfer);
-            var authorizeAfterJson = JsonSerializer.Deserialize<AuthorizeTransfer>(json);
+            string json = JsonConvert.SerializeObject(authorizeTransfer);
+            var authorizeAfterJson = JsonConvert.DeserializeObject<AuthorizeTransfer>(json);
             
             Assert.True(authorizeAfterJson?.Equals(authorizeTransfer));
         }

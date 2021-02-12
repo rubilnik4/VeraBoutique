@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using System.Text.Json;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Json.Clothes
@@ -20,8 +20,8 @@ namespace BoutiqueDTOXUnit.Json.Clothes
         {
             var colorTransfer = ColorTransfersData.ColorTransfers.First();
 
-            string json = JsonSerializer.Serialize(colorTransfer);
-            var colorAfterJson = JsonSerializer.Deserialize<ColorTransfer>(json);
+            string json = JsonConvert.SerializeObject(colorTransfer);
+            var colorAfterJson = JsonConvert.DeserializeObject<ColorTransfer>(json);
 
             Assert.True(colorAfterJson?.Equals(colorTransfer));
         }
