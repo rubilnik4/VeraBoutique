@@ -1,7 +1,9 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueCommon.Models.Domain.Implementations.Configuration;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
@@ -18,6 +20,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using RestSharp;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -45,6 +48,7 @@ namespace BoutiqueXamarin
         protected override async void OnInitialized() =>
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultErrorVoidOkTaskAsync(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
+            VoidBindAsync(_ => TestRest()).
             VoidTaskAsync(_ => InitializeComponent()).
             ResultErrorVoidOkBadBindAsync(
                 actionOk: () => NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(ChoicePage)}"),
@@ -59,6 +63,14 @@ namespace BoutiqueXamarin
             PagesRegistration.RegisterPages(containerRegistry);
             ConverterServicesRegistration.RegisterTransferConverters(BoutiqueContainer);
             CommonServicesRegistration.RegisterCommonServices(BoutiqueContainer);
+        }
+
+        private async Task TestRest()
+        {
+            var hostConfig = new HostConfigurationDomain(new Uri("https://veraboutique.ru"), TimeSpan.FromSeconds(5), false);
+            var restClient = RestSharpFactory.GetRestClient(hostConfig);
+            var restRequest = new RestRequest("api/gender", Method.GET);
+            var response = await restClient.ExecuteGetAsync<string>(restRequest);
         }
     }
 }

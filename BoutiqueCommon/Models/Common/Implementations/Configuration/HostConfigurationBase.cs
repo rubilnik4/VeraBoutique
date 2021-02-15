@@ -9,11 +9,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Configuration
     /// </summary>
     public abstract class HostConfigurationBase: IHostConfigurationBase
     {
-        protected HostConfigurationBase(Uri host, TimeSpan timeOut, bool disableSsl)
+        protected HostConfigurationBase(Uri host, TimeSpan timeOut, bool disableSSL)
         {
             Host = host;
             TimeOut = timeOut;
-            DisableSSL = disableSsl;
+            DisableSSL = disableSSL;
         }
 
         /// <summary>

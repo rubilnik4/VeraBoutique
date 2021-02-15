@@ -16,12 +16,12 @@ namespace BoutiqueDTO.Models.Implementations.Configuration
         { }
 
         [JsonConstructor]
-        public HostConfigurationTransfer(Uri host, string timeOut, bool disableSsl)
-           : this(host, TimeSpan.Parse(timeOut), disableSsl)
+        public HostConfigurationTransfer(Uri host, string timeOut, bool disableSSL)
+           : this(host, TimeSpan.Parse(timeOut), disableSSL)
         { }
 
-        public HostConfigurationTransfer(Uri host, TimeSpan timeOut, bool disableSsl)
-            :base(host, timeOut, disableSsl)
+        public HostConfigurationTransfer(Uri host, TimeSpan timeOut, bool disableSSL)
+            :base(host, timeOut, disableSSL)
         { }
     }
 }
