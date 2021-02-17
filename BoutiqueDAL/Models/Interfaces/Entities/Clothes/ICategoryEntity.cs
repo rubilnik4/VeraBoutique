@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
@@ -12,8 +11,8 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     public interface ICategoryEntity : ICategoryBase, IEntityModel<string>
     {
         /// <summary>
-        /// Связующие сущности категории и вида одежды
+        /// Связующие сущности типа пола и категории одежды
         /// </summary>
-        public IReadOnlyCollection<ClothesTypeEntity>? ClothesTypes { get; }
+        IReadOnlyCollection<GenderCategoryCompositeEntity>? GenderCategoryComposites { get; }
     }
 }

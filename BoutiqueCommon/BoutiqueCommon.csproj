@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\StringExtensions\" />
-    <Folder Include="Models\Common\Interfaces\Clothes\Categories\" />
   </ItemGroup>
 
 </Project>

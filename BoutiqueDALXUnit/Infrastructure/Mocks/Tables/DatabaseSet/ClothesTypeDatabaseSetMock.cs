@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;

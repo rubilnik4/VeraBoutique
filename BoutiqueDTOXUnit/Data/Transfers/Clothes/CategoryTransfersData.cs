@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 
 namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
 {

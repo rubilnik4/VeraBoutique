@@ -1,5 +1,7 @@
 ﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueXamarinCommonXUnit.Data.Models.Interfaces;
 
 namespace BoutiqueXamarinCommonXUnit.Data.Models.Implementations

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 
 namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
 {

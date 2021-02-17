@@ -14,7 +14,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// <summary>
     /// Сервис одежды
     /// </summary>
-    public class ClothesRestService : RestServiceBase<int, IClothesDomain, ClothesTransfer>, IClothesRestService
+    public class ClothesRestService : RestServiceBase<int, IClothesFullDomain, ClothesFullTransfer>, IClothesRestService
     {
         public ClothesRestService(IClothesApiService clothesApiService,
                                   IClothesTransferConverter clothesTransferConverter)

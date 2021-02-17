@@ -3,6 +3,7 @@ using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using RestSharp;
 

@@ -1,4 +1,4 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes

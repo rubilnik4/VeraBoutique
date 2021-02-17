@@ -6,7 +6,6 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Microsoft.EntityFrameworkCore;
@@ -67,8 +66,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// <summary>
         /// Сущность базы данных
         /// </summary>
-        private static Mock<DbSet<ClothesEntity>> DbSet =>
-            new Mock<DbSet<ClothesEntity>>();
+        private static Mock<DbSet<ClothesFullEntity>> DbSet =>
+            new Mock<DbSet<ClothesFullEntity>>();
 
         /// <summary>
         /// Таблица базы данных одежды

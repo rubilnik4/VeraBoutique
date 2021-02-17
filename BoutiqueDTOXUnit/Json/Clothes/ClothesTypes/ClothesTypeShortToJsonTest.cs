@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Newtonsoft.Json;

@@ -1,54 +1,74 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BoutiqueCommon.Infrastructure.Implementation;
-using BoutiqueCommon.Infrastructure.Implementation.Clothes;
+using Functional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
 {
     /// <summary>
     /// Группа размеров одежды. Базовые данные
     /// </summary>
-    public abstract class SizeGroupBase<TSize> : SizeGroupShortBase, ISizeGroupBase<TSize>
-        where TSize : ISizeBase
+    public abstract class SizeGroupBase : ISizeGroupBase
     {
-        protected SizeGroupBase(ClothesSizeType clothesSizeType, int sizeNormalize, IEnumerable<TSize> sizes)
-            : base(clothesSizeType, sizeNormalize)
+        protected SizeGroupBase(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
-            Sizes = sizes.ToList();
+            Id = GetIdHashCode(ClothesSizeType, SizeNormalize);
+            ClothesSizeType = clothesSizeType;
+            SizeNormalize = sizeNormalize;
         }
 
         /// <summary>
-        /// Размеры
+        /// Минимальное значение номинального размера
         /// </summary>
-        public IReadOnlyCollection<TSize> Sizes { get; }
+        public const int SIZE_NORMALIZE_MIN = 1;
 
         /// <summary>
-        /// Получить имя группы размеров по базовому типу
+        /// Максимальное значение номинального размера
         /// </summary>
-        public string GetBaseGroupName(SizeType sizeType) =>
-            SizeNaming.GetGroupName(sizeType, Sizes);
+        public const int SIZE_NORMALIZE_MAX = 299;
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public int Id { get; }
+
+        /// <summary>
+        /// Тип одежды для определения размера
+        /// </summary>
+        public ClothesSizeType ClothesSizeType { get; }
+
+        /// <summary>
+        /// Номинальное значение размера
+        /// </summary>
+        public int SizeNormalize { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroupBase<TSize> sizeGroup && Equals(sizeGroup);
+        public override bool Equals(object? obj) =>
+            obj is ISizeGroupBase sizeGroup && Equals(sizeGroup);
 
-        public bool Equals(ISizeGroupBase<TSize>? other) =>
-            base.Equals(other) &&
-            other?.Sizes.SequenceEqual(Sizes) == true;
+        public bool Equals(ISizeGroupBase? other) =>
+            other?.Id.Equals(Id) == true;
 
-        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize, SizeBase.GetSizesHashCodes(Sizes));
+        public override int GetHashCode() =>
+            GetIdHashCode(ClothesSizeType, SizeNormalize);
         #endregion
+
+        /// <summary>
+        /// Получить хэш-код идентификатора
+        /// </summary>
+        public static int GetIdHashCode(ClothesSizeType clothesSizeType, int sizeNormalize) =>
+            HashCode.Combine(clothesSizeType, sizeNormalize);
 
         /// <summary>
         /// Получить хэш-код группы размеров одежды
         /// </summary>
         public static double GetSizeGroupHashCodes<TSizeGroup>(IEnumerable<TSizeGroup> sizeGroups)
-            where TSizeGroup : ISizeGroupBase<TSize> =>
-            sizeGroups.Average(color => color.GetHashCode());
+            where TSizeGroup : ISizeGroupBase =>
+            sizeGroups.Average(sizeGroup => sizeGroup.GetHashCode());
     }
 }

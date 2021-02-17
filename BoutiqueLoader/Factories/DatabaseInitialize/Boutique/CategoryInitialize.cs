@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 
 namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
 {

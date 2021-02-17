@@ -12,20 +12,20 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     /// <summary>
     /// Конвертер одежды в трансферную модель
     /// </summary>
-    public class ClothesShortTransferConverter : TransferConverter<int, IClothesShortDomain, ClothesShortTransfer>,
+    public class ClothesShortTransferConverter : TransferConverter<int, IClothesDomain, ClothesTransfer>,
                                                  IClothesShortTransferConverter
     {
         /// <summary>
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
-        public override ClothesShortTransfer ToTransfer(IClothesShortDomain clothesShortDomain) =>
-            new ClothesShortTransfer(clothesShortDomain);
+        public override ClothesTransfer ToTransfer(IClothesDomain clothesDomain) =>
+            new ClothesTransfer(clothesDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
-        public override IResultValue<IClothesShortDomain> FromTransfer(ClothesShortTransfer clothesShortTransfer) =>
-            new ClothesShortDomain(clothesShortTransfer).
-            Map(clothesShort => new ResultValue<IClothesShortDomain>(clothesShort));
+        public override IResultValue<IClothesDomain> FromTransfer(ClothesTransfer clothesTransfer) =>
+            new ClothesDomain(clothesTransfer).
+            Map(clothesShort => new ResultValue<IClothesDomain>(clothesShort));
     }
 }

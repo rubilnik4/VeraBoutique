@@ -21,7 +21,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes.SizeGroups
             var sizeGroupTransfer = SizeGroupTransfersData.SizeGroupTransfers.First();
 
             string json = JsonConvert.SerializeObject(sizeGroupTransfer);
-            var sizeGroupAfterJson = JsonConvert.DeserializeObject<SizeGroupTransfer>(json);
+            var sizeGroupAfterJson = JsonConvert.DeserializeObject<SizeGroupFullTransfer>(json);
 
             Assert.True(sizeGroupAfterJson?.Equals(sizeGroupTransfer));
         }

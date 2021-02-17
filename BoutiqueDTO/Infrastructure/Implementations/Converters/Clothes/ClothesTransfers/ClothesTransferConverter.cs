@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
@@ -20,12 +20,12 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers
 {
-    using ClothesFunc = Func<IGenderDomain, IClothesTypeShortDomain, IEnumerable<IColorDomain>, IEnumerable<ISizeGroupDomain>, IClothesDomain>;
+    using ClothesFunc = Func<IGenderDomain, IClothesTypeDomain, IEnumerable<IColorDomain>, IEnumerable<ISizeGroupDomain>, IClothesFullDomain>;
    
     /// <summary>
     /// Конвертер информации об одежде в трансферную модель
     /// </summary>
-    public class ClothesTransferConverter : TransferConverter<int, IClothesDomain, ClothesTransfer>,
+    public class ClothesTransferConverter : TransferConverter<int, IClothesFullDomain, ClothesFullTransfer>,
                                             IClothesTransferConverter
     {
         public ClothesTransferConverter(IGenderTransferConverter genderTransferConverter,
@@ -62,30 +62,30 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Преобразовать одежду в трансферную модель
         /// </summary>
-        public override ClothesTransfer ToTransfer(IClothesDomain clothesDomain) =>
-            new ClothesTransfer(clothesDomain,
-                                _genderTransferConverter.ToTransfer(clothesDomain.Gender),
-                                _clothesTypeShortTransferConverter.ToTransfer(clothesDomain.ClothesTypeShort),
-                                _colorTransferConverter.ToTransfers(clothesDomain.Colors),
-                                _sizeGroupTransferConverter.ToTransfers(clothesDomain.SizeGroups));
+        public override ClothesFullTransfer ToTransfer(IClothesFullDomain clothesFullDomain) =>
+            new ClothesFullTransfer(clothesFullDomain,
+                                _genderTransferConverter.ToTransfer(clothesFullDomain.Gender),
+                                _clothesTypeShortTransferConverter.ToTransfer(clothesFullDomain.ClothesType),
+                                _colorTransferConverter.ToTransfers(clothesFullDomain.Colors),
+                                _sizeGroupTransferConverter.ToTransfers(clothesFullDomain.SizeGroups));
 
         /// <summary>
         /// Преобразовать одежду из трансферной модели
         /// </summary>
-        public override IResultValue<IClothesDomain> FromTransfer(ClothesTransfer clothesTransfer) =>
-              GetClothesFunc(clothesTransfer).
-              ResultValueCurryOk(_genderTransferConverter.GetDomain(clothesTransfer.Gender)).
-              ResultValueCurryOk(_clothesTypeShortTransferConverter.GetDomain(clothesTransfer.ClothesTypeShort)).
-              ResultValueCurryOk(_colorTransferConverter.GetDomains(clothesTransfer.Colors)).
-              ResultValueCurryOk(_sizeGroupTransferConverter.GetDomains(clothesTransfer.SizeGroups)).
+        public override IResultValue<IClothesFullDomain> FromTransfer(ClothesFullTransfer clothesFullTransfer) =>
+              GetClothesFunc(clothesFullTransfer).
+              ResultValueCurryOk(_genderTransferConverter.GetDomain(clothesFullTransfer.Gender)).
+              ResultValueCurryOk(_clothesTypeShortTransferConverter.GetDomain(clothesFullTransfer.ClothesType)).
+              ResultValueCurryOk(_colorTransferConverter.GetDomains(clothesFullTransfer.Colors)).
+              ResultValueCurryOk(_sizeGroupTransferConverter.GetDomains(clothesFullTransfer.SizeGroups)).
               ResultValueOk(func => func.Invoke());
 
         /// <summary>
         /// Функция получения одежды
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesShortBase clothes) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes) =>
             new ResultValue<ClothesFunc>(
-                (gender, clothesTypeShort, colors, sizeGroups) => new ClothesDomain(clothes, gender, clothesTypeShort, 
+                (gender, clothesTypeShort, colors, sizeGroups) => new ClothesFullDomain(clothes, gender, clothesTypeShort, 
                                                                                     colors, sizeGroups));
     }
 }

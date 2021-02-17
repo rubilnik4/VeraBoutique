@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using Functional.Models.Enums;

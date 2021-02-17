@@ -1,37 +1,27 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
-using BoutiqueDTO.Models.Interfaces.Clothes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
-using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Interfaces.Clothes.SizeGroup;
 using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
 {
     /// <summary>
-    /// Одежда. Доменная модель
+    /// Одежда. Базовая трансферная модель
     /// </summary>
-    public class ClothesTransfer : 
-        ClothesBase<GenderTransfer, ClothesTypeShortTransfer, ColorTransfer, SizeGroupTransfer, SizeTransfer>,
-        IClothesTransfer
+    public class ClothesTransfer : ClothesBase, IClothesTransfer
     {
-        public ClothesTransfer(IClothesShortBase clothes,
-                               GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
-                               IEnumerable<ColorTransfer> colors, IEnumerable<SizeGroupTransfer> sizeGroups)
+        public ClothesTransfer(IClothesBase clothes)
             : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                  gender, clothesTypeShort, colors.ToList(), sizeGroups.ToList())
+                   clothes.GenderType, clothes.ClothesTypeName)
         { }
-
+        
         [JsonConstructor]
         public ClothesTransfer(int id, string name, string description, decimal price, byte[] image,
-                               GenderTransfer gender, ClothesTypeShortTransfer clothesTypeShort,
-                               IReadOnlyCollection<ColorTransfer> colors, IReadOnlyCollection<SizeGroupTransfer> sizeGroups)
-            : base(id, name, description, price, image, gender, clothesTypeShort, colors, sizeGroups)
+                                    GenderType genderType, string clothesTypeName)
+            : base(id, name, description, price, image, genderType, clothesTypeName)
         { }
     }
 }

@@ -2,9 +2,7 @@
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 

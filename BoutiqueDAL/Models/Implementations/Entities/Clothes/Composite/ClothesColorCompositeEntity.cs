@@ -1,5 +1,4 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
@@ -14,7 +13,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         { }
 
         public ClothesColorCompositeEntity(int clothesId, string colorName,
-                                           ClothesEntity? clothes, 
+                                           ClothesFullEntity? clothes, 
                                            ColorEntity? colorClothes)
         {
             ClothesId = clothesId;
@@ -41,7 +40,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Одежда. Информация
         /// </summary>
-        public ClothesEntity? Clothes { get; }
+        public ClothesFullEntity? Clothes { get; }
 
         /// <summary>
         /// Цвет одежды

@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 
 namespace BoutiqueDALXUnit.Data.Entities
@@ -20,10 +17,10 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности информации об одежде
         /// </summary>
-        public static IReadOnlyCollection<ClothesEntity> ClothesEntities =>
+        public static IReadOnlyCollection<ClothesFullEntity> ClothesEntities =>
             ClothesData.ClothesDomains.
             Select(clothes =>
-                new ClothesEntity(clothes,
+                new ClothesFullEntity(clothes,
                                   new GenderEntity(clothes.Gender),
                                   GetClothesTypeEntity(clothes.ClothesTypeShort),
                                   GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),
@@ -51,7 +48,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущность типа одежды
         /// </summary>
-        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesTypeShort) =>
-             new (clothesTypeShort);
+        private static ClothesTypeEntity GetClothesTypeEntity(IClothesTypeShortDomain clothesType) =>
+             new (clothesType);
     }
 }

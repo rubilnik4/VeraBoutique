@@ -1,75 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
 {
     /// <summary>
-    /// Одежда
+    /// Одежда. Базовые данные
     /// </summary>
-    public abstract class ClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
-        ClothesShortBase,
-        IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>
-        where TGender : IGenderBase
-        where TClothesType : IClothesTypeShortBase
-        where TColor : IColorBase
-        where TSizeGroup : ISizeGroupBase<TSize>
-        where TSize : ISizeBase
+    public abstract class ClothesBase : IClothesBase
     {
-        protected ClothesBase(int id, string name, string description, decimal price, byte[] image,
-                              TGender gender, TClothesType clothesTypeShort,
-                              IEnumerable<TColor> colors, IEnumerable<TSizeGroup> sizeGroups)
-            : base(id, name, description, price, image, gender.GenderType, clothesTypeShort.Name)
+        protected ClothesBase(int id, string name, string description, decimal price, byte[] image, 
+                                   GenderType genderType, string clothesTypeName)
         {
-            Gender = gender;
-            ClothesTypeShort = clothesTypeShort;
-            Colors = colors.ToList();
-            SizeGroups = sizeGroups.ToList();
+            Id = id;
+            Name = name;
+            Description = description;
+            Price = price;
+            Image = image;
+            GenderType = genderType;
+            ClothesTypeName = clothesTypeName;
         }
 
         /// <summary>
-        /// Тип пола
+        /// Идентификатор
         /// </summary>
-        public TGender Gender { get; }
+        public int Id { get; }
 
         /// <summary>
-        /// Вид одежды
+        /// Наименование
         /// </summary>
-        public TClothesType ClothesTypeShort { get; }
+        public string Name { get; }
 
         /// <summary>
-        /// Цвета одежды
+        /// Описание
         /// </summary>
-        public IReadOnlyCollection<TColor> Colors { get; }
+        public string Description { get; }
 
         /// <summary>
-        /// Размеры
+        /// Цена
         /// </summary>
-        public IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
+        public decimal Price { get; }
+
+        /// <summary>
+        /// Изображение
+        /// </summary>
+        public byte[] Image { get; }
+
+        /// <summary>
+        /// Тип пола одежды
+        /// </summary>
+        public GenderType GenderType { get; }
+
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        public string ClothesTypeName { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize> clothes &&
-                                                    Equals(clothes);
+        public override bool Equals(object? obj) => obj is IClothesBase clothes && Equals(clothes);
 
-        public bool Equals(IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>? other) =>
-            base.Equals(other) &&
-            other?.Gender.Equals(Gender) == true &&
-            other?.ClothesTypeShort.Equals(ClothesTypeShort) == true &&
-            other?.Colors.SequenceEqual(Colors) == true &&
-            other?.SizeGroups.SequenceEqual(SizeGroups) == true;
+        public bool Equals(IClothesBase? other) =>
+            other?.Id == Id && 
+            other?.Name == Name && 
+            other?.Description == Description && 
+            other?.Price == Price &&
+            other?.Image.SequenceEqual(Image) == true &&
+            GenderType == other.GenderType &&
+            ClothesTypeName == other.ClothesTypeName;
 
-        public override int GetHashCode() =>
-            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description, Image),
-                             Gender.GetHashCode(), ClothesTypeShort.GetHashCode(),
-                             ColorBase.GetColorClothesHashCodes(Colors),
-                             SizeGroupBase<TSize>.GetSizeGroupHashCodes(SizeGroups));
+        public override int GetHashCode() => HashCode.Combine(Id, Name, Description, Price, Image, GenderType, ClothesTypeName);
         #endregion
     }
 }

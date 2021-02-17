@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransf
     /// <summary>
     /// Конвертер одежды в трансферную модель
     /// </summary>
-    public interface IClothesShortTransferConverter : ITransferConverter<int, IClothesShortDomain, ClothesShortTransfer>
+    public interface IClothesShortTransferConverter : ITransferConverter<int, IClothesDomain, ClothesTransfer>
     { }
 }

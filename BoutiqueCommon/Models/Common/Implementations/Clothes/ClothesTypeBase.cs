@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+
+namespace BoutiqueCommon.Models.Common.Implementations.Clothes
+{
+    /// <summary>
+    /// Вид одежды. Базовые данные
+    /// </summary>
+    public abstract class ClothesTypeBase: IClothesTypeBase
+    {
+        protected ClothesTypeBase(string name, string categoryName)
+        {
+            Name = name;
+            CategoryName = categoryName;
+        }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public string Id => Name;
+
+        /// <summary>
+        /// Наименование
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Категория
+        /// </summary>
+        public string CategoryName { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) => obj is IClothesTypeBase clothesType && Equals(clothesType);
+
+        public bool Equals(IClothesTypeBase? other) =>
+            other?.Id == Id &&
+            other?.CategoryName.Equals(CategoryName) == true;
+
+        public override int GetHashCode() => HashCode.Combine(Name, CategoryName);
+        #endregion
+
+        /// <summary>
+        /// Получить хэш-код коллекции пола одежды
+        /// </summary>
+        public static double GetClothesTypeHashCodes<TClothesType>(IEnumerable<TClothesType> clothesTypes)
+            where TClothesType : IClothesTypeBase =>
+            clothesTypes.Average(clothesType => clothesType.GetHashCode());
+    }
+}

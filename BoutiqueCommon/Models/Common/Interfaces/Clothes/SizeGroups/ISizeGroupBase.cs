@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups
@@ -10,17 +7,16 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups
     /// <summary>
     /// Группа размеров одежды. Базовые данные
     /// </summary>
-    public interface ISizeGroupBase<TSize> : ISizeGroupShortBase, IEquatable<ISizeGroupBase<TSize>>
-        where TSize: ISizeBase
+    public interface ISizeGroupBase : IModel<int>, IEquatable<ISizeGroupBase>
     {
         /// <summary>
-        /// Размеры
+        /// Тип одежды для определения размера
         /// </summary>
-        IReadOnlyCollection<TSize> Sizes { get; }
+        ClothesSizeType ClothesSizeType { get; }
 
         /// <summary>
-        /// Получить имя группы размеров по базовому типу
+        /// Номинальное значение размера
         /// </summary>
-        string GetBaseGroupName(SizeType sizeType);
+        int SizeNormalize { get; }
     }
 }

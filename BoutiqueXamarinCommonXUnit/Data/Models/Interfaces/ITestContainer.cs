@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 
 namespace BoutiqueXamarinCommonXUnit.Data.Models.Interfaces
 {

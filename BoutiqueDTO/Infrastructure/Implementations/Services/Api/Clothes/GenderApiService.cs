@@ -8,6 +8,7 @@ using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;

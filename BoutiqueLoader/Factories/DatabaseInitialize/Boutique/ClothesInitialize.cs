@@ -15,15 +15,15 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Начальные данные таблицы одежды
         /// </summary>
-        public static IReadOnlyCollection<IClothesDomain> Clothes =>
+        public static IReadOnlyCollection<IClothesFullDomain> Clothes =>
             ClothesTShirts.
             ToList().AsReadOnly();
 
         /// <summary>
         /// Вид одежды. 
         /// </summary>
-        private static IReadOnlyCollection<IClothesDomain> ClothesTShirts =>
-            new List<ClothesDomain>
+        private static IReadOnlyCollection<IClothesFullDomain> ClothesTShirts =>
+            new List<ClothesFullDomain>
             {
                 new (0,"Футболка","Футболка тестовая", 1500, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
                      ClothesTypeInitialize.Tshort, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)

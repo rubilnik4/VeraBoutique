@@ -1,8 +1,7 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate
 {

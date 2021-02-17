@@ -59,7 +59,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetByGender_ErrorDatabase()
         {
             var initialError = ErrorData.DatabaseError;
-            var clothesShortDomains = new ResultCollection<IClothesShortDomain>(initialError);
+            var clothesShortDomains = new ResultCollection<IClothesDomain>(initialError);
             var clothesDomain = ClothesDomainOk;
             var genderType = clothesDomain.Value.Gender.GenderType;
             var clothesType = clothesDomain.Value.ClothesTypeShort.Name;
@@ -80,7 +80,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Сервис одежды в базе данных
         /// </summary>
-        private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesShortDomain> clothesShortDomains) =>
+        private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesDomain> clothesShortDomains) =>
             new Mock<IClothesDatabaseService>().
             Void(mock => mock.Setup(service => service.GetClothesShorts(It.IsAny<GenderType>(), It.IsAny<string>())).
                               ReturnsAsync(clothesShortDomains));
@@ -88,13 +88,13 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Данные одежды. Корректный вариант
         /// </summary>
-        private static ResultCollection<IClothesShortDomain> ClothesShortDomainsOk =>
-            new ResultCollection<IClothesShortDomain>(ClothesData.ClothesShortDomains);
+        private static ResultCollection<IClothesDomain> ClothesShortDomainsOk =>
+            new ResultCollection<IClothesDomain>(ClothesData.ClothesShortDomains);
 
         /// <summary>
         /// Данные информации об одежде. Корректный вариант
         /// </summary>
-        private static ResultValue<IClothesDomain> ClothesDomainOk =>
-            new ResultValue<IClothesDomain>(ClothesData.ClothesDomains.First());
+        private static ResultValue<IClothesFullDomain> ClothesDomainOk =>
+            new ResultValue<IClothesFullDomain>(ClothesData.ClothesDomains.First());
     }
 }

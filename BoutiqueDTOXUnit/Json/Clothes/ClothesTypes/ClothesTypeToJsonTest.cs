@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;

@@ -1,5 +1,4 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite

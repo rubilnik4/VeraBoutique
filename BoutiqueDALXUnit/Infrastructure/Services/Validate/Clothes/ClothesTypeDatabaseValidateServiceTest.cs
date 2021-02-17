@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
@@ -19,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Xunit;
-using ClothesTypeDomain = BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains.ClothesTypeDomain;
+using ClothesTypeDomain = BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 {

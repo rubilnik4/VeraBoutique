@@ -4,6 +4,6 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
 {
-    public interface IClothesRestService : IRestServiceBase<int, IClothesDomain>
+    public interface IClothesRestService : IRestServiceBase<int, IClothesFullDomain>
     { }
 }

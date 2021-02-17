@@ -1,6 +1,5 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,9 +8,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Одежда. Информация. Схема базы данных
     /// </summary>
-    public class ClothesConfiguration : IEntityTypeConfiguration<ClothesEntity>
+    public class ClothesConfiguration : IEntityTypeConfiguration<ClothesFullEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesEntity> builder)
+        public void Configure(EntityTypeBuilder<ClothesFullEntity> builder)
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasDefaultValueSql($"nextval('\"{ClothesSequences.CLOTHES_ID_GENERATOR}\"')").IsRequired();

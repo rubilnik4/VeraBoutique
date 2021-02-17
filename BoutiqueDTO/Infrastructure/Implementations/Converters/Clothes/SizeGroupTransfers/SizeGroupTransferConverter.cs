@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Errors;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
@@ -25,7 +22,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель
     /// </summary>
-    public class SizeGroupTransferConverter : TransferConverter<int, ISizeGroupDomain, SizeGroupTransfer>,
+    public class SizeGroupTransferConverter : TransferConverter<int, ISizeGroupDomain, SizeGroupFullTransfer>,
                                               ISizeGroupTransferConverter
     {
         public SizeGroupTransferConverter(ISizeTransferConverter sizeTransferConverter)
@@ -41,13 +38,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
-        public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
+        public override SizeGroupFullTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
             new SizeGroupTransfer(sizeGroupDomain, _sizeTransferConverter.ToTransfers(sizeGroupDomain.Sizes));
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override IResultValue<ISizeGroupDomain> FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
+        public override IResultValue<ISizeGroupDomain> FromTransfer(SizeGroupFullTransfer sizeGroupTransfer) =>
             GetSizeGroupFunc(sizeGroupTransfer).
             ResultValueCurryOk(_sizeTransferConverter.GetDomains(sizeGroupTransfer.Sizes)).
             ResultValueOk(func => func.Invoke());
@@ -55,8 +52,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Функция получения группы размеров
         /// </summary>
-        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroupShortBase sizeGroupShort) =>
+        private static IResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>> GetSizeGroupFunc(ISizeGroupBase sizeGroup) =>
             new ResultValue<Func<IEnumerable<ISizeDomain>, ISizeGroupDomain>>(
-                sizes => new SizeGroupDomain(sizeGroupShort, sizes));
+                sizes => new SizeGroupDomain(sizeGroup, sizes));
     }
 }

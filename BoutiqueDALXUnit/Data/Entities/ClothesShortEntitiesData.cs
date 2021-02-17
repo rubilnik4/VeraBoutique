@@ -3,7 +3,6 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {
@@ -15,9 +14,9 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Сущности одежды
         /// </summary>
-        public static IReadOnlyCollection<ClothesShortEntity> ClothesShortEntities =>
+        public static IReadOnlyCollection<ClothesEntity> ClothesShortEntities =>
             ClothesData.ClothesShortDomains.
-            Select(clothesShort => new ClothesShortEntity(clothesShort)).
+            Select(clothesShort => new ClothesEntity(clothesShort)).
             ToList();
     }
 }

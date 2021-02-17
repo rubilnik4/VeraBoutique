@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
@@ -98,10 +95,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// <summary>
         /// Получить тип одежды
         /// </summary>
-        private static ClothesTypeEntity GetClothesType(IClothesTypeShortBase clothesType,
+        private static ClothesTypeEntity GetClothesType(IClothesTypeBase clothesType,
                                                         string categoryName, CategoryEntity? category, 
                                                         IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites, 
-                                                        IEnumerable<ClothesEntity>? clothes) =>
+                                                        IEnumerable<ClothesFullEntity>? clothes) =>
             new (clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes);
     }
 }

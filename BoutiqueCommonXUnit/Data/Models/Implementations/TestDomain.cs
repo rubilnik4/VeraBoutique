@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using Xunit.Abstractions;
 

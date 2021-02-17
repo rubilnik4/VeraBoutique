@@ -1,8 +1,7 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes
 {

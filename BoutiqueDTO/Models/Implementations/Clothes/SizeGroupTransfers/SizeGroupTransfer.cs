@@ -1,30 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes.SizeGroup;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers
 {
     /// <summary>
-    /// Группа размеров одежды разного типа. Трансферная модель
+    /// Группа размеров одежды разного типа. Базовые данные. Трансферная модель
     /// </summary>
-    public class SizeGroupTransfer : SizeGroupBase<SizeTransfer>, ISizeGroupTransfer
+    public class SizeGroupTransfer : SizeGroupBase, ISizeGroupTransfer
     {
-        public SizeGroupTransfer(ISizeGroupShortBase sizeGroup, IEnumerable<SizeTransfer> sizes)
-            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizes.ToList())
+        public SizeGroupTransfer(ISizeGroupBase sizeGroup)
+            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
         { }
 
         [JsonConstructor]
-        public SizeGroupTransfer(ClothesSizeType clothesSizeType, int sizeNormalize, IReadOnlyCollection<SizeTransfer> sizes)
-            : base(clothesSizeType, sizeNormalize, sizes)
+        public SizeGroupTransfer(ClothesSizeType clothesSizeType, int sizeNormalize)
+            :base(clothesSizeType, sizeNormalize)
         { }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public override int Id => GetIdHashCode(ClothesSizeType, SizeNormalize);
     }
 }

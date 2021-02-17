@@ -1,7 +1,5 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
@@ -24,7 +22,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Одежда. Информация
         /// </summary>
-        ClothesEntity? Clothes { get; }
+        ClothesFullEntity? Clothes { get; }
 
         /// <summary>
         /// Группа размеров одежды

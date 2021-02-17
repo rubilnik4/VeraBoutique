@@ -1,41 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
 {
-    public interface IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
-        IClothesShortBase,
-        IEquatable<IClothesBase<TGender, TClothesType, TColor, TSizeGroup, TSize>>
-        where TGender : IGenderBase
-        where TClothesType : IClothesTypeShortBase
-        where TColor : IColorBase
-        where TSizeGroup : ISizeGroupBase<TSize>
-        where TSize: ISizeBase
+    /// <summary>
+    /// Одежда
+    /// </summary>
+    public interface IClothesBase : IModel<int>, IEquatable<IClothesBase>
     {
         /// <summary>
-        /// Тип пола
+        /// Наименование
         /// </summary>
-        TGender Gender { get; }
+        string Name { get; }
 
         /// <summary>
-        /// Вид одежды
+        /// Описание
         /// </summary>
-        TClothesType ClothesTypeShort { get; }
+        string Description { get; }
 
         /// <summary>
-        /// Цвета одежды
+        /// Цена
         /// </summary>
-        IReadOnlyCollection<TColor> Colors { get; }
+        decimal Price { get; }
 
         /// <summary>
-        /// Размеры
+        /// Изображение
         /// </summary>
-        IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
+        byte[] Image { get; }
+
+        /// <summary>
+        /// Тип пола одежды
+        /// </summary>
+        GenderType GenderType { get; }
+
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        string ClothesTypeName { get; }
     }
 }

@@ -3,8 +3,6 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
@@ -38,7 +36,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности типа пола c информацией об одежде
         /// </summary>
         public static IReadOnlyCollection<GenderEntity> GetGenderEntitiesWithClothes(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                                 IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
+                                                                                 IReadOnlyCollection<ClothesFullEntity> clothesInformationEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               null,

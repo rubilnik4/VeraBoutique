@@ -18,14 +18,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// <summary>
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
-        public override SizeGroupShortTransfer ToTransfer(ISizeGroupShortDomain sizeGroupShortDomain) =>
-            new SizeGroupShortTransfer(sizeGroupShortDomain);
+        public override SizeGroupShortTransfer ToTransfer(ISizeGroupShortDomain sizeGroupDomain) =>
+            new SizeGroupShortTransfer(sizeGroupDomain);
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override IResultValue<ISizeGroupShortDomain> FromTransfer(SizeGroupShortTransfer sizeGroupShortTransfer) =>
-            new SizeGroupShortDomain(sizeGroupShortTransfer).
+        public override IResultValue<ISizeGroupShortDomain> FromTransfer(SizeGroupShortTransfer sizeGroupTransfer) =>
+            new SizeGroupShortDomain(sizeGroupTransfer).
             Map(sizeGroupShortDomain => new ResultValue<ISizeGroupShortDomain>(sizeGroupShortDomain));
     }
 }

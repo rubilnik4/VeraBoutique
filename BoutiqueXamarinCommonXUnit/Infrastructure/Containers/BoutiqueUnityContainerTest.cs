@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Containers;
 using BoutiqueXamarinCommonXUnit.Data.Models.Implementations;

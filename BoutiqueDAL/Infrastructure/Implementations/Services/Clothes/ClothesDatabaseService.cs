@@ -16,9 +16,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes.ClothesEntities;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -34,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesDomain, ClothesEntity>,
+    public class ClothesDatabaseService : DatabaseService<int, IClothesFullDomain, ClothesFullEntity>,
                                           IClothesDatabaseService
     {
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
@@ -72,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
-        public async Task<IResultCollection<IClothesShortDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
+        public async Task<IResultCollection<IClothesDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
             await ResultCollectionTryAsync(() => GetByGenderAndClothesType(genderType, clothesType),
                                            DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
@@ -80,20 +78,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить одежду без изображений
         /// </summary>
-        private async Task<IReadOnlyCollection<ClothesShortEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
+        private async Task<IReadOnlyCollection<ClothesEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
             await GetClothesByGender(genderType).
             Join(GetClothesByClothesType(clothesType),
                  clothesGender => clothesGender.Id,
                  clothesClothesType => clothesClothesType.Id,
                  (clothesGender, clothesClothesType) => clothesGender).
-            Select(clothesEntity => new ClothesShortEntity(clothesEntity)).
+            Select(clothesEntity => new ClothesEntity(clothesEntity)).
             AsNoTracking().
             ToListAsync();
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesEntity> GetClothesByGender(GenderType genderType) =>
+        private IQueryable<ClothesFullEntity> GetClothesByGender(GenderType genderType) =>
             _genderTable.
             Where(genderType).
             Include(genderEntity => genderEntity.Clothes).
@@ -102,7 +100,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesEntity> GetClothesByClothesType(string clothesType) =>
+        private IQueryable<ClothesFullEntity> GetClothesByClothesType(string clothesType) =>
             _clothesTypeTable.
             Where(clothesType).
             Include(clothesTypeEntity => clothesTypeEntity.Clothes).

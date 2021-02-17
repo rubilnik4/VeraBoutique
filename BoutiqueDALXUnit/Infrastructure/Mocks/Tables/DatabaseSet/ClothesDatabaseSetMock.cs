@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
@@ -17,7 +16,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet
         /// <summary>
         /// Сущности базы данных
         /// </summary>
-        public static Mock<DbSet<ClothesEntity>> GetClothesDbSet(IEnumerable<ClothesEntity> clothes) =>
+        public static Mock<DbSet<ClothesFullEntity>> GetClothesDbSet(IEnumerable<ClothesFullEntity> clothes) =>
             clothes.AsQueryable().BuildMockDbSet();
     }
 }

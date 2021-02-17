@@ -4,7 +4,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
@@ -32,7 +32,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const GenderType genderType = GenderType.Child;
             const string categoryName = "Одежа";
             byte[] image = Properties.Resources.TestImage;
-            var clothesShort = new ClothesShortDomain(id, name, description, price, image, genderType, categoryName);
+            var clothesShort = new ClothesDomain(id, name, description, price, image, genderType, categoryName);
 
             int clothesHash = HashCode.Combine(id, name, description, price, image, genderType, categoryName);
             Assert.Equal(clothesHash, clothesShort.GetHashCode());
@@ -54,7 +54,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
             var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
             var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothes = new ClothesDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
+            var clothes = new ClothesFullDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
 
             int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description, image),
                                                gender.GetHashCode(), clothesType.GetHashCode(),

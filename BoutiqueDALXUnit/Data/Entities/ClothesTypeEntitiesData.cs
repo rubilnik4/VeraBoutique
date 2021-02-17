@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesEntities;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 
 namespace BoutiqueDALXUnit.Data.Entities
@@ -40,7 +39,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Получить сущности типа одежды c информацией об одежде
         /// </summary>
         public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithClothes(IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                                                IReadOnlyCollection<ClothesEntity> clothesEntities) =>
+                                                                                IReadOnlyCollection<ClothesFullEntity> clothesEntities) =>
             clothesTypeEntities.
             Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName, clothesType.Category,
                                                         Enumerable.Empty<ClothesTypeGenderCompositeEntity>(), clothesEntities)).

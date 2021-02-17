@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
 
 namespace BoutiqueDTO.Models.Interfaces.Clothes.SizeGroup
 {
     /// <summary>
-    /// Группа размеров одежды разного типа. Трансферная модель
+    /// Группа размеров одежды разного типа. Базовые данные. Трансферная модель
     /// </summary>
-    public interface ISizeGroupTransfer : ISizeGroupBase<SizeTransfer>, ISizeGroupShortTransfer
+    public interface ISizeGroupTransfer : ISizeGroupBase, ITransferModel<int>
     { }
 }

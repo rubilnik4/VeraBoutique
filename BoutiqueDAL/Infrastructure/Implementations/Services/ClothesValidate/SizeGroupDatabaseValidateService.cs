@@ -11,7 +11,6 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.SizeGroupEntities;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync;
@@ -70,9 +69,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// </summary>
         private static IResultError ValidateSizeNormalized(ISizeGroupDomain sizeGroup) =>
             sizeGroup.SizeNormalize.ToResultValueWhere(
-                sizeNormalized => sizeNormalized >= SizeGroupShortBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupShortBase.SIZE_NORMALIZE_MAX,
-                _ => ModelsErrors.FieldNotValid<int, ISizeGroupDomain>(SizeGroupShortBase.SIZE_NORMALIZE_MIN, 
-                                                                                               SizeGroupShortBase.SIZE_NORMALIZE_MAX,
+                sizeNormalized => sizeNormalized >= SizeGroupBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupBase.SIZE_NORMALIZE_MAX,
+                _ => ModelsErrors.FieldNotValid<int, ISizeGroupDomain>(SizeGroupBase.SIZE_NORMALIZE_MIN, 
+                                                                                               SizeGroupBase.SIZE_NORMALIZE_MAX,
                                                                                                nameof(sizeGroup.SizeNormalize),
                                                                                                sizeGroup));
 

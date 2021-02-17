@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 

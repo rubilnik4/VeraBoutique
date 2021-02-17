@@ -8,6 +8,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes
     /// <summary>
     /// Api сервис группы размеров одежды
     /// </summary>
-    public interface ISizeGroupApiService : IApiService<int, SizeGroupTransfer>
+    public interface ISizeGroupApiService : IApiService<int, SizeGroupFullTransfer>
     { }
 }

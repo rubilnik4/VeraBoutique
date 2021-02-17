@@ -9,6 +9,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTran
     /// <summary>
     /// Конвертер группы размеров одежды в трансферную модель
     /// </summary>
-    public interface ISizeGroupTransferConverter : ITransferConverter<int, ISizeGroupDomain, SizeGroupTransfer>
+    public interface ISizeGroupTransferConverter : ITransferConverter<int, ISizeGroupDomain, SizeGroupFullTransfer>
     { }
 }
