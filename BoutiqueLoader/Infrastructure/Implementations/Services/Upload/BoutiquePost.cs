@@ -92,7 +92,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
                                                                                   IEnumerable<TDomain> domains, IBoutiqueLogger boutiqueLogger)
              where TDomain : IDomainModel<TId>
              where TId : notnull =>
-            await restService.Post(domains).
+            await restService.PostAsync(domains).
             VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post));
     }
 }

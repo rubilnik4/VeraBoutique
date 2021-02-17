@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.ChoicePage"
+             NavigationPage.HasNavigationBar="False"
              ItemsSource="{Binding ChoiceViewModelItems}" x:DataType="viewModel:ChoiceViewModel">
     <TabbedPage.ItemTemplate>
         <DataTemplate x:DataType="viewModel:ChoiceViewModelItem">
             <ContentPage Title="{Binding Name}">
+
             </ContentPage>
         </DataTemplate>
     </TabbedPage.ItemTemplate>

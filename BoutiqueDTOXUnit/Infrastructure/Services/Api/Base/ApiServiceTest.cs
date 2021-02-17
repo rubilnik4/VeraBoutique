@@ -35,7 +35,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Get();
+            var result = await testApiService.GetAsync();
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfers.SequenceEqual(result.Value));
@@ -52,7 +52,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Get();
+            var result = await testApiService.GetAsync();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -69,7 +69,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Get(testTransfer.Id);
+            var result = await testApiService.GetAsync(testTransfer.Id);
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfer.Equals(result.Value));
@@ -86,7 +86,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Get(testTransfer.Id);
+            var result = await testApiService.GetAsync(testTransfer.Id);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -104,7 +104,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Post(testTransfer);
+            var result = await testApiService.PostAsync(testTransfer);
 
             Assert.True(result.OkStatus);
             Assert.True(testId.Equals(result.Value));
@@ -122,7 +122,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Post(testTransfer);
+            var result = await testApiService.PostAsync(testTransfer);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -140,7 +140,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostCollection(testTransfers);
+            var result = await testApiService.PostCollectionAsync(testTransfers);
 
             Assert.True(result.OkStatus);
             Assert.True(testIds.SequenceEqual(result.Value));
@@ -158,7 +158,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostCollection(testTransfers);
+            var result = await testApiService.PostCollectionAsync(testTransfers);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -211,7 +211,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Delete(testId);
+            var result = await testApiService.DeleteAsync(testId);
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfer.Equals(result.Value));
@@ -229,7 +229,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Delete(testId);
+            var result = await testApiService.DeleteAsync(testId);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

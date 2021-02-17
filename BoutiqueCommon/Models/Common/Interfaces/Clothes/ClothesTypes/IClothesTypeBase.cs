@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes

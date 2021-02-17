@@ -95,7 +95,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         private static async Task<IResultError> ServiceDeleteAction<TId, TDomain>(IRestServiceBase<TId, TDomain> restService, IBoutiqueLogger boutiqueLogger)
              where TDomain : IDomainModel<TId>
              where TId : notnull =>
-            await restService.Delete().
+            await restService.DeleteAsync().
             VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Delete));
     }
 }

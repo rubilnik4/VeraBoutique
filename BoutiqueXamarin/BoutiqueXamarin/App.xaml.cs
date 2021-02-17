@@ -17,6 +17,8 @@ using BoutiqueXamarin.Views.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Containers;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
@@ -47,10 +49,10 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized() =>
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
-            ResultErrorVoidOkTaskAsync(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
-            VoidBindAsync(_ => TestRest()).
-            VoidTaskAsync(_ => InitializeComponent()).
-            ResultErrorVoidOkBadBindAsync(
+            ResultErrorVoidOk(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
+            ResultErrorBindOk(() => ProjectRegistration.RegisterProject(BoutiqueContainer)).
+            Void(_ => InitializeComponent()).
+            ResultErrorVoidOkBadAsync(
                 actionOk: () => NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(ChoicePage)}"),
                 actionBad: errors => throw new NotImplementedException());
 
@@ -63,14 +65,6 @@ namespace BoutiqueXamarin
             PagesRegistration.RegisterPages(containerRegistry);
             ConverterServicesRegistration.RegisterTransferConverters(BoutiqueContainer);
             CommonServicesRegistration.RegisterCommonServices(BoutiqueContainer);
-        }
-
-        private async Task TestRest()
-        {
-            var hostConfig = new HostConfigurationDomain(new Uri("https://veraboutique.ru"), TimeSpan.FromSeconds(5), false);
-            var restClient = RestSharpFactory.GetRestClient(hostConfig);
-            var restRequest = new RestRequest("api/gender", Method.GET);
-            var response = await restClient.ExecuteGetAsync<string>(restRequest);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueCommon.Models.Enums.Clothes;
 

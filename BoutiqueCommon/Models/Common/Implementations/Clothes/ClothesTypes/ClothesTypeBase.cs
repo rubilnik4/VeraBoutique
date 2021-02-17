@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Genders;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
 

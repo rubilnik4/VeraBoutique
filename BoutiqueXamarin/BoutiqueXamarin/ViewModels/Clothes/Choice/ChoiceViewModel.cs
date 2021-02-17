@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,34 +20,23 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
     /// </summary>
     public class ChoiceViewModel : ViewModelBase
     {
-        public ChoiceViewModel(INavigationService navigationService, IGenderRestService genderRestService)
+        public ChoiceViewModel(INavigationService navigationService, IBoutiqueXamarinProject boutiqueXamarinProject)
           : base(navigationService)
         {
-            _genderRestService = genderRestService;
+            ChoiceViewModelItems = GetChoiceViewModelItems(boutiqueXamarinProject);
         }
-
-        /// <summary>
-        /// Сервис типа пола
-        /// </summary>
-        private readonly IGenderRestService _genderRestService;
 
         /// <summary>
         /// Типы пола
         /// </summary>
-        public ObservableCollection<ChoiceViewModelItem> ChoiceViewModelItems { get; private set; } =
-            new ObservableCollection<ChoiceViewModelItem>();
+        public IReadOnlyCollection<ChoiceViewModelItem> ChoiceViewModelItems { get; }
 
         /// <summary>
-        /// Асинхронная загрузка параметров модели
+        /// Получить модели типа одежды
         /// </summary>
-        protected override async Task<IResultError> InitializeAction() =>
-            await _genderRestService.Get().
-            ResultCollectionOkTaskAsync(genders => genders.Select(gender => new ChoiceViewModelItem(gender))).
-            ResultCollectionVoidOkTaskAsync(
-                choiceViewModelItems =>
-                {
-                    ChoiceViewModelItems.Add(choiceViewModelItems.First());
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(ChoiceViewModelItems)));
-                });
+        private static IReadOnlyCollection<ChoiceViewModelItem> GetChoiceViewModelItems(IBoutiqueXamarinProject boutiqueXamarinProject) =>
+            boutiqueXamarinProject.Genders.
+            Select(gender => new ChoiceViewModelItem(gender)).
+            ToList();
     }
 }

@@ -13,38 +13,73 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base
         where TId: notnull
     {
         /// <summary>
-        /// Получение данных
+        /// Получить данные Api
         /// </summary>
-        Task<IResultCollection<TTransfer>> Get();
+        IResultCollection<TTransfer> Get();
 
         /// <summary>
-        /// Получение данных по идентификатору
+        /// Получить данные по идентификатору Api
         /// </summary>
-        Task<IResultValue<TTransfer>> Get(TId id);
+        IResultValue<TTransfer> Get(TId id);
 
         /// <summary>
-        /// Добавление данных
+        /// Добавить данные Api
         /// </summary>
-        Task<IResultValue<TId>> Post(TTransfer transfer);
+        IResultValue<TId> Post(TTransfer transfer);
 
         /// <summary>
-        /// Добавление коллекции данных
+        /// Добавить коллекцию данных Api
         /// </summary>
-        Task<IResultCollection<TId>> PostCollection(IEnumerable<TTransfer> transfers);
+        IResultCollection<TId> PostCollection(IEnumerable<TTransfer> transfers);
 
         /// <summary>
-        /// Добавление данных
+        /// Обновить данные Api
         /// </summary>
-        Task<IResultError> Put(TTransfer transfer);
+        IResultError Put(TTransfer transfer);
 
         /// <summary>
         /// Удалить все данные Api
         /// </summary>
-        Task<IResultError> Delete();
+        IResultError Delete();
+
+        /// <summary>
+        /// Удалить данные по идентификатору Api
+        /// </summary>
+        IResultValue<TTransfer> Delete(TId id);
+
+        /// <summary>
+        /// Получение данных
+        /// </summary>
+        Task<IResultCollection<TTransfer>> GetAsync();
+
+        /// <summary>
+        /// Получение данных по идентификатору
+        /// </summary>
+        Task<IResultValue<TTransfer>> GetAsync(TId id);
+
+        /// <summary>
+        /// Добавление данных
+        /// </summary>
+        Task<IResultValue<TId>> PostAsync(TTransfer transfer);
+
+        /// <summary>
+        /// Добавление коллекции данных
+        /// </summary>
+        Task<IResultCollection<TId>> PostCollectionAsync(IEnumerable<TTransfer> transfers);
+
+        /// <summary>
+        /// Добавление данных
+        /// </summary>
+        Task<IResultError> PutAsync(TTransfer transfer);
+
+        /// <summary>
+        /// Удалить все данные Api
+        /// </summary>
+        Task<IResultError> DeleteAsync();
 
         /// <summary>
         /// Удаление данных
         /// </summary>
-        Task <IResultValue<TTransfer>> Delete(TId id);
+        Task <IResultValue<TTransfer>> DeleteAsync(TId id);
     }
 }

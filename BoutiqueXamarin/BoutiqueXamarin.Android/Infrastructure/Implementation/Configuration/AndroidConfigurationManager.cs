@@ -26,19 +26,31 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
         /// <summary>
         /// Имя файла конфигурации
         /// </summary>
-        private const string CONFIGURATION_FILENAME = "appsettings.json";
+        private string ConfigurationFileName => $"appsettings{ConfigurationAdditional}.json";
+
+        /// <summary>
+        /// Параметры для дополнительных конфигураций
+        /// </summary>
+        private static string ConfigurationAdditional =>
+#if DEVELOPMENT
+            ".Development";
+#elif TEST
+            ".Test";
+#else
+            String.Empty;
+#endif
 
         /// <summary>
         /// Получить конфигурацию в текстовом виде
         /// </summary>
         public override string GetConfigurationText() =>
-            GetAssetText(CONFIGURATION_FILENAME);
+            GetAssetText(ConfigurationFileName);
 
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
         public override async Task<string> GetConfigurationTextAsync() =>
-            await GetAssetTextAsync(CONFIGURATION_FILENAME);
+            await GetAssetTextAsync(ConfigurationFileName);
 
         /// <summary>
         /// Получить файл в текстовом формате
@@ -46,7 +58,7 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
         private static string GetAssetText(string filename)
         {
             using var asset = Application.Context.Assets!.Open(filename);
-            using var streamReader = new StreamReader(asset);
+            using var streamReader = new StreamReader(asset!);
             return streamReader.ReadToEnd();
         }
 
@@ -56,7 +68,7 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
         private static async Task<string> GetAssetTextAsync(string filename)
         {
             await using var asset = Application.Context.Assets!.Open(filename);
-            using var streamReader = new StreamReader(asset);
+            using var streamReader = new StreamReader(asset!);
             return await streamReader.ReadToEndAsync();
         }
     }

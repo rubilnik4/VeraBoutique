@@ -19,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         /// </summary>
         public static Mock<ITestApiService> GetTestApiServicePost(IResultCollection<TestEnum> resultPost) =>
               new Mock<ITestApiService>().
-            Void(mock => mock.Setup(service => service.PostCollection(It.IsAny<IEnumerable<TestTransfer>>())).
+            Void(mock => mock.Setup(service => service.PostCollectionAsync(It.IsAny<IEnumerable<TestTransfer>>())).
                               ReturnsAsync(resultPost));
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         /// </summary>
         public static Mock<ITestApiService> GetTestApiServiceDelete(IResultError resultDelete) =>
             new Mock<ITestApiService>().
-            Void(mock => mock.Setup(service => service.Delete()).
+            Void(mock => mock.Setup(service => service.DeleteAsync()).
                               ReturnsAsync(resultDelete));
     }
 }

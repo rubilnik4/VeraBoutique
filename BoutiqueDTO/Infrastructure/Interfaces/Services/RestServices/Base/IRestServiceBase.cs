@@ -13,18 +13,33 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
         where TId : notnull
     {
         /// <summary>
-        /// Получить данные
+        /// Отправить данные
         /// </summary>
-        Task<IResultCollection<TDomain>> Get();
+        IResultCollection<TDomain> Get();
 
         /// <summary>
         /// Отправить данные
         /// </summary>
-        Task<IResultError> Post(IEnumerable<TDomain> domains);
+        IResultError Post(IEnumerable<TDomain> domains);
 
         /// <summary>
         /// Удалить все данные
         /// </summary>
-        Task<IResultError> Delete();
+        IResultError Delete();
+
+        /// <summary>
+        /// Получить данные
+        /// </summary>
+        Task<IResultCollection<TDomain>> GetAsync();
+
+        /// <summary>
+        /// Отправить данные
+        /// </summary>
+        Task<IResultError> PostAsync(IEnumerable<TDomain> domains);
+
+        /// <summary>
+        /// Удалить все данные
+        /// </summary>
+        Task<IResultError> DeleteAsync();
     }
 }

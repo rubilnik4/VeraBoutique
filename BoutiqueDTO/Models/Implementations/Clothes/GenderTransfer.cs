@@ -1,6 +1,8 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Genders;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 using Newtonsoft.Json;

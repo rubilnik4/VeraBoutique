@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  boutiquemvc:
+    container_name: 'boutiquemvc'    
+    image: rubilnik4/boutiquemvc
+    env_file:
+      -  postgres.env
+      -  jwt.env
+      -  defaultUser.env
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro  
+    depends_on:
+      - "postgres"
+    restart: unless-stopped
+
+  nginx:
+    container_name: 'nginx'
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./cert.crt:/etc/nginx/cert.crt
+      - ./cert.rsa:/etc/nginx/cert.rsa
+    ports:
+      - "443:44392"
+      - "80:80"
+    depends_on:
+      - "boutiquemvc"
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres:latest
+    env_file:
+      - postgres.env
+    environment:
+      - ./data/:/var/lib/postgresql/data/
+    restart: unless-stopped

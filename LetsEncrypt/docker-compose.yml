@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  boutiquemvc:
+    container_name: 'boutiquemvc'    
+    image: rubilnik4/boutiquemvc:latest
+    env_file:
+      -  postgres.env
+      -  jwt.env
+      -  defaultUser.env
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro  
+    depends_on:
+      - "postgres"
+    restart: unless-stopped
+
+  nginx:
+    container_name: 'nginx'
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    ports:
+      - "443:44392"
+      - "80:80"
+    depends_on:
+      - "boutiquemvc"
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    
+  certbot:
+    container_name: 'certbot'
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    depends_on:
+      - "nginx"
+    restart: unless-stopped
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres:latest
+    env_file:
+      - postgres.env
+    environment:
+      - ./data/:/var/lib/postgresql/data/
+    restart: unless-stopped

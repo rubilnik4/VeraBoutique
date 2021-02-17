@@ -49,7 +49,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = await testRestService.Post(tests);
+            var result = await testRestService.PostAsync(tests);
 
             Assert.True(result.OkStatus);
         }
@@ -67,7 +67,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = await testRestService.Post(tests);
+            var result = await testRestService.PostAsync(tests);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -84,7 +84,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = await testRestService.Delete();
+            var result = await testRestService.DeleteAsync();
 
             Assert.True(result.OkStatus);
         }
@@ -101,7 +101,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = await testRestService.Delete();
+            var result = await testRestService.DeleteAsync();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

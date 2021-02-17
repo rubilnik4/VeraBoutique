@@ -25,6 +25,18 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
         /// <summary>
         /// Имя файла конфигурации
         /// </summary>
-        protected override string ConfigurationFileName => "appsettings.json";
+        protected override string ConfigurationFileName => $"appsettings{ConfigurationAdditional}.json";
+
+        /// <summary>
+        /// Параметры для дополнительных конфигураций
+        /// </summary>
+        private static string ConfigurationAdditional =>
+#if DEVELOPMENT
+            ".Development";
+#elif TEST
+            ".Test";
+#else
+            String.Empty;
+#endif
     }
 }

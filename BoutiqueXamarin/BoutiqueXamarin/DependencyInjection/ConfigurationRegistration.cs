@@ -4,6 +4,7 @@ using BoutiqueXamarinCommon.Infrastructure.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 using Microsoft.Extensions.Configuration;
 using Prism.Ioc;
@@ -20,9 +21,9 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация конфигурации
         /// </summary>
-        public static async Task<IResultError> RegisterConfiguration(IBoutiqueContainer container) =>
-            await container.Resolve<IXamarinConfigurationManager>().
-            MapAsync(manager => manager.GetConfigurationAsync()).
-            ResultValueVoidOkTaskAsync(container.Register);
+        public static IResultError RegisterConfiguration(IBoutiqueContainer container) =>
+            container.Resolve<IXamarinConfigurationManager>().
+            Map(manager => manager.GetConfiguration()).
+            ResultValueVoidOk(container.Register);
     }
 }
