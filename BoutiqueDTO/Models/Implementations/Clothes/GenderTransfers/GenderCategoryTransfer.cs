@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes.Genders;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.GenderTransfers;
 using Newtonsoft.Json;
 

@@ -13,9 +13,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных одежды
     /// </summary>
-    public class ClothesTable : EntityDatabaseTable<int, IClothesFullDomain, ClothesFullEntity>, IClothesTable
+    public class ClothesTable : EntityDatabaseTable<int, IClothesMainDomain, ClothesEntity>, IClothesTable
     {
-        public ClothesTable(DbSet<ClothesFullEntity> clothesSet)
+        public ClothesTable(DbSet<ClothesEntity> clothesSet)
             : base(clothesSet)
         {
             _clothesSet = clothesSet;
@@ -24,30 +24,30 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Экземпляр таблицы базы данных
         /// </summary>
-        private readonly DbSet<ClothesFullEntity> _clothesSet;
+        private readonly DbSet<ClothesEntity> _clothesSet;
 
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<ClothesFullEntity, int>> IdSelect() =>
+        public override Expression<Func<ClothesEntity, int>> IdSelect() =>
             entity => entity.Id;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public override Expression<Func<ClothesFullEntity, bool>> IdPredicate(int id) =>
+        public override Expression<Func<ClothesEntity, bool>> IdPredicate(int id) =>
             entity => entity.Id == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<ClothesFullEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
+        public override Expression<Func<ClothesEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
             entity => ids.Contains(entity.Id);
 
         /// <summary>
         /// Включение сущностей при загрузке полных данных
         /// </summary>
-        protected override IQueryable<ClothesFullEntity> EntitiesIncludes =>
+        protected override IQueryable<ClothesEntity> EntitiesIncludes =>
             _clothesSet.Include(entity => entity.Gender).
                         Include(entity => entity.ClothesType).
                         Include(entity => entity.ClothesColorComposites).

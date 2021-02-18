@@ -4,6 +4,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -50,11 +51,11 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const decimal price = (decimal)0.55;
             byte[] image = Properties.Resources.TestImage;
             var gender = new GenderDomain(GenderType.Male, "Мужик");
-            var clothesType = new ClothesTypeShortDomain("Тряпье нательное", "Тряпье");
+            var clothesType = new ClothesTypeDomain("Тряпье нательное", "Тряпье");
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
             var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
-            var sizeGroups = new List<ISizeGroupDomain> { new SizeGroupDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothes = new ClothesFullDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
+            var sizeGroups = new List<ISizeGroupMainDomain> { new SizeGroupMainDomain(ClothesSizeType.Shirt, 1, sizes) };
+            var clothes = new ClothesMainDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
 
             int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description, image),
                                                gender.GetHashCode(), clothesType.GetHashCode(),

@@ -24,15 +24,15 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи информации об одежде
     /// </summary>
-    public class ClothesController : ApiController<int, IClothesFullDomain, ClothesFullTransfer>
+    public class ClothesController : ApiController<int, IClothesMainDomain, ClothesMainTransfer>
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
-                                 IClothesShortTransferConverter clothesShortTransferConverter,
-                                 IClothesTransferConverter clothesTransferConverter)
-           : base(clothesDatabaseService, clothesTransferConverter)
+                                 IClothesTransferConverter clothesTransferConverter,
+                                 IClothesMainTransferConverter clothesMainTransferConverter)
+           : base(clothesDatabaseService, clothesMainTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
-            _clothesShortTransferConverter = clothesShortTransferConverter;
+            _clothesTransferConverter = clothesTransferConverter;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
-        private readonly IClothesShortTransferConverter _clothesShortTransferConverter;
+        private readonly IClothesTransferConverter _clothesTransferConverter;
 
         /// <summary>
         /// Получить одежду без изображений
@@ -52,9 +52,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IReadOnlyCollection<ClothesTransfer>>> GetClothesShorts(GenderType genderType, string clothesType) =>
-            await _clothesDatabaseService.GetClothesShorts(genderType, clothesType).
-            ResultCollectionOkTaskAsync(clothes => _clothesShortTransferConverter.ToTransfers(clothes)).
+        public async Task<ActionResult<IReadOnlyCollection<ClothesTransfer>>> GetClothes(GenderType genderType, string clothesType) =>
+            await _clothesDatabaseService.GetClothes(genderType, clothesType).
+            ResultCollectionOkTaskAsync(clothes => _clothesTransferConverter.ToTransfers(clothes)).
             ToActionResultCollectionTaskAsync<int, ClothesTransfer>();
     }
 }

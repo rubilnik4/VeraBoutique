@@ -16,17 +16,17 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить группы размеров одежды
         /// </summary>
-        public static IReadOnlyCollection<ISizeGroupDomain> SizeGroupDomains =>
-            new List<ISizeGroupDomain>()
+        public static IReadOnlyCollection<ISizeGroupMainDomain> SizeGroupMainDomains =>
+            new List<ISizeGroupMainDomain>()
             {
-                new SizeGroupDomain(ClothesSizeType.Shirt, 46, SizeData.SizeDomains),
-                new SizeGroupDomain(ClothesSizeType.Shirt, 48, SizeData.SizeDomains),
+                new SizeGroupMainDomain(ClothesSizeType.Shirt, 46, SizeData.SizeDomains),
+                new SizeGroupMainDomain(ClothesSizeType.Shirt, 48, SizeData.SizeDomains),
             };
 
         /// <summary>
         /// Получить базовые данные группы размеров одежды
         /// </summary>
-        public static IReadOnlyCollection<ISizeGroupShortDomain> SizeGroupShortDomains =>
-            SizeGroupDomains;
+        public static IReadOnlyCollection<ISizeGroupDomain> SizeGroupDomains =>
+            SizeGroupMainDomains;
     }
 }

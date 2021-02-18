@@ -3,11 +3,13 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
@@ -22,39 +24,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи вида одежды
     /// </summary>
-    public class ClothesTypeController : ApiController<string, IClothesTypeDomain, ClothesTypeTransfer>
+    public class ClothesTypeController : ApiController<string, IClothesTypeMainDomain, ClothesTypeMainTransfer>
     {
         public ClothesTypeController(IClothesTypeDatabaseService clothesTypeDatabaseService,
-                                     IClothesTypeTransferConverter clothesTypeTransferConverter,
-                                     IClothesTypeShortTransferConverter clothesTypeShortTransferConverter)
-            : base(clothesTypeDatabaseService, clothesTypeTransferConverter)
-        {
-            _clothesTypeDatabaseService = clothesTypeDatabaseService;
-            _clothesTypeShortTransferConverter = clothesTypeShortTransferConverter;
-        }
-
-        /// <summary>
-        /// Сервис вида одежды в базе данных
-        /// </summary>
-        private readonly IClothesTypeDatabaseService _clothesTypeDatabaseService;
-
-        /// <summary>
-        /// Конвертер основной информации вида одежды в трансферную модель
-        /// </summary>
-        private readonly IClothesTypeShortTransferConverter _clothesTypeShortTransferConverter;
-
-        /// <summary>
-        /// Получить вид одежды по типу пола
-        /// </summary>
-        [HttpGet("genderCategory/{genderType}/{category}")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IReadOnlyCollection<ClothesTypeShortTransfer>>> GetByGenderCategory(GenderType genderType,
-                                                                                                           string category) =>
-            await _clothesTypeDatabaseService.GetByGenderCategory(genderType, category).
-            ResultCollectionOkTaskAsync(clothesTypes => _clothesTypeShortTransferConverter.ToTransfers(clothesTypes)).
-            ToActionResultCollectionTaskAsync<string, ClothesTypeShortTransfer>();
+                                     IClothesTypeMainTransferConverter clothesTypeMainTransferConverter)
+            : base(clothesTypeDatabaseService, clothesTypeMainTransferConverter)
+        { }
     }
 }

@@ -62,7 +62,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> ClothesTypeUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesTypeRestService(restClient).
-            MapAsync(service => ServiceDeleteAction(service, ClothesTypeInitialize.ClothesTypes, boutiqueLogger));
+            MapAsync(service => ServiceDeleteAction(service, ClothesTypeInitialize.ClothesTypeMains, boutiqueLogger));
 
         /// <summary>
         /// Загрузить тип одежды в базу

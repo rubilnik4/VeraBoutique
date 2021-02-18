@@ -11,6 +11,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
-    public interface ISizeGroupDatabaseService : IDatabaseService<int, ISizeGroupDomain>
+    public interface ISizeGroupDatabaseService : IDatabaseService<int, ISizeGroupMainDomain>
     { }
 }

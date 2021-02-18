@@ -17,10 +17,10 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// <summary>
         /// Типы одежды. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<ClothesFullTransfer> ClothesTransfers =>
+        public static IReadOnlyCollection<ClothesMainTransfer> ClothesTransfers =>
             ClothesData.ClothesDomains.
             Select(clothes => 
-                new ClothesFullTransfer(clothes, 
+                new ClothesMainTransfer(clothes, 
                                     new GenderTransfer(clothes.Gender), 
                                     new ClothesTypeShortTransfer(clothes.ClothesTypeShort),
                                     clothes.Colors.Select(color => new ColorTransfer(color)),

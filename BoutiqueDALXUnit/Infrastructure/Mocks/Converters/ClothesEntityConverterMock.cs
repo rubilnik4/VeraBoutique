@@ -17,7 +17,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Converters
         /// </summary>d
         public static IClothesEntityConverter ClothesEntityConverter =>
             new ClothesEntityConverter(GenderEntityConverterMock.GenderEntityConverter,
-                                       ClothesTypeEntityConverterMock.ClothesTypeShortEntityConverter,
+                                       ClothesTypeEntityConverterMock.ClothesTypeEntityConverter,
                                        ColorClothesEntityConverterMock.ColorClothesEntityConverter,
                                        SizeGroupEntityConverterMock.SizeGroupEntityConverter);
 

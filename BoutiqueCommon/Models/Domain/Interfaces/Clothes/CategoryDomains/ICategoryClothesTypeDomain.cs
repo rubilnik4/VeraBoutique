@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains
 {

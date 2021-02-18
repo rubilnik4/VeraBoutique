@@ -11,11 +11,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// <summary>
     /// Сервис группы размера одежды
     /// </summary>
-    public class SizeGroupRestService : RestServiceBase<int, ISizeGroupDomain, SizeGroupFullTransfer>, ISizeGroupRestService
+    public class SizeGroupRestService : RestServiceBase<int, ISizeGroupMainDomain, SizeGroupMainTransfer>, ISizeGroupRestService
     {
         public SizeGroupRestService(ISizeGroupApiService sizeGroupApiService,
-                                    ISizeGroupTransferConverter sizeGroupTransferConverter)
-            : base(sizeGroupApiService, sizeGroupTransferConverter)
+                                    ISizeGroupMainTransferConverter sizeGroupMainTransferConverter)
+            : base(sizeGroupApiService, sizeGroupMainTransferConverter)
         { }
     }
 }

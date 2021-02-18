@@ -3,6 +3,7 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
@@ -23,7 +24,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
         [Fact]
         public void ClothesType_ToTransfer_FromTransfer()
         {
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
 
             var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);

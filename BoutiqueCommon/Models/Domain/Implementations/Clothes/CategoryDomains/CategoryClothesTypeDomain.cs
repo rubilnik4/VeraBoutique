@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains
 {

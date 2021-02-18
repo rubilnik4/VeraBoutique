@@ -6,6 +6,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
     /// <summary>
     /// Сервис группы размера одежды
     /// </summary>
-    public interface ISizeGroupRestService : IRestServiceBase<int, ISizeGroupDomain>
+    public interface ISizeGroupRestService : IRestServiceBase<int, ISizeGroupMainDomain>
     { }
 }

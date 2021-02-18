@@ -19,7 +19,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void ClothesShort_ToTransfer_FromTransfer()
         {
             var clothesShort = ClothesData.ClothesShortDomains.First();
-            var clothesShortTransferConverter = ClothesTransferConverterMock.ClothesShortTransferConverter;
+            var clothesShortTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
 
             var clothesShortTransfer = clothesShortTransferConverter.ToTransfer(clothesShort);
             var clothesShortAfterConverter = clothesShortTransferConverter.FromTransfer(clothesShortTransfer);

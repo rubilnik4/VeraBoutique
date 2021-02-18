@@ -1,5 +1,6 @@
 ﻿using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders
 {

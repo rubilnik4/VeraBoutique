@@ -12,7 +12,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
     /// <summary>
     /// Api сервис группы размеров одежды
     /// </summary>
-    public class SizeGroupApiService : ApiService<int, SizeGroupFullTransfer>, ISizeGroupApiService
+    public class SizeGroupApiService : ApiService<int, SizeGroupMainTransfer>, ISizeGroupApiService
     {
         public SizeGroupApiService(IRestClient restClient)
           : base(restClient)

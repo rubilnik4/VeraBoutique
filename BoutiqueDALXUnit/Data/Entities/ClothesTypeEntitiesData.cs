@@ -18,7 +18,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// Сущности вида одежды
         /// </summary>
         public static IReadOnlyCollection<ClothesTypeEntity> ClothesTypeEntities =>
-            ClothesTypeData.ClothesTypeDomains.
+            ClothesTypeData.ClothesTypeMainDomains.
             Select(clothesTypeDomain => new ClothesTypeEntity(clothesTypeDomain, 
                                                               new CategoryEntity(clothesTypeDomain.Category.Name),
                                                               GetClothesTypeGenderCompositeEntities(clothesTypeDomain.Genders,

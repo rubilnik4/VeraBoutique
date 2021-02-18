@@ -22,7 +22,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Одежда. Информация
         /// </summary>
-        ClothesFullEntity? Clothes { get; }
+        ClothesEntity? Clothes { get; }
 
         /// <summary>
         /// Цвет одежды

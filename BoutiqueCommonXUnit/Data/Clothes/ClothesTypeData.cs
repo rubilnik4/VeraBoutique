@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommonXUnit.Data.Clothes
@@ -14,17 +16,17 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить виды одежды
         /// </summary>
-        public static IReadOnlyCollection<IClothesTypeDomain> ClothesTypeDomains =>
-            new List<IClothesTypeDomain>()
+        public static IReadOnlyCollection<IClothesTypeMainDomain> ClothesTypeMainDomains =>
+            new List<IClothesTypeMainDomain>()
             {
-                new ClothesTypeDomain("Пиджак", CategoryData.CategoryDomains.First(), GenderData.GenderDomains),
-                new ClothesTypeDomain("Брюки", CategoryData.CategoryDomains.Last(), GenderData.GenderDomains),
+                new ClothesTypeMainDomain("Пиджак", CategoryData.CategoryDomains.First()),
+                new ClothesTypeMainDomain("Брюки", CategoryData.CategoryDomains.Last()),
             };
 
         /// <summary>
         /// Получить основную информацию видов одежды
         /// </summary>
-        public static IReadOnlyCollection<IClothesTypeShortDomain> ClothesTypeShortDomains =>
-            ClothesTypeDomains;
+        public static IReadOnlyCollection<IClothesTypeDomain> ClothesTypeDomains =>
+            ClothesTypeMainDomains;
     }
 }

@@ -39,10 +39,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         where TId : notnull
     {
         protected ApiController(IDatabaseService<TId, TDomain> databaseDatabaseService,
-                                ITransferConverter<TId, TDomain, TTransfer> transferConverter)
+                                ITransferConverter<TId, TDomain, TTransfer> mainTransferConverter)
         {
             _databaseDatabaseService = databaseDatabaseService;
-            _transferConverter = transferConverter;
+            _mainTransferConverter = mainTransferConverter;
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
         /// </summary>
-        private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
+        private readonly ITransferConverter<TId, TDomain, TTransfer> _mainTransferConverter;
 
         /// <summary>
         /// Базовый метод получения данных
@@ -64,7 +64,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TTransfer>>> Get() =>
             await _databaseDatabaseService.Get().
-            ResultCollectionOkTaskAsync(_transferConverter.ToTransfers).
+            ResultCollectionOkTaskAsync(_mainTransferConverter.ToTransfers).
             ToActionResultCollectionTaskAsync<TId, TTransfer>();
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TTransfer>> Get(TId id) =>
             await _databaseDatabaseService.Get(id).
-            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
+            ResultValueOkTaskAsync(_mainTransferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
-            await _transferConverter.FromTransfer(transfer).
+            await _mainTransferConverter.FromTransfer(transfer).
             ResultValueBindOkAsync(domain => _databaseDatabaseService.Post(domain)).
             ToActionResultValueTaskAsync();
 
@@ -100,7 +100,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
-            await _transferConverter.FromTransfers(transfers).
+            await _mainTransferConverter.FromTransfers(transfers).
             ResultCollectionBindOkAsync(domains => _databaseDatabaseService.Post(domains)).
             ToActionResultCollectionTaskAsync();
 
@@ -113,7 +113,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(TTransfer transfer) =>
-             await _transferConverter.FromTransfer(transfer).
+             await _mainTransferConverter.FromTransfer(transfer).
              ResultValueBindErrorsOkAsync(domain => _databaseDatabaseService.Put(domain)).
              ToResultErrorTaskAsync().
              ToNoContentActionResultTaskAsync();
@@ -137,7 +137,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TTransfer>> Delete(TId id) =>
             await _databaseDatabaseService.Delete(id).
-            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
+            ResultValueOkTaskAsync(_mainTransferConverter.ToTransfer).
             ToActionResultValueTaskAsync<TId, TTransfer>();
     }
 }

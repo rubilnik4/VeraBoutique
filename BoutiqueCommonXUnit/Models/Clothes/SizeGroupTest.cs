@@ -23,38 +23,38 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void SizeGroupShort_Equal_Ok()
+        public void SizeGroup_Equal_Ok()
         {
             const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
             const int sizeNormalize = 72;
 
-            var sizeGroupShortDomains = new SizeGroupShortDomain(clothesSizeType, sizeNormalize);
+            var sizeGroupDomains = new SizeGroupDomain(clothesSizeType, sizeNormalize);
 
             int sizeGroupHash = HashCode.Combine(clothesSizeType, sizeNormalize);
-            Assert.Equal(sizeGroupHash, sizeGroupShortDomains.GetHashCode());
+            Assert.Equal(sizeGroupHash, sizeGroupDomains.GetHashCode());
         }
 
         /// <summary>
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void SizeGroup_Equal_Ok()
+        public void SizeGroupMain_Equal_Ok()
         {
             const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
             const int sizeNormalize = 72;
             var sizes = SizeData.SizeDomains;
 
-            var sizeGroupDomains = new SizeGroupDomain(clothesSizeType, sizeNormalize, sizes);
+            var sizeGroupMainDomain = new SizeGroupMainDomain(clothesSizeType, sizeNormalize, sizes);
 
             int sizeGroupHash = HashCode.Combine(clothesSizeType, sizeNormalize, SizeBase.GetSizesHashCodes(sizes));
-            Assert.Equal(sizeGroupHash, sizeGroupDomains.GetHashCode());
+            Assert.Equal(sizeGroupHash, sizeGroupMainDomain.GetHashCode());
         }
 
         /// <summary>
         /// Проверка идентичности по внутренним коллекциям
         /// </summary>
         [Fact]
-        public void SizeGroupShort_EqualSizes()
+        public void SizeGroup_EqualSizes()
         {
             var clothesSizeDomainFirst = SizeGroupData.SizeGroupDomains.First();
             var clothesSizeDomainSecond = SizeGroupData.SizeGroupDomains.First();
@@ -66,12 +66,12 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности по внутренним коллекциям
         /// </summary>
         [Fact]
-        public void SizeGroup_EqualSizes()
+        public void SizeGroupMain_EqualSizes()
         {
-            var clothesSizeDomainFirst = SizeGroupData.SizeGroupShortDomains.First();
-            var clothesSizeDomainSecond = SizeGroupData.SizeGroupShortDomains.First();
+            var sizeGroupMainDomainFirst = SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupMainDomainSecond = SizeGroupData.SizeGroupMainDomains.First();
 
-            Assert.True(clothesSizeDomainFirst.Equals(clothesSizeDomainSecond));
+            Assert.True(sizeGroupMainDomainFirst.Equals(sizeGroupMainDomainSecond));
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         {
             const string expectedGroupName = "M (EU 72/74, RU 156/158)";
             const SizeType sizeType = SizeType.American;
-            var sizeGroupDomain = SizeGroupData.SizeGroupDomains.First();
+            var sizeGroupMainDomain = SizeGroupData.SizeGroupMainDomains.First();
 
-            string sizeBaseGroupName = sizeGroupDomain.GetBaseGroupName(sizeType);
-            string sizeGroupName = SizeNaming.GetGroupName(sizeType, sizeGroupDomain.Sizes);
+            string sizeBaseGroupName = sizeGroupMainDomain.GetBaseGroupName(sizeType);
+            string sizeGroupName = SizeNaming.GetGroupName(sizeType, sizeGroupMainDomain.Sizes);
 
             Assert.Equal(expectedGroupName, sizeBaseGroupName);
             Assert.Equal(expectedGroupName, sizeGroupName);

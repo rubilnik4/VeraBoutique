@@ -43,6 +43,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица базы данных  одежды
         /// </summary>
-        public DbSet<ClothesFullEntity> Clothes { get; set; } = null!;
+        public DbSet<ClothesEntity> Clothes { get; set; } = null!;
     }
 }

@@ -12,20 +12,20 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers
 {
-    public class SizeGroupShortTransferConverter : TransferConverter<int, ISizeGroupShortDomain, SizeGroupShortTransfer>,
-                                                   ISizeGroupShortTransferConverter
+    public class SizeGroupTransferConverter : TransferConverter<int, ISizeGroupDomain, SizeGroupTransfer>,
+                                              ISizeGroupTransferConverter
     {
         /// <summary>
         /// Преобразовать группу размеров одежды в трансферную модель
         /// </summary>
-        public override SizeGroupShortTransfer ToTransfer(ISizeGroupShortDomain sizeGroupDomain) =>
-            new SizeGroupShortTransfer(sizeGroupDomain);
+        public override SizeGroupTransfer ToTransfer(ISizeGroupDomain sizeGroupDomain) =>
+            new SizeGroupTransfer(sizeGroupDomain);
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
-        public override IResultValue<ISizeGroupShortDomain> FromTransfer(SizeGroupShortTransfer sizeGroupTransfer) =>
-            new SizeGroupShortDomain(sizeGroupTransfer).
-            Map(sizeGroupShortDomain => new ResultValue<ISizeGroupShortDomain>(sizeGroupShortDomain));
+        public override IResultValue<ISizeGroupDomain> FromTransfer(SizeGroupTransfer sizeGroupTransfer) =>
+            new SizeGroupDomain(sizeGroupTransfer).
+            Map(sizeGroupShortDomain => new ResultValue<ISizeGroupDomain>(sizeGroupShortDomain));
     }
 }

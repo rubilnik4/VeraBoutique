@@ -9,7 +9,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
     /// <summary>
     /// Api сервис одежды
     /// </summary>
-    public class ClothesApiService : ApiService<int, ClothesFullTransfer>, IClothesApiService
+    public class ClothesApiService : ApiService<int, ClothesMainTransfer>, IClothesApiService
     {
         public ClothesApiService(IRestClient restClient)
             : base(restClient)

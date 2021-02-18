@@ -65,7 +65,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
                                                                     clothesShortEntityConverter, 
                                                                     ClothesEntityConverterMock.ClothesEntityConverter);
 
-            var clothesResults = await clothesDatabaseService.GetClothesShorts(genderType, clothesType);
+            var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
             var clothesShortDomains = clothesShortEntityConverter.FromEntities(clothesInformationEntities);
 
             Assert.True(clothesResults.OkStatus);

@@ -15,18 +15,19 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Начальные данные таблицы одежды
         /// </summary>
-        public static IReadOnlyCollection<IClothesFullDomain> Clothes =>
+        public static IReadOnlyCollection<IClothesMainDomain> ClothesMains =>
             ClothesTShirts.
             ToList().AsReadOnly();
 
         /// <summary>
         /// Вид одежды. 
         /// </summary>
-        private static IReadOnlyCollection<IClothesFullDomain> ClothesTShirts =>
-            new List<ClothesFullDomain>
+        private static IEnumerable<IClothesMainDomain> ClothesTShirts =>
+            new List<ClothesMainDomain>
             {
                 new (0,"Футболка","Футболка тестовая", 1500, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
-                     ClothesTypeInitialize.Tshort, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)
+                     ClothesTypeInitialize.ClothesTypeMains.First(clothesType => clothesType.Name == "Футболки"), 
+                     ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)
             };
     }
 }

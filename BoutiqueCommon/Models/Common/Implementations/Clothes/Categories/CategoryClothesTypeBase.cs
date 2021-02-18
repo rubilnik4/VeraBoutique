@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
 {
     /// <summary>
     /// Категория одежды с подтипами
     /// </summary>
-    public class CategoryClothesTypeBase<TClothesType> : CategoryBase, ICategoryClothesTypeBase<TClothesType>
+    public abstract class CategoryClothesTypeBase<TClothesType> : CategoryBase, ICategoryClothesTypeBase<TClothesType>
         where TClothesType : IClothesTypeBase
     {
-        public CategoryClothesTypeBase(ICategoryBase category, IEnumerable<TClothesType> clothesTypes)
+        protected CategoryClothesTypeBase(ICategoryBase category, IEnumerable<TClothesType> clothesTypes)
             :this(category.Name, clothesTypes)
         { }
 
-        public CategoryClothesTypeBase(string name, IEnumerable<TClothesType> clothesTypes)
+        protected CategoryClothesTypeBase(string name, IEnumerable<TClothesType> clothesTypes)
             : base(name)
         {
             ClothesTypes = clothesTypes.ToList().AsReadOnly();

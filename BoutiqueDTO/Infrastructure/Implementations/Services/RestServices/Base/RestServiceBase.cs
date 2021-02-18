@@ -28,10 +28,10 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         where TId : notnull
     {
         protected RestServiceBase(IApiService<TId, TTransfer> apiService,
-                                  ITransferConverter<TId, TDomain, TTransfer> transferConverter)
+                                  ITransferConverter<TId, TDomain, TTransfer> mainTransferConverter)
         {
             _apiService = apiService;
-            _transferConverter = transferConverter;
+            _mainTransferConverter = mainTransferConverter;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
         /// </summary>
-        private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
+        private readonly ITransferConverter<TId, TDomain, TTransfer> _mainTransferConverter;
 
         /// <summary>
         /// Отправить данные
@@ -50,14 +50,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public IResultCollection<TDomain> Get() =>
             new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindOkToCollection(api => api.Get()).
-            ResultCollectionBindOk(transfers => _transferConverter.FromTransfers(transfers));
+            ResultCollectionBindOk(transfers => _mainTransferConverter.FromTransfers(transfers));
 
         /// <summary>
         /// Отправить данные
         /// </summary>
         public IResultError Post(IEnumerable<TDomain> domains) =>
             new ResultValue<IApiService<TId, TTransfer>>(_apiService).
-            ResultValueBindOkToCollection(api => api.PostCollection(_transferConverter.ToTransfers(domains)));
+            ResultValueBindOkToCollection(api => api.PostCollection(_mainTransferConverter.ToTransfers(domains)));
 
         /// <summary>
         /// Удалить все данные
@@ -72,14 +72,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultCollection<TDomain>> GetAsync() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindOkToCollectionAsync(api => api.GetAsync()).
-            ResultCollectionBindOkTaskAsync(transfers => _transferConverter.FromTransfers(transfers));
+            ResultCollectionBindOkTaskAsync(transfers => _mainTransferConverter.FromTransfers(transfers));
 
         /// <summary>
         /// Отправить данные
         /// </summary>
         public async Task<IResultError> PostAsync(IEnumerable<TDomain> domains) =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
-            ResultValueBindOkToCollectionAsync(api => api.PostCollectionAsync(_transferConverter.ToTransfers(domains)));
+            ResultValueBindOkToCollectionAsync(api => api.PostCollectionAsync(_mainTransferConverter.ToTransfers(domains)));
 
         /// <summary>
         /// Удалить все данные

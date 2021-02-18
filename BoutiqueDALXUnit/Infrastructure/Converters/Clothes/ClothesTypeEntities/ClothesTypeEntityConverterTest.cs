@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
@@ -27,8 +28,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         [Fact]
         public void ToEntity()
         {
-            var clothesTypeDomain = ClothesTypeData.ClothesTypeDomains.First();
-            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+            var clothesTypeDomain = ClothesTypeData.ClothesTypeMainDomains.First();
+            var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
 
             var clothesTypeEntity = clothesTypeEntityConverter.ToEntity(clothesTypeDomain);
 
@@ -44,12 +45,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         public void FromEntity()
         {
             var clothesTypeEntity = ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+            var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
 
             var clothesTypeDomain = clothesTypeEntityConverter.FromEntity(clothesTypeEntity);
 
             Assert.True(clothesTypeDomain.OkStatus);
-            Assert.True(ClothesTypeData.ClothesTypeDomains.First().Equals(clothesTypeDomain.Value));
+            Assert.True(ClothesTypeData.ClothesTypeMainDomains.First().Equals(clothesTypeDomain.Value));
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
             var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
             var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, null,
                                                  clothesType.ClothesTypeGenderComposites, clothesType.Clothes);
-            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+            var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 
@@ -78,7 +79,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
             var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
             var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, clothesType.Category, 
                                                  null, clothesType.Clothes);
-            var clothesTypeEntityConverter = ClothesTypeEntityConverter;
+            var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 
@@ -89,8 +90,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// <summary>
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
-        private static IClothesTypeEntityConverter ClothesTypeEntityConverter =>
-            ClothesTypeEntityConverterMock.ClothesTypeEntityConverter;
+        private static IClothesTypeMainEntityConverter ClothesTypeMainEntityConverter =>
+            ClothesTypeEntityConverterMock.ClothesTypeMainEntityConverter;
 
         /// <summary>
         /// Получить тип одежды

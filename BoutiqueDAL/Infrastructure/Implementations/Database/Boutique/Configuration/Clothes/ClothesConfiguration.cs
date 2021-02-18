@@ -8,9 +8,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Одежда. Информация. Схема базы данных
     /// </summary>
-    public class ClothesConfiguration : IEntityTypeConfiguration<ClothesFullEntity>
+    public class ClothesConfiguration : IEntityTypeConfiguration<ClothesEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesFullEntity> builder)
+        public void Configure(EntityTypeBuilder<ClothesEntity> builder)
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).HasDefaultValueSql($"nextval('\"{ClothesSequences.CLOTHES_ID_GENERATOR}\"')").IsRequired();

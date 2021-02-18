@@ -8,6 +8,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes
     /// <summary>
     /// Таблица базы данных одежды
     /// </summary>
-    public interface IClothesTable : IDatabaseTable<int, IClothesFullDomain, ClothesFullEntity>
+    public interface IClothesTable : IDatabaseTable<int, IClothesMainDomain, ClothesEntity>
     { }
 }

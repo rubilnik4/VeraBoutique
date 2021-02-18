@@ -69,8 +69,7 @@ namespace BoutiqueLoader.Factories.Services
         /// </summary>
         public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient) =>
              new ClothesTypeRestService(new ClothesTypeApiService(restClient), 
-                                        new ClothesTypeTransferConverter(new CategoryTransferConverter(),
-                                                                         new GenderTransferConverter()));
+                                        new ClothesTypeMainTransferConverter(new CategoryTransferConverter()));
 
         /// <summary>
         /// Получить сервис размера одежды
@@ -83,16 +82,16 @@ namespace BoutiqueLoader.Factories.Services
         /// </summary>
         public static ISizeGroupRestService GetSizeGroupRestService(IRestClient restClient) =>
              new SizeGroupRestService(new SizeGroupApiService(restClient),
-                                      new SizeGroupTransferConverter(new SizeTransferConverter()));
+                                      new SizeGroupMainTransferConverter(new SizeTransferConverter()));
 
         /// <summary>
         /// Получить сервис одежды
         /// </summary>
         public static IClothesRestService GetClothesRestService(IRestClient restClient) =>
              new ClothesRestService(new ClothesApiService(restClient),
-                                    new ClothesTransferConverter(new GenderTransferConverter(),
-                                                                 new ClothesTypeShortTransferConverter(),
+                                    new ClothesMainTransferConverter(new GenderTransferConverter(),
+                                                                 new ClothesTypeTransferConverter(),
                                                                  new ColorTransferConverter(),
-                                                                 new SizeGroupTransferConverter(new SizeTransferConverter())));
+                                                                 new SizeGroupMainTransferConverter(new SizeTransferConverter())));
     }
 }

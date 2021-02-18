@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы одежды
     /// </summary>
-    public class ClothesDatabaseValidateService : DatabaseValidateService<int, IClothesFullDomain, ClothesFullEntity>,
+    public class ClothesDatabaseValidateService : DatabaseValidateService<int, IClothesMainDomain, ClothesEntity>,
                                                   IClothesDatabaseValidateService
     {
         public ClothesDatabaseValidateService(IClothesTable clothesTable,
@@ -64,34 +64,34 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(IClothesFullDomain clothesFull) =>
+        protected override IResultError ValidateModel(IClothesMainDomain clothesMain) =>
             new ResultError().
-            ResultErrorBindOk(() => ValidateName(clothesFull)).
-            ResultErrorBindOk(() => ValidateDescription(clothesFull)).
-            ResultErrorBindOk(() => ValidatePrice(clothesFull)).
-            ResultErrorBindOk(() => ValidateClothesTypeName(clothesFull)).
-            ResultErrorBindOk(() => ValidateColors(clothesFull)).
-            ResultErrorBindOk(() => ValidateSizeGroups(clothesFull));
+            ResultErrorBindOk(() => ValidateName(clothesMain)).
+            ResultErrorBindOk(() => ValidateDescription(clothesMain)).
+            ResultErrorBindOk(() => ValidatePrice(clothesMain)).
+            ResultErrorBindOk(() => ValidateClothesTypeName(clothesMain)).
+            ResultErrorBindOk(() => ValidateColors(clothesMain)).
+            ResultErrorBindOk(() => ValidateSizeGroups(clothesMain));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IClothesFullDomain clothesFull) =>
+        protected override async Task<IResultError> ValidateIncludes(IClothesMainDomain clothesMain) =>
             await new ResultError().
-            ResultErrorBindOkAsync(() => _genderDatabaseValidateService.ValidateFind(clothesFull.Gender.Id)).
-            ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseValidateService.ValidateFind(clothesFull.ClothesTypeShort.Id)).
-            ResultErrorBindOkBindAsync(() => _colorClothesDatabaseValidateService.ValidateFinds(clothesFull.Colors.Select(color => color.Id))).
-            ResultErrorBindOkBindAsync(() => _sizeGroupDatabaseValidateService.ValidateFinds(clothesFull.SizeGroups.Select(sizeGroup => sizeGroup.Id)));
+            ResultErrorBindOkAsync(() => _genderDatabaseValidateService.ValidateFind(clothesMain.Gender.Id)).
+            ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseValidateService.ValidateFind(clothesMain.ClothesType.Id)).
+            ResultErrorBindOkBindAsync(() => _colorClothesDatabaseValidateService.ValidateFinds(clothesMain.Colors.Select(color => color.Id))).
+            ResultErrorBindOkBindAsync(() => _sizeGroupDatabaseValidateService.ValidateFinds(clothesMain.SizeGroups.Select(sizeGroup => sizeGroup.Id)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesFullDomain> clothesDomains) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesMainDomain> clothesDomains) =>
             await new ResultError().
             ResultErrorBindOkAsync(() => clothesDomains.Select(clothes => clothes.Gender.Id).
                                                         Distinct().
                                          Map(ids => _genderDatabaseValidateService.ValidateFinds(ids))).
-            ResultErrorBindOkBindAsync(() => clothesDomains.Select(clothes => clothes.ClothesTypeShort.Id).
+            ResultErrorBindOkBindAsync(() => clothesDomains.Select(clothes => clothes.ClothesType.Id).
                                                             Distinct().
                                              Map(ids => _clothesTypeDatabaseValidateService.ValidateFinds(ids))).
             ResultErrorBindOkBindAsync(() => clothesDomains.SelectMany(clothesType => clothesType.Colors.Select(color => color.Id)).
@@ -104,45 +104,45 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверка имени
         /// </summary>
-        private static IResultError ValidateName(IClothesFullDomain clothesFull) =>
-            clothesFull.Name.ToResultValueWhere(
+        private static IResultError ValidateName(IClothesMainDomain clothesMain) =>
+            clothesMain.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<int, IClothesFullDomain>(nameof(clothesFull.Name), clothesFull));
+                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Name), clothesMain));
 
         /// <summary>
         /// Проверка описания
         /// </summary>
-        private static IResultError ValidateDescription(IClothesFullDomain clothesFull) =>
-            clothesFull.Description.ToResultValueWhere(
+        private static IResultError ValidateDescription(IClothesMainDomain clothesMain) =>
+            clothesMain.Description.ToResultValueWhere(
                 description => !String.IsNullOrWhiteSpace(description),
-                _ => ModelsErrors.FieldNotValid<int, IClothesFullDomain>(nameof(clothesFull.Description), clothesFull));
+                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Description), clothesMain));
 
         /// <summary>
         /// Проверка цены
         /// </summary>
-        private static IResultError ValidatePrice(IClothesFullDomain clothesFull) =>
-             clothesFull.Price.ToResultValueWhere(
+        private static IResultError ValidatePrice(IClothesMainDomain clothesMain) =>
+             clothesMain.Price.ToResultValueWhere(
                 price => price > 0,
-                _ => ModelsErrors.FieldNotValid<int, IClothesFullDomain>(0, nameof(clothesFull.Price), clothesFull));
+                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(0, nameof(clothesMain.Price), clothesMain));
 
         /// <summary>
         /// Проверка имени типа одежды
         /// </summary>
-        private static IResultError ValidateClothesTypeName(IClothesFullDomain clothesFull) =>
-            clothesFull.ClothesTypeName.ToResultValueWhere(
+        private static IResultError ValidateClothesTypeName(IClothesMainDomain clothesMain) =>
+            clothesMain.ClothesTypeName.ToResultValueWhere(
                 clothesTypeName => !String.IsNullOrWhiteSpace(clothesTypeName),
-                _ => ModelsErrors.FieldNotValid<int, IClothesFullDomain>(nameof(clothesFull.ClothesTypeName), clothesFull));
+                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.ClothesTypeName), clothesMain));
 
         /// <summary>
         /// Проверка цветов
         /// </summary>
-        private IResultError ValidateColors(IClothesFullDomain clothesFull) =>
-            _colorClothesDatabaseValidateService.ValidateQuantity(clothesFull.Colors);
+        private IResultError ValidateColors(IClothesMainDomain clothesMain) =>
+            _colorClothesDatabaseValidateService.ValidateQuantity(clothesMain.Colors);
 
         /// <summary>
         /// Проверка групп размеров
         /// </summary>
-        private IResultError ValidateSizeGroups(IClothesFullDomain clothesFull) =>
-            _sizeGroupDatabaseValidateService.ValidateQuantity(clothesFull.SizeGroups);
+        private IResultError ValidateSizeGroups(IClothesMainDomain clothesMain) =>
+            _sizeGroupDatabaseValidateService.ValidateQuantity(clothesMain.SizeGroups);
     }
 }

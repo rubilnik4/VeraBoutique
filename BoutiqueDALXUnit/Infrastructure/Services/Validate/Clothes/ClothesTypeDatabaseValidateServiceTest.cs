@@ -21,7 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Xunit;
-using ClothesTypeDomain = BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain;
+using ClothesTypeDomain = BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains.ClothesTypeDomain;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 {
@@ -42,7 +42,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
 
             var result = ValidateModel(clothesType);
 
@@ -55,7 +55,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_NameError()
         {
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypeEmptyName = new ClothesTypeDomain(String.Empty, clothesType.Category, clothesType.Genders);
 
             var result = ValidateModel(clothesTypeEmptyName);
@@ -70,7 +70,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_GendersError()
         {
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypeEmptyGenders = new ClothesTypeDomain(clothesType, clothesType.Category,
                                                                 Enumerable.Empty<IGenderDomain>());
 
@@ -86,7 +86,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_Ok()
         {
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
 
             var result = await ValidateIncludes(clothesType);
 
@@ -100,7 +100,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludes_CategoryNotFound()
         {
             var category = new CategoryDomain("NotFound");
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypeNotFound = new ClothesTypeDomain(clothesType, category, clothesType.Genders);
 
             var result = await ValidateIncludes(clothesTypeNotFound);
@@ -116,7 +116,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludes_GendersNotFound()
         {
             var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Female, "NotFound"));
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypeNotFound = new ClothesTypeDomain(clothesType, clothesType.Category, genders);
 
             var result = await ValidateIncludes(clothesTypeNotFound);
@@ -131,7 +131,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var clothesTypes = ClothesTypeData.ClothesTypeDomains.
+            var clothesTypes = ClothesTypeData.ClothesTypeMainDomains.
                                OrderByDescending(clothesType => clothesType.CategoryName);
 
             var result = await ValidateIncludes(clothesTypes);
@@ -146,8 +146,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_GendersNotFound()
         {
             var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Child, "NotFound"));
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
-            var clothesTypesNotFound = ClothesTypeData.ClothesTypeDomains.
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
+            var clothesTypesNotFound = ClothesTypeData.ClothesTypeMainDomains.
                                        Append(new ClothesTypeDomain(clothesType, clothesType.Category, genders));
 
             var result = await ValidateIncludes(clothesTypesNotFound);
@@ -163,8 +163,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_CategoriesNotFound()
         {
             var category = new CategoryDomain("NotFound");
-            var clothesType = ClothesTypeData.ClothesTypeDomains.First();
-            var clothesTypesNotFound = ClothesTypeData.ClothesTypeDomains.
+            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
+            var clothesTypesNotFound = ClothesTypeData.ClothesTypeMainDomains.
                                        Append(new ClothesTypeDomain(clothesType, category, clothesType.Genders));
 
             var result = await ValidateIncludes(clothesTypesNotFound);

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 
 namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
@@ -14,28 +16,22 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Начальные данные вида одежды
         /// </summary>
-        public static IReadOnlyCollection<IClothesTypeDomain> ClothesTypes =>
-            new List<IClothesTypeDomain>
+        public static IReadOnlyCollection<IClothesTypeMainDomain> ClothesTypeMains =>
+            new List<IClothesTypeMainDomain>
             {
-                new ClothesTypeDomain("Пальто", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Куртки", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Толстовки", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Свитера", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Рубашки", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale),
-                Tshort,
-                new ClothesTypeDomain("Брюки", CategoryInitialize.Pants, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Джинсы", CategoryInitialize.Pants, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Шорты", CategoryInitialize.Pants, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Кроссовки", CategoryInitialize.Shoes, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Туфли", CategoryInitialize.Shoes, GenderInitialize.MaleAndFemale),
-                new ClothesTypeDomain("Платья", CategoryInitialize.Dress, new List<IGenderDomain> {GenderInitialize.Female}),
-                new ClothesTypeDomain("Юбки", CategoryInitialize.Dress, new List<IGenderDomain> {GenderInitialize.Female}),
+                new ClothesTypeMainDomain("Пальто", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Куртки", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Толстовки", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Свитера", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Рубашки", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Футболки", CategoryInitialize.Outerwear),
+                new ClothesTypeMainDomain("Брюки", CategoryInitialize.Pants),
+                new ClothesTypeMainDomain("Джинсы", CategoryInitialize.Pants),
+                new ClothesTypeMainDomain("Шорты", CategoryInitialize.Pants),
+                new ClothesTypeMainDomain("Кроссовки", CategoryInitialize.Shoes),
+                new ClothesTypeMainDomain("Туфли", CategoryInitialize.Shoes),
+                new ClothesTypeMainDomain("Платья", CategoryInitialize.Dress),
+                new ClothesTypeMainDomain("Юбки", CategoryInitialize.Dress),
             }.AsReadOnly();
-
-        /// <summary>
-        /// Вид одежды. Футболка
-        /// </summary>
-        public static IClothesTypeDomain Tshort =>
-            new ClothesTypeDomain("Футболки", CategoryInitialize.Outerwear, GenderInitialize.MaleAndFemale);
     }
 }

@@ -13,8 +13,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         { }
 
         public ClothesColorCompositeEntity(int clothesId, string colorName,
-                                           ClothesFullEntity? clothes, 
-                                           ColorEntity? colorClothes)
+                                           ClothesEntity? clothes, ColorEntity? colorClothes)
         {
             ClothesId = clothesId;
             ColorName = colorName;
@@ -40,7 +39,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Одежда. Информация
         /// </summary>
-        public ClothesFullEntity? Clothes { get; }
+        public ClothesEntity? Clothes { get; }
 
         /// <summary>
         /// Цвет одежды

@@ -5,8 +5,8 @@ using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers
 {
     /// <summary>
-    /// Конвертер информации об одежде в трансферную модель
+    /// Конвертер одежды в трансферную модель
     /// </summary>
-    public interface IClothesTransferConverter : ITransferConverter<int, IClothesFullDomain, ClothesFullTransfer>
+    public interface IClothesTransferConverter : ITransferConverter<int, IClothesDomain, ClothesTransfer>
     { }
 }

@@ -34,14 +34,14 @@ namespace BoutiqueXamarin.DependencyInjection
         {
             container.Register<IGenderTransferConverter, GenderTransferConverter>();
             container.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
-            container.Register<IClothesTypeShortTransferConverter, ClothesTypeShortTransferConverter>();
+            container.Register<IClothesTypeMainTransferConverter, ClothesTypeMainTransferConverter>();
             container.Register<ICategoryTransferConverter, CategoryTransferConverter>();
             container.Register<ISizeTransferConverter, SizeTransferConverter>();
-            container.Register<ISizeGroupShortTransferConverter, SizeGroupShortTransferConverter>();
+            container.Register<ISizeGroupMainTransferConverter, SizeGroupMainTransferConverter>();
             container.Register<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
             container.Register<IColorTransferConverter, ColorTransferConverter>();
-            container.Register<IClothesShortTransferConverter, ClothesShortTransferConverter>();
             container.Register<IClothesTransferConverter, ClothesTransferConverter>();
+            container.Register<IClothesMainTransferConverter, ClothesMainTransferConverter>();
 
             container.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();
             container.Register<IXamarinConfigurationTransferConverter, XamarinConfigurationTransferConverter>();

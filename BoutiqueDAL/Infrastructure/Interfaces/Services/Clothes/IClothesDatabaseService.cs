@@ -10,11 +10,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис информации об одежде в базе данных
     /// </summary>
-    public interface IClothesDatabaseService : IDatabaseService<int, IClothesFullDomain>
+    public interface IClothesDatabaseService : IDatabaseService<int, IClothesMainDomain>
     {
         /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
-        Task<IResultCollection<IClothesDomain>> GetClothesShorts(GenderType genderType, string clothesType);
+        Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType);
     }
 }

@@ -1,69 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Models.Implementations.Clothes;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers
 {
     /// <summary>
-    /// Конвертер вида одежды в трансферную модель
+    /// Конвертер основной информации вида одежды в трансферную модель
     /// </summary>
     public class ClothesTypeTransferConverter : TransferConverter<string, IClothesTypeDomain, ClothesTypeTransfer>,
                                                 IClothesTypeTransferConverter
     {
-        public ClothesTypeTransferConverter(ICategoryTransferConverter categoryTransferConverter,
-                                            IGenderTransferConverter genderTransferConverter)
-        {
-            _categoryTransferConverter = categoryTransferConverter;
-            _genderTransferConverter = genderTransferConverter;
-        }
+        /// <summary>
+        /// Преобразовать пол в трансферную модель
+        /// </summary>
+        public override ClothesTypeTransfer ToTransfer(IClothesTypeDomain clothesTypeDomain) =>
+            new ClothesTypeTransfer(clothesTypeDomain);
 
         /// <summary>
-        /// Конвертер категорий одежды в трансферную модель
+        /// Преобразовать пол из трансферной модели
         /// </summary>
-        private readonly ICategoryTransferConverter _categoryTransferConverter;
-
-
-        /// <summary>
-        /// Конвертер типа пола в трансферную модель
-        /// </summary>
-        private readonly IGenderTransferConverter _genderTransferConverter;
-
-        /// <summary>
-        /// Преобразовать тип одежды в трансферную модель
-        /// </summary>
-        public override ClothesTypeTransfer ToTransfer(IClothesTypeDomain clothesTypeFullDomain) =>
-            new ClothesTypeTransfer(clothesTypeFullDomain,
-                                    _categoryTransferConverter.ToTransfer(clothesTypeFullDomain.Category),
-                                    _genderTransferConverter.ToTransfers(clothesTypeFullDomain.Genders));
-
-        ///// <summary>
-        ///// Преобразовать тип одежды из трансферной модели
-        ///// </summary>
         public override IResultValue<IClothesTypeDomain> FromTransfer(ClothesTypeTransfer clothesTypeTransfer) =>
-            GetClothesTypeFunc(clothesTypeTransfer).
-            ResultValueCurryOk(_categoryTransferConverter.GetDomain(clothesTypeTransfer.Category)).
-            ResultValueCurryOk(_genderTransferConverter.GetDomains(clothesTypeTransfer.Genders)).
-            ResultValueOk(func => func.Invoke());
-
-        /// <summary>
-        /// Функция получения типа одежды
-        /// </summary>
-        private static IResultValue<Func<ICategoryDomain, IEnumerable<IGenderDomain>, IClothesTypeDomain>> GetClothesTypeFunc(IClothesTypeBase clothesType) =>
-            new ResultValue<Func<ICategoryDomain, IEnumerable<IGenderDomain>, IClothesTypeDomain>>(
-                (category, genders) => new ClothesTypeDomain(clothesType, category, genders));
+            new ClothesTypeDomain(clothesTypeTransfer).
+            Map(clothesTypeShort => new ResultValue<IClothesTypeDomain>(clothesTypeShort));
     }
 }

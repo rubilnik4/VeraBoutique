@@ -27,7 +27,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_FromTransfer()
         {
             var clothes = ClothesData.ClothesDomains.First();
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
+            var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 
             var clothesTransfer = clothesTransferConverter.ToTransfer(clothes);
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesTransfer);
@@ -43,9 +43,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_ColorsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesTransfers.First();
-            var clothesNull = new ClothesFullTransfer(clothes, clothes.Gender, clothes.ClothesType,
+            var clothesNull = new ClothesMainTransfer(clothes, clothes.Gender, clothes.ClothesType,
                                                   clothes.Colors.Append(null), clothes.SizeGroups);
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
+            var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
@@ -60,9 +60,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_SizeGroupsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesTransfers.First();
-            var clothesNull = new ClothesFullTransfer(clothes, clothes.Gender, clothes.ClothesType, 
+            var clothesNull = new ClothesMainTransfer(clothes, clothes.Gender, clothes.ClothesType, 
                                                   clothes.Colors, clothes.SizeGroups.Append(null));
-            var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
+            var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 

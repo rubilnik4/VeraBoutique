@@ -16,7 +16,7 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Начальные данные связующей таблицы группы размеров одежды
         /// </summary>
-        public static IReadOnlyCollection<ISizeGroupDomain> SizeGroups =>
+        public static IReadOnlyCollection<ISizeGroupMainDomain> SizeGroupMains =>
             OutwearSizes.
             Concat(ShirtSizes).
             Concat(TshirtSizes).
@@ -32,8 +32,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Верхняя одежда
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> OutwearSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> OutwearSizes =>
+            new List<SizeGroupMainDomain>
             {
                  new(ClothesSizeType.Outerwear, 38,
                      new List<SizeDomain>
@@ -124,8 +124,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Рубашки
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> ShirtSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> ShirtSizes =>
+            new List<SizeGroupMainDomain>
             {
                  new(ClothesSizeType.Shirt, 44,
                      new List<SizeDomain>
@@ -174,8 +174,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Футболки
         /// </summary>
-        public static IReadOnlyCollection<ISizeGroupDomain> TshirtSizes =>
-            new List<SizeGroupDomain>
+        public static IEnumerable<ISizeGroupMainDomain> TshirtSizes =>
+            new List<SizeGroupMainDomain>
             {
                  new(ClothesSizeType.Tshirt, 42,
                      new List<SizeDomain>
@@ -238,8 +238,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Куртки
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> JacketSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> JacketSizes =>
+            new List<SizeGroupMainDomain>
             {
                 new(ClothesSizeType.Jacket, 38,
                     new List<SizeDomain>
@@ -316,8 +316,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Штаны
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> PantsSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> PantsSizes =>
+            new List<SizeGroupMainDomain>
             {
                 new (ClothesSizeType.Pants, 44,
                      new List<SizeDomain> {
@@ -366,8 +366,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Нижнее белье
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> UnderwearSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> UnderwearSizes =>
+            new List<SizeGroupMainDomain>
             {
                 new (ClothesSizeType.Underwear, 42,
                      new List<SizeDomain> {
@@ -416,8 +416,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Носки
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> SocksSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> SocksSizes =>
+            new List<SizeGroupMainDomain>
             {
                  new (ClothesSizeType.Socks, 39,
                      new List<SizeDomain> {
@@ -466,8 +466,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Обувь
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> ShoesSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> ShoesSizes =>
+            new List<SizeGroupMainDomain>
             {
                  new (ClothesSizeType.Shoes, 35,
                      new List<SizeDomain> {
@@ -540,8 +540,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Платья
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> DressSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> DressSizes =>
+            new List<SizeGroupMainDomain>
             {
                 new (ClothesSizeType.Dress, 40,
                      new List<SizeDomain> {
@@ -608,8 +608,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Блузки
         /// </summary>
-        private static IReadOnlyCollection<ISizeGroupDomain> BlouseSizes =>
-            new List<SizeGroupDomain>
+        private static IEnumerable<ISizeGroupMainDomain> BlouseSizes =>
+            new List<SizeGroupMainDomain>
             {
                 new (ClothesSizeType.Blouse, 40,
                      new List<SizeDomain> {

@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesFullDomain, ClothesFullEntity>,
+    public class ClothesDatabaseService : DatabaseService<int, IClothesMainDomain, ClothesEntity>,
                                           IClothesDatabaseService
     {
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
@@ -70,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
-        public async Task<IResultCollection<IClothesDomain>> GetClothesShorts(GenderType genderType, string clothesType) =>
+        public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
             await ResultCollectionTryAsync(() => GetByGenderAndClothesType(genderType, clothesType),
                                            DatabaseErrors.TableAccessError(nameof(_clothesTable))).
             ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
@@ -84,14 +84,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                  clothesGender => clothesGender.Id,
                  clothesClothesType => clothesClothesType.Id,
                  (clothesGender, clothesClothesType) => clothesGender).
-            Select(clothesEntity => new ClothesEntity(clothesEntity)).
             AsNoTracking().
             ToListAsync();
 
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesFullEntity> GetClothesByGender(GenderType genderType) =>
+        private IQueryable<ClothesEntity> GetClothesByGender(GenderType genderType) =>
             _genderTable.
             Where(genderType).
             Include(genderEntity => genderEntity.Clothes).
@@ -100,7 +99,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить список информации об одежде по типу пола
         /// </summary>
-        private IQueryable<ClothesFullEntity> GetClothesByClothesType(string clothesType) =>
+        private IQueryable<ClothesEntity> GetClothesByClothesType(string clothesType) =>
             _clothesTypeTable.
             Where(clothesType).
             Include(clothesTypeEntity => clothesTypeEntity.Clothes).
