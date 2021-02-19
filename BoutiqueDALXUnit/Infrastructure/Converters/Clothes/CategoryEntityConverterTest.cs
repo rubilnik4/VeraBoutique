@@ -2,6 +2,7 @@
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.CategoryEntities;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes

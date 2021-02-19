@@ -20,11 +20,19 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
            : this(name, null, null)
         { }
 
-        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypes, 
-                              IReadOnlyCollection<GenderCategoryCompositeEntity>? genderCategoryComposites)
+        public CategoryEntity(ICategoryBase category, IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites)
+         : this(category.Name, genderCategoryComposites)
+        { }
+
+        public CategoryEntity(string name, IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites)
+          : this(name, genderCategoryComposites, null)
+        { }
+
+        public CategoryEntity(string name, IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites,
+                              IEnumerable<ClothesTypeEntity>? clothesTypes)
             : base(name)
         {
-            GenderCategoryComposites = genderCategoryComposites;
+            GenderCategoryComposites = genderCategoryComposites?.ToList();
             ClothesTypes = clothesTypes?.ToList();
         }
 

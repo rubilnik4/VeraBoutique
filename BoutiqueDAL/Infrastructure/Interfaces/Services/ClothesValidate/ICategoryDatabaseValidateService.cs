@@ -7,6 +7,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы категорий одежды
     /// </summary>
-    public interface ICategoryDatabaseValidateService : IDatabaseValidateService<string, ICategoryDomain>
+    public interface ICategoryDatabaseValidateService : IDatabaseValidateService<string, ICategoryMainDomain>
     { }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
@@ -15,6 +16,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate
         /// Сервис проверки данных из базы категорий одежды
         /// </summary>
         public static ICategoryDatabaseValidateService GetCategoryDatabaseValidateService(IEnumerable<CategoryEntity> categories) =>
-            new CategoryDatabaseValidateService(CategoryTableMock.GetCategoryTable(categories));
+            GetCategoryDatabaseValidateService(categories, Enumerable.Empty<GenderEntity>());
+
+        /// <summary>
+        /// Сервис проверки данных из базы категорий одежды
+        /// </summary>
+        public static ICategoryDatabaseValidateService GetCategoryDatabaseValidateService(IEnumerable<CategoryEntity> categories,
+                                                                                          IEnumerable<GenderEntity> genders) =>
+            new CategoryDatabaseValidateService(CategoryTableMock.GetCategoryTable(categories),
+                                                GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(genders));
     }
 }

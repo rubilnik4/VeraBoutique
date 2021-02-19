@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
     /// <summary>
     /// Конвертер вида одежды в трансферную модель. Тесты
     /// </summary>
-    public class ClothesTypeTransferConverterTest
+    public class ClothesTypeMainTransferConverterTest
     {
         /// <summary>
         /// Преобразования модели вида одежды в трансферную модель
@@ -25,7 +25,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
         public void ClothesType_ToTransfer_FromTransfer()
         {
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
+            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeMainTransferConverter;
 
             var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);
             var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);
@@ -40,9 +40,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
         [Fact]
         public void ClothesType_ToTransfer_GendersCollectionNull()
         {
-            var clothesType = ClothesTypeTransfersData.ClothesTypeTransfers.First();
-            var clothesTypeNull = new ClothesTypeTransfer(clothesType, clothesType.Category, clothesType.Genders.Append(null));
-            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
+            var clothesType = ClothesTypeTransfersData.ClothesTypeMainTransfers.First();
+            var clothesTypeNull = new ClothesTypeMainTransfer(clothesType, clothesType.Category);
+            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeMainTransferConverter;
 
             var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeNull);
 

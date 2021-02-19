@@ -9,6 +9,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы группы размера одежды
     /// </summary>
-    public interface ISizeGroupDatabaseValidateService : IDatabaseValidateService<int, ISizeGroupDomain>
+    public interface ISizeGroupDatabaseValidateService : IDatabaseValidateService<int, ISizeGroupMainDomain>
     { }
 }

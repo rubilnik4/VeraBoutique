@@ -16,7 +16,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet
         /// <summary>
         /// Сущности базы данных
         /// </summary>
-        public static Mock<DbSet<ClothesFullEntity>> GetClothesDbSet(IEnumerable<ClothesFullEntity> clothes) =>
+        public static Mock<DbSet<ClothesEntity>> GetClothesDbSet(IEnumerable<ClothesEntity> clothes) =>
             clothes.AsQueryable().BuildMockDbSet();
     }
 }

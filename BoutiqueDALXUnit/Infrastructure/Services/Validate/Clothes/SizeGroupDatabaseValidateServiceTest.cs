@@ -37,7 +37,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
 
             var result = ValidateModel(sizeGroup);
 
@@ -50,8 +50,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_NameError()
         {
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeGroupSizeNormalize = new SizeGroupDomain(ClothesSizeType.Dress, 0, sizeGroup.Sizes);
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupSizeNormalize = new SizeGroupMainDomain(ClothesSizeType.Dress, 0, sizeGroup.Sizes);
 
             var result = ValidateModel(sizeGroupSizeNormalize);
 
@@ -65,8 +65,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_SizesError()
         {
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeGroupEmptySizes = new SizeGroupDomain(sizeGroup, Enumerable.Empty<ISizeDomain>());
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupEmptySizes = new SizeGroupMainDomain(sizeGroup, Enumerable.Empty<ISizeDomain>());
 
             var result = ValidateModel(sizeGroupEmptySizes);
 
@@ -80,7 +80,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_Ok()
         {
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
 
             var result = await ValidateIncludes(sizeGroup);
 
@@ -94,8 +94,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludes_SizesNotFound()
         {
             var sizes = SizeData.SizeDomains.Append(new SizeDomain(SizeType.American, "NotFound"));
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeGroupNotFound = new SizeGroupDomain(sizeGroup, sizes);
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupNotFound = new SizeGroupMainDomain(sizeGroup, sizes);
 
             var result = await ValidateIncludes(sizeGroupNotFound);
 
@@ -109,7 +109,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var sizeGroups = SizeGroupData.SizeGroupDomains.
+            var sizeGroups = SizeGroupData.SizeGroupMainDomains.
                              OrderByDescending(sizeGroup => sizeGroup.SizeNormalize);
 
             var result = await ValidateIncludes(sizeGroups);
@@ -124,8 +124,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_SizesNotFound()
         {
             var sizes = SizeData.SizeDomains.Append(new SizeDomain(SizeType.American, "NotFound"));
-            var sizeGroup = SizeGroupData.SizeGroupDomains.First();
-            var sizeGroupsNotFound = SizeGroupData.SizeGroupDomains.Append(new SizeGroupDomain(sizeGroup, sizes));
+            var sizeGroup = SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupsNotFound = SizeGroupData.SizeGroupMainDomains.Append(new SizeGroupMainDomain(sizeGroup, sizes));
 
             var result = await ValidateIncludes(sizeGroupsNotFound);
 

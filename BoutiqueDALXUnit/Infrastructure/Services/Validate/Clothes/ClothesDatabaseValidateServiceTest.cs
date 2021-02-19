@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -40,7 +41,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
 
             var result = ValidateModel(clothes);
 
@@ -53,9 +54,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_NameError()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptyName = new ClothesMainDomain(clothes.Id, String.Empty, clothes.Description, clothes.Price, clothes.Image,
-                                                     clothes.Gender, clothes.ClothesTypeShort, clothes.Colors, clothes.SizeGroups);
+                                                     clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = ValidateModel(clothesEmptyName);
 
@@ -69,9 +70,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_DescriptionError()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptyDescription = new ClothesMainDomain(clothes.Id, clothes.Name, String.Empty, clothes.Price, clothes.Image,
-                                                     clothes.Gender, clothes.ClothesTypeShort, clothes.Colors, clothes.SizeGroups);
+                                                     clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = ValidateModel(clothesEmptyDescription);
 
@@ -87,9 +88,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [InlineData(-5)]
         public void ValidateModel_PriceError(decimal price)
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesPrice = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, price, clothes.Image,
-                                                 clothes.Gender, clothes.ClothesTypeShort, clothes.Colors, clothes.SizeGroups);
+                                                 clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = ValidateModel(clothesPrice);
 
@@ -103,9 +104,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_ColorsError()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptyColors = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                                                 clothes.Gender, clothes.ClothesTypeShort, Enumerable.Empty<IColorDomain>(),
+                                                 clothes.Gender, clothes.ClothesType, Enumerable.Empty<IColorDomain>(),
                                                  clothes.SizeGroups);
 
             var result = ValidateModel(clothesEmptyColors);
@@ -120,10 +121,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_SizeGroupsError()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptySizeGroups = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                                                 clothes.Gender, clothes.ClothesTypeShort, clothes.Colors,
-                                                 Enumerable.Empty<ISizeGroupDomain>());
+                                                 clothes.Gender, clothes.ClothesType, clothes.Colors,
+                                                 Enumerable.Empty<ISizeGroupMainDomain>());
 
             var result = ValidateModel(clothesEmptySizeGroups);
 
@@ -137,7 +138,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_Ok()
         {
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothes = ClothesData.ClothesMainDomains.First();
 
             var result = await ValidateIncludes(clothes);
 
@@ -151,8 +152,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludes_GenderNotFound()
         {
             var gender = new GenderDomain(GenderType.Child, "NotFound");
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = new ClothesMainDomain(clothes, gender, clothes.ClothesTypeShort, clothes.Colors, clothes.SizeGroups);
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = new ClothesMainDomain(clothes, gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = await ValidateIncludes(clothesNotFound);
 
@@ -166,8 +167,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_ClothesTypeNotFound()
         {
-            var clothesType = new ClothesTypeShortDomain("NotFound", "NotFound");
-            var clothes = ClothesData.ClothesDomains.First();
+            var clothesType = new ClothesTypeDomain("NotFound", "NotFound");
+            var clothes = ClothesData.ClothesMainDomains.First();
             var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = await ValidateIncludes(clothesNotFound);
@@ -183,8 +184,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludes_ColorsNotFound()
         {
             var colors = ColorData.ColorDomains.Append(new ColorDomain("NotFound"));
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, colors, clothes.SizeGroups);
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesType, colors, clothes.SizeGroups);
 
             var result = await ValidateIncludes(clothesNotFound);
 
@@ -198,9 +199,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_SizeGroupsNotFound()
         {
-            var sizeGroups = SizeGroupData.SizeGroupDomains.Append(new SizeGroupDomain(ClothesSizeType.Dress,0, Enumerable.Empty<ISizeDomain>()));
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, clothes.Colors, sizeGroups);
+            var sizeGroups = SizeGroupData.SizeGroupMainDomains.Append(new SizeGroupMainDomain(ClothesSizeType.Dress,0, Enumerable.Empty<ISizeDomain>()));
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesType, clothes.Colors, sizeGroups);
 
             var result = await ValidateIncludes(clothesNotFound);
 
@@ -214,8 +215,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var clothes = ClothesData.ClothesDomains.
-                          OrderByDescending(clothesDomain => clothesDomain.ClothesTypeShort.CategoryName);
+            var clothes = ClothesData.ClothesMainDomains.
+                          OrderByDescending(clothesDomain => clothesDomain.ClothesType.CategoryName);
 
             var result = await ValidateIncludes(clothes);
 
@@ -229,9 +230,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_GenderNotFound()
         {
             var gender = new GenderDomain(GenderType.Child, "NotFound");
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = ClothesData.ClothesDomains.
-                                  Append(new ClothesMainDomain(clothes, gender, clothes.ClothesTypeShort, clothes.Colors, clothes.SizeGroups));
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = ClothesData.ClothesMainDomains.
+                                  Append(new ClothesMainDomain(clothes, gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups));
 
             var result = await ValidateIncludes(clothesNotFound);
 
@@ -245,9 +246,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_ClothesTypeNotFound()
         {
-            var clothesType = new ClothesTypeShortDomain("NotFound", "NotFound");
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = ClothesData.ClothesDomains.
+            var clothesType = new ClothesTypeDomain("NotFound", "NotFound");
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = ClothesData.ClothesMainDomains.
                                   Append(new ClothesMainDomain(clothes, clothes.Gender, clothesType, clothes.Colors, clothes.SizeGroups));
 
             var result = await ValidateIncludes(clothesNotFound);
@@ -263,9 +264,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public async Task ValidateIncludesCollection_ColorsNotFound()
         {
             var colors = ColorData.ColorDomains.Append(new ColorDomain("NotFound"));
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = ClothesData.ClothesDomains.
-                                  Append(new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, colors, clothes.SizeGroups));
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = ClothesData.ClothesMainDomains.
+                                  Append(new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesType, colors, clothes.SizeGroups));
 
             var result = await ValidateIncludes(clothesNotFound);
 
@@ -279,10 +280,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_SizeGroupsNotFound()
         {
-            var sizeGroups = SizeGroupData.SizeGroupDomains.Append(new SizeGroupDomain(ClothesSizeType.Dress, 0, Enumerable.Empty<ISizeDomain>()));
-            var clothes = ClothesData.ClothesDomains.First();
-            var clothesNotFound = ClothesData.ClothesDomains.
-                                  Append(new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesTypeShort, clothes.Colors, sizeGroups));
+            var sizeGroups = SizeGroupData.SizeGroupMainDomains.Append(new SizeGroupMainDomain(ClothesSizeType.Dress, 0, Enumerable.Empty<ISizeDomain>()));
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesNotFound = ClothesData.ClothesMainDomains.
+                                  Append(new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesType, clothes.Colors, sizeGroups));
 
             var result = await ValidateIncludes(clothesNotFound);
 

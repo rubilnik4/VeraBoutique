@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 
@@ -17,21 +18,21 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// <summary>
         /// Типы одежды. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<ClothesMainTransfer> ClothesTransfers =>
-            ClothesData.ClothesDomains.
+        public static IReadOnlyCollection<ClothesMainTransfer> ClothesMainTransfers =>
+            ClothesData.ClothesMainDomains.
             Select(clothes => 
                 new ClothesMainTransfer(clothes, 
                                     new GenderTransfer(clothes.Gender), 
-                                    new ClothesTypeShortTransfer(clothes.ClothesTypeShort),
+                                    new ClothesTypeTransfer(clothes.ClothesType),
                                     clothes.Colors.Select(color => new ColorTransfer(color)),
-                                    clothes.SizeGroups.Select(sizeGroup => new SizeGroupTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
+                                    clothes.SizeGroups.Select(sizeGroup => new SizeGroupMainTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
             ToList();
 
         /// <summary>
         /// Типы одежды. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<ClothesTransfer> ClothesShortTransfers =>
-            ClothesData.ClothesShortDomains.
+        public static IReadOnlyCollection<ClothesTransfer> ClothesTransfers =>
+            ClothesData.ClothesDomains.
             Select(clothesShort => new ClothesTransfer(clothesShort)).
             ToList();
 

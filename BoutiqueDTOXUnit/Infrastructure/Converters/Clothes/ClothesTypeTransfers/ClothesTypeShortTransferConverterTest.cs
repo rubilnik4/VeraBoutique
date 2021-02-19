@@ -16,16 +16,16 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
         /// Преобразования модели вида одежды в трансферную модель
         /// </summary>
         [Fact]
-        public void ClothesTypeShort_ToTransfer_FromTransfer()
+        public void ClothesType_ToTransfer_FromTransfer()
         {
             var clothesType = ClothesTypeData.ClothesTypeDomains.First();
-            var clothesTypeShortTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeShortTransferConverter;
+            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeTransferConverter;
 
-            var clothesTypeShortTransfer = clothesTypeShortTransferConverter.ToTransfer(clothesType);
-            var clothesTypeAfterShortConverter = clothesTypeShortTransferConverter.FromTransfer(clothesTypeShortTransfer);
+            var clothesTypeTransfer = clothesTypeTransferConverter.ToTransfer(clothesType);
+            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeTransfer);
 
-            Assert.True(clothesTypeAfterShortConverter.OkStatus);
-            Assert.True(clothesType.Equals(clothesTypeAfterShortConverter.Value));
+            Assert.True(clothesTypeAfterConverter.OkStatus);
+            Assert.True(clothesType.Equals(clothesTypeAfterConverter.Value));
         }
     }
 }

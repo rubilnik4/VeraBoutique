@@ -25,7 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы группы размера одежды
     /// </summary>
-    public class SizeGroupDatabaseValidateService : DatabaseValidateService<int, ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupDatabaseValidateService : DatabaseValidateService<int, ISizeGroupMainDomain, SizeGroupEntity>,
                                                     ISizeGroupDatabaseValidateService
     {
         public SizeGroupDatabaseValidateService(ISizeGroupTable sizeGroupTable, 
@@ -43,42 +43,42 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(ISizeGroupDomain sizeGroup) =>
+        protected override IResultError ValidateModel(ISizeGroupMainDomain sizeGroupMain) =>
             new ResultError().
-            ResultErrorBindOk(() => ValidateSizeNormalized(sizeGroup)).
-            ResultErrorBindOk(() => ValidateSizes(sizeGroup));
+            ResultErrorBindOk(() => ValidateSizeNormalized(sizeGroupMain)).
+            ResultErrorBindOk(() => ValidateSizes(sizeGroupMain));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(ISizeGroupDomain sizeGroup) =>
+        protected override async Task<IResultError> ValidateIncludes(ISizeGroupMainDomain sizeGroupMain) =>
              await new ResultError().
-            ResultErrorBindOkAsync(() => _sizeDatabaseValidateService.ValidateFinds(sizeGroup.Sizes.Select(size => size.Id)));
+            ResultErrorBindOkAsync(() => _sizeDatabaseValidateService.ValidateFinds(sizeGroupMain.Sizes.Select(size => size.Id)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IEnumerable<ISizeGroupDomain> sizeGroups) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<ISizeGroupMainDomain> sizeGroupMains) =>
             await new ResultError().
-            ResultErrorBindOkAsync(() => sizeGroups.SelectMany(sizeGroup => sizeGroup.Sizes.Select(size => size.Id)).
+            ResultErrorBindOkAsync(() => sizeGroupMains.SelectMany(sizeGroup => sizeGroup.Sizes.Select(size => size.Id)).
                                                     Distinct().
                                          Map(ids => _sizeDatabaseValidateService.ValidateFinds(ids)));
 
         /// <summary>
         /// Проверка имени
         /// </summary>
-        private static IResultError ValidateSizeNormalized(ISizeGroupDomain sizeGroup) =>
-            sizeGroup.SizeNormalize.ToResultValueWhere(
+        private static IResultError ValidateSizeNormalized(ISizeGroupMainDomain sizeGroupMain) =>
+            sizeGroupMain.SizeNormalize.ToResultValueWhere(
                 sizeNormalized => sizeNormalized >= SizeGroupBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupBase.SIZE_NORMALIZE_MAX,
                 _ => ModelsErrors.FieldNotValid<int, ISizeGroupDomain>(SizeGroupBase.SIZE_NORMALIZE_MIN, 
                                                                                                SizeGroupBase.SIZE_NORMALIZE_MAX,
-                                                                                               nameof(sizeGroup.SizeNormalize),
-                                                                                               sizeGroup));
+                                                                                               nameof(sizeGroupMain.SizeNormalize),
+                                                                                               sizeGroupMain));
 
         /// <summary>
         /// Проверка размеров
         /// </summary>
-        private IResultError ValidateSizes(ISizeGroupDomain sizeGroup) =>
-            _sizeDatabaseValidateService.ValidateQuantity(sizeGroup.Sizes);
+        private IResultError ValidateSizes(ISizeGroupMainDomain sizeGroupMain) =>
+            _sizeDatabaseValidateService.ValidateQuantity(sizeGroupMain.Sizes);
     }
 }

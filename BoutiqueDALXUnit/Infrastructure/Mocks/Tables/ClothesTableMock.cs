@@ -19,7 +19,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public static IClothesTable GetClothesTable(IEnumerable<ClothesFullEntity> clothes) =>
+        public static IClothesTable GetClothesTable(IEnumerable<ClothesEntity> clothes) =>
             new ClothesTable(ClothesDatabaseSetMock.GetClothesDbSet(clothes).Object);
     }
 }

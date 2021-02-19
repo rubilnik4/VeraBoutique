@@ -1,8 +1,10 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
@@ -11,6 +13,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTrans
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
@@ -29,12 +32,12 @@ namespace BoutiqueMVC.DependencyInjection
         public static void RegisterTransferConverters(IServiceCollection services)
         {
             services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
-            services.AddTransient<IClothesTypeMainTransferConverter, ClothesTypeTransferConverter>();
-            services.AddTransient<IClothesTypeTransferConverter, ClothesTypeShortTransferConverter>();
+            services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
+            services.AddTransient<IClothesTypeMainTransferConverter, ClothesTypeMainTransferConverter>();
             services.AddTransient<ICategoryTransferConverter, CategoryTransferConverter>();
             services.AddTransient<ISizeTransferConverter, SizeTransferConverter>();
-            services.AddTransient<ISizeGroupShortTransferConverter, SizeGroupShortTransferConverter>();
             services.AddTransient<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
+            services.AddTransient<ISizeGroupMainTransferConverter, SizeGroupMainTransferConverter>();
             services.AddTransient<IColorTransferConverter, ColorTransferConverter>();
             services.AddTransient<IClothesTransferConverter, ClothesTransferConverter>();
             services.AddTransient<IClothesMainTransferConverter, ClothesMainTransferConverter>();
@@ -51,10 +54,10 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ICategoryEntityConverter, CategoryEntityConverter>();
             services.AddTransient<ISizeEntityConverter, SizeEntityConverter>();
             services.AddTransient<ISizeGroupEntityConverter, SizeGroupEntityConverter>();
-            services.AddTransient<ISizeGroupShortEntityConverter, SizeGroupShortEntityConverter>();
+            services.AddTransient<ISizeGroupMainEntityConverter, SizeGroupMainEntityConverter>();
             services.AddTransient<IColorClothesEntityConverter, ColorClothesEntityConverter>();
-            services.AddTransient<IClothesShortEntityConverter, ClothesShortEntityConverter>();
-            services.AddTransient<IClothesEntityConverter, ClothesEntityConverter>();
+            services.AddTransient<IClothesShortEntityConverter, ClothesEntityConverter>();
+            services.AddTransient<IClothesEntityConverter, ClothesMainEntityConverter>();
         }
     }
 }

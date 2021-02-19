@@ -15,8 +15,8 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         public GenderCategoryCompositeEntity(GenderType genderId, string categoryId,
                                              GenderEntity? gender, CategoryEntity? category)
         {
-            GenderId = genderId;
-            CategoryId = categoryId;
+            GenderType = genderId;
+            CategoryName = categoryId;
             Gender = gender;
             Category = category;
         }
@@ -24,17 +24,17 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (GenderType, string) Id => (GenderId, CategoryId);
+        public (GenderType, string) Id => (GenderType, CategoryName);
 
         /// <summary>
         /// Идентификатор типа пола
         /// </summary>
-        public GenderType GenderId { get; }
+        public GenderType GenderType { get; }
 
         /// <summary>
         /// Идентификатор категории одежды
         /// </summary>
-        public string CategoryId { get; }
+        public string CategoryName { get; }
 
         /// <summary>
         /// Тип пола

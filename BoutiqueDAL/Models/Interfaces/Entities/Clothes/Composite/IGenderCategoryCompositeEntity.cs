@@ -12,12 +12,12 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Composite
         /// <summary>
         /// Идентификатор типа пола
         /// </summary>
-        GenderType GenderId { get; }
+        GenderType GenderType { get; }
 
         /// <summary>
         /// Идентификатор категории одежды
         /// </summary>
-        string CategoryId { get; }
+        string CategoryName { get; }
 
         /// <summary>
         /// Тип пола

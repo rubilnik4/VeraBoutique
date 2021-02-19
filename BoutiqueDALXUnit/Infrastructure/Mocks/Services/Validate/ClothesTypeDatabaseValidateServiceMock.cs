@@ -13,16 +13,14 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate
         /// Сервис проверки данных из базы категорий одежды
         /// </summary>
         public static IClothesTypeDatabaseValidateService GetClothesTypeDatabaseValidateService(IEnumerable<ClothesTypeEntity> clothesTypes) =>
-            GetClothesTypeDatabaseValidateService(clothesTypes, Enumerable.Empty<CategoryEntity>(), Enumerable.Empty<GenderEntity>());
+            GetClothesTypeDatabaseValidateService(clothesTypes, Enumerable.Empty<CategoryEntity>());
 
         /// <summary>
         /// Сервис проверки данных из базы категорий одежды
         /// </summary>
         public static IClothesTypeDatabaseValidateService GetClothesTypeDatabaseValidateService(IEnumerable<ClothesTypeEntity> clothesTypes,
-                                                                                                IEnumerable<CategoryEntity> categories,
-                                                                                                IEnumerable<GenderEntity> genders) =>
+                                                                                                IEnumerable<CategoryEntity> categories) =>
             new ClothesTypeDatabaseValidateService(ClothesTypeTableMock.GetClothesTypeTable(clothesTypes),
-                                                   CategoryDatabaseValidateServiceMock.GetCategoryDatabaseValidateService(categories),
-                                                   GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(genders));
+                                                   CategoryDatabaseValidateServiceMock.GetCategoryDatabaseValidateService(categories));
     }
 }

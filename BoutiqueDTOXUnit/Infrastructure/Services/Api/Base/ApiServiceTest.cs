@@ -28,14 +28,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Получение данных
         /// </summary>
         [Fact]
-        public async Task Get_Ok()
+        public void Get_Ok()
         {
             var testTransfers = TestTransferData.TestTransfers.ToList();
             var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.OK, testTransfers);
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.GetAsync();
+            var result = testApiService.Get();
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfers.SequenceEqual(result.Value));
@@ -45,14 +45,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Получение данных. Ошибка
         /// </summary>
         [Fact]
-        public async Task Get_Error()
+        public void Get_Error()
         {
             var testTransfers = TestTransferData.TestTransfers.ToList();
             var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.BadRequest, testTransfers);
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.GetAsync();
+            var result = testApiService.Get();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -62,14 +62,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Получение данных по идентификатору
         /// </summary>
         [Fact]
-        public async Task GetById_Ok()
+        public void GetById_Ok()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.OK, testTransfer);
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.GetAsync(testTransfer.Id);
+            var result = testApiService.Get(testTransfer.Id);
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfer.Equals(result.Value));
@@ -79,14 +79,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Получение данных по идентификатору. Ошибка
         /// </summary>
         [Fact]
-        public async Task GetById_Error()
+        public void GetById_Error()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.BadRequest, testTransfer);
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.GetAsync(testTransfer.Id);
+            var result = testApiService.Get(testTransfer.Id);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -96,7 +96,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Отправка данных
         /// </summary>
         [Fact]
-        public async Task Post_Ok()
+        public void Post_Ok()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -104,7 +104,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostAsync(testTransfer);
+            var result = testApiService.Post(testTransfer);
 
             Assert.True(result.OkStatus);
             Assert.True(testId.Equals(result.Value));
@@ -114,7 +114,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Отправка данных
         /// </summary>
         [Fact]
-        public async Task Post_Error()
+        public void Post_Error()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -122,7 +122,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostAsync(testTransfer);
+            var result = testApiService.Post(testTransfer);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -132,7 +132,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Отправка данных
         /// </summary>
         [Fact]
-        public async Task PostCollection_Ok()
+        public void PostCollection_Ok()
         {
             var testTransfers = TestTransferData.TestTransfers;
             var testIds = testTransfers.Select(transfer => transfer.Id).ToList();
@@ -140,7 +140,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostCollectionAsync(testTransfers);
+            var result = testApiService.PostCollection(testTransfers);
 
             Assert.True(result.OkStatus);
             Assert.True(testIds.SequenceEqual(result.Value));
@@ -150,7 +150,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Отправка данных
         /// </summary>
         [Fact]
-        public async Task PostCollection_Error()
+        public void PostCollection_Error()
         {
             var testTransfers = TestTransferData.TestTransfers;
             var testIds = testTransfers.Select(transfer => transfer.Id).ToList();
@@ -158,7 +158,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.PostCollectionAsync(testTransfers);
+            var result = testApiService.PostCollection(testTransfers);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -168,7 +168,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Обновление данных
         /// </summary>
         [Fact]
-        public async Task Put_Ok()
+        public void Put_Ok()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -176,7 +176,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Put(testTransfer);
+            var result = testApiService.Put(testTransfer);
 
             Assert.True(result.OkStatus);
         }
@@ -185,7 +185,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Обновление данных. Ошибка
         /// </summary>
         [Fact]
-        public async Task Put_Error()
+        public void Put_Error()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -193,7 +193,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.Put(testTransfer);
+            var result = testApiService.Put(testTransfer);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -203,7 +203,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Удаление данных
         /// </summary>
         [Fact]
-        public async Task Delete_Ok()
+        public void Delete_Ok()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -211,7 +211,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.DeleteAsync(testId);
+            var result = testApiService.Delete(testId);
 
             Assert.True(result.OkStatus);
             Assert.True(testTransfer.Equals(result.Value));
@@ -221,7 +221,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         /// Удаление данных. Ошибка
         /// </summary>
         [Fact]
-        public async Task Delete_Error()
+        public void Delete_Error()
         {
             var testTransfer = TestTransferData.TestTransfers.First();
             var testId = testTransfer.Id;
@@ -229,7 +229,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var restClient = RestClientMock.GetRestClient(restRequest);
             var testApiService = new TestApiService(restClient.Object);
 
-            var result = await testApiService.DeleteAsync(testId);
+            var result = testApiService.Delete(testId);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

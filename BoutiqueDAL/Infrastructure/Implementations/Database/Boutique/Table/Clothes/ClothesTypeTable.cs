@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     /// <summary>
     /// Таблица базы данных вида одежды
     /// </summary>
-    public class ClothesTypeTable : EntityDatabaseTable<string, IClothesTypeDomain, ClothesTypeEntity>, IClothesTypeTable
+    public class ClothesTypeTable : EntityDatabaseTable<string, IClothesTypeMainDomain, ClothesTypeEntity>, IClothesTypeTable
     {
         public ClothesTypeTable(DbSet<ClothesTypeEntity> clothesTypeSet)
          : base(clothesTypeSet)
@@ -52,8 +52,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Включение сущностей при загрузке полных данных
         /// </summary>
         protected override IQueryable<ClothesTypeEntity> EntitiesIncludes =>
-            _clothesTypeSet.Include(entity => entity.Category).
-                            Include(entity => entity.ClothesTypeGenderComposites).
-                            ThenInclude(composite => composite.Gender);
+            _clothesTypeSet.Include(entity => entity.Category);
     }
 }

@@ -35,7 +35,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
 
             Assert.True(clothesTypeDomain.Equals(clothesTypeEntity));
             Assert.Null(clothesTypeEntity.Category);
-            Assert.True(clothesTypeEntity.ClothesTypeGenderComposites?.All(composite => composite.Gender == null));
         }
 
         /// <summary>
@@ -60,8 +59,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         public void FromEntity_CategoryNotFound()
         {
             var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, null,
-                                                 clothesType.ClothesTypeGenderComposites, clothesType.Clothes);
+            var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, null, clothesType.Clothes);
             var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
 
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
@@ -70,22 +68,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
             Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
-        /// <summary>
-        /// Преобразования модели вида одежды в модель базы данных. Ошибка пола одежды
-        /// </summary>
-        [Fact]
-        public void FromEntity_GendersNotFound()
-        {
-            var clothesType = ClothesTypeEntitiesData.ClothesTypeEntities.First();
-            var clothesTypeNull = GetClothesType(clothesType, clothesType.CategoryName, clothesType.Category, 
-                                                 null, clothesType.Clothes);
-            var clothesTypeEntityConverter = ClothesTypeMainEntityConverter;
-
-            var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
-
-            Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
 
         /// <summary>
         /// Преобразования модели вида одежды в модель базы данных
@@ -98,8 +80,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         /// </summary>
         private static ClothesTypeEntity GetClothesType(IClothesTypeBase clothesType,
                                                         string categoryName, CategoryEntity? category, 
-                                                        IEnumerable<ClothesTypeGenderCompositeEntity>? clothesTypeGenderComposites, 
-                                                        IEnumerable<ClothesFullEntity>? clothes) =>
-            new (clothesType.Name, categoryName, category, clothesTypeGenderComposites, clothes);
+                                                        IEnumerable<ClothesEntity>? clothes) =>
+            new (clothesType.Name, categoryName, category, clothes);
     }
 }

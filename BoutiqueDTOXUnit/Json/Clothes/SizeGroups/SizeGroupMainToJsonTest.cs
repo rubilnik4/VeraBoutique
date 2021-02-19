@@ -10,7 +10,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes.SizeGroups
     /// <summary>
     /// Группа размеров одежды. Конвертация в Json
     /// </summary>
-    public class SizeGroupShortToJsonTest
+    public class SizeGroupMainToJsonTest
     {
         /// <summary>
         /// Преобразовать в Json
@@ -18,12 +18,12 @@ namespace BoutiqueDTOXUnit.Json.Clothes.SizeGroups
         [Fact]
         public void ToJson_Ok()
         {
-            var sizeGroupShortTransfer = SizeGroupTransfersData.SizeGroupTransfers.First();
+            var sizeGroupMainTransfer = SizeGroupTransfersData.SizeGroupMainTransfers.First();
 
-            string json = JsonConvert.SerializeObject(sizeGroupShortTransfer);
-            var sizeGroupShortAfterJson = JsonConvert.DeserializeObject<SizeGroupShortTransfer>(json);
+            string json = JsonConvert.SerializeObject(sizeGroupMainTransfer);
+            var sizeGroupAfterJson = JsonConvert.DeserializeObject<SizeGroupMainTransfer>(json);
 
-            Assert.True(sizeGroupShortAfterJson?.Equals(sizeGroupShortTransfer));
+            Assert.True(sizeGroupAfterJson?.Equals(sizeGroupMainTransfer));
         }
     }
 }

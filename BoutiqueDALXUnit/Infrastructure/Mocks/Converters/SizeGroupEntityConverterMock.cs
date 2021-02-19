@@ -14,6 +14,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Converters
         /// Преобразования модели группы размера одежды в модель базы данных
         /// </summary>
         public static ISizeGroupEntityConverter SizeGroupEntityConverter =>
-            new SizeGroupEntityConverter(SizeEntityConverterMock.SizeEntityConverter);
+            new SizeGroupEntityConverter();
+
+        /// <summary>
+        /// Преобразования модели группы размера одежды в модель базы данных
+        /// </summary>
+        public static ISizeGroupMainEntityConverter SizeGroupMainEntityConverter =>
+            new SizeGroupMainEntityConverter(SizeEntityConverterMock.SizeEntityConverter);
     }
 }

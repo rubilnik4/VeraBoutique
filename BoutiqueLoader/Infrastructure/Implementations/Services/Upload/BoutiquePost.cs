@@ -76,14 +76,14 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> SizeGroupUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetSizeGroupRestService(restClient).
-            MapAsync(service => ServiceDeleteAction(service, SizeGroupInitialize.SizeGroups, boutiqueLogger));
+            MapAsync(service => ServiceDeleteAction(service, SizeGroupInitialize.SizeGroupMains, boutiqueLogger));
 
         /// <summary>
         /// Загрузить одежду в базу
         /// </summary>
         private static async Task<IResultError> ClothesUpload(IRestClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesRestService(restClient).
-            MapAsync(service => ServiceDeleteAction(service, ClothesInitialize.Clothes, boutiqueLogger));
+            MapAsync(service => ServiceDeleteAction(service, ClothesInitialize.ClothesMains, boutiqueLogger));
 
         /// <summary>
         /// Логгирование загрузки

@@ -44,12 +44,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// Получить одежду без изображений
         /// </summary>
         [Fact]
-        public async Task GetClothesShort_Ok()
+        public async Task GetClothes_Ok()
         {
             var genderEntities = GenderEntitiesData.GenderEntities;
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
-            var clothesType = clothesTypeEntities.First().Name;
+            string clothesType = clothesTypeEntities.First().Name;
             var clothesInformationEntities = ClothesEntitiesData.ClothesEntities;
             var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities,
                                                                                             clothesInformationEntities);
@@ -86,25 +86,25 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.ClothesType
         /// Сервис проверки данных из базы пола одежды
         /// </summary>
         private static Mock<IGenderDatabaseValidateService> GenderDatabaseValidateService =>
-            new Mock<IGenderDatabaseValidateService>();
+            new ();
 
         /// <summary>
         /// Сервис проверки данных из базы пола одежды
         /// </summary>
         private static Mock<IClothesTypeDatabaseValidateService> ClothesTypeDatabaseValidateService =>
-            new Mock<IClothesTypeDatabaseValidateService>();
+            new();
 
         /// <summary>
         /// Сервис проверки данных из базы пола одежды
         /// </summary>
         private static Mock<IColorClothesDatabaseValidateService> ColorClothesDatabaseValidateService =>
-            new Mock<IColorClothesDatabaseValidateService>();
+            new();
 
         /// <summary>
         /// Сервис проверки данных из базы пола одежды
         /// </summary>
         private static Mock<ISizeGroupDatabaseValidateService> SizeGroupDatabaseValidateService =>
-            new Mock<ISizeGroupDatabaseValidateService>();
+            new();
 
         /// <summary>
         /// Сервис проверки данных из базы

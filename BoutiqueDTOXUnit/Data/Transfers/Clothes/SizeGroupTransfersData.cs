@@ -14,18 +14,18 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// <summary>
         /// Группа размеров. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<SizeGroupMainTransfer> SizeGroupTransfers =>
-            SizeGroupData.SizeGroupDomains.
-            Select(sizeGroup => new SizeGroupTransfer(sizeGroup,
-                                                      sizeGroup.Sizes.Select(size => new SizeTransfer(size)))).
+        public static IReadOnlyCollection<SizeGroupMainTransfer> SizeGroupMainTransfers =>
+            SizeGroupData.SizeGroupMainDomains.
+            Select(sizeGroupMain => new SizeGroupMainTransfer(sizeGroupMain,
+                                                              sizeGroupMain.Sizes.Select(size => new SizeTransfer(size)))).
             ToList();
 
         /// <summary>
         /// Группа размеров. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<SizeGroupShortTransfer> SizeGroupShortTransfers =>
-            SizeGroupData.SizeGroupShortDomains.
-            Select(sizeGroupShort => new SizeGroupShortTransfer(sizeGroupShort)).
+        public static IReadOnlyCollection<SizeGroupTransfer> SizeGroupTransfers =>
+            SizeGroupData.SizeGroupDomains.
+            Select(sizeGroup => new SizeGroupTransfer(sizeGroup)).
             ToList();
     }
 }

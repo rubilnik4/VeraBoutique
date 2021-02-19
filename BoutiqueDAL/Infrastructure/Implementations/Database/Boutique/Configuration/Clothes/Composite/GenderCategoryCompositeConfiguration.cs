@@ -7,20 +7,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
     /// <summary>
     /// Связующая сущность пола и вида одежды. Схема базы данных
     /// </summary>
-    public class ClothesTypeGenderCompositeConfiguration : IEntityTypeConfiguration<ClothesTypeGenderCompositeEntity>
+    public class GenderCategoryCompositeConfiguration : IEntityTypeConfiguration<GenderCategoryCompositeEntity>
     {
-        public void Configure(EntityTypeBuilder<ClothesTypeGenderCompositeEntity> builder)
+        public void Configure(EntityTypeBuilder<GenderCategoryCompositeEntity> builder)
         {
-            builder.HasKey(t => new { t.ClothesTypeName, t.GenderType });
+            builder.HasKey(t => new { GenderId = t.GenderType, CategoryId = t.CategoryName });
 
             builder.HasOne(t => t.Gender)
-                   .WithMany(s => s!.ClothesTypeGenderComposites)
+                   .WithMany(s => s!.GenderCategoryComposites)
                    .HasForeignKey(sc => sc.GenderType)
                    .IsRequired();
 
-            builder.HasOne(t => t.ClothesType)
-                   .WithMany(s => s!.ClothesTypeGenderComposites)
-                   .HasForeignKey(sc => sc.ClothesTypeName)
+            builder.HasOne(t => t.Category)
+                   .WithMany(s => s!.GenderCategoryComposites)
+                   .HasForeignKey(sc => sc.CategoryName)
                    .IsRequired();
         }
     }

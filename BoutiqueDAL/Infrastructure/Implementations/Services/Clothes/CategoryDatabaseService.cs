@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -22,12 +23,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис категорий одежды в базе данных
     /// </summary>
-    public class CategoryDatabaseService : DatabaseService<string, ICategoryDomain, CategoryEntity>, ICategoryDatabaseService
+    public class CategoryDatabaseService : DatabaseService<string, ICategoryMainDomain, CategoryEntity>, ICategoryDatabaseService
     {
         public CategoryDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                        ICategoryDatabaseValidateService categoryDatabaseValidateService,
-                                       ICategoryEntityConverter categoryEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.CategoryTable, categoryDatabaseValidateService, categoryEntityConverter)
+                                       ICategoryMainEntityConverter categoryMainEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.CategoryTable, categoryDatabaseValidateService, categoryMainEntityConverter)
         { }
     }
 }

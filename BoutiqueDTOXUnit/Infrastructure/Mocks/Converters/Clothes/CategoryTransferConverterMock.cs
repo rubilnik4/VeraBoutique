@@ -1,5 +1,6 @@
 ﻿using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
 {

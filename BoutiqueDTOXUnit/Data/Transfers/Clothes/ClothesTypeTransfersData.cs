@@ -16,19 +16,18 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// <summary>
         /// Типы одежды. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<ClothesTypeTransfer> ClothesTypeTransfers =>
+        public static IReadOnlyCollection<ClothesTypeMainTransfer> ClothesTypeMainTransfers =>
             ClothesTypeData.ClothesTypeMainDomains.
-            Select(clothesType => new ClothesTypeTransfer(clothesType,
-                                                          new CategoryTransfer(clothesType.Category),
-                                                          clothesType.Genders.Select(gender => new GenderTransfer(gender)))).
+            Select(clothesTypeMain => new ClothesTypeMainTransfer(clothesTypeMain,
+                                                                  new CategoryTransfer(clothesTypeMain.Category))).
             ToList();
 
         /// <summary>
         /// Типы одежды. Базовые данные. Трансферные модели
         /// </summary>
-        public static IReadOnlyCollection<ClothesTypeShortTransfer> ClothesTypeShortTransfers =>
+        public static IReadOnlyCollection<ClothesTypeTransfer> ClothesTypeTransfers =>
             ClothesTypeData.ClothesTypeDomains.
-            Select(clothesTypeShort => new ClothesTypeShortTransfer(clothesTypeShort)).
+            Select(clothesTypeShort => new ClothesTypeTransfer(clothesTypeShort)).
             ToList();
     }
 }

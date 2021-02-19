@@ -27,16 +27,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     /// <summary>
     /// Сервис проверки данных из базы типов одежды
     /// </summary>
-    public class ClothesTypeDatabaseValidateService : DatabaseValidateService<string, IClothesTypeDomain, ClothesTypeEntity>,
+    public class ClothesTypeDatabaseValidateService : DatabaseValidateService<string, IClothesTypeMainDomain, ClothesTypeEntity>,
                                                       IClothesTypeDatabaseValidateService
     {
         public ClothesTypeDatabaseValidateService(IClothesTypeTable clothesTypeTable,
-                                                  ICategoryDatabaseValidateService categoryDatabaseValidateService,
-                                                  IGenderDatabaseValidateService genderDatabaseValidateService)
+                                                  ICategoryDatabaseValidateService categoryDatabaseValidateService)
             : base(clothesTypeTable)
         {
             _categoryDatabaseValidateService = categoryDatabaseValidateService;
-            _genderDatabaseValidateService = genderDatabaseValidateService;
         }
 
         /// <summary>
@@ -45,39 +43,29 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private readonly ICategoryDatabaseValidateService _categoryDatabaseValidateService;
 
         /// <summary>
-        /// Сервис проверки данных из базы пола одежды
-        /// </summary>
-        private readonly IGenderDatabaseValidateService _genderDatabaseValidateService;
-
-        /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(IClothesTypeDomain clothesType) =>
+        protected override IResultError ValidateModel(IClothesTypeMainDomain clothesType) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateName(clothesType)).
-            ResultErrorBindOk(() => ValidateCategoryName(clothesType)).
-            ResultErrorBindOk(() => ValidateGenders(clothesType));
+            ResultErrorBindOk(() => ValidateCategoryName(clothesType));
+
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IClothesTypeDomain clothesType) =>
+        protected override async Task<IResultError> ValidateIncludes(IClothesTypeMainDomain clothesTypeMain) =>
             await new ResultError().
-            ResultErrorBindOkAsync(() => _categoryDatabaseValidateService.ValidateFind(clothesType.Category.Id)).
-            ResultErrorBindOkBindAsync(() => clothesType.Genders.Select(gender => gender.Id).
-                                             Map(ids => _genderDatabaseValidateService.ValidateFinds(ids)));
+            ResultErrorBindOkAsync(() => _categoryDatabaseValidateService.ValidateFind(clothesTypeMain.Category.Id));
 
         /// <summary>
         /// Проверить наличие вложенных моделей
         /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesTypeDomain> clothesTypes) =>
+        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesTypeMainDomain> clothesTypeMains) =>
             await new ResultError().
-            ResultErrorBindOkAsync(() => clothesTypes.Select(clothesType => clothesType.Category.Id).
-                                                      Distinct().
-                                         Map(ids => _categoryDatabaseValidateService.ValidateFinds(ids))).
-            ResultErrorBindOkBindAsync(() => clothesTypes.SelectMany(clothesType => clothesType.Genders.Select(gender => gender.Id)).
+            ResultErrorBindOkAsync(() => clothesTypeMains.Select(clothesType => clothesType.Category.Id).
                                                           Distinct().
-                                             Map(ids => _genderDatabaseValidateService.ValidateFinds(ids)));
+                                         Map(ids => _categoryDatabaseValidateService.ValidateFinds(ids)));
 
         /// <summary>
         /// Проверка имени
@@ -86,7 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             clothesType.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
                 _ => ModelsErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.Name), clothesType));
-        
+
         /// <summary>
         /// Проверка наименования категории 
         /// </summary>
@@ -94,11 +82,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             clothesType.CategoryName.ToResultValueWhere(
                 categoryName => !String.IsNullOrWhiteSpace(categoryName),
                 _ => ModelsErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.CategoryName), clothesType));
-
-        /// <summary>
-        /// Проверка размеров
-        /// </summary>
-        private IResultError ValidateGenders(IClothesTypeDomain clothesType) =>
-            _genderDatabaseValidateService.ValidateQuantity(clothesType.Genders);
     }
 }

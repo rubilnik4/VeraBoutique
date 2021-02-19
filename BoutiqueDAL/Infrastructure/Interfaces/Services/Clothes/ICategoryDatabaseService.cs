@@ -10,6 +10,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// <summary>
     /// Сервис категорий одежды в базе данных
     /// </summary>
-    public interface ICategoryDatabaseService : IDatabaseService<string, ICategoryDomain>
+    public interface ICategoryDatabaseService : IDatabaseService<string, ICategoryMainDomain>
     { }
 }

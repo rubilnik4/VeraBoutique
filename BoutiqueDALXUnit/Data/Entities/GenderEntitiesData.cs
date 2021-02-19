@@ -22,21 +22,10 @@ namespace BoutiqueDALXUnit.Data.Entities
             ToList();
 
         /// <summary>
-        /// Получить сущности типа пола c видом одежды
-        /// </summary>
-        public static IReadOnlyCollection<GenderEntity> GetGenderEntitiesWithClothesType(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                          IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
-            genderEntities.
-            Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                              ClothesTypeEntitiesData.GetClothesTypeGenderCompositeEntities(gender, clothesTypeEntities),
-                                              null)).
-            ToList();
-
-        /// <summary>
         /// Получить сущности типа пола c информацией об одежде
         /// </summary>
         public static IReadOnlyCollection<GenderEntity> GetGenderEntitiesWithClothes(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                                 IReadOnlyCollection<ClothesFullEntity> clothesInformationEntities) =>
+                                                                                 IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
             genderEntities.
             Select(gender => new GenderEntity(gender.GenderType, gender.Name,
                                               null,

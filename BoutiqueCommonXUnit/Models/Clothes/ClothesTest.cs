@@ -68,7 +68,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void Clothes_Equal_Clothes()
+        public void ClothesMain_Equal_ClothesMain()
         {
             var first = ClothesData.ClothesDomains.First();
             var second = ClothesData.ClothesDomains.First();
@@ -80,10 +80,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void ClothesShort_Equal_ClothesShort()
+        public void Clothes_Equal_Clothes()
         {
-            var first = ClothesData.ClothesShortDomains.First();
-            var second = ClothesData.ClothesShortDomains.First();
+            var first = ClothesData.ClothesDomains.First();
+            var second = ClothesData.ClothesDomains.First();
 
             Assert.True(first.Equals(second));
         }

@@ -15,25 +15,25 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static IReadOnlyCollection<IClothesMainDomain> ClothesDomains =>
+        public static IReadOnlyCollection<IClothesMainDomain> ClothesMainDomains =>
             new List<IClothesMainDomain>
             {
                 new ClothesMainDomain(1, "Верхонки", "Верхонки батраческие", 55.55m, Properties.Resources.TestImage,
                                   GenderData.GenderDomains.First(),
                                   ClothesTypeData.ClothesTypeDomains.First(),
                                   ColorData.ColorDomains,
-                                  SizeGroupData.SizeGroupDomains),
+                                  SizeGroupData.SizeGroupMainDomains),
                 new ClothesMainDomain(2, "Варежки", "Варежки простолюдинные", 0.66m, Properties.Resources.TestImage,
                                   GenderData.GenderDomains.Last(),
                                   ClothesTypeData.ClothesTypeDomains.Last(),
                                   ColorData.ColorDomains,
-                                  SizeGroupData.SizeGroupDomains),
+                                  SizeGroupData.SizeGroupMainDomains),
             };
 
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static IReadOnlyCollection<IClothesDomain> ClothesShortDomains =>
-            ClothesDomains;
+        public static IReadOnlyCollection<IClothesDomain> ClothesDomains =>
+            ClothesMainDomains;
     }
 }

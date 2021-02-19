@@ -5,6 +5,8 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using Functional.Models.Enums;
 using Moq;
 using Xunit;
@@ -17,7 +19,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
     public class CategoryDatabaseValidateServiceTest: CategoryDatabaseValidateService
     {
         public CategoryDatabaseValidateServiceTest()
-            :base(CategoryTable.Object)
+            :base(CategoryTable.Object, 
+                  GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(GenderEntitiesData.GenderEntities))
         { }
 
         /// <summary>
@@ -26,7 +29,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_Ok()
         {
-            var category = CategoryData.CategoryDomains.First();
+            var category = CategoryData.CategoryMainDomains.First();
 
             var result = ValidateModel(category);
 
@@ -39,7 +42,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_NameError()
         {
-            var categoryEmptyName = new CategoryDomain(String.Empty);
+            var category = CategoryData.CategoryMainDomains.First();
+            var categoryEmptyName = new CategoryMainDomain(String.Empty, category.Genders);
 
             var result = ValidateModel(categoryEmptyName);
 
@@ -51,6 +55,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных категорий одежды
         /// </summary>
         private static Mock<ICategoryTable> CategoryTable =>
-            new Mock<ICategoryTable>();
+            new();
     }
 }

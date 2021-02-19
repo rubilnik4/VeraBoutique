@@ -10,9 +10,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
         /// </summary>
         public static IClothesMainTransferConverter ClothesMainTransferConverter =>
             new ClothesMainTransferConverter(GenderTransferConverterMock.GenderTransferConverter,
-                                         ClothesTypeTransferConverterMock.ClothesTypeShortTransferConverter,
-                                         ColorClothesTransferConverterMock.ColorTransferConverter,
-                                         SizeGroupTransferConverterMock.SizeGroupTransferConverter);
+                                             ClothesTypeTransferConverterMock.ClothesTypeTransferConverter,
+                                             ColorClothesTransferConverterMock.ColorTransferConverter,
+                                             SizeGroupTransferConverterMock.SizeGroupMainTransferConverter);
 
         /// <summary>
         /// Конвертер одежды в трансферную модель

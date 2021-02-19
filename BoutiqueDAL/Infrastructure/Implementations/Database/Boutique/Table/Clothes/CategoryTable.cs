@@ -19,7 +19,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
     {
         public CategoryTable(DbSet<CategoryEntity> categorySet)
             : base(categorySet)
-        { }
+        {
+            _categorySet = categorySet;
+        }
+
+        /// <summary>
+        /// Экземпляр таблицы базы данных
+        /// </summary>
+        private readonly DbSet<CategoryEntity> _categorySet;
 
         /// <summary>
         /// Выгрузка идентификатора
@@ -38,5 +45,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// </summary>
         public override Expression<Func<CategoryEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
             entity => ids.Contains(entity.Name);
+
+        /// <summary>
+        /// Включение сущностей при загрузке полных данных
+        /// </summary>
+        protected override IQueryable<CategoryEntity> EntitiesIncludes =>
+            _categorySet.Include(entity => entity.GenderCategoryComposites).
+                         ThenInclude(composite => composite.Gender);
     }
 }

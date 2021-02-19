@@ -11,14 +11,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
         /// <summary>
         /// Конвертер полной информации вида одежды в трансферную модель
         /// </summary>
-        public static IClothesTypeMainTransferConverter ClothesTypeTransferConverter =>
-            new ClothesTypeTransferConverter(CategoryTransferConverterMock.CategoryTransferConverter,
-                                             GenderTransferConverterMock.GenderTransferConverter);
+        public static IClothesTypeMainTransferConverter ClothesTypeMainTransferConverter =>
+            new ClothesTypeMainTransferConverter(CategoryTransferConverterMock.CategoryTransferConverter);
 
         /// <summary>
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
-        public static IClothesTypeTransferConverter ClothesTypeShortTransferConverter =>
-            new ClothesTypeShortTransferConverter();
+        public static IClothesTypeTransferConverter ClothesTypeTransferConverter =>
+            new ClothesTypeTransferConverter();
     }
 }

@@ -11,13 +11,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
         /// <summary>
         /// Конвертер группы размеров одежды в трансферную модель
         /// </summary>
-        public static ISizeGroupTransferConverter SizeGroupTransferConverter =>
-            new SizeGroupTransferConverter(SizeTransferConverterMock.SizeTransferConverter);
+        public static ISizeGroupMainTransferConverter SizeGroupMainTransferConverter =>
+            new SizeGroupMainTransferConverter(SizeTransferConverterMock.SizeTransferConverter);
 
         /// <summary>
         /// Конвертер базовых данных группы размеров одежды в трансферную модель
         /// </summary>
-        public static ISizeGroupShortTransferConverter SizeGroupTransferConverter =>
-            new SizeGroupShortTransferConverter();
+        public static ISizeGroupTransferConverter SizeGroupTransferConverter =>
+            new SizeGroupTransferConverter();
     }
 }

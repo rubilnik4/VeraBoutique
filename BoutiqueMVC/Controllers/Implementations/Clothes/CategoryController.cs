@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueMVC.Controllers.Implementations.Base;
@@ -19,11 +20,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     /// <summary>
     /// Контроллер для получения и записи категорий одежды
     /// </summary>
-    public class CategoryController : ApiController<string, ICategoryDomain, CategoryTransfer>
+    public class CategoryController : ApiController<string, ICategoryMainDomain, CategoryMainTransfer>
     {
         public CategoryController(ICategoryDatabaseService categoryDatabaseService,
-                                  ICategoryTransferConverter categoryTransferConverter)
-            : base(categoryDatabaseService, categoryTransferConverter)
+                                  ICategoryMainTransferConverter categoryMainTransferConverter)
+            : base(categoryDatabaseService, categoryMainTransferConverter)
         { }
     }
 }

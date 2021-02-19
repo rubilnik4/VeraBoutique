@@ -31,13 +31,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис группы размеров одежды в базе данных
     /// </summary>
-    public class SizeGroupDatabaseService : DatabaseService<int, ISizeGroupDomain, SizeGroupEntity>,
+    public class SizeGroupDatabaseService : DatabaseService<int, ISizeGroupMainDomain, SizeGroupEntity>,
                                             ISizeGroupDatabaseService
     {
         public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                         ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService,
-                                        ISizeGroupEntityConverter sizeGroupEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupEntityConverter)
+                                        ISizeGroupMainEntityConverter sizeGroupMainEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupMainEntityConverter)
         { }
     }
 }

@@ -18,7 +18,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes.Clothes
         [Fact]
         public void ToJson_Ok()
         {
-            var clothesShortTransfer = ClothesTransfersData.ClothesShortTransfers.First();
+            var clothesShortTransfer = ClothesTransfersData.ClothesTransfers.First();
 
             string json = JsonConvert.SerializeObject(clothesShortTransfer);
             var clothesShortAfterJson = JsonConvert.DeserializeObject<ClothesTransfer>(json);

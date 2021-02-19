@@ -79,8 +79,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         private static IResultCollection<SizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
-            Select(sizeGroup => sizeGroup.Size.
-                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(sizeGroup.Size)))).
+            Select(composite => composite.Size.
+                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(composite.Size)))).
             ToResultCollection();
     }
 }

@@ -18,12 +18,12 @@ namespace BoutiqueDTOXUnit.Json.Clothes.SizeGroups
         [Fact]
         public void ToJson_Ok()
         {
-            var sizeGroupTransfer = SizeGroupTransfersData.SizeGroupTransfers.First();
+            var sizeGroupShortTransfer = SizeGroupTransfersData.SizeGroupTransfers.First();
 
-            string json = JsonConvert.SerializeObject(sizeGroupTransfer);
-            var sizeGroupAfterJson = JsonConvert.DeserializeObject<SizeGroupMainTransfer>(json);
+            string json = JsonConvert.SerializeObject(sizeGroupShortTransfer);
+            var sizeGroupShortAfterJson = JsonConvert.DeserializeObject<SizeGroupTransfer>(json);
 
-            Assert.True(sizeGroupAfterJson?.Equals(sizeGroupTransfer));
+            Assert.True(sizeGroupShortAfterJson?.Equals(sizeGroupShortTransfer));
         }
     }
 }

@@ -18,6 +18,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             :this(id, name, description, price, image, genderType, clothesTypeName, null, null, null, null)
         { }
 
+        public ClothesEntity(IClothesBase clothes)
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
+                   clothes.GenderType, clothes.ClothesTypeName, null, null, null, null)
+        { }
+
         public ClothesEntity(IClothesBase clothes,
                              GenderType genderType, string clothesTypeName,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,

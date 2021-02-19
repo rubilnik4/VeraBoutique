@@ -12,8 +12,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Converters
         /// Преобразования модели вида одежды в модель базы данных
         /// </summary>
         public static IClothesTypeMainEntityConverter ClothesTypeMainEntityConverter =>
-            new ClothesTypeMainEntityConverter(CategoryEntityConverterMock.CategoryEntityConverter,
-                                           GenderEntityConverterMock.GenderEntityConverter);
+            new ClothesTypeMainEntityConverter(CategoryEntityConverterMock.CategoryEntityConverter);
 
         /// <summary>
         /// Преобразования модели основных данных вида одежды в модель базы данных

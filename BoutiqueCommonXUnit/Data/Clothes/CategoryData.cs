@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -14,11 +15,17 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить категории одежды
         /// </summary>
-        public static IReadOnlyCollection<ICategoryDomain> CategoryDomains =>
-            new List<ICategoryDomain>
+        public static IReadOnlyCollection<ICategoryMainDomain> CategoryMainDomains =>
+            new List<ICategoryMainDomain>
             {
-                new CategoryDomain("Верхняя одежда"),
-                new CategoryDomain("Побрякушки"),
+                new CategoryMainDomain("Верхняя одежда", GenderData.GenderDomains),
+                new CategoryMainDomain("Побрякушки", GenderData.GenderDomains),
             };
+
+        /// <summary>
+        /// Получить категории одежды
+        /// </summary>
+        public static IReadOnlyCollection<ICategoryDomain> CategoryDomains =>
+            CategoryMainDomains;
     }
 }

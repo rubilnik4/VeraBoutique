@@ -66,8 +66,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// <summary>
         /// Сущность базы данных
         /// </summary>
-        private static Mock<DbSet<ClothesFullEntity>> DbSet =>
-            new Mock<DbSet<ClothesFullEntity>>();
+        private static Mock<DbSet<ClothesEntity>> DbSet =>
+            new ();
 
         /// <summary>
         /// Таблица базы данных одежды

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -32,8 +33,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
     {
         public ClothesTypeDatabaseValidateServiceTest()
             : base(ClothesTypeTable.Object,
-                   CategoryDatabaseValidateServiceMock.GetCategoryDatabaseValidateService(CategoryEntitiesData.CategoryEntities),
-                   GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(GenderEntitiesData.GenderEntities))
+                   CategoryDatabaseValidateServiceMock.GetCategoryDatabaseValidateService(CategoryEntitiesData.CategoryEntities))
         { }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public void ValidateModel_NameError()
         {
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeEmptyName = new ClothesTypeDomain(String.Empty, clothesType.Category, clothesType.Genders);
+            var clothesTypeEmptyName = new ClothesTypeMainDomain(String.Empty, clothesType.Category);
 
             var result = ValidateModel(clothesTypeEmptyName);
 
@@ -71,8 +71,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public void ValidateModel_GendersError()
         {
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeEmptyGenders = new ClothesTypeDomain(clothesType, clothesType.Category,
-                                                                Enumerable.Empty<IGenderDomain>());
+            var clothesTypeEmptyGenders = new ClothesTypeMainDomain(clothesType, clothesType.Category);
 
             var result = ValidateModel(clothesTypeEmptyGenders);
 
@@ -101,23 +100,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         {
             var category = new CategoryDomain("NotFound");
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeNotFound = new ClothesTypeDomain(clothesType, category, clothesType.Genders);
-
-            var result = await ValidateIncludes(clothesTypeNotFound);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Проверить вложенные модели. Типы пола не найдены
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludes_GendersNotFound()
-        {
-            var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Female, "NotFound"));
-            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeNotFound = new ClothesTypeDomain(clothesType, clothesType.Category, genders);
+            var clothesTypeNotFound = new ClothesTypeMainDomain(clothesType, category);
 
             var result = await ValidateIncludes(clothesTypeNotFound);
 
@@ -140,23 +123,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         }
 
         /// <summary>
-        /// Проверить вложенные модели. Типы пола не найдены
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludesCollection_GendersNotFound()
-        {
-            var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Child, "NotFound"));
-            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypesNotFound = ClothesTypeData.ClothesTypeMainDomains.
-                                       Append(new ClothesTypeDomain(clothesType, clothesType.Category, genders));
-
-            var result = await ValidateIncludes(clothesTypesNotFound);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
         /// Проверить вложенные модели. Категории не найдены
         /// </summary>
         [Fact]
@@ -165,7 +131,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var category = new CategoryDomain("NotFound");
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
             var clothesTypesNotFound = ClothesTypeData.ClothesTypeMainDomains.
-                                       Append(new ClothesTypeDomain(clothesType, category, clothesType.Genders));
+                                       Append(new ClothesTypeMainDomain(clothesType, category));
 
             var result = await ValidateIncludes(clothesTypesNotFound);
 
