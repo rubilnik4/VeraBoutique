@@ -28,8 +28,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesTransferConverter clothesTransferConverter,
-                                 IClothesMainTransferConverter clothesMainTransferConverter)
-           : base(clothesDatabaseService, clothesMainTransferConverter)
+                                 IClothesMainTransferConverter clothesTransferConverter)
+           : base(clothesDatabaseService, clothesTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
             _clothesTransferConverter = clothesTransferConverter;

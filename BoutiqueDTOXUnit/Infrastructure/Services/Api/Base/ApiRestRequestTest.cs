@@ -29,6 +29,32 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         }
 
         /// <summary>
+        /// Запрос получения
+        /// </summary>
+        [Fact]
+        public void GetJsonRequest_AdditionalRoute()
+        {
+            const string additionalRoute = "additionalRoute";
+            var request = ApiRestRequest.GetJsonRequest(ControllerName, additionalRoute);
+
+            Assert.Equal(Method.GET, request.Method);
+            Assert.True($"api/{additionalRoute}/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Запрос получения
+        /// </summary>
+        [Fact]
+        public void GetJsonRequest_AdditionalRoute_Empty()
+        {
+            string additionalRoute = String.Empty;
+            var request = ApiRestRequest.GetJsonRequest(ControllerName, additionalRoute);
+
+            Assert.Equal(Method.GET, request.Method);
+            Assert.True($"api/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
         /// Запрос получения по идентификатору
         /// </summary>
         [Fact]

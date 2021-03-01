@@ -13,5 +13,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
     /// Сервис типа пола одежды в базе данных
     /// </summary>
     public interface IGenderDatabaseService : IDatabaseService<GenderType, IGenderDomain>
-    { }
+    {
+        /// <summary>
+        /// Получить типы пола одежды с категорией
+        /// </summary>
+        Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories();
+    }
 }

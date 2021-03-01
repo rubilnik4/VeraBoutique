@@ -27,8 +27,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     public class ClothesTypeController : ApiController<string, IClothesTypeMainDomain, ClothesTypeMainTransfer>
     {
         public ClothesTypeController(IClothesTypeDatabaseService clothesTypeDatabaseService,
-                                     IClothesTypeMainTransferConverter clothesTypeMainTransferConverter)
-            : base(clothesTypeDatabaseService, clothesTypeMainTransferConverter)
+                                     IClothesTypeMainTransferConverter clothesTypeTransferConverter)
+            : base(clothesTypeDatabaseService, clothesTypeTransferConverter)
         { }
     }
 }

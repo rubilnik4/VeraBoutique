@@ -23,8 +23,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     public class CategoryController : ApiController<string, ICategoryMainDomain, CategoryMainTransfer>
     {
         public CategoryController(ICategoryDatabaseService categoryDatabaseService,
-                                  ICategoryMainTransferConverter categoryMainTransferConverter)
-            : base(categoryDatabaseService, categoryMainTransferConverter)
+                                  ICategoryMainTransferConverter categoryTransferConverter)
+            : base(categoryDatabaseService, categoryTransferConverter)
         { }
     }
 }

@@ -23,6 +23,16 @@ namespace BoutiqueCommonXUnit.Data.Clothes
             };
 
         /// <summary>
+        /// Получить категории одежды c типом одежды
+        /// </summary>
+        public static IReadOnlyCollection<ICategoryClothesTypeDomain> CategoryClothesTypeDomains =>
+            new List<ICategoryClothesTypeDomain>
+            {
+                new CategoryClothesTypeDomain("Верхняя одежда", ClothesTypeData.ClothesTypeDomains),
+                new CategoryClothesTypeDomain("Побрякушки", ClothesTypeData.ClothesTypeDomains),
+            };
+
+        /// <summary>
         /// Получить категории одежды
         /// </summary>
         public static IReadOnlyCollection<ICategoryDomain> CategoryDomains =>

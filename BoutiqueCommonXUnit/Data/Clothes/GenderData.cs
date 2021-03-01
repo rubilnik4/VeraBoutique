@@ -21,5 +21,15 @@ namespace BoutiqueCommonXUnit.Data.Clothes
                 new GenderDomain(GenderType.Male, "Мужик" ),
                 new GenderDomain(GenderType.Female, "Тетя"),
             };
+
+        /// <summary>
+        /// Получить типы пола с категорией
+        /// </summary>
+        public static IReadOnlyCollection<IGenderCategoryDomain> GenderCategoryDomains =>
+            new List<IGenderCategoryDomain>()
+            {
+                new GenderCategoryDomain(GenderType.Male, "Мужик" , CategoryData.CategoryClothesTypeDomains),
+                new GenderCategoryDomain(GenderType.Female, "Тетя", CategoryData.CategoryClothesTypeDomains),
+            };
     }
 }

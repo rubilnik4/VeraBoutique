@@ -25,8 +25,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     public class SizeGroupController : ApiController<int, ISizeGroupMainDomain, SizeGroupMainTransfer>
     {
         public SizeGroupController(ISizeGroupDatabaseService sizeGroupDatabaseService,
-                                   ISizeGroupMainTransferConverter sizeGroupMainTransferConverter)
-            : base(sizeGroupDatabaseService, sizeGroupMainTransferConverter)
+                                   ISizeGroupMainTransferConverter sizeGroupTransferConverter)
+            : base(sizeGroupDatabaseService, sizeGroupTransferConverter)
         { }
     }
 }

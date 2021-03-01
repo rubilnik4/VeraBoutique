@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Extensions\Json\Async\" />
     <Folder Include="Factory\RestSharp\" />
+    <Folder Include="Routes\Clothes\" />
   </ItemGroup>
 
 </Project>

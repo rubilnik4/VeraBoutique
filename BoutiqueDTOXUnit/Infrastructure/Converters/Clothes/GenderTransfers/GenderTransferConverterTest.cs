@@ -1,18 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommonXUnit.Data;
+﻿using System.Linq;
 using BoutiqueCommonXUnit.Data.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTOXUnit.Data;
-using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
+namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.GenderTransfers
 {
     /// <summary>
     /// Конвертер типа пола в трансферную модель. Тесты

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Sync;
 using RestSharp;
 using RestSharp.Serialization.Json;
 
@@ -36,7 +38,17 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         /// Запрос на получение данных
         /// </summary>
         public static IRestRequest GetJsonRequest(string controllerName) =>
-            new RestRequest(GetApiRoute(controllerName), Method.GET);
+           GetJsonRequest(controllerName, String.Empty);
+
+        /// <summary>
+        /// Запрос на получение данных
+        /// </summary>
+        public static IRestRequest GetJsonRequest(string controllerName, string additionalRoute) =>
+            additionalRoute.
+            WhereContinue(route => !String.IsNullOrWhiteSpace(route),
+                route => $"/{route}",
+                _ => String.Empty).
+            Map(route => new RestRequest(GetApiRoute(controllerName) + route, Method.GET));
 
         /// <summary>
         /// Запрос на получение данных по идентификатору

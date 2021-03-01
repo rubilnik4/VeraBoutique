@@ -34,21 +34,21 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
     /// <summary>
     /// Базовый сервис для данных Api. Тесты
     /// </summary>
-    public class RestServiceBaseTest
+    public class RestServiceBaseAsyncTest
     {
         /// <summary>
         /// Получение данных
         /// </summary>
         [Fact]
-        public void Get_Ok()
+        public async Task Get_Ok()
         {
             var tests = TestTransferData.TestTransfers;
-            var resultTest = new ResultCollection<TestTransfer>(tests);
-            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGet(resultTest);
+            var resultIds = new ResultCollection<TestTransfer>(tests);
+            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGet(resultIds);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServiceGet.Object, testTransferConverter);
 
-            var result = testRestService.Get();
+            var result = await testRestService.GetAsync();
 
             Assert.True(result.OkStatus);
             Assert.True(TestData.TestDomains.SequenceEqual(result.Value));
@@ -58,15 +58,15 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Получение данных
         /// </summary>
         [Fact]
-        public void Get_Error()
+        public async Task Get_Error()
         {
             var error = ErrorTransferData.ErrorBadRequest;
-            var resultTest = new ResultCollection<TestTransfer>(error);
-            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGet(resultTest);
+            var resultIds = new ResultCollection<TestTransfer>(error);
+            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGet(resultIds);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServiceGet.Object, testTransferConverter);
 
-            var result = testRestService.Get();
+            var result = await testRestService.GetAsync();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -76,7 +76,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Загрузка данных
         /// </summary>
         [Fact]
-        public void Upload_Ok()
+        public async Task Upload_Ok()
         {
             var tests = TestData.TestDomains;
             var testsIds = tests.Select(test => test.Id);
@@ -85,7 +85,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = testRestService.Post(tests);
+            var result = await testRestService.PostAsync(tests);
 
             Assert.True(result.OkStatus);
         }
@@ -94,7 +94,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Загрузка данных. Ошибка
         /// </summary>
         [Fact]
-        public void Upload_Error()
+        public async Task Upload_Error()
         {
             var tests = TestData.TestDomains;
             var error = ErrorTransferData.ErrorBadRequest;
@@ -103,7 +103,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = testRestService.Post(tests);
+            var result = await testRestService.PostAsync(tests);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -113,14 +113,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Удаление данных
         /// </summary>
         [Fact]
-        public void Delete_Ok()
+        public async Task Delete_Ok()
         {
             var resultDelete = new ResultError();
             var testApiServicePost = TestApiServiceMock.GetTestApiServiceDelete(resultDelete);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = testRestService.Delete();
+            var result = await testRestService.DeleteAsync();
 
             Assert.True(result.OkStatus);
         }
@@ -129,7 +129,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Удаление данных. Ошибка
         /// </summary>
         [Fact]
-        public void Delete_Error()
+        public async Task Delete_Error()
         {
             var error = ErrorTransferData.ErrorBadRequest;
             var resultDelete = new ResultError(error);
@@ -137,7 +137,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(testApiServicePost.Object, testTransferConverter);
 
-            var result = testRestService.Delete();
+            var result = await testRestService.DeleteAsync();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

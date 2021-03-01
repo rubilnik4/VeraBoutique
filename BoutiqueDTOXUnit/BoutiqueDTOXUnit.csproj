@@ -36,7 +36,7 @@
     <Folder Include="Factory\RestSharp\" />
     <Folder Include="Infrastructure\Configuration\" />
     <Folder Include="Infrastructure\Mocks\Converters\Configuration\" />
-    <Folder Include="Infrastructure\Services\RestServices\Base\" />
+    <Folder Include="Infrastructure\Services\Api\Clothes\" />
     <Folder Include="Json\Clothes\Clothes\" />
   </ItemGroup>
 

@@ -14,8 +14,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     public class SizeGroupRestService : RestServiceBase<int, ISizeGroupMainDomain, SizeGroupMainTransfer>, ISizeGroupRestService
     {
         public SizeGroupRestService(ISizeGroupApiService sizeGroupApiService,
-                                    ISizeGroupMainTransferConverter sizeGroupMainTransferConverter)
-            : base(sizeGroupApiService, sizeGroupMainTransferConverter)
+                                    ISizeGroupMainTransferConverter sizeGroupTransferConverter)
+            : base(sizeGroupApiService, sizeGroupTransferConverter)
         { }
     }
 }

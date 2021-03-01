@@ -10,7 +10,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
     /// <summary>
     /// Конвертер вида одежды в трансферную модель. Тесты
     /// </summary>
-    public class ClothesTypeShortTransferConverterTest
+    public class ClothesTypeTransferConverterTest
     {
         /// <summary>
         /// Преобразования модели вида одежды в трансферную модель
