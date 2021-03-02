@@ -67,7 +67,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить полные модели из базы
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
-            await _dataTable.ToListAsync().
+            await _dataTable.ToListMainAsync().
             ResultCollectionBindOkTaskAsync(entities => _mainEntityConverter.FromEntities(entities));
 
         /// <summary>

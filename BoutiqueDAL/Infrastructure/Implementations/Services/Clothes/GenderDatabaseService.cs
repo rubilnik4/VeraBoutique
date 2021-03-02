@@ -9,6 +9,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
@@ -18,7 +19,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.Models.Interfaces.Result;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
 {
@@ -30,8 +33,31 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public GenderDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                      IGenderDatabaseValidateService genderDatabaseValidateService,
-                                     IGenderEntityConverter genderEntityConverter)
+                                     IGenderEntityConverter genderEntityConverter,
+                                     IGenderCategoryEntityConverter genderCategoryEntityConverter)
             : base(boutiqueDatabase, boutiqueDatabase.GendersTable, genderDatabaseValidateService, genderEntityConverter)
-        { }
+        {
+            _boutiqueDatabase = boutiqueDatabase;
+            _genderCategoryEntityConverter = genderCategoryEntityConverter;
+        }
+
+        /// <summary>
+        /// База данных магазина
+        /// </summary>
+        private readonly IBoutiqueDatabase _boutiqueDatabase;
+
+        /// <summary>
+        /// Преобразования модели типа пола с категорией в модель базы данных
+        /// </summary>
+        private readonly IGenderCategoryEntityConverter _genderCategoryEntityConverter;
+
+        /// <summary>
+        /// Получить типы пола одежды с категорией
+        /// </summary>
+        public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories() =>
+            await _boutiqueDatabase.GendersTable.
+            FindsExpressionAsync(genders => genders.Include(gender => gender.GenderCategoryComposites).
+                                                    ThenInclude(composite => composite.Category)).
+            ResultCollectionBindOkTaskAsync(entities => _genderCategoryEntityConverter.FromEntities(entities));
     }
 }

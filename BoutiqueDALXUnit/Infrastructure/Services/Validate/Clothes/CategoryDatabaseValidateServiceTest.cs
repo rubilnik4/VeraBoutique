@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
@@ -16,10 +20,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
     /// <summary>
     /// Сервис проверки данных из базы категорий одежды
     /// </summary>
-    public class CategoryDatabaseValidateServiceTest: CategoryDatabaseValidateService
+    public class CategoryDatabaseValidateServiceTest : CategoryDatabaseValidateService
     {
         public CategoryDatabaseValidateServiceTest()
-            :base(CategoryTable.Object, 
+            : base(CategoryTable.Object,
                   GenderDatabaseValidateServiceMock.GetGenderDatabaseValidateService(GenderEntitiesData.GenderEntities))
         { }
 
@@ -49,6 +53,35 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+        }
+
+        /// <summary>
+        /// Проверить вложенные модели 
+        /// </summary>
+        [Fact]
+        public async Task ValidateIncludes_Ok()
+        {
+            var category = CategoryData.CategoryMainDomains.First();
+
+            var result = await ValidateIncludes(category);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Проверить вложенные модели. Типы пола не найдены
+        /// </summary>
+        [Fact]
+        public async Task ValidateIncludes_GendersNotFound()
+        {
+            var genders = GenderData.GenderDomains.Append(new GenderDomain(GenderType.Child, "NotFound"));
+            var category = CategoryData.CategoryMainDomains.First();
+            var categoryNotFound = new CategoryMainDomain(category, genders);
+
+            var result = await ValidateIncludes(categoryNotFound);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>

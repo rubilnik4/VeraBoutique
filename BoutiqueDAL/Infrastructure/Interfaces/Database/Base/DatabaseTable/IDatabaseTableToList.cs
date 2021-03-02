@@ -17,11 +17,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
-        Task<IResultCollection<TEntity>> ToListShortAsync();
+        Task<IResultCollection<TEntity>> ToListAsync();
 
         /// <summary>
         /// Вернуть полные записи из таблицы асинхронно
         /// </summary>
-        Task<IResultCollection<TEntity>> ToListAsync();
+        Task<IResultCollection<TEntity>> ToListMainAsync();
     }
 }

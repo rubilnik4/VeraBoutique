@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
+namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEntities
 {
     /// <summary>
     /// Преобразования модели типа пола в модель базы данных

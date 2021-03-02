@@ -15,7 +15,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Converters
         /// <summary>
         /// Конвертер модели цвета одежды в модель базы данных
         /// </summary>d
-        public static IClothesEntityConverter ClothesEntityConverter =>
+        public static IClothesMainEntityConverter ClothesMainEntityConverter =>
             new ClothesMainEntityConverter(GenderEntityConverterMock.GenderEntityConverter,
                                        ClothesTypeEntityConverterMock.ClothesTypeEntityConverter,
                                        ColorClothesEntityConverterMock.ColorClothesEntityConverter,
@@ -24,7 +24,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Converters
         /// <summary>
         /// Преобразования модели одежды в модель базы данных
         /// </summary>
-        public static IClothesShortEntityConverter ClothesShortEntityConverter =>
+        public static IClothesEntityConverter ClothesEntityConverter =>
             new ClothesEntityConverter();
     }
 }

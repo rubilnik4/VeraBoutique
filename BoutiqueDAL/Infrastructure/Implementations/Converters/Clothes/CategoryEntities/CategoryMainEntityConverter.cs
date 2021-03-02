@@ -13,6 +13,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Functional.FunctionalExtensions.Sync;
@@ -46,8 +47,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
             GetCategoryFunc(categoryEntity).
             ResultValueCurryOk(GenderDomainsFromComposite(categoryEntity.GenderCategoryComposites)).
             ResultValueOk(func => func.Invoke());
-        //new CategoryMainDomain(categoryEntity, ).
-        //Map(category => new ResultValue<ICategoryMainDomain>(category));
 
         /// <summary>
         /// Преобразовать категорию одежды в модель базы данных
@@ -73,10 +72,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
             ResultCollectionBindOk(genderEntities => _genderEntityConverter.FromEntities(genderEntities));
 
         /// <summary>
-        /// Получить сущности категории одежды
+        /// Получить сущности типа пола одежды
         /// </summary>
-        private static IResultCollection<GenderEntity> GetGenders(IEnumerable<GenderCategoryCompositeEntity> genderCategoryCompositeEntity) =>
-            genderCategoryCompositeEntity.
+        private static IResultCollection<GenderEntity> GetGenders(IEnumerable<GenderCategoryCompositeEntity> genderCategoryCompositeEntities) =>
+            genderCategoryCompositeEntities.
             Select(composite => composite.Gender.
                                 ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(composite.Gender)))).
             ToResultCollection();

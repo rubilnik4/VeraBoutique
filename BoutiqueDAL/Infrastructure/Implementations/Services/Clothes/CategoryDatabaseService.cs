@@ -27,8 +27,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public CategoryDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                        ICategoryDatabaseValidateService categoryDatabaseValidateService,
-                                       ICategoryMainEntityConverter categoryMainEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.CategoryTable, categoryDatabaseValidateService, categoryMainEntityConverter)
+                                       ICategoryMainEntityConverter categoryEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.CategoryTable, categoryDatabaseValidateService, categoryEntityConverter)
         { }
     }
 }

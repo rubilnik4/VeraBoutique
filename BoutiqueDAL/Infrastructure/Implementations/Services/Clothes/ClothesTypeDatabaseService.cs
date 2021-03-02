@@ -39,8 +39,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public ClothesTypeDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                           IClothesTypeDatabaseValidateService clothesTypeDatabaseValidateService,
-                                          IClothesTypeMainEntityConverter clothesTypeMainEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.ClotheTypeTable, clothesTypeDatabaseValidateService, clothesTypeMainEntityConverter)
+                                          IClothesTypeMainEntityConverter clothesTypeEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.ClotheTypeTable, clothesTypeDatabaseValidateService, clothesTypeEntityConverter)
         { }
     }
 }

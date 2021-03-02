@@ -52,6 +52,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных типа пола
         /// </summary>
         private static Mock<IGenderTable> GenderTable =>
-            new Mock<IGenderTable>();
+            new();
     }
 }

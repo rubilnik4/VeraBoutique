@@ -36,8 +36,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public SizeGroupDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                         ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService,
-                                        ISizeGroupMainEntityConverter sizeGroupMainEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupMainEntityConverter)
+                                        ISizeGroupMainEntityConverter sizeGroupEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.SizeGroupTable, sizeGroupDatabaseValidateService, sizeGroupEntityConverter)
         { }
     }
 }

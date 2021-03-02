@@ -38,8 +38,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
                                                         genderCategoryTransferConverter);
 
             var result = genderRestService.GetGenderCategories();
+            var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
 
             Assert.True(result.OkStatus);
+            Assert.True(result.Value.SequenceEqual(genderDomains));
         }
 
         /// <summary>
@@ -77,8 +79,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
                                                         genderCategoryTransferConverter);
 
             var result =await genderRestService.GetGenderCategoriesAsync();
+            var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
 
             Assert.True(result.OkStatus);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -32,8 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
     /// <summary>
     /// Преобразования модели информации об одежде в модель базы данных
     /// </summary>
-    public class ClothesMainEntityConverter : EntityConverter<int, IClothesMainDomain, ClothesEntity>,
-                                          IClothesEntityConverter
+    public class ClothesMainEntityConverter : EntityConverter<int, IClothesMainDomain, ClothesEntity>, IClothesMainEntityConverter
     {
         public ClothesMainEntityConverter(IGenderEntityConverter genderEntityConverter,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter,
@@ -72,7 +72,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         public override IResultValue<IClothesMainDomain> FromEntity(ClothesEntity clothesEntity) =>
             GetClothesFunc(clothesEntity).
             ResultValueCurryOk(GetGender(clothesEntity.Gender)).
-            ResultValueCurryOk(GetClothesTypeShort(clothesEntity.ClothesType)).
+            ResultValueCurryOk(GetClothesType(clothesEntity.ClothesType)).
             ResultValueCurryOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites)).
             ResultValueCurryOk(SizeGroupFromComposite(clothesEntity.ClothesSizeGroupComposites)).
             ResultValueOk(func => func.Invoke());
@@ -138,7 +138,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Преобразовать тип одежды в доменную модель
         /// </summary>
-        private IResultValue<IClothesTypeDomain> GetClothesTypeShort(ClothesTypeEntity? clothesTypeEntity) =>
+        private IResultValue<IClothesTypeDomain> GetClothesType(ClothesTypeEntity? clothesTypeEntity) =>
             clothesTypeEntity.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesTypeEntity))).
             ResultValueBindOk(clothesType => _clothesTypeEntityConverter.FromEntity(clothesType));

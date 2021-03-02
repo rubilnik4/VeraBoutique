@@ -37,14 +37,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     {
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                       IClothesDatabaseValidateService clothesDatabaseValidateService,
-                                      IClothesShortEntityConverter clothesShortEntityConverter,
-                                      IClothesEntityConverter clothesEntityConverter)
-          : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesDatabaseValidateService, clothesEntityConverter)
+                                      IClothesEntityConverter clothesEntityConverter,
+                                      IClothesMainEntityConverter clothesMainEntityConverter)
+          : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesDatabaseValidateService, clothesMainEntityConverter)
         {
             _clothesTable = boutiqueDatabase.ClothesTable;
             _genderTable = boutiqueDatabase.GendersTable;
             _clothesTypeTable = boutiqueDatabase.ClotheTypeTable;
-            _clothesShortEntityConverter = clothesShortEntityConverter;
+            _clothesEntityConverter = clothesEntityConverter;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Преобразования модели одежды в модель базы данных
         /// </summary>
-        private readonly IClothesShortEntityConverter _clothesShortEntityConverter;
+        private readonly IClothesEntityConverter _clothesEntityConverter;
 
         /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
@@ -73,7 +73,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
             await ResultCollectionTryAsync(() => GetByGenderAndClothesType(genderType, clothesType),
                                            DatabaseErrors.TableAccessError(nameof(_clothesTable))).
-            ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesShortEntityConverter.FromEntities(clothesShortDomains));
+            ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesEntityConverter.FromEntities(clothesShortDomains));
 
         /// <summary>
         /// Получить одежду без изображений
