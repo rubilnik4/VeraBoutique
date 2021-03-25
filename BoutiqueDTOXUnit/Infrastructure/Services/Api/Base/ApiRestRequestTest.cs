@@ -38,7 +38,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var request = ApiRestRequest.GetJsonRequest(ControllerName, additionalRoute);
 
             Assert.Equal(Method.GET, request.Method);
-            Assert.True($"api/{additionalRoute}/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test/{additionalRoute}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>

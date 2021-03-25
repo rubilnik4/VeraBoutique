@@ -13,6 +13,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
@@ -80,8 +81,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             await new ResultError().
             ResultErrorBindOkAsync(() => _genderDatabaseValidateService.ValidateFind(clothesMain.Gender.Id)).
             ResultErrorBindOkBindAsync(() => _clothesTypeDatabaseValidateService.ValidateFind(clothesMain.ClothesType.Id)).
-            ResultErrorBindOkBindAsync(() => _colorClothesDatabaseValidateService.ValidateFinds(clothesMain.Colors.Select(color => color.Id))).
-            ResultErrorBindOkBindAsync(() => _sizeGroupDatabaseValidateService.ValidateFinds(clothesMain.SizeGroups.Select(sizeGroup => sizeGroup.Id)));
+            ResultErrorBindOkBindAsync(() => clothesMain.Colors.Select(color => color.Id).Distinct().
+                                             MapAsync(ids => _colorClothesDatabaseValidateService.ValidateFinds(ids))).
+            ResultErrorBindOkBindAsync(() => clothesMain.SizeGroups.Select(sizeGroup => sizeGroup.Id).Distinct().
+                                             MapAsync(ids => _sizeGroupDatabaseValidateService.ValidateFinds(ids)));
 
         /// <summary>
         /// Проверить наличие вложенных моделей

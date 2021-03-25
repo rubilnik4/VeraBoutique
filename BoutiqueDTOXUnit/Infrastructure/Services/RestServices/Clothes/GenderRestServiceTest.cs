@@ -34,14 +34,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var genderApiServiceGet = GenderApiServiceMock.GetGenderApiServiceGet(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
-            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter, 
+            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
                                                         genderCategoryTransferConverter);
 
             var result = genderRestService.GetGenderCategories();
             var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
 
             Assert.True(result.OkStatus);
-            Assert.True(result.Value.SequenceEqual(genderDomains));
+            Assert.True(result.Value.SequenceEqual(genderDomains.Value));
         }
 
         /// <summary>
@@ -78,11 +78,11 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
                                                         genderCategoryTransferConverter);
 
-            var result =await genderRestService.GetGenderCategoriesAsync();
+            var result = await genderRestService.GetGenderCategoriesAsync();
             var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
 
             Assert.True(result.OkStatus);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.True(result.Value.SequenceEqual(genderDomains.Value));
         }
 
         /// <summary>

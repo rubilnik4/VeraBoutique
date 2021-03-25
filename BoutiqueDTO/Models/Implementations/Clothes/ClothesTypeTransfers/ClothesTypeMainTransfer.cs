@@ -2,6 +2,7 @@
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTypeTransfers;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
 {
@@ -14,6 +15,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers
          : base(clothesType.Name, category)
         { }
 
+        [JsonConstructor]
         public ClothesTypeMainTransfer(string name, CategoryTransfer category)
           : base(name, category)
         { }

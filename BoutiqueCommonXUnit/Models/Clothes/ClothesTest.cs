@@ -80,6 +80,20 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
+        public void ClothesMain_Equal_Color()
+        {
+            var first = ClothesData.ClothesDomains.First();
+            var second =new ClothesMainDomain(first, GenderData.GenderCategoryDomains.First(), 
+                                              ClothesTypeData.ClothesTypeMainDomains.First(),
+                                              ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);
+
+            Assert.True(first.Equals(second));
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
         public void Clothes_Equal_Clothes()
         {
             var first = ClothesData.ClothesDomains.First();

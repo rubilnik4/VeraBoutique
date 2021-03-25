@@ -64,12 +64,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// </summary>
         public static int GetIdHashCode(SizeType sizeType, string name) =>
             HashCode.Combine(sizeType, name);
-
-        /// <summary>
-        /// Получить хэш-код коллекции размеров одежды
-        /// </summary>
-        public static double GetSizesHashCodes<TSize>(IEnumerable<TSize> sizes)
-            where TSize: ISizeBase=>
-            sizes.Average(size => size.GetHashCode());
     }
 }

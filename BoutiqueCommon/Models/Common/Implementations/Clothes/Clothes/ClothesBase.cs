@@ -13,7 +13,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
     public abstract class ClothesBase : IClothesBase
     {
         protected ClothesBase(int id, string name, string description, decimal price, byte[] image, 
-                                   GenderType genderType, string clothesTypeName)
+                              GenderType genderType, string clothesTypeName)
         {
             Id = id;
             Name = name;

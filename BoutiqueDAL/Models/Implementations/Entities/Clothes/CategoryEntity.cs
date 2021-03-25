@@ -28,6 +28,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
           : this(name, genderCategoryComposites, null)
         { }
 
+        public CategoryEntity(string name, IEnumerable<ClothesTypeEntity>? clothesTypes)
+         : this(name, null, clothesTypes)
+        { }
+
         public CategoryEntity(string name, IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites,
                               IEnumerable<ClothesTypeEntity>? clothesTypes)
             : base(name)

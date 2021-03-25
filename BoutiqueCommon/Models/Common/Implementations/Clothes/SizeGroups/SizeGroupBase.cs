@@ -17,7 +17,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
     {
         protected SizeGroupBase(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
-            Id = GetIdHashCode(ClothesSizeType, SizeNormalize);
+            Id = GetIdHashCode(clothesSizeType, sizeNormalize);
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
         }
@@ -63,12 +63,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
         /// </summary>
         public static int GetIdHashCode(ClothesSizeType clothesSizeType, int sizeNormalize) =>
             HashCode.Combine(clothesSizeType, sizeNormalize);
-
-        /// <summary>
-        /// Получить хэш-код группы размеров одежды
-        /// </summary>
-        public static double GetSizeGroupHashCodes<TSizeGroup>(IEnumerable<TSizeGroup> sizeGroups)
-            where TSizeGroup : ISizeGroupBase =>
-            sizeGroups.Average(sizeGroup => sizeGroup.GetHashCode());
     }
 }

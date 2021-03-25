@@ -40,12 +40,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Genders
 
         public override int GetHashCode() => HashCode.Combine(GenderType);
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код коллекции пола одежды
-        /// </summary>
-        public static double GetGendersHashCodes<TGender>(IEnumerable<TGender> genders)
-            where TGender: IGenderBase =>
-            genders.Average(gender => gender.GetHashCode());
     }
 }

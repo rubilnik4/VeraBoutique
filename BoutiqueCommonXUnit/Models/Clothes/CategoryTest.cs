@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommonXUnit.Data.Clothes;
 using Xunit;
 
@@ -62,6 +63,32 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var second = CategoryData.CategoryMainDomains.First();
 
             Assert.True(first.Equals(second));
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void CategoryMain_Equal_GenderCategory()
+        {
+            var first = CategoryData.CategoryMainDomains.First();
+            var second = new CategoryMainDomain(first, GenderData.GenderCategoryDomains);
+
+            Assert.True(first.Equals(second));
+            Assert.True(second.Equals(first));
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void CategoryMain_Equal_ClothesTypeMain()
+        {
+            var first = CategoryData.CategoryClothesTypeDomains.First();
+            var second = new CategoryClothesTypeDomain(first, ClothesTypeData.ClothesTypeMainDomains);
+
+            Assert.True(first.Equals(second));
+            Assert.True(second.Equals(first));
         }
 
         /// <summary>

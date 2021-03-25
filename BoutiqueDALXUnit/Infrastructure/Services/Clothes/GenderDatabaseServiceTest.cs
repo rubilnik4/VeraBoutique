@@ -1,9 +1,15 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
+using Functional.FunctionalExtensions.Sync;
+using Moq;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
@@ -19,31 +25,43 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         [Fact]
         public async Task GetGenderCategories_Ok()
         {
-            //var genderEntities = GenderEntitiesData.GenderEntities;
-            //var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
-            //var genderType = genderEntities.First().GenderType;
-            //string clothesType = clothesTypeEntities.First().Name;
-            //var clothesInformationEntities = ClothesEntitiesData.ClothesEntities;
-            //var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities,
-            //                                                                                clothesInformationEntities);
-            //var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
-            //                                                                                               clothesInformationEntities);
-            //var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
-            //var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
-            //var clothesTable = ClothesTableMock.GetClothesTable(clothesInformationEntities);
-            var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
+            var genderCategoryEntities = GenderEntitiesData.GenderCategoryEntities;
+            var categoryEntities = CategoryEntitiesData.CategoryEntities;
+            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var categoryWithGenders = CategoryEntitiesData.GetCategoryEntitiesWithGenders(categoryEntities, genderCategoryEntities);
+            var clothesTypeWithCategory = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithCategory(clothesTypeEntities, categoryEntities.First());
+            var genderTable = GenderTableMock.GetGenderTable(genderCategoryEntities);
+            var categoryTable = CategoryTableMock.GetCategoryTable(categoryWithGenders);
+            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithCategory);
+            var database = GetDatabase(genderTable, categoryTable, clothesTypeTable);
             var genderEntityConverter = GenderEntityConverterMock.GenderEntityConverter;
             var genderCategoryEntityConverter = GenderEntityConverterMock.GenderCategoryEntityConverter;
             var genderDatabaseService = new GenderDatabaseService(database.Object,
-                                                                  GetDatabaseValidationService(clothesTable),
+                                                                  GetDatabaseValidationService(genderTable),
                                                                   genderEntityConverter,
                                                                   genderCategoryEntityConverter);
 
-            var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
-            var clothesDomains = clothesEntityConverter.FromEntities(clothesInformationEntities);
+            var genderResults = await genderDatabaseService.GetGenderCategories();
+            var gendersDomains = genderCategoryEntityConverter.FromEntities(genderCategoryEntities);
 
-            Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value));
+            Assert.True(genderResults.OkStatus);
+            Assert.True(genderResults.Value.SequenceEqual(gendersDomains.Value));
         }
+
+        /// <summary>
+        /// База данных
+        /// </summary>
+        private static Mock<IBoutiqueDatabase> GetDatabase(IGenderTable genderTable, ICategoryTable categoryTable,
+                                                           IClothesTypeTable clothesTypeTable) =>
+            new Mock<IBoutiqueDatabase>().
+            Void(mock => mock.Setup(database => database.GendersTable).Returns(genderTable)).
+            Void(mock => mock.Setup(database => database.CategoryTable).Returns(categoryTable)).
+            Void(mock => mock.Setup(database => database.ClotheTypeTable).Returns(clothesTypeTable));
+
+        /// <summary>
+        /// Сервис проверки данных из базы
+        /// </summary>
+        private static IGenderDatabaseValidateService GetDatabaseValidationService(IGenderTable genderTable) =>
+            new GenderDatabaseValidateService(genderTable);
     }
 }

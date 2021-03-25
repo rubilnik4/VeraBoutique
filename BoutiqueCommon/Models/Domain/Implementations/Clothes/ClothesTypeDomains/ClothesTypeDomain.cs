@@ -16,7 +16,5 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomain
         public ClothesTypeDomain(string name, string categoryName)
             : base(name, categoryName)
         { }
-
-
     }
 }

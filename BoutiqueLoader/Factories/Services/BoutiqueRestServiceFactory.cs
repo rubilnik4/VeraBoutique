@@ -17,6 +17,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueLoader.Factories.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
 using RestSharp;
@@ -52,7 +53,10 @@ namespace BoutiqueLoader.Factories.Services
         /// Получить сервис типа пола
         /// </summary>
         public static IGenderRestService GetGenderRestService(IRestClient restClient) =>
-             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter());
+             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter(),
+                                   new ClothesTypeTransferConverter().
+                                   Map(clothesTypeConverter => new CategoryClothesTypeTransferConverter(clothesTypeConverter)).
+                                   Map(categoryConverter => new GenderCategoryTransferConverter(categoryConverter)));
 
         /// <summary>
         /// Получить сервис категорий одежды
@@ -70,7 +74,7 @@ namespace BoutiqueLoader.Factories.Services
         /// Получить сервис типа одежды
         /// </summary>
         public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient) =>
-             new ClothesTypeRestService(new ClothesTypeApiService(restClient), 
+             new ClothesTypeRestService(new ClothesTypeApiService(restClient),
                                         new ClothesTypeMainTransferConverter(new CategoryTransferConverter()));
 
         /// <summary>

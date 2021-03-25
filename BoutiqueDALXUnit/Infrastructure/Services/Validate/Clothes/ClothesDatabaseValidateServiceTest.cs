@@ -199,7 +199,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_SizeGroupsNotFound()
         {
-            var sizeGroups = SizeGroupData.SizeGroupMainDomains.Append(new SizeGroupMainDomain(ClothesSizeType.Dress,0, Enumerable.Empty<ISizeDomain>()));
+            var sizeGroups = SizeGroupData.SizeGroupMainDomains.Append(new SizeGroupMainDomain(ClothesSizeType.Dress, 0, Enumerable.Empty<ISizeDomain>()));
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesNotFound = new ClothesMainDomain(clothes, clothes.Gender, clothes.ClothesType, clothes.Colors, sizeGroups);
 
@@ -215,8 +215,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_Ok()
         {
-            var clothes = ClothesData.ClothesMainDomains.
-                          OrderByDescending(clothesDomain => clothesDomain.ClothesType.CategoryName);
+            var clothes = ClothesData.ClothesMainDomains.OrderByDescending(clothesDomain => clothesDomain.ClothesType.CategoryName);
 
             var result = await ValidateIncludes(clothes);
 
@@ -295,6 +294,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных одежды
         /// </summary>
         private static Mock<IClothesTable> ClothesTable =>
-            new ();
+            new();
     }
 }

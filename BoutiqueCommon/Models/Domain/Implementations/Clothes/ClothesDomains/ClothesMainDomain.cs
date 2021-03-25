@@ -14,7 +14,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
 {
     public class ClothesMainDomain : ClothesMainBase<IGenderDomain, IClothesTypeDomain, IColorDomain, ISizeGroupMainDomain, ISizeDomain>, 
-                                 IClothesMainDomain
+                                     IClothesMainDomain
     {
         public ClothesMainDomain(IClothesBase clothes,
                                  IGenderDomain gender, IClothesTypeDomain clothesType,

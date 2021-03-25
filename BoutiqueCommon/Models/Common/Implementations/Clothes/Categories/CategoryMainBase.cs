@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using BoutiqueCommon.Extensions.HashCodeExtensions;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.Genders;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
@@ -30,13 +31,15 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
         public IReadOnlyCollection<TGender> Genders { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ICategoryMainBase<TGender> category && Equals(category);
+        public override bool Equals(object? obj) => 
+            obj is ICategoryMainBase<TGender> category && Equals(category);
 
         public bool Equals(ICategoryMainBase<TGender>? other) =>
             other?.Id == Id &&
-             other?.Genders.SequenceEqual(Genders) == true;
+            other?.Genders.Cast<IGenderBase>().SequenceEqual(Genders.Cast<IGenderBase>()) == true;
 
-        public override int GetHashCode() => HashCode.Combine(Name, GenderBase.GetGendersHashCodes(Genders));
+        public override int GetHashCode() =>
+            HashCode.Combine(Name, Genders.GetHashCodes());
         #endregion
     }
 }

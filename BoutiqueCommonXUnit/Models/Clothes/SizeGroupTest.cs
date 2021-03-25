@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BoutiqueCommon.Extensions.HashCodeExtensions;
 using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Infrastructure.Implementation.Clothes;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
@@ -46,7 +47,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
 
             var sizeGroupMainDomain = new SizeGroupMainDomain(clothesSizeType, sizeNormalize, sizes);
 
-            int sizeGroupHash = HashCode.Combine(clothesSizeType, sizeNormalize, SizeBase.GetSizesHashCodes(sizes));
+            int sizeGroupHash = HashCode.Combine(clothesSizeType, sizeNormalize, sizes.GetHashCodes());
             Assert.Equal(sizeGroupHash, sizeGroupMainDomain.GetHashCode());
         }
 

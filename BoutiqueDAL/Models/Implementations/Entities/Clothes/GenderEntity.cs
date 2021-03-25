@@ -25,6 +25,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
             : this(genderType, name, null, null)
         { }
 
+        public GenderEntity(IGenderBase gender, 
+                            IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites)
+           : this(gender.GenderType, gender.Name, genderCategoryComposites, null)
+        { }
+
         public GenderEntity(GenderType genderType, string name,
                             IEnumerable<GenderCategoryCompositeEntity>? genderCategoryComposites,
                             IEnumerable<ClothesEntity>? clothes)

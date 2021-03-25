@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
@@ -53,6 +54,21 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+        }
+
+
+        /// <summary>
+        /// Проверить модель. Ошибка размеров
+        /// </summary>
+        [Fact]
+        public void ValidateModel_GendersError()
+        {
+            var category = CategoryData.CategoryMainDomains.First();
+            var categoryEmptyGenders = new CategoryMainDomain(category, Enumerable.Empty<IGenderDomain>());
+
+            var result = ValidateModel(categoryEmptyGenders);
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
         }
 
         /// <summary>

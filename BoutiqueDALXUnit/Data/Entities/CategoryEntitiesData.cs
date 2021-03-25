@@ -9,6 +9,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using Xunit.Sdk;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {
@@ -26,10 +27,31 @@ namespace BoutiqueDALXUnit.Data.Entities
                          ToList();
 
         /// <summary>
+        /// Получить категории одежды с типом пола
+        /// </summary>
+        public static IEnumerable<CategoryEntity> GetCategoryEntitiesWithGenders(IEnumerable<CategoryEntity> categories,
+                                                                                 IEnumerable<GenderEntity> genders) =>
+            categories.
+            Select(category => new CategoryEntity(category.Name,
+                                                  genders.Select(gender => new GenderCategoryCompositeEntity(gender.GenderType, category.Name,
+                                                                                                             gender, category))));
+
+        /// <summary>
+        /// Получить категории одежды с типом одежды
+        /// </summary>
+        public static IEnumerable<CategoryEntity> GetCategoryEntitiesWithClothesTypes(IEnumerable<CategoryEntity> categories,
+                                                                                      IEnumerable<ClothesTypeEntity> clothesTypes) =>
+            categories.
+            Select(category =>
+                new CategoryEntity(category.Name, clothesTypes));
+
+        /// <summary>
         /// Получить сущность группы размеров
         /// </summary>
         public static CategoryEntity GetCategoryEntity(ICategoryMainDomain category) =>
              new(category, GetCategoryComposite(category.Name, category.Genders));
+
+     
 
         /// <summary>
         /// Получить связующую сущность группы размеров
@@ -38,12 +60,17 @@ namespace BoutiqueDALXUnit.Data.Entities
             genders.Select(gender => new GenderCategoryCompositeEntity(gender.GenderType, categoryName, new GenderEntity(gender), null));
 
         /// <summary>
-        /// Получить сущности категорий c видом одежды
+        /// Получить связующую сущность группы размеров
         /// </summary>
-        public static IReadOnlyCollection<CategoryEntity> GetCategoryClothesTypeEntities(IReadOnlyCollection<CategoryEntity> categoryEntities,
-                                                                                         IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities) =>
-            categoryEntities.
-            Select(category => new CategoryEntity(category.Name, category.GenderCategoryComposites, clothesTypeEntities)).
-            ToList();
+        public static IEnumerable<GenderCategoryCompositeEntity> GetCategoryComposite(GenderType genderType,
+                                                                                      IEnumerable<ICategoryClothesTypeDomain> categories) =>
+            categories.Select(category => new GenderCategoryCompositeEntity(genderType, category.Name, null,
+                                                                            GetCategoryClothesTypeEntity(category)));
+        /// <summary>
+        /// Получить категорию с типом одежды
+        /// </summary>
+        public static CategoryEntity GetCategoryClothesTypeEntity(ICategoryClothesTypeDomain category) =>
+            new(category.Name, null,
+                category.ClothesTypes.Select(clothesType => new ClothesTypeEntity(clothesType)));
     }
 }

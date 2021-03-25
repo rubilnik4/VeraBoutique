@@ -27,9 +27,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     public class ClothesController : ApiController<int, IClothesMainDomain, ClothesMainTransfer>
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
-                                 IClothesTransferConverter clothesTransferConverter,
-                                 IClothesMainTransferConverter clothesTransferConverter)
-           : base(clothesDatabaseService, clothesTransferConverter)
+                                 IClothesMainTransferConverter clothesMainTransferConverter,
+                                 IClothesTransferConverter clothesTransferConverter)
+           : base(clothesDatabaseService, clothesMainTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
             _clothesTransferConverter = clothesTransferConverter;

@@ -33,20 +33,15 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
         public string CategoryName { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesTypeBase clothesType && Equals(clothesType);
+        public override bool Equals(object? obj) => 
+            obj is IClothesTypeBase clothesType && Equals(clothesType);
 
         public bool Equals(IClothesTypeBase? other) =>
             other?.Id == Id &&
             other?.CategoryName.Equals(CategoryName) == true;
 
-        public override int GetHashCode() => HashCode.Combine(Name, CategoryName);
+        public override int GetHashCode() => 
+            HashCode.Combine(Name, CategoryName);
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код коллекции пола одежды
-        /// </summary>
-        public static double GetClothesTypeHashCodes<TClothesType>(IEnumerable<TClothesType> clothesTypes)
-            where TClothesType : IClothesTypeBase =>
-            clothesTypes.Average(clothesType => clothesType.GetHashCode());
     }
 }

@@ -24,4 +24,5 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services.Clothes
                               Returns(genders)).
             Void(mock => mock.Setup(service => service.GetGenderCategoriesAsync()).
                               ReturnsAsync(genders));
+    }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoutiqueCommon.Extensions.HashCodeExtensions;
 using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Infrastructure.Implementation.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
@@ -35,20 +36,15 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
             SizeNaming.GetGroupName(sizeType, Sizes);
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is ISizeGroupMainBase<TSize> sizeGroup && Equals(sizeGroup);
+        public override bool Equals(object? obj) =>
+            obj is ISizeGroupMainBase<TSize> sizeGroup && Equals(sizeGroup);
 
         public bool Equals(ISizeGroupMainBase<TSize>? other) =>
             base.Equals(other) &&
             other?.Sizes.SequenceEqual(Sizes) == true;
 
-        public override int GetHashCode() => HashCode.Combine(ClothesSizeType, SizeNormalize, SizeBase.GetSizesHashCodes(Sizes));
+        public override int GetHashCode() =>
+            HashCode.Combine(ClothesSizeType, SizeNormalize, Sizes.GetHashCodes());
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код группы размеров одежды
-        /// </summary>
-        public static double GetSizeGroupFullHashCodes<TSizeGroup>(IEnumerable<TSizeGroup> sizeGroups)
-            where TSizeGroup : ISizeGroupMainBase<TSize> =>
-            sizeGroups.Average(sizeGroup => sizeGroup.GetHashCode());
     }
 }

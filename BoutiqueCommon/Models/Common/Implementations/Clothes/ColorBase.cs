@@ -34,12 +34,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 
         public override int GetHashCode() => HashCode.Combine(Id);
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код коллекции цветов одежды
-        /// </summary>
-        public static double GetColorClothesHashCodes<TColor>(IEnumerable<TColor> colors)
-            where TColor : IColorBase =>
-            colors.Average(color => color.GetHashCode());
     }
 }

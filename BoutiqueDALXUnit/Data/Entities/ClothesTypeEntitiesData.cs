@@ -26,11 +26,20 @@ namespace BoutiqueDALXUnit.Data.Entities
         /// <summary>
         /// Получить сущности типа одежды c информацией об одежде
         /// </summary>
-        public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithClothes(IReadOnlyCollection<ClothesTypeEntity> clothesTypeEntities,
-                                                                                IReadOnlyCollection<ClothesEntity> clothesEntities) =>
+        public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithClothes(IEnumerable<ClothesTypeEntity> clothesTypeEntities,
+                                                                                               IEnumerable<ClothesEntity> clothesEntities) =>
             clothesTypeEntities.
             Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName,
                                                         clothesType.Category, clothesEntities)).
+            ToList();
+
+        /// <summary>
+        /// Получить сущности типа одежды c типом одежды
+        /// </summary>
+        public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithCategory(IEnumerable<ClothesTypeEntity> clothesTypeEntities,
+                                                                                                CategoryEntity categoryEntity) =>
+            clothesTypeEntities.
+            Select(clothesType => new ClothesTypeEntity(clothesType.Name,  categoryEntity)).
             ToList();
     }
 }

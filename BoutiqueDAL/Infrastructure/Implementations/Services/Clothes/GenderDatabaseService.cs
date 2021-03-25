@@ -57,7 +57,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories() =>
             await _boutiqueDatabase.GendersTable.
             FindsExpressionAsync(genders => genders.Include(gender => gender.GenderCategoryComposites).
-                                                    ThenInclude(composite => composite.Category)).
+                                                    ThenInclude(composite => composite.Category).
+                                                    ThenInclude(category => category!.ClothesTypes)).
             ResultCollectionBindOkTaskAsync(entities => _genderCategoryEntityConverter.FromEntities(entities));
     }
 }

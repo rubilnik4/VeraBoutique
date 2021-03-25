@@ -17,6 +17,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         public static Mock<IRestClient> GetRestClient<TValue>(IRestResponse<TValue> restResponse)
             where TValue : notnull =>
             new Mock<IRestClient>().
+            Void(mock => mock.Setup(client => client.Execute<TValue>(It.IsAny<IRestRequest>())).
+                              Returns(restResponse)).
+            Void(mock => mock.Setup(client => client.Execute(It.IsAny<IRestRequest>())).
+                              Returns(restResponse)).
             Void(mock => mock.Setup(client => client.ExecuteAsync<TValue>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).
                               ReturnsAsync(restResponse)).
             Void(mock => mock.Setup(client => client.ExecuteAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).

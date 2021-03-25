@@ -33,18 +33,6 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void Gender_Equal_Gender()
-        {
-            var first = GenderData.GenderDomains.First();
-            var second = GenderData.GenderDomains.First();
-
-            Assert.True(first.Equals(second));
-        }
-
-        /// <summary>
-        /// Проверка идентичности
-        /// </summary>
-        [Fact]
         public void GenderCategory_Equal_Ok()
         {
             const GenderType genderType = GenderType.Male;
@@ -61,10 +49,22 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void GenderCategory_Equal_GenderCategory()
+        public void Gender_Equal_Gender()
         {
             var first = GenderData.GenderDomains.First();
             var second = GenderData.GenderDomains.First();
+
+            Assert.True(first.Equals(second));
+        }
+
+        /// <summary>
+        /// Проверка идентичности
+        /// </summary>
+        [Fact]
+        public void GenderCategory_Equal_GenderCategory()
+        {
+            var first = GenderData.GenderCategoryDomains.First();
+            var second = GenderData.GenderCategoryDomains.First();
 
             Assert.True(first.Equals(second));
         }

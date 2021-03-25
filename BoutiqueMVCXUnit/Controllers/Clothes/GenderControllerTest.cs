@@ -27,7 +27,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Получить тип пола одежды с категорией. Корректный вариант
         /// </summary>
         [Fact]
-        public async Task GetClothes_Ok()
+        public async Task GetGenderCategories_Ok()
         {
             var genderDomains = GenderData.GenderCategoryDomains;
             var gendersResult = new ResultCollection<IGenderCategoryDomain>(genderDomains);
@@ -47,7 +47,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Получить тип пола одежды с категорией. Ошибка
         /// </summary>
         [Fact]
-        public async Task GetClothes_ErrorDatabase()
+        public async Task GetGenderCategoris_ErrorDatabase()
         {
             var initialError = ErrorData.DatabaseError;
             var gendersResult = new ResultCollection<IGenderCategoryDomain>(initialError);

@@ -66,7 +66,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEn
             genderCategoryCompositeEntity.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(genderCategoryCompositeEntity))).
             ResultValueBindOkToCollection(GetCategories).
-            ResultCollectionBindOk(genderEntities => _categoryClothesTypeEntityConverter.FromEntities(genderEntities));
+            ResultCollectionBindOk(categoryEntities => _categoryClothesTypeEntityConverter.FromEntities(categoryEntities));
 
         /// <summary>
         /// Получить сущности категории одежды

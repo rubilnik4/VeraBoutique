@@ -33,21 +33,5 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTypeTransfer
             Assert.True(clothesTypeAfterConverter.OkStatus);
             Assert.True(clothesType.Equals(clothesTypeAfterConverter.Value));
         }
-
-        /// <summary>
-        /// Преобразования модели вида одежды в трансферную модель. Ошибка категории
-        /// </summary>
-        [Fact]
-        public void ClothesType_ToTransfer_GendersCollectionNull()
-        {
-            var clothesType = ClothesTypeTransfersData.ClothesTypeMainTransfers.First();
-            var clothesTypeNull = new ClothesTypeMainTransfer(clothesType, clothesType.Category);
-            var clothesTypeTransferConverter = ClothesTypeTransferConverterMock.ClothesTypeMainTransferConverter;
-
-            var clothesTypeAfterConverter = clothesTypeTransferConverter.FromTransfer(clothesTypeNull);
-
-            Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
     }
 }

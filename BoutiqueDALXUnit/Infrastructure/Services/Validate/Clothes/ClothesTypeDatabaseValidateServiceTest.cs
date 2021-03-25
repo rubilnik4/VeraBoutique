@@ -65,21 +65,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         }
 
         /// <summary>
-        /// Проверить модель. Ошибка размеров
-        /// </summary>
-        [Fact]
-        public void ValidateModel_GendersError()
-        {
-            var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeEmptyGenders = new ClothesTypeMainDomain(clothesType, clothesType.Category);
-
-            var result = ValidateModel(clothesTypeEmptyGenders);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
-        }
-
-        /// <summary>
         /// Проверить вложенные модели 
         /// </summary>
         [Fact]

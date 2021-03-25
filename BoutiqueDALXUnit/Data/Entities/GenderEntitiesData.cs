@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
@@ -22,14 +24,25 @@ namespace BoutiqueDALXUnit.Data.Entities
             ToList();
 
         /// <summary>
+        /// Сущности типа пола с категорией
+        /// </summary>
+        public static IReadOnlyCollection<GenderEntity> GenderCategoryEntities =>
+            GenderData.GenderCategoryDomains.
+            Select(genderCategoryDomain => 
+                new GenderEntity(genderCategoryDomain,
+                                 CategoryEntitiesData.GetCategoryComposite(genderCategoryDomain.GenderType, genderCategoryDomain.Categories))).
+            ToList();
+
+        /// <summary>
         /// Получить сущности типа пола c информацией об одежде
         /// </summary>
         public static IReadOnlyCollection<GenderEntity> GetGenderEntitiesWithClothes(IReadOnlyCollection<GenderEntity> genderEntities,
-                                                                                 IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
+                                                                                     IReadOnlyCollection<ClothesEntity> clothesInformationEntities) =>
             genderEntities.
-            Select(gender => new GenderEntity(gender.GenderType, gender.Name,
-                                              null,
-                                              clothesInformationEntities)).
+            Select(gender => new GenderEntity(gender.GenderType, gender.Name, null, clothesInformationEntities)).
             ToList();
+
+       
+
     }
 }

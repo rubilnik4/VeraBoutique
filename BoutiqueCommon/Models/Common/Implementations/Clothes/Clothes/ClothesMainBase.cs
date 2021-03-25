@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Extensions.HashCodeExtensions;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
@@ -62,14 +63,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
             base.Equals(other) &&
             other?.Gender.Equals(Gender) == true &&
             other?.ClothesType.Equals(ClothesType) == true &&
-            other?.Colors.SequenceEqual(Colors) == true &&
+            other?.Colors.Cast<IColorBase>().SequenceEqual(Colors.Cast<IColorBase>()) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
             HashCode.Combine(HashCode.Combine(Id, Name, Price, Description, Image),
                              Gender.GetHashCode(), ClothesType.GetHashCode(),
-                             ColorBase.GetColorClothesHashCodes(Colors),
-                             SizeGroupBase.GetSizeGroupHashCodes(SizeGroups));
+                             Colors.GetHashCodes(), SizeGroups.GetHashCodes());
         #endregion
     }
 }

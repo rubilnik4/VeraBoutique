@@ -29,14 +29,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
             string clothesType = clothesTypeEntities.First().Name;
-            var clothesInformationEntities = ClothesEntitiesData.ClothesEntities;
-            var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities,
-                                                                                            clothesInformationEntities);
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities, clothesEntities);
             var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
-                                                                                                           clothesInformationEntities);
+                                                                                                           clothesEntities);
             var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
             var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
-            var clothesTable = ClothesTableMock.GetClothesTable(clothesInformationEntities);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
             var clothesDatabaseService = new ClothesDatabaseService(database.Object,
@@ -45,7 +44,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
                                                                     ClothesEntityConverterMock.ClothesMainEntityConverter);
 
             var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
-            var clothesDomains = clothesEntityConverter.FromEntities(clothesInformationEntities);
+            var clothesDomains = clothesEntityConverter.FromEntities(clothesEntities);
 
             Assert.True(clothesResults.OkStatus);
             Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value));
