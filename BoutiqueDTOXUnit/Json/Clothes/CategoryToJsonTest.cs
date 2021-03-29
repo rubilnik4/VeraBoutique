@@ -17,6 +17,35 @@ namespace BoutiqueDTOXUnit.Json.Clothes
         /// Преобразовать в Json
         /// </summary>
         [Fact]
+        public void ToJsonMain_Ok()
+        {
+            var categoryTransfer = CategoryTransfersData.CategoryMainTransfers.First();
+
+            string json = JsonConvert.SerializeObject(categoryTransfer);
+            var categoryAfterJson = JsonConvert.DeserializeObject<CategoryMainTransfer>(json);
+
+            Assert.True(categoryAfterJson?.Equals(categoryAfterJson));
+        }
+
+        /// <summary>
+        /// Преобразовать в Json
+        /// </summary>
+        [Fact]
+        public void ToJsonClothesType_Ok()
+        {
+            var categoryTransfer = CategoryTransfersData.CategoryClothesTypeTransfers.First();
+
+            string json = JsonConvert.SerializeObject(categoryTransfer);
+            var categoryAfterJson = JsonConvert.DeserializeObject<CategoryClothesTypeTransfer>(json);
+
+            Assert.True(categoryAfterJson?.Equals(categoryAfterJson));
+        }
+
+
+        /// <summary>
+        /// Преобразовать в Json
+        /// </summary>
+        [Fact]
         public void ToJson_Ok()
         {
             var categoryTransfer = CategoryTransfersData.CategoryTransfers.First();

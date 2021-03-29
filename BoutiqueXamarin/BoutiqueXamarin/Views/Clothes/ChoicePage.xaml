@@ -1,14 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModel="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice;assembly=BoutiqueXamarin"
+             xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice"
+             xmlns:choiceViewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              x:Class="BoutiqueXamarin.Views.Clothes.ChoicePage"
              NavigationPage.HasNavigationBar="False"
-             ItemsSource="{Binding ChoiceViewModelItems}" x:DataType="viewModel:ChoiceViewModel">
+             x:DataType="{x:Type viewModels:ChoiceViewModel}"
+             ItemsSource="{Binding ChoiceGenderViewModelItems}">
     <TabbedPage.ItemTemplate>
-        <DataTemplate x:DataType="viewModel:ChoiceViewModelItem">
-            <ContentPage Title="{Binding Name}">
-
+        <DataTemplate x:DataType="{x:Type choiceViewModels:ChoiceGenderViewModelItem}">
+            <ContentPage Title="{Binding GenderName}">
+                <ListView ItemsSource="{Binding ChoiceBaseViewModelItems}">
+                    <ListView.Resources>
+                        <DataTemplate x:Key="ChoiceCategory" 
+                                      x:DataType="{x:Type choiceViewModels:ChoiceCategoryViewModelItem}">
+                            <TextCell Text="111"/>
+                        </DataTemplate>
+                        <DataTemplate x:Key="ChoiceClothesType" 
+                                      x:DataType="{x:Type choiceViewModels:ChoiceClothesTypeViewModelItem}">
+                            <TextCell Text="222"/>
+                        </DataTemplate>
+                    </ListView.Resources>
+                </ListView>
             </ContentPage>
         </DataTemplate>
     </TabbedPage.ItemTemplate>

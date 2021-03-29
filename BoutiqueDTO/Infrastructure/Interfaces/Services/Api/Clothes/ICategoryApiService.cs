@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes
     /// <summary>
     /// Api сервис категории одежды
     /// </summary>
-    public interface ICategoryApiService : IApiService<string, CategoryTransfer>
+    public interface ICategoryApiService : IApiService<string, CategoryMainTransfer>
     { }
 }

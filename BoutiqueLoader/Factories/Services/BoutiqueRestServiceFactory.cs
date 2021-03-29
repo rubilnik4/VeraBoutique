@@ -62,7 +62,7 @@ namespace BoutiqueLoader.Factories.Services
         /// Получить сервис категорий одежды
         /// </summary>
         public static ICategoryRestService GetCategoryRestService(IRestClient restClient) =>
-             new CategoryRestService(new CategoryApiService(restClient), new CategoryTransferConverter());
+             new CategoryRestService(new CategoryApiService(restClient), new CategoryMainTransferConverter(new GenderTransferConverter()));
 
         /// <summary>
         /// Получить сервис категорий одежды

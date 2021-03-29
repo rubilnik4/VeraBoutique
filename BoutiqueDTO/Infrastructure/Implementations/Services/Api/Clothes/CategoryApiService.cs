@@ -12,7 +12,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
     /// <summary>
     /// Api сервис категорий одежды
     /// </summary>
-    public class CategoryApiService : ApiService<string, CategoryTransfer>, ICategoryApiService
+    public class CategoryApiService : ApiService<string, CategoryMainTransfer>, ICategoryApiService
     {
         public CategoryApiService(IRestClient restClient)
         : base(restClient)

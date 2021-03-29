@@ -8,9 +8,6 @@ services:
       -  postgres.env
       -  jwt.env
       -  defaultUser.env
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro  
     depends_on:
       - "postgres"
     restart: unless-stopped

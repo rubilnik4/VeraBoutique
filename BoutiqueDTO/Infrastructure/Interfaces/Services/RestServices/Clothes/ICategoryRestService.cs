@@ -7,6 +7,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
     /// <summary>
     /// Сервис категорий одежды
     /// </summary>
-    public interface ICategoryRestService : IRestServiceBase<string, ICategoryDomain>
+    public interface ICategoryRestService : IRestServiceBase<string, ICategoryMainDomain>
     { }
 }

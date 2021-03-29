@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.CategoryTransfers;
+using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers
 {
@@ -15,6 +16,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers
             :this(category.Name, genders)
         { }
 
+        [JsonConstructor]
         public CategoryMainTransfer(string name, IEnumerable<GenderTransfer> genders)
             :base(name, genders)
         { }

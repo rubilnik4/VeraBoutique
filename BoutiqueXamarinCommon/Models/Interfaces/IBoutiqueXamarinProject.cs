@@ -12,6 +12,6 @@ namespace BoutiqueXamarinCommon.Models.Interfaces
         /// <summary>
         /// Типы пола
         /// </summary>
-        IReadOnlyCollection<IGenderDomain> Genders { get; }
+        IReadOnlyCollection<IGenderCategoryDomain> GenderCategories { get; }
     }
 }

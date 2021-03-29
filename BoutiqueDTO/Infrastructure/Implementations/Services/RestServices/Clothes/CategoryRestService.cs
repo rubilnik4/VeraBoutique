@@ -14,11 +14,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// <summary>
     /// Сервис категорий одежды
     /// </summary>
-    public class CategoryRestService : RestServiceBase<string, ICategoryDomain, CategoryTransfer>, ICategoryRestService
+    public class CategoryRestService : RestServiceBase<string, ICategoryMainDomain, CategoryMainTransfer>, ICategoryRestService
     {
         public CategoryRestService(ICategoryApiService categoryApiService, 
-                                   ICategoryTransferConverter categoryTransferConverter)
-            : base(categoryApiService, categoryTransferConverter)
+                                   ICategoryMainTransferConverter categoryMainTransferConverter)
+            : base(categoryApiService, categoryMainTransferConverter)
         { }
     }
 }

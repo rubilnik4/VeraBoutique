@@ -23,7 +23,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.Category
     /// Конвертер категорий одежды в трансферную модель
     /// </summary>
     public class CategoryMainTransferConverter : TransferConverter<string, ICategoryMainDomain, CategoryMainTransfer>,
-                                             ICategoryMainTransferConverter
+                                                ICategoryMainTransferConverter
     {
         public CategoryMainTransferConverter(IGenderTransferConverter genderTransferConverter)
         {

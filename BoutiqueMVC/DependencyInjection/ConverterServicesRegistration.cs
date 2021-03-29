@@ -37,9 +37,12 @@ namespace BoutiqueMVC.DependencyInjection
         public static void RegisterTransferConverters(IServiceCollection services)
         {
             services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
+            services.AddTransient<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
             services.AddTransient<IClothesTypeMainTransferConverter, ClothesTypeMainTransferConverter>();
             services.AddTransient<ICategoryTransferConverter, CategoryTransferConverter>();
+            services.AddTransient<ICategoryMainTransferConverter, CategoryMainTransferConverter>();
+            services.AddTransient<ICategoryClothesTypeTransferConverter, CategoryClothesTypeTransferConverter>();
             services.AddTransient<ISizeTransferConverter, SizeTransferConverter>();
             services.AddTransient<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
             services.AddTransient<ISizeGroupMainTransferConverter, SizeGroupMainTransferConverter>();
@@ -54,9 +57,12 @@ namespace BoutiqueMVC.DependencyInjection
         public static void RegisterEntityConverters(IServiceCollection services)
         {
             services.AddTransient<IGenderEntityConverter, GenderEntityConverter>();
+            services.AddTransient<IGenderCategoryEntityConverter, GenderCategoryEntityConverter>();
             services.AddTransient<IClothesTypeMainEntityConverter, ClothesTypeMainEntityConverter>();
             services.AddTransient<IClothesTypeEntityConverter, ClothesTypeEntityConverter>();
             services.AddTransient<ICategoryEntityConverter, CategoryEntityConverter>();
+            services.AddTransient<ICategoryMainEntityConverter, CategoryMainEntityConverter>();
+            services.AddTransient<ICategoryClothesTypeEntityConverter, CategoryClothesTypeEntityConverter>();
             services.AddTransient<ISizeEntityConverter, SizeEntityConverter>();
             services.AddTransient<ISizeGroupEntityConverter, SizeGroupEntityConverter>();
             services.AddTransient<ISizeGroupMainEntityConverter, SizeGroupMainEntityConverter>();

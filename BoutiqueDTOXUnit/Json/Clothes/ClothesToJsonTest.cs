@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes.Clothes
         /// Преобразовать в Json
         /// </summary>
         [Fact]
-        public void ToJson_Ok()
+        public void ToJsonMain_Ok()
         {
             var clothesTransfer = ClothesTransfersData.ClothesMainTransfers.First();
 
@@ -24,6 +24,20 @@ namespace BoutiqueDTOXUnit.Json.Clothes.Clothes
             var clothesAfterJson = JsonConvert.DeserializeObject<ClothesMainTransfer>(json);
 
             Assert.True(clothesAfterJson?.Equals(clothesTransfer));
+        }
+
+        /// <summary>
+        /// Преобразовать в Json
+        /// </summary>
+        [Fact]
+        public void ToJson_Ok()
+        {
+            var clothesTransfer = ClothesTransfersData.ClothesTransfers.First();
+
+            string json = JsonConvert.SerializeObject(clothesTransfer);
+            var clothesShortAfterJson = JsonConvert.DeserializeObject<ClothesTransfer>(json);
+
+            Assert.True(clothesShortAfterJson?.Equals(clothesTransfer));
         }
     }
 }

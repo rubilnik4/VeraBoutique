@@ -8,15 +8,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite
     /// </summary>
     public class GenderCategoryCompositeEntity : IGenderCategoryCompositeEntity
     {
-        public GenderCategoryCompositeEntity(GenderType genderId, string categoryId)
-            : this(genderId, categoryId, null, null)
+        public GenderCategoryCompositeEntity(GenderType genderType, string categoryName)
+            : this(genderType, categoryName, null, null)
         { }
 
-        public GenderCategoryCompositeEntity(GenderType genderId, string categoryId,
+        public GenderCategoryCompositeEntity(GenderType genderType, string categoryName,
                                              GenderEntity? gender, CategoryEntity? category)
         {
-            GenderType = genderId;
-            CategoryName = categoryId;
+            GenderType = genderType;
+            CategoryName = categoryName;
             Gender = gender;
             Category = category;
         }

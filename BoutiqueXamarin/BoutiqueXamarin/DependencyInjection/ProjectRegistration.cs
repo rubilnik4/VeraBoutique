@@ -25,8 +25,8 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         public static IResultError RegisterProject(IBoutiqueContainer container) =>
             container.Resolve<IGenderRestService>().
-            Map(genderService => genderService.Get()).
-            ResultCollectionOkToValue(genders => new BoutiqueXamarinProject(genders)).
+            Map(genderService => genderService.GetGenderCategories()).
+            ResultCollectionOkToValue(genderCategories => new BoutiqueXamarinProject(genderCategories)).
             ResultValueVoidOk(container.Register<IBoutiqueXamarinProject>);
     }
 }

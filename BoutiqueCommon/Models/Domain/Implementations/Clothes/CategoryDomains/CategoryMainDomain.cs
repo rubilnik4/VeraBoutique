@@ -15,6 +15,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains
             : this(category.Name, genders)
         { }
 
+        public CategoryMainDomain(string name, IGenderDomain gender)
+          : base(name, new List<IGenderDomain> { gender })
+        { }
+
         public CategoryMainDomain(string name, IEnumerable<IGenderDomain> genders)
             :base(name, genders)
         { }

@@ -11,14 +11,14 @@ namespace BoutiqueXamarinCommon.Models.Implementation
     /// </summary>
     public class BoutiqueXamarinProject : IBoutiqueXamarinProject
     {
-        public BoutiqueXamarinProject(IEnumerable<IGenderDomain> genders)
+        public BoutiqueXamarinProject(IEnumerable<IGenderCategoryDomain> genderCategories)
         {
-            Genders = genders.ToList().AsReadOnly();
+            GenderCategories = genderCategories.ToList().AsReadOnly();
         }
 
         /// <summary>
         /// Типы пола
         /// </summary>
-        public IReadOnlyCollection<IGenderDomain> Genders { get; }
+        public IReadOnlyCollection<IGenderCategoryDomain> GenderCategories { get; }
     }
 }

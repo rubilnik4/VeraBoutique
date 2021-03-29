@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems;
 using BoutiqueXamarinCommon.Models.Interfaces;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
@@ -23,20 +24,20 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
         public ChoiceViewModel(INavigationService navigationService, IBoutiqueXamarinProject boutiqueXamarinProject)
           : base(navigationService)
         {
-            ChoiceViewModelItems = GetChoiceViewModelItems(boutiqueXamarinProject);
+            ChoiceGenderViewModelItems = GetChoiceGenderItems(boutiqueXamarinProject);
         }
 
         /// <summary>
-        /// Типы пола
+        /// Модели типа пола одежды
         /// </summary>
-        public IReadOnlyCollection<ChoiceViewModelItem> ChoiceViewModelItems { get; }
+        public IReadOnlyCollection<ChoiceGenderViewModelItem> ChoiceGenderViewModelItems { get; }
 
         /// <summary>
-        /// Получить модели типа одежды
+        /// Получить модели типа пола одежды
         /// </summary>
-        private static IReadOnlyCollection<ChoiceViewModelItem> GetChoiceViewModelItems(IBoutiqueXamarinProject boutiqueXamarinProject) =>
-            boutiqueXamarinProject.Genders.
-            Select(gender => new ChoiceViewModelItem(gender)).
+        private static IReadOnlyCollection<ChoiceGenderViewModelItem> GetChoiceGenderItems(IBoutiqueXamarinProject boutiqueXamarinProject) =>
+            boutiqueXamarinProject.GenderCategories.
+            Select(genderCategory => new ChoiceGenderViewModelItem(genderCategory)).
             ToList();
     }
 }

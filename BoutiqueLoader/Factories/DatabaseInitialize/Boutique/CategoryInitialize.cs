@@ -14,8 +14,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Начальные данные таблицы категорий одежды
         /// </summary>
-        public static IReadOnlyCollection<ICategoryDomain> Categories =>
-            new List<ICategoryDomain>
+        public static IReadOnlyCollection<ICategoryMainDomain> Categories =>
+            new List<ICategoryMainDomain>
             {
                 Outerwear,
                 Dress,
@@ -27,31 +27,31 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Верхняя одежда
         /// </summary>
-        public static ICategoryDomain Outerwear =>
-            new CategoryDomain("Верхняя одежда");
+        public static ICategoryMainDomain Outerwear =>
+            new CategoryMainDomain("Верхняя одежда", GenderInitialize.Genders);
 
         /// <summary>
         /// Платья
         /// </summary>
-        public static ICategoryDomain Dress =>
-            new CategoryDomain("Платья");
+        public static ICategoryMainDomain Dress =>
+            new CategoryMainDomain("Платья", GenderInitialize.Female);
 
         /// <summary>
         /// Штаны
         /// </summary>
-        public static ICategoryDomain Pants =>
-            new CategoryDomain("Штаны");
+        public static ICategoryMainDomain Pants =>
+            new CategoryMainDomain("Штаны", GenderInitialize.Genders);
 
         /// <summary>
         /// Обувь
         /// </summary>
-        public static ICategoryDomain Shoes =>
-            new CategoryDomain("Обувь");
+        public static ICategoryMainDomain Shoes =>
+            new CategoryMainDomain("Обувь", GenderInitialize.Genders);
 
         /// <summary>
         /// Аксессуары
         /// </summary>
-        public static ICategoryDomain Accessories =>
-            new CategoryDomain("Аксессуары");
+        public static ICategoryMainDomain Accessories =>
+            new CategoryMainDomain("Аксессуары", GenderInitialize.Genders);
     }
 }

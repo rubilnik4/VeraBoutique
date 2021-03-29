@@ -26,5 +26,19 @@ namespace BoutiqueDTOXUnit.Json.Clothes
 
             Assert.True(genderAfterJson?.Equals(genderTransfer));
         }
+
+        /// <summary>
+        /// Преобразовать в Json
+        /// </summary>
+        [Fact]
+        public void ToJsonCategory_Ok()
+        {
+            var genderTransfer = GenderTransfersData.GenderCategoryTransfers.First();
+
+            string json = JsonConvert.SerializeObject(genderTransfer);
+            var genderAfterJson = JsonConvert.DeserializeObject<GenderCategoryTransfer>(json);
+
+            Assert.True(genderAfterJson?.Equals(genderTransfer));
+        }
     }
 }

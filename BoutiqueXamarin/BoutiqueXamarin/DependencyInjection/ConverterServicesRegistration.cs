@@ -37,9 +37,11 @@ namespace BoutiqueXamarin.DependencyInjection
         public static void RegisterTransferConverters(IBoutiqueContainer container)
         {
             container.Register<IGenderTransferConverter, GenderTransferConverter>();
+            container.Register<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             container.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
             container.Register<IClothesTypeMainTransferConverter, ClothesTypeMainTransferConverter>();
             container.Register<ICategoryTransferConverter, CategoryTransferConverter>();
+            container.Register<ICategoryClothesTypeTransferConverter, CategoryClothesTypeTransferConverter>();
             container.Register<ISizeTransferConverter, SizeTransferConverter>();
             container.Register<ISizeGroupMainTransferConverter, SizeGroupMainTransferConverter>();
             container.Register<ISizeGroupTransferConverter, SizeGroupTransferConverter>();

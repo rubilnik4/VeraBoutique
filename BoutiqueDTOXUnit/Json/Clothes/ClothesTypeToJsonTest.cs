@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
-using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Json.Clothes.ClothesTypes
+namespace BoutiqueDTOXUnit.Json.Clothes
 {
     /// <summary>
     /// Тип одежды. Конвертация в Json
