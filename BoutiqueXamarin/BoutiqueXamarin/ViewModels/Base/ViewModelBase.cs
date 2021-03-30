@@ -35,7 +35,7 @@ namespace BoutiqueXamarin.ViewModels.Base
         public virtual async void Initialize(INavigationParameters parameters) =>
             await new ResultError().
             ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
-            ResultErrorBindOkAsync(InitializeAction).
+            ResultErrorBindOkAsync(() => InitializeAction(parameters)).
             ResultErrorVoidOkBadTaskAsync(
                 actionOk: () => ViewModelState = ViewModelState.Ok,
                 actionBad: _ => ViewModelState = ViewModelState.Error);
@@ -61,7 +61,7 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Асинхронная загрузка параметров модели
         /// </summary>
-        protected virtual async Task<IResultError> InitializeAction() =>
+        protected virtual async Task<IResultError> InitializeAction(INavigationParameters parameters) =>
             await Task.FromResult(new ResultError());
     }
 }

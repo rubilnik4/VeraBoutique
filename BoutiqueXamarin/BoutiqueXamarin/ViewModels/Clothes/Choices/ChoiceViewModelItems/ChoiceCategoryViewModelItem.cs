@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Категория одежды
     /// </summary>
-    public class ChoiceCategoryViewModelItem: ChoiceBaseViewModelItem
+    public class ChoiceCategoryViewModelItem : ChoiceBaseViewModelItem
     {
         public ChoiceCategoryViewModelItem(ICategoryClothesTypeDomain categoryClothesType)
         {
             _categoryClothesType = categoryClothesType;
+            ChoiceClothesTypeViewModelItems = ToChoiceClothesTypeItems(categoryClothesType);
         }
 
         /// <summary>
@@ -25,6 +25,22 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems
         /// </summary>
         public string CategoryName =>
             _categoryClothesType.Name;
+
+        /// <summary>
+        /// МОдели типов одежды
+        /// </summary>
+        public IReadOnlyCollection<ChoiceClothesTypeViewModelItem> ChoiceClothesTypeViewModelItems { get; }
+
+        /// <summary>
+        /// Видимость типов одежды
+        /// </summary>
+        public bool ClothesTypesVisible { get; private set; }
+
+        /// <summary>
+        /// Изменить видимость типов одежды
+        /// </summary>
+        public void ClothesTypesVisibleChange() =>
+            ClothesTypesVisible = !ClothesTypesVisible;
 
         /// <summary>
         /// Получить категории одежды

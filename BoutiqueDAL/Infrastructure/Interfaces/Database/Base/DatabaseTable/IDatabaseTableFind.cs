@@ -45,6 +45,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
         Task<IResultCollection<TOut>> FindsExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
-               where TOut : notnull;
+            where TOut : notnull;
     }
 }

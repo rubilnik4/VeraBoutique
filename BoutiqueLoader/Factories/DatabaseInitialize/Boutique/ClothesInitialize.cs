@@ -25,9 +25,14 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         private static IEnumerable<IClothesMainDomain> ClothesTShirts =>
             new List<ClothesMainDomain>
             {
-                new (0,"Футболка","Футболка тестовая", 1500, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
-                     ClothesTypeInitialize.ClothesTypeMains.First(clothesType => clothesType.Name == "Футболки"), 
-                     ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)
+                new (0,"Футболка 1","Футболка тестовая 1", 1000, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
+                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
+                new (0,"Футболка 2","Футболка тестовая 2", 2000, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
+                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
+                new (0,"Футболка 3","Футболка тестовая 3", 3000, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
+                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
+                new (0,"Футболка 4","Футболка тестовая 4", 4000, Encoding.UTF8.GetBytes("test"), GenderInitialize.Male,
+                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)
             };
     }
 }

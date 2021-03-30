@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
@@ -39,6 +40,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
 
             Assert.Equal(Method.GET, request.Method);
             Assert.True($"api/Test/{additionalRoute}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Запрос получения
+        /// </summary>
+        [Fact]
+        public void GetJsonRequest_Parameters()
+        {
+            var parameters = new List<string>
+            {
+                "first",
+                "second",
+            };
+            var request = ApiRestRequest.GetJsonRequest(ControllerName, parameters);
+
+            Assert.Equal(Method.GET, request.Method);
+            Assert.True($"api/Test/{parameters.First()}/{parameters.Last()}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>

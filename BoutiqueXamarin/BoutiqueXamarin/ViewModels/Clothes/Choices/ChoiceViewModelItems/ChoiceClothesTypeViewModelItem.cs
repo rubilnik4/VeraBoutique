@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Вид одежды
@@ -16,8 +13,14 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems
         }
 
         /// <summary>
-        /// Вид одежды
+        /// Тип одежды
         /// </summary>
         private readonly IClothesTypeDomain _clothesType;
+
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        public string ClothesTypeName => 
+            _clothesType.Name;
     }
 }

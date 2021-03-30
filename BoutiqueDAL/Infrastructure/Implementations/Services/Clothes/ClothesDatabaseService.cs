@@ -32,8 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
     /// <summary>
     /// Сервис одежды в базе данных
     /// </summary>
-    public class ClothesDatabaseService : DatabaseService<int, IClothesMainDomain, ClothesEntity>,
-                                          IClothesDatabaseService
+    public class ClothesDatabaseService : DatabaseService<int, IClothesMainDomain, ClothesEntity>, IClothesDatabaseService
     {
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                       IClothesDatabaseValidateService clothesDatabaseValidateService,
@@ -42,8 +41,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
           : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesDatabaseValidateService, clothesMainEntityConverter)
         {
             _clothesTable = boutiqueDatabase.ClothesTable;
-            _genderTable = boutiqueDatabase.GendersTable;
-            _clothesTypeTable = boutiqueDatabase.ClotheTypeTable;
             _clothesEntityConverter = clothesEntityConverter;
         }
 
@@ -51,16 +48,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Таблица базы данных одежды
         /// </summary>
         private readonly IClothesTable _clothesTable;
-
-        /// <summary>
-        /// Таблица базы данных одежды
-        /// </summary>
-        private readonly IGenderTable _genderTable;
-
-        /// <summary>
-        /// Таблица базы данных одежды
-        /// </summary>
-        private readonly IClothesTypeTable _clothesTypeTable;
 
         /// <summary>
         /// Преобразования модели одежды в модель базы данных
@@ -71,38 +58,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
-            await ResultCollectionTryAsync(() => GetByGenderAndClothesType(genderType, clothesType),
-                                           DatabaseErrors.TableAccessError(nameof(_clothesTable))).
-            ResultCollectionBindOkTaskAsync(clothesShortDomains => _clothesEntityConverter.FromEntities(clothesShortDomains));
-
-        /// <summary>
-        /// Получить одежду без изображений
-        /// </summary>
-        private async Task<IReadOnlyCollection<ClothesEntity>> GetByGenderAndClothesType(GenderType genderType, string clothesType) =>
-            await GetClothesByGender(genderType).
-            Join(GetClothesByClothesType(clothesType),
-                 clothesGender => clothesGender.Id,
-                 clothesClothesType => clothesClothesType.Id,
-                 (clothesGender, clothesClothesType) => clothesGender).
-            AsNoTracking().
-            ToListAsync();
-
-        /// <summary>
-        /// Получить список информации об одежде по типу пола
-        /// </summary>
-        private IQueryable<ClothesEntity> GetClothesByGender(GenderType genderType) =>
-            _genderTable.
-            Where(genderType).
-            Include(genderEntity => genderEntity.Clothes).
-            SelectMany(genderEntity => genderEntity.Clothes!);
-
-        /// <summary>
-        /// Получить список информации об одежде по типу пола
-        /// </summary>
-        private IQueryable<ClothesEntity> GetClothesByClothesType(string clothesType) =>
-            _clothesTypeTable.
-            Where(clothesType).
-            Include(clothesTypeEntity => clothesTypeEntity.Clothes).
-            SelectMany(genderEntity => genderEntity.Clothes!);
+            await _clothesTable.
+            FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.GenderType == genderType &&
+                                                                           clothesEntity.ClothesTypeName == clothesType)).
+            ResultCollectionBindOkTaskAsync(clothesDomains => _clothesEntityConverter.FromEntities(clothesDomains));
     }
 }

@@ -24,7 +24,7 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
                 new ClothesTypeMainDomain("Толстовки", CategoryInitialize.Outerwear),
                 new ClothesTypeMainDomain("Свитера", CategoryInitialize.Outerwear),
                 new ClothesTypeMainDomain("Рубашки", CategoryInitialize.Outerwear),
-                new ClothesTypeMainDomain("Футболки", CategoryInitialize.Outerwear),
+                TshirtClothesType,
                 new ClothesTypeMainDomain("Брюки", CategoryInitialize.Pants),
                 new ClothesTypeMainDomain("Джинсы", CategoryInitialize.Pants),
                 new ClothesTypeMainDomain("Шорты", CategoryInitialize.Pants),
@@ -32,6 +32,13 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
                 new ClothesTypeMainDomain("Туфли", CategoryInitialize.Shoes),
                 new ClothesTypeMainDomain("Платья", CategoryInitialize.Dress),
                 new ClothesTypeMainDomain("Юбки", CategoryInitialize.Dress),
+                new ClothesTypeMainDomain("Бижутерия", CategoryInitialize.Accessories),
             }.AsReadOnly();
+
+        /// <summary>
+        /// Футболки
+        /// </summary>
+        public static IClothesTypeMainDomain TshirtClothesType =>
+            new ClothesTypeMainDomain("Футболки", CategoryInitialize.Outerwear);
     }
 }

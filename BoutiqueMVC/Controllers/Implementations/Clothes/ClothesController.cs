@@ -46,9 +46,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         private readonly IClothesTransferConverter _clothesTransferConverter;
 
         /// <summary>
-        /// Получить одежду без изображений
+        /// Получить одежду по типу пола и категории
         /// </summary>
-        [HttpGet("clothesShorts/{genderType}/{clothesType}")]
+        [HttpGet("{genderType}/{clothesType}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

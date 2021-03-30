@@ -1,6 +1,9 @@
-﻿using BoutiqueXamarin.ViewModels.Clothes.Choice;
+﻿using BoutiqueXamarin.ViewModels.Clothes.Choices;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
+using BoutiqueXamarin.Views.Clothes.Choices;
+using BoutiqueXamarin.Views.Clothes.Clothes;
 using Prism.Ioc;
 using Xamarin.Forms;
 
@@ -18,6 +21,7 @@ namespace BoutiqueXamarin.DependencyInjection
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ChoicePage, ChoiceViewModel>();
+            containerRegistry.RegisterForNavigation<ClothesPage, ClothesViewModel>();
         }
     }
 }

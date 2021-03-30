@@ -1,7 +1,16 @@
-﻿using BoutiqueDTO.Factory.RestSharp;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDTO.Extensions.RestResponses.Async;
+using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
+using BoutiqueDTO.Routes.Clothes;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Interfaces.Result;
 using RestSharp;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
@@ -14,5 +23,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public ClothesApiService(IRestClient restClient)
             : base(restClient)
         { }
+
+        /// <summary>
+        /// Получить одежду по типу пола и категории
+        /// </summary>
+        public async Task<IResultCollection<ClothesTransfer>> GetClothes(GenderType genderType, string clothesType) =>
+            await new List<string> { genderType.ToString(), clothesType}.
+            Map(parameters => ApiRestRequest.GetJsonRequest(ControllerName, parameters)).
+            MapAsync(route => RestClient.ExecuteAsync<List<ClothesTransfer>>(route)).
+            ToRestResultCollectionAsync();
     }
 }

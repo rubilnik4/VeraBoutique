@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
@@ -44,10 +45,15 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         /// Запрос на получение данных
         /// </summary>
         public static IRestRequest GetJsonRequest(string controllerName, string additionalRoute) =>
-            additionalRoute.
-            WhereContinue(route => !String.IsNullOrWhiteSpace(route),
-                route => $"/{route}",
-                _ => String.Empty).
+            ValidateRoute(additionalRoute).
+            Map(route => new RestRequest(GetApiRoute(controllerName) + route, Method.GET));
+
+        /// <summary>
+        /// Запрос на получение данных
+        /// </summary>
+        public static IRestRequest GetJsonRequest(string controllerName, IEnumerable<string> parameters) =>
+            parameters.
+            Aggregate(String.Empty, (first, second) => first + ValidateRoute(second)).
             Map(route => new RestRequest(GetApiRoute(controllerName) + route, Method.GET));
 
         /// <summary>
@@ -104,5 +110,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         /// </summary>
         private static string GetApiRoute(string controllerName) =>
             API + controllerName.SubstringRemove(CONTROLLER);
+
+        /// <summary>
+        /// Проверка пути
+        /// </summary>
+        private static string ValidateRoute(string additionalRoute) =>
+            additionalRoute.
+            WhereContinue(route => !String.IsNullOrWhiteSpace(route),
+                route => $"/{route}",
+                _ => String.Empty);
     }
 }

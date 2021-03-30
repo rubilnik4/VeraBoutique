@@ -1,20 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
-using BoutiqueXamarin.ViewModels.Clothes.Choice.ChoiceViewModelItems;
+using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using BoutiqueXamarinCommon.Models.Interfaces;
-using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
 using Prism.Navigation;
-using RestSharp;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choice
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices
 {
     /// <summary>
     /// Выбор типа одежды
@@ -24,7 +16,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
         public ChoiceViewModel(INavigationService navigationService, IBoutiqueXamarinProject boutiqueXamarinProject)
           : base(navigationService)
         {
-            ChoiceGenderViewModelItems = GetChoiceGenderItems(boutiqueXamarinProject);
+            ChoiceGenderViewModelItems = GetChoiceGenderItems(navigationService, boutiqueXamarinProject);
         }
 
         /// <summary>
@@ -35,9 +27,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choice
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
-        private static IReadOnlyCollection<ChoiceGenderViewModelItem> GetChoiceGenderItems(IBoutiqueXamarinProject boutiqueXamarinProject) =>
+        private static IReadOnlyCollection<ChoiceGenderViewModelItem> GetChoiceGenderItems(INavigationService navigationService, 
+                                                                                           IBoutiqueXamarinProject boutiqueXamarinProject) =>
             boutiqueXamarinProject.GenderCategories.
-            Select(genderCategory => new ChoiceGenderViewModelItem(genderCategory)).
+            Select(genderCategory => new ChoiceGenderViewModelItem(navigationService, genderCategory)).
             ToList();
     }
 }

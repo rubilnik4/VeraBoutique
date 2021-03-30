@@ -33,7 +33,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// </summary>
         public static IReadOnlyCollection<ClothesTransfer> ClothesTransfers =>
             ClothesData.ClothesDomains.
-            Select(clothesShort => new ClothesTransfer(clothesShort)).
+            Select(clothes => new ClothesTransfer(clothes)).
             ToList();
 
         /// <summary>
