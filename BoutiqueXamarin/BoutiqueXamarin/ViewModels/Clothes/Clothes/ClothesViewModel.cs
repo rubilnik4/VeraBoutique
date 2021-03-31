@@ -1,10 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.Models.Interfaces.Result;
+using Prism.Common;
 using Prism.Navigation;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
@@ -12,26 +17,29 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel: ViewModelBase
+    public class ClothesViewModel: NavigationBaseViewModel<ClothesNavigationParameters>
     {
-        public ClothesViewModel(INavigationService navigationService, IClothesApiService clothesApiService)
-            :base(navigationService)
+        public ClothesViewModel(IClothesRestService clothesRestService)
         {
-            _clothesApiService = clothesApiService;
+            _clothesRestService = clothesRestService;
         }
 
         /// <summary>
-        /// Api сервис одежды
+        /// Получить данные одежды
         /// </summary>
-        private readonly IClothesApiService _clothesApiService;
+        private readonly IClothesRestService _clothesRestService;
+
+        /// <summary>
+        /// Одежда
+        /// </summary>
+        public IReadOnlyCollection<IClothesDomain> Clothes { get; private set; } = 
+            new List<IClothesDomain>();
 
         /// <summary>
         /// Асинхронная загрузка параметров модели
         /// </summary>
-        protected override Task<IResultError> InitializeAction(INavigationParameters parameters) =>;
-
-        private static async Task<IResultCollection<IClothesDomain>> GetClothes(IClothesApiService clothesApiService,
-                                                                                GenderType genderType, string clothesType) =>
-            await clothesApiService.GetClothes(genderType, clothesType);
+        protected override async Task<IResultError> InitializeAction(ClothesNavigationParameters clothesParameters) =>
+            await _clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
+            ResultCollectionVoidOkTaskAsync(clothes => Clothes = clothes);
     }
 }

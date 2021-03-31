@@ -11,14 +11,14 @@ using Moq;
 namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services.Clothes
 {
     /// <summary>
-    /// Тестовый Api сервис
+    /// Тестовый Api сервис типа пола
     /// </summary>
     public static class GenderApiServiceMock
     {
         /// <summary>
         /// Получить Api сервис типа пола
         /// </summary>
-        public static Mock<IGenderApiService> GetGenderApiServiceGet(IResultCollection<GenderCategoryTransfer> genders) =>
+        public static Mock<IGenderApiService> GetGenderApiService(IResultCollection<GenderCategoryTransfer> genders) =>
             new Mock<IGenderApiService>().
             Void(mock => mock.Setup(service => service.GetGenderCategories()).
                               Returns(genders)).

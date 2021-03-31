@@ -9,7 +9,7 @@
              x:DataType="{x:Type viewModels:ChoiceViewModel}"
              ItemsSource="{Binding ChoiceGenderViewModelItems}">
     <TabbedPage.ItemTemplate>
-        <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
+        <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderBaseViewModelItem}">
             <ContentPage Title="{Binding GenderName}">
                 <ContentPage.Resources>
                     <DataTemplate x:Key="ChoiceCategory" 

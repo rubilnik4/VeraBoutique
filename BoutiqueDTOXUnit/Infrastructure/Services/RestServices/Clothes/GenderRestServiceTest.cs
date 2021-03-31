@@ -19,7 +19,7 @@ using Xunit;
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
 {
     /// <summary>
-    /// Сервис типа пола в базу данных. Тесты
+    /// Сервис типа пола. Тесты
     /// </summary>
     public class GenderRestServiceTest
     {
@@ -31,10 +31,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var genders = GenderTransfersData.GenderCategoryTransfers;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(genders);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiServiceGet(resultGenders);
+            var genderApiService = GenderApiServiceMock.GetGenderApiService(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
-            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
+            var genderRestService = new GenderRestService(genderApiService.Object, genderTransferConverter,
                                                         genderCategoryTransferConverter);
 
             var result = genderRestService.GetGenderCategories();
@@ -52,7 +52,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var error = ErrorTransferData.ErrorBadRequest;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(error);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiServiceGet(resultGenders);
+            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
             var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
@@ -72,7 +72,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var genders = GenderTransfersData.GenderCategoryTransfers;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(genders);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiServiceGet(resultGenders);
+            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
             var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
@@ -93,7 +93,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var error = ErrorTransferData.ErrorBadRequest;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(error);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiServiceGet(resultGenders);
+            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
             var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,

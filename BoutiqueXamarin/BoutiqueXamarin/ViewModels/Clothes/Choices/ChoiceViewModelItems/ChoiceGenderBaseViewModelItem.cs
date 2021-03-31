@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
-using BoutiqueXamarin.ViewModels.Clothes.Navigation;
 using BoutiqueXamarin.Views.Clothes.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Prism.Commands;
@@ -15,15 +16,21 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
     /// <summary>
     /// Тип одежды
     /// </summary>
-    public class ChoiceGenderViewModelItem : ViewModelBase
+    public class ChoiceGenderBaseViewModelItem : BaseViewModel
     {
-        public ChoiceGenderViewModelItem(INavigationService navigationService, IGenderCategoryDomain genderCategory)
-            : base(navigationService)
+        public ChoiceGenderBaseViewModelItem(IClothesNavigationService clothesNavigationService,
+                                             IGenderCategoryDomain genderCategory)
         {
+            _clothesNavigationService = clothesNavigationService;
             _genderCategory = genderCategory;
             _choiceCategoryViewModelItems = ToChoiceCategoryItems(genderCategory);
             ChoiceBaseTapCommand = new DelegateCommand<ChoiceBaseViewModelItem>(async choice => await ChoiceBaseTapUpdate(choice));
         }
+
+        /// <summary>
+        /// Сервис навигации к странице одежды
+        /// </summary>
+        private readonly IClothesNavigationService _clothesNavigationService;
 
         /// <summary>
         /// Пол
@@ -82,7 +89,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
                     ChoiceItemsUpdate(choiceCategory);
                     break;
                 case ChoiceClothesTypeViewModelItem choiceClothesType:
-                    await ClothesNavigation.ToClothesPage(NavigationService, choiceClothesType.ClothesTypeName);
+                    await _clothesNavigationService.NavigateTo(_genderCategory.GenderType, choiceClothesType.ClothesTypeName);
                     break;
             }
         }

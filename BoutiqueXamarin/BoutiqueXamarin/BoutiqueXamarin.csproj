@@ -46,7 +46,6 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Clothes\Clothes\ClothesViewModelItems\" />
-    <Folder Include="ViewModels\Clothes\Navigation\" />
   </ItemGroup>
 
 </Project>
