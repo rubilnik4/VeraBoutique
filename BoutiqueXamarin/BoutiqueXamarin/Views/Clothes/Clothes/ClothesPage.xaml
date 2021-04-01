@@ -1,10 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage">
+             xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
+             xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="{x:Type viewModels:ClothesViewModel}">
     <ContentPage.Content>
-        <ListView>
+        <StackLayout Orientation="Vertical"
+                     BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style x:Key="LabelClothesItemStyle" 
+                                   TargetType="{x:Type Label}" >
+                                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                            </Style>
 
-        </ListView>
+                            <ControlTemplate x:Key="Test">
+                                <StackLayout BindingContext="{TemplateBinding BindingContext}"
+                                             x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
+                                    <Label Text="{Binding Name}"/>
+                                </StackLayout>
+                            </ControlTemplate>
+                        </Grid.Resources>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentView  Grid.Column="0" 
+                                      BindingContext="{Binding ClothesViewModelItemLeft}"
+                                     ControlTemplate="{StaticResource Test}"/>
+                        <ContentView Grid.Column="1" 
+                                     BindingContext="{Binding ClothesViewModelItemRight}"
+                                     ControlTemplate="{StaticResource Test}"/>
+
+                    </Grid>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -48,6 +48,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\StringExtensions\" />
+    <Folder Include="Models\StringCollection\" />
   </ItemGroup>
 
 </Project>

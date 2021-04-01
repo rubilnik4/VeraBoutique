@@ -2,22 +2,22 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="http://prismlibrary.com"
-             xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ChoiceViewModel}"
              ItemsSource="{Binding ChoiceGenderViewModelItems}">
     <TabbedPage.ItemTemplate>
-        <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderBaseViewModelItem}">
+        <DataTemplate x:DataType="{x:Type viewModelItems:ChoiceGenderBaseViewModelItem}">
             <ContentPage Title="{Binding GenderName}">
                 <ContentPage.Resources>
                     <DataTemplate x:Key="ChoiceCategory" 
-                                  x:DataType="{x:Type choiceViewModelItems:ChoiceCategoryViewModelItem}">
+                                  x:DataType="{x:Type viewModelItems:ChoiceCategoryViewModelItem}">
                         <TextCell Text="{Binding CategoryName}" />
                     </DataTemplate>
                     <DataTemplate x:Key="ChoiceClothesType" 
-                                  x:DataType="{x:Type choiceViewModelItems:ChoiceClothesTypeViewModelItem}">
+                                  x:DataType="{x:Type viewModelItems:ChoiceClothesTypeViewModelItem}">
                         <ViewCell>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -31,9 +31,9 @@
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
-                    <choiceViewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
-                                                                 CategoryTemplate="{StaticResource ChoiceCategory}"
-                                                                 ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
+                    <viewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
+                                                               CategoryTemplate="{StaticResource ChoiceCategory}"
+                                                               ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
                 </ContentPage.Resources>
                 <ListView ItemsSource="{Binding ChoiceBaseViewModelItems}" 
                           ItemTemplate="{StaticResource ChoiceSelector}"

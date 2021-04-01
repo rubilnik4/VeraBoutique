@@ -20,7 +20,7 @@ namespace BoutiqueCommonXUnit.Extensions.HashCodesExtensions
             var sizeGroups = SizeGroupData.SizeGroupDomains;
             var hashCode = sizeGroups.GetHashCodes();
 
-            Assert.Equal(hashCode, sizeGroups.Average(sizeGroup => sizeGroup.GetHashCode()));
+            Assert.Equal(sizeGroups.Average(sizeGroup => sizeGroup.GetHashCode()), hashCode);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace BoutiqueCommonXUnit.Extensions.HashCodesExtensions
             var sizeGroups = Enumerable.Empty<ISizeGroupMainDomain>().ToList();
             var hashCode = sizeGroups.GetHashCodes();
 
-            Assert.Equal(hashCode, 0);
+            Assert.Equal(0 , hashCode);
         }
     }
 }
