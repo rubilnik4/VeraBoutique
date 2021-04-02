@@ -38,8 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object,
-                                                                    GetDatabaseValidationService(clothesTable), 
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable), 
                                                                     clothesEntityConverter, 
                                                                     ClothesEntityConverterMock.ClothesMainEntityConverter);
 
@@ -47,7 +46,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesDomains = clothesEntityConverter.FromEntities(clothesEntities);
 
             Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value));
+            Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value.Where(clothes => clothes.GenderType == genderType &&
+                                                                                                 clothes.ClothesTypeName == clothesType)));
         }
 
         /// <summary>

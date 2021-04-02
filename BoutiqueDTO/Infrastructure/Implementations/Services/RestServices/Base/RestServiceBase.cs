@@ -45,12 +45,20 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
-        /// Отправить данные
+        /// Получить данные
         /// </summary>
         public IResultCollection<TDomain> Get() =>
             new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindOkToCollection(api => api.Get()).
             ResultCollectionBindOk(transfers => _transferConverter.FromTransfers(transfers));
+
+        /// <summary>
+        /// Получить данные по идентификатору
+        /// </summary>
+        public IResultValue<TDomain> Get(TId id) =>
+            new ResultValue<IApiService<TId, TTransfer>>(_apiService).
+            ResultValueBindOk(api => api.Get(id)).
+            ResultValueBindOk(transfer => _transferConverter.FromTransfer(transfer));
 
         /// <summary>
         /// Отправить данные
@@ -67,7 +75,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
             ResultValueBindErrorsOk(api => api.Delete());
 
         /// <summary>
-        /// Отправить данные
+        /// Получить данные асинхронно
         /// </summary>
         public async Task<IResultCollection<TDomain>> GetAsync() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
@@ -75,14 +83,22 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
             ResultCollectionBindOkTaskAsync(transfers => _transferConverter.FromTransfers(transfers));
 
         /// <summary>
-        /// Отправить данные
+        /// Получить данные по идентификатору асинхронно
+        /// </summary>
+        public async Task<IResultValue<TDomain>> GetAsync(TId id) =>
+            await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
+            ResultValueBindOkAsync(api => api.GetAsync(id)).
+            ResultValueBindOkTaskAsync(transfer => _transferConverter.FromTransfer(transfer));
+
+        /// <summary>
+        /// Отправить данные асинхронно
         /// </summary>
         public async Task<IResultError> PostAsync(IEnumerable<TDomain> domains) =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).
             ResultValueBindOkToCollectionAsync(api => api.PostCollectionAsync(_transferConverter.ToTransfers(domains)));
 
         /// <summary>
-        /// Удалить все данные
+        /// Удалить все данные асинхронно
         /// </summary>
         public async Task<IResultError> DeleteAsync() =>
             await new ResultValue<IApiService<TId, TTransfer>>(_apiService).

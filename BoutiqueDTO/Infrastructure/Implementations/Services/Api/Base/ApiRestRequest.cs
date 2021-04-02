@@ -61,7 +61,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         /// </summary>
         public static IRestRequest GetJsonRequest<TId>(TId id, string controllerName)
             where TId : notnull =>
-            new RestRequest(GetApiRoute(controllerName) + $"/{Id}", Method.GET).
+            new RestRequest(GetApiRoute(controllerName) + "/{id}", Method.GET).
             AddUrlSegment(Id, id);
 
         /// <summary>

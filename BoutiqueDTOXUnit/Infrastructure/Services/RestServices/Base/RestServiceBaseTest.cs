@@ -73,6 +73,43 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         }
 
         /// <summary>
+        /// Получение данных по идентификатору
+        /// </summary>
+        [Fact]
+        public void GetById_Ok()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var resultTest = new ResultValue<TestTransfer>(test);
+            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGetId(resultTest);
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(testApiServiceGet.Object, testTransferConverter);
+
+            var result = testRestService.Get(test.Id);
+
+            Assert.True(result.OkStatus);
+            Assert.True(TestData.TestDomains.First().Equals(result.Value));
+        }
+
+        /// <summary>
+        /// Получение данных по идентификатору
+        /// </summary>
+        [Fact]
+        public void GetById_Error()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var error = ErrorTransferData.ErrorBadRequest;
+            var resultTest = new ResultValue<TestTransfer>(error);
+            var testApiServiceGet = TestApiServiceMock.GetTestApiServiceGetId(resultTest);
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(testApiServiceGet.Object, testTransferConverter);
+
+            var result = testRestService.Get(test.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
         /// Загрузка данных
         /// </summary>
         [Fact]

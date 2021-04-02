@@ -3,6 +3,9 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 
 namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
 {
+    /// <summary>
+    /// Параметры перехода к списку одежды
+    /// </summary>
     public class ClothesNavigationParameters : BaseNavigationParameters
     {
         public ClothesNavigationParameters(GenderType genderType, string clothesType)

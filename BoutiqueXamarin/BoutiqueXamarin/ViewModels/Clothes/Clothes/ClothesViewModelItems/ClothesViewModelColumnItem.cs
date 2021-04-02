@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Prism.Commands;
+using Xamarin.Essentials.Implementation;
+using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
 {

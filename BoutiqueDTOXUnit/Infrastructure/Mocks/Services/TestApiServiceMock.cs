@@ -6,6 +6,7 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
+using Xunit.Sdk;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
 {
@@ -22,6 +23,16 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
             Void(mock => mock.Setup(service => service.Get()).
                               Returns(resultGet)).
             Void(mock => mock.Setup(service => service.GetAsync()).
+                              ReturnsAsync(resultGet));
+
+        /// <summary>
+        /// Получить тестовый Api сервис
+        /// </summary>
+        public static Mock<ITestApiService> GetTestApiServiceGetId(IResultValue<TestTransfer> resultGet) =>
+            new Mock<ITestApiService>().
+            Void(mock => mock.Setup(service => service.Get(It.IsAny<TestEnum>())).
+                              Returns(resultGet)).
+            Void(mock => mock.Setup(service => service.GetAsync(It.IsAny<TestEnum>())).
                               ReturnsAsync(resultGet));
 
         /// <summary>

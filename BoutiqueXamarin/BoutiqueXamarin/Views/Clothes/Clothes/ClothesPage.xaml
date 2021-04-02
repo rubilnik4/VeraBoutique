@@ -3,45 +3,87 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
-             xmlns:system="clr-namespace:System;assembly=netstandard"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical"
-                     BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
-                    <Grid>
-                        <Grid.Resources>
-                            <Style x:Key="LabelClothesItemStyle" 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" 
+                        Text="Назад"/>
+                <Button Grid.Column="2" 
+                        Text="Фильтр"/>
+            </Grid>
+
+            <StackLayout Grid.Row="1"
+                         Orientation="Vertical"
+                         BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style x:Key="LabelClothesItemStyle" 
                                    TargetType="{x:Type Label}" >
-                                <Setter Property="HorizontalTextAlignment" Value="Center" />
-                            </Style>
+                                    <Setter Property="HorizontalTextAlignment" Value="Center" />
+                                </Style>
 
-                            <ControlTemplate x:Key="Test">
-                                <StackLayout BindingContext="{TemplateBinding BindingContext}"
-                                             x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
-                                    <Label Text="{Binding Name}"/>
-                                </StackLayout>
-                            </ControlTemplate>
-                        </Grid.Resources>
+                                <ControlTemplate x:Key="ClothesItemTemplate">
+                                    <StackLayout BindingContext="{TemplateBinding BindingContext}"
+                                                 x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ClothesDetailCommand}"/>
+                                        </StackLayout.GestureRecognizers>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                                        <Image Source="{Binding ImageSource}"
+                                               Aspect="AspectFit" />
+                                        <Label Style="{StaticResource LabelClothesItemStyle}"
+                                               Text="{Binding Name}" />
+                                        <Label Style="{StaticResource LabelClothesItemStyle}"
+                                               Text="{Binding Price}" />
+                                    </StackLayout>
+                                </ControlTemplate>
+                            </Grid.Resources>
 
-                        <ContentView  Grid.Column="0" 
-                                      BindingContext="{Binding ClothesViewModelItemLeft}"
-                                     ControlTemplate="{StaticResource Test}"/>
-                        <ContentView Grid.Column="1" 
-                                     BindingContext="{Binding ClothesViewModelItemRight}"
-                                     ControlTemplate="{StaticResource Test}"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                    </Grid>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+                            <ContentView Grid.Column="0" 
+                                         BindingContext="{Binding ClothesViewModelItemLeft}"
+                                         ControlTemplate="{StaticResource ClothesItemTemplate}"/>
+                         
+                            <ContentView Grid.Column="1" 
+                                         BindingContext="{Binding ClothesViewModelItemRight}"
+                                         ControlTemplate="{StaticResource ClothesItemTemplate}"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" 
+                        Text="Меню"/>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

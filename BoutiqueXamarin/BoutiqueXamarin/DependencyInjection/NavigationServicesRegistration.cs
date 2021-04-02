@@ -31,6 +31,7 @@ namespace BoutiqueXamarin.DependencyInjection
         public static void RegisterNavigationServices(IBoutiqueContainer container)
         {
             container.Register<IClothesNavigationService, ClothesNavigationService>();
+            container.Register<IClothesDetailNavigationService, ClothesDetailNavigationService>();
         }
     }
 }

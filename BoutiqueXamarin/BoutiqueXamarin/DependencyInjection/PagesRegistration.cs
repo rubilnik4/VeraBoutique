@@ -22,6 +22,7 @@ namespace BoutiqueXamarin.DependencyInjection
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<ChoicePage, ChoiceViewModel>();
             containerRegistry.RegisterForNavigation<ClothesPage, ClothesViewModel>();
+            containerRegistry.RegisterForNavigation<ClothesDetailPage, ClothesDetailViewModel>();
         }
     }
 }

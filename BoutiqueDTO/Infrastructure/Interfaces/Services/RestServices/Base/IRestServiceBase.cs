@@ -8,14 +8,19 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
     /// <summary>
     /// Базовый сервис для данных Api
     /// </summary>
-    public interface IRestServiceBase<TId, TDomain>
+    public interface IRestServiceBase<in TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TId : notnull
     {
         /// <summary>
-        /// Отправить данные
+        /// Получить данные
         /// </summary>
         IResultCollection<TDomain> Get();
+
+        /// <summary>
+        /// Получить данные по идентификатору
+        /// </summary>
+        IResultValue<TDomain> Get(TId id);
 
         /// <summary>
         /// Отправить данные
@@ -28,17 +33,22 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
         IResultError Delete();
 
         /// <summary>
-        /// Получить данные
+        /// Получить данные асинхронно
         /// </summary>
         Task<IResultCollection<TDomain>> GetAsync();
 
         /// <summary>
-        /// Отправить данные
+        /// Получить данные по идентификатору асинхронно
+        /// </summary>
+        Task<IResultValue<TDomain>> GetAsync(TId id);
+
+        /// <summary>
+        /// Отправить данные асинхронно
         /// </summary>
         Task<IResultError> PostAsync(IEnumerable<TDomain> domains);
 
         /// <summary>
-        /// Удалить все данные
+        /// Удалить все данные асинхронно
         /// </summary>
         Task<IResultError> DeleteAsync();
     }
