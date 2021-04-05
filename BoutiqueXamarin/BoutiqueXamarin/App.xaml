@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              x:Class="BoutiqueXamarin.App">
-  <Application.Resources>
-
-  </Application.Resources>
+    <Application.Resources>
+        <!--<Style x:Key="MyBodyStyle" 
+                   TargetType="Label"
+                   BaseResourceKey="BodyStyle">
+            <Setter Property="TextColor" Value="" />
+        </Style>-->
+    </Application.Resources>
 </prism:PrismApplication>

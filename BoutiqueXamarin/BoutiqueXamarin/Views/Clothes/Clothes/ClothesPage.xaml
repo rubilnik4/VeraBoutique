@@ -64,7 +64,7 @@
                             <ContentView Grid.Column="0" 
                                          BindingContext="{Binding ClothesViewModelItemLeft}"
                                          ControlTemplate="{StaticResource ClothesItemTemplate}"/>
-                         
+
                             <ContentView Grid.Column="1" 
                                          BindingContext="{Binding ClothesViewModelItemRight}"
                                          ControlTemplate="{StaticResource ClothesItemTemplate}"/>
