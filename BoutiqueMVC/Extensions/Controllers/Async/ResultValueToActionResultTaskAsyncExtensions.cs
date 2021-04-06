@@ -29,6 +29,13 @@ namespace BoutiqueMVC.Extensions.Controllers.Async
         /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера со значением для задачи-объекта
         /// </summary>
+        public static async Task<ActionResult> ToImageResultValueTaskAsync(this Task<IResultValue<byte[]>> @this) =>
+            await @this.
+            MapTaskAsync(thisAwaited => thisAwaited.ToImageResultValue());
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера со значением для задачи-объекта
+        /// </summary>
         public static async Task<ActionResult<TTransfer>> ToActionResultValueTaskAsync<TId, TTransfer>(this Task<IResultValue<TTransfer>> @this)
             where TTransfer : ITransferModel<TId>
             where TId : notnull =>

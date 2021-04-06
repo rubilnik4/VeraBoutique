@@ -27,13 +27,19 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         protected ClothesMainBase(int id, string name, string description, decimal price, byte[] image,
                                   TGender gender, TClothesType clothesType,
                                   IEnumerable<TColor> colors, IEnumerable<TSizeGroup> sizeGroups)
-            : base(id, name, description, price, image, gender.GenderType, clothesType.Name)
+            : base(id, name, description, price, gender.GenderType, clothesType.Name)
         {
+            Image = image;
             Gender = gender;
             ClothesType = clothesType;
             Colors = colors.ToList().AsReadOnly();
             SizeGroups = sizeGroups.ToList().AsReadOnly();
         }
+
+        /// <summary>
+        /// Изображение
+        /// </summary>
+        public byte[] Image { get; }
 
         /// <summary>
         /// Тип пола
@@ -56,18 +62,20 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         public IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize> clothes &&
-                                                    Equals(clothes);
+        public override bool Equals(object? obj) =>
+            obj is IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize> clothes &&
+            Equals(clothes);
 
         public bool Equals(IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize>? other) =>
             base.Equals(other) &&
+            other?.Image.SequenceEqual(Image) == true &&
             other?.Gender.Equals(Gender) == true &&
             other?.ClothesType.Equals(ClothesType) == true &&
             other?.Colors.Cast<IColorBase>().SequenceEqual(Colors.Cast<IColorBase>()) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description, Image),
+            HashCode.Combine(HashCode.Combine(Id, Image, Name, Price, Description, Image),
                              Gender.GetHashCode(), ClothesType.GetHashCode(),
                              Colors.GetHashCodes(), SizeGroups.GetHashCodes());
         #endregion

@@ -17,7 +17,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// Логгирование действия с базой
         /// </summary>
         public static void LogServiceAction<TId, TDomain>(IResultError result, IBoutiqueLogger boutiqueLogger,
-                                                           ServiceActionType serviceActionType)
+                                                          ServiceActionType serviceActionType)
                where TDomain : IDomainModel<TId>
                where TId : notnull => 
             result.

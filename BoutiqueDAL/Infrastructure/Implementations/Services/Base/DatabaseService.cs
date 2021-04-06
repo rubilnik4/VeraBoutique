@@ -74,7 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Получить  полную модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
-            await _dataTable.FindIdAsync(id).
+            await _dataTable.FindMainByIdAsync(id).
             ResultValueBindOkTaskAsync(entity => _mainEntityConverter.FromEntity(entity));
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.FindShortIdAsync(id).
+            await _dataTable.FindByIdAsync(id).
             ResultValueBindOkBindAsync(DeleteWithSaving);
 
         /// <summary>

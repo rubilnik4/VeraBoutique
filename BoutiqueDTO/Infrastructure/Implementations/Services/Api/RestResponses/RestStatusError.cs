@@ -25,6 +25,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses
                                                                       restResponse.ErrorException),
                 HttpStatusCode.NotFound => new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент не найден. {restResponse.ErrorMessage}"),
                 HttpStatusCode.RequestTimeout => new ErrorResult(ErrorResultType.RequestTimeout, "Время ожидания ответа истекло"),
+                HttpStatusCode.RequestEntityTooLarge => new ErrorResult(ErrorResultType.RequestEntityToLarge, "Запрос слишком велик"),
                 HttpStatusCode.Unauthorized => new ErrorResult(ErrorResultType.Unauthorized, "Авторизация не пройдена"),
                 _ => new ErrorResult(ErrorResultType.UnknownRestStatus, "Неизвестный статус ответа сервера"),
             };

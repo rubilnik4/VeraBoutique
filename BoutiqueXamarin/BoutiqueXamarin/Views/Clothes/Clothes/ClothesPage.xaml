@@ -27,52 +27,53 @@
                         Text="Фильтр"/>
             </Grid>
 
-            <StackLayout Grid.Row="1"
-                         Orientation="Vertical"
-                         BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
-                        <Grid>
-                            <Grid.Resources>
-                                <Style x:Key="LabelClothesItemStyle" 
-                                   TargetType="{x:Type Label}" >
-                                    <Setter Property="HorizontalTextAlignment" Value="Center" />
-                                </Style>
+            <ScrollView Grid.Row="1">
+                <StackLayout Orientation="Vertical"
+                             BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style x:Key="LabelClothesItemStyle"
+                                           TargetType="{x:Type Label}">
+                                        <Setter Property="HorizontalTextAlignment" Value="Center" />
+                                    </Style>
 
-                                <ControlTemplate x:Key="ClothesItemTemplate">
-                                    <StackLayout BindingContext="{TemplateBinding BindingContext}"
-                                                 x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ClothesDetailCommand}"/>
-                                        </StackLayout.GestureRecognizers>
+                                    <ControlTemplate x:Key="ClothesItemTemplate">
+                                        <StackLayout BindingContext="{TemplateBinding BindingContext}"
+                                                     x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ClothesDetailCommand}" />
+                                            </StackLayout.GestureRecognizers>
 
-                                        <Image Source="{Binding ImageSource}"
-                                               Aspect="AspectFit" />
-                                        <Label Style="{StaticResource LabelClothesItemStyle}"
-                                               Text="{Binding Name}" />
-                                        <Label Style="{StaticResource LabelClothesItemStyle}"
-                                               Text="{Binding Price}" />
-                                    </StackLayout>
-                                </ControlTemplate>
-                            </Grid.Resources>
+                                            <Image Source="{Binding ImageSource}"
+                                                   Aspect="AspectFit"/>
+                                            <Label Style="{StaticResource LabelClothesItemStyle}"
+                                                   Text="{Binding Name}" />
+                                            <Label Style="{StaticResource LabelClothesItemStyle}"
+                                                   Text="{Binding Price}" />
+                                        </StackLayout>
+                                    </ControlTemplate>
+                                </Grid.Resources>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                            <ContentView Grid.Column="0" 
-                                         BindingContext="{Binding ClothesViewModelItemLeft}"
-                                         ControlTemplate="{StaticResource ClothesItemTemplate}"/>
+                                <ContentView Grid.Column="0"
+                                             BindingContext="{Binding ClothesViewModelItemLeft}"
+                                             ControlTemplate="{StaticResource ClothesItemTemplate}" />
 
-                            <ContentView Grid.Column="1" 
-                                         BindingContext="{Binding ClothesViewModelItemRight}"
-                                         ControlTemplate="{StaticResource ClothesItemTemplate}"/>
+                                <ContentView Grid.Column="1"
+                                             BindingContext="{Binding ClothesViewModelItemRight}"
+                                             ControlTemplate="{StaticResource ClothesItemTemplate}" />
 
-                        </Grid>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>

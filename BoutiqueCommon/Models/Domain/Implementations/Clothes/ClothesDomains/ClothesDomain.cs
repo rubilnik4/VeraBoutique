@@ -16,13 +16,12 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
     public class ClothesDomain : ClothesBase, IClothesDomain
     {
         public ClothesDomain(IClothesBase clothes)
-           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                  clothes.GenderType, clothes.ClothesTypeName)
+           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.GenderType, clothes.ClothesTypeName)
         { }
 
-        public ClothesDomain(int id, string name, string description, decimal price, byte[] image,
+        public ClothesDomain(int id, string name, string description, decimal price,
                              GenderType genderType, string clothesTypeName)
-            : base(id, name, description, price, image, genderType, clothesTypeName)
+            : base(id, name, description, price, genderType, clothesTypeName)
         { }
     }
 }

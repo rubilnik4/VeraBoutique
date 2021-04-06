@@ -26,11 +26,6 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
         decimal Price { get; }
 
         /// <summary>
-        /// Изображение
-        /// </summary>
-        byte[] Image { get; }
-
-        /// <summary>
         /// Тип пола одежды
         /// </summary>
         GenderType GenderType { get; }

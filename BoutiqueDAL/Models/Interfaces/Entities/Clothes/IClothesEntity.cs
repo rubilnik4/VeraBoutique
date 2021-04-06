@@ -12,6 +12,11 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
     public interface IClothesEntity : IClothesBase, IEntityModel<int>
     {
         /// <summary>
+        /// Изображение
+        /// </summary>
+        byte[]? Image { get; }
+
+        /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>
         GenderEntity? Gender { get; }

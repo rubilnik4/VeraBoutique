@@ -60,5 +60,52 @@ namespace BoutiqueCommonXUnit.Extensions.CollectionExtensions
             Assert.True(collectionZip.Select(stringTuple => stringTuple.SecondString).
                                       SequenceEqual(collectionSecond));
         }
+
+        /// <summary>
+        /// Разбить массив на пачки
+        /// </summary>
+        [Fact]
+        public void SelectChunk_Ok()
+        {
+            var collection = Enumerable.Range(1, 7);
+            const int chunks = 3;
+
+            var collectionChunked = collection.SelectChunk(chunks).ToList();
+
+            Assert.Equal(3, collectionChunked.Count);
+            Assert.Equal(3, collectionChunked[0].Count());
+            Assert.Equal(3, collectionChunked[1].Count());
+            Assert.Single(collectionChunked[2]);
+        }
+
+        /// <summary>
+        /// Разбить массив на пачки. Превышение длины массива
+        /// </summary>
+        [Fact]
+        public void SelectChunk_FirstOnly()
+        {
+            var collection = Enumerable.Range(1, 7).ToList();
+            const int chunks = 8;
+
+            var collectionChunked = collection.SelectChunk(chunks).ToList();
+
+            Assert.Single(collectionChunked);
+            Assert.Equal(collection.Count, collectionChunked[0].Count());
+        }
+
+        /// <summary>
+        /// Разбить массив на пачки. Неверное значение деления
+        /// </summary>
+        [Fact]
+        public void SelectChunk_OutOfRange()
+        {
+            var collection = Enumerable.Range(1, 7).ToList();
+            const int chunks = 0;
+
+            var collectionChunked = collection.SelectChunk(chunks).ToList();
+
+            Assert.Single(collectionChunked);
+            Assert.Equal(collection.Count, collectionChunked[0].Count());
+        }
     }
 }

@@ -51,6 +51,27 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         }
 
         /// <summary>
+        /// Получить изображение
+        /// </summary>
+        [Fact]
+        public async Task GetImage_Ok()
+        {
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var clothesEntity = clothesEntities.First();
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
+            var database = GetDatabase(clothesTable);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable),
+                                                                    clothesEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+
+            var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
+
+            Assert.True(clothesResults.OkStatus);
+            Assert.True(clothesResults.Value.SequenceEqual(clothesEntity.Image));
+        }
+
+        /// <summary>
         /// База данных
         /// </summary>
         private static Mock<IBoutiqueDatabase> GetDatabase(IGenderTable genderTable, IClothesTypeTable clothesTypeTable,
@@ -58,6 +79,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             new Mock<IBoutiqueDatabase>().
             Void(mock => mock.Setup(database => database.GendersTable).Returns(genderTable)).
             Void(mock => mock.Setup(database => database.ClotheTypeTable).Returns(clothesTypeTable)).
+            Void(mock => mock.Setup(database => database.ClothesTable).Returns(clothesTable));
+
+        /// <summary>
+        /// База данных
+        /// </summary>
+        private static Mock<IBoutiqueDatabase> GetDatabase(IClothesTable clothesTable) =>
+            new Mock<IBoutiqueDatabase>().
             Void(mock => mock.Setup(database => database.ClothesTable).Returns(clothesTable));
 
         /// <summary>

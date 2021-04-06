@@ -23,17 +23,11 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// Вид одежды. 
         /// </summary>
         private static IEnumerable<IClothesMainDomain> ClothesTShirts =>
-            new List<ClothesMainDomain>
-            {
-                new (0,"Футболка 1","Футболка тестовая 1", 1000, ImageResource, GenderInitialize.Male,
-                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
-                new (0,"Футболка 2","Футболка тестовая 2", 2000, ImageResource, GenderInitialize.Male,
-                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
-                new (0,"Футболка 3","Футболка тестовая 3", 3000, ImageResource, GenderInitialize.Male,
-                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes),
-                new (0,"Футболка 4","Футболка тестовая 4", 4000, ImageResource, GenderInitialize.Male,
-                     ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes, SizeGroupInitialize.TshirtSizes)
-            };
+            Enumerable.Range(1, 25).
+            Select(index => new ClothesMainDomain(0, $"Футболка {index}", $"Футболка тестовая шерстяная {index}",
+                                                  index * 1000, ImageResource, GenderInitialize.Male,
+                                                  ClothesTypeInitialize.TshirtClothesType, ColorInitialize.ColorClothes,
+                                                  SizeGroupInitialize.TshirtSizes));
 
         /// <summary>
         /// Тестовое изображение

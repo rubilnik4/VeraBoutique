@@ -16,5 +16,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType);
+
+        /// <summary>
+        /// Получить изображение одежды по идентификатору
+        /// </summary>
+        Task<IResultValue<byte[]>> GetImage(int id);
     }
 }

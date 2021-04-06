@@ -32,13 +32,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TEntity>> FindShortIdAsync(TId id) =>
+        public async Task<IResultValue<TEntity>> FindByIdAsync(TId id) =>
             await FindAsyncWrapper(() => _databaseSet.AsNoTracking().FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TEntity>> FindIdAsync(TId id) =>
+        public async Task<IResultValue<TEntity>> FindMainByIdAsync(TId id) =>
             await FindAsyncWrapper(() => EntitiesIncludes.AsNoTracking().
                                          FirstOrDefaultAsync(IdPredicate(id))!,
                                    id);
@@ -46,13 +46,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        public async Task<IResultCollection<TEntity>> FindShortIdsAsync(IEnumerable<TId> ids) =>
+        public async Task<IResultCollection<TEntity>> FindByIdsAsync(IEnumerable<TId> ids) =>
             await FindEntityAsync(() => _databaseSet.AsNoTracking().Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>
         /// Вернуть полные записи из таблицы по идентификаторам асинхронно
         /// </summary>
-        public async Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids) =>
+        public async Task<IResultCollection<TEntity>> FindMainByIdsAsync(IEnumerable<TId> ids) =>
             await FindEntityAsync(() => EntitiesIncludes.AsNoTracking().Where(IdsPredicate(ids)).ToListAsync());
 
         /// <summary>

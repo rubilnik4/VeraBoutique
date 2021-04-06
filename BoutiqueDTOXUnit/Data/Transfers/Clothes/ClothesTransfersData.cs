@@ -21,11 +21,12 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         public static IReadOnlyCollection<ClothesMainTransfer> ClothesMainTransfers =>
             ClothesData.ClothesMainDomains.
             Select(clothes => 
-                new ClothesMainTransfer(clothes, 
-                                    new GenderTransfer(clothes.Gender), 
-                                    new ClothesTypeTransfer(clothes.ClothesType),
-                                    clothes.Colors.Select(color => new ColorTransfer(color)),
-                                    clothes.SizeGroups.Select(sizeGroup => new SizeGroupMainTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
+                new ClothesMainTransfer(clothes,
+                                        clothes.Image,
+                                        new GenderTransfer(clothes.Gender), 
+                                        new ClothesTypeTransfer(clothes.ClothesType),
+                                        clothes.Colors.Select(color => new ColorTransfer(color)),
+                                        clothes.SizeGroups.Select(sizeGroup => new SizeGroupMainTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
             ToList();
 
         /// <summary>

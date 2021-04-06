@@ -4,10 +4,9 @@
              xmlns:prism="http://prismlibrary.com"
              x:Class="BoutiqueXamarin.App">
     <Application.Resources>
-        <!--<Style x:Key="MyBodyStyle" 
-                   TargetType="Label"
-                   BaseResourceKey="BodyStyle">
-            <Setter Property="TextColor" Value="" />
-        </Style>-->
+        <Style TargetType="{x:Type Label}"
+               BaseResourceKey="BodyStyle">
+            <Setter Property="TextColor" Value="Accent" />
+        </Style>
     </Application.Resources>
 </prism:PrismApplication>

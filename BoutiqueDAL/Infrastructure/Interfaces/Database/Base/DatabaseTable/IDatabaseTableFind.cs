@@ -18,22 +18,22 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Вернуть запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FindShortIdAsync(TId id);
+        Task<IResultValue<TEntity>> FindByIdAsync(TId id);
 
         /// <summary>
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
-        Task<IResultValue<TEntity>> FindIdAsync(TId id);
+        Task<IResultValue<TEntity>> FindMainByIdAsync(TId id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
         /// </summary>
-        Task<IResultCollection<TEntity>> FindShortIdsAsync(IEnumerable<TId> ids);
+        Task<IResultCollection<TEntity>> FindByIdsAsync(IEnumerable<TId> ids);
 
         /// <summary>
         /// Вернуть полные записи из таблицы по идентификаторам асинхронно
         /// </summary>
-        Task<IResultCollection<TEntity>> FindIdsAsync(IEnumerable<TId> ids);
+        Task<IResultCollection<TEntity>> FindMainByIdsAsync(IEnumerable<TId> ids);
 
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности

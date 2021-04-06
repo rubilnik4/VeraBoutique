@@ -18,6 +18,11 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
         where TSize: ISizeBase
     {
         /// <summary>
+        /// Изображение
+        /// </summary>
+        byte[] Image { get; }
+
+        /// <summary>
         /// Тип пола
         /// </summary>
         TGender Gender { get; }

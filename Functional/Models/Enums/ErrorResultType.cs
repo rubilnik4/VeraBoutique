@@ -24,6 +24,7 @@
         GatewayTimeout,
         InternalServerError,
         RequestTimeout,
+        RequestEntityToLarge,
         Unauthorized,
         UnknownRestStatus,
     }

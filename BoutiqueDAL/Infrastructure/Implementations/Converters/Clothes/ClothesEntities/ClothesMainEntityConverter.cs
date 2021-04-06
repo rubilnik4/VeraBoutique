@@ -70,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
         public override IResultValue<IClothesMainDomain> FromEntity(ClothesEntity clothesEntity) =>
-            GetClothesFunc(clothesEntity).
+            GetClothesFunc(clothesEntity, clothesEntity.Image).
             ResultValueCurryOk(GetGender(clothesEntity.Gender)).
             ResultValueCurryOk(GetClothesType(clothesEntity.ClothesType)).
             ResultValueCurryOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites)).
@@ -81,17 +81,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesMainDomain clothesMainDomain) =>
-            new ClothesEntity(clothesMainDomain, clothesMainDomain.Gender.GenderType,
-                 clothesMainDomain.ClothesType.Name,
-                 ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id),
-                 SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id));
+            new ClothesEntity(clothesMainDomain, clothesMainDomain.Image,
+                              clothesMainDomain.Gender.GenderType, clothesMainDomain.ClothesType.Name,
+                              ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id),
+                              SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id));
 
         /// <summary>
         /// Функция получения информации об одежде
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes, byte[] image) =>
             new ResultValue<ClothesFunc>(
-                (gender, clothesType, colors, sizes) => new ClothesMainDomain(clothes, gender, clothesType, colors, sizes));
+                (gender, clothesType, colors, sizes) => new ClothesMainDomain(clothes, image, gender, clothesType, colors, sizes));
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов

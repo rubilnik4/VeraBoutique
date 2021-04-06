@@ -10,6 +10,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using Functional.FunctionalExtensions.Async;
@@ -18,6 +19,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace BoutiqueMVC.Controllers.Implementations.Clothes
 {
@@ -56,5 +58,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
             await _clothesDatabaseService.GetClothes(genderType, clothesType).
             ResultCollectionOkTaskAsync(clothes => _clothesTransferConverter.ToTransfers(clothes)).
             ToActionResultCollectionTaskAsync<int, ClothesTransfer>();
+
+        /// <summary>
+        /// Получить изображение одежды по идентификатору
+        /// </summary>
+        [HttpGet("Image/{id}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<byte[]>> GetImage(int id) =>
+            await _clothesDatabaseService.GetImage(id).
+            ToImageResultValueTaskAsync();
     }
 }

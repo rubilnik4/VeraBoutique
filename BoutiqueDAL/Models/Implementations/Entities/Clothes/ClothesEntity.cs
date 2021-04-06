@@ -15,29 +15,28 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     {
         public ClothesEntity(int id, string name, string description, decimal price, byte[] image,
                              GenderType genderType, string clothesTypeName)
-            :this(id, name, description, price, image, genderType, clothesTypeName, null, null, null, null)
+            : this(id, name, description, price, image, genderType, clothesTypeName, null, null, null, null)
         { }
 
-        public ClothesEntity(IClothesBase clothes)
-            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image, 
+        public ClothesEntity(IClothesBase clothes, byte[] image)
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
                    clothes.GenderType, clothes.ClothesTypeName, null, null, null, null)
         { }
 
-        public ClothesEntity(IClothesBase clothes,
+        public ClothesEntity(IClothesBase clothes, byte[] image,
                              GenderType genderType, string clothesTypeName,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
-           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                  genderType, clothesTypeName, null, null,
-                  clothesColorComposites, clothesSizeGroupComposites)
+           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
+                  genderType, clothesTypeName, null, null, clothesColorComposites, clothesSizeGroupComposites)
         { }
 
-        public ClothesEntity(IClothesBase clothes,
+        public ClothesEntity(IClothesBase clothes, byte[] image,
                              GenderEntity gender, ClothesTypeEntity clothesType,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
-            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                   gender.GenderType,  clothesType.Name, gender, clothesType,
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
+                   gender.GenderType, clothesType.Name, gender, clothesType,
                    clothesColorComposites, clothesSizeGroupComposites)
         { }
 
@@ -46,14 +45,20 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
                              GenderEntity? gender, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
-          : base(id, name, description, price, image, genderType, clothesTypeName)
+          : base(id, name, description, price, genderType, clothesTypeName)
         {
+            Image = image;
             Gender = gender;
             ClothesType = clothesType;
             ClothesColorComposites = clothesColorComposites?.ToList();
             ClothesSizeGroupComposites = clothesSizeGroupComposites?.ToList();
         }
-        
+
+        /// <summary>
+        /// Изображение
+        /// </summary>
+        public byte[] Image { get; }
+
         /// <summary>
         /// Связующая сущность типа одежды
         /// </summary>

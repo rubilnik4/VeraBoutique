@@ -11,6 +11,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
+using BoutiqueCommonXUnit.Properties;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes
@@ -32,11 +33,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const decimal price = 0.55m;
             const GenderType genderType = GenderType.Child;
             const string categoryName = "Одежа";
-            byte[] image = Properties.Resources.TestImage;
-            var clothesShort = new ClothesDomain(id, name, description, price, image, genderType, categoryName);
+            var clothes = new ClothesDomain(id, name, description, price, genderType, categoryName);
 
-            int clothesHash = HashCode.Combine(id, name, description, price, image, genderType, categoryName);
-            Assert.Equal(clothesHash, clothesShort.GetHashCode());
+            int clothesHash = HashCode.Combine(id, name, description, price, genderType, categoryName);
+            Assert.Equal(clothesHash, clothes.GetHashCode());
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
-            byte[] image = Properties.Resources.TestImage;
+            byte[] image = Resources.TestImage;
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeDomain("Тряпье нательное", "Тряпье");
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
@@ -83,7 +83,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesMain_Equal_Color()
         {
             var first = ClothesData.ClothesDomains.First();
-            var second =new ClothesMainDomain(first, GenderData.GenderCategoryDomains.First(), 
+            var image = Resources.TestImage;
+            var second =new ClothesMainDomain(first, image, GenderData.GenderCategoryDomains.First(), 
                                               ClothesTypeData.ClothesTypeMainDomains.First(),
                                               ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);
 

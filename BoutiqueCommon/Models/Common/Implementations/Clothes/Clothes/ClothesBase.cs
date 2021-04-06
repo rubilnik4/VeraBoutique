@@ -12,14 +12,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
     /// </summary>
     public abstract class ClothesBase : IClothesBase
     {
-        protected ClothesBase(int id, string name, string description, decimal price, byte[] image, 
-                              GenderType genderType, string clothesTypeName)
+        protected ClothesBase(int id, string name, string description, decimal price, GenderType genderType, string clothesTypeName)
         {
             Id = id;
             Name = name;
             Description = description;
             Price = price;
-            Image = image;
             GenderType = genderType;
             ClothesTypeName = clothesTypeName;
         }
@@ -45,11 +43,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         public decimal Price { get; }
 
         /// <summary>
-        /// Изображение
-        /// </summary>
-        public byte[] Image { get; }
-
-        /// <summary>
         /// Тип пола одежды
         /// </summary>
         public GenderType GenderType { get; }
@@ -60,18 +53,19 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         public string ClothesTypeName { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesBase clothes && Equals(clothes);
+        public override bool Equals(object? obj) => 
+            obj is IClothesBase clothes && Equals(clothes);
 
         public bool Equals(IClothesBase? other) =>
             other?.Id == Id && 
             other?.Name == Name && 
             other?.Description == Description && 
             other?.Price == Price &&
-            other?.Image.SequenceEqual(Image) == true &&
             GenderType == other.GenderType &&
             ClothesTypeName == other.ClothesTypeName;
 
-        public override int GetHashCode() => HashCode.Combine(Id, Name, Description, Price, Image, GenderType, ClothesTypeName);
+        public override int GetHashCode() =>
+            HashCode.Combine(Id, Name, Description, Price, GenderType, ClothesTypeName);
         #endregion
     }
 }

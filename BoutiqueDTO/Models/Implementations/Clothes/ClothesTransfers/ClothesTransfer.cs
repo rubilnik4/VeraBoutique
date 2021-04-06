@@ -14,14 +14,13 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
     public class ClothesTransfer : ClothesBase, IClothesTransfer
     {
         public ClothesTransfer(IClothesBase clothes)
-            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.Image,
-                   clothes.GenderType, clothes.ClothesTypeName)
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.GenderType, clothes.ClothesTypeName)
         { }
         
         [JsonConstructor]
-        public ClothesTransfer(int id, string name, string description, decimal price, byte[] image,
-                                    GenderType genderType, string clothesTypeName)
-            : base(id, name, description, price, image, genderType, clothesTypeName)
+        public ClothesTransfer(int id, string name, string description, decimal price,
+                               GenderType genderType, string clothesTypeName)
+            : base(id, name, description, price, genderType, clothesTypeName)
         { }
     }
 }

@@ -56,7 +56,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
                                         Returns(deleteFunc)).
             Void(tableMock => tableMock.Setup(table => table.Remove()).
                                         Returns(resultDelete)).
-            Void(tableMock => tableMock.Setup(table => table.FindShortIdAsync(It.IsAny<TestEnum>())).
+            Void(tableMock => tableMock.Setup(table => table.FindByIdAsync(It.IsAny<TestEnum>())).
                   
             ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
 

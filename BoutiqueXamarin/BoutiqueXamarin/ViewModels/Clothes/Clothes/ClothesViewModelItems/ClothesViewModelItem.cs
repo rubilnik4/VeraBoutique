@@ -46,8 +46,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Изображение
         /// </summary>
-        public ImageSource ImageSource =>
-            ImageSource.FromStream(() => new MemoryStream(_clothesDomain.Image));
+        public ImageSource? ImageSource { get; } = null;
+        //    ImageSource.FromStream(() => new MemoryStream(_clothesDomain.Image));
 
         /// <summary>
         /// Кнопка перехода на страницу детализации одежды

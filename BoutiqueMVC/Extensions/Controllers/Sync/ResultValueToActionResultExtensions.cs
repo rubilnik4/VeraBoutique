@@ -25,6 +25,14 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
                 : GetBadRequestByErrors<TId>(@this.Errors);
 
         /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера с изображением
+        /// </summary>
+        public static ActionResult ToImageResultValue(this IResultValue<byte[]> @this) =>
+            @this.OkStatus
+                ? new FileContentResult(@this.Value, "image/jpeg")
+                : GetBadRequestByErrors(@this.Errors);
+
+        /// <summary>
         /// Преобразовать результирующий ответ в ответ контроллера со значением
         /// </summary>
         public static ActionResult<TTransfer> ToActionResultValue<TId, TTransfer>(this IResultValue<TTransfer> @this)

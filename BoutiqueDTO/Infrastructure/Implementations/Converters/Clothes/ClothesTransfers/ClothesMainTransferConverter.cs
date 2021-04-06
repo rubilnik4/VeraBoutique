@@ -66,17 +66,17 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать одежду в трансферную модель
         /// </summary>
         public override ClothesMainTransfer ToTransfer(IClothesMainDomain clothesMainDomain) =>
-            new ClothesMainTransfer(clothesMainDomain,
-                                _genderTransferConverter.ToTransfer(clothesMainDomain.Gender),
-                                _clothesTypeShortTransferConverter.ToTransfer(clothesMainDomain.ClothesType),
-                                _colorTransferConverter.ToTransfers(clothesMainDomain.Colors),
-                                _sizeGroupMainTransferConverter.ToTransfers(clothesMainDomain.SizeGroups));
+            new ClothesMainTransfer(clothesMainDomain, clothesMainDomain.Image,
+                                    _genderTransferConverter.ToTransfer(clothesMainDomain.Gender),
+                                    _clothesTypeShortTransferConverter.ToTransfer(clothesMainDomain.ClothesType),
+                                    _colorTransferConverter.ToTransfers(clothesMainDomain.Colors),
+                                    _sizeGroupMainTransferConverter.ToTransfers(clothesMainDomain.SizeGroups));
 
         /// <summary>
         /// Преобразовать одежду из трансферной модели
         /// </summary>
         public override IResultValue<IClothesMainDomain> FromTransfer(ClothesMainTransfer clothesMainTransfer) =>
-              GetClothesFunc(clothesMainTransfer).
+              GetClothesFunc(clothesMainTransfer, clothesMainTransfer.Image).
               ResultValueCurryOk(_genderTransferConverter.GetDomain(clothesMainTransfer.Gender)).
               ResultValueCurryOk(_clothesTypeShortTransferConverter.GetDomain(clothesMainTransfer.ClothesType)).
               ResultValueCurryOk(_colorTransferConverter.GetDomains(clothesMainTransfer.Colors)).
@@ -86,9 +86,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Функция получения одежды
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes, byte[] image) =>
             new ResultValue<ClothesFunc>(
                 (gender, clothesTypeShort, colors, sizeGroups) => 
-                    new ClothesMainDomain(clothes, gender, clothesTypeShort, colors, sizeGroups));
+                    new ClothesMainDomain(clothes, image, gender, clothesTypeShort, colors, sizeGroups));
     }
 }

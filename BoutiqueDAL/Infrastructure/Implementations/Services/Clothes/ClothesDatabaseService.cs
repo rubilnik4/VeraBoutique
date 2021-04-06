@@ -21,6 +21,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
@@ -62,5 +63,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.GenderType == genderType &&
                                                                            clothesEntity.ClothesTypeName == clothesType)).
             ResultCollectionBindOkTaskAsync(clothesDomains => _clothesEntityConverter.FromEntities(clothesDomains));
+
+        /// <summary>
+        /// Получить изображение одежды по идентификатору
+        /// </summary>
+        public async Task<IResultValue<byte[]>> GetImage(int id) =>
+             await _clothesTable.
+             FindByIdAsync(id).
+             ResultValueOkTaskAsync(clothes => clothes.Image);
     }
 }
