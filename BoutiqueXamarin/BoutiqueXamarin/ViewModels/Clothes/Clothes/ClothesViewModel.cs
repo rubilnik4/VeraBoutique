@@ -61,15 +61,18 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// </summary>
         protected override async Task<IResultError> InitializeAction(ClothesNavigationParameters clothesParameters) =>
             await _clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
-            ResultCollectionVoidOkTaskAsync(clothes => ClothesViewModelColumnItems = GetClothesItems(clothes, _clothesDetailNavigationService));
+            ResultCollectionVoidOkTaskAsync(clothes => ClothesViewModelColumnItems = GetClothesItems(clothes,
+                                                                                                     _clothesRestService,
+                                                                                                     _clothesDetailNavigationService));
 
         /// <summary>
         /// Преобразовать в модели одежды
         /// </summary>
         public static IReadOnlyCollection<ClothesViewModelColumnItem> GetClothesItems(IEnumerable<IClothesDomain> clothesDomains,
+                                                                                      IClothesRestService clothesRestService,
                                                                                       IClothesDetailNavigationService clothesDetailNavigationService) =>
             clothesDomains.
-            Select(clothesDomain => new ClothesViewModelItem(clothesDomain, clothesDetailNavigationService)).
+            Select(clothesDomain => new ClothesViewModelItem(clothesDomain, clothesRestService, clothesDetailNavigationService)).
             ToList().
             Map(clothesItems => (clothesItems.Where((clothes, index) => index % 2 == 0),
                                  clothesItems.Where((clothes, index) => index % 2 != 0))).

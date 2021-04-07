@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using Prism.Commands;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;

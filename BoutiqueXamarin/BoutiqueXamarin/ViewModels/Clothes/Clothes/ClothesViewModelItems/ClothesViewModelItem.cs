@@ -2,7 +2,11 @@
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Models.Implementations.NotifyTasks;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.Models.Interfaces.Result;
 using Prism.Commands;
 using Xamarin.Forms;
 
@@ -13,11 +17,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// </summary>
     public class ClothesViewModelItem
     {
-        public ClothesViewModelItem(IClothesDomain clothesDomain, IClothesDetailNavigationService clothesDetailNavigationService)
+        public ClothesViewModelItem(IClothesDomain clothesDomain, IClothesRestService clothesRestService,
+                                    IClothesDetailNavigationService clothesDetailNavigationService)
         {
             _clothesDomain = clothesDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
-
+            Image = new NotifyResultTask<byte[]>(() => GetImageSource(clothesRestService, clothesDomain.Id));
             ClothesDetailCommand = new DelegateCommand(async () => await ToClothesDetail());
         }
 
@@ -46,8 +51,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Изображение
         /// </summary>
-        public ImageSource? ImageSource { get; } = null;
-        //    ImageSource.FromStream(() => new MemoryStream(_clothesDomain.Image));
+        public NotifyResultTask<byte[]> Image { get; }
+        //    ;
 
         /// <summary>
         /// Кнопка перехода на страницу детализации одежды
@@ -59,5 +64,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// </summary>
         private async Task ToClothesDetail() =>
             await _clothesDetailNavigationService.NavigateTo(_clothesDomain.Id);
+
+        /// <summary>
+        /// Преобразовать изображение в поток
+        /// </summary>
+        private static Task<IResultValue<byte[]>> GetImageSource(IClothesRestService clothesRestService, int clothesId) =>
+            clothesRestService.GetImageAsync(clothesId);
+        // ResultValueOkTaskAsync(image => ImageSource.FromStream(() => new MemoryStream(image)));
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Extensions.HashCodeExtensions;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
@@ -57,10 +58,9 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var sizeGroups = new List<ISizeGroupMainDomain> { new SizeGroupMainDomain(ClothesSizeType.Shirt, 1, sizes) };
             var clothes = new ClothesMainDomain(id, name, description, price, image, gender, clothesType, colors, sizeGroups);
 
-            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description, image),
-                                               gender.GetHashCode(), clothesType.GetHashCode(),
-                                               colors.Average(color => color.GetHashCode()),
-                                               sizeGroups.Average(size => size.GetHashCode()));
+            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description),
+                                               image, gender.GetHashCode(), clothesType.GetHashCode(),
+                                               colors.GetHashCodes(), sizeGroups.GetHashCodes());
             Assert.Equal(clothesHash, clothes.GetHashCode());
         }
 

@@ -75,8 +75,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(HashCode.Combine(Id, Image, Name, Price, Description, Image),
-                             Gender.GetHashCode(), ClothesType.GetHashCode(),
+            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description), 
+                             Image, Gender.GetHashCode(), ClothesType.GetHashCode(),
                              Colors.GetHashCodes(), SizeGroups.GetHashCodes());
         #endregion
     }

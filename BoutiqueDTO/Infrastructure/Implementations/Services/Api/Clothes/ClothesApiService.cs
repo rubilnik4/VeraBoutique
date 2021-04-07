@@ -32,5 +32,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
             Map(parameters => ApiRestRequest.GetJsonRequest(ControllerName, parameters)).
             MapAsync(route => RestClient.ExecuteAsync<List<ClothesTransfer>>(route)).
             ToRestResultCollectionAsync();
+
+        /// <summary>
+        /// Получить изображение одежды
+        /// </summary>
+        public async Task<IResultValue<byte[]>> GetImage(int clothesId) =>
+            await ApiRestRequest.GetJsonRequest(clothesId, ControllerName).
+            MapAsync(route => RestClient.ExecuteAsync<byte[]>(route)).
+            ToRestResultValueAsync();
     }
 }

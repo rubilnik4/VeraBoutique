@@ -4,6 +4,8 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDTO.Extensions.RestResponses.Async;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
@@ -11,6 +13,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -49,5 +52,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
             await new ResultValue<IClothesApiService>(_clothesApiService).
             ResultValueBindOkToCollectionAsync(api => api.GetClothes(genderType, clothesType)).
             ResultCollectionBindOkTaskAsync(transfers => _clothesTransferConverter.FromTransfers(transfers));
+
+        /// <summary>
+        /// Получить изображение одежды
+        /// </summary>
+        public async Task<IResultValue<byte[]>> GetImageAsync(int clothesId) =>
+           await _clothesApiService.GetImage(clothesId);
     }
 }

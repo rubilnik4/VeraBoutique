@@ -82,7 +82,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             var request = ApiRestRequest.GetJsonRequest(id, ControllerName);
 
             Assert.Equal(Method.GET, request.Method);
-            Assert.True("api/Test/id".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True("api/Test/{id}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
             Assert.Equal(id.ToString(), request.Parameters.First().Value!);
         }
 

@@ -7,6 +7,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Interfaces.Result;
 using MockQueryable.Moq;
 using Moq;
 
@@ -22,5 +23,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
         /// </summary>
         public static IGenderTable GetGenderTable(IEnumerable<GenderEntity> genders) =>
             new GenderTable(GenderDatabaseSetMock.GetGenderDbSet(genders).Object);
+
+        /// <summary>
+        /// Получить таблицу одежды
+        /// </summary>
+        public static Mock<IGenderTable> GetGenderTable(IResultCollection<GenderEntity> genderEntities) =>
+            new Mock<IGenderTable>().
+            Void(tableMock => tableMock.Setup(table => table.FindsExpressionAsync(It.IsAny<Func<IQueryable<GenderEntity>, IQueryable<GenderEntity>>>())).
+                              ReturnsAsync(genderEntities));
     }
 }

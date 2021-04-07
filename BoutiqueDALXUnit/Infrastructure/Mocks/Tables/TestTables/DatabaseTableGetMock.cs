@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDALXUnit.Data;
+using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -12,13 +14,19 @@ using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
-namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
+namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
 {
     /// <summary>
     /// Таблицы баз данных. Получение
     /// </summary>
     public static class DatabaseTableGetMock
     {
+        /// <summary>
+        /// Таблица базы данных категорий одежды
+        /// </summary>
+        public static ITestTable GetTestDatabaseTable(IEnumerable<TestEntity> testEntities) =>
+            new TestTable(TestDatabaseSetMock.GetDbSetTest(testEntities).Object);
+
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
@@ -56,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable
         /// Функция получения по идентификатору. Не найдено
         /// </summary>
         public static Func<TestEnum, IResultValue<TestEntity>> FirstNotFoundFunc(IResultCollection<TestEntity> entitiesResult) =>
-            id => entitiesResult.ResultValueBindOk(entities => new ResultValue<TestEntity>(Errors.NotFoundError));
+            _ => entitiesResult.ResultValueBindOk(_ => new ResultValue<TestEntity>(Errors.NotFoundError));
 
         /// <summary>
         /// Получить тестовую таблицу

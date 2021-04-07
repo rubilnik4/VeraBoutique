@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -13,5 +14,10 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
         /// Получить данные одежды
         /// </summary>
         Task<IResultCollection<IClothesDomain>> GetClothesAsync(GenderType genderType, string clothesType);
+
+        /// <summary>
+        /// Получить изображение одежды
+        /// </summary>
+        Task<IResultValue<byte[]>> GetImageAsync(int clothesId);
     }
 }

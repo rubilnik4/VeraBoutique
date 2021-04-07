@@ -8,6 +8,7 @@ using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
 using BoutiqueMVCXUnit.Data;
+using BoutiqueMVCXUnit.Properties;
 using Functional.Models.Implementations.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -65,6 +66,56 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.IsType<NotFoundResult>(actionResult.Result);
             var notFoundRequest = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundRequest.StatusCode);
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть корректный объект
+        /// </summary>
+        [Fact]
+        public void ToImageResultValue_Id_OkRequest()
+        {
+            var image = Resources.TestImage;
+            var imageResult = new ResultValue<byte[]>(image);
+
+            var actionResult = imageResult.ToImageResultValue();
+
+            Assert.IsType<FileContentResult>(actionResult);
+            var fileContentResult = (FileContentResult)actionResult;
+            Assert.True(image.SequenceEqual(fileContentResult.FileContents));
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToImageResultValue_Id_BadRequest()
+        {
+            var initialError = ErrorData.ErrorTest;
+            var imageResult = new ResultValue<byte[]>(initialError);
+
+            var actionResult = imageResult.ToImageResultValue();
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Преобразовать результирующий ответ в ответ контроллера. Вернуть объект с ошибкой не найденного элемента
+        /// </summary>
+        [Fact]
+        public void ToImageResultValue_Id_NotFound()
+        {
+            var initialError = ErrorData.NotFoundError;
+            var testTransfer = new ResultValue<byte[]>(initialError);
+
+            var actionResult = testTransfer.ToImageResultValue();
+
+            Assert.IsType<NotFoundResult>(actionResult);
+            var notFoundRequest = (NotFoundResult)actionResult;
             Assert.Equal(StatusCodes.Status404NotFound, notFoundRequest.StatusCode);
         }
 

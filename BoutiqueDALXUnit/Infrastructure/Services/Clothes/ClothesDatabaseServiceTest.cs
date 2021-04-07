@@ -1,14 +1,19 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 using Moq;
 using Xunit;
 
@@ -47,7 +52,38 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
 
             Assert.True(clothesResults.OkStatus);
             Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value.Where(clothes => clothes.GenderType == genderType &&
-                                                                                                 clothes.ClothesTypeName == clothesType)));
+                                                                                                clothes.ClothesTypeName == clothesType)));
+        }
+
+        /// <summary>
+        /// Получить одежду без изображений. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetClothes_Error()
+        {
+            var errorInitial = ErrorData.DatabaseError;
+            var genderEntities = GenderEntitiesData.GenderEntities;
+            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var genderType = genderEntities.First().GenderType;
+            string clothesType = clothesTypeEntities.First().Name;
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var clothesResult = new ResultCollection<ClothesEntity>(errorInitial);
+            var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities, clothesEntities);
+            var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
+                                                                                                           clothesEntities);
+            var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
+            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
+            var database = GetDatabase(genderTable, clothesTypeTable, clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
+                                                                    clothesEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+
+            var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -69,6 +105,50 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
 
             Assert.True(clothesResults.OkStatus);
             Assert.True(clothesResults.Value.SequenceEqual(clothesEntity.Image));
+        }
+
+        /// <summary>
+        /// Получить изображение. Ошибка базы
+        /// </summary>
+        [Fact]
+        public async Task GetImage_ErrorDatabase()
+        {
+            var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
+            var errorInitial = ErrorData.DatabaseError;
+            var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
+            var database = GetDatabase(clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
+                                                                    clothesEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+
+            var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Получить изображение. Отсутствие значения
+        /// </summary>
+        [Fact]
+        public async Task GetImage_NotFound()
+        {
+            var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
+            var errorInitial = ErrorData.NotFoundError;
+            var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
+            var database = GetDatabase(clothesTable.Object);
+            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
+                                                                    clothesEntityConverter,
+                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+
+            var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(ErrorResultType.ValueNotFound, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

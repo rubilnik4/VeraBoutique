@@ -59,5 +59,43 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Clothes
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
         }
+
+        /// <summary>
+        /// Получить изображение одежды
+        /// </summary>
+        [Fact]
+        public async Task GetImageAsync_Ok()
+        {
+            var clothes = ClothesTransfersData.ClothesMainTransfers;
+            var clothesInitial = clothes.First();
+           
+            var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.OK, clothes);
+            var restClient = RestClientMock.GetRestClient(restRequest);
+            var clothesApiService = new ClothesApiService(restClient.Object);
+
+            var result = await clothesApiService.GetImage(clothesInitial.Id);
+
+            Assert.True(result.OkStatus);
+            Assert.True(clothesInitial.Image.SequenceEqual(result.Value));
+        }
+
+        /// <summary>
+        /// Получить изображение одежды. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetImageAsync_Error()
+        {
+            var clothes = ClothesTransfersData.ClothesMainTransfers;
+            var clothesInitial = clothes.First();
+
+            var restRequest = RestClientMock.GetRestResponse(HttpStatusCode.BadRequest, clothes);
+            var restClient = RestClientMock.GetRestClient(restRequest);
+            var clothesApiService = new ClothesApiService(restClient.Object);
+
+            var result = await clothesApiService.GetImage(clothesInitial.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
     }
 }

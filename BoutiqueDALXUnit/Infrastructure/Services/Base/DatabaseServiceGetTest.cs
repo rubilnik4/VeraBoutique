@@ -8,7 +8,7 @@ using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
-using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTable;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Moq;
@@ -27,15 +27,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Get_OK()
         {
-            var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testEntities = TestEntitiesData.TestEntities;
+            var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          testConverter);
 
             var testResult = await testService.Get();
-            var testEntitiesGet = testConverter.FromEntities(testResultEntities.Value);
+            var testEntitiesGet = testConverter.FromEntities(testEntities);
 
             Assert.True(testResult.OkStatus);
             Assert.True(testResult.Value.SequenceEqual(testEntitiesGet.Value));
@@ -67,7 +67,29 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task GetId_OK()
         {
-            var testResultEntities = TestEntitiesData.TestResultEntities;
+            var testEntities = TestEntitiesData.TestEntities;
+            var testEntity = testEntities.First();
+            var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
+            var testConverter = TestEntityConverterMock.TestEntityConverter;
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
+                                                                         testConverter);
+
+            var testResult = await testService.Get(testEntity.Id);
+            var testEntityGet = testConverter.FromEntity(testEntity);
+
+            Assert.True(testResult.OkStatus);
+            Assert.True(testResult.Value.Equals(testEntityGet.Value));
+        }
+
+        /// <summary>
+        /// Проверить получение по идентификатору. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetId_Error()
+        {
+            var errorInitial = ErrorData.DatabaseError;
+            var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
@@ -75,11 +97,9 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
                                                                          testConverter);
 
             var testResult = await testService.Get(It.IsAny<TestEnum>());
-            var testEntitiesGet = testConverter.FromEntity(SearchInEntities.FirstEntity(testResultEntities.Value, 
-                                                                                        testResult.Value.Id));
-
-            Assert.True(testResult.OkStatus);
-            Assert.True(testResult.Value.Equals(testEntitiesGet.Value));
+         
+            Assert.True(testResult.HasErrors);
+            Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
         }
 
         /// <summary>

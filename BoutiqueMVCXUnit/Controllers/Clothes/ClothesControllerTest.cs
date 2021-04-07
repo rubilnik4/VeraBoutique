@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
+using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
@@ -15,6 +16,8 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
+using BoutiqueMVCXUnit.Controllers.Base.Mocks;
+using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -94,7 +97,9 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
 
             var imageResult = await clothesController.GetImage(clotheId);
 
-            Assert.True(imageResult.Value.SequenceEqual(clothesDomain.Image));
+            Assert.IsType<FileContentResult>(imageResult.Result);
+            var fileContentResult = (FileContentResult)imageResult.Result;
+            Assert.True(fileContentResult.FileContents.SequenceEqual(clothesDomain.Image));
         }
 
         /// <summary>
@@ -119,6 +124,27 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
             Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Получить изображение. Элемент не найден
+        /// </summary>
+        [Fact]
+        public async Task GetImage_NotFound()
+        {
+            var clothesDomain = ClothesData.ClothesMainDomains.First();
+            var initialError = ErrorData.NotFoundError;
+            var clothesResult = new ResultValue<byte[]>(initialError);
+            var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
+            var clothesController = new ClothesController(clothesDatabaseService.Object,
+                                                       ClothesTransferConverterMock.ClothesMainTransferConverter,
+                                                       ClothesTransferConverterMock.ClothesTransferConverter);
+
+            var actionResult = await clothesController.GetImage(clothesDomain.Id);
+
+            Assert.IsType<NotFoundResult>(actionResult.Result);
+            var notFoundResult = (NotFoundResult)actionResult.Result;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
         }
 
         /// <summary>

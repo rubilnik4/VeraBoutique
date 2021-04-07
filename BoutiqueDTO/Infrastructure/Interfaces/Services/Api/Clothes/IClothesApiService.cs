@@ -16,5 +16,10 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes
         /// Получить одежду по типу пола и категории
         /// </summary>
         Task<IResultCollection<ClothesTransfer>> GetClothes(GenderType genderType, string clothesType);
+
+        /// <summary>
+        /// Получить изображение одежды
+        /// </summary>
+        Task<IResultValue<byte[]>> GetImage(int clothesId);
     }
 }
