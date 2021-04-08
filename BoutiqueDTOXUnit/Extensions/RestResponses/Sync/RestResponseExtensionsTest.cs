@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using BoutiqueDTO.Extensions.RestResponses.Sync;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using RestSharp;

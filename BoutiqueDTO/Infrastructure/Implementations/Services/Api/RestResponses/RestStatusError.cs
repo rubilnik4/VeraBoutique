@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -14,16 +15,15 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses
         /// <summary>
         /// Преобразовать статус в результирующую ошибку
         /// </summary>
-        public static IErrorResult RestStatusToErrorResult(IRestResponse restResponse) =>
-            restResponse.StatusCode switch
+        public static IErrorResult RestStatusToErrorResult(HttpResponseMessage httpResponse) =>
+            httpResponse.StatusCode switch
             {
-                0 => new ErrorResult(ErrorResultType.ServerNotFound, $"Сервер {restResponse.ResponseUri} не найден"),
-                HttpStatusCode.BadGateway => new ErrorResult(ErrorResultType.BadGateway, $"Маршрут {restResponse.ResponseUri} не найден"),
-                HttpStatusCode.BadRequest => new ErrorResult(ErrorResultType.BadRequest, $"Некорректный запрос. {restResponse.ErrorMessage}"),
+                0 => new ErrorResult(ErrorResultType.ServerNotFound, $"Сервер {httpResponse.RequestMessage.RequestUri} не найден"),
+                HttpStatusCode.BadGateway => new ErrorResult(ErrorResultType.BadGateway, $"Маршрут {httpResponse.RequestMessage.RequestUri} не найден"),
+                HttpStatusCode.BadRequest => new ErrorResult(ErrorResultType.BadRequest, $"Некорректный запрос. {httpResponse.ReasonPhrase}"),
                 HttpStatusCode.GatewayTimeout => new ErrorResult(ErrorResultType.GatewayTimeout, "Время ожидания истекло"),
-                HttpStatusCode.InternalServerError => new ErrorResult(ErrorResultType.InternalServerError, $"Ошибка сервера. {restResponse.ErrorMessage}",
-                                                                      restResponse.ErrorException),
-                HttpStatusCode.NotFound => new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент не найден. {restResponse.ErrorMessage}"),
+                HttpStatusCode.InternalServerError => new ErrorResult(ErrorResultType.InternalServerError, $"Ошибка сервера. {httpResponse.ReasonPhrase}"),
+                HttpStatusCode.NotFound => new ErrorResult(ErrorResultType.ValueNotFound, $"Элемент не найден. {httpResponse.ReasonPhrase}"),
                 HttpStatusCode.RequestTimeout => new ErrorResult(ErrorResultType.RequestTimeout, "Время ожидания ответа истекло"),
                 HttpStatusCode.RequestEntityTooLarge => new ErrorResult(ErrorResultType.RequestEntityToLarge, "Запрос слишком велик"),
                 HttpStatusCode.Unauthorized => new ErrorResult(ErrorResultType.Unauthorized, "Авторизация не пройдена"),

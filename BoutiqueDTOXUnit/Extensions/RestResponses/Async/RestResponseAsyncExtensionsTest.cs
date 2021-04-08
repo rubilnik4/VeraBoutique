@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
-using BoutiqueDTO.Extensions.RestResponses.Sync;
 using Functional.Models.Enums;
 using RestSharp;
 using Xunit;
@@ -31,7 +30,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask = GetRestResponseTask(restResult);
 
-            var resultValue = await restResultTask.ToRestResultValueAsync();
+            var resultValue = await restResultTask.ToRestResultValueTaskAsync();
 
             Assert.True(resultValue.OkStatus);
             Assert.Equal(value, resultValue.Value);
@@ -51,7 +50,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask = GetRestResponseTask(restResult);
             
-            var resultValue = await restResultTask.ToRestResultValueAsync();
+            var resultValue = await restResultTask.ToRestResultValueTaskAsync();
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
@@ -73,7 +72,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask =  GetRestResponseTask(restResult);
             
-            var resultCollection = await restResultTask.ToRestResultCollectionAsync();
+            var resultCollection = await restResultTask.ToRestResultCollectionTaskAsync();
 
             Assert.True(resultCollection.OkStatus);
             Assert.True(values.SequenceEqual(resultCollection.Value));
@@ -93,7 +92,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask = GetRestResponseTask(restResult);
             
-            var resultCollection = await restResultTask.ToRestResultCollectionAsync();
+            var resultCollection = await restResultTask.ToRestResultCollectionTaskAsync();
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
@@ -111,7 +110,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask = GetRestResponseTask(restResult);
 
-            var resultCollection = await restResultTask.ToRestResultErrorAsync();
+            var resultCollection = await restResultTask.ToRestResultErrorTaskAsync();
 
             Assert.True(resultCollection.OkStatus);
         }
@@ -128,7 +127,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
             var restResultTask = GetRestResponseTask(restResult);
 
-            var resultCollection = await restResultTask.ToRestResultErrorAsync();
+            var resultCollection = await restResultTask.ToRestResultErrorTaskAsync();
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);

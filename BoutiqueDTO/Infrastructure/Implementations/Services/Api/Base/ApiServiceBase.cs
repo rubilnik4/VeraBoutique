@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Extensions.ReflectionExtensions;
+﻿using System.Net.Http;
+using BoutiqueCommon.Extensions.ReflectionExtensions;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
@@ -13,15 +14,15 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         where TTransfer : ITransferModel<TId>
         where TId : notnull
     {
-        protected ApiServiceBase(IRestClient restClient)
+        protected ApiServiceBase(HttpClient httpClient)
         {
-            RestClient = restClient;
+            HttpClient = httpClient;
         }
 
         /// <summary>
         /// Клиент для Api сервисов
         /// </summary>
-        protected IRestClient RestClient { get; }
+        protected HttpClient HttpClient { get; }
 
         /// <summary>
         /// Наименование контроллера

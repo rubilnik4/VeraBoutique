@@ -5,7 +5,9 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.NotifyTasks;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Prism.Commands;
 using Xamarin.Forms;
@@ -22,7 +24,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         {
             _clothesDomain = clothesDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
-            Image = new NotifyResultTask<byte[]>(() => GetImageSource(clothesRestService, clothesDomain.Id));
+            Image = new NotifyResultTask<ImageSource>(GetImageSource(clothesRestService, _clothesDomain.Id),
+                                                      ImageSource.FromStream(() => new MemoryStream(new byte[0])));
             ClothesDetailCommand = new DelegateCommand(async () => await ToClothesDetail());
         }
 
@@ -51,8 +54,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Изображение
         /// </summary>
-        public NotifyResultTask<byte[]> Image { get; }
-        //    ;
+        public NotifyResultTask<ImageSource> Image { get; }
 
         /// <summary>
         /// Кнопка перехода на страницу детализации одежды
@@ -68,8 +70,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Преобразовать изображение в поток
         /// </summary>
-        private static Task<IResultValue<byte[]>> GetImageSource(IClothesRestService clothesRestService, int clothesId) =>
-            clothesRestService.GetImageAsync(clothesId);
-        // ResultValueOkTaskAsync(image => ImageSource.FromStream(() => new MemoryStream(image)));
+        private static async Task<IResultValue<ImageSource>> GetImageSource(IClothesRestService clothesRestService, int clothesId) =>
+            await clothesRestService.GetImageAsync(clothesId).
+            ResultValueOkTaskAsync(image => ImageSource.FromStream(() => new MemoryStream(image)));
     }
 }

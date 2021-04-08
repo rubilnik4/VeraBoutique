@@ -18,9 +18,15 @@ namespace BoutiqueDTO.Extensions.Json.Async
         /// <summary>
         /// Преобразовать json в трансферную модель
         /// </summary>
-        public static async Task<IResultValue<TTransfer>> ToTransferJsonAsync<TId, TTransfer>(this Task<string> json)
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            await json.MapTaskAsync(jsonAwaited => jsonAwaited.ToTransferJson<TId, TTransfer>());
+        public static async Task<IResultValue<TValue>> ToTransferValueJsonAsync<TValue>(this Task<string> json)
+            where TValue : notnull =>
+            await json.MapTaskAsync(jsonAwaited => jsonAwaited.ToTransferValueJson<TValue>());
+
+        /// <summary>
+        /// Преобразовать json в коллекцию трансферных моделей
+        /// </summary>
+        public static async Task<IResultCollection<TValue>> ToTransferCollectionJsonAsync<TValue>(this Task<string> json)
+            where TValue : notnull =>
+            await json.MapTaskAsync(jsonAwaited => jsonAwaited.ToTransferCollectionJson<TValue>());
     }
 }

@@ -73,6 +73,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                                                                                       IClothesDetailNavigationService clothesDetailNavigationService) =>
             clothesDomains.
             Select(clothesDomain => new ClothesViewModelItem(clothesDomain, clothesRestService, clothesDetailNavigationService)).
+            Map(tt => tt).
             ToList().
             Map(clothesItems => (clothesItems.Where((clothes, index) => index % 2 == 0),
                                  clothesItems.Where((clothes, index) => index % 2 != 0))).

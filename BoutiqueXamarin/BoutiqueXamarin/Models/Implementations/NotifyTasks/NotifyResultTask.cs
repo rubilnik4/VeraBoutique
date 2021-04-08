@@ -13,11 +13,11 @@ namespace BoutiqueXamarin.Models.Implementations.NotifyTasks
     public class NotifyResultTask<T> : BindableBase
         where T : notnull
     {
-        public NotifyResultTask(Func<Task<IResultValue<T>>> resultValueTask)
+        public NotifyResultTask(Task<IResultValue<T>> resultValueTask, T defaultValue)
         {
-            resultValueTask.Invoke();
-           //_resultValueTask = resultValueTask;
-            //WaitResultValue().ConfigureAwait(false);
+            _resultValueTask = resultValueTask;
+            _defaultValue = defaultValue;
+            WaitResultValue(resultValueTask).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -26,10 +26,15 @@ namespace BoutiqueXamarin.Models.Implementations.NotifyTasks
         private readonly Task<IResultValue<T>> _resultValueTask;
 
         /// <summary>
+        /// Значение по умолчанию
+        /// </summary>
+        private readonly T _defaultValue;
+
+        /// <summary>
         /// Значение при успешном завершении
         /// </summary>
-        public T OkResult => 
-            _resultValueTask.Result.Value ;
+        public T OkResult =>
+            IsCompleted ? _resultValueTask.Result.Value : _defaultValue;
 
         /// <summary>
         /// Статус задачи
@@ -60,8 +65,8 @@ namespace BoutiqueXamarin.Models.Implementations.NotifyTasks
         /// <summary>
         /// Запуск задачи с обновлением полей
         /// </summary>
-        private async Task WaitResultValue() =>
-            await _resultValueTask.
+        private async Task WaitResultValue(Task<IResultValue<T>> resultValueTask) =>
+            await resultValueTask.
             VoidTaskAsync(_ => RaisePropertyChanged(nameof(Status))).
             VoidTaskAsync(_ => RaisePropertyChanged(nameof(IsCompleted))).
             VoidTaskAsync(_ => RaisePropertyChanged(nameof(OkStatus))).

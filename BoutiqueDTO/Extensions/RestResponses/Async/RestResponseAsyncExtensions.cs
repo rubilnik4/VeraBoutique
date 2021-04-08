@@ -1,38 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using BoutiqueDTO.Extensions.RestResponses.Sync;
-using Functional.FunctionalExtensions.Async;
+using BoutiqueDTO.Extensions.Json.Async;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses;
+using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
-using RestSharp;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Async
 {
     /// <summary>
-    /// Методы расширения ответа Api сервера для задачи-объекта
+    /// Методы расширения ответа Api сервера
     /// </summary>
     public static class RestResponseAsyncExtensions
     {
         /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ со значением
         /// </summary>
-        public static async Task<IResultValue<TValue>> ToRestResultValueAsync<TValue>(this Task<IRestResponse<TValue>> @this)
-             where TValue : notnull =>
-            await @this.
-            MapTaskAsync(restResponse => restResponse.ToRestResultValue());
+        public static async Task<IResultValue<TValue>> ToRestResultValueAsync<TValue>(this HttpResponseMessage @this)
+            where TValue : notnull =>
+            @this.IsSuccessStatusCode 
+                ? await @this.Content.ReadAsStringAsync().ToTransferValueJsonAsync<TValue>()
+                : RestStatusError.RestStatusToErrorResult(@this).ToResultValue<TValue>();
 
         /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ с коллекцией
         /// </summary>
-        public static async Task<IResultCollection<TValue>> ToRestResultCollectionAsync<TValue>(this Task<IRestResponse<List<TValue>>> @this)
-             where TValue : notnull =>
-            await @this.
-            MapTaskAsync(restResponse => restResponse.ToRestResultCollection());
-
-        /// <summary>
-        /// Преобразовать ответ сервера в результирующий ответ со значением
-        /// </summary>
-        public static async Task<IResultError> ToRestResultErrorAsync(this Task<IRestResponse> @this) =>
-            await @this.
-            MapTaskAsync(restResponse => restResponse.ToRestResultError());
+        public static async Task<IResultCollection<TValue>> ToRestResultCollectionAsync<TValue>(this HttpResponseMessage @this)
+            where TValue : notnull =>
+              @this.IsSuccessStatusCode
+                ? await @this.Content.ReadAsStringAsync().ToTransferCollectionJsonAsync<TValue>()
+                : RestStatusError.RestStatusToErrorResult(@this).ToResultCollection<TValue>();
     }
 }

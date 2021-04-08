@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.ReflectionExtensions;
 using BoutiqueCommon.Extensions.StringExtensions;
+using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using RestSharp;
@@ -21,106 +26,63 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
         where TTransfer : ITransferModel<TId>
         where TId : notnull
     {
-        protected ApiService(IRestClient restClient)
-            : base(restClient)
+        protected ApiService(HttpClient httpClient)
+            : base(httpClient)
         { }
 
         /// <summary>
         /// Получить данные Api
         /// </summary>
-        public IResultCollection<TTransfer> Get() =>
-            RestClient.Execute<List<TTransfer>>(ApiRestRequest.GetJsonRequest(ControllerName)).
-            ToRestResultCollection();
-
-        /// <summary>
-        /// Получить данные по идентификатору Api
-        /// </summary>
-        public IResultValue<TTransfer> Get(TId id) =>
-            RestClient.Execute<TTransfer>(ApiRestRequest.GetJsonRequest(id, ControllerName)).
-            ToRestResultValue();
-
-        /// <summary>
-        /// Добавить данные Api
-        /// </summary>
-        public IResultValue<TId> Post(TTransfer transfer) =>
-            RestClient.Execute<TId>(ApiRestRequest.PostJsonRequest<TId, TTransfer>(transfer, ControllerName)).
-            ToRestResultValue();
-
-        /// <summary>
-        /// Добавить коллекцию данных Api
-        /// </summary>
-        public IResultCollection<TId> PostCollection(IEnumerable<TTransfer> transfers) =>
-            RestClient.Execute<List<TId>>(ApiRestRequest.PostJsonRequest<TId, TTransfer>(transfers, ControllerName)).
-            ToRestResultCollection();
-
-        /// <summary>
-        /// Обновить данные Api
-        /// </summary>
-        public IResultError Put(TTransfer transfer) =>
-            RestClient.Execute(ApiRestRequest.PutJsonRequest<TId, TTransfer>(transfer, ControllerName)).
-            ToRestResultError();
-
-        /// <summary>
-        /// Удалить все данные Api
-        /// </summary>
-        public IResultError Delete() =>
-            RestClient.Execute(ApiRestRequest.DeleteJsonRequest(ControllerName)).
-            ToRestResultError();
-
-        /// <summary>
-        /// Удалить данные по идентификатору Api
-        /// </summary>
-        public IResultValue<TTransfer> Delete(TId id) =>
-            RestClient.Execute<TTransfer>(ApiRestRequest.DeleteJsonRequest(id, ControllerName)).
-            ToRestResultValue();
-
-        /// <summary>
-        /// Получить данные Api
-        /// </summary>
         public async Task<IResultCollection<TTransfer>> GetAsync() =>
-            await RestClient.ExecuteAsync<List<TTransfer>>(ApiRestRequest.GetJsonRequest(ControllerName)).
-            ToRestResultCollectionAsync();
+             await HttpClient.GetAsync(ApiRestRequest.GetRequest(ControllerName)).
+             ToRestResultCollectionTaskAsync<TTransfer>();
 
         /// <summary>
         /// Получить данные по идентификатору Api
         /// </summary>
         public async Task<IResultValue<TTransfer>> GetAsync(TId id) =>
-            await RestClient.ExecuteAsync<TTransfer>(ApiRestRequest.GetJsonRequest(id, ControllerName)).
-            ToRestResultValueAsync();
+            await HttpClient.GetAsync(ApiRestRequest.GetRequest(id, ControllerName)).
+            ToRestResultValueTaskAsync<TTransfer>();
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<TId>> PostAsync(TTransfer transfer) =>
-            await RestClient.ExecuteAsync<TId>(ApiRestRequest.PostJsonRequest<TId, TTransfer>(transfer, ControllerName)).
-            ToRestResultValueAsync();
+            await transfer.ToJsonTransfer().
+            ResultValueOkAsync(json => HttpClient.PostAsync(ApiRestRequest.PostRequest(ControllerName),
+                                                            new StringContent(json))).
+            ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TId>());
 
         /// <summary>
         /// Добавить коллекцию данных Api
         /// </summary>
         public async Task<IResultCollection<TId>> PostCollectionAsync(IEnumerable<TTransfer> transfers) =>
-            await RestClient.ExecuteAsync<List<TId>>(ApiRestRequest.PostJsonRequest<TId, TTransfer>(transfers, ControllerName)).
-            ToRestResultCollectionAsync();
+            await transfers.ToJsonTransfer().
+            ResultValueOkAsync(json => HttpClient.PostAsync(ApiRestRequest.PostRequestCollection(ControllerName),
+                                                            new StringContent(json))).
+            ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TId>());
 
         /// <summary>
         /// Обновить данные Api
         /// </summary>
         public async Task<IResultError> PutAsync(TTransfer transfer) =>
-            await RestClient.ExecuteAsync(ApiRestRequest.PutJsonRequest<TId, TTransfer>(transfer, ControllerName)).
-            ToRestResultErrorAsync();
+            await transfer.ToJsonTransfer().
+            ResultValueOkAsync(json => HttpClient.PutAsync(ApiRestRequest.PostRequest(ControllerName),
+                                                            new StringContent(json))).
+            ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
 
         /// <summary>
         /// Удалить все данные Api
         /// </summary>
         public async Task<IResultError> DeleteAsync() =>
-            await RestClient.ExecuteAsync(ApiRestRequest.DeleteJsonRequest(ControllerName)).
-            ToRestResultErrorAsync();
+            await HttpClient.DeleteAsync(ApiRestRequest.GetRequest(ControllerName)).
+            ToRestResultErrorTaskAsync();
 
         /// <summary>
         /// Удалить данные по идентификатору Api
         /// </summary>
         public async Task<IResultValue<TTransfer>> DeleteAsync(TId id) =>
-            await RestClient.ExecuteAsync<TTransfer>(ApiRestRequest.DeleteJsonRequest(id, ControllerName)).
-            ToRestResultValueAsync();
+            await HttpClient.DeleteAsync(ApiRestRequest.GetRequest(id, ControllerName)).
+            ToRestResultValueTaskAsync<TTransfer>();
     }
 }

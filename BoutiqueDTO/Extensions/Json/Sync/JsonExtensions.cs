@@ -1,4 +1,6 @@
-﻿using BoutiqueDTO.Models.Interfaces.Base;
+﻿using System.Collections.Generic;
+using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
@@ -15,18 +17,47 @@ namespace BoutiqueDTO.Extensions.Json.Sync
         /// <summary>
         /// Преобразовать json в трансферную модель
         /// </summary>
-        public static IResultValue<TTransfer> ToTransferJson<TId, TTransfer>(this string json)
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.DeserializeObject<TTransfer>(json),
-                                                     GetJsonError<TId, TTransfer>());
+        public static IResultValue<TValue> ToTransferValueJson<TValue>(this string json)
+            where TValue : notnull =>
+            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.DeserializeObject<TValue>(json),
+                                                     GetJsonError<TValue>());
+
+        /// <summary>
+        /// Преобразовать json в трансферные модели
+        /// </summary>
+        public static IResultCollection<TValue> ToTransferCollectionJson<TValue>(this string json)
+           where TValue : notnull =>
+            ResultCollectionTryExtensions.ResultCollectionTry(() => JsonConvert.DeserializeObject<List<TValue>>(json),
+                                                              GetJsonListError<TValue>());
+
+        /// <summary>
+        /// Преобразовать json в трансферную модель
+        /// </summary>
+        public static IResultValue<string> ToJsonTransfer<TValue>(this TValue transfer)
+            where TValue : notnull =>
+            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.SerializeObject(transfer),
+                                                    GetJsonError<TValue>());
+
+        /// <summary>
+        /// Преобразовать json в трансферные модели
+        /// </summary>
+        public static IResultValue<string> ToJsonTransfer<TValue>(this IEnumerable<TValue> transfers)
+            where TValue : notnull =>
+            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.SerializeObject(transfers),
+                                                    GetJsonError<TValue>());
 
         /// <summary>
         /// Ошибка конвертации в Json
         /// </summary>
-        private static IErrorResult GetJsonError<TId, TTransfer>()
-            where TTransfer : ITransferModel<TId>
-            where TId : notnull =>
-            new ErrorResult(ErrorResultType.JsonConvertion, $"Ошибка конвертации в Json типа [{typeof(TTransfer).Name}]");
+        private static IErrorResult GetJsonError<TValue>()
+            where TValue : notnull =>
+            new ErrorResult(ErrorResultType.JsonConvertion, $"Ошибка конвертации Json типа [{typeof(TValue).Name}]");
+
+        /// <summary>
+        /// Ошибка конвертации в Json коллекции
+        /// </summary>
+        private static IErrorResult GetJsonListError<TValue>()
+            where TValue : notnull =>
+            new ErrorResult(ErrorResultType.JsonConvertion, $"Ошибка конвертации Json коллекцию типа [{typeof(List<TValue>).Name}]");
     }
 }

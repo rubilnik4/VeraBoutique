@@ -46,8 +46,8 @@
                                                 <TapGestureRecognizer Command="{Binding ClothesDetailCommand}" />
                                             </StackLayout.GestureRecognizers>
 
-                                            <!--<Image Source="{Binding Image.OkResult}"
-                                                   Aspect="AspectFit"/>-->
+                                            <Image Source="{Binding Image.OkResult}"
+                                                   Aspect="AspectFit"/>
                                             <Label Style="{StaticResource LabelClothesItemStyle}"
                                                    Text="{Binding Name}" />
                                             <Label Style="{StaticResource LabelClothesItemStyle}"

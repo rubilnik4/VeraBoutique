@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Extensions.RestResponses.Async;
-using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
@@ -42,6 +41,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes
         public async  Task<IResultCollection<GenderCategoryTransfer>> GetGenderCategoriesAsync() =>
             await RestClient.ExecuteAsync<List<GenderCategoryTransfer>>(ApiRestRequest.GetJsonRequest(ControllerName,
                                                                                                       GenderRoutes.GENDER_CATEGORY_ROUTE)).
-            ToRestResultCollectionAsync();
+            ToRestResultCollectionTaskAsync();
     }
 }

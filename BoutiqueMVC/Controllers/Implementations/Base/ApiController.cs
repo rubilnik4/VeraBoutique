@@ -10,6 +10,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Controllers.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Enums.Identity;
@@ -100,7 +101,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         /// <summary>
         /// Записать данные
         /// </summary>
-        [HttpPost("collection")]
+        [HttpPost(BaseRoutes.POST_COLLECTION_ROUTE)]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

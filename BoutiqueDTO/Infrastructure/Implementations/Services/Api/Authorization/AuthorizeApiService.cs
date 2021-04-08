@@ -26,6 +26,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization
         /// </summary>
         public async Task<IResultValue<string>> AuthorizeJwt(AuthorizeTransfer authorizeTransfer) =>
             await RestClient.ExecuteAsync<string>(ApiRestRequest.PostJsonRequest<(string, string), AuthorizeTransfer>(authorizeTransfer, ControllerName)).
-            ToRestResultValueAsync();
+            ToRestResultValueTaskAsync();
     }
 }

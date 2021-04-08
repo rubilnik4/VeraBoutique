@@ -13,41 +13,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base
         where TId: notnull
     {
         /// <summary>
-        /// Получить данные Api
-        /// </summary>
-        IResultCollection<TTransfer> Get();
-
-        /// <summary>
-        /// Получить данные по идентификатору Api
-        /// </summary>
-        IResultValue<TTransfer> Get(TId id);
-
-        /// <summary>
-        /// Добавить данные Api
-        /// </summary>
-        IResultValue<TId> Post(TTransfer transfer);
-
-        /// <summary>
-        /// Добавить коллекцию данных Api
-        /// </summary>
-        IResultCollection<TId> PostCollection(IEnumerable<TTransfer> transfers);
-
-        /// <summary>
-        /// Обновить данные Api
-        /// </summary>
-        IResultError Put(TTransfer transfer);
-
-        /// <summary>
-        /// Удалить все данные Api
-        /// </summary>
-        IResultError Delete();
-
-        /// <summary>
-        /// Удалить данные по идентификатору Api
-        /// </summary>
-        IResultValue<TTransfer> Delete(TId id);
-
-        /// <summary>
         /// Получение данных
         /// </summary>
         Task<IResultCollection<TTransfer>> GetAsync();
