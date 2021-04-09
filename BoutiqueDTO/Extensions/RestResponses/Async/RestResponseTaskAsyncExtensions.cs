@@ -5,7 +5,6 @@ using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.Models.Interfaces.Result;
-using RestSharp;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Async
 {

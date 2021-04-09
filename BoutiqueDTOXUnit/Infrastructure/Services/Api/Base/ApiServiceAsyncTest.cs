@@ -14,7 +14,6 @@ using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
 using Moq;
-using RestSharp;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base

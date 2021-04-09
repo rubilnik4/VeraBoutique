@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses;
+using System.Net.Http;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using Functional.Models.Enums;
-using RestSharp;
+using Newtonsoft.Json.Serialization;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
@@ -26,9 +27,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         public void HttpStatusCodeStatus(HttpStatusCode httpStatusCode, ErrorResultType errorResultType)
         {
             var restResponse = GetRestResponse(httpStatusCode);
-          
+
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
-            
+
             Assert.Equal(errorResultType, errorResult.ErrorResultType);
         }
 
@@ -49,8 +50,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         public void InternalServerErrorException()
         {
             var exception = new ArgumentNullException();
-            var restResponse = GetRestResponse(HttpStatusCode.InternalServerError, exception);
-         
+            var restResponse = GetRestResponse(HttpStatusCode.InternalServerError, exception.Message);
+
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
             Assert.Equal(ErrorResultType.InternalServerError, errorResult.ErrorResultType);
@@ -60,17 +61,17 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         /// <summary>
         /// Создать ответ сервера
         /// </summary>
-        private static IRestResponse GetRestResponse(HttpStatusCode httpStatusCode) =>
+        private static HttpResponseMessage GetRestResponse(HttpStatusCode httpStatusCode) =>
             GetRestResponse(httpStatusCode, null);
 
         /// <summary>
         /// Создать ответ сервера
         /// </summary>
-        private static IRestResponse GetRestResponse(HttpStatusCode httpStatusCode, Exception exception) =>
-            new RestResponse
+        private static HttpResponseMessage GetRestResponse(HttpStatusCode httpStatusCode, string reasonPhrase) =>
+            new()
             {
                 StatusCode = httpStatusCode,
-                ErrorException = exception
+                ReasonPhrase = reasonPhrase,
             };
     }
 }

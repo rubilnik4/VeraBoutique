@@ -22,7 +22,7 @@ namespace BoutiqueLoader.Factories.Configuration
         /// Получить конфигурацию авторизации
         /// </summary>
         public static async Task<IResultValue<IAuthorizeDomain>> GetConfiguration(IBoutiqueLogger boutiqueLogger) =>
-            await AuthorizeConfigurationManager.GetConfigurationAsync().
+            await AuthorizeConfigurationManager.GetConfiguration().
             ResultValueVoidBadTaskAsync(errors => boutiqueLogger.
                                                   Void(_ => boutiqueLogger.ShowMessage("Ошибка файла авторизации")).
                                                   Void(_ => boutiqueLogger.ShowErrors(errors)));

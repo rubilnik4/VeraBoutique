@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.RestSharp;
@@ -9,18 +10,16 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTrans
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;
-using RestSharp;
 
 namespace BoutiqueLoader.Factories.Services
 {
@@ -32,28 +31,28 @@ namespace BoutiqueLoader.Factories.Services
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static async Task<IResultValue<IRestClient>> GetBoutiqueRestClient(IBoutiqueLogger boutiqueLogger) =>
+        public static async Task<IResultValue<HttpClient>> GetBoutiqueRestClient(IBoutiqueLogger boutiqueLogger) =>
             await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
-            ResultValueOkTaskAsync(config => RestSharpFactory.GetRestClient(config.HostConfiguration));
+            ResultValueOkTaskAsync(config => HttpClientFactory.GetRestClient(config.HostConfiguration));
 
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static async Task<IResultValue<IRestClient>> GetBoutiqueRestClient(string jwtToken, IBoutiqueLogger boutiqueLogger) =>
+        public static async Task<IResultValue<HttpClient>> GetBoutiqueRestClient(string jwtToken, IBoutiqueLogger boutiqueLogger) =>
             await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
-            ResultValueOkTaskAsync(config => RestSharpFactory.GetRestClient(config.HostConfiguration, jwtToken));
+            ResultValueOkTaskAsync(config => HttpClientFactory.GetRestClient(config.HostConfiguration, jwtToken));
 
         /// <summary>
         ///  Получить сервис авторизации
         /// </summary>
-        public static IAuthorizeRestService GetAuthorizeRestService(IRestClient restClient) =>
-             new AuthorizeRestService(new AuthorizeApiService(restClient), new AuthorizeTransferConverter());
+        public static IAuthorizeRestService GetAuthorizeRestService(IRestHttpClient restHttpClient) =>
+             new AuthorizeRestService(restHttpClient, new AuthorizeTransferConverter());
 
         /// <summary>
         /// Получить сервис типа пола
         /// </summary>
-        public static IGenderRestService GetGenderRestService(IRestClient restClient) =>
-             new GenderRestService(new GenderApiService(restClient), new GenderTransferConverter(),
+        public static IGenderRestService GetGenderRestService(IRestHttpClient restHttpClient) =>
+             new GenderRestService(restHttpClient, new GenderTransferConverter(),
                                    new ClothesTypeTransferConverter().
                                    Map(clothesTypeConverter => new CategoryClothesTypeTransferConverter(clothesTypeConverter)).
                                    Map(categoryConverter => new GenderCategoryTransferConverter(categoryConverter)));
@@ -61,40 +60,40 @@ namespace BoutiqueLoader.Factories.Services
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
-        public static ICategoryRestService GetCategoryRestService(IRestClient restClient) =>
-             new CategoryRestService(new CategoryApiService(restClient), new CategoryMainTransferConverter(new GenderTransferConverter()));
+        public static ICategoryRestService GetCategoryRestService(IRestHttpClient restHttpClient) =>
+             new CategoryRestService(restHttpClient, new CategoryMainTransferConverter(new GenderTransferConverter()));
 
         /// <summary>
         /// Получить сервис категорий одежды
         /// </summary>
-        public static IColorRestService GetColorRestService(IRestClient restClient) =>
-             new ColorRestService(new ColorApiService(restClient), new ColorTransferConverter());
+        public static IColorRestService GetColorRestService(IRestHttpClient restHttpClient) =>
+             new ColorRestService(restHttpClient, new ColorTransferConverter());
 
         /// <summary>
         /// Получить сервис типа одежды
         /// </summary>
-        public static IClothesTypeRestService GetClothesTypeRestService(IRestClient restClient) =>
-             new ClothesTypeRestService(new ClothesTypeApiService(restClient),
+        public static IClothesTypeRestService GetClothesTypeRestService(IRestHttpClient restHttpClient) =>
+             new ClothesTypeRestService(restHttpClient,
                                         new ClothesTypeMainTransferConverter(new CategoryTransferConverter()));
 
         /// <summary>
         /// Получить сервис размера одежды
         /// </summary>
-        public static ISizeRestService GetSizeRestService(IRestClient restClient) =>
-             new SizeRestService(new SizeApiService(restClient), new SizeTransferConverter());
+        public static ISizeRestService GetSizeRestService(IRestHttpClient restHttpClient) =>
+             new SizeRestService(restHttpClient, new SizeTransferConverter());
 
         /// <summary>
         /// Получить сервис размера одежды
         /// </summary>
-        public static ISizeGroupRestService GetSizeGroupRestService(IRestClient restClient) =>
-             new SizeGroupRestService(new SizeGroupApiService(restClient),
+        public static ISizeGroupRestService GetSizeGroupRestService(IRestHttpClient restHttpClient) =>
+             new SizeGroupRestService(restHttpClient,
                                       new SizeGroupMainTransferConverter(new SizeTransferConverter()));
 
         /// <summary>
         /// Получить сервис одежды
         /// </summary>
-        public static IClothesRestService GetClothesRestService(IRestClient restClient) =>
-             new ClothesRestService(new ClothesApiService(restClient),
+        public static IClothesRestService GetClothesRestService(IRestHttpClient restHttpClient) =>
+             new ClothesRestService(restHttpClient,
                                     new ClothesTransferConverter(),
                                     new ClothesMainTransferConverter(new GenderTransferConverter(),
                                                                      new ClothesTypeTransferConverter(),

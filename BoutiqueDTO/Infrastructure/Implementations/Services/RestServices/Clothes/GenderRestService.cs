@@ -3,14 +3,16 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
+using BoutiqueDTO.Models.Interfaces.RestClients;
+using BoutiqueDTO.Routes.Clothes;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
@@ -25,19 +27,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class GenderRestService : RestServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderRestService
     {
-        public GenderRestService(IGenderApiService genderApiService, 
+        public GenderRestService(IRestHttpClient restHttpClient,
                                  IGenderTransferConverter genderTransferConverter,
                                  IGenderCategoryTransferConverter genderCategoryTransferConverter)
-            :base(genderApiService, genderTransferConverter)
+            :base(restHttpClient, genderTransferConverter)
         {
-            _genderApiService = genderApiService;
             _genderCategoryTransferConverter = genderCategoryTransferConverter;
         }
-
-        /// <summary>
-        /// Api сервис типа пола
-        /// </summary>
-        private readonly IGenderApiService _genderApiService;
 
         /// <summary>
         /// Конвертер типа пола c категорией в трансферную модель
@@ -47,17 +43,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         /// <summary>
         /// Получить данные типа пола с категорией
         /// </summary>
-        public IResultCollection<IGenderCategoryDomain> GetGenderCategories() =>
-            new ResultValue<IGenderApiService>(_genderApiService).
-            ResultValueBindOkToCollection(api => api.GetGenderCategories()).
-            ResultCollectionBindOk(transfers => _genderCategoryTransferConverter.FromTransfers(transfers));
-
-        /// <summary>
-        /// Получить данные типа пола с категорией
-        /// </summary>
-        public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategoriesAsync() =>
-            await new ResultValue<IGenderApiService>(_genderApiService).
-            ResultValueBindOkToCollectionAsync(api => api.GetGenderCategoriesAsync()).
+        public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories() =>
+            await RestRequest.GetRequest(RestRequest.GetRequest(ControllerName, GenderRoutes.GENDER_CATEGORY_ROUTE)).
+            MapAsync(request => RestHttpClient.GetCollectionAsync<GenderCategoryTransfer>(request)).
             ResultCollectionBindOkTaskAsync(transfers => _genderCategoryTransferConverter.FromTransfers(transfers));
     }
 }

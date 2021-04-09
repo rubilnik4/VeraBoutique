@@ -3,9 +3,8 @@ using System.Net.Http;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
-using RestSharp;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses
+namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses
 {
     /// <summary>
     /// Преобразование rest статуса в результирующую ошибку

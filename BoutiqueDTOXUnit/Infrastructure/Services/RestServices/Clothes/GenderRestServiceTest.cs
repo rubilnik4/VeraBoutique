@@ -27,17 +27,17 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         /// Получение данных
         /// </summary>
         [Fact]
-        public void GetGenderCategories_Ok()
+        public async Task GetGenderCategories_Ok()
         {
             var genders = GenderTransfersData.GenderCategoryTransfers;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(genders);
-            var genderApiService = GenderApiServiceMock.GetGenderApiService(resultGenders);
+            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
             var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
-            var genderRestService = new GenderRestService(genderApiService.Object, genderTransferConverter,
+            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
                                                         genderCategoryTransferConverter);
 
-            var result = genderRestService.GetGenderCategories();
+            var result = await genderRestService.GetGenderCategories();
             var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
 
             Assert.True(result.OkStatus);
@@ -48,7 +48,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         /// Получение данных
         /// </summary>
         [Fact]
-        public void GetGenderCategories_Error()
+        public async Task GetGenderCategories_Error()
         {
             var error = ErrorTransferData.ErrorBadRequest;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(error);
@@ -58,48 +58,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
                                                         genderCategoryTransferConverter);
 
-            var result = genderRestService.GetGenderCategories();
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
-        }
-
-        /// <summary>
-        /// Получение данных
-        /// </summary>
-        [Fact]
-        public async Task GetGenderCategoriesAsync_Ok()
-        {
-            var genders = GenderTransfersData.GenderCategoryTransfers;
-            var resultGenders = new ResultCollection<GenderCategoryTransfer>(genders);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
-            var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
-            var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
-            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
-                                                        genderCategoryTransferConverter);
-
-            var result = await genderRestService.GetGenderCategoriesAsync();
-            var genderDomains = genderCategoryTransferConverter.FromTransfers(genders);
-
-            Assert.True(result.OkStatus);
-            Assert.True(result.Value.SequenceEqual(genderDomains.Value));
-        }
-
-        /// <summary>
-        /// Получение данных
-        /// </summary>
-        [Fact]
-        public async Task GetGenderCategoriesAsync_Error()
-        {
-            var error = ErrorTransferData.ErrorBadRequest;
-            var resultGenders = new ResultCollection<GenderCategoryTransfer>(error);
-            var genderApiServiceGet = GenderApiServiceMock.GetGenderApiService(resultGenders);
-            var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
-            var genderCategoryTransferConverter = GenderTransferConverterMock.GenderCategoryTransferConverter;
-            var genderRestService = new GenderRestService(genderApiServiceGet.Object, genderTransferConverter,
-                                                        genderCategoryTransferConverter);
-
-            var result = await genderRestService.GetGenderCategoriesAsync();
+            var result = await genderRestService.GetGenderCategories();
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

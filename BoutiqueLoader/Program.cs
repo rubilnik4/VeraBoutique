@@ -20,7 +20,6 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
-using RestSharp;
 
 namespace BoutiqueLoader
 {

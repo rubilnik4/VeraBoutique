@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDTO.Extensions.Json.Async;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
@@ -9,23 +10,24 @@ using Functional.Models.Enums;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Extensions.Json.Sync
+namespace BoutiqueDTOXUnit.Extensions.Json.Async
 {
     /// <summary>
-    /// Методы расширения для json. Тесты
+    /// Асинхронные методы расширения для json. Тесты
     /// </summary>
-    public class JsonExtensionsTest
+    public class JsonExtensionsAsyncTest
     {
         /// <summary>
         /// Корректное преобразование
         /// </summary>
         [Fact]
-        public void ToTransferValueJson_Ok()
+        public async Task ToTransferValueJson_Ok()
         {
             var genderTransfer = GenderTransfersData.GenderTransfers.First();
             string genderJson = JsonConvert.SerializeObject(genderTransfer);
+            var taskJson = Task.FromResult(genderJson);
 
-            var genderTransferAfter = genderJson.ToTransferValueJson<GenderTransfer>();
+            var genderTransferAfter = await taskJson.ToTransferValueJsonAsync<GenderTransfer>();
             var genderJsonAfter = genderTransferAfter.Value.ToJsonTransfer();
 
             Assert.True(genderTransferAfter.OkStatus);
@@ -37,12 +39,13 @@ namespace BoutiqueDTOXUnit.Extensions.Json.Sync
         /// Корректное преобразование
         /// </summary>
         [Fact]
-        public void ToTransferCollectionJson_Ok()
+        public async Task ToTransferCollectionJson_Ok()
         {
             var genderTransfer = GenderTransfersData.GenderTransfers;
             string genderJson = JsonConvert.SerializeObject(genderTransfer);
+            var taskJson = Task.FromResult(genderJson);
 
-            var genderTransferAfter = genderJson.ToTransferCollectionJson<GenderTransfer>();
+            var genderTransferAfter = await taskJson.ToTransferCollectionJsonAsync<GenderTransfer>();
             var genderJsonAfter = genderTransferAfter.Value.ToJsonTransfer();
 
             Assert.True(genderTransferAfter.OkStatus);

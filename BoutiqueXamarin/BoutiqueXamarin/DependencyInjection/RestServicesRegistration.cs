@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
@@ -11,7 +12,6 @@ using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Sync;
 using Prism.Ioc;
 using Prism.Unity;
-using RestSharp;
 using Unity;
 
 namespace BoutiqueXamarin.DependencyInjection
@@ -27,21 +27,21 @@ namespace BoutiqueXamarin.DependencyInjection
         public static void RegisterServices(IBoutiqueContainer container) =>
             container.Resolve<IXamarinConfigurationDomain>().
             HostConfiguration.
-            Void(hostConfig => RegisterApiServices(container, RestSharpFactory.GetRestClient(hostConfig))).
+            Void(hostConfig => RegisterApiServices(container, HttpClientFactory.GetRestClient(hostConfig))).
             Void(_ => RegisterRestServices(container));
 
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        private static void RegisterApiServices(IBoutiqueContainer container, IRestClient restClient)
+        private static void RegisterApiServices(IBoutiqueContainer container, HttpClient httpClient)
         {
-            container.Register<IGenderApiService>(service => new GenderApiService(restClient));
-            container.Register<ICategoryApiService>(service => new CategoryApiService(restClient));
-            container.Register<IClothesTypeApiService>(service => new ClothesTypeApiService(restClient));
-            container.Register<IColorApiService>(service => new ColorApiService(restClient));
-            container.Register<ISizeApiService>(service => new SizeApiService(restClient));
-            container.Register<ISizeGroupApiService>(service => new SizeGroupApiService(restClient));
-            container.Register<IClothesApiService>(service => new ClothesApiService(restClient));
+            container.Register<IGenderApiService>(service => new GenderApiService(httpClient));
+            container.Register<ICategoryApiService>(service => new CategoryApiService(httpClient));
+            container.Register<IClothesTypeApiService>(service => new ClothesTypeApiService(httpClient));
+            container.Register<IColorApiService>(service => new ColorApiService(httpClient));
+            container.Register<ISizeApiService>(service => new SizeApiService(httpClient));
+            container.Register<ISizeGroupApiService>(service => new SizeGroupApiService(httpClient));
+            container.Register<IClothesApiService>(service => new ClothesApiService(httpClient));
         }
 
         /// <summary>

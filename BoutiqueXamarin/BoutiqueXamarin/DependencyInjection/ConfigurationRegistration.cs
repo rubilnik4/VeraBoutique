@@ -21,9 +21,9 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация конфигурации
         /// </summary>
-        public static IResultError RegisterConfiguration(IBoutiqueContainer container) =>
-            container.Resolve<IXamarinConfigurationManager>().
-            Map(manager => manager.GetConfiguration()).
-            ResultValueVoidOk(container.Register);
+        public static async Task<IResultError> RegisterConfiguration(IBoutiqueContainer container) =>
+            await container.Resolve<IXamarinConfigurationManager>().
+            MapAsync(manager => manager.GetConfiguration()).
+            ResultValueVoidOkTaskAsync(container.Register);
     }
 }

@@ -2,19 +2,19 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Extensions.RestResponses.Async;
-using BoutiqueDTO.Extensions.RestResponses.Sync;
 using Functional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
 {
     /// <summary>
-    /// Методы расширения ответа Api сервера. Тесты
+    /// Асинхронные методы расширения ответа Api сервера. Тесты
     /// </summary>
-    public class RestResponseAsyncExtensionsTest
+    public class RestResponseTaskAsyncExtensionsTest
     {
         /// <summary>
         /// Преобразование в результирующий ответ
@@ -30,8 +30,9 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
                 Content = new StringContent(value),
                 StatusCode = httpStatusCode,
             };
+            var restResultTask = GetRestResponseTask(restResult);
 
-            var resultValue = await restResult.ToRestResultValueAsync<string>();
+            var resultValue = await restResultTask.ToRestResultValueTaskAsync<string>();
 
             Assert.True(resultValue.OkStatus);
             Assert.Equal(value, resultValue.Value);
@@ -49,8 +50,9 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
                 Content = new StringContent(value),
                 StatusCode = HttpStatusCode.InternalServerError,
             };
-
-            var resultValue = await restResult.ToRestResultValueAsync<string>();
+            var restResultTask = GetRestResponseTask(restResult);
+            
+            var resultValue = await restResultTask.ToRestResultValueTaskAsync<string>();
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
@@ -70,8 +72,9 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
                 Content = new StringContent(values.ToJsonTransfer().Value),
                 StatusCode = httpStatusCode,
             };
-
-            var resultCollection = await restResult.ToRestResultCollectionAsync<string>();
+            var restResultTask =  GetRestResponseTask(restResult);
+            
+            var resultCollection = await restResultTask.ToRestResultCollectionTaskAsync<string>();
 
             Assert.True(resultCollection.OkStatus);
             Assert.True(values.SequenceEqual(resultCollection.Value));
@@ -89,11 +92,53 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
                 Content = new StringContent(values.ToJsonTransfer().Value),
                 StatusCode = HttpStatusCode.InternalServerError,
             };
-
-            var resultCollection = await restResult.ToRestResultCollectionAsync<string>();
+            var restResultTask = GetRestResponseTask(restResult);
+            
+            var resultCollection = await restResultTask.ToRestResultCollectionTaskAsync<string>();
 
             Assert.True(resultCollection.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
         }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ
+        /// </summary>
+        [Fact]
+        public async Task ToRestResultError()
+        {
+            var restResult = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NoContent,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultCollection = await restResultTask.ToRestResultErrorTaskAsync();
+
+            Assert.True(resultCollection.OkStatus);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task ToRestResultError_Error()
+        {
+            var restResult = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultCollection = await restResultTask.ToRestResultErrorTaskAsync();
+
+            Assert.True(resultCollection.HasErrors);
+            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Получить задачу с ответом сервера
+        /// </summary>
+        private static Task<HttpResponseMessage> GetRestResponseTask(HttpResponseMessage httpResponseMessage) =>
+            Task.FromResult(httpResponseMessage);
     }
 }

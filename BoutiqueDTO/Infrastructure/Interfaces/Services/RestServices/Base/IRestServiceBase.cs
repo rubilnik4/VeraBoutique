@@ -8,30 +8,10 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
     /// <summary>
     /// Базовый сервис для данных Api
     /// </summary>
-    public interface IRestServiceBase<in TId, TDomain>
+    public interface IRestServiceBase<TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TId : notnull
     {
-        /// <summary>
-        /// Получить данные
-        /// </summary>
-        IResultCollection<TDomain> Get();
-
-        /// <summary>
-        /// Получить данные по идентификатору
-        /// </summary>
-        IResultValue<TDomain> Get(TId id);
-
-        /// <summary>
-        /// Отправить данные
-        /// </summary>
-        IResultError Post(IEnumerable<TDomain> domains);
-
-        /// <summary>
-        /// Удалить все данные
-        /// </summary>
-        IResultError Delete();
-
         /// <summary>
         /// Получить данные асинхронно
         /// </summary>
@@ -43,13 +23,28 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
         Task<IResultValue<TDomain>> GetAsync(TId id);
 
         /// <summary>
+        /// Отправить данные коллекции асинхронно
+        /// </summary>
+        Task<IResultCollection<TId>> PostAsync(IEnumerable<TDomain> domains);
+
+        /// <summary>
         /// Отправить данные асинхронно
         /// </summary>
-        Task<IResultError> PostAsync(IEnumerable<TDomain> domains);
+        Task<IResultValue<TId>> PostAsync(TDomain domain);
+
+        /// <summary>
+        /// Обновить данные асинхронно
+        /// </summary>
+        Task<IResultError> PutAsync(TDomain domain);
 
         /// <summary>
         /// Удалить все данные асинхронно
         /// </summary>
-        Task<IResultError> DeleteAsync();
+        Task<IResultCollection<TDomain>> DeleteAsync();
+
+        /// <summary>
+        /// Удалить данные по идентификатору асинхронно
+        /// </summary>
+        Task<IResultValue<TDomain>> DeleteAsync(TId id);
     }
 }

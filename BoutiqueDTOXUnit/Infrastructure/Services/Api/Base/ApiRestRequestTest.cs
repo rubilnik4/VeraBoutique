@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
+using BoutiqueDTO.Routes.Clothes;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Transfers;
-using RestSharp;
 using Xunit;
 using Xunit.Sdk;
 
@@ -23,10 +23,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         [Fact]
         public void GetJsonRequest()
         {
-            var request = ApiRestRequest.GetJsonRequest(ControllerName);
+            var request = RestRequest.GetRequest(ControllerName);
 
-            Assert.Equal(Method.GET, request.Method);
-            Assert.True("api/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -36,10 +35,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         public void GetJsonRequest_AdditionalRoute()
         {
             const string additionalRoute = "additionalRoute";
-            var request = ApiRestRequest.GetJsonRequest(ControllerName, additionalRoute);
+            var request = RestRequest.GetRequest(ControllerName, additionalRoute);
 
-            Assert.Equal(Method.GET, request.Method);
-            Assert.True($"api/Test/{additionalRoute}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/{ControllerName}/{additionalRoute}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -53,10 +51,10 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
                 "first",
                 "second",
             };
-            var request = ApiRestRequest.GetJsonRequest(ControllerName, parameters);
+            var request = RestRequest.GetRequest(ControllerName, parameters);
 
-            Assert.Equal(Method.GET, request.Method);
-            Assert.True($"api/Test/{parameters.First()}/{parameters.Last()}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/{ControllerName}/{parameters.First()}/{parameters.Last()}".
+                        Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -66,10 +64,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         public void GetJsonRequest_AdditionalRoute_Empty()
         {
             string additionalRoute = String.Empty;
-            var request = ApiRestRequest.GetJsonRequest(ControllerName, additionalRoute);
+            var request = RestRequest.GetRequest(ControllerName, additionalRoute);
 
-            Assert.Equal(Method.GET, request.Method);
-            Assert.True($"api/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -79,11 +76,22 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         public void GetByIdJsonRequest()
         {
             const int id = 123;
-            var request = ApiRestRequest.GetJsonRequest(id, ControllerName);
+            const string additionalRoute = "additionalRoute";
+            var request = RestRequest.GetRequest(id, ControllerName, additionalRoute);
 
-            Assert.Equal(Method.GET, request.Method);
-            Assert.True("api/Test/{id}".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
-            Assert.Equal(id.ToString(), request.Parameters.First().Value!);
+            Assert.True($"api/{ControllerName}/{additionalRoute}/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Запрос получения по идентификатору
+        /// </summary>
+        [Fact]
+        public void GetByIdAdditionalJsonRequest()
+        {
+            const int id = 123;
+            var request = RestRequest.GetRequest(id, ControllerName);
+
+            Assert.True($"api/{ControllerName}/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -92,11 +100,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         [Fact]
         public void PostJsonRequest()
         {
-            var testTransfer = TestTransferData.TestTransfers.First();
-            var request = ApiRestRequest.PostJsonRequest<TestEnum, TestTransfer>(testTransfer, ControllerName);
+            var request = RestRequest.PostRequest(ControllerName);
 
-            Assert.Equal(Method.POST, request.Method);
-            Assert.True("api/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -105,38 +111,9 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         [Fact]
         public void PostCollectionJsonRequest()
         {
-            var testTransfers = TestTransferData.TestTransfers;
-            var request = ApiRestRequest.PostJsonRequest<TestEnum, TestTransfer>(testTransfers, ControllerName);
+            var request = RestRequest.PostRequestCollection( ControllerName);
 
-            Assert.Equal(Method.POST, request.Method);
-            Assert.True("api/Test/collection".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        /// <summary>
-        /// Запрос на изменение данных
-        /// </summary>
-        [Fact]
-        public void PutJsonRequest()
-        {
-            var testTransfer = TestTransferData.TestTransfers.First();
-            var request = ApiRestRequest.PutJsonRequest<TestEnum, TestTransfer>(testTransfer, ControllerName);
-
-            Assert.Equal(Method.PUT, request.Method);
-            Assert.True("api/Test".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        /// <summary>
-        /// Запрос на удаление данных
-        /// </summary>
-        [Fact]
-        public void DeleteJsonRequest()
-        {
-            var testTransfer = TestTransferData.TestTransfers.First();
-            var request = ApiRestRequest.DeleteJsonRequest(testTransfer.Id, ControllerName);
-
-            Assert.Equal(Method.DELETE, request.Method);
-            Assert.True("api/Test/id".Equals(request.Resource, StringComparison.InvariantCultureIgnoreCase));
-            Assert.Equal(testTransfer.Id.ToString(), request.Parameters.First().Value!);
+            Assert.True($"api/{ControllerName}/{BaseRoutes.POST_COLLECTION_ROUTE}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>

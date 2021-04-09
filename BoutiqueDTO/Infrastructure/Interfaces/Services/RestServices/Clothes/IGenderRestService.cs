@@ -2,7 +2,6 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -17,13 +16,8 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
     public interface IGenderRestService : IRestServiceBase<GenderType, IGenderDomain>
     {
         /// <summary>
-        /// Получить данные типа пола с категорией
-        /// </summary>
-        public IResultCollection<IGenderCategoryDomain> GetGenderCategories();
-
-        /// <summary>
         /// Получить данные типа пола с категорией асинхронно
         /// </summary>
-        public Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategoriesAsync();
+        public Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories();
     }
 }

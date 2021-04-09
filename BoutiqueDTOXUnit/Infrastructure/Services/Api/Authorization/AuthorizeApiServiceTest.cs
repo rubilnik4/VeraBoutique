@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Authorization;
 using BoutiqueDTOXUnit.Data;
-using BoutiqueDTOXUnit.Data.Services.Implementations.Services.Api;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;

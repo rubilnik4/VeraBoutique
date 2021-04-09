@@ -23,7 +23,6 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
-using RestSharp;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -50,10 +49,10 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized() =>
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
-            ResultErrorVoidOk(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
-            ResultErrorBindOk(() => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            Void(_ => InitializeComponent()).
-            ResultErrorVoidOkBadAsync(
+            ResultErrorVoidOkTaskAsync(() => RestServicesRegistration.RegisterServices(BoutiqueContainer)).
+            ResultErrorBindOkBindAsync(() => ProjectRegistration.RegisterProject(BoutiqueContainer)).
+            VoidTaskAsync(_ => InitializeComponent()).
+            ResultErrorVoidOkBadBindAsync(
                 actionOk: () => NavigationService.NavigateAsync(nameof(ChoicePage)),
                 actionBad: errors => throw new NotImplementedException());
 

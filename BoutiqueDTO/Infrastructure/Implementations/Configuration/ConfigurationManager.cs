@@ -30,29 +30,16 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Configuration
         private readonly ITransferConverter<TId, TDomain, TTransfer> _configurationConverter;
 
         /// <summary>
-        /// Получить конфигурацию в текстовом виде
+        /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public abstract string GetConfigurationText();
-
+        public abstract Task<string> GetConfigurationText();
+        
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public abstract Task<string> GetConfigurationTextAsync();
-
-        /// <summary>
-        /// Получить конфигурацию в текстовом виде
-        /// </summary>
-        public IResultValue<TDomain> GetConfiguration() =>
-            GetConfigurationText().
-            ToTransferJson<TId, TTransfer>().
-            ResultValueBindOk(configTransfer => _configurationConverter.FromTransfer(configTransfer));
-
-        /// <summary>
-        /// Получить конфигурацию в текстовом виде асинхронно
-        /// </summary>
-        public async Task<IResultValue<TDomain>> GetConfigurationAsync() =>
-            await GetConfigurationTextAsync().
-            ToTransferJsonAsync<TId, TTransfer>().
+        public async Task<IResultValue<TDomain>> GetConfiguration() =>
+            await GetConfigurationText().
+            ToTransferValueJsonAsync<TTransfer>().
             ResultValueBindOkTaskAsync(configTransfer => _configurationConverter.FromTransfer(configTransfer));
     }
 }

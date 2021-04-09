@@ -41,31 +41,15 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
 #endif
 
         /// <summary>
-        /// Получить конфигурацию в текстовом виде
-        /// </summary>
-        public override string GetConfigurationText() =>
-            GetAssetText(ConfigurationFileName);
-
-        /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public override async Task<string> GetConfigurationTextAsync() =>
-            await GetAssetTextAsync(ConfigurationFileName);
-
-        /// <summary>
-        /// Получить файл в текстовом формате
-        /// </summary>
-        private static string GetAssetText(string filename)
-        {
-            using var asset = Application.Context.Assets!.Open(filename);
-            using var streamReader = new StreamReader(asset!);
-            return streamReader.ReadToEnd();
-        }
+        public override async Task<string> GetConfigurationText() =>
+            await GetAssetText(ConfigurationFileName);
 
         /// <summary>
         /// Получить файл в текстовом формате асинхронно
         /// </summary>
-        private static async Task<string> GetAssetTextAsync(string filename)
+        private static async Task<string> GetAssetText(string filename)
         {
             await using var asset = Application.Context.Assets!.Open(filename);
             using var streamReader = new StreamReader(asset!);

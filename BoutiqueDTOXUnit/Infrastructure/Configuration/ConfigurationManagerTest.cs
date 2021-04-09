@@ -28,36 +28,18 @@ namespace BoutiqueDTOXUnit.Infrastructure.Configuration
         { }
 
         /// <summary>
-        /// Получить конфигурацию в текстовом виде
-        /// </summary>
-        public override string GetConfigurationText() =>
-            ConfigurationTextOk;
-
-        /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public override async Task<string> GetConfigurationTextAsync() =>
+        public override async Task<string> GetConfigurationText() =>
             await Task.FromResult(ConfigurationTextOk);
 
         /// <summary>
         /// Получить корректную конфигурацию
         /// </summary>
         [Fact]
-        public void GetConfiguration_Ok()
+        public async Task GetConfiguration_Ok()
         {
-            var configuration = GetConfiguration();
-
-            Assert.True(configuration.OkStatus);
-            Assert.True(configuration.Value.Equals(TestData.TestDomains.First()));
-        }
-
-        /// <summary>
-        /// Получить корректную конфигурацию
-        /// </summary>
-        [Fact]
-        public async Task GetConfigurationAsync_Ok()
-        {
-            var configuration = await GetConfigurationAsync();
+            var configuration = await GetConfiguration();
 
             Assert.True(configuration.OkStatus);
             Assert.True(configuration.Value.Equals(TestData.TestDomains.First()));
@@ -68,6 +50,6 @@ namespace BoutiqueDTOXUnit.Infrastructure.Configuration
         /// </summary>
         private static string ConfigurationTextOk => 
             TestTransferData.TestTransfers.First().
-            Map(config => JsonConvert.SerializeObject(config));
+            Map(JsonConvert.SerializeObject);
     }
 }

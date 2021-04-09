@@ -22,7 +22,7 @@ namespace BoutiqueLoader.Factories.Configuration
         /// Получить конфигурацию
         /// </summary>
         public static async Task<IResultValue<ILoaderConfigurationDomain>> GetConfiguration(IBoutiqueLogger boutiqueLogger) =>
-            await LoaderConfigurationManager.GetConfigurationAsync().
+            await LoaderConfigurationManager.GetConfiguration().
             ResultValueVoidBadTaskAsync(errors => boutiqueLogger.
                                                   Void(_ => boutiqueLogger.ShowMessage("Ошибка конфигурационного файла")).
                                                   Void(_ => boutiqueLogger.ShowErrors(errors)));

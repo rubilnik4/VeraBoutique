@@ -2,9 +2,9 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
@@ -13,9 +13,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class SizeGroupRestService : RestServiceBase<int, ISizeGroupMainDomain, SizeGroupMainTransfer>, ISizeGroupRestService
     {
-        public SizeGroupRestService(ISizeGroupApiService sizeGroupApiService,
+        public SizeGroupRestService(IRestHttpClient restHttpClient,
                                     ISizeGroupMainTransferConverter sizeGroupTransferConverter)
-            : base(sizeGroupApiService, sizeGroupTransferConverter)
+            : base(restHttpClient, sizeGroupTransferConverter)
         { }
     }
 }

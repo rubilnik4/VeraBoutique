@@ -1,8 +1,14 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading;
+using BoutiqueDTO.Models.Interfaces.Base;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Interfaces.Result;
 using Moq;
-using RestSharp;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
 {
@@ -14,27 +20,39 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         /// <summary>
         /// Получить клиент для Api сервисов
         /// </summary>
-        public static Mock<IRestClient> GetRestClient<TValue>(IRestResponse<TValue> restResponse)
+        public static Mock<IRestHttpClient> GetRestClient<TValue>(IResultCollection<TValue> result)
             where TValue : notnull =>
-            new Mock<IRestClient>().
-            Void(mock => mock.Setup(client => client.Execute<TValue>(It.IsAny<IRestRequest>())).
-                              Returns(restResponse)).
-            Void(mock => mock.Setup(client => client.Execute(It.IsAny<IRestRequest>())).
-                              Returns(restResponse)).
-            Void(mock => mock.Setup(client => client.ExecuteAsync<TValue>(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).
-                              ReturnsAsync(restResponse)).
-            Void(mock => mock.Setup(client => client.ExecuteAsync(It.IsAny<IRestRequest>(), It.IsAny<CancellationToken>())).
-                              ReturnsAsync(restResponse));
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.GetCollectionAsync<TValue>(It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> GetRestClient<TValue>(IResultValue<TValue> result)
+            where TValue : notnull =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.GetValueAsync<TValue>(It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> PostRestClient<TValue>(IResultValue<TValue> result)
+            where TValue : notnull =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.PostValueAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
+                              ReturnsAsync(result));
 
         /// <summary>
         /// Получить ответ сервера
         /// </summary>
-        public static IRestResponse<TValue> GetRestResponse<TValue>(HttpStatusCode httpStatusCode, TValue value)
+        public static HttpResponseMessage GetRestResponse<TValue>(HttpStatusCode httpStatusCode, TValue value)
             where TValue : notnull =>
-            new RestResponse<TValue>()
+            new()
             {
                 StatusCode = httpStatusCode,
-                Data = value,
+                Content = new StringContent(value?.ToString() ?? String.Empty),
             };
     }
 }

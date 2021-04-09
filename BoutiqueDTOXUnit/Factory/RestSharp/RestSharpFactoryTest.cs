@@ -2,7 +2,6 @@
 using BoutiqueCommon.Models.Domain.Implementations.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.RestSharp;
-using RestSharp.Authenticators;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Factory.RestSharp
@@ -19,10 +18,10 @@ namespace BoutiqueDTOXUnit.Factory.RestSharp
         public void GetRestClient_Ok()
         {
             var hostConnection = HostConnection;
-            var restClient = RestSharpFactory.GetRestClient(hostConnection);
+            var restClient = HttpClientFactory.GetRestClient(hostConnection);
             
-            Assert.Equal(hostConnection.Host, restClient.BaseUrl);
-            Assert.Equal(hostConnection.TimeOut.TotalMilliseconds, restClient.Timeout);
+            Assert.Equal(hostConnection.Host, restClient.BaseAddress);
+            Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
         }
 
         /// <summary>
@@ -34,11 +33,12 @@ namespace BoutiqueDTOXUnit.Factory.RestSharp
             var hostConnection = HostConnection;
             const string jwtToken = "jwtToken";
 
-            var restClient = RestSharpFactory.GetRestClient(hostConnection, jwtToken);
+            var restClient = HttpClientFactory.GetRestClient(hostConnection, jwtToken);
 
-            Assert.Equal(hostConnection.Host, restClient.BaseUrl);
-            Assert.Equal(hostConnection.TimeOut.TotalMilliseconds, restClient.Timeout);
-            Assert.IsType<JwtAuthenticator>(restClient.Authenticator);
+            Assert.Equal(hostConnection.Host, restClient.BaseAddress);
+            Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
+            Assert.Equal(HttpClientFactory.JWT_SCHEME, restClient.DefaultRequestHeaders.Authorization?.Scheme);
+            Assert.Equal(jwtToken, restClient.DefaultRequestHeaders.Authorization?.Parameter);
         }
 
         /// <summary>

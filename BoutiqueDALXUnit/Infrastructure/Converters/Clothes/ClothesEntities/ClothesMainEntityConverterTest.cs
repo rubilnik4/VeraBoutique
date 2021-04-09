@@ -130,7 +130,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         /// <summary>
         /// Получить сущность одежды
         /// </summary>
-        private static ClothesEntity GetClothesEntity(IClothesBase clothes, byte[]? image,
+        private static ClothesEntity GetClothesEntity(IClothesBase clothes, byte[] image,
                                                       GenderEntity? gender, ClothesTypeEntity? clothesType,
                                                       IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                                                       IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites) =>

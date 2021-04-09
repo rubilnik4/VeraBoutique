@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Async;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.RestResponses;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;

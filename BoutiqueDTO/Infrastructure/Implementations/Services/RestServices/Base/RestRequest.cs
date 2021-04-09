@@ -6,15 +6,13 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Routes.Clothes;
 using Functional.FunctionalExtensions.Sync;
-using RestSharp;
-using RestSharp.Serialization.Json;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
 {
     /// <summary>
     /// Запросы к серверу
     /// </summary>
-    public static class ApiRestRequest
+    public static class RestRequest
     {
         /// <summary>
         /// Начальный путь для

@@ -16,13 +16,11 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="RestSharp" Version="106.11.8-alpha.0.12" />
-    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.11.8-alpha.0.12" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Extensions\Json\Async\" />
-    <Folder Include="Factory\RestSharp\" />
+    <Folder Include="Models\Interfaces\RestClients\" />
     <Folder Include="Routes\Clothes\" />
   </ItemGroup>
 

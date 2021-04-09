@@ -23,10 +23,10 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация сервисов проекта
         /// </summary>
-        public static IResultError RegisterProject(IBoutiqueContainer container) =>
-            container.Resolve<IGenderRestService>().
-            Map(genderService => genderService.GetGenderCategories()).
-            ResultCollectionOkToValue(genderCategories => new BoutiqueXamarinProject(genderCategories)).
-            ResultValueVoidOk(container.Register<IBoutiqueXamarinProject>);
+        public static async Task<IResultError> RegisterProject(IBoutiqueContainer container) =>
+            await container.Resolve<IGenderRestService>().
+            MapAsync(genderService => genderService.GetGenderCategories()).
+            ResultCollectionOkToValueTaskAsync(genderCategories => new BoutiqueXamarinProject(genderCategories)).
+            ResultValueVoidOkTaskAsync(container.Register<IBoutiqueXamarinProject>);
     }
 }

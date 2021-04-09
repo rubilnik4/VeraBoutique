@@ -3,10 +3,10 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {
@@ -16,9 +16,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     public class ClothesTypeRestService : RestServiceBase<string, IClothesTypeMainDomain, ClothesTypeMainTransfer>, 
                                           IClothesTypeRestService
     {
-        public ClothesTypeRestService(IClothesTypeApiService clothesTypeApiService, 
+        public ClothesTypeRestService(IRestHttpClient restHttpClient,
                                       IClothesTypeMainTransferConverter clothesTypeTransferConverter)
-            : base(clothesTypeApiService, clothesTypeTransferConverter)
+            : base(restHttpClient, clothesTypeTransferConverter)
         { }
     }
 }

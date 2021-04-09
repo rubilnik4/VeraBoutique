@@ -1,9 +1,14 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueDTO.Extensions.Json.Sync;
+using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
+using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Interfaces.Identity;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -15,19 +20,20 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     /// <summary>
     /// Сервис авторизации
     /// </summary>
-    public class AuthorizeRestService : IAuthorizeRestService
+    public class AuthorizeRestService : RestServiceNaming<(string, string), IAuthorizeDomain, AuthorizeTransfer>,
+                                        IAuthorizeRestService
     {
-        public AuthorizeRestService(IAuthorizeApiService authorizeApiService,
+        public AuthorizeRestService(IRestHttpClient restHttpClient,
                                     IAuthorizeTransferConverter authorizeTransferConverter)
         {
-            _authorizeApiService = authorizeApiService;
+            _restHttpClient = restHttpClient;
             _authorizeTransferConverter = authorizeTransferConverter;
         }
 
         /// <summary>
-        /// Сервис получения данных по протоколу rest api
+        /// Клиент для http запросов
         /// </summary>
-        private readonly IAuthorizeApiService _authorizeApiService;
+        private readonly IRestHttpClient _restHttpClient;
 
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
@@ -38,7 +44,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         /// Авторизироваться в сервисе
         /// </summary>
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
-            await new ResultValue<IAuthorizeApiService>(_authorizeApiService).
-            ResultValueBindOkAsync(_ => _authorizeApiService.AuthorizeJwt(_authorizeTransferConverter.ToTransfer(authorizeDomain)));
+            await _authorizeTransferConverter.ToTransfer(authorizeDomain).
+            ToJsonTransfer().
+            ResultValueBindOkAsync(json => _restHttpClient.PostValueAsync<string>(RestRequest.PostRequest(ControllerName), json));
     }
 }
