@@ -3,10 +3,9 @@ using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using Functional.Models.Enums;
-using Newtonsoft.Json.Serialization;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
+namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 {
     /// <summary>
     /// Преобразование rest статуса в результирующую ошибку. Тесты
@@ -26,7 +25,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         [InlineData(HttpStatusCode.Unauthorized, ErrorResultType.Unauthorized)]
         public void HttpStatusCodeStatus(HttpStatusCode httpStatusCode, ErrorResultType errorResultType)
         {
-            var restResponse = GetRestResponse(httpStatusCode);
+            var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
+            var restResponse = GetRestResponse(httpStatusCode, httpStatusCode.ToString(), httpMessage);
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
@@ -36,7 +36,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         [Fact]
         public void HttpStatusCodeStatusServerNotFound()
         {
-            var restResponse = GetRestResponse(0);
+            var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
+            var restResponse = GetRestResponse(0, "errorInternal", httpMessage);
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
@@ -49,29 +50,24 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.RestResponses
         [Fact]
         public void InternalServerErrorException()
         {
-            var exception = new ArgumentNullException();
-            var restResponse = GetRestResponse(HttpStatusCode.InternalServerError, exception.Message);
+            var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
+            var restResponse = GetRestResponse(HttpStatusCode.InternalServerError, "errorInternal", httpMessage);
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
             Assert.Equal(ErrorResultType.InternalServerError, errorResult.ErrorResultType);
-            Assert.IsType<ArgumentNullException>(errorResult.Exception);
         }
 
         /// <summary>
         /// Создать ответ сервера
         /// </summary>
-        private static HttpResponseMessage GetRestResponse(HttpStatusCode httpStatusCode) =>
-            GetRestResponse(httpStatusCode, null);
-
-        /// <summary>
-        /// Создать ответ сервера
-        /// </summary>
-        private static HttpResponseMessage GetRestResponse(HttpStatusCode httpStatusCode, string reasonPhrase) =>
+        private static HttpResponseMessage GetRestResponse(HttpStatusCode httpStatusCode, string? reasonPhrase,
+                                                           HttpRequestMessage? httpRequestMessage) =>
             new()
             {
                 StatusCode = httpStatusCode,
                 ReasonPhrase = reasonPhrase,
+                RequestMessage = httpRequestMessage,
             };
     }
 }

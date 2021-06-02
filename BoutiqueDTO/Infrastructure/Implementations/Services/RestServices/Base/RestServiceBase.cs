@@ -88,14 +88,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
             await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
             ResultValueBindErrorsOkAsync(json =>
-                RestHttpClient.PutValueAsync<TId>(RestRequest.PostRequestCollection(ControllerName), json));
+                RestHttpClient.PutValueAsync(RestRequest.PostRequestCollection(ControllerName), json));
 
         /// <summary>
         /// Удалить все данные асинхронно
         /// </summary>
-        public async Task<IResultCollection<TDomain>> DeleteAsync() =>
-            await RestHttpClient.DeleteCollectionAsync<TTransfer>(RestRequest.GetRequest(ControllerName)).
-            ResultCollectionBindOkTaskAsync(transfers => _transferConverter.FromTransfers(transfers));
+        public async Task<IResultError> DeleteAsync() =>
+            await RestHttpClient.DeleteCollectionAsync(RestRequest.GetRequest(ControllerName));
 
         /// <summary>
         /// Удалить данные по идентификатору асинхронно

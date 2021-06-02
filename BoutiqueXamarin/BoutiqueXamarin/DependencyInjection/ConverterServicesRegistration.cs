@@ -1,7 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
@@ -9,7 +8,6 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeT
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
@@ -18,7 +16,6 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransf
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Converters;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;

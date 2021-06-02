@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
+using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.Models.Interfaces.Result;
 
@@ -20,6 +22,32 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// Клиент для http запросов
         /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// Адрес сервера
+        /// </summary>
+        public Uri BaseAddress =>
+            _httpClient.BaseAddress;
+
+        /// <summary>
+        /// Время ожидания ответа
+        /// </summary>
+        public TimeSpan TimeOut =>
+            _httpClient.Timeout;
+
+        /// <summary>
+        /// Тип авторизации
+        /// </summary>
+        public AuthorizationType AuthorizationType =>
+            Enum.TryParse(_httpClient.DefaultRequestHeaders.Authorization?.Scheme, true, out AuthorizationType authorizationType)
+                ? authorizationType
+                : AuthorizationType.None;
+
+        /// <summary>
+        /// Токен авторизации
+        /// </summary>
+        public string? JwtToken =>
+             _httpClient.DefaultRequestHeaders.Authorization?.Parameter;
 
         /// <summary>
         /// Получить данные по идентификатору Api
@@ -56,8 +84,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// <summary>
         /// Обновить данные Api по идентификатору
         /// </summary>
-        public async Task<IResultError> PutValueAsync<TOut>(string request, string jsonContent)
-            where TOut : notnull =>
+        public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
             await _httpClient.PutAsync(request, new StringContent(jsonContent)).
             ToRestResultErrorTaskAsync();
 
@@ -72,9 +99,8 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// <summary>
         /// Удалить данные Api
         /// </summary>
-        public async Task<IResultCollection<TOut>> DeleteCollectionAsync<TOut>(string request)
-            where TOut : notnull =>
+        public async Task<IResultError> DeleteCollectionAsync(string request) =>
             await _httpClient.DeleteAsync(request).
-            ToRestResultCollectionTaskAsync<TOut>();
+            ToRestResultErrorTaskAsync();
     }
 }

@@ -27,7 +27,7 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             const string value = "test";
             var restResult = new HttpResponseMessage
             {
-                Content = new StringContent(value),
+                Content = new StringContent(value.ToJsonTransfer().Value),
                 StatusCode = httpStatusCode,
             };
 

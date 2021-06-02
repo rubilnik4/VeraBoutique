@@ -40,7 +40,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
         /// <summary>
         /// Удалить все данные асинхронно
         /// </summary>
-        Task<IResultCollection<TDomain>> DeleteAsync();
+        Task<IResultError> DeleteAsync();
 
         /// <summary>
         /// Удалить данные по идентификатору асинхронно

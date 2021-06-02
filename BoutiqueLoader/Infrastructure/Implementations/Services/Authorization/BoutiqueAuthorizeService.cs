@@ -5,6 +5,7 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;
 using BoutiqueLoader.Factories.Services;
 using Functional.FunctionalExtensions.Async;
@@ -33,16 +34,16 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorization
         /// <summary>
         /// Функция авторизации
         /// </summary>
-        private static IResultValue<Func<HttpClient, IAuthorizeDomain, Task<IResultValue<string>>>> BoutiqueAuthorizeFunc(IBoutiqueLogger boutiqueLogger) =>
-            new ResultValue<Func<HttpClient, IAuthorizeDomain, Task<IResultValue<string>>>>((restClient, authorizeDomain) =>
+        private static IResultValue<Func<IRestHttpClient, IAuthorizeDomain, Task<IResultValue<string>>>> BoutiqueAuthorizeFunc(IBoutiqueLogger boutiqueLogger) =>
+            new ResultValue<Func<IRestHttpClient, IAuthorizeDomain, Task<IResultValue<string>>>>((restClient, authorizeDomain) =>
                 Authorize(restClient, authorizeDomain, boutiqueLogger));
 
         /// <summary>
         /// Авторизироваться с помощью токена
         /// </summary>
-        private static async Task<IResultValue<string>> Authorize(HttpClient httpClient, IAuthorizeDomain authorizeDomain,
+        private static async Task<IResultValue<string>> Authorize(IRestHttpClient restClient, IAuthorizeDomain authorizeDomain,
                                                                   IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueRestServiceFactory.GetAuthorizeRestService(httpClient).ToResultValue().
+            await BoutiqueRestServiceFactory.GetAuthorizeRestService(restClient).ToResultValue().
             ResultValueBindOkAsync(service => service.AuthorizeJwt(authorizeDomain).
                                               VoidTaskAsync(token => LogAuthorize(token, service, boutiqueLogger)));
 

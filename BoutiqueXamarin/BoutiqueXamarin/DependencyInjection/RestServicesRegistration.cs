@@ -3,11 +3,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueDTO.Factory.RestSharp;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
+using BoutiqueDTO.Factory.HttpClients;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Sync;
 using Prism.Ioc;
@@ -24,25 +23,17 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        public static void RegisterServices(IBoutiqueContainer container) =>
-            container.Resolve<IXamarinConfigurationDomain>().
-            HostConfiguration.
-            Void(hostConfig => RegisterApiServices(container, HttpClientFactory.GetRestClient(hostConfig))).
+        public static void RegisterServices(IBoutiqueContainer container, IXamarinConfigurationDomain configuration) =>
+            container.
+            Void(_ => RegisterRestClient(container, configuration)).
             Void(_ => RegisterRestServices(container));
 
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        private static void RegisterApiServices(IBoutiqueContainer container, HttpClient httpClient)
-        {
-            container.Register<IGenderApiService>(service => new GenderApiService(httpClient));
-            container.Register<ICategoryApiService>(service => new CategoryApiService(httpClient));
-            container.Register<IClothesTypeApiService>(service => new ClothesTypeApiService(httpClient));
-            container.Register<IColorApiService>(service => new ColorApiService(httpClient));
-            container.Register<ISizeApiService>(service => new SizeApiService(httpClient));
-            container.Register<ISizeGroupApiService>(service => new SizeGroupApiService(httpClient));
-            container.Register<IClothesApiService>(service => new ClothesApiService(httpClient));
-        }
+        private static void RegisterRestClient(IBoutiqueContainer container, IXamarinConfigurationDomain configuration) =>
+            configuration.HostConfiguration.
+            Void(hostConfig => container.Register(service => HttpClientFactory.GetRestClient(hostConfig)));
 
         /// <summary>
         /// Регистрация сервисов обмена данными
@@ -58,6 +49,6 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<IClothesRestService, ClothesRestService>();
         }
 
-      
+
     }
 }

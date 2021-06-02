@@ -49,7 +49,7 @@ namespace BoutiqueDTOXUnit.Extensions.Json.Async
             var genderJsonAfter = genderTransferAfter.Value.ToJsonTransfer();
 
             Assert.True(genderTransferAfter.OkStatus);
-            Assert.True(genderTransferAfter.Value.Equals(genderTransfer));
+            Assert.True(genderTransferAfter.Value.SequenceEqual(genderTransfer));
             Assert.True(genderJsonAfter.Value.Equals(genderJson));
         }
     }

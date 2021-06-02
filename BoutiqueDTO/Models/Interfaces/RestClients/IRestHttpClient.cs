@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
+using BoutiqueDTO.Models.Enums.RestClients;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Models.Interfaces.RestClients
@@ -12,9 +14,29 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
     public interface IRestHttpClient
     {
         /// <summary>
+        /// Адрес сервера
+        /// </summary>
+        Uri BaseAddress { get; }
+
+        /// <summary>
+        /// Время ожидания ответа
+        /// </summary>
+        TimeSpan TimeOut { get; }
+
+        /// <summary>
+        /// Тип авторизации
+        /// </summary>
+        AuthorizationType AuthorizationType { get; }
+
+        /// <summary>
+        /// Токен авторизации
+        /// </summary>
+        string? JwtToken { get; }
+
+        /// <summary>
         /// Получить данные по идентификатору Api
         /// </summary>
-         Task<IResultValue<TOut>> GetValueAsync<TOut>(string request)
+        Task<IResultValue<TOut>> GetValueAsync<TOut>(string request)
             where TOut : notnull;
 
         /// <summary>
@@ -38,8 +60,7 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
         /// <summary>
         /// Обновить данные Api по идентификатору
         /// </summary>
-        Task<IResultError> PutValueAsync<TOut>(string request, string jsonContent)
-            where TOut : notnull;
+        Task<IResultError> PutValueAsync(string request, string jsonContent);
 
         /// <summary>
         /// Удалить данные по идентификатору Api
@@ -50,7 +71,6 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
         /// <summary>
         /// Удалить данные Api
         /// </summary>
-        Task<IResultCollection<TOut>> DeleteCollectionAsync<TOut>(string request)
-            where TOut : notnull;
+        Task<IResultError> DeleteCollectionAsync(string request);
     }
 }

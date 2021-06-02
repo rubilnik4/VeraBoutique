@@ -38,10 +38,44 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         /// <summary>
         /// Получить клиент для Api сервисов
         /// </summary>
+        public static Mock<IRestHttpClient> PostRestClient<TValue>(IResultCollection<TValue> result)
+            where TValue : notnull =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.PostCollectionAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
         public static Mock<IRestHttpClient> PostRestClient<TValue>(IResultValue<TValue> result)
             where TValue : notnull =>
             new Mock<IRestHttpClient>().
             Void(mock => mock.Setup(client => client.PostValueAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> PutRestClient(IResultError result) =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.PutValueAsync(It.IsAny<string>(), It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> DeleteRestClient(IResultError result) =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.DeleteCollectionAsync(It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> DeleteRestClient<TValue>(IResultValue<TValue> result)
+            where TValue : notnull =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.DeleteValueAsync<TValue>(It.IsAny<string>())).
                               ReturnsAsync(result));
 
         /// <summary>

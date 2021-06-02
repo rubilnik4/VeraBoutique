@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarinCommon.Models.Implementation;
 using BoutiqueXamarinCommon.Models.Interfaces;

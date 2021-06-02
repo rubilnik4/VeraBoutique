@@ -95,7 +95,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
         [Fact]
         public void GetDomains_NullCollection()
         {
-            var testTransfers = TestTransferData.TestTransfers.Append(null);
+            var testTransfers = TestTransferData.TestTransfers.Append(null!);
             var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
 
             var testDomainAfterConverter = testEntityConverter.GetDomains(testTransfers);

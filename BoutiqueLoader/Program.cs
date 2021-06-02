@@ -2,9 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueDTO.Factory.RestSharp;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Clothes;
 using BoutiqueLoader.Factories.Configuration;
 using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
 using BoutiqueLoader.Factories.Logger;

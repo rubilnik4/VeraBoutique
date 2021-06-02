@@ -6,7 +6,6 @@ using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.Api.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;

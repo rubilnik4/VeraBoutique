@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Routes.Clothes;
-using BoutiqueDTOXUnit.Data;
-using BoutiqueDTOXUnit.Data.Models.Implementations;
-using BoutiqueDTOXUnit.Data.Transfers;
 using Xunit;
-using Xunit.Sdk;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
+namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 {
     /// <summary>
     /// Запросы к серверу. Тесты
     /// </summary>
-    public class ApiRestRequestTest
+    public class RestRequestTest
     {
         /// <summary>
         /// Запрос получения
@@ -25,7 +20,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         {
             var request = RestRequest.GetRequest(ControllerName);
 
-            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -37,7 +32,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             const string additionalRoute = "additionalRoute";
             var request = RestRequest.GetRequest(ControllerName, additionalRoute);
 
-            Assert.True($"api/{ControllerName}/{additionalRoute}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test/{additionalRoute}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -53,7 +48,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             };
             var request = RestRequest.GetRequest(ControllerName, parameters);
 
-            Assert.True($"api/{ControllerName}/{parameters.First()}/{parameters.Last()}".
+            Assert.True($"api/Test/{parameters.First()}/{parameters.Last()}".
                         Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
@@ -66,7 +61,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             string additionalRoute = String.Empty;
             var request = RestRequest.GetRequest(ControllerName, additionalRoute);
 
-            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -79,7 +74,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             const string additionalRoute = "additionalRoute";
             var request = RestRequest.GetRequest(id, ControllerName, additionalRoute);
 
-            Assert.True($"api/{ControllerName}/{additionalRoute}/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test/{additionalRoute}/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -91,7 +86,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
             const int id = 123;
             var request = RestRequest.GetRequest(id, ControllerName);
 
-            Assert.True($"api/{ControllerName}/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test/{id}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -102,7 +97,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         {
             var request = RestRequest.PostRequest(ControllerName);
 
-            Assert.True($"api/{ControllerName}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -113,7 +108,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.Api.Base
         {
             var request = RestRequest.PostRequestCollection( ControllerName);
 
-            Assert.True($"api/{ControllerName}/{BaseRoutes.POST_COLLECTION_ROUTE}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
+            Assert.True($"api/Test/{BaseRoutes.POST_COLLECTION_ROUTE}".Equals(request, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
