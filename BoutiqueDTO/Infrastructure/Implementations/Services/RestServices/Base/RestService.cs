@@ -3,13 +3,14 @@ using BoutiqueCommon.Extensions.ReflectionExtensions;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
 {
     /// <summary>
     /// Именование сервиса
     /// </summary>
-    public abstract class RestServiceNaming<TId, TDomain, TTransfer>
+    public abstract class RestService<TId, TDomain, TTransfer>
         where TDomain : IDomainModel<TId>
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
@@ -17,7 +18,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         /// <summary>
         /// Наименование контроллера
         /// </summary>
-        protected string ControllerName =>
-            GetType().Name.SubstringRemove(typeof(RestServiceBase<TId, TDomain, TTransfer>).GetNameWithoutGenerics());
+        public string ControllerName =>
+            typeof(RestService<TId, TDomain, TTransfer>).GetNameWithoutGenerics().
+            Map(baseName => GetType().Name.SubstringRemove(baseName));
     }
 }

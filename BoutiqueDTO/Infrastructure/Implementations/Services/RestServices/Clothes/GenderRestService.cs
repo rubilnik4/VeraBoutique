@@ -44,7 +44,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         /// Получить данные типа пола с категорией
         /// </summary>
         public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories() =>
-            await RestRequest.GetRequest(RestRequest.GetRequest(ControllerName, GenderRoutes.GENDER_CATEGORY_ROUTE)).
+            await RestRequest.GetRequest(ControllerName, GenderRoutes.GENDER_CATEGORY_ROUTE).
             MapAsync(request => RestHttpClient.GetCollectionAsync<GenderCategoryTransfer>(request)).
             ResultCollectionBindOkTaskAsync(transfers => _genderCategoryTransferConverter.FromTransfers(transfers));
     }

@@ -56,6 +56,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         /// </summary>
         public async Task<IResultValue<byte[]>> GetImageAsync(int clothesId) =>
            await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGE_ROUTE).
-           MapAsync(request => RestHttpClient.GetValueAsync<byte[]>(request));
+           MapAsync(request => RestHttpClient.GetByteAsync(request));
     }
 }

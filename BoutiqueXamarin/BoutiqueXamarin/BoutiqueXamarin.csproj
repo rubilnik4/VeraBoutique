@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Test</Configurations>
     <UserSecretsId>77bc02dd-f017-42d7-8734-104729c16b89</UserSecretsId>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup> 
 
   <ItemGroup>

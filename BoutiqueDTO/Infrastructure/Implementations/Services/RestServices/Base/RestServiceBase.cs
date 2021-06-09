@@ -26,7 +26,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
     /// <summary>
     /// Базовый сервис для данных Api
     /// </summary>
-    public abstract class RestServiceBase<TId, TDomain, TTransfer> : RestServiceNaming<TId, TDomain, TTransfer>,
+    public abstract class RestServiceBase<TId, TDomain, TTransfer> : RestService<TId, TDomain, TTransfer>,
                                                                      IRestServiceBase<TId, TDomain>
         where TDomain : IDomainModel<TId>
         where TTransfer : class, ITransferModel<TId>

@@ -9,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.DependencyInjection;
+using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
 using BoutiqueXamarin.Views.Clothes.Choices;
@@ -20,6 +21,7 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Unity;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
@@ -48,10 +50,11 @@ namespace BoutiqueXamarin
         protected override async void OnInitialized() =>
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultValueVoidOkTaskAsync(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
-            ResultValueBindErrorsOkBindAsync(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
+       //     ResultValueBindErrorsOkBindAsync(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
             VoidTaskAsync(_ => InitializeComponent()).
             ResultValueVoidOkBadBindAsync(
-                actionOk: _ => NavigationService.NavigateAsync(nameof(ChoicePage)),
+                actionOk: _ => NavigationService.NavigateAsync(nameof(ChoicePage),
+                                                               new NavigationParameters {{ nameof(ChoiceNavigationParameters), new ChoiceNavigationParameters() } }),
                 actionBad: errors => throw new NotImplementedException());
 
         /// <summary>

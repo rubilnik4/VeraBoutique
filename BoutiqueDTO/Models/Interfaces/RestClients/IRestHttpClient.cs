@@ -40,6 +40,11 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
             where TOut : notnull;
 
         /// <summary>
+        /// Получить байтовый массив по идентификатору Api
+        /// </summary>
+        Task<IResultValue<byte[]>> GetByteAsync(string request);
+
+        /// <summary>
         /// Получить данные Api
         /// </summary>
         Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request) 

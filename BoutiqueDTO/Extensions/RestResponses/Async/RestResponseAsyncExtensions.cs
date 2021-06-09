@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Async;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using BoutiqueDTO.Models.Interfaces.Base;
+using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -18,7 +20,7 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
         /// </summary>
         public static async Task<IResultValue<TValue>> ToRestResultValueAsync<TValue>(this HttpResponseMessage @this)
             where TValue : notnull =>
-            @this.IsSuccessStatusCode 
+            @this.IsSuccessStatusCode
                 ? await @this.Content.ReadAsStringAsync().ToTransferValueJsonAsync<TValue>()
                 : RestStatusError.RestStatusToErrorResult(@this).ToResultValue<TValue>();
 

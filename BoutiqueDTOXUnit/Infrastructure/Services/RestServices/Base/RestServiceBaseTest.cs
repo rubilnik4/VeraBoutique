@@ -34,6 +34,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
     public class RestServiceBaseTest
     {
         /// <summary>
+        /// Имя контроллера
+        /// </summary>
+        [Fact]
+        public void ControllerName_Ok()
+        {
+            var tests = TestTransferData.TestTransfers;
+            var resultTests = new ResultCollection<TestTransfer>(tests);
+            var restClient = RestClientMock.GetRestClient(resultTests);
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient.Object, testTransferConverter);
+
+            var controllerName = testRestService.ControllerName;
+
+            Assert.Equal("Test", controllerName);
+        }
+
+        /// <summary>
         /// Получение данных
         /// </summary>
         [Fact]

@@ -15,10 +15,6 @@
             <Setter Property="VerticalTextAlignment" Value="Center"/>
             <Setter Property="TextTransform" Value="Uppercase"/>
         </Style>
-        <Style x:Key="ListViewGrid"
-               TargetType="{x:Type Grid}">
-            <Setter Property="Padding" Value="5"/>
-        </Style>
     </TabbedPage.Resources>
     <TabbedPage.ItemTemplate>
         <DataTemplate x:DataType="{x:Type viewModelItems:ChoiceGenderBaseViewModelItem}">

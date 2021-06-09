@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.Models.Enums;
+using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Models.Implementations.RestClients
@@ -56,6 +59,13 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
             where TOut : notnull =>
             await _httpClient.GetAsync(request).
             ToRestResultValueTaskAsync<TOut>();
+
+        /// <summary>
+        /// Получить байтовый массив по идентификатору Api
+        /// </summary>
+        public async Task<IResultValue<byte[]>> GetByteAsync(string request) =>
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request),
+                                                                    new ErrorResult(ErrorResultType.BadRequest, "Невозможно загрузить байтовый массив"));
 
         /// <summary>
         /// Получить данные Api

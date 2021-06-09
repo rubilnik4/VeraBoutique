@@ -20,7 +20,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     /// <summary>
     /// Сервис авторизации
     /// </summary>
-    public class AuthorizeRestService : RestServiceNaming<(string, string), IAuthorizeDomain, AuthorizeTransfer>,
+    public class AuthorizeRestService : RestService<(string, string), IAuthorizeDomain, AuthorizeTransfer>,
                                         IAuthorizeRestService
     {
         public AuthorizeRestService(IRestHttpClient restHttpClient,

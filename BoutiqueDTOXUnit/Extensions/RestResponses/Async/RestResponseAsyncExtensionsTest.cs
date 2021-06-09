@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Extensions.RestResponses.Async;
@@ -51,6 +52,46 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             };
 
             var resultValue = await restResult.ToRestResultValueAsync<string>();
+
+            Assert.True(resultValue.HasErrors);
+            Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий байтовый ответ
+        /// </summary>
+        [Theory]
+        [InlineData(HttpStatusCode.OK)]
+        [InlineData(HttpStatusCode.Created)]
+        public async Task ToRestResultByte(HttpStatusCode httpStatusCode)
+        {
+            var bytes = Encoding.ASCII.GetBytes("test");
+            var restResult = new HttpResponseMessage
+            {
+                Content = new ByteArrayContent(bytes),
+                StatusCode = httpStatusCode,
+            };
+
+            var resultValue = await restResult.ToRestResultByteAsync();
+
+            Assert.True(resultValue.OkStatus);
+            Assert.True(bytes.SequenceEqual(resultValue.Value));
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий байтовый ответ. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task ToRestResultByte_Error()
+        {
+            var bytes = Encoding.ASCII.GetBytes("test");
+            var restResult = new HttpResponseMessage
+            {
+                Content = new ByteArrayContent(bytes),
+                StatusCode = HttpStatusCode.InternalServerError,
+            };
+
+            var resultValue = await restResult.ToRestResultByteAsync();
 
             Assert.True(resultValue.HasErrors);
             Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
