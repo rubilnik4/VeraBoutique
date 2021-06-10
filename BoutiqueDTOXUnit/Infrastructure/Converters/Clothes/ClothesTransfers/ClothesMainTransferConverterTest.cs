@@ -61,7 +61,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
             var clothesNull = new ClothesMainTransfer(clothes, clothes.Image, clothes.Gender, clothes.ClothesType, 
-                                                      clothes.Colors, clothes.SizeGroups.Append(null));
+                                                      clothes.Colors, clothes.SizeGroups.Append(null!)!);
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);

@@ -52,17 +52,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         public IReadOnlyCollection<ClothesViewModelColumnItem> ClothesViewModelColumnItems
         {
             get => _clothesViewModelColumnItems;
-            private set => SetProperty(ref _clothesViewModelColumnItems, value);
+            private set => _clothesViewModelColumnItems = value;
         }
 
-        /// <summary>
-        /// Асинхронная загрузка параметров модели
-        /// </summary>
-        protected override async Task<IResultError> InitializeAction(ClothesNavigationParameters clothesParameters) =>
-            await _clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
-            ResultCollectionVoidOkTaskAsync(clothes => ClothesViewModelColumnItems = GetClothesItems(clothes,
-                                                                                                     _clothesRestService,
-                                                                                                     _clothesDetailNavigationService));
+        ///// <summary>
+        ///// Асинхронная загрузка параметров модели
+        ///// </summary>
+        //protected override async Task<IResultError> InitializeAction(ClothesNavigationParameters clothesParameters) =>
+        //    await _clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
+        //    ResultCollectionVoidOkTaskAsync(clothes => ClothesViewModelColumnItems = GetClothesItems(clothes,
+        //                                                                                             _clothesRestService,
+        //                                                                                             _clothesDetailNavigationService));
 
         /// <summary>
         /// Преобразовать в модели одежды

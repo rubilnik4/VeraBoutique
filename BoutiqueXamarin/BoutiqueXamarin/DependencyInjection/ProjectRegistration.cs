@@ -21,10 +21,8 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация сервисов проекта
         /// </summary>
-        public static async Task<IResultError> RegisterProject(IBoutiqueContainer container) =>
-            await container.Resolve<IGenderRestService>().
-            MapAsync(genderService => genderService.GetGenderCategories()).
-            ResultCollectionOkToValueTaskAsync(genderCategories => new BoutiqueXamarinProject(genderCategories)).
-            ResultValueVoidOkTaskAsync(container.Register<IBoutiqueXamarinProject>);
+        public static IResultError RegisterProject(IBoutiqueContainer container) =>
+            new BoutiqueXamarinProject().ToResultValue().
+            ResultValueVoidOk(container.Register<IBoutiqueXamarinProject>);
     }
 }

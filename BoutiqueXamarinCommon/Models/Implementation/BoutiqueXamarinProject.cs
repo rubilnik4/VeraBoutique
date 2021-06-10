@@ -10,15 +10,5 @@ namespace BoutiqueXamarinCommon.Models.Implementation
     /// Общие данные клиентского приложения
     /// </summary>
     public class BoutiqueXamarinProject : IBoutiqueXamarinProject
-    {
-        public BoutiqueXamarinProject(IEnumerable<IGenderCategoryDomain> genderCategories)
-        {
-            GenderCategories = genderCategories.ToList().AsReadOnly();
-        }
-
-        /// <summary>
-        /// Типы пола
-        /// </summary>
-        public IReadOnlyCollection<IGenderCategoryDomain> GenderCategories { get; }
-    }
+    { }
 }

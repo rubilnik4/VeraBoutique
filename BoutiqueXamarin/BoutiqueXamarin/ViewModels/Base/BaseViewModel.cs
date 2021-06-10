@@ -6,13 +6,14 @@ using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Prism.Mvvm;
 using Prism.Navigation;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base
 {
     /// <summary>
     /// Базовая модель отображения
     /// </summary>
-    public abstract class BaseViewModel : BindableBase, IInitialize, INavigationAware, IDestructible
+    public abstract class BaseViewModel : ReactiveObject, IInitialize, INavigationAware, IDestructible
     {
         /// <summary>
         /// Состояние модели

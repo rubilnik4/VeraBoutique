@@ -8,10 +8,5 @@ namespace BoutiqueXamarinCommon.Models.Interfaces
     /// Общие данные клиентского приложения
     /// </summary>
     public interface IBoutiqueXamarinProject
-    {
-        /// <summary>
-        /// Типы пола
-        /// </summary>
-        IReadOnlyCollection<IGenderCategoryDomain> GenderCategories { get; }
-    }
+    { }
 }

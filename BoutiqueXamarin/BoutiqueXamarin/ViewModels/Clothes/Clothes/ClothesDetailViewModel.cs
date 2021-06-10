@@ -35,14 +35,14 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         public ClothesDetailViewModelItem? ClothesDetailViewModelItem
         {
             get => _clothesDetailViewModelItem;
-            private set => SetProperty(ref _clothesDetailViewModelItem, value);
+            private set => _clothesDetailViewModelItem= value;
         }
 
-        /// <summary>
-        /// Асинхронная загрузка параметров модели
-        /// </summary>
-        protected override async Task<IResultError> InitializeAction(ClothesDetailNavigationParameters clothesDetailNavigationParameters) =>
-            await _clothesRestService.GetAsync(clothesDetailNavigationParameters.ClothesId).
-            ResultValueVoidOkTaskAsync(clothes => ClothesDetailViewModelItem = new ClothesDetailViewModelItem(clothes));
+        ///// <summary>
+        ///// Асинхронная загрузка параметров модели
+        ///// </summary>
+        //protected override async Task<IResultError> InitializeAction(ClothesDetailNavigationParameters clothesDetailNavigationParameters) =>
+        //    await _clothesRestService.GetAsync(clothesDetailNavigationParameters.ClothesId).
+        //    ResultValueVoidOkTaskAsync(clothes => ClothesDetailViewModelItem = new ClothesDetailViewModelItem(clothes));
     }
 }

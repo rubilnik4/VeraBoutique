@@ -22,19 +22,19 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Параметры инициализации формы с изменением состояния
         /// </summary>
-        public override async void Initialize(INavigationParameters parameters) =>
-            await new ResultError().
+        public override void Initialize(INavigationParameters parameters) =>
+            new ResultError().
             ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
-            ToResultBindValue(GetNavigationParameter(parameters)).
-            ResultValueBindErrorsOkAsync(InitializeAction).
-            ResultValueVoidOkBadTaskAsync(
-                actionOk: _ => ViewModelState = ViewModelState.Ok,
-                actionBad: _ => ViewModelState = ViewModelState.Error);
+            ToResultBindValue(GetNavigationParameter(parameters));
+         //   ResultValueBindErrorsOkAsync(InitializeAction).
+            //ResultValueVoidOkBadTaskAsync(
+            //    actionOk: _ => ViewModelState = ViewModelState.Ok,
+            //    actionBad: _ => ViewModelState = ViewModelState.Error);
 
         /// <summary>
         /// Асинхронная загрузка параметров модели
         /// </summary>
-        protected abstract Task<IResultError> InitializeAction(TParameter navigateParameter);
+      //  protected abstract Task<IResultError> InitializeAction(TParameter navigateParameter);
 
         /// <summary>
         /// Преобразовать параметры навигации

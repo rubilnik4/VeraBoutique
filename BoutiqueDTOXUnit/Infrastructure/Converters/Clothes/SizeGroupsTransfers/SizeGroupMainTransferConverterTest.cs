@@ -40,7 +40,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
         public void SizeGroup_ToTransfer_SizeCollectionError()
         {
             var sizeGroup = SizeGroupTransfersData.SizeGroupMainTransfers.First();
-            var sizeGroupNull = new SizeGroupMainTransfer(sizeGroup, sizeGroup.Sizes.Append(null));
+            var sizeGroupNull = new SizeGroupMainTransfer(sizeGroup, sizeGroup.Sizes.Append(null!)!);
             var sizeGroupTransferConverter = SizeGroupTransferConverterMock.SizeGroupMainTransferConverter;
 
             var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupNull);

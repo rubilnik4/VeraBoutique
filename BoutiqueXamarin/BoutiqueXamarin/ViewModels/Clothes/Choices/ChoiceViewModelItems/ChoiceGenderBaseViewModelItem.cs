@@ -70,7 +70,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
         public ChoiceBaseViewModelItem? SelectedChoiceBaseViewModelItem
         {
             get => _selectedChoiceBaseViewModelItem;
-            set => SetProperty(ref _selectedChoiceBaseViewModelItem, value);
+            set => _selectedChoiceBaseViewModelItem = value;
         }
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
         /// </summary>
         private void ChoiceItemsUpdate(ChoiceCategoryViewModelItem choiceCategory) =>
             choiceCategory.
-            Void(_ => choiceCategory.ClothesTypesVisibleChange()).
-            Void(_ => RaisePropertyChanged(nameof(ChoiceBaseViewModelItems)));
+            Void(_ => choiceCategory.ClothesTypesVisibleChange());
+        //    Void(_ => RaisePropertyChanged(nameof(ChoiceBaseViewModelItems)));
 
         /// <summary>
         /// Преобразовать в модель категорий одежды
