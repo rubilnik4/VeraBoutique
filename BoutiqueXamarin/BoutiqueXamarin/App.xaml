@@ -8,5 +8,12 @@
                BaseResourceKey="BodyStyle">
             <Setter Property="TextColor" Value="Accent" />
         </Style>
+
+        <Style x:Key="ListViewLabel"
+               TargetType="{x:Type Label}">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="TextTransform" Value="Uppercase"/>
+        </Style>
     </Application.Resources>
 </prism:PrismApplication>

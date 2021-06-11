@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
+using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems
 {
     /// <summary>
     /// Категория одежды
@@ -34,7 +35,16 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
         /// <summary>
         /// Видимость типов одежды
         /// </summary>
-        public bool ClothesTypesVisible { get; private set; }
+        private bool _clothesTypesVisible;
+
+        /// <summary>
+        /// Видимость типов одежды
+        /// </summary>
+        public bool ClothesTypesVisible 
+        { 
+            get => _clothesTypesVisible; 
+            private set => this.RaiseAndSetIfChanged(ref _clothesTypesVisible, value);
+        }
 
         /// <summary>
         /// Изменить видимость типов одежды

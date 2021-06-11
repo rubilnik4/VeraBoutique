@@ -91,6 +91,9 @@
     <PackageReference Include="ReactiveUI">
       <Version>13.3.2</Version>
     </PackageReference>
+    <PackageReference Include="ReactiveUI.Events.XamForms">
+      <Version>13.3.2</Version>
+    </PackageReference>
     <PackageReference Include="ReactiveUI.XamForms">
       <Version>13.3.2</Version>
     </PackageReference>
@@ -180,7 +183,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

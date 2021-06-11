@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:ChoiceCategoryBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems.ChoiceCategoryView">
+    <Grid Padding="5, 10, 5, 10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.02*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="CategoryName"
+               Grid.Column="1"
+               Style="{StaticResource ListViewLabel}" />
+    </Grid>
+</views:ChoiceCategoryBase>

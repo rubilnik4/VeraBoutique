@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
@@ -11,11 +13,13 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Prism.Common;
 using Prism.Navigation;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
 {
@@ -26,50 +30,47 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            _clothesRestService = clothesRestService;
-            _clothesDetailNavigationService = clothesDetailNavigationService;
+            ClothesCommand = ReactiveCommand.CreateFromTask<ClothesNavigationParameters, IReadOnlyCollection<ClothesViewModelColumnItem>>(
+                parameters => GetClothesItems(parameters, clothesRestService, clothesDetailNavigationService));
+            _clothesViewModelColumnItems = ClothesCommand.
+                                           ToProperty(this, nameof(ClothesViewModelColumnItems), scheduler: RxApp.MainThreadScheduler);
+
+            this.WhenAnyValue(x => x.NavigationParameters).
+                 Where(clothesParameters => clothesParameters != null).
+                 InvokeCommand(this, x => x.ClothesCommand!);
         }
 
-        /// <summary>
-        /// Получить данные одежды
-        /// </summary>
-        private readonly IClothesRestService _clothesRestService;
-
-        /// <summary>
-        /// Сервис навигации к странице детализации одежды
-        /// </summary>
-        private readonly IClothesDetailNavigationService _clothesDetailNavigationService;
+        public ReactiveCommand<ClothesNavigationParameters, IReadOnlyCollection<ClothesViewModelColumnItem>> ClothesCommand { get; }
 
         /// <summary>
         /// Одежда
         /// </summary>
-        private IReadOnlyCollection<ClothesViewModelColumnItem> _clothesViewModelColumnItems =
-            new List<ClothesViewModelColumnItem>();
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ClothesViewModelColumnItem>> _clothesViewModelColumnItems;
 
         /// <summary>
         /// Одежда
         /// </summary>
-        public IReadOnlyCollection<ClothesViewModelColumnItem> ClothesViewModelColumnItems
-        {
-            get => _clothesViewModelColumnItems;
-            private set => _clothesViewModelColumnItems = value;
-        }
-
-        ///// <summary>
-        ///// Асинхронная загрузка параметров модели
-        ///// </summary>
-        //protected override async Task<IResultError> InitializeAction(ClothesNavigationParameters clothesParameters) =>
-        //    await _clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
-        //    ResultCollectionVoidOkTaskAsync(clothes => ClothesViewModelColumnItems = GetClothesItems(clothes,
-        //                                                                                             _clothesRestService,
-        //                                                                                             _clothesDetailNavigationService));
+        public IReadOnlyCollection<ClothesViewModelColumnItem> ClothesViewModelColumnItems =>
+            _clothesViewModelColumnItems.Value;
 
         /// <summary>
         /// Преобразовать в модели одежды
         /// </summary>
-        public static IReadOnlyCollection<ClothesViewModelColumnItem> GetClothesItems(IEnumerable<IClothesDomain> clothesDomains,
-                                                                                      IClothesRestService clothesRestService,
-                                                                                      IClothesDetailNavigationService clothesDetailNavigationService) =>
+        public static async Task<IReadOnlyCollection<ClothesViewModelColumnItem>> GetClothesItems(ClothesNavigationParameters clothesParameters,
+                                                                                                  IClothesRestService clothesRestService,
+                                                                                                  IClothesDetailNavigationService clothesDetailNavigationService) =>
+            await clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
+            ResultCollectionOkTaskAsync(clothesDomains => GetClothesItemsFromDomains(clothesDomains, clothesRestService, clothesDetailNavigationService)).
+            WhereContinueTaskAsync(result => result.OkStatus,
+                                   result => result.Value,
+                                   result => new List<ClothesViewModelColumnItem>());
+
+        /// <summary>
+        /// Преобразовать в модели одежды
+        /// </summary>
+        private static IReadOnlyCollection<ClothesViewModelColumnItem> GetClothesItemsFromDomains(IEnumerable<IClothesDomain> clothesDomains,
+                                                                                                 IClothesRestService clothesRestService,
+                                                                                                 IClothesDetailNavigationService clothesDetailNavigationService) =>
             clothesDomains.
             Select(clothesDomain => new ClothesViewModelItem(clothesDomain, clothesRestService, clothesDetailNavigationService)).
             Map(tt => tt).

@@ -16,11 +16,6 @@ namespace BoutiqueXamarin.ViewModels.Base
     public abstract class BaseViewModel : ReactiveObject, IInitialize, INavigationAware, IDestructible
     {
         /// <summary>
-        /// Состояние модели
-        /// </summary>
-        protected ViewModelState ViewModelState { get; set; } = ViewModelState.Ok;
-
-        /// <summary>
         /// Параметры инициализации формы с изменением состояния
         /// </summary>
         public virtual void Initialize(INavigationParameters parameters)

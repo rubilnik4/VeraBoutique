@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems
 {
     /// <summary>
     /// Выбор модели для категорий одежды

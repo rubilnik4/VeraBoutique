@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:ClothesPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
@@ -27,10 +28,8 @@
                         Text="Фильтр"/>
             </Grid>
 
-            <ScrollView Grid.Row="1">
-                <StackLayout Orientation="Vertical"
-                             BindableLayout.ItemsSource="{Binding ClothesViewModelColumnItems}">
-                    <BindableLayout.ItemTemplate>
+            <ListView x:Name="ClothesColumns">
+                <!--<ListView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
                             <Grid>
                                 <Grid.Resources>
@@ -71,9 +70,8 @@
 
                             </Grid>
                         </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </StackLayout>
-            </ScrollView>
+                    </ListView.ItemTemplate>-->
+            </ListView>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -87,4 +85,4 @@
             </Grid>
         </Grid>
     </ContentPage.Content>
-</ContentPage>
+</views:ClothesPageBase>

@@ -10,6 +10,7 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Prism.Navigation;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base
 {
@@ -20,28 +21,29 @@ namespace BoutiqueXamarin.ViewModels.Base
         where TParameter : BaseNavigationParameters
     {
         /// <summary>
+        /// Параметры навигации
+        /// </summary>
+        private TParameter? _navigationParameters;
+
+        /// <summary>
+        /// Параметры навигации
+        /// </summary>
+        protected TParameter? NavigationParameters 
+        { 
+            get => _navigationParameters;
+            set => this.RaiseAndSetIfChanged(ref _navigationParameters, value); 
+        }
+
+        /// <summary>
         /// Параметры инициализации формы с изменением состояния
         /// </summary>
         public override void Initialize(INavigationParameters parameters) =>
-            new ResultError().
-            ResultErrorVoidOk(() => ViewModelState = ViewModelState.Loading).
-            ToResultBindValue(GetNavigationParameter(parameters));
-         //   ResultValueBindErrorsOkAsync(InitializeAction).
-            //ResultValueVoidOkBadTaskAsync(
-            //    actionOk: _ => ViewModelState = ViewModelState.Ok,
-            //    actionBad: _ => ViewModelState = ViewModelState.Error);
-
-        /// <summary>
-        /// Асинхронная загрузка параметров модели
-        /// </summary>
-      //  protected abstract Task<IResultError> InitializeAction(TParameter navigateParameter);
+            NavigationParameters = GetNavigationParameters(parameters);
 
         /// <summary>
         /// Преобразовать параметры навигации
         /// </summary>
-        private static IResultValue<TParameter> GetNavigationParameter(INavigationParameters parameters) =>
-            parameters.GetValue<TParameter>(NavigationParametersInfo.GetNavigationParameterName<TParameter>()).
-            ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound,
-                                                   $"Параметры навигации [{typeof(TParameter).Name}] не найдены"));
+        private static TParameter GetNavigationParameters(INavigationParameters parameters) =>
+            parameters.GetValue<TParameter>(NavigationParametersInfo.GetNavigationParameterName<TParameter>());
     }
 }
