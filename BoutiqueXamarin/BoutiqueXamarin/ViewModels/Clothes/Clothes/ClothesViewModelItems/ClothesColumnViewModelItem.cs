@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.ViewModels.Base;
 using Prism.Commands;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
@@ -9,9 +10,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// <summary>
     /// Колонки одежды
     /// </summary>
-    public class ClothesViewModelColumnItem
+    public class ClothesColumnViewModelItem: BaseViewModel
     {
-        public ClothesViewModelColumnItem(ClothesViewModelItem? clothesViewModelItemLeft,
+        public ClothesColumnViewModelItem(ClothesViewModelItem? clothesViewModelItemLeft,
                                           ClothesViewModelItem? clothesViewModelItemRight)
         {
             ClothesViewModelItemLeft = clothesViewModelItemLeft;

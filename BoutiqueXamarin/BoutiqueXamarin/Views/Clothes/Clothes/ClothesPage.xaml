@@ -4,6 +4,7 @@
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
@@ -28,49 +29,15 @@
                         Text="Фильтр"/>
             </Grid>
 
-            <ListView x:Name="ClothesColumns">
-                <!--<ListView.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type viewModelItems:ClothesViewModelColumnItem}">
-                            <Grid>
-                                <Grid.Resources>
-                                    <Style x:Key="LabelClothesItemStyle"
-                                           TargetType="{x:Type Label}">
-                                        <Setter Property="HorizontalTextAlignment" Value="Center" />
-                                    </Style>
-
-                                    <ControlTemplate x:Key="ClothesItemTemplate">
-                                        <StackLayout BindingContext="{TemplateBinding BindingContext}"
-                                                     x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
-                                            <StackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding ClothesDetailCommand}" />
-                                            </StackLayout.GestureRecognizers>
-
-                                            <Image Source="{Binding Image.OkResult}"
-                                                   Aspect="AspectFit"/>
-                                            <Label Style="{StaticResource LabelClothesItemStyle}"
-                                                   Text="{Binding Name}" />
-                                            <Label Style="{StaticResource LabelClothesItemStyle}"
-                                                   Text="{Binding Price}" />
-                                        </StackLayout>
-                                    </ControlTemplate>
-                                </Grid.Resources>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
-                                <ContentView Grid.Column="0"
-                                             BindingContext="{Binding ClothesViewModelItemLeft}"
-                                             ControlTemplate="{StaticResource ClothesItemTemplate}" />
-
-                                <ContentView Grid.Column="1"
-                                             BindingContext="{Binding ClothesViewModelItemRight}"
-                                             ControlTemplate="{StaticResource ClothesItemTemplate}" />
-
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>-->
+            <ListView x:Name="ClothesColumns"
+                      Grid.Row="1"
+                      HasUnevenRows="True"
+                      SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
+                        <viewItems:ClothesColumnView/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
 
             <Grid Grid.Row="2">

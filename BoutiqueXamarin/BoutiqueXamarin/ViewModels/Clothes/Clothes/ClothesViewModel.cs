@@ -30,7 +30,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            ClothesCommand = ReactiveCommand.CreateFromTask<ClothesNavigationParameters, IReadOnlyCollection<ClothesViewModelColumnItem>>(
+            ClothesCommand = ReactiveCommand.CreateFromTask<ClothesNavigationParameters, IReadOnlyCollection<ClothesColumnViewModelItem>>(
                 parameters => GetClothesItems(parameters, clothesRestService, clothesDetailNavigationService));
             _clothesViewModelColumnItems = ClothesCommand.
                                            ToProperty(this, nameof(ClothesViewModelColumnItems), scheduler: RxApp.MainThreadScheduler);
@@ -40,35 +40,35 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                  InvokeCommand(this, x => x.ClothesCommand!);
         }
 
-        public ReactiveCommand<ClothesNavigationParameters, IReadOnlyCollection<ClothesViewModelColumnItem>> ClothesCommand { get; }
+        public ReactiveCommand<ClothesNavigationParameters, IReadOnlyCollection<ClothesColumnViewModelItem>> ClothesCommand { get; }
 
         /// <summary>
         /// Одежда
         /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ClothesViewModelColumnItem>> _clothesViewModelColumnItems;
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ClothesColumnViewModelItem>> _clothesViewModelColumnItems;
 
         /// <summary>
         /// Одежда
         /// </summary>
-        public IReadOnlyCollection<ClothesViewModelColumnItem> ClothesViewModelColumnItems =>
+        public IReadOnlyCollection<ClothesColumnViewModelItem> ClothesViewModelColumnItems =>
             _clothesViewModelColumnItems.Value;
 
         /// <summary>
         /// Преобразовать в модели одежды
         /// </summary>
-        public static async Task<IReadOnlyCollection<ClothesViewModelColumnItem>> GetClothesItems(ClothesNavigationParameters clothesParameters,
+        public static async Task<IReadOnlyCollection<ClothesColumnViewModelItem>> GetClothesItems(ClothesNavigationParameters clothesParameters,
                                                                                                   IClothesRestService clothesRestService,
                                                                                                   IClothesDetailNavigationService clothesDetailNavigationService) =>
             await clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
             ResultCollectionOkTaskAsync(clothesDomains => GetClothesItemsFromDomains(clothesDomains, clothesRestService, clothesDetailNavigationService)).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
-                                   result => new List<ClothesViewModelColumnItem>());
+                                   result => new List<ClothesColumnViewModelItem>());
 
         /// <summary>
         /// Преобразовать в модели одежды
         /// </summary>
-        private static IReadOnlyCollection<ClothesViewModelColumnItem> GetClothesItemsFromDomains(IEnumerable<IClothesDomain> clothesDomains,
+        private static IReadOnlyCollection<ClothesColumnViewModelItem> GetClothesItemsFromDomains(IEnumerable<IClothesDomain> clothesDomains,
                                                                                                  IClothesRestService clothesRestService,
                                                                                                  IClothesDetailNavigationService clothesDetailNavigationService) =>
             clothesDomains.
@@ -78,7 +78,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             Map(clothesItems => (clothesItems.Where((clothes, index) => index % 2 == 0),
                                  clothesItems.Where((clothes, index) => index % 2 != 0))).
             Map(clothesPair => clothesPair.Item1.ZipLong(clothesPair.Item2,
-                                                         (first, second) => new ClothesViewModelColumnItem(first, second))).
+                                                         (first, second) => new ClothesColumnViewModelItem(first, second))).
             ToList();
     }
 }

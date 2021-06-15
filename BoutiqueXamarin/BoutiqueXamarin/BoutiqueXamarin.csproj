@@ -6,7 +6,7 @@
     <Configurations>Debug;Release;Test</Configurations>
     <UserSecretsId>77bc02dd-f017-42d7-8734-104729c16b89</UserSecretsId>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-  </PropertyGroup> 
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DynamicData" Version="7.1.16" />
@@ -51,6 +51,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\Clothes\ClothesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\Clothes\ViewItems\ClothesColumnView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\Clothes\ViewItems\ClothesItemView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

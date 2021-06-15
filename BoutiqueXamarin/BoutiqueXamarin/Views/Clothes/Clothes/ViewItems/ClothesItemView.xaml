@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:ClothesItemBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ViewItems.ClothesItemView"
+             xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
+             xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
+    <StackLayout x:Name="ClothesItem">
+        <StackLayout.Resources>
+            <Style x:Key="LabelClothesItemStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </StackLayout.Resources>
+
+        <Image x:Name="ClothesImage" Aspect="AspectFit" />
+        <Label Style="{StaticResource LabelClothesItemStyle}"
+               Text="{Binding Name}" />
+        <Label Style="{StaticResource LabelClothesItemStyle}"
+               Text="{Binding Price}" />
+    </StackLayout>
+</views:ClothesItemBase>
