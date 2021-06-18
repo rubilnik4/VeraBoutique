@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
-    <Grid>
+    <Grid Margin="0, 0, 0, 20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />

@@ -4,16 +4,11 @@
              xmlns:prism="http://prismlibrary.com"
              x:Class="BoutiqueXamarin.App">
     <Application.Resources>
-        <Style TargetType="{x:Type Label}"
-               BaseResourceKey="BodyStyle">
-            <Setter Property="TextColor" Value="Accent" />
-        </Style>
-
-        <Style x:Key="ListViewLabel"
-               TargetType="{x:Type Label}">
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="VerticalTextAlignment" Value="Center"/>
-            <Setter Property="TextTransform" Value="Uppercase"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueColors.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueElements.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

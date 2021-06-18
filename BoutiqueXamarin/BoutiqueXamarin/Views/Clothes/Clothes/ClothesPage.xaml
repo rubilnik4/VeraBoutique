@@ -16,18 +16,24 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            <StackLayout Grid.Row="0"
+                         Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" 
-                        Text="Назад"/>
-                <Button Grid.Column="2" 
-                        Text="Фильтр"/>
-            </Grid>
+                    <Button Grid.Column="0" 
+                            Style="{StaticResource ButtonTransparent}"
+                            Text="Назад"/>
+                    <Button Grid.Column="2" 
+                            Style="{StaticResource ButtonTransparent}"
+                            Text="Фильтр"/>
+                </Grid>
+                <BoxView Style="{StaticResource SeparatorBox}"/>
+            </StackLayout>
 
             <ListView x:Name="ClothesColumns"
                       Grid.Row="1"
@@ -40,16 +46,21 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <StackLayout Grid.Row="2" 
+                         Orientation="Vertical">
+                <BoxView Style="{StaticResource SeparatorBox}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="1" 
-                        Text="Меню"/>
-            </Grid>
+                    <Button Grid.Column="1"
+                            Style="{StaticResource ButtonTransparent}"
+                            Text="Меню" />
+                </Grid>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </views:ClothesPageBase>
