@@ -25,9 +25,17 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" 
-                            Style="{StaticResource ButtonTransparent}"
-                            Text="Назад"/>
+                    <ImageButton Grid.Column="0"
+                                 BackgroundColor="Transparent"
+                                 Padding="5">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="&#xf2ca;"
+                                             FontFamily="{OnPlatform iOS=Ionicons, Android=ionicons.ttf#}"
+                                             Color="Black"
+                                             Size="32" />
+                        </ImageButton.Source>
+                    </ImageButton>
+
                     <Button Grid.Column="2" 
                             Style="{StaticResource ButtonTransparent}"
                             Text="Фильтр"/>
