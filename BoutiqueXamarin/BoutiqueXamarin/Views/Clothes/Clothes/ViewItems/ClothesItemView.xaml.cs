@@ -26,6 +26,14 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
             {
                 this.OneWayBind(ViewModel, x => x.Image, x => x.ClothesImage.Source).
                      DisposeWith(disposable);
+
+                this.OneWayBind(ViewModel, x => x.Name, x => x.ClothesName.Text).
+                    DisposeWith(disposable);
+
+                this.OneWayBind(ViewModel, x => x.Price, x => x.ClothesPrice.Text,
+                                price => price.ToString("F0") + " Руб.").
+                    DisposeWith(disposable);
+
                 tapGestureRecognizer.
                 Events().Tapped.
                 Select(_ => Unit.Default).

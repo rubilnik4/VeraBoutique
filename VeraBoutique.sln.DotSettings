@@ -23,11 +23,13 @@
 	<s:Boolean x:Key="/Default/InstalledDictionaries/InstalledDictionaries/=N_003A_005C_041F_0440_043E_0433_0438_005Crusdic_005Cindex_002Edic/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/InstalledDictionaries/InstalledDictionaries/=N_003A_005C_041F_0440_043E_0433_0438_005Crusdic_005Cru_005FRU_005FUTF_002D8_005F20131101_005Cru_005FRU_002Edic/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=appsettings/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=bindable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Boutoque/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Concatted/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Convertion/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=DALX/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=DTOX/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ionicons/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=loginsettings/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=MVCX/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=nextval/@EntryIndexedValue">True</s:Boolean>

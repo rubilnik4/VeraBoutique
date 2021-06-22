@@ -5,6 +5,7 @@
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
@@ -25,17 +26,9 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <ImageButton Grid.Column="0"
-                                 BackgroundColor="Transparent"
-                                 Padding="5">
-                        <ImageButton.Source>
-                            <FontImageSource Glyph="&#xf2ca;"
-                                             FontFamily="{OnPlatform iOS=Ionicons, Android=ionicons.ttf#}"
-                                             Color="Black"
-                                             Size="32" />
-                        </ImageButton.Source>
-                    </ImageButton>
-
+                    <controls:ImageButtonGlyph Grid.Column="0"
+                                               Style="{StaticResource ButtonGlyph}"
+                                               Glyph="&#xf2ca;"/>
                     <Button Grid.Column="2" 
                             Style="{StaticResource ButtonTransparent}"
                             Text="Фильтр"/>

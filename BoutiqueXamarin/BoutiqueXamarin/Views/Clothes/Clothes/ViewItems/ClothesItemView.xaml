@@ -11,13 +11,16 @@
                    TargetType="{x:Type Label}">
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextTransform" Value="Uppercase" />
             </Style>
         </StackLayout.Resources>
 
         <Image x:Name="ClothesImage" Aspect="AspectFit" />
-        <Label Style="{StaticResource LabelClothesItemStyle}"
+        <Label x:Name="ClothesName" 
+               Style="{StaticResource LabelClothesItemStyle}"
                Text="{Binding Name}" />
-        <Label Style="{StaticResource LabelClothesItemStyle}"
+        <Label x:Name="ClothesPrice" 
+               Style="{StaticResource LabelClothesItemStyle}"
                Text="{Binding Price}"
                FontAttributes="Bold"/>
     </StackLayout>

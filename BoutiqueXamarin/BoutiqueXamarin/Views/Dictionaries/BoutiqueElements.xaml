@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin">
     <Style TargetType="{x:Type Label}"
            BaseResourceKey="BodyStyle">
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
@@ -32,5 +33,14 @@
            TargetType="{x:Type Button}">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="ButtonGlyph" 
+           TargetType="{x:Type controls:ImageButtonGlyph}">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Padding" Value="10, 5, 10, 5" />
+        <Setter Property="GlyphFontFamily" Value="{OnPlatform iOS=Ionicons, Android=ionicons.ttf#}" />
+        <Setter Property="GlyphColor" Value="{StaticResource ColorAccent}" />
+        <Setter Property="GlyphSize" Value="32" />
     </Style>
 </ResourceDictionary>
