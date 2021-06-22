@@ -96,15 +96,6 @@
     <PackageReference Include="Prism.Unity.Forms">
       <Version>8.0.0.1909</Version>
     </PackageReference>
-    <PackageReference Include="ReactiveUI">
-      <Version>13.3.2</Version>
-    </PackageReference>
-    <PackageReference Include="ReactiveUI.Events.XamForms">
-      <Version>13.3.2</Version>
-    </PackageReference>
-    <PackageReference Include="ReactiveUI.XamForms">
-      <Version>13.3.2</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
   </ItemGroup>
@@ -192,7 +183,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
