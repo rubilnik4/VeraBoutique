@@ -7,11 +7,18 @@
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
     </Style>
 
-    <Style x:Key="ListViewLabel"
+    <Style x:Key="LabelTitle"
            TargetType="{x:Type Label}">
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="TextTransform" Value="Uppercase"/>
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="LabelDescription"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelTitle}">
+        <Setter Property="FontSize" Value="16"/>
     </Style>
 
     <Style  TargetType="{x:Type Grid}" >
@@ -33,6 +40,7 @@
            TargetType="{x:Type Button}">
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="18" />
     </Style>
 
     <Style x:Key="ButtonGlyph" 

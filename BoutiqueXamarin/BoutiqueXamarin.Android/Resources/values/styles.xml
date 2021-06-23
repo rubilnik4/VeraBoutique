@@ -35,4 +35,8 @@
     <item name="android:windowContentOverlay">@null</item>
     <item name="android:windowActionBar">true</item>
   </style>
+
+  <style name="TabTextStyle" parent="TextAppearance.AppCompat.Button">
+    <item name="android:textSize">16sp</item>
+  </style>
 </resources>

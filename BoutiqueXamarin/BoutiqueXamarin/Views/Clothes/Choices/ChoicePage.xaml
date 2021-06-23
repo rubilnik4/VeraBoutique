@@ -1,17 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:ChoicePageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="http://prismlibrary.com"
-             xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices;assembly=BoutiqueXamarin"
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices;assembly=BoutiqueXamarin"
-             xmlns:xamForms="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
              xmlns:tabs="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs;assembly=BoutiqueXamarin"
              xmlns:choiceTabViewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">  
     <TabbedPage.ItemTemplate>
         <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
-            <tabs:ChoiceGenderTabPage/>
+            <tabs:ChoiceGenderTabPage />
         </DataTemplate>
     </TabbedPage.ItemTemplate>
 </views:ChoicePageBase>

@@ -11,6 +11,6 @@
 
         <Label x:Name="CategoryName"
                Grid.Column="1"
-               Style="{StaticResource ListViewLabel}" />
+               Style="{StaticResource LabelTitle}" />
     </Grid>
 </views:ChoiceCategoryBase>

@@ -5,23 +5,23 @@
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
-    <StackLayout x:Name="ClothesItem">
-        <StackLayout.Resources>
+    <ContentView.Resources>
+        <ResourceDictionary>
             <Style x:Key="LabelClothesItemStyle"
-                   TargetType="{x:Type Label}">
+                   TargetType="{x:Type Label}"
+                   BasedOn="{StaticResource LabelDescription}">
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextTransform" Value="Uppercase" />
             </Style>
-        </StackLayout.Resources>
-
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <StackLayout x:Name="ClothesItem">
         <Image x:Name="ClothesImage" Aspect="AspectFit" />
         <Label x:Name="ClothesName" 
                Style="{StaticResource LabelClothesItemStyle}"
-               Text="{Binding Name}" />
+               Text="{Binding Name}" 
+               FontAttributes="None"/>
         <Label x:Name="ClothesPrice" 
                Style="{StaticResource LabelClothesItemStyle}"
-               Text="{Binding Price}"
-               FontAttributes="Bold"/>
+               Text="{Binding Price}"/>
     </StackLayout>
 </views:ClothesItemBase>
