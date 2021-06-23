@@ -29,16 +29,18 @@
                     <controls:ImageButtonGlyph Grid.Column="0"
                                                Style="{StaticResource ButtonGlyph}"
                                                Glyph="&#xf2ca;"/>
-                    <Button Grid.Column="2" 
-                            Style="{StaticResource ButtonTransparent}"
-                            Text="Фильтр"/>
+                    <controls:CheckBoxButton x:Name="FilterButton"
+                                             Grid.Column="2"
+                                             Style="{StaticResource ButtonTransparent}"
+                                             TextUnchecked="Фильтр"
+                                             TextChecked="Назад"/>
                 </Grid>
                 <BoxView Style="{StaticResource SeparatorBox}"/>
             </StackLayout>
 
             <ListView x:Name="ClothesColumns"
                       Grid.Row="1"
-                      HasUnevenRows="True"
+                      Style="{StaticResource ListViewDefault}"
                       SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
@@ -46,15 +48,16 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Grid.Row="1">
+
+            <Grid x:Name="FilterView" 
+                  Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Frame Grid.Column="1"
-                       BackgroundColor="Bisque"/>
+                <Grid Grid.Column="1"
+                      BackgroundColor="{StaticResource ColorTransparent}"/>
             </Grid>
-
 
             <StackLayout Grid.Row="2" 
                          Orientation="Vertical">

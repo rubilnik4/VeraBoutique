@@ -22,9 +22,9 @@ namespace BoutiqueXamarin.DependencyInjection
         /// <summary>
         /// Регистрация конфигурации
         /// </summary>
-        public static async Task<IResultValue<IXamarinConfigurationDomain>> RegisterConfiguration(IBoutiqueContainer container) =>
-            await container.Resolve<IXamarinConfigurationManager>().
-            MapAsync(manager => manager.GetConfiguration()).
-            ResultValueVoidOkTaskAsync(container.Register);
+        public static IResultValue<IXamarinConfigurationDomain> RegisterConfiguration(IBoutiqueContainer container) =>
+            container.Resolve<IXamarinConfigurationManager>().
+            Map(manager => manager.GetConfiguration()).
+            ResultValueVoidOk(container.Register);
     }
 }

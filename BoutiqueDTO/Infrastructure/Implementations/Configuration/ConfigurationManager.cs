@@ -32,14 +32,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Configuration
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public abstract Task<string> GetConfigurationText();
+        public abstract string GetConfigurationText();
         
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public async Task<IResultValue<TDomain>> GetConfiguration() =>
-            await GetConfigurationText().
-            ToTransferValueJsonAsync<TTransfer>().
-            ResultValueBindOkTaskAsync(configTransfer => _configurationConverter.FromTransfer(configTransfer));
+        public IResultValue<TDomain> GetConfiguration() =>
+            GetConfigurationText().
+            ToTransferValueJson<TTransfer>().
+            ResultValueBindOk(configTransfer => _configurationConverter.FromTransfer(configTransfer));
     }
 }

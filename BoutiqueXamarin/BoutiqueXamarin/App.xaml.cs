@@ -20,6 +20,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
@@ -50,10 +51,10 @@ namespace BoutiqueXamarin
         /// </summary>
         protected override async void OnInitialized() =>
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
-            ResultValueVoidOkTaskAsync(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
-            ResultValueBindErrorsOkTaskAsync(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            VoidTaskAsync(_ => InitializeComponent()).
-            ResultValueVoidOkBadBindAsync(
+            ResultValueVoidOk(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
+            ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
+            Void(_ => InitializeComponent()).
+            ResultValueVoidOkBadAsync(
                 actionOk: _ => NavigationService.NavigateAsync(nameof(ChoicePage), EmptyNavigationParameters.GetEmptyNavigationParameters),
                 actionBad: errors => throw new NotImplementedException());
 

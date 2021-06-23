@@ -4,4 +4,5 @@
     <Color x:Key ="ColorPrimary">#7E7D81</Color>
     <Color x:Key ="ColorPrimaryDark">#424242</Color>
     <Color x:Key ="ColorAccent">#000000</Color>
+    <Color x:Key ="ColorTransparent">#ffffff</Color>
 </ResourceDictionary>

@@ -21,12 +21,18 @@
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style  TargetType="{x:Type Grid}" >
+    <Style TargetType="{x:Type Grid}" >
         <Setter Property="RowSpacing" Value="0" />
     </Style>
 
     <Style TargetType="{x:Type StackLayout}" >
         <Setter Property="Spacing" Value="0" />
+    </Style>
+
+    <Style x:Key="ListViewDefault" 
+           TargetType="{x:Type ListView}" >
+        <Setter Property="SeparatorVisibility" Value="None" />
+        <Setter Property="HasUnevenRows" Value="True" />
     </Style>
 
     <Style x:Key="SeparatorBox" 

@@ -28,7 +28,7 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
                      DisposeWith(disposable);
 
                 this.OneWayBind(ViewModel, x => x.Name, x => x.ClothesName.Text).
-                    DisposeWith(disposable);
+                     DisposeWith(disposable);
 
                 this.OneWayBind(ViewModel, x => x.Price, x => x.ClothesPrice.Text,
                                 price => price.ToString("F0") + " Руб.").
