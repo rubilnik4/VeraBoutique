@@ -53,12 +53,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         public IReadOnlyCollection<ClothesColumnViewModelItem> ClothesViewModelColumnItems =>
             _clothesViewModelColumnItems.Value;
 
-      //  public ReactiveCommand<ClothesNavigationParameters, IReadOnlyCollection<ClothesColumnViewModelItem>> ClothesCommand { get; }
-
-        /// <summary>
-        /// Видимость фильтрации
-        /// </summary>
-        public bool FilterVisible { get; set; }
+        ///// <summary>
+        ///// Размеры для фильтрации
+        ///// </summary>
+        //public IReadOnlyCollection<string> FilterSizes =>
+        //    ClothesViewModelColumnItems.
+        //    SelectMany(clothesColumn => clothesColumn.ClothesViewModelItems).
+        //    Select(clothesItem => clothesItem.ClothesDomain.)
 
         /// <summary>
         /// Преобразовать в модели одежды

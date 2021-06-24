@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Base;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes
 {
@@ -12,6 +13,11 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes
         /// Наименование
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Тип размера по умолчанию
+        /// </summary>
+        SizeType SizeTypeDefault { get; }
 
         /// <summary>
         /// Категория

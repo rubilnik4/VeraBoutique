@@ -27,10 +27,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         public ClothesViewModelItem(IClothesDomain clothesDomain, IClothesRestService clothesRestService,
                                     IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            _clothesDomain = clothesDomain;
+            ClothesDomain = clothesDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
 
-            _image = Observable.FromAsync(() => GetImageSource(clothesRestService, _clothesDomain.Id)).
+            _image = Observable.FromAsync(() => GetImageSource(clothesRestService, ClothesDomain.Id)).
                      ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
 
             ClothesDetailCommand = ReactiveCommand.CreateFromTask(ToClothesDetail);
@@ -39,7 +39,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Одежда. Доменная модель
         /// </summary>
-        private readonly IClothesDomain _clothesDomain;
+        public IClothesDomain ClothesDomain { get; }
 
         /// <summary>
         /// Сервис навигации к странице детализации одежды
@@ -50,13 +50,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Наименование
         /// </summary>
         public string Name =>
-            _clothesDomain.Name;
+            ClothesDomain.Name;
 
         /// <summary>
         /// Цена
         /// </summary>
         public decimal Price =>
-            _clothesDomain.Price;
+            ClothesDomain.Price;
 
         /// <summary>
         /// Изображение
@@ -78,7 +78,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Переход на страницу детализации одежды
         /// </summary>
         private async Task ToClothesDetail() =>
-            await _clothesDetailNavigationService.NavigateTo(_clothesDomain.Id);
+            await _clothesDetailNavigationService.NavigateTo(ClothesDomain.Id);
 
         /// <summary>
         /// Преобразовать изображение в поток

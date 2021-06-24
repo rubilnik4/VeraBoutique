@@ -8,6 +8,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Configuration;
+using FFImageLoading.Forms.Platform;
+using FFImageLoading.Svg.Forms;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
@@ -29,6 +31,8 @@ namespace BoutiqueXamarin.Droid
             base.OnCreate(savedInstanceState);
 
             Forms.Init(this, savedInstanceState);
+            CachedImageRenderer.Init(true);
+            CachedImageRenderer.InitImageViewHandler();
             LoadApplication(new App(new AndroidInitializer()));
         }
 

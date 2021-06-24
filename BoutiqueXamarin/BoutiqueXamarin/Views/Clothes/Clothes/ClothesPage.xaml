@@ -6,74 +6,100 @@
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <StackLayout Grid.Row="0"
-                         Orientation="Vertical">
+        <xct:SideMenuView x:Name="SideMenuView">
+            <StackLayout BackgroundColor="{StaticResource ColorTransparent}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                    <controls:ImageButtonGlyph Grid.Column="0"
-                                               Style="{StaticResource ButtonGlyph}"
-                                               Glyph="&#xf2ca;"/>
-                    <controls:CheckBoxButton x:Name="FilterButton"
-                                             Grid.Column="2"
-                                             Style="{StaticResource ButtonTransparent}"
-                                             TextUnchecked="Фильтр"
-                                             TextChecked="Назад"/>
+                    <StackLayout Grid.Row="0"
+                                 Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <svg:SvgCachedImage Grid.Column="0"
+                                                x:Name="BackButton"
+                                                Style="{StaticResource SvgImageBack}" />
+
+                            <StackLayout Grid.Column="2"
+                                         Orientation="Horizontal">
+                                <svg:SvgCachedImage x:Name="SortButton"
+                                                    Source="sort_amount_up_solid.svg"
+                                                    Style="{StaticResource SvgImage}" />
+                                <svg:SvgCachedImage x:Name="FilterButton"
+                                                    Source="filter_solid.svg"
+                                                    Style="{StaticResource SvgImage}" />
+                            </StackLayout>
+                        </Grid>
+                        <BoxView Style="{StaticResource SeparatorBox}" />
+                    </StackLayout>
+
+                    <ListView x:Name="ClothesColumns"
+                              Grid.Row="1"
+                              Style="{StaticResource ListViewDefault}"
+                              SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
+                                <viewItems:ClothesColumnView />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <StackLayout Grid.Row="2"
+                                 Orientation="Vertical">
+                        <BoxView Style="{StaticResource SeparatorBox}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource ButtonTransparent}"
+                                    Text="Меню" />
+                        </Grid>
+                    </StackLayout>
                 </Grid>
-                <BoxView Style="{StaticResource SeparatorBox}"/>
             </StackLayout>
 
-            <ListView x:Name="ClothesColumns"
-                      Grid.Row="1"
-                      Style="{StaticResource ListViewDefault}"
-                      SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
-                        <viewItems:ClothesColumnView/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Grid x:Name="FilterView" 
-                  Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1"
-                      BackgroundColor="{StaticResource ColorTransparent}"/>
-            </Grid>
-
-            <StackLayout Grid.Row="2" 
-                         Orientation="Vertical">
-                <BoxView Style="{StaticResource SeparatorBox}"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Button Grid.Column="1"
+            <StackLayout xct:SideMenuView.Position="RightMenu"
+                         xct:SideMenuView.MenuWidthPercentage="0.75"
+                         xct:SideMenuView.MenuGestureEnabled="False"
+                         xct:SideMenuView.ParallaxValue="0"
+                         BackgroundColor="{StaticResource ColorTransparent}">
+                <StackLayout Orientation="Vertical">
+                    <Button x:Name="FilterHide"
                             Style="{StaticResource ButtonTransparent}"
-                            Text="Меню" />
-                </Grid>
+                            Text="Закрыть" 
+                            HorizontalOptions="End"/>
+                    <xct:Expander Margin="10, 5, 5, 5">
+                        <xct:Expander.Header>
+                            <Label Text="Размер"
+                                   Style="{StaticResource LabelTitle}"/>
+                        </xct:Expander.Header>
+                        <ListView x:Name="FilterSizes">
+
+                        </ListView>
+                    </xct:Expander>
+                    <!--<xct:Expander Header="Цена"/>
+                    <xct:Expander Header="Цвет"/>-->
+                </StackLayout>
             </StackLayout>
-        </Grid>
+        </xct:SideMenuView>
     </ContentPage.Content>
 </views:ClothesPageBase>

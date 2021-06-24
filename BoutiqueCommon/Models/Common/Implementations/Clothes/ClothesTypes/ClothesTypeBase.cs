@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
 {
@@ -11,9 +12,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
     /// </summary>
     public abstract class ClothesTypeBase: IClothesTypeBase
     {
-        protected ClothesTypeBase(string name, string categoryName)
+        protected ClothesTypeBase(string name, SizeType sizeTypeDefault, string categoryName)
         {
             Name = name;
+            SizeTypeDefault = sizeTypeDefault;
             CategoryName = categoryName;
         }
 
@@ -26,6 +28,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
         /// Наименование
         /// </summary>
         public string Name { get; }
+        
+        /// <summary>
+        /// Тип размера по умолчанию
+        /// </summary>
+        public SizeType SizeTypeDefault { get; }
 
         /// <summary>
         /// Категория

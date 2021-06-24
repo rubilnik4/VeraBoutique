@@ -1,14 +1,15 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
+using BoutiqueCommon.Models.Enums.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
 {
     public abstract class ClothesTypeMainBase<TCategory> : ClothesTypeBase, IClothesTypeMainBase<TCategory>
         where TCategory : ICategoryBase
     {
-        protected ClothesTypeMainBase(string name, TCategory category)
-            :base(name, category.Name)
+        protected ClothesTypeMainBase(string name, SizeType sizeTypeDefault, TCategory category)
+            : base(name, sizeTypeDefault, category.Name)
         {
             Category = category;
         }
@@ -26,7 +27,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
             other?.Id == Id &&
             other?.Category.Equals(Category) == true;
 
-        public override int GetHashCode() => 
+        public override int GetHashCode() =>
             HashCode.Combine(Name, Category);
         #endregion
     }
