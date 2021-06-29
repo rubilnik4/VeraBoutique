@@ -56,7 +56,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public void ValidateModel_NameError()
         {
             var clothesType = ClothesTypeData.ClothesTypeMainDomains.First();
-            var clothesTypeEmptyName = new ClothesTypeMainDomain(String.Empty, clothesType.Category);
+            var clothesTypeEmptyName = new ClothesTypeMainDomain(String.Empty, SizeType.American, clothesType.Category);
 
             var result = ValidateModel(clothesTypeEmptyName);
 

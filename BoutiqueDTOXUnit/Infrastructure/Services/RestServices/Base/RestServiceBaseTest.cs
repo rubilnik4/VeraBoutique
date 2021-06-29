@@ -136,7 +136,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
-            var result = await testRestService.PostAsync(tests);
+            var result = await testRestService.PostCollectionAsync(tests);
 
             Assert.True(result.OkStatus);
             Assert.True(result.Value.SequenceEqual(testsIds));
@@ -155,7 +155,45 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
-            var result = await testRestService.PostAsync(tests);
+            var result = await testRestService.PostCollectionAsync(tests);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Загрузка данных
+        /// </summary>
+        [Fact]
+        public async Task PostAsync_Ok()
+        {
+            var test = TestData.TestDomains.First();
+            var testId = test.Id;
+            var resultId = new ResultValue<string>(testId.ToString());
+            var restClient = RestClientMock.PostRestClient(resultId);
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient.Object, testTransferConverter);
+
+            var result = await testRestService.PostAsync(test);
+
+            Assert.True(result.OkStatus);
+            Assert.True(result.Value.Equals(testId.ToString()));
+        }
+
+        /// <summary>
+        /// Загрузка данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task PostAsync_Error()
+        {
+            var test = TestData.TestDomains.First();
+            var error = ErrorTransferData.ErrorBadRequest;
+            var resultIds = new ResultValue<string>(error);
+            var restClient = RestClientMock.PostRestClient(resultIds);
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient.Object, testTransferConverter);
+
+            var result = await testRestService.PostAsync(test);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
@@ -174,7 +212,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
-            var result = await testRestService.PostAsync(test);
+            var result = await testRestService.PostValueAsync(test);
 
             Assert.True(result.OkStatus);
             Assert.True(result.Value.Equals(testId));
@@ -193,7 +231,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
-            var result = await testRestService.PostAsync(test);
+            var result = await testRestService.PostValueAsync(test);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);

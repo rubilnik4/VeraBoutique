@@ -38,10 +38,26 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
         /// <summary>
         /// Получить клиент для Api сервисов
         /// </summary>
+        public static Mock<IRestHttpClient> GetRestClient(IResultValue<byte[]> result) =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.GetByteAsync(It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
         public static Mock<IRestHttpClient> PostRestClient<TValue>(IResultCollection<TValue> result)
             where TValue : notnull =>
             new Mock<IRestHttpClient>().
             Void(mock => mock.Setup(client => client.PostCollectionAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
+                              ReturnsAsync(result));
+
+        /// <summary>
+        /// Получить клиент для Api сервисов
+        /// </summary>
+        public static Mock<IRestHttpClient> PostRestClient(IResultValue<string> result) =>
+            new Mock<IRestHttpClient>().
+            Void(mock => mock.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<string>())).
                               ReturnsAsync(result));
 
         /// <summary>

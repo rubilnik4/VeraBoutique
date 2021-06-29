@@ -29,7 +29,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithClothes(IEnumerable<ClothesTypeEntity> clothesTypeEntities,
                                                                                                IEnumerable<ClothesEntity> clothesEntities) =>
             clothesTypeEntities.
-            Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.CategoryName,
+            Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.SizeTypeDefault, clothesType.CategoryName,
                                                         clothesType.Category, clothesEntities)).
             ToList();
 
@@ -39,7 +39,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IReadOnlyCollection<ClothesTypeEntity> GetClothesTypeEntitiesWithCategory(IEnumerable<ClothesTypeEntity> clothesTypeEntities,
                                                                                                 CategoryEntity categoryEntity) =>
             clothesTypeEntities.
-            Select(clothesType => new ClothesTypeEntity(clothesType.Name,  categoryEntity)).
+            Select(clothesType => new ClothesTypeEntity(clothesType.Name, clothesType.SizeTypeDefault, categoryEntity)).
             ToList();
     }
 }

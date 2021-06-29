@@ -12,6 +12,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         public void Configure(EntityTypeBuilder<ClothesTypeEntity> builder)
         {
             builder.HasKey(t => t.Name);
+            builder.Property(t => t.SizeTypeDefault).IsRequired();
 
             builder.HasOne(t => t.Category)
                    .WithMany(s => s!.ClothesTypes)

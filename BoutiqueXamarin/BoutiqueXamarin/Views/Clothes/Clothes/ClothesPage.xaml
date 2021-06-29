@@ -5,7 +5,6 @@
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
-             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"

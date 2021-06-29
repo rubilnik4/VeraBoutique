@@ -16,7 +16,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
     /// Одежда
     /// </summary>
     public abstract class ClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
-        ClothesBase,
+        ClothesDetailBase<TColor, TSizeGroup, TSize>,
         IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize>
         where TGender : IGenderBase
         where TClothesType : IClothesTypeBase
@@ -27,13 +27,11 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         protected ClothesMainBase(int id, string name, string description, decimal price, byte[] image,
                                   TGender gender, TClothesType clothesType,
                                   IEnumerable<TColor> colors, IEnumerable<TSizeGroup> sizeGroups)
-            : base(id, name, description, price, gender.GenderType, clothesType.Name)
+            : base(id, name, description, price, gender.GenderType, clothesType.Name, colors, sizeGroups)
         {
             Image = image;
             Gender = gender;
             ClothesType = clothesType;
-            Colors = colors.ToList().AsReadOnly();
-            SizeGroups = sizeGroups.ToList().AsReadOnly();
         }
 
         /// <summary>
@@ -51,15 +49,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         /// </summary>
         public TClothesType ClothesType { get; }
 
-        /// <summary>
-        /// Цвета одежды
-        /// </summary>
-        public IReadOnlyCollection<TColor> Colors { get; }
-
-        /// <summary>
-        /// Размеры
-        /// </summary>
-        public IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>

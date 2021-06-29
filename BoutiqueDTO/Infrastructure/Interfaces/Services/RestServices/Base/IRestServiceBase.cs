@@ -25,12 +25,12 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base
         /// <summary>
         /// Отправить данные коллекции асинхронно
         /// </summary>
-        Task<IResultCollection<TId>> PostAsync(IEnumerable<TDomain> domains);
+        Task<IResultCollection<TId>> PostCollectionAsync(IEnumerable<TDomain> domains);
 
         /// <summary>
         /// Отправить данные асинхронно
         /// </summary>
-        Task<IResultValue<TId>> PostAsync(TDomain domain);
+        Task<IResultValue<TId>> PostValueAsync(TDomain domain);
 
         /// <summary>
         /// Обновить данные асинхронно

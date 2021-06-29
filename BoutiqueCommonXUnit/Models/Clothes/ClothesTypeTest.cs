@@ -26,8 +26,9 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesType_Equal_Ok()
         {
             const string name = "Свитер";
+            const SizeType sizeTypeDefault = SizeType.American;
             const string categoryName = "Нательное";
-            var clothesTypeDomain = new ClothesTypeDomain(name, categoryName);
+            var clothesTypeDomain = new ClothesTypeDomain(name, sizeTypeDefault, categoryName);
 
             int clothesTypeHash = HashCode.Combine(name, categoryName);
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
@@ -40,8 +41,9 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesTypeMain_Equal_Ok()
         {
             const string name = "Свитер";
+            const SizeType sizeTypeDefault = SizeType.American;
             var categoryDomain = new CategoryDomain("Верхушка");
-            var clothesTypeMainDomain = new ClothesTypeMainDomain(name, categoryDomain);
+            var clothesTypeMainDomain = new ClothesTypeMainDomain(name, sizeTypeDefault, categoryDomain);
 
             int clothesTypeHash = HashCode.Combine(name, categoryDomain.GetHashCode());
             Assert.Equal(clothesTypeHash, clothesTypeMainDomain.GetHashCode());

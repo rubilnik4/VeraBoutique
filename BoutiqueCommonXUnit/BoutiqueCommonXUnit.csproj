@@ -10,6 +10,8 @@
     <Description>Common library tests</Description>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Test</Configurations>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>

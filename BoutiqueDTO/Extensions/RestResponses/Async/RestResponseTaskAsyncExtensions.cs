@@ -16,6 +16,13 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
         /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ со значением
         /// </summary>
+        public static async Task<IResultValue<string>> ToRestResultTaskAsync(this Task<HttpResponseMessage> @this) =>
+            await @this.
+            MapBindAsync(restResponse => restResponse.ToRestResultAsync());
+
+        /// <summary>
+        /// Преобразовать ответ сервера в результирующий ответ со значением
+        /// </summary>
         public static async Task<IResultValue<TValue>> ToRestResultValueTaskAsync<TValue>(this Task<HttpResponseMessage> @this)
             where TValue : notnull =>
             await @this.

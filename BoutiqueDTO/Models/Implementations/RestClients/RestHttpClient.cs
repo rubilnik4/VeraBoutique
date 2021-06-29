@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Models.Enums.RestClients;
@@ -78,9 +79,16 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// <summary>
         /// Добавить данные Api
         /// </summary>
+        public async Task<IResultValue<string>> PostAsync(string request, string jsonContent) =>
+            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
+            ToRestResultTaskAsync();
+
+        /// <summary>
+        /// Добавить данные Api
+        /// </summary>
         public async Task<IResultValue<TOut>> PostValueAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
-            await _httpClient.PostAsync(request, new StringContent(jsonContent)).
+            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
             ToRestResultValueTaskAsync<TOut>();
 
         /// <summary>
@@ -88,14 +96,14 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultCollection<TOut>> PostCollectionAsync<TOut>(string request, string jsonContent) 
             where TOut : notnull =>
-            await _httpClient.PostAsync(request, new StringContent(jsonContent)).
+            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
             ToRestResultCollectionTaskAsync<TOut>();
 
         /// <summary>
         /// Обновить данные Api по идентификатору
         /// </summary>
         public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
-            await _httpClient.PutAsync(request, new StringContent(jsonContent)).
+            await _httpClient.PutAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
             ToRestResultErrorTaskAsync();
 
         /// <summary>

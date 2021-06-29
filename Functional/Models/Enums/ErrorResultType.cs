@@ -26,6 +26,7 @@
         RequestTimeout,
         RequestEntityToLarge,
         Unauthorized,
+        UnsupportedMediaType,
         UnknownRestStatus,
     }
 }

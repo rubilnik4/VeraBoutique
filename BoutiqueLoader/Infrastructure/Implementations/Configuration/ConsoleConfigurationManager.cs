@@ -28,13 +28,26 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public override async Task<string> GetConfigurationText() =>
-            await GetAssetText(ConfigurationFileName);
+        public override string GetConfigurationText() =>
+            GetAssetText(ConfigurationFileName);
+
+        /// <summary>
+        /// Получить конфигурацию в текстовом виде асинхронно
+        /// </summary>
+        public override async Task<string> GetConfigurationTextAsync() =>
+            await GetAssetTextAsync(ConfigurationFileName);
 
         /// <summary>
         /// Получить файл в текстовом формате асинхронно
         /// </summary>
-        private static async Task<string> GetAssetText(string filename) =>
+        private static string GetAssetText(string filename) =>
+            GetConfigurationFilePath(filename).
+            Map(File.ReadAllText);
+
+        /// <summary>
+        /// Получить файл в текстовом формате асинхронно
+        /// </summary>
+        private static async Task<string> GetAssetTextAsync(string filename) =>
             await GetConfigurationFilePath(filename).
             MapAsync(filePath => File.ReadAllTextAsync(filePath));
 

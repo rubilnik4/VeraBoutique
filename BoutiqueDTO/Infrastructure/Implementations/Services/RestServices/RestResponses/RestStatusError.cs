@@ -26,6 +26,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
                 HttpStatusCode.RequestTimeout => new ErrorResult(ErrorResultType.RequestTimeout, "Время ожидания ответа истекло"),
                 HttpStatusCode.RequestEntityTooLarge => new ErrorResult(ErrorResultType.RequestEntityToLarge, "Запрос слишком велик"),
                 HttpStatusCode.Unauthorized => new ErrorResult(ErrorResultType.Unauthorized, "Авторизация не пройдена"),
+                HttpStatusCode.UnsupportedMediaType => new ErrorResult(ErrorResultType.UnsupportedMediaType, "Недопустимое тело запроса"),
                 _ => new ErrorResult(ErrorResultType.UnknownRestStatus, "Неизвестный статус ответа сервера"),
             };
     }

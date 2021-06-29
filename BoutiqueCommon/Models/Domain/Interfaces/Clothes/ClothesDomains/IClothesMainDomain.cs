@@ -9,10 +9,10 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains
 {
     /// <summary>
-    /// Одежда. Трансферная модель
+    /// Одежда. Доменная модель
     /// </summary>
-    public interface IClothesMainDomain : 
+    public interface IClothesMainDomain: 
         IClothesMainBase<IGenderDomain, IClothesTypeDomain, IColorDomain, ISizeGroupMainDomain, ISizeDomain>,
-        IClothesDomain
+        IClothesDetailDomain
     { }
 }

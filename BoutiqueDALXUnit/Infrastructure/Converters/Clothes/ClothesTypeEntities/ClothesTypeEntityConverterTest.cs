@@ -81,6 +81,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
         private static ClothesTypeEntity GetClothesType(IClothesTypeBase clothesType,
                                                         string categoryName, CategoryEntity? category, 
                                                         IEnumerable<ClothesEntity>? clothes) =>
-            new (clothesType.Name, categoryName, category, clothes);
+            new (clothesType.Name, clothesType.SizeTypeDefault, categoryName, category, clothes);
     }
 }

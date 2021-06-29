@@ -46,6 +46,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await _authorizeTransferConverter.ToTransfer(authorizeDomain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json => _restHttpClient.PostValueAsync<string>(RestRequest.PostRequest(ControllerName), json));
+            ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
     }
 }

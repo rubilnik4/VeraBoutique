@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
@@ -14,28 +15,28 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class ClothesTypeEntity : ClothesTypeBase, IClothesTypeEntity
     {
         public ClothesTypeEntity(IClothesTypeBase clothesType)
-           : this(clothesType.Name, clothesType.CategoryName)
+           : this(clothesType.Name, clothesType.SizeTypeDefault, clothesType.CategoryName)
         { }
 
-        public ClothesTypeEntity(string name, string categoryName)
-           : this(name, categoryName, null, null)
+        public ClothesTypeEntity(string name, SizeType sizeTypeDefault, string categoryName)
+           : this(name, sizeTypeDefault, categoryName, null, null)
         { }
 
         public ClothesTypeEntity(IClothesTypeBase clothesType, string categoryName)
-           : this(clothesType.Name, categoryName, null, null)
+           : this(clothesType.Name, clothesType.SizeTypeDefault, categoryName, null, null)
         { }
 
         public ClothesTypeEntity(IClothesTypeBase clothesType, CategoryEntity category)
-            : this(clothesType.Name, category)
+            : this(clothesType.Name, clothesType.SizeTypeDefault, category)
         { }
 
-        public ClothesTypeEntity(string name, CategoryEntity category)
-           : this(name, category.Name, category, null)
+        public ClothesTypeEntity(string name, SizeType sizeTypeDefault, CategoryEntity category)
+           : this(name, sizeTypeDefault, category.Name, category, null)
         { }
 
-        public ClothesTypeEntity(string name, string categoryName, CategoryEntity? category, 
+        public ClothesTypeEntity(string name, SizeType sizeTypeDefault, string categoryName, CategoryEntity? category, 
                                  IEnumerable<ClothesEntity>? clothes)
-           : base(name, categoryName)
+           : base(name, sizeTypeDefault, categoryName)
         {
             Category = category;
             Clothes = clothes?.ToList();

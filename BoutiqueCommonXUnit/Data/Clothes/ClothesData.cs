@@ -35,5 +35,11 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// </summary>
         public static IReadOnlyCollection<IClothesDomain> ClothesDomains =>
             ClothesMainDomains;
+
+        /// <summary>
+        /// Получить уточненную информацию об одежде
+        /// </summary>
+        public static IReadOnlyCollection<IClothesDetailDomain> ClothesDetailDomains =>
+            ClothesMainDomains;
     }
 }

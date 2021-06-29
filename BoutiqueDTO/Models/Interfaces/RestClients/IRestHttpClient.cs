@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Models.Enums.RestClients;
@@ -49,6 +50,11 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
         /// </summary>
         Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request) 
             where TOut : notnull;
+
+        /// <summary>
+        /// Добавить данные Api
+        /// </summary>
+        Task<IResultValue<string>> PostAsync(string request, string jsonContent);
 
         /// <summary>
         /// Добавить данные Api

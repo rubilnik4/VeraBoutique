@@ -16,6 +16,14 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
     public static class RestResponseAsyncExtensions
     {
         /// <summary>
+        /// Преобразовать ответ сервера в результирующий ответ со значением строки
+        /// </summary>
+        public static async Task<IResultValue<string>> ToRestResultAsync(this HttpResponseMessage @this) =>
+            @this.IsSuccessStatusCode
+                ? (await @this.Content.ReadAsStringAsync()).Trim('"').ToResultValue()
+                : RestStatusError.RestStatusToErrorResult(@this).ToResultValue<string>();
+
+        /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ со значением
         /// </summary>
         public static async Task<IResultValue<TValue>> ToRestResultValueAsync<TValue>(this HttpResponseMessage @this)

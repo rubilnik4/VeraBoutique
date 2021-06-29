@@ -64,22 +64,32 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
             ResultValueBindOkTaskAsync(transfer => _transferConverter.FromTransfer(transfer));
 
         /// <summary>
-        /// Отправить данные коллекции асинхронно
+        /// Отправить данные асинхронно
         /// </summary>
-        public async Task<IResultCollection<TId>> PostAsync(IEnumerable<TDomain> domains) =>
-            await _transferConverter.ToTransfers(domains).
+        public async Task<IResultValue<string>> PostAsync(TDomain domain) =>
+            await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
-            ResultValueBindOkToCollectionAsync(json => 
-                RestHttpClient.PostCollectionAsync<TId>(RestRequest.PostRequestCollection(ControllerName), json));
+            ResultValueBindOkAsync(json =>
+                RestHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
 
         /// <summary>
         /// Отправить данные асинхронно
         /// </summary>
-        public async Task<IResultValue<TId>> PostAsync(TDomain domain) =>
+        public async Task<IResultValue<TId>> PostValueAsync(TDomain domain) =>
             await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
             ResultValueBindOkAsync(json =>
                 RestHttpClient.PostValueAsync<TId>(RestRequest.PostRequest(ControllerName), json));
+
+
+        /// <summary>
+        /// Отправить данные коллекции асинхронно
+        /// </summary>
+        public async Task<IResultCollection<TId>> PostCollectionAsync(IEnumerable<TDomain> domains) =>
+            await _transferConverter.ToTransfers(domains).
+            ToJsonTransfer().
+            ResultValueBindOkToCollectionAsync(json => 
+                RestHttpClient.PostCollectionAsync<TId>(RestRequest.PostRequestCollection(ControllerName), json));
 
         /// <summary>
         /// Обновить данные асинхронно

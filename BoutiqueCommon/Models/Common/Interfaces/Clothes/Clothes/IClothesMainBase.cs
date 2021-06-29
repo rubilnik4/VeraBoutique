@@ -8,8 +8,11 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
 {
+    /// <summary>
+    /// Одежда. Полная информация
+    /// </summary>
     public interface IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize> :
-        IClothesBase,
+        IClothesDetailBase<TColor, TSizeGroup, TSize>,
         IEquatable<IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize>>
         where TGender : IGenderBase
         where TClothesType : IClothesTypeBase
@@ -31,15 +34,5 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
         /// Вид одежды
         /// </summary>
         TClothesType ClothesType { get; }
-
-        /// <summary>
-        /// Цвета одежды
-        /// </summary>
-        IReadOnlyCollection<TColor> Colors { get; }
-
-        /// <summary>
-        /// Размеры
-        /// </summary>
-        IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
     }
 }

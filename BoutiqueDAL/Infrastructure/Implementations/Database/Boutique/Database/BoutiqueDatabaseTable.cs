@@ -11,36 +11,43 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public IGenderTable GendersTable => new GenderTable(Genders);
+        public IGenderTable GendersTable =>
+            new GenderTable(Genders);
 
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public ICategoryTable CategoryTable => new CategoryTable(Categories);
+        public ICategoryTable CategoryTable => 
+            new CategoryTable(Categories);
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public IColorClothesTable ColorClothesTable => new ColorClothesTable(ColorClothes);
+        public IColorClothesTable ColorClothesTable =>
+            new ColorClothesTable(ColorClothes);
 
         /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
-        public IClothesTypeTable ClotheTypeTable => new ClothesTypeTable(ClothesTypes);
+        public IClothesTypeTable ClotheTypeTable =>
+            new ClothesTypeTable(ClothesTypes);
 
         /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
-        public ISizeTable SizeTable => new SizeTable(Sizes);
+        public ISizeTable SizeTable => 
+            new SizeTable(Sizes);
 
         /// <summary>
         /// Таблица базы данных группы размеров одежды
         /// </summary>
-        public ISizeGroupTable SizeGroupTable => new SizeGroupTable(SizeGroups);
+        public ISizeGroupTable SizeGroupTable => 
+            new SizeGroupTable(SizeGroups);
 
         /// <summary>
         /// Таблица базы данных одежды
         /// </summary>
-        public IClothesTable ClothesTable => new ClothesTable(Clothes);
+        public IClothesTable ClothesTable => 
+            new ClothesTable(Clothes);
     }
 }

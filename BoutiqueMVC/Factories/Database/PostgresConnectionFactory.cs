@@ -22,26 +22,31 @@ namespace BoutiqueMVC.Factories.Database
         /// <summary>
         /// Имя сервера
         /// </summary>
-        private static string? Host => Environment.GetEnvironmentVariable(PostgresEnvironment.HOST_NAME);
+        private static string? Host =>
+            Environment.GetEnvironmentVariable(PostgresEnvironment.HOST_NAME);
 
         /// <summary>
         /// Порт
         /// </summary>
-        private static string? Port => Environment.GetEnvironmentVariable(PostgresEnvironment.PORT_NAME);
+        private static string? Port =>
+            Environment.GetEnvironmentVariable(PostgresEnvironment.PORT_NAME);
 
         /// <summary>
         /// Имя базы данных
         /// </summary>
-        private static string? Database => Environment.GetEnvironmentVariable(PostgresEnvironment.DATABASE_NAME);
+        private static string? Database =>
+            Environment.GetEnvironmentVariable(PostgresEnvironment.DATABASE_NAME);
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        private static string? Username => Environment.GetEnvironmentVariable(PostgresEnvironment.USER_NAME);
+        private static string? Username =>
+            Environment.GetEnvironmentVariable(PostgresEnvironment.USER_NAME);
 
         /// <summary>
         /// Пароль
         /// </summary>
-        private static string? Password => Environment.GetEnvironmentVariable(PostgresEnvironment.PASSWORD_NAME);
+        private static string? Password =>
+            Environment.GetEnvironmentVariable(PostgresEnvironment.PASSWORD_NAME);
     }
 }

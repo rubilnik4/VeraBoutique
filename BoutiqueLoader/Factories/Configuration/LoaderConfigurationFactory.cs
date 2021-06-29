@@ -7,6 +7,7 @@ using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
 using BoutiqueLoader.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -22,7 +23,7 @@ namespace BoutiqueLoader.Factories.Configuration
         /// Получить конфигурацию
         /// </summary>
         public static async Task<IResultValue<ILoaderConfigurationDomain>> GetConfiguration(IBoutiqueLogger boutiqueLogger) =>
-            await LoaderConfigurationManager.GetConfiguration().
+            await LoaderConfigurationManager.GetConfigurationAsync().
             ResultValueVoidBadTaskAsync(errors => boutiqueLogger.
                                                   Void(_ => boutiqueLogger.ShowMessage("Ошибка конфигурационного файла")).
                                                   Void(_ => boutiqueLogger.ShowErrors(errors)));

@@ -22,6 +22,48 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
         [Theory]
         [InlineData(HttpStatusCode.OK)]
         [InlineData(HttpStatusCode.Created)]
+        public async Task ToRestResult(HttpStatusCode httpStatusCode)
+        {
+            const string value = "test";
+            var restResult = new HttpResponseMessage
+            {
+                Content = new StringContent(value.ToJsonTransfer().Value),
+                StatusCode = httpStatusCode,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultValue = await restResultTask.ToRestResultTaskAsync();
+
+            Assert.True(resultValue.OkStatus);
+            Assert.Equal(value, resultValue.Value);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task ToRestResult_Error()
+        {
+            const string value = "test";
+            var restResult = new HttpResponseMessage
+            {
+                Content = new StringContent(value),
+                StatusCode = HttpStatusCode.InternalServerError,
+            };
+            var restResultTask = GetRestResponseTask(restResult);
+
+            var resultValue = await restResultTask.ToRestResultTaskAsync();
+
+            Assert.True(resultValue.HasErrors);
+            Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Преобразование в результирующий ответ
+        /// </summary>
+        [Theory]
+        [InlineData(HttpStatusCode.OK)]
+        [InlineData(HttpStatusCode.Created)]
         public async Task ToRestResultValue(HttpStatusCode httpStatusCode)
         {
             const string value = "test";

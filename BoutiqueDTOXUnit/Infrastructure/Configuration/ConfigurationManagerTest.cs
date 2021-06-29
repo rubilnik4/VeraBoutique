@@ -14,7 +14,6 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Newtonsoft.Json;
 using Xunit;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Configuration
 {
@@ -30,16 +29,34 @@ namespace BoutiqueDTOXUnit.Infrastructure.Configuration
         /// <summary>
         /// Получить конфигурацию в текстовом виде асинхронно
         /// </summary>
-        public override async Task<string> GetConfigurationText() =>
+        public override string GetConfigurationText() =>
+            ConfigurationTextOk;
+
+        /// <summary>
+        /// Получить конфигурацию в текстовом виде асинхронно
+        /// </summary>
+        public override async Task<string> GetConfigurationTextAsync() =>
             await Task.FromResult(ConfigurationTextOk);
 
         /// <summary>
         /// Получить корректную конфигурацию
         /// </summary>
         [Fact]
-        public async Task GetConfiguration_Ok()
+        public void GetConfiguration_Ok()
         {
-            var configuration = await GetConfiguration();
+            var configuration = GetConfiguration();
+
+            Assert.True(configuration.OkStatus);
+            Assert.True(configuration.Value.Equals(TestData.TestDomains.First()));
+        }
+
+        /// <summary>
+        /// Получить корректную конфигурацию
+        /// </summary>
+        [Fact]
+        public async Task GetConfigurationAsync_Ok()
+        {
+            var configuration = await GetConfigurationAsync();
 
             Assert.True(configuration.OkStatus);
             Assert.True(configuration.Value.Equals(TestData.TestDomains.First()));

@@ -168,7 +168,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludes_ClothesTypeNotFound()
         {
-            var clothesType = new ClothesTypeDomain("NotFound", "NotFound");
+            var clothesType = new ClothesTypeDomain("NotFound", SizeType.Default, "NotFound");
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesNotFound = new ClothesMainDomain(clothes, clothes.Image, clothes.Gender, clothesType, 
                                                         clothes.Colors, clothes.SizeGroups);
@@ -250,7 +250,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public async Task ValidateIncludesCollection_ClothesTypeNotFound()
         {
-            var clothesType = new ClothesTypeDomain("NotFound", "NotFound");
+            var clothesType = new ClothesTypeDomain("NotFound", SizeType.Default, "NotFound");
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesNotFound = ClothesData.ClothesMainDomains.
                                   Append(new ClothesMainDomain(clothes, clothes.Image, clothes.Gender, clothesType, 

@@ -29,7 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers)
         {
             await Database.EnsureCreatedAsync();
-          //  await Database.MigrateAsync();
+            await Database.MigrateAsync();
             await IdentityInitialize.Initialize(this, userManager, defaultUsers);
         }
 

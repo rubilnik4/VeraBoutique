@@ -8,5 +8,6 @@
         European,
         American,
         Russian,
+        Default,
     }
 }
