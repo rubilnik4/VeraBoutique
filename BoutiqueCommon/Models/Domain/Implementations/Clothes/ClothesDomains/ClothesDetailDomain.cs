@@ -16,9 +16,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
     public class ClothesDetailDomain: ClothesDetailBase<IColorDomain, ISizeGroupMainDomain, ISizeDomain>,
                                       IClothesDetailDomain
     {
-        public ClothesDetailDomain(IClothesBase clothes, GenderType genderType, string clothesTypeName,
+        public ClothesDetailDomain(IClothesBase clothes, 
                                    IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupMainDomain> sizeGroups)
-           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, genderType, clothesTypeName, colors, sizeGroups)
+           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, 
+                  clothes.GenderType, clothes.ClothesTypeName, colors, sizeGroups)
         { }
 
         public ClothesDetailDomain(int id, string name, string description, decimal price,

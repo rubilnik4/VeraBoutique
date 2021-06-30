@@ -73,8 +73,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
             GetClothesFunc(clothesEntity, clothesEntity.Image).
             ResultValueCurryOk(GetGender(clothesEntity.Gender)).
             ResultValueCurryOk(GetClothesType(clothesEntity.ClothesType)).
-            ResultValueCurryOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites)).
-            ResultValueCurryOk(SizeGroupFromComposite(clothesEntity.ClothesSizeGroupComposites)).
+            ResultValueCurryOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites, _colorClothesEntityConverter)).
+            ResultValueCurryOk(SizeGroupFromComposite(clothesEntity.ClothesSizeGroupComposites, _sizeGroupMainEntityConverter)).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>
@@ -82,9 +82,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         public override ClothesEntity ToEntity(IClothesMainDomain clothesMainDomain) =>
             new ClothesEntity(clothesMainDomain, clothesMainDomain.Image,
-                              clothesMainDomain.Gender.GenderType, clothesMainDomain.ClothesType.Name,
-                              ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id),
-                              SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id));
+                              ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id, _colorClothesEntityConverter),
+                              SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id, _sizeGroupMainEntityConverter));
 
         /// <summary>
         /// Функция получения информации об одежде
@@ -96,35 +95,39 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов
         /// </summary>
-        private IResultCollection<IColorDomain> ColorClothesFromComposite(IEnumerable<ClothesColorCompositeEntity>? clothesColorCompositeEntities) =>
+        public static IResultCollection<IColorDomain> ColorClothesFromComposite(IEnumerable<ClothesColorCompositeEntity>? clothesColorCompositeEntities,
+                                                                                IColorClothesEntityConverter colorClothesEntityConverter) =>
             clothesColorCompositeEntities.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesColorCompositeEntities))).
             ResultValueBindOkToCollection(GetColorClothes).
-            ResultCollectionBindOk(colorClothesEntities => _colorClothesEntityConverter.FromEntities(colorClothesEntities));
+            ResultCollectionBindOk(colorClothesEntityConverter.FromEntities);
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию размеров
         /// </summary>
-        private IResultCollection<ISizeGroupMainDomain> SizeGroupFromComposite(IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeCompositeEntities) =>
+        public static IResultCollection<ISizeGroupMainDomain> SizeGroupFromComposite(IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeCompositeEntities,
+                                                                                     ISizeGroupMainEntityConverter sizeGroupMainEntityConverter) =>
             clothesSizeCompositeEntities.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesSizeCompositeEntities))).
             ResultValueBindOkToCollection(GetColorClothes).
-            ResultCollectionBindOk(sizeGroupEntities => _sizeGroupMainEntityConverter.FromEntities(sizeGroupEntities));
+            ResultCollectionBindOk(sizeGroupMainEntityConverter.FromEntities);
 
         /// <summary>
         /// Преобразовать цвета в связующую сущность
         /// </summary>
-        private IEnumerable<ClothesColorCompositeEntity> ColorClothesToComposite(IEnumerable<IColorDomain> colorClothesDomains,
-                                                                                         int clothesId) =>
-            _colorClothesEntityConverter.ToEntities(colorClothesDomains).
+        public static IEnumerable<ClothesColorCompositeEntity> ColorClothesToComposite(IEnumerable<IColorDomain> colorClothesDomains,
+                                                                                         int clothesId,
+                                                                                         IColorClothesEntityConverter colorClothesEntityConverter) =>
+            colorClothesEntityConverter.ToEntities(colorClothesDomains).
             Select(colorClothesEntity => new ClothesColorCompositeEntity(clothesId, colorClothesEntity.Name, null, null));
 
         /// <summary>
         /// Преобразовать размеры в связующую сущность
         /// </summary>
-        private IEnumerable<ClothesSizeGroupCompositeEntity> SizeGroupToComposite(IEnumerable<ISizeGroupMainDomain> sizeGroupMainDomains,
-                                                                                  int clothesId) =>
-            _sizeGroupMainEntityConverter.ToEntities(sizeGroupMainDomains).
+        public static IEnumerable<ClothesSizeGroupCompositeEntity> SizeGroupToComposite(IEnumerable<ISizeGroupMainDomain> sizeGroupMainDomains,
+                                                                                        int clothesId,
+                                                                                        ISizeGroupMainEntityConverter sizeGroupMainEntityConverter) =>
+            sizeGroupMainEntityConverter.ToEntities(sizeGroupMainDomains).
             Select(sizeGroupEntity => new ClothesSizeGroupCompositeEntity(clothesId, sizeGroupEntity.Id, null, null));
 
         /// <summary>

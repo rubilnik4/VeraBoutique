@@ -44,6 +44,7 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<ISizeGroupTransferConverter, SizeGroupTransferConverter>();
             container.Register<IColorTransferConverter, ColorTransferConverter>();
             container.Register<IClothesTransferConverter, ClothesTransferConverter>();
+            container.Register<IClothesDetailTransferConverter, ClothesDetailTransferConverter>();
             container.Register<IClothesMainTransferConverter, ClothesMainTransferConverter>();
 
             container.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();

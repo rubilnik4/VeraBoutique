@@ -38,11 +38,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public ClothesDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                       IClothesDatabaseValidateService clothesDatabaseValidateService,
                                       IClothesEntityConverter clothesEntityConverter,
+                                      IClothesDetailEntityConverter clothesDetailEntityConverter,
                                       IClothesMainEntityConverter clothesMainEntityConverter)
           : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesDatabaseValidateService, clothesMainEntityConverter)
         {
             _clothesTable = boutiqueDatabase.ClothesTable;
             _clothesEntityConverter = clothesEntityConverter;
+            _clothesDetailEntityConverter = clothesDetailEntityConverter;
         }
 
         /// <summary>
@@ -56,6 +58,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IClothesEntityConverter _clothesEntityConverter;
 
         /// <summary>
+        /// Преобразования модели уточненной информации об одежде в модель базы данных
+        /// </summary>
+        private readonly IClothesDetailEntityConverter _clothesDetailEntityConverter;
+
+        /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
@@ -63,6 +70,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
             FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.GenderType == genderType &&
                                                                            clothesEntity.ClothesTypeName == clothesType)).
             ResultCollectionBindOkTaskAsync(clothesDomains => _clothesEntityConverter.FromEntities(clothesDomains));
+
+        /// <summary>
+        /// Получить уточненную информацию об одежде по типу полу и типу одежды
+        /// </summary>
+        public async Task<IResultCollection<IClothesDetailDomain>> GetClothesDetails(GenderType genderType, string clothesType) =>
+            await _clothesTable.
+            FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.GenderType == genderType &&
+                                                                           clothesEntity.ClothesTypeName == clothesType).
+                                                    Include(clothesEntity => clothesEntity.ClothesColorComposites).
+                                                    ThenInclude(clothesColor => clothesColor.ColorClothes).
+                                                    Include(clothesEntity => clothesEntity.ClothesSizeGroupComposites).
+                                                    ThenInclude(clothesColor => clothesColor.SizeGroup).
+                                                    ThenInclude(sizeGroups => sizeGroups!.SizeGroupComposites).
+                                                    ThenInclude(sizeComposites => sizeComposites.Size)).
+            ResultCollectionBindOkTaskAsync(clothesDomains => _clothesDetailEntityConverter.FromEntities(clothesDomains));
 
         /// <summary>
         /// Получить изображение одежды по идентификатору

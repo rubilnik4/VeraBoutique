@@ -13,7 +13,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
     /// Преобразования модели одежды в модель базы данных
     /// </summary>
     public class ClothesEntityConverter : EntityConverter<int, IClothesDomain, ClothesEntity>,
-                                               IClothesEntityConverter
+                                          IClothesEntityConverter
     {
         /// <summary>
         /// Преобразовать категорию одежды из модели базы данных

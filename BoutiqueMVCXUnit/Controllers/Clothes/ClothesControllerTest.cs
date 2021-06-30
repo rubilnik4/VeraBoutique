@@ -43,12 +43,10 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clothesDomain = clothesDomains.First();
             var genderType = clothesDomain.Gender.GenderType;
             var clothesType = clothesDomain.ClothesType.Name;
-            var clothesResult = new ResultCollection<IClothesMainDomain>(clothesDomains);
+            var clothesResult = new ResultCollection<IClothesDomain>(clothesDomains);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesTransferConverter;
-            var clothesController = new ClothesController(clothesDatabaseService.Object, 
-                                                          ClothesTransferConverterMock.ClothesMainTransferConverter,
-                                                          ClothesTransferConverterMock.ClothesTransferConverter);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
 
             var clothesTransfers = await clothesController.GetClothes(genderType, clothesType);
             var actionResult = clothesTransferConverter.FromTransfers(clothesTransfers.Value);
@@ -68,11 +66,53 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var genderType = clothesDomain.Gender.GenderType;
             var clothesType = clothesDomain.ClothesType.Name;
             var clothesDatabaseService = GetClothesDatabaseService(clothesDomains);
-            var clothesController = new ClothesController(clothesDatabaseService.Object,
-                                                          ClothesTransferConverterMock.ClothesMainTransferConverter,
-                                                          ClothesTransferConverterMock.ClothesTransferConverter);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
 
             var actionResult = await clothesController.GetClothes(genderType, clothesType);
+
+            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
+            var badRequest = (BadRequestObjectResult)actionResult.Result;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Получить одежду без картинок. Корректный вариант
+        /// </summary>
+        [Fact]
+        public async Task GetClothesDetails_Ok()
+        {
+            var clothesDomains = ClothesData.ClothesDetailDomains;
+            var clothesDomain = clothesDomains.First();
+            var genderType = clothesDomain.GenderType;
+            var clothesType = clothesDomain.Name;
+            var clothesResult = new ResultCollection<IClothesDetailDomain>(clothesDomains);
+            var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
+            var clothesTransferConverter = ClothesTransferConverterMock.ClothesDetailTransferConverter;
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
+
+            var clothesTransfers = await clothesController.GetClothesDetails(genderType, clothesType);
+            var actionResult = clothesTransferConverter.FromTransfers(clothesTransfers.Value);
+
+            Assert.True(actionResult.Value.SequenceEqual(clothesDomains));
+        }
+
+        /// <summary>
+        /// Получить одежду без картинок. Ошибка базы данных
+        /// </summary>
+        [Fact]
+        public async Task GetByGenderDetails_ErrorDatabase()
+        {
+            var initialError = ErrorData.DatabaseError;
+            var clothesDomains = new ResultCollection<IClothesDetailDomain>(initialError);
+            var clothesDomain = ClothesData.ClothesDetailDomains.First();
+            var genderType = clothesDomain.GenderType;
+            var clothesType = clothesDomain.Name;
+            var clothesDatabaseService = GetClothesDatabaseService(clothesDomains);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
+
+            var actionResult = await clothesController.GetClothesDetails(genderType, clothesType);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;
@@ -91,9 +131,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clotheId = clothesDomain.Id;
             var clothesResult = new ResultValue<byte[]>(clothesDomain.Image);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
-            var clothesController = new ClothesController(clothesDatabaseService.Object,
-                                                          ClothesTransferConverterMock.ClothesMainTransferConverter,
-                                                          ClothesTransferConverterMock.ClothesTransferConverter);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
 
             var imageResult = await clothesController.GetImage(clotheId);
 
@@ -113,9 +151,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var clotheId = clothesDomain.Id;
             var clothesResult = new ResultValue<byte[]>(initialError);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
-            var clothesController = new ClothesController(clothesDatabaseService.Object,
-                                                          ClothesTransferConverterMock.ClothesMainTransferConverter,
-                                                          ClothesTransferConverterMock.ClothesTransferConverter);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
 
             var imageResult = await clothesController.GetImage(clotheId);
 
@@ -136,9 +172,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var initialError = ErrorData.NotFoundError;
             var clothesResult = new ResultValue<byte[]>(initialError);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
-            var clothesController = new ClothesController(clothesDatabaseService.Object,
-                                                       ClothesTransferConverterMock.ClothesMainTransferConverter,
-                                                       ClothesTransferConverterMock.ClothesTransferConverter);
+            var clothesController = GetClothesController(clothesDatabaseService.Object);
 
             var actionResult = await clothesController.GetImage(clothesDomain.Id);
 
@@ -158,9 +192,26 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// <summary>
         /// Сервис одежды в базе данных
         /// </summary>
+        private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultCollection<IClothesDetailDomain> clothesDetailDomains) =>
+            new Mock<IClothesDatabaseService>().
+            Void(mock => mock.Setup(service => service.GetClothesDetails(It.IsAny<GenderType>(), It.IsAny<string>())).
+                              ReturnsAsync(clothesDetailDomains));
+
+        /// <summary>
+        /// Сервис одежды в базе данных
+        /// </summary>
         private static Mock<IClothesDatabaseService> GetClothesDatabaseService(IResultValue<byte[]> image) =>
             new Mock<IClothesDatabaseService>().
             Void(mock => mock.Setup(service => service.GetImage(It.IsAny<int>())).
                               ReturnsAsync(image));
+
+        /// <summary>
+        /// Получить контроллер одежды
+        /// </summary>
+        private static ClothesController GetClothesController(IClothesDatabaseService clothesDatabaseService) =>
+            new(clothesDatabaseService,
+                ClothesTransferConverterMock.ClothesMainTransferConverter,
+                ClothesTransferConverterMock.ClothesDetailTransferConverter,
+                ClothesTransferConverterMock.ClothesTransferConverter);
     }
 }

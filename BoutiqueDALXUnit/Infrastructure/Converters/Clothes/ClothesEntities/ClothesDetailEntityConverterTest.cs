@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
@@ -16,9 +13,9 @@ using Xunit;
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
 {
     /// <summary>
-    /// Преобразования модели одежды в модель базы данных. Тесты
+    /// Преобразования модели уточненной информации об одежде в модель базы данных. Тесты
     /// </summary>
-    public class ClothesMainEntityConverterTest
+    public class ClothesDetailEntityConverterTest
     {
         /// <summary>
         /// Преобразования модели цвета одежды в модель базы данных
@@ -26,8 +23,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         [Fact]
         public void ToEntity()
         {
-            var clothesDomain = ClothesData.ClothesMainDomains.First();
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
+            var clothesDomain = ClothesData.ClothesDetailDomains.First();
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesDetailEntityConverter;
 
             var clothesEntity = clothesEntityConverter.ToEntity(clothesDomain);
 
@@ -45,46 +42,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity()
         {
             var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesDetailEntityConverter;
 
             var clothesDomain = clothesEntityConverter.FromEntity(clothesEntity);
 
             Assert.True(clothesDomain.OkStatus);
-            Assert.True(ClothesData.ClothesMainDomains.First().Equals(clothesDomain.Value));
-        }
-
-        /// <summary>
-        /// Преобразования модели цвета одежды в модель базы данных. Ошибка типа пола
-        /// </summary>
-        [Fact]
-        public void FromEntity_GenderNotFound()
-        {
-            var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, null, clothes.ClothesType,
-                                               clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
-
-            var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Преобразования модели цвета одежды в модель базы данных. Ошибка типа одежды
-        /// </summary>
-        [Fact]
-        public void FromEntity_ClothesTypeNotFound()
-        {
-            var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, null,
-                                               clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
-
-            var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
-
-            Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.True(ClothesData.ClothesDetailDomains.First().Equals(clothesDomain.Value));
         }
 
         /// <summary>
@@ -96,7 +59,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, clothes.ClothesType,
                                                null, clothes.ClothesSizeGroupComposites);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesDetailEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
@@ -113,7 +76,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothes = ClothesEntitiesData.ClothesEntities.First();
             var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, clothes.ClothesType,
                                                clothes.ClothesColorComposites, null);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesDetailEntityConverter;
 
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
@@ -129,7 +92,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
                                                       IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                                                       IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites) =>
             new(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
-                clothes.GenderType, clothes.ClothesTypeName, gender, clothesType,
-                clothesColorComposites, clothesSizeGroupComposites);
+                 clothes.GenderType, clothes.ClothesTypeName, gender, clothesType,
+                 clothesColorComposites, clothesSizeGroupComposites);
     }
 }

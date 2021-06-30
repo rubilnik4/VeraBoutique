@@ -48,6 +48,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupMainTransferConverter, SizeGroupMainTransferConverter>();
             services.AddTransient<IColorTransferConverter, ColorTransferConverter>();
             services.AddTransient<IClothesTransferConverter, ClothesTransferConverter>();
+            services.AddTransient<IClothesDetailTransferConverter, ClothesDetailTransferConverter>();
             services.AddTransient<IClothesMainTransferConverter, ClothesMainTransferConverter>();
         }
 
@@ -68,6 +69,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupMainEntityConverter, SizeGroupMainEntityConverter>();
             services.AddTransient<IColorClothesEntityConverter, ColorClothesEntityConverter>();
             services.AddTransient<IClothesEntityConverter, ClothesEntityConverter>();
+            services.AddTransient<IClothesDetailEntityConverter, ClothesDetailEntityConverter>();
             services.AddTransient<IClothesMainEntityConverter, ClothesMainEntityConverter>();
         }
     }

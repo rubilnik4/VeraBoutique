@@ -129,9 +129,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesDetail_Equal_Color()
         {
             var first = ClothesData.ClothesDomains.First();
-            var second = new ClothesDetailDomain(first, GenderData.GenderCategoryDomains.First().GenderType,
-                                                 ClothesTypeData.ClothesTypeMainDomains.First().CategoryName,
-                                                 ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);
+            var second = new ClothesDetailDomain(first, ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);
 
             Assert.True(first.Equals(second));
         }

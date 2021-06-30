@@ -56,6 +56,25 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Запрос получения
         /// </summary>
         [Fact]
+        public void GetJsonRequest_Additional_Parameters()
+        {
+            var parameters = new List<string>
+            {
+                "first",
+                "second",
+            };
+            const string additionalRoute = "additionalRoute";
+            var request = RestRequest.GetRequest(ControllerName, additionalRoute, parameters);
+
+            Assert.True($"api/Test/{additionalRoute}/{parameters.First()}/{parameters.Last()}".
+                        Equals(request, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+
+        /// <summary>
+        /// Запрос получения
+        /// </summary>
+        [Fact]
         public void GetJsonRequest_AdditionalRoute_Empty()
         {
             string additionalRoute = String.Empty;

@@ -31,10 +31,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     {
         public ClothesRestService(IRestHttpClient restHttpClient,
                                   IClothesTransferConverter clothesTransferConverter,
+                                  IClothesDetailTransferConverter clothesDetailTransferConverter,
                                   IClothesMainTransferConverter clothesMainTransferConverter)
             : base(restHttpClient, clothesMainTransferConverter)
         {
             _clothesTransferConverter = clothesTransferConverter;
+            _clothesDetailTransferConverter = clothesDetailTransferConverter;
         }
 
         /// <summary>
@@ -43,19 +45,33 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         private readonly IClothesTransferConverter _clothesTransferConverter;
 
         /// <summary>
+        /// Конвертер уточненной информации об одежде в трансферную модель
+        /// </summary>
+        private readonly IClothesDetailTransferConverter _clothesDetailTransferConverter;
+
+        /// <summary>
         /// Получить данные одежды
         /// </summary>
-        public async Task<IResultCollection<IClothesDomain>> GetClothesAsync(GenderType genderType, string clothesType) =>
+        public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
             await new List<string> { genderType.ToString(), clothesType }.
             Map(parameters => RestRequest.GetRequest(ControllerName, parameters)).
             MapAsync(request => RestHttpClient.GetCollectionAsync<ClothesTransfer>(request)).
             ResultCollectionBindOkTaskAsync(transfers => _clothesTransferConverter.FromTransfers(transfers));
 
         /// <summary>
+        /// Получить уточненные данные одежды
+        /// </summary>
+        public async Task<IResultCollection<IClothesDetailDomain>> GetClothesDetails(GenderType genderType, string clothesType) =>
+            await new List<string> { genderType.ToString(), clothesType }.
+            Map(parameters => RestRequest.GetRequest(ControllerName, ClothesRoutes.DETAIL_ROUTE, parameters)).
+            MapAsync(request => RestHttpClient.GetCollectionAsync<ClothesDetailTransfer>(request)).
+            ResultCollectionBindOkTaskAsync(transfers => _clothesDetailTransferConverter.FromTransfers(transfers));
+
+        /// <summary>
         /// Получить изображение одежды
         /// </summary>
-        public async Task<IResultValue<byte[]>> GetImageAsync(int clothesId) =>
-           await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGE_ROUTE).
-           MapAsync(request => RestHttpClient.GetByteAsync(request));
+        public async Task<IResultValue<byte[]>> GetImage(int clothesId) =>
+            await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGE_ROUTE).
+            MapAsync(request => RestHttpClient.GetByteAsync(request));
     }
 }

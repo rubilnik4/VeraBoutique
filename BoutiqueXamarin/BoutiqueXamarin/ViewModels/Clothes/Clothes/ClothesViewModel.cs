@@ -67,7 +67,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         public static async Task<IReadOnlyCollection<ClothesColumnViewModelItem>> GetClothesItems(ClothesNavigationParameters clothesParameters,
                                                                                                   IClothesRestService clothesRestService,
                                                                                                   IClothesDetailNavigationService clothesDetailNavigationService) =>
-            await clothesRestService.GetClothesAsync(clothesParameters.GenderType, clothesParameters.ClothesType).
+            await clothesRestService.GetClothes(clothesParameters.GenderType, clothesParameters.ClothesType).
             ResultCollectionOkTaskAsync(clothesDomains => GetClothesItemsFromDomains(clothesDomains, clothesRestService, clothesDetailNavigationService)).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,

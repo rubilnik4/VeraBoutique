@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
@@ -43,9 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable), 
-                                                                    clothesEntityConverter, 
-                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable));
 
             var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
             var clothesDomains = clothesEntityConverter.FromEntities(clothesEntities);
@@ -74,13 +74,67 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
             var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(genderTable, clothesTypeTable, clothesTable.Object);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
-                                                                    clothesEntityConverter,
-                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));
 
             var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
+
+            Assert.True(clothesResults.HasErrors);
+            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
+        }
+
+        /// <summary>
+        /// Получить одежду без изображений
+        /// </summary>
+        [Fact]
+        public async Task GetClothesDetails_Ok()
+        {
+            var genderEntities = GenderEntitiesData.GenderEntities;
+            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var genderType = genderEntities.First().GenderType;
+            string clothesType = clothesTypeEntities.First().Name;
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities, clothesEntities);
+            var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
+                                                                                                           clothesEntities);
+            var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
+            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
+            var clothesEntityConverter = ClothesEntityConverterMock.ClothesDetailEntityConverter;
+            var database = GetDatabase(genderTable, clothesTypeTable, clothesTable);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable));
+
+            var clothesResults = await clothesDatabaseService.GetClothesDetails(genderType, clothesType);
+            var clothesDomains = clothesEntityConverter.FromEntities(clothesEntities);
+
+            Assert.True(clothesResults.OkStatus);
+            Assert.True(clothesResults.Value.SequenceEqual(clothesDomains.Value.Where(clothes => clothes.GenderType == genderType &&
+                                                                                                 clothes.ClothesTypeName == clothesType)));
+        }
+
+        /// <summary>
+        /// Получить одежду без изображений. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task GetClothesDetails_Error()
+        {
+            var errorInitial = ErrorData.DatabaseError;
+            var genderEntities = GenderEntitiesData.GenderEntities;
+            var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
+            var genderType = genderEntities.First().GenderType;
+            string clothesType = clothesTypeEntities.First().Name;
+            var clothesEntities = ClothesEntitiesData.ClothesEntities;
+            var clothesResult = new ResultCollection<ClothesEntity>(errorInitial);
+            var genderWithClothesEntities = GenderEntitiesData.GetGenderEntitiesWithClothes(genderEntities, clothesEntities);
+            var clothesTypeWithClothesEntities = ClothesTypeEntitiesData.GetClothesTypeEntitiesWithClothes(clothesTypeEntities,
+                                                                                                           clothesEntities);
+            var genderTable = GenderTableMock.GetGenderTable(genderWithClothesEntities);
+            var clothesTypeTable = ClothesTypeTableMock.GetClothesTypeTable(clothesTypeWithClothesEntities);
+            var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
+            var database = GetDatabase(genderTable, clothesTypeTable, clothesTable.Object);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));
+
+            var clothesResults = await clothesDatabaseService.GetClothesDetails(genderType, clothesType);
 
             Assert.True(clothesResults.HasErrors);
             Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
@@ -95,11 +149,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesEntities = ClothesEntitiesData.ClothesEntities;
             var clothesEntity = clothesEntities.First();
             var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(clothesTable);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable),
-                                                                    clothesEntityConverter,
-                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable));
 
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
@@ -117,11 +168,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var errorInitial = ErrorData.DatabaseError;
             var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(clothesTable.Object);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
-                                                                    clothesEntityConverter,
-                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));
 
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
@@ -139,11 +187,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var errorInitial = ErrorData.NotFoundError;
             var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
-            var clothesEntityConverter = ClothesEntityConverterMock.ClothesEntityConverter;
             var database = GetDatabase(clothesTable.Object);
-            var clothesDatabaseService = new ClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object),
-                                                                    clothesEntityConverter,
-                                                                    ClothesEntityConverterMock.ClothesMainEntityConverter);
+            var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));
 
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
@@ -201,5 +246,15 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
                                                ClothesTypeDatabaseValidateService.Object,
                                                ColorClothesDatabaseValidateService.Object,
                                                SizeGroupDatabaseValidateService.Object);
+
+        /// <summary>
+        /// Получить сервис базы данных с одеждой
+        /// </summary>
+        private static IClothesDatabaseService GetClothesDatabaseService(IBoutiqueDatabase database,
+                                                                         IClothesDatabaseValidateService clothesDatabaseValidateService) =>
+            new ClothesDatabaseService(database, clothesDatabaseValidateService,
+                                       ClothesEntityConverterMock.ClothesEntityConverter,
+                                       ClothesEntityConverterMock.ClothesDetailEntityConverter,
+                                       ClothesEntityConverterMock.ClothesMainEntityConverter);
     }
 }

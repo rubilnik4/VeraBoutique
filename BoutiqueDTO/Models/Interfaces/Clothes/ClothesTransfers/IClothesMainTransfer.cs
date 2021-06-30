@@ -14,6 +14,6 @@ namespace BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers
     /// </summary>
     public interface IClothesMainTransfer :
         IClothesMainBase<GenderTransfer, ClothesTypeTransfer, ColorTransfer, SizeGroupMainTransfer, SizeTransfer>,
-        IClothesTransfer
+        IClothesDetailTransfer
     { }
 }

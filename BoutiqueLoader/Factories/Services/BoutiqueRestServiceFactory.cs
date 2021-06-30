@@ -95,6 +95,8 @@ namespace BoutiqueLoader.Factories.Services
         public static IClothesRestService GetClothesRestService(IRestHttpClient restHttpClient) =>
              new ClothesRestService(restHttpClient,
                                     new ClothesTransferConverter(),
+                                    new ClothesDetailTransferConverter(new ColorTransferConverter(),
+                                                                      new SizeGroupMainTransferConverter(new SizeTransferConverter())),
                                     new ClothesMainTransferConverter(new GenderTransferConverter(),
                                                                      new ClothesTypeTransferConverter(),
                                                                      new ColorTransferConverter(),

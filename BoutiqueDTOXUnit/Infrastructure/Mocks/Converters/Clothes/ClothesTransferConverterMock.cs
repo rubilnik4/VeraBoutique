@@ -15,6 +15,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
                                              SizeGroupTransferConverterMock.SizeGroupMainTransferConverter);
 
         /// <summary>
+        /// Конвертер уточненной информации об одежде в трансферную модель
+        /// </summary>
+        public static IClothesDetailTransferConverter ClothesDetailTransferConverter =>
+            new ClothesDetailTransferConverter(ColorClothesTransferConverterMock.ColorTransferConverter,
+                                               SizeGroupTransferConverterMock.SizeGroupMainTransferConverter);
+
+        /// <summary>
         /// Конвертер одежды в трансферную модель
         /// </summary>
         public static IClothesTransferConverter ClothesTransferConverter =>

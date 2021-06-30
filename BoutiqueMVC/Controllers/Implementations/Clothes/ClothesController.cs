@@ -30,10 +30,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
     {
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesMainTransferConverter clothesMainTransferConverter,
+                                 IClothesDetailTransferConverter clothesDetailTransferConverter,
                                  IClothesTransferConverter clothesTransferConverter)
            : base(clothesDatabaseService, clothesMainTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
+            _clothesDetailTransferConverter = clothesDetailTransferConverter;
             _clothesTransferConverter = clothesTransferConverter;
         }
 
@@ -41,6 +43,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// Сервис вида одежды в базе данных
         /// </summary>
         private readonly IClothesDatabaseService _clothesDatabaseService;
+
+        /// <summary>
+        /// Конвертер уточненной информации об одежде в трансферную модель
+        /// </summary>
+        private readonly IClothesDetailTransferConverter _clothesDetailTransferConverter;
 
         /// <summary>
         /// Конвертер вида одежды в трансферную модель
@@ -60,9 +67,21 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
             ToActionResultCollectionTaskAsync<int, ClothesTransfer>();
 
         /// <summary>
+        /// Получить уточненную информацию об одежде по типу пола и категории
+        /// </summary>
+        [HttpGet(ClothesRoutes.DETAIL_ROUTE + "/{genderType}/{clothesType}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IReadOnlyCollection<ClothesDetailTransfer>>> GetClothesDetails(GenderType genderType, string clothesType) =>
+            await _clothesDatabaseService.GetClothesDetails(genderType, clothesType).
+            ResultCollectionOkTaskAsync(clothes => _clothesDetailTransferConverter.ToTransfers(clothes)).
+            ToActionResultCollectionTaskAsync<int, ClothesDetailTransfer>();
+
+        /// <summary>
         /// Получить изображение одежды по идентификатору
         /// </summary>
-        [HttpGet("Image/{id}")]
+        [HttpGet(ClothesRoutes.IMAGE_ROUTE + "/{id:int}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -84,7 +84,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Преобразовать изображение в поток
         /// </summary>
         private static async Task<ImageSource> GetImageSource(IClothesRestService clothesRestService, int clothesId) =>
-            await clothesRestService.GetImageAsync(clothesId).
+            await clothesRestService.GetImage(clothesId).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
                                    _ => new byte[0]).

@@ -24,11 +24,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public ClothesEntity(IClothesBase clothes, byte[] image,
-                             GenderType genderType, string clothesTypeName,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
-                  genderType, clothesTypeName, null, null, clothesColorComposites, clothesSizeGroupComposites)
+                  clothes.GenderType, clothes.ClothesTypeName, null, null, clothesColorComposites, clothesSizeGroupComposites)
         { }
 
         public ClothesEntity(IClothesBase clothes, byte[] image,

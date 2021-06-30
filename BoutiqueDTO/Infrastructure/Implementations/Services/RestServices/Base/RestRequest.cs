@@ -46,6 +46,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
             Map(route => GetApiRoute(controllerName) + route);
 
         /// <summary>
+        /// Запрос на получение данных
+        /// </summary>
+        public static string GetRequest(string controllerName, string additionalRoute, IEnumerable<string> parameters) =>
+            parameters.
+            Aggregate(String.Empty, (first, second) => first + ValidateRoute(second)).
+            Map(route => GetApiRoute(controllerName) + ValidateRoute(additionalRoute) + route);
+
+        /// <summary>
         /// Запрос на получение данных по идентификатору
         /// </summary>
         public static string GetRequest<TId>(TId id, string controllerName, string additionalRoute)

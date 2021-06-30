@@ -32,6 +32,17 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// <summary>
         /// Типы одежды. Трансферные модели
         /// </summary>
+        public static IReadOnlyCollection<ClothesDetailTransfer> ClothesDetailTransfers =>
+            ClothesData.ClothesDetailDomains.
+            Select(clothes => 
+                       new ClothesDetailTransfer(clothes,
+                                                 clothes.Colors.Select(color => new ColorTransfer(color)),
+                                                 clothes.SizeGroups.Select(sizeGroup => new SizeGroupMainTransfer(sizeGroup, ToSizeTransfers(sizeGroup.Sizes))))).
+            ToList();
+        
+        /// <summary>
+        /// Типы одежды. Трансферные модели
+        /// </summary>
         public static IReadOnlyCollection<ClothesTransfer> ClothesTransfers =>
             ClothesData.ClothesDomains.
             Select(clothes => new ClothesTransfer(clothes)).

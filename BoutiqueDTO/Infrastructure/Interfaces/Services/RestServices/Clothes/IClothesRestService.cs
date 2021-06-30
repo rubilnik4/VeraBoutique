@@ -13,11 +13,16 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
         /// <summary>
         /// Получить данные одежды
         /// </summary>
-        Task<IResultCollection<IClothesDomain>> GetClothesAsync(GenderType genderType, string clothesType);
+        Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType);
+
+        /// <summary>
+        /// Получить уточненные данные одежды
+        /// </summary>
+        Task<IResultCollection<IClothesDetailDomain>> GetClothesDetails(GenderType genderType, string clothesType);
 
         /// <summary>
         /// Получить изображение одежды
         /// </summary>
-        Task<IResultValue<byte[]>> GetImageAsync(int clothesId);
+        Task<IResultValue<byte[]>> GetImage(int clothesId);
     }
 }
