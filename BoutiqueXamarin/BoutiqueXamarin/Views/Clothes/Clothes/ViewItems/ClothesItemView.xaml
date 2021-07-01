@@ -27,11 +27,9 @@
         <Label x:Name="ClothesName" 
                Grid.Row="1"
                Style="{StaticResource LabelClothesItemStyle}"
-               Text="{Binding Name}" 
                FontAttributes="None"/>
         <Label x:Name="ClothesPrice" 
                Grid.Row="2"
-               Style="{StaticResource LabelClothesItemStyle}"
-               Text="{Binding Price}"/>
+               Style="{StaticResource LabelClothesItemStyle}"/>
     </Grid>
 </views:ClothesItemBase>

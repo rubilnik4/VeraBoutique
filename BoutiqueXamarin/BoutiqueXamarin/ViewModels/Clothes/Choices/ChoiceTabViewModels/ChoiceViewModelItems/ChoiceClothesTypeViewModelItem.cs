@@ -9,18 +9,18 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceV
     {
         public ChoiceClothesTypeViewModelItem(IClothesTypeDomain clothesType)
         {
-            _clothesType = clothesType;
+            ClothesType = clothesType;
         }
 
         /// <summary>
         /// Тип одежды
         /// </summary>
-        private readonly IClothesTypeDomain _clothesType;
+        public IClothesTypeDomain ClothesType { get; }
 
         /// <summary>
         /// Тип одежды
         /// </summary>
         public string ClothesTypeName => 
-            _clothesType.Name;
+            ClothesType.Name;
     }
 }

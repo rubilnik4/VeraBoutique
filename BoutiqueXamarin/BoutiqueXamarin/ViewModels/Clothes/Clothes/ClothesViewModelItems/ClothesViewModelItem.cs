@@ -24,13 +24,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// </summary>
     public class ClothesViewModelItem: BaseViewModel
     {
-        public ClothesViewModelItem(IClothesDomain clothesDomain, IClothesRestService clothesRestService,
+        public ClothesViewModelItem(IClothesDetailDomain clothesDetailDomain, IClothesRestService clothesRestService,
                                     IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            ClothesDomain = clothesDomain;
+            ClothesDetailDomain = clothesDetailDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
 
-            _image = Observable.FromAsync(() => GetImageSource(clothesRestService, ClothesDomain.Id)).
+            _image = Observable.FromAsync(() => GetImageSource(clothesRestService, ClothesDetailDomain.Id)).
                      ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
 
             ClothesDetailCommand = ReactiveCommand.CreateFromTask(ToClothesDetail);
@@ -39,7 +39,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Одежда. Доменная модель
         /// </summary>
-        public IClothesDomain ClothesDomain { get; }
+        public IClothesDetailDomain ClothesDetailDomain { get; }
 
         /// <summary>
         /// Сервис навигации к странице детализации одежды
@@ -50,13 +50,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Наименование
         /// </summary>
         public string Name =>
-            ClothesDomain.Name;
+            ClothesDetailDomain.Name;
 
         /// <summary>
         /// Цена
         /// </summary>
         public decimal Price =>
-            ClothesDomain.Price;
+            ClothesDetailDomain.Price;
 
         /// <summary>
         /// Изображение
@@ -78,7 +78,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Переход на страницу детализации одежды
         /// </summary>
         private async Task ToClothesDetail() =>
-            await _clothesDetailNavigationService.NavigateTo(ClothesDomain.Id);
+            await _clothesDetailNavigationService.NavigateTo(ClothesDetailDomain.Id);
 
         /// <summary>
         /// Преобразовать изображение в поток

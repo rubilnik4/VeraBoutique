@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
@@ -30,63 +31,111 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            ClothesCommand = ReactiveCommand.CreateFromTask<ClothesNavigationParameters, IReadOnlyCollection<ClothesColumnViewModelItem>>(
-                parameters => GetClothesItems(parameters, clothesRestService, clothesDetailNavigationService));
-            _clothesViewModelColumnItems = ClothesCommand.
-                                           ToProperty(this, nameof(ClothesViewModelColumnItems), scheduler: RxApp.MainThreadScheduler);
+            _clothesTypeDomain = this.WhenAnyValue(x => x.NavigationParameters).
+                                      Where(clothesParameters => clothesParameters != null).
+                                      Select(clothesParameters => clothesParameters!.ClothesTypeDomain).
+                                      ToProperty(this, nameof(ClothesTypeDomain));
 
-            this.WhenAnyValue(x => x.NavigationParameters).
-                 Where(clothesParameters => clothesParameters != null).
-                 InvokeCommand(this, x => x.ClothesCommand!);
+            _clothes = this.WhenAnyValue(x => x.NavigationParameters).
+                            Where(parameters => parameters != null).
+                            SelectMany(parameters => Observable.FromAsync(() => GetClothes(parameters!, clothesRestService))).
+                            ToProperty(this, nameof(Clothes), scheduler: RxApp.MainThreadScheduler);
+
+            _clothesViewModelColumnItems = this.WhenAnyValue(x => x.Clothes).
+                                                Where(clothes => clothes!= null).
+                                                Select(clothes => GetClothesItems(clothes, clothesRestService, clothesDetailNavigationService)).
+                                                ToProperty(this, nameof(ClothesViewModelColumnItems));
+
+            _filterSizeViewModelItems = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, 
+                                             (clothes, parameters) => (clothes, parameters)).
+                                Where(clothesNavigate => clothesNavigate.clothes != null && clothesNavigate.parameters != null).
+                                Select(clothesNavigate => GetFilterSizes(clothesNavigate.clothes, 
+                                                                         clothesNavigate.parameters!.ClothesTypeDomain.SizeTypeDefault)).
+                                ToProperty(this, nameof(FilterSizeViewModelItems));
         }
-
-        public ReactiveCommand<ClothesNavigationParameters, IReadOnlyCollection<ClothesColumnViewModelItem>> ClothesCommand { get; }
 
         /// <summary>
         /// Одежда
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<IClothesDetailDomain>> _clothes;
+
+        /// <summary>
+        /// Одежда
+        /// </summary>
+        private IReadOnlyCollection<IClothesDetailDomain> Clothes =>
+            _clothes.Value;
+
+        /// <summary>
+        /// Одежда. Модели
         /// </summary>
         private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ClothesColumnViewModelItem>> _clothesViewModelColumnItems;
 
         /// <summary>
-        /// Одежда
+        /// Одежда. Модели
         /// </summary>
         public IReadOnlyCollection<ClothesColumnViewModelItem> ClothesViewModelColumnItems =>
             _clothesViewModelColumnItems.Value;
 
-        ///// <summary>
-        ///// Размеры для фильтрации
-        ///// </summary>
-        //public IReadOnlyCollection<string> FilterSizes =>
-        //    ClothesViewModelColumnItems.
-        //    SelectMany(clothesColumn => clothesColumn.ClothesViewModelItems).
-        //    Select(clothesItem => clothesItem.ClothesDomain.)
+        /// <summary>
+        /// Тип одежды
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IClothesTypeDomain> _clothesTypeDomain;
 
         /// <summary>
-        /// Преобразовать в модели одежды
+        /// Тип одежды
         /// </summary>
-        public static async Task<IReadOnlyCollection<ClothesColumnViewModelItem>> GetClothesItems(ClothesNavigationParameters clothesParameters,
-                                                                                                  IClothesRestService clothesRestService,
-                                                                                                  IClothesDetailNavigationService clothesDetailNavigationService) =>
-            await clothesRestService.GetClothes(clothesParameters.GenderType, clothesParameters.ClothesType).
-            ResultCollectionOkTaskAsync(clothesDomains => GetClothesItemsFromDomains(clothesDomains, clothesRestService, clothesDetailNavigationService)).
+        private IClothesTypeDomain ClothesTypeDomain =>
+            _clothesTypeDomain.Value;
+
+        /// <summary>
+        /// Размеры для фильтрации
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<FilterSizeViewModelItem>> _filterSizeViewModelItems;
+
+        /// <summary>
+        /// Размеры для фильтрации
+        /// </summary>
+        public IReadOnlyCollection<FilterSizeViewModelItem> FilterSizeViewModelItems =>
+            _filterSizeViewModelItems.Value;
+
+        /// <summary>
+        /// Получить модели одежды
+        /// </summary>
+        private static async Task<IReadOnlyCollection<IClothesDetailDomain>> GetClothes(ClothesNavigationParameters clothesParameters,
+                                                                                        IClothesRestService clothesRestService) =>
+            await clothesRestService.GetClothesDetails(clothesParameters.GenderType, clothesParameters.ClothesTypeDomain.Name).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
-                                   result => new List<ClothesColumnViewModelItem>());
+                                   result => new List<IClothesDetailDomain>());
 
         /// <summary>
         /// Преобразовать в модели одежды
         /// </summary>
-        private static IReadOnlyCollection<ClothesColumnViewModelItem> GetClothesItemsFromDomains(IEnumerable<IClothesDomain> clothesDomains,
-                                                                                                 IClothesRestService clothesRestService,
-                                                                                                 IClothesDetailNavigationService clothesDetailNavigationService) =>
+        private static IReadOnlyCollection<ClothesColumnViewModelItem> GetClothesItems(IEnumerable<IClothesDetailDomain> clothesDomains,
+                                                                                       IClothesRestService clothesRestService,
+                                                                                       IClothesDetailNavigationService clothesDetailNavigationService) =>
             clothesDomains.
             Select(clothesDomain => new ClothesViewModelItem(clothesDomain, clothesRestService, clothesDetailNavigationService)).
             Map(tt => tt).
             ToList().
-            Map(clothesItems => (clothesItems.Where((clothes, index) => index % 2 == 0),
-                                 clothesItems.Where((clothes, index) => index % 2 != 0))).
-            Map(clothesPair => clothesPair.Item1.ZipLong(clothesPair.Item2,
-                                                         (first, second) => new ClothesColumnViewModelItem(first, second))).
+            Map(clothesItems => (columnLeft: clothesItems.Where((clothes, index) => index % 2 == 0),
+                                 columnRight: clothesItems.Where((clothes, index) => index % 2 != 0))).
+            Map(clothesPair => clothesPair.columnLeft.ZipLong(clothesPair.columnRight,
+                                                              (first, second) => new ClothesColumnViewModelItem(first, second))).
+            ToList();
+
+        /// <summary>
+        /// Получить размеры для фильтрации
+        /// </summary>
+        private static IReadOnlyCollection<FilterSizeViewModelItem> GetFilterSizes(IEnumerable<IClothesDetailDomain> clothes,
+                                                                                   SizeType sizeTypeDefault) =>
+            clothes.
+            SelectMany(clothesItem => clothesItem.SizeGroups.
+                                      Select(sizeGroup => sizeGroup.Sizes.FirstOrDefault(size => size.SizeType == sizeTypeDefault)).
+                                      Where(size => size != null)).
+            Distinct().
+            OrderBy(size => size!.Id).
+            Select(size => new FilterSizeViewModelItem(size!)).
             ToList();
     }
 }

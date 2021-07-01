@@ -99,7 +99,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels
                    Void(_ => choiceCategory.ClothesTypesVisibleChange()),
                 ChoiceClothesTypeViewModelItem choiceClothesType =>
                     await choiceClothesType.
-                    VoidAsync(_ => _clothesNavigationService.NavigateTo(_genderCategory.GenderType, choiceClothesType.ClothesTypeName)),
+                    VoidAsync(_ => _clothesNavigationService.NavigateTo(_genderCategory.GenderType, choiceClothesType.ClothesType)),
                 _ => throw new ArgumentException(nameof(choiceBaseViewModelItem)),
             };
     }

@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Enums.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 
 namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
@@ -8,10 +9,10 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// </summary>
     public class ClothesNavigationParameters : BaseNavigationParameters
     {
-        public ClothesNavigationParameters(GenderType genderType, string clothesType)
+        public ClothesNavigationParameters(GenderType genderType, IClothesTypeDomain clothesTypeDomain)
         {
             GenderType = genderType;
-            ClothesType = clothesType;
+            ClothesTypeDomain = clothesTypeDomain;
         }
 
         /// <summary>
@@ -20,8 +21,8 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
         public GenderType GenderType { get; }
 
         /// <summary>
-        /// Тип одежды
+        /// Тип пола
         /// </summary>
-        public string ClothesType { get; }
+        public IClothesTypeDomain ClothesTypeDomain { get; }
     }
 }

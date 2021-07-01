@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
@@ -21,7 +22,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo(GenderType genderType, string clothesType) =>
-            await NavigateTo(new ClothesNavigationParameters(genderType, clothesType));
+        public async Task NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain) =>
+            await NavigateTo(new ClothesNavigationParameters(genderType, clothesTypeDomain));
     }
 }

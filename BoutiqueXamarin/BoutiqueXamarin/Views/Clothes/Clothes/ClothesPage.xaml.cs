@@ -25,6 +25,9 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                 this.OneWayBind(ViewModel, x => x.ClothesViewModelColumnItems, x => x.ClothesColumns.ItemsSource).
                      DisposeWith(disposable);
 
+                this.OneWayBind(ViewModel, x => x.FilterSizeViewModelItems, x => x.FilterSizes.ItemsSource).
+                     DisposeWith(disposable);
+
                 tapGestureRecognizer.
                 Events().Tapped.
                 Subscribe(_ => SideMenuView.State = SideMenuState.RightMenuShown).

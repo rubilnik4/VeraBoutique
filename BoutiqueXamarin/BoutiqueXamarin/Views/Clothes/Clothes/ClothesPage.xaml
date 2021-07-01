@@ -86,15 +86,19 @@
                             Style="{StaticResource ButtonTransparent}"
                             Text="Закрыть" 
                             HorizontalOptions="End"/>
-                    <xct:Expander Margin="10, 5, 5, 5">
+                    <!--<xct:Expander Margin="10, 5, 5, 5">
                         <xct:Expander.Header>
                             <Label Text="Размер"
                                    Style="{StaticResource LabelTitle}"/>
-                        </xct:Expander.Header>
+                        </xct:Expander.Header>-->
                         <ListView x:Name="FilterSizes">
-
+                            <!--<ListView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type viewModelItems:FilterSizeViewModelItem}">
+                                    <viewItems:FilterSizeItemView />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>-->
                         </ListView>
-                    </xct:Expander>
+                    <!--</xct:Expander>-->
                     <!--<xct:Expander Header="Цена"/>
                     <xct:Expander Header="Цвет"/>-->
                 </StackLayout>
