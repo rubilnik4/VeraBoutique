@@ -130,11 +130,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         private static IReadOnlyCollection<FilterSizeViewModelItem> GetFilterSizes(IEnumerable<IClothesDetailDomain> clothes,
                                                                                    SizeType sizeTypeDefault) =>
             clothes.
-            SelectMany(clothesItem => clothesItem.SizeGroups.
-                                      Select(sizeGroup => sizeGroup.Sizes.FirstOrDefault(size => size.SizeType == sizeTypeDefault)).
-                                      Where(size => size != null)).
+            SelectMany(clothesItem => clothesItem.SizeGroups).
             Distinct().
-            OrderBy(size => size!.Id).
+            OrderBy(sizeGroup => sizeGroup.SizeNormalize).
+            Select(sizeGroup => sizeGroup.Sizes.FirstOrDefault(size => size.SizeType == sizeTypeDefault)).
+            Where(size => size != null).
+            Distinct().
             Select(size => new FilterSizeViewModelItem(size!)).
             ToList();
     }

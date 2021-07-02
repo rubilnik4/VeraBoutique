@@ -7,6 +7,7 @@
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
@@ -49,7 +50,7 @@
 
                     <ListView x:Name="ClothesColumns"
                               Grid.Row="1"
-                              Style="{StaticResource ListViewDefault}"
+                              Style="{StaticResource ListViewUnevenDefault}"
                               SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
@@ -86,21 +87,21 @@
                             Style="{StaticResource ButtonTransparent}"
                             Text="Закрыть" 
                             HorizontalOptions="End"/>
-                    <!--<xct:Expander Margin="10, 5, 5, 5">
-                        <xct:Expander.Header>
-                            <Label Text="Размер"
-                                   Style="{StaticResource LabelTitle}"/>
-                        </xct:Expander.Header>-->
-                        <ListView x:Name="FilterSizes">
-                            <!--<ListView.ItemTemplate>
+                    <controls:ExpanderCheck Style="{StaticResource ExpanderCheck}"
+                                            HeaderText="Размер">
+                        <ListView x:Name="FilterSizes"
+                                  Style="{StaticResource ListViewDefault}"
+                                  VerticalScrollBarVisibility="Never"
+                                  Margin="30, 0, 0, 0">
+                            <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="{x:Type viewModelItems:FilterSizeViewModelItem}">
                                     <viewItems:FilterSizeItemView />
                                 </DataTemplate>
-                            </ListView.ItemTemplate>-->
+                            </ListView.ItemTemplate>
                         </ListView>
-                    <!--</xct:Expander>-->
-                    <!--<xct:Expander Header="Цена"/>
-                    <xct:Expander Header="Цвет"/>-->
+                    </controls:ExpanderCheck>
+                    <!--<xct:Expander Header="Цена" />
+                    <xct:Expander Header="Цвет" />-->
                 </StackLayout>
             </StackLayout>
         </xct:SideMenuView>

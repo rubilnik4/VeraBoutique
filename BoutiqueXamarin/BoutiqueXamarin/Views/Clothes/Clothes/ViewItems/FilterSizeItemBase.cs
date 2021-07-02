@@ -6,6 +6,6 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
     /// <summary>
     /// Модель сортировки размера одежды
     /// </summary>
-    public class FilterSizeItemBase : ReactiveContentView<FilterSizeViewModelItem>
+    public class FilterSizeItemBase : ReactiveViewCell<FilterSizeViewModelItem>
     { }
 }

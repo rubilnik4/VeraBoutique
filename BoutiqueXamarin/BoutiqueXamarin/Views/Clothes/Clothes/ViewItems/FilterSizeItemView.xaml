@@ -5,7 +5,9 @@
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              x:DataType="{x:Type viewModelItems:FilterSizeViewModelItem}">
-    <Grid>
-        <Label x:Name="SizeName" />
-    </Grid>
+    <StackLayout Style="{StaticResource StackLayoutText}">
+        <CheckBox x:Name="SizeCheck" />
+        <Label x:Name="SizeName" 
+               Style="{StaticResource LabelDescription}"/>
+    </StackLayout>
 </views:FilterSizeItemBase>

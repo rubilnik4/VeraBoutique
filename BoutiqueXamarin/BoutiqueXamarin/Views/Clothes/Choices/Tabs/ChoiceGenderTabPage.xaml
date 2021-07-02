@@ -25,7 +25,7 @@
 
     <ContentPage.Content>
         <ListView x:Name="CategoryListView"
-                  Style="{StaticResource ListViewDefault}"
+                  Style="{StaticResource ListViewUnevenDefault}"
                   ItemTemplate="{StaticResource ChoiceSelector}"/>
     </ContentPage.Content>
 </tabs:ChoiceGenderTabPageBase>

@@ -21,6 +21,9 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
 
             this.WhenActivated(disposable =>
             {
+                this.Bind(ViewModel, x => x.SizeCheck, x => x.SizeCheck.IsChecked).
+                    DisposeWith(disposable);
+
                 this.OneWayBind(ViewModel, x => x.SizeName, x => x.SizeName.Text).
                      DisposeWith(disposable);
             });
