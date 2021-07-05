@@ -38,6 +38,12 @@
     <Compile Update="Views\Clothes\Clothes\ViewItems\ClothesItemView.xaml.cs">
       <DependentUpon>ClothesItemView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Clothes\Clothes\ViewItems\FilterPriceItemView.xaml.cs">
+      <DependentUpon>FilterPriceItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Clothes\Clothes\ViewItems\FilterColorItemView.xaml.cs">
+      <DependentUpon>FilterColorItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Clothes\Clothes\ViewItems\FilterSizeItemView.xaml.cs">
       <DependentUpon>FilterSizeItemView.xaml</DependentUpon>
     </Compile>
@@ -66,6 +72,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\Clothes\ViewItems\FilterSizeItemView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Controls\ExpanderHeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Dictionaries\BoutiqueColors.xaml">

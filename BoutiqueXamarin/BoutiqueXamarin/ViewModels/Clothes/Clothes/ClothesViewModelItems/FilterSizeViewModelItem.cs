@@ -4,7 +4,10 @@ using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
 {
-    public class FilterSizeViewModelItem: BaseViewModel
+    /// <summary>
+    /// Размер для фильтрации
+    /// </summary>
+    public class FilterSizeViewModelItem: CheckViewModelItem
     {
         public FilterSizeViewModelItem(ISizeDomain sizeDomain)
         {
@@ -21,10 +24,5 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// </summary>
         public string SizeName =>
             _sizeDomain.SizeNameShort;
-
-        /// <summary>
-        /// Выбранный размер
-        /// </summary>
-        public bool SizeCheck { get; set; }
     }
 }

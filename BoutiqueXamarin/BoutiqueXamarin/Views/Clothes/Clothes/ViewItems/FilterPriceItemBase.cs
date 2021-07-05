@@ -4,8 +4,8 @@ using ReactiveUI.XamForms;
 namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
 {
     /// <summary>
-    /// Модель фильтрации размера одежды
+    /// Модель фильтрации цены одежды
     /// </summary>
-    public class FilterSizeItemBase : ReactiveContentView<FilterSizeViewModelItem>
+    public class FilterPriceItemBase : ReactiveContentView<FilterPriceViewModelItem>
     { }
 }

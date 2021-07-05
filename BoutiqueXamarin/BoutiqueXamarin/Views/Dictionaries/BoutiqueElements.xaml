@@ -2,8 +2,7 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
-                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                    xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
     <Style TargetType="{x:Type Label}"
            BaseResourceKey="BodyStyle">
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
@@ -85,34 +84,5 @@
         <Setter Property="WidthRequest" Value="26" />
         <Setter Property="HeightRequest" Value="26" />
         <Setter Property="Source" Value="arrow_left_solid.svg" />
-    </Style>
-
-    <Style x:Key="ExpanderCheck"
-           TargetType="{x:Type controls:ExpanderCheck}">
-        <Setter Property="Header">
-            <Setter.Value>
-                <StackLayout Style="{StaticResource StackLayoutText}">
-                    <svg:SvgCachedImage Style="{StaticResource SvgImage}">
-                        <svg:SvgCachedImage.Triggers>
-                            <DataTrigger TargetType="{x:Type svg:SvgCachedImage}"
-                                         Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
-                                         Value="True">
-                                <Setter Property="Source"
-                                        Value="chevron_down_solid.svg" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="{x:Type svg:SvgCachedImage}"
-                                         Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
-                                         Value="False">
-                                <Setter Property="Source"
-                                        Value="chevron_right_solid.svg" />
-                            </DataTrigger>
-                        </svg:SvgCachedImage.Triggers>
-                    </svg:SvgCachedImage>
-
-                    <Label Text="{Binding Source={RelativeSource AncestorType={x:Type controls:ExpanderCheck}}, Path=HeaderText}"
-                           Style="{StaticResource LabelTitle}" />
-                </StackLayout>
-            </Setter.Value>
-        </Setter>
     </Style>
 </ResourceDictionary>

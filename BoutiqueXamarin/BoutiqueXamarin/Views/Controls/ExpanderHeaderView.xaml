@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoutiqueXamarin.Views.Controls.ExpanderHeaderView"
+             xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin">
+  <ContentView.Content>
+        <StackLayout Style="{StaticResource StackLayoutText}">
+            <svg:SvgCachedImage Style="{StaticResource SvgImage}">
+                <svg:SvgCachedImage.Triggers>
+                    <DataTrigger TargetType="{x:Type svg:SvgCachedImage}"
+                                         Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                         Value="True">
+                        <Setter Property="Source"
+                                        Value="chevron_down_solid.svg" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="{x:Type svg:SvgCachedImage}"
+                                         Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                         Value="False">
+                        <Setter Property="Source"
+                                        Value="chevron_right_solid.svg" />
+                    </DataTrigger>
+                </svg:SvgCachedImage.Triggers>
+            </svg:SvgCachedImage>
+
+            <Label Text="{Binding Source={RelativeSource AncestorType={x:Type controls:ExpanderCheck}}, Path=HeaderText}"
+                   Style="{StaticResource LabelTitle}" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

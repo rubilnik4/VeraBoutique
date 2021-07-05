@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueXamarin.Views.Controls;
 using FFImageLoading.Svg.Forms;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
@@ -11,6 +12,11 @@ namespace BoutiqueXamarin.Controls
     /// </summary>
     public class ExpanderCheck: Expander
     {
+        public ExpanderCheck()
+        {
+            Header = new ExpanderHeaderView();
+        }
+
         /// <summary>
         /// Изображение нераскрытого списка
         /// </summary>

@@ -83,25 +83,45 @@
                          xct:SideMenuView.ParallaxValue="0"
                          BackgroundColor="{StaticResource ColorTransparent}">
                 <StackLayout Orientation="Vertical">
+                    <StackLayout.Resources>
+                        <Style x:Key="StackLayoutExpander" 
+                               TargetType="{x:Type StackLayout}">
+                            <Setter Property="Margin" Value="30, 0, 10, 0" />
+                        </Style>
+                    </StackLayout.Resources>
+
                     <Button x:Name="FilterHide"
                             Style="{StaticResource ButtonTransparent}"
                             Text="Закрыть" 
                             HorizontalOptions="End"/>
-                    <controls:ExpanderCheck Style="{StaticResource ExpanderCheck}"
-                                            HeaderText="Размер">
-                        <ListView x:Name="FilterSizes"
-                                  Style="{StaticResource ListViewDefault}"
-                                  VerticalScrollBarVisibility="Never"
-                                  Margin="30, 0, 0, 0">
-                            <ListView.ItemTemplate>
+
+                    <controls:ExpanderCheck HeaderText="Размер">
+                        <StackLayout x:Name="FilterSizes"
+                                     Style="{StaticResource StackLayoutExpander}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="{x:Type viewModelItems:FilterSizeViewModelItem}">
                                     <viewItems:FilterSizeItemView />
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </controls:ExpanderCheck>
-                    <!--<xct:Expander Header="Цена" />
-                    <xct:Expander Header="Цвет" />-->
+
+                    <controls:ExpanderCheck HeaderText="Цвет">
+                        <StackLayout x:Name="FilterColors"
+                                     Style="{StaticResource StackLayoutExpander}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type viewModelItems:FilterColorViewModelItem}">
+                                    <viewItems:FilterColorItemView />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </controls:ExpanderCheck>
+
+                    <controls:ExpanderCheck HeaderText="Цена">
+                        <StackLayout Style="{StaticResource StackLayoutExpander}">
+                            <viewItems:FilterPriceItemView x:Name="FilterPrices" />
+                        </StackLayout>
+                    </controls:ExpanderCheck>
                 </StackLayout>
             </StackLayout>
         </xct:SideMenuView>

@@ -46,12 +46,19 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                                                 Select(clothes => GetClothesItems(clothes, clothesRestService, clothesDetailNavigationService)).
                                                 ToProperty(this, nameof(ClothesViewModelColumnItems));
 
-            _filterSizeViewModelItems = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, 
-                                             (clothes, parameters) => (clothes, parameters)).
-                                Where(clothesNavigate => clothesNavigate.clothes != null && clothesNavigate.parameters != null).
-                                Select(clothesNavigate => GetFilterSizes(clothesNavigate.clothes, 
-                                                                         clothesNavigate.parameters!.ClothesTypeDomain.SizeTypeDefault)).
-                                ToProperty(this, nameof(FilterSizeViewModelItems));
+            var clothesWithNavigate = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters,
+                                                        (clothes, parameters) => (clothes, parameters)).
+                                      Where(clothesNavigate => clothesNavigate.clothes != null && clothesNavigate.parameters != null);
+            _filterSizeViewModelItems = clothesWithNavigate.
+                                        Select(clothesNavigate => clothesNavigate.parameters!.ClothesTypeDomain.SizeTypeDefault.
+                                                                  Map(defaultSize => FilterViewModelFactory.GetFilterSizes(clothesNavigate.clothes, defaultSize))).
+                                        ToProperty(this, nameof(FilterSizeViewModelItems));
+            _filterColorViewModelItems = clothesWithNavigate.
+                                         Select(clothesNavigate => FilterViewModelFactory.GetFilterColors(clothesNavigate.clothes)).
+                                         ToProperty(this, nameof(FilterColorViewModelItems));
+            _filterPriceViewModelItem = clothesWithNavigate.
+                                         Select(clothesNavigate => FilterViewModelFactory.GetFilterPrices(clothesNavigate.clothes)).
+                                         ToProperty(this, nameof(FilterPriceViewModelItem));
         }
 
         /// <summary>
@@ -99,6 +106,28 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             _filterSizeViewModelItems.Value;
 
         /// <summary>
+        /// Размеры для фильтрации
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<FilterColorViewModelItem>> _filterColorViewModelItems;
+
+        /// <summary>
+        /// Размеры для фильтрации
+        /// </summary>
+        public IReadOnlyCollection<FilterColorViewModelItem> FilterColorViewModelItems =>
+            _filterColorViewModelItems.Value;
+
+        /// <summary>
+        /// Цены для фильтрации
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<FilterPriceViewModelItem> _filterPriceViewModelItem;
+
+        /// <summary>
+        /// Цены для фильтрации
+        /// </summary>
+        public FilterPriceViewModelItem FilterPriceViewModelItem =>
+            _filterPriceViewModelItem.Value;
+
+        /// <summary>
         /// Получить модели одежды
         /// </summary>
         private static async Task<IReadOnlyCollection<IClothesDetailDomain>> GetClothes(ClothesNavigationParameters clothesParameters,
@@ -122,21 +151,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                                  columnRight: clothesItems.Where((clothes, index) => index % 2 != 0))).
             Map(clothesPair => clothesPair.columnLeft.ZipLong(clothesPair.columnRight,
                                                               (first, second) => new ClothesColumnViewModelItem(first, second))).
-            ToList();
-
-        /// <summary>
-        /// Получить размеры для фильтрации
-        /// </summary>
-        private static IReadOnlyCollection<FilterSizeViewModelItem> GetFilterSizes(IEnumerable<IClothesDetailDomain> clothes,
-                                                                                   SizeType sizeTypeDefault) =>
-            clothes.
-            SelectMany(clothesItem => clothesItem.SizeGroups).
-            Distinct().
-            OrderBy(sizeGroup => sizeGroup.SizeNormalize).
-            Select(sizeGroup => sizeGroup.Sizes.FirstOrDefault(size => size.SizeType == sizeTypeDefault)).
-            Where(size => size != null).
-            Distinct().
-            Select(size => new FilterSizeViewModelItem(size!)).
             ToList();
     }
 }
