@@ -20,7 +20,7 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
             InitializeComponent();
 
             var tapGestureRecognizer = new TapGestureRecognizer();
-            this.ClothesItem.GestureRecognizers.Add(tapGestureRecognizer);
+            ClothesItem.GestureRecognizers.Add(tapGestureRecognizer);
 
             this.WhenActivated(disposable =>
             {
@@ -30,9 +30,8 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
                 this.OneWayBind(ViewModel, x => x.Name, x => x.ClothesName.Text).
                      DisposeWith(disposable);
 
-                this.OneWayBind(ViewModel, x => x.Price, x => x.ClothesPrice.Text,
-                                price => price.ToString("F0") + " Руб.").
-                    DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.Price, x => x.ClothesPrice.Text, price => price.ToString("F0") + " Руб.").
+                     DisposeWith(disposable);
 
                 tapGestureRecognizer.
                 Events().Tapped.

@@ -29,6 +29,7 @@
     <Folder Include="Infrastructure\Converters\" />
     <Folder Include="Infrastructure\Mocks\Converters\" />
     <Folder Include="Infrastructure\Containers\" />
+    <Folder Include="Infrastructure\Calculate\" />
   </ItemGroup>
 
 </Project>

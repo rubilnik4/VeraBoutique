@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reactive;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate;
 using Functional.FunctionalExtensions.Sync;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
 {
@@ -8,10 +13,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// </summary>
     public class FilterPriceViewModelItem
     {
-        public FilterPriceViewModelItem(decimal priceMinimum, decimal priceMaximum)
+        public FilterPriceViewModelItem(decimal priceMinimum, decimal priceMaximum,
+                                        ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand)
         {
             _priceMinimum = priceMinimum;
             _priceMaximum = priceMaximum;
+            ClothesFilterCommand = clothesFilterCommand;
         }
 
         /// <summary>
@@ -23,6 +30,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Максимальная цена
         /// </summary>
         private readonly decimal _priceMaximum;
+
+        /// <summary>
+        /// Команда обновления фильтрации одежды
+        /// </summary>
+        public ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> ClothesFilterCommand { get; }
 
         /// <summary>
         /// Минимальная цена
@@ -40,10 +52,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Шаг цены
         /// </summary>
         public int PriceStep =>
-            Math.Log10((double)_priceMaximum).
-            Map(Math.Ceiling).
-            Map(pow => Math.Pow(10, pow) / 100).
-            Map(step => (int)Math.Floor(step));
+            ClothesPrices.GetPriceStep(_priceMaximum);
 
         /// <summary>
         /// Минимальная цена

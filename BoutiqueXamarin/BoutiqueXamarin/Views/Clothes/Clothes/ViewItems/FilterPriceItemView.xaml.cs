@@ -45,6 +45,18 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
                 this.WhenAnyValue(x => x.ViewModel!.PriceStep).
                      Subscribe(step => PriceSlider.StepValue = step).
                      DisposeWith(disposable);
+
+                Observable.FromEventPattern(PriceSlider, nameof(PriceSlider.LowerDragCompleted)).
+                           Throttle(TimeSpan.FromSeconds(1)).
+                           Select(_ => Unit.Default).
+                           InvokeCommand(this, x => x.ViewModel!.ClothesFilterCommand).
+                           DisposeWith(disposable);
+
+                Observable.FromEventPattern(PriceSlider, nameof(PriceSlider.UpperDragCompleted)).
+                           Throttle(TimeSpan.FromSeconds(1)).
+                           Select(_ => Unit.Default).
+                           InvokeCommand(this, x => x.ViewModel!.ClothesFilterCommand).
+                           DisposeWith(disposable);
             });
         }
     }

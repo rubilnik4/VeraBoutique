@@ -30,9 +30,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
             ClothesDetailDomain = clothesDetailDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
 
-            _image = Observable.FromAsync(() => GetImageSource(clothesRestService, ClothesDetailDomain.Id)).
-                     ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
-
+            ImageCommand = ReactiveCommand.CreateFromTask(() => GetImageSource(clothesRestService, ClothesDetailDomain.Id));
+            _image = ImageCommand.ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
+           
             ClothesDetailCommand = ReactiveCommand.CreateFromTask(ToClothesDetail);
         }
 
@@ -68,6 +68,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// </summary>
         public ImageSource Image => 
             _image.Value;
+
+        /// <summary>
+        /// Команда пол
+        /// </summary>
+        public ReactiveCommand<Unit, ImageSource> ImageCommand { get; }
 
         /// <summary>
         /// Кнопка перехода на страницу детализации одежды

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\StringExtensions\" />
+    <Folder Include="Infrastructure\Implementation\Calculate\" />
   </ItemGroup>
 
 </Project>

@@ -1,27 +1,34 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+﻿using System.Collections.Generic;
+using System.Reactive;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
 {
     /// <summary>
     /// Цвет для фильтрации
     /// </summary>
-    public class FilterColorViewModelItem: CheckViewModelItem
+    public class FilterColorViewModelItem: FilterCheckViewModelItem
     {
-        public FilterColorViewModelItem(IColorDomain colorDomain )
+        public FilterColorViewModelItem(IColorDomain color,
+                                        ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand)
+            :base(clothesFilterCommand)
         {
-            _colorDomain = colorDomain;
+            Color = color;
         }
 
         /// <summary>
         /// Цвет одежды. Доменная модель
         /// </summary>
-        private readonly IColorDomain _colorDomain;
+        public IColorDomain Color { get; }
 
         /// <summary>
         /// Цвет одежды
         /// </summary>
-        public string Color =>
-            _colorDomain.Name;
+        public string ColorName =>
+            Color.Name;
     }
 }

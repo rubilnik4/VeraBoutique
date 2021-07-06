@@ -174,7 +174,7 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         /// <summary>
         /// Связующие размеры. Футболки
         /// </summary>
-        public static IEnumerable<ISizeGroupMainDomain> TshirtSizes =>
+        public static IReadOnlyCollection<ISizeGroupMainDomain> TshirtSizes =>
             new List<SizeGroupMainDomain>
             {
                  new(ClothesSizeType.Tshirt, 42,

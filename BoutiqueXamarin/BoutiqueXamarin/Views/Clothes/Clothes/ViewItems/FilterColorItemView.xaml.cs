@@ -24,7 +24,13 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
                 this.Bind(ViewModel, x => x.IsChecked, x => x.ColorCheck.IsChecked).
                     DisposeWith(disposable);
 
-                this.OneWayBind(ViewModel, x => x.Color, x => x.ColorName.Text).
+                this.OneWayBind(ViewModel, x => x.ColorName, x => x.ColorName.Text).
+                     DisposeWith(disposable);
+
+                this.ColorCheck.Events().
+                     CheckedChanged.
+                     Select(_ => Unit.Default).
+                     InvokeCommand(this, x => x.ViewModel!.ClothesFilterCommand).
                      DisposeWith(disposable);
             });
         }
