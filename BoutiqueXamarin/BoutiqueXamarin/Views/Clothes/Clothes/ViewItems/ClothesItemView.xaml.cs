@@ -34,10 +34,10 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ViewItems
                      DisposeWith(disposable);
 
                 tapGestureRecognizer.
-                Events().Tapped.
-                Select(_ => Unit.Default).
-                InvokeCommand(this, x => x.ViewModel!.ClothesDetailCommand).
-                DisposeWith(disposable);
+                    Events().Tapped.
+                    Select(_ => Unit.Default).
+                    InvokeCommand(this, x => x.ViewModel!.ClothesDetailCommand).
+                    DisposeWith(disposable);
             });
         }
     }

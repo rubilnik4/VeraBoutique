@@ -43,9 +43,9 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
 
                     ClothesColumns.
                         Events().ItemAppearing.
-                        Select(item => ViewModel!.ClothesViewModelColumnItems[item.ItemIndex].ClothesViewModelItems.
-                                       Where(clothesItems => clothesItems != null && clothesItems.Image == null)).
-                        Subscribe(clothesItems => clothesItems.First().ImageCommand.Execute(Unit.Default).Subscribe()).
+                        SelectMany(item => ViewModel!.ClothesViewModelColumnItems[item.ItemIndex].ClothesViewModelItems.
+                                           Where(clothesItems => clothesItems?.ImageLoad == false)).
+                        Subscribe(clothesItem => clothesItem?.ImageCommand.Execute(Unit.Default).Subscribe()).
                         DisposeWith(disposable);
 
                     tapGestureRecognizer.

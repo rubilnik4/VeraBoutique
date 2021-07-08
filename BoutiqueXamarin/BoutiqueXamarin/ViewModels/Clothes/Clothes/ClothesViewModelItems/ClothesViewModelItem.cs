@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -11,6 +12,7 @@ using BoutiqueXamarin.Models.Implementations.NotifyTasks;
 using BoutiqueXamarin.ViewModels.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Prism.Commands;
@@ -29,11 +31,15 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         {
             ClothesDetailDomain = clothesDetailDomain;
             _clothesDetailNavigationService = clothesDetailNavigationService;
-
+            _image = Observable.Return(ImageSource.FromFile("empty_image.png")).
+                                ToProperty(this, nameof(Image));
             ImageCommand = ReactiveCommand.CreateFromTask(() => GetImageSource(clothesRestService, ClothesDetailDomain.Id));
             _image = ImageCommand.ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
-           
-            ClothesDetailCommand = ReactiveCommand.CreateFromTask(ToClothesDetail);
+            this.WhenAnyValue(x => x.Image).
+                 Where(x => x != null).
+                 Subscribe(x => ImageLoad = true);
+
+             ClothesDetailCommand = ReactiveCommand.CreateFromTask(ToClothesDetail);
         }
 
         /// <summary>
@@ -78,6 +84,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Кнопка перехода на страницу детализации одежды
         /// </summary>
         public ReactiveCommand<Unit, Unit> ClothesDetailCommand { get; }
+
+        /// <summary>
+        /// Статус загрузки картинки
+        /// </summary>
+        public bool ImageLoad { get; private set; }
 
         /// <summary>
         /// Переход на страницу детализации одежды
