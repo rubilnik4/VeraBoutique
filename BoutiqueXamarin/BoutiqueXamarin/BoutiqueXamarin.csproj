@@ -35,16 +35,16 @@
     <Compile Update="Views\Clothes\Choices\Tabs\ChoiceGenderTabPage.xaml.cs">
       <DependentUpon>ChoiceGenderTabPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Clothes\Clothes\ViewItems\ClothesItemView.xaml.cs">
+    <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesItemView.xaml.cs">
       <DependentUpon>ClothesItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Clothes\Clothes\ViewItems\FilterPriceItemView.xaml.cs">
+    <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterPriceItemView.xaml.cs">
       <DependentUpon>FilterPriceItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Clothes\Clothes\ViewItems\FilterColorItemView.xaml.cs">
+    <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterColorItemView.xaml.cs">
       <DependentUpon>FilterColorItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Clothes\Clothes\ViewItems\FilterSizeItemView.xaml.cs">
+    <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterSizeItemView.xaml.cs">
       <DependentUpon>FilterSizeItemView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -68,10 +68,13 @@
     <EmbeddedResource Update="Views\Clothes\Clothes\ClothesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Clothes\ViewItems\ClothesColumnView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Clothes\ClothesViewItems\ClothesColumnView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Clothes\ViewItems\FilterSizeItemView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterSizeItemView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Controls\ExpanderHeaderView.xaml">

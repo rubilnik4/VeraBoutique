@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<clothesFilters:FilterPriceItemBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters.FilterPriceItemView"
+             xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFilters="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;assembly=BoutiqueXamarin"
+             x:DataType="{x:Type clothesFiltersViewModelItems:FilterPriceViewModelItem}">
+    <xct:RangeSlider x:Name="PriceSlider"
+                     HeightRequest="100"/>
+</clothesFilters:FilterPriceItemBase>

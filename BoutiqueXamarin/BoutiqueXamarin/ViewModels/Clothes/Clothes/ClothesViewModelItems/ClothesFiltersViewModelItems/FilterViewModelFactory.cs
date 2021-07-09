@@ -9,7 +9,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems
 {
     /// <summary>
     /// Модели фильтрации
@@ -57,13 +57,15 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Получить отфильтрованную одежду
         /// </summary>
         public static IReadOnlyList<ClothesViewModelItem> GetClothesFiltered(IEnumerable<ClothesViewModelItem> clothesItems,
-                                                                                   IEnumerable<FilterSizeViewModelItem> sizeItems,
-                                                                                   IEnumerable<FilterColorViewModelItem> colorItems,
-                                                                                   FilterPriceViewModelItem priceItem) =>
+                                                                             ClothesFilterViewModelCollection clothesFilter) =>
             GetClothesFilterChecked(clothesItems,
-                                    sizeItems.Where(sizeItem => sizeItem.IsChecked).Select(sizeItem => sizeItem.SizeGroup).ToList(),
-                                    colorItems.Where(colorItem => colorItem.IsChecked).Select(colorItem => colorItem.Color).ToList(),
-                                    (priceItem.PriceMinimumValue, priceItem.PriceMaximumValue));
+                                    clothesFilter.SizeItems.Where(sizeItem => sizeItem.IsChecked).
+                                                  Select(sizeItem => sizeItem.SizeGroup).
+                                                  ToList(),
+                                    clothesFilter.ColorItems.Where(colorItem => colorItem.IsChecked).
+                                                  Select(colorItem => colorItem.Color).
+                                                  ToList(),
+                                    (clothesFilter.PriceItem.PriceMinimumValue, clothesFilter.PriceItem.PriceMaximumValue));
 
         /// <summary>
         /// Получить отфильтрованную одежду с отмеченными фильтрами

@@ -5,7 +5,6 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
 using BoutiqueXamarin.Views.Clothes.Choices;
-using BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;
 using ReactiveUI;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
@@ -28,17 +27,7 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                     this.OneWayBind(ViewModel, x => x.ClothesViewModelColumnItems, x => x.ClothesColumns.ItemsSource).
                          DisposeWith(disposable);
 
-                    this.WhenAnyValue(x => x.ViewModel!.FilterSizeViewModelItems).
-                         Where(filterSizes => filterSizes != null).
-                         Subscribe(filterSizes => BindableLayout.SetItemsSource(FilterSizes, filterSizes)).
-                         DisposeWith(disposable);
-
-                    this.WhenAnyValue(x => x.ViewModel!.FilterColorViewModelItems).
-                         Where(filterColors => filterColors != null).
-                         Subscribe(filterColors => BindableLayout.SetItemsSource(FilterColors, filterColors)).
-                         DisposeWith(disposable);
-
-                    this.OneWayBind(ViewModel, x => x.FilterPriceViewModelItem, x => x.FilterPrices.ViewModel).
+                    this.OneWayBind(ViewModel, x => x.FilterViewModel, x => x.FilterViewControl.ViewModel).
                          DisposeWith(disposable);
 
                     ClothesColumns.
@@ -53,10 +42,10 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                         Subscribe(_ => SideMenuView.State = SideMenuState.RightMenuShown).
                         DisposeWith(disposable);
 
-                   this.FilterHide.
-                        Events().Clicked.
-                        Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
-                        DisposeWith(disposable);
+                    this.FilterViewControl.FilterHideButton.
+                         Events().Clicked.
+                         Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
+                         DisposeWith(disposable);
                 });
         }
     }

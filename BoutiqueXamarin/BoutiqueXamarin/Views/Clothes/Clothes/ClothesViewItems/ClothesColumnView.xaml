@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:ClothesColumnBase xmlns="http://xamarin.com/schemas/2014/forms" 
+<clothesViewItems:ClothesColumnBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ViewItems.ClothesColumnView"
-             xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesColumnView"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
              x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
     <Grid Margin="0, 0, 0, 20">
         <Grid.ColumnDefinitions>
@@ -11,9 +11,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <views:ClothesItemView x:Name="ItemLeft" 
+        <clothesViewItems:ClothesItemView x:Name="ItemLeft" 
                                Grid.Column="0"/>
-        <views:ClothesItemView x:Name="ItemRight" 
+        <clothesViewItems:ClothesItemView x:Name="ItemRight" 
                                Grid.Column="1"/>
     </Grid>
-</views:ClothesColumnBase>
+</clothesViewItems:ClothesColumnBase>

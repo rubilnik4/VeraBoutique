@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:ClothesItemBase xmlns="http://xamarin.com/schemas/2014/forms" 
+<clothesViewItems:ClothesItemBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ViewItems.ClothesItemView"
-             xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesItemView"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
              x:DataType="{x:Type viewModelItems:ClothesViewModelItem}">
     <ContentView.Resources>
         <ResourceDictionary>
@@ -32,4 +32,4 @@
                Grid.Row="2"
                Style="{StaticResource LabelClothesItemStyle}"/>
     </Grid>
-</views:ClothesItemBase>
+</clothesViewItems:ClothesItemBase>

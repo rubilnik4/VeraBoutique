@@ -3,10 +3,16 @@
 namespace BoutiqueXamarin.Models.Implementations.Navigation.Base
 {
     /// <summary>
-    /// Пустые параметры навигации
+    /// Базовые параметры навигации
     /// </summary>
-    public class EmptyNavigationParameters : BaseNavigationParameters
+    public class EmptyNavigationParameters
     {
+        /// <summary>
+        /// Являются ли параметры пустыми
+        /// </summary>
+        public bool IsEmpty => 
+            GetType() == typeof(EmptyNavigationParameters);
+
         /// <summary>
         /// Пустые параметры навигации
         /// </summary>

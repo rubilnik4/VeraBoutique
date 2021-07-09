@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<clothesFilters:FilterSizeItemBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters.FilterSizeItemView"
+             xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFilters="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;assembly=BoutiqueXamarin"
+             x:DataType="{x:Type clothesFiltersViewModelItems:FilterSizeViewModelItem}">
+    <StackLayout Style="{StaticResource StackLayoutText}">
+        <CheckBox x:Name="SizeCheck" />
+        <Label x:Name="SizeName" 
+               Style="{StaticResource LabelDescription}"/>
+    </StackLayout>
+</clothesFilters:FilterSizeItemBase>

@@ -4,10 +4,12 @@
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
-             xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ViewItems;assembly=BoutiqueXamarin"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:clothesFilters="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
@@ -54,7 +56,7 @@
                               SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="{x:Type viewModelItems:ClothesColumnViewModelItem}">
-                                <viewItems:ClothesColumnView />
+                                <clothesViewItems:ClothesColumnView />
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -82,47 +84,7 @@
                          xct:SideMenuView.MenuGestureEnabled="False"
                          xct:SideMenuView.ParallaxValue="0"
                          BackgroundColor="{StaticResource ColorTransparent}">
-                <StackLayout Orientation="Vertical">
-                    <StackLayout.Resources>
-                        <Style x:Key="StackLayoutExpander" 
-                               TargetType="{x:Type StackLayout}">
-                            <Setter Property="Margin" Value="30, 0, 10, 0" />
-                        </Style>
-                    </StackLayout.Resources>
-
-                    <Button x:Name="FilterHide"
-                            Style="{StaticResource ButtonTransparent}"
-                            Text="Закрыть" 
-                            HorizontalOptions="End"/>
-
-                    <controls:ExpanderCheck HeaderText="Размер">
-                        <StackLayout x:Name="FilterSizes"
-                                     Style="{StaticResource StackLayoutExpander}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="{x:Type viewModelItems:FilterSizeViewModelItem}">
-                                    <viewItems:FilterSizeItemView />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </controls:ExpanderCheck>
-
-                    <controls:ExpanderCheck HeaderText="Цвет">
-                        <StackLayout x:Name="FilterColors"
-                                     Style="{StaticResource StackLayoutExpander}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="{x:Type viewModelItems:FilterColorViewModelItem}">
-                                    <viewItems:FilterColorItemView />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </controls:ExpanderCheck>
-
-                    <controls:ExpanderCheck HeaderText="Цена">
-                        <StackLayout Style="{StaticResource StackLayoutExpander}">
-                            <viewItems:FilterPriceItemView x:Name="FilterPrices" />
-                        </StackLayout>
-                    </controls:ExpanderCheck>
-                </StackLayout>
+                <clothesFilters:FilterView x:Name="FilterViewControl" />
             </StackLayout>
         </xct:SideMenuView>
     </ContentPage.Content>

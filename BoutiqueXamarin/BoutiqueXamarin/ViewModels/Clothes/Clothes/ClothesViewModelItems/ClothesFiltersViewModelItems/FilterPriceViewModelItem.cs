@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate;
-using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems
 {
     /// <summary>
     /// Фильтрация цены

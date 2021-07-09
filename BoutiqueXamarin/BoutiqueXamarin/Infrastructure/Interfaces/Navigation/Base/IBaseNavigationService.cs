@@ -8,7 +8,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
     /// Базовый сервис навигации
     /// </summary>
     public interface IBaseNavigationService<in TParameter>
-        where TParameter : BaseNavigationParameters
+        where TParameter : EmptyNavigationParameters
     {
         /// <summary>
         /// Сервис навигации Prism

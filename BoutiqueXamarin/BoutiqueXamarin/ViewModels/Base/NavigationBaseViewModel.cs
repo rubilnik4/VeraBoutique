@@ -18,7 +18,7 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// Базовая модель с навигацией
     /// </summary>
     public abstract class NavigationBaseViewModel<TParameter> : BaseViewModel
-        where TParameter : BaseNavigationParameters
+        where TParameter : EmptyNavigationParameters
     {
         /// <summary>
         /// Параметры навигации
@@ -28,10 +28,10 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Параметры навигации
         /// </summary>
-        protected TParameter? NavigationParameters 
-        { 
+        protected TParameter? NavigationParameters
+        {
             get => _navigationParameters;
-            set => this.RaiseAndSetIfChanged(ref _navigationParameters, value); 
+            set => this.RaiseAndSetIfChanged(ref _navigationParameters, value);
         }
 
         /// <summary>

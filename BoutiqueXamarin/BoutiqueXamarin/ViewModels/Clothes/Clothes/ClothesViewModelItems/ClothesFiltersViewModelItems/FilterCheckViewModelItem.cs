@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reactive;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueXamarin.ViewModels.Base;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems
 {
     /// <summary>
     /// Модель с выбором
@@ -24,6 +23,15 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Выбор
         /// </summary>
-        public bool IsChecked { get; set; }
+        private bool _isChecked;
+
+        /// <summary>
+        /// Выбор
+        /// </summary>
+        public bool IsChecked
+        {
+            get => _isChecked;
+            set => this.RaiseAndSetIfChanged(ref _isChecked, value);
+        }
     }
 }

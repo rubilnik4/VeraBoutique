@@ -12,7 +12,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
         /// Имя параметра навигации
         /// </summary>
         public static string GetNavigationParameterName<TParameter>() 
-            where TParameter: BaseNavigationParameters =>
+            where TParameter: EmptyNavigationParameters =>
             typeof(TParameter).Name;
     }
 }

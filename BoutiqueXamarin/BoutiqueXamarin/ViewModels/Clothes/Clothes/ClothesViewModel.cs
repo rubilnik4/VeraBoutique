@@ -14,6 +14,7 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync;
@@ -32,43 +33,24 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            _clothesTypeDomain = this.WhenAnyValue(x => x.NavigationParameters).
-                                      Where(clothesParameters => clothesParameters != null).
-                                      Select(clothesParameters => clothesParameters!.ClothesTypeDomain).
-                                      ToProperty(this, nameof(ClothesTypeDomain));
-
             _clothes = this.WhenAnyValue(x => x.NavigationParameters).
-                            Where(parameters => parameters != null).
+                            Where(clothesParameters => clothesParameters!= null).
                             SelectMany(parameters => Observable.FromAsync(() => GetClothes(parameters!, clothesRestService, clothesDetailNavigationService))).
                             ToProperty(this, nameof(Clothes), scheduler: RxApp.MainThreadScheduler);
 
-            var clothesWithNavigate = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters,
-                                                        (clothes, parameters) => (clothes, parameters)).
-                                           Where(clothesNavigate => clothesNavigate.clothes != null && clothesNavigate.parameters != null);
-          
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(
-                                        _ => FilterViewModelFactory.GetClothesFiltered(Clothes, FilterSizeViewModelItems, 
-                                                                                       FilterColorViewModelItems, FilterPriceViewModelItem));
-            _clothesFiltered = ClothesFilterCommand.ToProperty(this, nameof(ClothesFiltered));
+                                   _ => FilterViewModelFactory.GetClothesFiltered(Clothes, FilterViewModel.ClothesFilters));
 
-            _filterSizeViewModelItems = clothesWithNavigate.
-                                        Select(clothesNavigate => clothesNavigate.parameters!.ClothesTypeDomain.SizeTypeDefault.
-                                            Map(defaultSize => FilterViewModelFactory.GetFilterSizes(clothesNavigate.clothes, defaultSize,
-                                                                                                     ClothesFilterCommand))).
-                                        ToProperty(this, nameof(FilterSizeViewModelItems));
-            _filterColorViewModelItems = clothesWithNavigate.
-                                         Select(clothesNavigate => FilterViewModelFactory.GetFilterColors(clothesNavigate.clothes,
-                                                                                                          ClothesFilterCommand)).
-                                         ToProperty(this, nameof(FilterColorViewModelItems));
-            _filterPriceViewModelItem = clothesWithNavigate.
-                                        Select(clothesNavigate => FilterViewModelFactory.GetFilterPrices(clothesNavigate.clothes,
-                                                                                                         ClothesFilterCommand)).
-                                        ToProperty(this, nameof(FilterPriceViewModelItem));
+            _filterViewModel = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
+                                    Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.parameters != null).
+                                    Select(clothesNavigation => new FilterViewModel(clothesNavigation.parameters!, clothesNavigation.clothes, 
+                                                                                    ClothesFilterCommand)).
+                                    ToProperty(this, nameof(FilterViewModel));
 
-            this.WhenAnyValue(x => x.Clothes).
-                 Where(clothes => clothes != null).
-                 Select(_ => Unit.Default).
-                 InvokeCommand(ClothesFilterCommand);
+            _clothesFiltered = this.WhenAnyValue(x => x.FilterViewModel).
+                                    Where(filterViewModel => filterViewModel != null).
+                                    SelectMany(filterViewModel => ClothesFilterCommand).
+                                    ToProperty(this, nameof(ClothesFiltered));
 
             _clothesViewModelColumnItems = this.WhenAnyValue(x => x.ClothesFiltered).
                                                 Where(clothes => clothes != null).
@@ -78,6 +60,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(
                 itemIndex => ClothesViewModelColumnItems[itemIndex].ClothesViewModelItemLeft!.
                              ImageCommand.Execute(Unit.Default));
+
+            this.WhenAnyValue(x => x.Clothes, x => x.FilterViewModel, (clothes, filterViewModel) => (clothes, filterViewModel)).
+              Where(clothes => clothes.clothes != null && clothes.filterViewModel != null).
+              Select(_ => Unit.Default).
+              InvokeCommand(ClothesFilterCommand);
         }
 
         /// <summary>
@@ -114,58 +101,25 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             _clothesViewModelColumnItems.Value;
 
         /// <summary>
-        /// Тип одежды
+        /// Фильтрация
         /// </summary>
-        private readonly ObservableAsPropertyHelper<IClothesTypeDomain> _clothesTypeDomain;
+        private readonly ObservableAsPropertyHelper<FilterViewModel> _filterViewModel;
 
         /// <summary>
-        /// Тип одежды
+        /// Фильтрация
         /// </summary>
-        private IClothesTypeDomain ClothesTypeDomain =>
-            _clothesTypeDomain.Value;
-
-        /// <summary>
-        /// Размеры для фильтрации
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<FilterSizeViewModelItem>> _filterSizeViewModelItems;
-
-        /// <summary>
-        /// Размеры для фильтрации
-        /// </summary>
-        public IReadOnlyCollection<FilterSizeViewModelItem> FilterSizeViewModelItems =>
-            _filterSizeViewModelItems.Value;
-
-        /// <summary>
-        /// Размеры для фильтрации
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<FilterColorViewModelItem>> _filterColorViewModelItems;
-
-        /// <summary>
-        /// Размеры для фильтрации
-        /// </summary>
-        public IReadOnlyCollection<FilterColorViewModelItem> FilterColorViewModelItems =>
-            _filterColorViewModelItems.Value;
-
-        /// <summary>
-        /// Цены для фильтрации
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<FilterPriceViewModelItem> _filterPriceViewModelItem;
-
-        /// <summary>
-        /// Цены для фильтрации
-        /// </summary>
-        public FilterPriceViewModelItem FilterPriceViewModelItem =>
-            _filterPriceViewModelItem.Value;
-
-        /// <summary>
-        /// Команда загрузки изображений
-        /// </summary>
-        public ReactiveCommand<int, ImageSource> ImagesCommand { get; }
+        public FilterViewModel FilterViewModel =>
+            _filterViewModel.Value;
 
         /// <summary>
         /// Команда обновления списка одежды с фильтрами
         /// </summary>
         public ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> ClothesFilterCommand { get; }
+
+        /// <summary>
+        /// Команда загрузки изображений
+        /// </summary>
+        public ReactiveCommand<int, ImageSource> ImagesCommand { get; }
 
         /// <summary> 
         /// Получить модели одежды
