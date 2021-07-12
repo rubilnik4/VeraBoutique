@@ -10,9 +10,21 @@
              xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
              xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
              xmlns:clothesFilters="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;assembly=BoutiqueXamarin"
+             xmlns:clothesSorting="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False"
              x:DataType="{x:Type viewModels:ClothesViewModel}">
+    <ContentPage.Resources>
+        <Style x:Key ="SideRightMenu"
+               TargetType="{x:Type StackLayout}">
+            <Setter Property="xct:SideMenuView.Position" Value="RightMenu" />
+            <Setter Property="xct:SideMenuView.MenuWidthPercentage" Value="0.75" />
+            <Setter Property="xct:SideMenuView.MenuGestureEnabled" Value="False" />
+            <Setter Property="xct:SideMenuView.ParallaxValue" Value="0" />
+            <Setter Property="BackgroundColor" Value="{StaticResource ColorTransparent}" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <xct:SideMenuView x:Name="SideMenuView">
             <StackLayout BackgroundColor="{StaticResource ColorTransparent}">
@@ -79,11 +91,8 @@
                 </Grid>
             </StackLayout>
 
-            <StackLayout xct:SideMenuView.Position="RightMenu"
-                         xct:SideMenuView.MenuWidthPercentage="0.75"
-                         xct:SideMenuView.MenuGestureEnabled="False"
-                         xct:SideMenuView.ParallaxValue="0"
-                         BackgroundColor="{StaticResource ColorTransparent}">
+            <StackLayout Style="{StaticResource SideRightMenu}">
+                <clothesSorting:SortingView x:Name="SortingViewControl" />
                 <clothesFilters:FilterView x:Name="FilterViewControl" />
             </StackLayout>
         </xct:SideMenuView>

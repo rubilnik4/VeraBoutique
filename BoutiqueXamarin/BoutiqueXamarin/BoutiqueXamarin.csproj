@@ -47,6 +47,9 @@
     <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterSizeItemView.xaml.cs">
       <DependentUpon>FilterSizeItemView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesSorting\SortingView.xaml.cs">
+      <DependentUpon>SortingView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

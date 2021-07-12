@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<clothesSorting:SortingViewBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:clothesSorting="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting;assembly=BoutiqueXamarin"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting.SortingView">
+    <StackLayout Orientation="Vertical">
+        <StackLayout.Resources>
+            <Style x:Key="StackLayoutRadio"
+                   TargetType="{x:Type StackLayout}">
+                <Setter Property="Margin" Value="30, 10, 10, 0" />
+                <Setter Property="Spacing" Value="5" />
+            </Style>
+        </StackLayout.Resources>
+
+        <Button x:Name="SortingHide"
+                    Style="{StaticResource ButtonTransparent}"
+                    Text="Закрыть"
+                    HorizontalOptions="End" />
+
+        <StackLayout Margin="10, 5, 0, 0">
+            <Label Text="Сортировка:"
+                   Style ="{StaticResource LabelTitle}"/>
+
+            <StackLayout Style="{StaticResource StackLayoutRadio}">
+                <StackLayout.Resources>
+                    <Style x:Key="SortingRadioButton" 
+                           TargetType="{x:Type RadioButton}">
+                        <Setter Property="GroupName" Value="SortingGroup"/>
+                    </Style>
+                </StackLayout.Resources>
+
+                <StackLayout Style="{StaticResource StackLayoutText}">
+                    <RadioButton x:Name="NamingRadio" 
+                                 Style="{StaticResource SortingRadioButton}"/>
+                    <Label Style="{StaticResource LabelDescription}"
+                           Text="Наименование"/>
+                </StackLayout>
+
+                <StackLayout Style="{StaticResource StackLayoutText}">
+                    <RadioButton x:Name="PriceRadio" 
+                                 Style="{StaticResource SortingRadioButton}"/>
+                    <Label Style="{StaticResource LabelDescription}"
+                           Text="Цена"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</clothesSorting:SortingViewBase>

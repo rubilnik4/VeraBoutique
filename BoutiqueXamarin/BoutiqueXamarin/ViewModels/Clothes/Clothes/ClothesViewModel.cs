@@ -15,6 +15,7 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesSortingViewModelItems;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync;
@@ -40,6 +41,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(
                                    _ => FilterViewModelFactory.GetClothesFiltered(Clothes, FilterViewModel.ClothesFilters));
+            _sortingViewModel = Observable.Return(new SortingViewModel()).
+                                ToProperty(this, nameof(SortingViewModel));
 
             _filterViewModel = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
                                     Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.parameters != null).
@@ -99,6 +102,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// </summary>
         public IReadOnlyList<ClothesColumnViewModelItem> ClothesViewModelColumnItems =>
             _clothesViewModelColumnItems.Value;
+
+        /// <summary>
+        /// Сортировка
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<SortingViewModel> _sortingViewModel;
+
+        /// <summary>
+        /// Сортировка
+        /// </summary>
+        public SortingViewModel SortingViewModel =>
+            _sortingViewModel.Value;
 
         /// <summary>
         /// Фильтрация

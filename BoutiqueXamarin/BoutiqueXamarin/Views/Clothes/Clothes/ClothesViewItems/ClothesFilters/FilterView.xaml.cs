@@ -38,9 +38,9 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters
         }
 
         /// <summary>
-        /// Кнопка закрытия формы
+        /// Событие закрытия формы
         /// </summary>
-        public Button FilterHideButton =>
-            FilterHide;
+        public IObservable<EventArgs> FilterHideButtonClick =>
+            FilterHide.Events().Clicked;
     }
 }

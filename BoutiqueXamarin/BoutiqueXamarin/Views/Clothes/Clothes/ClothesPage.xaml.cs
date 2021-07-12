@@ -19,12 +19,18 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
         {
             InitializeComponent();
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            this.FilterButton.GestureRecognizers.Add(tapGestureRecognizer);
+            var filterRecognizer = new TapGestureRecognizer();
+            this.FilterButton.GestureRecognizers.Add(filterRecognizer);
+
+            var sortingRecognizer = new TapGestureRecognizer();
+            this.SortButton.GestureRecognizers.Add(sortingRecognizer);
 
             this.WhenActivated(disposable =>
                 {
                     this.OneWayBind(ViewModel, x => x.ClothesViewModelColumnItems, x => x.ClothesColumns.ItemsSource).
+                         DisposeWith(disposable);
+
+                    this.OneWayBind(ViewModel, x => x.SortingViewModel, x => x.SortingViewControl.ViewModel).
                          DisposeWith(disposable);
 
                     this.OneWayBind(ViewModel, x => x.FilterViewModel, x => x.FilterViewControl.ViewModel).
@@ -37,15 +43,33 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                         Subscribe(clothesItem => clothesItem?.ImageCommand.Execute(Unit.Default).Subscribe()).
                         DisposeWith(disposable);
 
-                    tapGestureRecognizer.
+                    sortingRecognizer.
+                       Events().Tapped.
+                       Subscribe(_ =>
+                         {
+                             SideMenuView.State = SideMenuState.RightMenuShown;
+                             FilterViewControl.IsVisible = false;
+                             SortingViewControl.IsVisible = true;
+                         }).
+                       DisposeWith(disposable);
+
+                    filterRecognizer.
                         Events().Tapped.
-                        Subscribe(_ => SideMenuView.State = SideMenuState.RightMenuShown).
+                        Subscribe(_ =>
+                        {
+                            SideMenuView.State = SideMenuState.RightMenuShown;
+                            FilterViewControl.IsVisible = true;
+                            SortingViewControl.IsVisible = false;
+                        }).
                         DisposeWith(disposable);
 
-                    this.FilterViewControl.FilterHideButton.
-                         Events().Clicked.
+                    this.FilterViewControl.FilterHideButtonClick.
                          Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
                          DisposeWith(disposable);
+
+                    this.SortingViewControl.SortingHideButtonClick.
+                        Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
+                        DisposeWith(disposable);
                 });
         }
     }
