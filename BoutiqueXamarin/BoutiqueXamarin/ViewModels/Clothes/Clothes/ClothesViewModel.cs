@@ -40,8 +40,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                             ToProperty(this, nameof(Clothes), scheduler: RxApp.MainThreadScheduler);
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(
-                                   _ => FilterViewModelFactory.GetClothesFiltered(Clothes, FilterViewModel.ClothesFilters));
-            _sortingViewModel = Observable.Return(new SortingViewModel()).
+                                   _ => FilterAndSortingViewModelFactory.GetClothesFiltered(Clothes, FilterViewModel.ClothesFilters,
+                                                                                            SortingViewModel.ClothesSortingType));
+            _sortingViewModel = Observable.Return(new SortingViewModel(ClothesFilterCommand)).
                                 ToProperty(this, nameof(SortingViewModel));
 
             _filterViewModel = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
@@ -65,9 +66,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                              ImageCommand.Execute(Unit.Default));
 
             this.WhenAnyValue(x => x.Clothes, x => x.FilterViewModel, (clothes, filterViewModel) => (clothes, filterViewModel)).
-              Where(clothes => clothes.clothes != null && clothes.filterViewModel != null).
-              Select(_ => Unit.Default).
-              InvokeCommand(ClothesFilterCommand);
+                 Where(clothes => clothes.clothes != null && clothes.filterViewModel != null).
+                 Select(_ => Unit.Default).
+                 InvokeCommand(ClothesFilterCommand);
         }
 
         /// <summary>

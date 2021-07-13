@@ -38,5 +38,10 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// </summary>
         public virtual void Destroy()
         { }
+
+        /// <summary>
+        /// Статус загрузки
+        /// </summary>
+        public bool IsLoaded { get; protected set; }
     }
 }

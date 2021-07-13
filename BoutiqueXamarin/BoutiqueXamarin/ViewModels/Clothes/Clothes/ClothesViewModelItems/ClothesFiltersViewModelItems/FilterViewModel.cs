@@ -20,10 +20,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         public FilterViewModel(ClothesNavigationParameters navigateParameters, IReadOnlyCollection<ClothesViewModelItem> clothes,
                                ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand)
         {
-            FilterSizeViewModelItems = FilterViewModelFactory.GetFilterSizes(clothes, navigateParameters.ClothesTypeDomain.SizeTypeDefault,
+            FilterSizeViewModelItems = FilterAndSortingViewModelFactory.GetFilterSizes(clothes, navigateParameters.ClothesTypeDomain.SizeTypeDefault,
                                                                              clothesFilterCommand);
-            FilterColorViewModelItems = FilterViewModelFactory.GetFilterColors(clothes, clothesFilterCommand);
-            FilterPriceViewModelItem = FilterViewModelFactory.GetFilterPrices(clothes, clothesFilterCommand);
+            FilterColorViewModelItems = FilterAndSortingViewModelFactory.GetFilterColors(clothes, clothesFilterCommand);
+            FilterPriceViewModelItem = FilterAndSortingViewModelFactory.GetFilterPrices(clothes, clothesFilterCommand);
         }
 
         /// <summary>

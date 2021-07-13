@@ -24,7 +24,8 @@
             <Label Text="Сортировка:"
                    Style ="{StaticResource LabelTitle}"/>
 
-            <StackLayout Style="{StaticResource StackLayoutRadio}">
+            <StackLayout x:Name ="StackLayoutRadio" 
+                         Style="{StaticResource StackLayoutRadio}">
                 <StackLayout.Resources>
                     <Style x:Key="SortingRadioButton" 
                            TargetType="{x:Type RadioButton}">

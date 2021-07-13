@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using BoutiqueXamarin.Models.Enums;
 using BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;
 using ReactiveUI;
 using Xamarin.Forms;
@@ -14,21 +16,13 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting
         public SortingView()
         {
             InitializeComponent();
-
+         
             this.WhenActivated(disposable =>
             {
-                //this.WhenAnyValue(x => x.ViewModel!.FilterSizeViewModelItems).
-                //     Where(filterSizes => filterSizes != null).
-                //     Subscribe(filterSizes => BindableLayout.SetItemsSource(FilterSizes, filterSizes)).
-                //     DisposeWith(disposable);
-
-                //this.WhenAnyValue(x => x.ViewModel!.FilterColorViewModelItems).
-                //     Where(filterColors => filterColors != null).
-                //     Subscribe(filterColors => BindableLayout.SetItemsSource(FilterColors, filterColors)).
-                //     DisposeWith(disposable);
-
-                //this.OneWayBind(ViewModel, x => x.FilterPriceViewModelItem, x => x.FilterPrices.ViewModel).
-                //     DisposeWith(disposable);
+                this.Bind(ViewModel, x => x.IsNamingSorting, x => x.NamingRadio.IsChecked).
+                     DisposeWith(disposable);
+                this.Bind(ViewModel, x => x.IsPriceSorting, x => x.PriceRadio.IsChecked).
+                     DisposeWith(disposable);
             });
         }
 

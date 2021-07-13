@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueXamarin.Models.Enums;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
@@ -14,7 +15,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
     /// <summary>
     /// Модели фильтрации
     /// </summary>
-    public static class FilterViewModelFactory
+    public static class FilterAndSortingViewModelFactory
     {
         /// <summary>
         /// Получить размеры для фильтрации
@@ -57,7 +58,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         /// Получить отфильтрованную одежду
         /// </summary>
         public static IReadOnlyList<ClothesViewModelItem> GetClothesFiltered(IEnumerable<ClothesViewModelItem> clothesItems,
-                                                                             ClothesFilterViewModelCollection clothesFilter) =>
+                                                                             ClothesFilterViewModelCollection clothesFilter,
+                                                                             ClothesSortingType clothesSortingType) =>
             GetClothesFilterChecked(clothesItems,
                                     clothesFilter.SizeItems.Where(sizeItem => sizeItem.IsChecked).
                                                   Select(sizeItem => sizeItem.SizeGroup).
@@ -65,19 +67,22 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
                                     clothesFilter.ColorItems.Where(colorItem => colorItem.IsChecked).
                                                   Select(colorItem => colorItem.Color).
                                                   ToList(),
-                                    (clothesFilter.PriceItem.PriceMinimumValue, clothesFilter.PriceItem.PriceMaximumValue));
+                                    (clothesFilter.PriceItem.PriceMinimumValue, clothesFilter.PriceItem.PriceMaximumValue),
+                                    clothesSortingType);
 
         /// <summary>
         /// Получить отфильтрованную одежду с отмеченными фильтрами
         /// </summary>
         private static IReadOnlyList<ClothesViewModelItem> GetClothesFilterChecked(IEnumerable<ClothesViewModelItem> clothesItems,
-                                                                                         IReadOnlyCollection<ISizeGroupMainDomain> filterSizes,
-                                                                                         IReadOnlyCollection<IColorDomain> filterColors,
-                                                                                         (double, double) priceRange) =>
+                                                                                   IReadOnlyCollection<ISizeGroupMainDomain> filterSizes,
+                                                                                   IReadOnlyCollection<IColorDomain> filterColors,
+                                                                                   (double, double) priceRange,
+                                                                                   ClothesSortingType clothesSortingType) =>
             clothesItems.
             Where(clothes => SizeFilterFunc(clothes.ClothesDetailDomain, filterSizes) &&
                              ColorFilterFunc(clothes.ClothesDetailDomain, filterColors) &&
                              PriceFilterFunc(clothes.ClothesDetailDomain, priceRange)).
+            Map(clothes => ClothesSorting(clothes, clothesSortingType)).
             ToList();
 
         /// <summary>
@@ -98,7 +103,20 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         /// Функция фильтрации по цене одежды
         /// </summary>
         private static Func<IClothesDetailDomain, (double PriceMinimum, double PriceMaximum), bool> PriceFilterFunc =>
-            (clothes, priceRange) => (double)clothes.Price >= priceRange.PriceMinimum && 
+            (clothes, priceRange) => (double)clothes.Price >= priceRange.PriceMinimum &&
                                      (double)clothes.Price <= priceRange.PriceMaximum;
+
+
+        /// <summary>
+        /// Сортировать список одежды
+        /// </summary>
+        private static IEnumerable<ClothesViewModelItem> ClothesSorting(IEnumerable<ClothesViewModelItem> clothes,
+                                                                        ClothesSortingType clothesSortingType) =>
+            clothesSortingType switch
+            {
+                ClothesSortingType.Naming => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Name),
+                ClothesSortingType.Price => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Price),
+                _ => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Name),
+            };
     }
 }
