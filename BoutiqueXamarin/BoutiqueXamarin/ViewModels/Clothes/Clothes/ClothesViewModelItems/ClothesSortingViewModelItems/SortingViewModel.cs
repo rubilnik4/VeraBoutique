@@ -28,8 +28,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
             IsLoaded = true;
         }
 
-        
-
         /// <summary>
         /// Тип сортировки. Наименование
         /// </summary>

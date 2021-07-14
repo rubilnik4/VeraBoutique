@@ -51,10 +51,10 @@
 
                             <StackLayout Grid.Column="2"
                                          Orientation="Horizontal">
-                                <svg:SvgCachedImage x:Name="SortButton"
+                                <controls:SvgButton x:Name="SortButton"
                                                     Source="sort_amount_up_solid.svg"
                                                     Style="{StaticResource SvgImage}" />
-                                <svg:SvgCachedImage x:Name="FilterButton"
+                                <controls:SvgButton x:Name="FilterButton"
                                                     Source="filter_solid.svg"
                                                     Style="{StaticResource SvgImage}" />
                             </StackLayout>

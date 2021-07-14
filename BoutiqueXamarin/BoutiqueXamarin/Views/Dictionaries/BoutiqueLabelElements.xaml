@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+    <Style TargetType="{x:Type Label}"
+           BaseResourceKey="BodyStyle">
+        <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
+    </Style>
+
+    <Style x:Key="LabelTitle"
+           TargetType="{x:Type Label}">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="TextTransform" Value="Uppercase"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextColor" Value="{StaticResource ColorAccent}"/>
+    </Style>
+
+    <Style x:Key="LabelDescription"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelTitle}">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+</ResourceDictionary>

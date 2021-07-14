@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+    <Style x:Key="ListViewDefault" 
+           TargetType="{x:Type ListView}" >
+        <Setter Property="SeparatorVisibility" Value="None" />
+    </Style>
+
+    <Style x:Key="ListViewUnevenDefault" 
+           TargetType="{x:Type ListView}" 
+           BasedOn="{StaticResource ListViewDefault}">
+        <Setter Property="HasUnevenRows" Value="True" />
+    </Style>
+
+    <Style x:Key="SeparatorBox" 
+           TargetType="{x:Type BoxView}">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+    </Style>
+
+</ResourceDictionary>

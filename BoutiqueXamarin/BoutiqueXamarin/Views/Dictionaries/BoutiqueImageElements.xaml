@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+   
+
+    
+   
+
+    <Style x:Key="SvgImage"
+           TargetType="{x:Type svg:SvgCachedImage}">
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+        <Setter Property="Margin" Value="8" />
+    </Style>
+
+    <Style x:Key="SvgImageBack"
+           TargetType="{x:Type svg:SvgCachedImage}"
+           BasedOn="{StaticResource SvgImage}">
+        <Setter Property="WidthRequest" Value="26" />
+        <Setter Property="HeightRequest" Value="26" />
+        <Setter Property="Source" Value="arrow_left_solid.svg" />
+    </Style>
+</ResourceDictionary>

@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.Controls;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting.SortingView">
     <StackLayout Orientation="Vertical">
         <StackLayout.Resources>
@@ -28,24 +29,16 @@
                          Style="{StaticResource StackLayoutRadio}">
                 <StackLayout.Resources>
                     <Style x:Key="SortingRadioButton" 
-                           TargetType="{x:Type RadioButton}">
+                           TargetType="{x:Type controlViews:RadioButtonControl}">
                         <Setter Property="GroupName" Value="SortingGroup"/>
                     </Style>
                 </StackLayout.Resources>
-
-                <StackLayout Style="{StaticResource StackLayoutText}">
-                    <RadioButton x:Name="NamingRadio" 
-                                 Style="{StaticResource SortingRadioButton}"/>
-                    <Label Style="{StaticResource LabelDescription}"
-                           Text="Наименование"/>
-                </StackLayout>
-
-                <StackLayout Style="{StaticResource StackLayoutText}">
-                    <RadioButton x:Name="PriceRadio" 
-                                 Style="{StaticResource SortingRadioButton}"/>
-                    <Label Style="{StaticResource LabelDescription}"
-                           Text="Цена"/>
-                </StackLayout>
+                <controlViews:RadioButtonControl x:Name="NamingRadio" 
+                                                 Style="{StaticResource SortingRadioButton}" 
+                                                 Text="Наименование" />
+                <controlViews:RadioButtonControl x:Name="PriceRadio" 
+                                                 Style="{StaticResource SortingRadioButton}" 
+                                                 Text="Цена" />
             </StackLayout>
         </StackLayout>
     </StackLayout>

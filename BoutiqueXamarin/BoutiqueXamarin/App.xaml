@@ -7,7 +7,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueColors.xaml" />
-                <ResourceDictionary Source="Views/Dictionaries/BoutiqueElements.xaml"/>
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueButtonElements.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueImageElements.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueLabelElements.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueStackLayoutElements.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueViewElements.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

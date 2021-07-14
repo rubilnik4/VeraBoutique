@@ -11,11 +11,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
         where TParameter : EmptyNavigationParameters
     {
         /// <summary>
-        /// Сервис навигации Prism
-        /// </summary>
-        INavigationService NavigationService { get; }
-
-        /// <summary>
         /// Имя параметра навигации
         /// </summary>
         string NavigationParameterName { get; }
@@ -29,5 +24,10 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
         /// Перейти к странице
         /// </summary>
         Task NavigateTo(TParameter parameter);
+
+        /// <summary>
+        /// Перейти назад
+        /// </summary>
+        Task NavigateBack();
     }
 }

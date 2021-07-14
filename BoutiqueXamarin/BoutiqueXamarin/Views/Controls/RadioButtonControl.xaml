@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<controls:StackRadioButton xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Controls.RadioButtonControl"
+             Orientation="Horizontal">
+    <RadioButton IsChecked="{Binding Source={RelativeSource AncestorType={x:Type StackLayout}}, Path=IsChecked}" 
+                 GroupName="{Binding Source={RelativeSource AncestorType={x:Type StackLayout}}, Path=GroupName}" />
+    <Label Style="{StaticResource LabelDescription}"
+           Text="{Binding Source={RelativeSource AncestorType={x:Type StackLayout}}, Path=Text}"/>
+</controls:StackRadioButton>
