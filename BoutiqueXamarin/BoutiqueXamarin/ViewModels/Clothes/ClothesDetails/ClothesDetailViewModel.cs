@@ -1,20 +1,16 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+﻿using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesDetailViewModelItems;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.Models.Interfaces.Result;
-using Xamarin.Forms;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
+namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel : NavigationBaseViewModel<ClothesDetailNavigationParameters>
+    public class ClothesDetailViewModel : NavigationBaseViewModel<ClothesDetailNavigationParameters, IClothesDetailNavigationService>
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService,
+                                      IClothesDetailNavigationService clothesDetailNavigationService)
+            :base(clothesDetailNavigationService)
         {
             _clothesRestService = clothesRestService;
         }

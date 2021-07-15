@@ -65,7 +65,7 @@
     <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceClothesTypeView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Clothes\ClothesDetailPage.xaml">
+    <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\Clothes\ClothesPage.xaml">

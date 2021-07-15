@@ -9,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.DependencyInjection;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Views;
@@ -55,7 +56,7 @@ namespace BoutiqueXamarin
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
             Void(_ => InitializeComponent()).
             ResultValueVoidOkBadAsync(
-                actionOk: _ => NavigationService.NavigateAsync(nameof(ChoicePage), EmptyNavigationParameters.GetEmptyNavigationParameters),
+                actionOk: _ => BoutiqueContainer.Resolve<IChoiceNavigationService>().NavigateTo(new ChoiceNavigationParameters()),
                 actionBad: errors => throw new NotImplementedException());
 
         /// <summary>

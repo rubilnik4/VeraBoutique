@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -29,12 +30,18 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// <summary>
     /// Выбор типа одежды
     /// </summary>
-    public class ChoiceViewModel : NavigationBaseViewModel<EmptyNavigationParameters>
+    public class ChoiceViewModel : NavigationBaseViewModel<ChoiceNavigationParameters, IChoiceNavigationService>
     {
-        public ChoiceViewModel(IClothesNavigationService clothesNavigationService, IGenderRestService genderRestService)
+        public ChoiceViewModel(IGenderRestService genderRestService, IChoiceNavigationService choiceNavigationService,
+                               IClothesNavigationService clothesNavigationService)
+            : base(choiceNavigationService)
         {
             _choiceGenderViewModelItems = Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService)).
                                           ToProperty(this, nameof(ChoiceGenderViewModelItems), scheduler: RxApp.MainThreadScheduler);
+            //this.WhenAnyValue(x => x.ChoiceGenderViewModelItems).
+            //     Where(choiceItems => choiceItems != null).
+            //     Select(choiceItems => choiceItems.First()).
+            //     Subscribe(choiceItem => SelectedChoiceViewModelItem = choiceItem);
         }
 
         /// <summary>
@@ -48,11 +55,25 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         public IReadOnlyCollection<ChoiceGenderViewModelItem> ChoiceGenderViewModelItems =>
             _choiceGenderViewModelItems.Value;
 
+        ///// <summary>
+        ///// Выбранная страница
+        ///// </summary>
+        //private ChoiceGenderViewModelItem _selectedChoiceViewModelItem;
+
+        ///// <summary>
+        ///// Выбранная страница
+        ///// </summary>
+        //public ChoiceGenderViewModelItem SelectedChoiceViewModelItem
+        //{
+        //    get => _selectedChoiceViewModelItem;
+        //    set => this.RaiseAndSetIfChanged(ref _selectedChoiceViewModelItem, value);
+        //}
+
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
         private static async Task<IReadOnlyCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
-                                                                                                           IGenderRestService genderRestService) =>
+                                                                                                       IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
                 genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).

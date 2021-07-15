@@ -45,7 +45,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <svg:SvgCachedImage Grid.Column="0"
+                            <controls:SvgButton Grid.Column="0"
                                                 x:Name="BackButton"
                                                 Style="{StaticResource SvgImageBack}" />
 
@@ -83,7 +83,8 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Column="1"
+                            <Button x:Name="MenuButton"
+                                    Grid.Column="1"
                                     Style="{StaticResource ButtonTransparent}"
                                     Text="Меню" />
                         </Grid>

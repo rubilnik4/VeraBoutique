@@ -19,11 +19,6 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
         {
             InitializeComponent();
 
-            //var filterRecognizer = new TapGestureRecognizer();
-            //this.FilterButton.GestureRecognizers.Add(filterRecognizer);
-            //var sortingRecognizer = new TapGestureRecognizer();
-            //this.SortButton.GestureRecognizers.Add(sortingRecognizer);
-
             this.WhenActivated(disposable =>
                 {
                     this.OneWayBind(ViewModel, x => x.ClothesViewModelColumnItems, x => x.ClothesColumns.ItemsSource).
@@ -42,31 +37,35 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                         Subscribe(clothesItem => clothesItem?.ImageCommand.Execute(Unit.Default).Subscribe()).
                         DisposeWith(disposable);
 
-                    FilterButton.Tapped.
-                                 Subscribe(_ =>
-                                 {
-                                     SideMenuView.State = SideMenuState.RightMenuShown;
-                                     FilterViewControl.IsVisible = false;
-                                     SortingViewControl.IsVisible = true;
-                                 }).
-                                 DisposeWith(disposable);
+                    this.SortButton.Tapped.
+                         Subscribe(_ =>
+                            {
+                                SideMenuView.State = SideMenuState.RightMenuShown;
+                                FilterViewControl.IsVisible = true;
+                                SortingViewControl.IsVisible = false;
+                            }).
+                         DisposeWith(disposable);
 
-                    //SortButton.TappedEvent.
-                    //    Subscribe(_ =>
-                    //    {
-                    //        SideMenuView.State = SideMenuState.RightMenuShown;
-                    //        FilterViewControl.IsVisible = true;
-                    //        SortingViewControl.IsVisible = false;
-                    //    }).
-                    //    DisposeWith(disposable);
+                    this.FilterButton.Tapped.
+                         Subscribe(_ =>
+                            {
+                                SideMenuView.State = SideMenuState.RightMenuShown;
+                                FilterViewControl.IsVisible = false;
+                                SortingViewControl.IsVisible = true;
+                            }).
+                         DisposeWith(disposable);
 
                     this.FilterViewControl.FilterHideButtonClick.
                          Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
                          DisposeWith(disposable);
 
                     this.SortingViewControl.SortingHideButtonClick.
-                        Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
-                        DisposeWith(disposable);
+                         Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
+                         DisposeWith(disposable);
+
+                    this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton);
+
+                    this.BindCommand(ViewModel, x => x.ChoiceNavigateCommand, x => x.MenuButton);
                 });
         }
     }

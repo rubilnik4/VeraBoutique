@@ -30,9 +30,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationBaseViewModel<ClothesNavigationParameters>
+    public class ClothesViewModel : NavigationBaseViewModel<ClothesNavigationParameters, IClothesNavigationService>
     {
-        public ClothesViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService)
+        public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
+                              IChoiceNavigationService choiceNavigationService,
+                              IClothesDetailNavigationService clothesDetailNavigationService)
+            :base(clothesNavigationService)
         {
             _clothes = this.WhenAnyValue(x => x.NavigationParameters).
                             Where(clothesParameters => clothesParameters!= null).
@@ -64,6 +67,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(
                 itemIndex => ClothesViewModelColumnItems[itemIndex].ClothesViewModelItemLeft!.
                              ImageCommand.Execute(Unit.Default));
+
+            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationParameters()));
 
             this.WhenAnyValue(x => x.Clothes, x => x.FilterViewModel, (clothes, filterViewModel) => (clothes, filterViewModel)).
                  Where(clothes => clothes.clothes != null && clothes.filterViewModel != null).
@@ -135,6 +140,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// Команда загрузки изображений
         /// </summary>
         public ReactiveCommand<int, ImageSource> ImagesCommand { get; }
+
+        /// <summary>
+        /// Команда навигации к странице выбора
+        /// </summary>
+        public ReactiveCommand<Unit, Unit> ChoiceNavigateCommand { get; }
 
         /// <summary> 
         /// Получить модели одежды

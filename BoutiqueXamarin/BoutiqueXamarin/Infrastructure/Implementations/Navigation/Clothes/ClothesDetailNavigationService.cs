@@ -4,6 +4,7 @@ using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Views.Clothes.Clothes;
+using BoutiqueXamarin.Views.Clothes.ClothesDetails;
 using Prism.Navigation;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes

@@ -13,7 +13,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
     /// </summary>
     public abstract class BaseNavigationService<TParameter, TPage> : IBaseNavigationService<TParameter>
         where TParameter : EmptyNavigationParameters
-        where TPage : ContentPage
+        where TPage : Page
     {
         protected BaseNavigationService(INavigationService navigationService)
         {

@@ -1,9 +1,11 @@
 ﻿using BoutiqueXamarin.ViewModels.Clothes.Choices;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes;
+using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails;
 using BoutiqueXamarin.Views;
 using BoutiqueXamarin.Views.Clothes;
 using BoutiqueXamarin.Views.Clothes.Choices;
 using BoutiqueXamarin.Views.Clothes.Clothes;
+using BoutiqueXamarin.Views.Clothes.ClothesDetails;
 using Prism.Ioc;
 using Xamarin.Forms;
 
