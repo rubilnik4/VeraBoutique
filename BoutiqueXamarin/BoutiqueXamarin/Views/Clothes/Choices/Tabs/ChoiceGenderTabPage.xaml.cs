@@ -16,10 +16,10 @@ namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs
         {
             InitializeComponent();
 
-            this.WhenAnyValue(x => x.ViewModel).
-                 Where(x => x != null).
-                 Do(SetTitle).
-                 Subscribe();
+            //this.WhenAnyValue(x => x.ViewModel).
+            //     Where(x => x != null).
+            //     Do(SetTitle).
+            //     Subscribe();
 
             this.WhenActivated(disposable =>
             {
@@ -28,12 +28,12 @@ namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs
             });
         }
 
-        /// <summary>
-        /// Название страницы
-        /// </summary>
-        private void SetTitle(ChoiceGenderViewModelItem? choiceGenderBaseViewModelItem)
-        {
-            Title = choiceGenderBaseViewModelItem?.GenderName;
-        }
+        ///// <summary>
+        ///// Название страницы
+        ///// </summary>
+        //private void SetTitle(ChoiceGenderViewModelItem? choiceGenderBaseViewModelItem)
+        //{
+        //    Title = choiceGenderBaseViewModelItem?.GenderName;
+        //}
     }
 }

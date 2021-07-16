@@ -6,6 +6,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs
     /// <summary>
     /// Страница выбора с типом пола
     /// </summary>
-    public class ChoiceGenderTabPageBase : ReactiveContentPage<ChoiceGenderViewModelItem>
+    public class ChoiceGenderTabPageBase : ReactiveContentView<ChoiceGenderViewModelItem>
     { }
 }

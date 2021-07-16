@@ -5,10 +5,22 @@
              xmlns:tabs="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs;assembly=BoutiqueXamarin"
              xmlns:choiceTabViewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
-             NavigationPage.HasNavigationBar="False">  
-    <TabbedPage.ItemTemplate>
+             NavigationPage.HasNavigationBar="False">
+    <CarouselView x:Name="CarouselGenderView" 
+                  Loop ="False">
+        <CarouselView.ItemsLayout>
+            <LinearItemsLayout Orientation="Horizontal" />
+        </CarouselView.ItemsLayout>
+
+        <CarouselView.ItemTemplate>
+            <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
+                <tabs:ChoiceGenderTabPage />
+            </DataTemplate>
+        </CarouselView.ItemTemplate>
+    </CarouselView>
+    <!--<TabbedPage.ItemTemplate>
         <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
             <tabs:ChoiceGenderTabPage />
         </DataTemplate>
-    </TabbedPage.ItemTemplate>
+    </TabbedPage.ItemTemplate>-->
 </views:ChoicePageBase>

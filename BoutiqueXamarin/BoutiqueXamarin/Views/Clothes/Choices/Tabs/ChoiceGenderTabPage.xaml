@@ -22,6 +22,15 @@
                                                CategoryTemplate="{StaticResource ChoiceCategory}"
                                                ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
     </ContentPage.Resources>
+    <StackLayout Orientation="Vertical">
+        <CarouselView>
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" />
+            </CarouselView.ItemsLayout>
 
-    <viewItems:ChoiceGenderView x:Name="ChoiceGenderView"/>
+
+        </CarouselView>
+        <viewItems:ChoiceGenderView x:Name="ChoiceGenderView"/>
+    </StackLayout>
+   
 </tabs:ChoiceGenderTabPageBase>

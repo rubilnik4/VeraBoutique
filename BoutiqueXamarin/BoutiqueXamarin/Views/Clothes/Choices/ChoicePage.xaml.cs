@@ -19,7 +19,7 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
 
             this.WhenActivated(disposable =>
             {
-                this.OneWayBind(ViewModel, x => x.ChoiceGenderViewModelItems, x => x.ItemsSource).
+                this.OneWayBind(ViewModel, x => x.ChoiceGenderViewModelItems, x => x.CarouselGenderView.ItemsSource).
                      DisposeWith(disposable);
             });
         }

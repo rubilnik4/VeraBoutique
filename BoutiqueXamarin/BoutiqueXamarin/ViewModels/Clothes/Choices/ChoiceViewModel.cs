@@ -58,8 +58,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
                                                                                                        IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
-                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)).
-                Concat(genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)))).
+                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).
             MapTaskAsync(result => result.Value.ToList());
 
     }

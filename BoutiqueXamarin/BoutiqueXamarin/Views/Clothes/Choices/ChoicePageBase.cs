@@ -6,6 +6,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
     /// <summary>
     /// Базовый класс страницы выбора
     /// </summary>
-    public class ChoicePageBase: ReactiveTabbedPage<ChoiceViewModel>
+    public class ChoicePageBase: ReactiveContentPage<ChoiceViewModel>
     { }
 }
