@@ -23,12 +23,8 @@ namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs
 
             this.WhenActivated(disposable =>
             {
-                this.OneWayBind(ViewModel, x => x.ChoiceBaseViewModelItems, x => x.CategoryListView.ItemsSource).
+                this.OneWayBind(ViewModel, x => x, x => x.ChoiceGenderView.ViewModel).
                      DisposeWith(disposable);
-                this.CategoryListView.Events().ItemTapped.
-                Select(args => this.CategoryListView.SelectedItem).
-                InvokeCommand(this, x => x.ViewModel!.ChoiceBaseTapCommand).
-                DisposeWith(disposable);
             });
         }
 

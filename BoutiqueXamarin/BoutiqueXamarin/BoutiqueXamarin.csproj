@@ -35,6 +35,9 @@
     <Compile Update="Views\Clothes\Choices\Tabs\ChoiceGenderTabPage.xaml.cs">
       <DependentUpon>ChoiceGenderTabPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceGenderView.xaml.cs">
+      <DependentUpon>ChoiceGenderView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesItemView.xaml.cs">
       <DependentUpon>ClothesItemView.xaml</DependentUpon>
     </Compile>
@@ -63,6 +66,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceClothesTypeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceGenderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailPage.xaml">

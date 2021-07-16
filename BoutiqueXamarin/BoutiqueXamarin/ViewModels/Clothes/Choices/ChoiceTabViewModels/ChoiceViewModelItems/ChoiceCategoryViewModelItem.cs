@@ -28,7 +28,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceV
             _categoryClothesType.Name;
 
         /// <summary>
-        /// МОдели типов одежды
+        /// Модели типов одежды
         /// </summary>
         public IReadOnlyCollection<ChoiceClothesTypeViewModelItem> ChoiceClothesTypeViewModelItems { get; }
 

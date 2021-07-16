@@ -1,13 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<tabs:ChoiceGenderTabPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<viewItems:ChoiceGenderBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
-             xmlns:tabs="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs;assembly=BoutiqueXamarin"
-             xmlns:choiceTabViewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;assembly=BoutiqueXamarin"
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;assembly=BoutiqueXamarin"
-             x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ChoiceGenderTabPage"
-             x:DataType="choiceTabViewModels:ChoiceGenderViewModelItem">
-    <ContentPage.Resources>
+             x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems.ChoiceGenderView">
+    <ContentView.Resources>
         <DataTemplate x:Key="ChoiceCategory" 
                       x:DataType="{x:Type choiceViewModelItems:ChoiceCategoryViewModelItem}">
             <viewItems:ChoiceCategoryView/>
@@ -21,7 +18,9 @@
         <choiceViewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
                                                CategoryTemplate="{StaticResource ChoiceCategory}"
                                                ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
-    </ContentPage.Resources>
+    </ContentView.Resources>
 
-    <viewItems:ChoiceGenderView x:Name="ChoiceGenderView"/>
-</tabs:ChoiceGenderTabPageBase>
+    <ListView x:Name="CategoryListView"
+              Style="{StaticResource ListViewUnevenDefault}"
+              ItemTemplate="{StaticResource ChoiceSelector}"/>
+</viewItems:ChoiceGenderBase>

@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;
 using ReactiveUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,7 +21,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
             {
                 this.OneWayBind(ViewModel, x => x.ChoiceGenderViewModelItems, x => x.ItemsSource).
                      DisposeWith(disposable);
-                //this.Bind(ViewModel, x => x.SelectedChoiceViewModelItem, x => x.SelectedItem);
             });
         }
     }

@@ -34,6 +34,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels
                                         ToCollection().
                                         Select(ChoiceBaseViewModelItemsUpdate).
                                         ToProperty(this, nameof(ChoiceBaseViewModelItems));
+
             ChoiceBaseTapCommand = ReactiveCommand.CreateFromTask<ChoiceBaseViewModelItem, ChoiceBaseViewModelItem>(ChoiceBaseTapUpdate);
         }
 

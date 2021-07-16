@@ -38,10 +38,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         {
             _choiceGenderViewModelItems = Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService)).
                                           ToProperty(this, nameof(ChoiceGenderViewModelItems), scheduler: RxApp.MainThreadScheduler);
-            //this.WhenAnyValue(x => x.ChoiceGenderViewModelItems).
-            //     Where(choiceItems => choiceItems != null).
-            //     Select(choiceItems => choiceItems.First()).
-            //     Subscribe(choiceItem => SelectedChoiceViewModelItem = choiceItem);
         }
 
         /// <summary>
@@ -55,20 +51,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         public IReadOnlyCollection<ChoiceGenderViewModelItem> ChoiceGenderViewModelItems =>
             _choiceGenderViewModelItems.Value;
 
-        ///// <summary>
-        ///// Выбранная страница
-        ///// </summary>
-        //private ChoiceGenderViewModelItem _selectedChoiceViewModelItem;
-
-        ///// <summary>
-        ///// Выбранная страница
-        ///// </summary>
-        //public ChoiceGenderViewModelItem SelectedChoiceViewModelItem
-        //{
-        //    get => _selectedChoiceViewModelItem;
-        //    set => this.RaiseAndSetIfChanged(ref _selectedChoiceViewModelItem, value);
-        //}
-
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
@@ -76,7 +58,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
                                                                                                        IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
-                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).
+                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)).
+                Concat(genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)))).
             MapTaskAsync(result => result.Value.ToList());
 
     }
