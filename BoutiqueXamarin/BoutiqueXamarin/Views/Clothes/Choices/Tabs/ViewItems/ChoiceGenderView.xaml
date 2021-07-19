@@ -4,23 +4,15 @@
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems.ChoiceGenderView">
-    <ContentView.Resources>
-        <DataTemplate x:Key="ChoiceCategory" 
-                      x:DataType="{x:Type choiceViewModelItems:ChoiceCategoryViewModelItem}">
-            <viewItems:ChoiceCategoryView/>
-        </DataTemplate>
 
-        <DataTemplate x:Key="ChoiceClothesType" 
-                      x:DataType="{x:Type choiceViewModelItems:ChoiceClothesTypeViewModelItem}">
-            <viewItems:ChoiceClothesTypeView/>
-        </DataTemplate>
-
-        <choiceViewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
-                                               CategoryTemplate="{StaticResource ChoiceCategory}"
-                                               ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
-    </ContentView.Resources>
-
-    <ListView x:Name="CategoryListView"
-              Style="{StaticResource ListViewUnevenDefault}"
-              ItemTemplate="{StaticResource ChoiceSelector}"/>
+    <!--<Frame HasShadow="True"
+           BackgroundColor="LightGray"
+           HorizontalOptions="CenterAndExpand"
+           WidthRequest="150">-->
+        <Label x:Name="GenderLabel"
+               Style="{StaticResource LabelTitle}"
+               HorizontalOptions="CenterAndExpand" 
+               VerticalOptions="CenterAndExpand"
+               BackgroundColor="LightGray"/>
+    <!--</Frame>-->
 </viewItems:ChoiceGenderBase>

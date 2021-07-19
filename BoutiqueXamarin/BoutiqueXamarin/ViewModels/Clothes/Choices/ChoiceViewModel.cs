@@ -52,6 +52,20 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
             _choiceGenderViewModelItems.Value;
 
         /// <summary>
+        /// Выбранная страница типа пола
+        /// </summary>
+        private ChoiceGenderViewModelItem _selectedChoiceGenderViewModel;
+
+        /// <summary>
+        /// Выбранная страница типа пола
+        /// </summary>
+        public ChoiceGenderViewModelItem SelectedChoiceGenderViewModel
+        {
+            get => _selectedChoiceGenderViewModel;
+            set => this.RaiseAndSetIfChanged(ref _selectedChoiceGenderViewModel, value);
+        }
+
+        /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
         private static async Task<IReadOnlyCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,

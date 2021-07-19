@@ -17,6 +17,15 @@
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}"/>
     </Style>
 
+    <Style x:Key="LabelVeraBoutique"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelTitle}">
+        <Setter Property="TextTransform" Value="Default"/>
+        <Setter Property="FontSize" Value="32"/>
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Setter Property="Margin" Value="20"/>
+    </Style>
+
     <Style x:Key="LabelDescription"
            TargetType="{x:Type Label}"
            BasedOn="{StaticResource LabelTitle}">

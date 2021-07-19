@@ -13,6 +13,7 @@ using FFImageLoading.Svg.Forms;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using Sharpnado.HorizontalListView.Droid;
 using Unity;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -33,6 +34,7 @@ namespace BoutiqueXamarin.Droid
             Forms.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
+            SharpnadoInitializer.Initialize();
             LoadApplication(new App(new AndroidInitializer()));
         }
 

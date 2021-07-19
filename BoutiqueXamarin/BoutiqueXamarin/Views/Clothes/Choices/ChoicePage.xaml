@@ -2,25 +2,74 @@
 <views:ChoicePageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices;assembly=BoutiqueXamarin"
-             xmlns:tabs="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs;assembly=BoutiqueXamarin"
              xmlns:choiceTabViewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;assembly=BoutiqueXamarin"
+             xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
+             xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:sho="http://sharpnado.com"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
-    <CarouselView x:Name="CarouselGenderView" 
-                  Loop ="False">
-        <CarouselView.ItemsLayout>
-            <LinearItemsLayout Orientation="Horizontal" />
-        </CarouselView.ItemsLayout>
-
-        <CarouselView.ItemTemplate>
-            <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
-                <tabs:ChoiceGenderTabPage />
-            </DataTemplate>
-        </CarouselView.ItemTemplate>
-    </CarouselView>
-    <!--<TabbedPage.ItemTemplate>
-        <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
-            <tabs:ChoiceGenderTabPage />
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ChoiceCategory" 
+                      x:DataType="{x:Type choiceViewModelItems:ChoiceCategoryViewModelItem}">
+            <viewItems:ChoiceCategoryView/>
         </DataTemplate>
-    </TabbedPage.ItemTemplate>-->
+
+        <DataTemplate x:Key="ChoiceClothesType" 
+                      x:DataType="{x:Type choiceViewModelItems:ChoiceClothesTypeViewModelItem}">
+            <viewItems:ChoiceClothesTypeView/>
+        </DataTemplate>
+
+        <choiceViewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
+                                                         CategoryTemplate="{StaticResource ChoiceCategory}"
+                                                         ClothesTypeTemplate="{StaticResource ChoiceClothesType}" />
+
+        <DataTemplate x:Key="HorizontalDudeTemplate">
+            <sho:DraggableViewCell x:Name="DraggableViewCell">
+                <ContentView>
+                    <Label x:Name="GenderLabel"
+                           Style="{StaticResource LabelTitle}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           BackgroundColor="LightGray" 
+                           Text="Gender"/>
+                </ContentView>
+            </sho:DraggableViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <Label Style="{StaticResource LabelVeraBoutique}"
+               Text ="VeraBoutique"/>
+
+        <!--<CarouselView x:Name="CarouselGenderView" 
+                      Grid.Row="1" 
+                      Loop ="False" 
+                      PeekAreaInsets="100">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
+                    <viewItems:ChoiceGenderView />
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>-->
+
+        <sho:HorizontalListView x:Name="GenderViews"
+                                CollectionPadding="10,30,10,75"
+                                ItemHeight="260"
+                                ItemWidth="260"
+                                ListLayout="Linear"
+                                SnapStyle="Center"
+                                ItemTemplate="{StaticResource HorizontalDudeTemplate}"
+                                ItemsSource="{Binding ChoiceGenderViewModelItems}">
+            <!--<sho:HorizontalListView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type choiceTabViewModels:ChoiceGenderViewModelItem}">
+                    <viewItems:ChoiceGenderView />
+                </DataTemplate>
+            </sho:HorizontalListView.ItemTemplate>-->
+        </sho:HorizontalListView>
+
+        <ListView x:Name="CategoryListView"
+                  Style="{StaticResource ListViewUnevenDefault}"
+                  ItemTemplate="{StaticResource ChoiceSelector}"/>
+    </StackLayout>
+
 </views:ChoicePageBase>
