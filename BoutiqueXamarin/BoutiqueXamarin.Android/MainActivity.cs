@@ -35,6 +35,8 @@ namespace BoutiqueXamarin.Droid
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
             SharpnadoInitializer.Initialize();
+            Sharpnado.Tabs.Initializer.Initialize(false, false);
+            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
             LoadApplication(new App(new AndroidInitializer()));
         }
 

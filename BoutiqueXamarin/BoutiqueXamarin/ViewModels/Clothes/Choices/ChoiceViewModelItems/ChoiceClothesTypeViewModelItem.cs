@@ -1,6 +1,6 @@
 ﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Вид одежды

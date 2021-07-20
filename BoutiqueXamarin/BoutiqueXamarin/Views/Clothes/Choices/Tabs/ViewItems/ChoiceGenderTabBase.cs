@@ -4,8 +4,8 @@ using ReactiveUI.XamForms;
 namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems
 {
     /// <summary>
-    /// Выбор типа одежды
+    /// Страница выбора с типом пола
     /// </summary>
-    public class ChoiceClothesTypeBase : ReactiveViewCell<ChoiceClothesTypeViewModelItem>
+    public class ChoiceGenderTabBase : ReactiveContentView<ChoiceGenderViewModelItem>
     { }
 }

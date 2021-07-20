@@ -7,15 +7,13 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
-using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;
 using DynamicData;
-using DynamicData.Alias;
 using DynamicData.Binding;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Тип одежды

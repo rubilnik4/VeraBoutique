@@ -1,7 +1,6 @@
 ﻿using BoutiqueXamarin.ViewModels.Base;
-using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Базовая модель выбора одежды

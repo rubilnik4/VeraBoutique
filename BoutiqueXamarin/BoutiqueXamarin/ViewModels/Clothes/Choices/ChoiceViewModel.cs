@@ -13,7 +13,7 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
-using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;
+using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using BoutiqueXamarinCommon.Models.Implementation;
 using BoutiqueXamarinCommon.Models.Interfaces;
 using Functional.FunctionalExtensions.Async;
@@ -43,37 +43,36 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// <summary>
         /// Модели типа пола одежды
         /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ChoiceGenderViewModelItem>> _choiceGenderViewModelItems;
+        private readonly ObservableAsPropertyHelper<IList<ChoiceGenderViewModelItem>> _choiceGenderViewModelItems;
 
         /// <summary>
         /// Модели типа пола одежды
         /// </summary>
-        public IReadOnlyCollection<ChoiceGenderViewModelItem> ChoiceGenderViewModelItems =>
+        public IList<ChoiceGenderViewModelItem> ChoiceGenderViewModelItems =>
             _choiceGenderViewModelItems.Value;
 
         /// <summary>
-        /// Выбранная страница типа пола
+        /// Выбранный тип пола
         /// </summary>
-        private ChoiceGenderViewModelItem _selectedChoiceGenderViewModel;
+        private ChoiceGenderViewModelItem? _selectedGenderViewModelItem;
 
         /// <summary>
-        /// Выбранная страница типа пола
+        /// Выбранный тип пола
         /// </summary>
-        public ChoiceGenderViewModelItem SelectedChoiceGenderViewModel
+        public ChoiceGenderViewModelItem? SelectedGenderViewModelItem
         {
-            get => _selectedChoiceGenderViewModel;
-            set => this.RaiseAndSetIfChanged(ref _selectedChoiceGenderViewModel, value);
+            get => _selectedGenderViewModelItem;
+            set => this.RaiseAndSetIfChanged(ref _selectedGenderViewModelItem, value);
         }
 
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
-        private static async Task<IReadOnlyCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
+        private static async Task<IList<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
                                                                                                        IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
                 genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).
             MapTaskAsync(result => result.Value.ToList());
-
     }
 }

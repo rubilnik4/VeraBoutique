@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels;
-using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;
+using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,20 +23,39 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
 
             this.WhenActivated(disposable =>
             {
-                this.OneWayBind(ViewModel, x => x.ChoiceGenderViewModelItems, x => x.GenderViews.ItemsSource).
+                this.WhenAnyValue(x => x.ViewModel!.ChoiceGenderViewModelItems).
+                     Select(items => (IList)items).
+                     BindTo(this, x => x.GenderTab.TabItemsSource).
                      DisposeWith(disposable);
 
-                //this.Bind(ViewModel, x => x.SelectedChoiceGenderViewModel, x => x.GenderViews.CurrentIndex).
-                //     DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.ChoiceGenderViewModelItems, x => x.CategoryCarouselView.ItemsSource).
+                     DisposeWith(disposable);
 
-                //this.OneWayBind(ViewModel, x => x.SelectedChoiceGenderViewModel.ChoiceBaseViewModelItems, x => x.CategoryListView.ItemsSource).
-                //     DisposeWith(disposable);
+                this.Bind(ViewModel, x => x.SelectedGenderViewModelItem, x => x.GenderTab.SelectedIndex,
+                          choiceGender => GetGenderViewModelItemIndex(choiceGender, ViewModel!.ChoiceGenderViewModelItems),
+                          index => GetGenderViewModelItemByIndex(index, ViewModel!.ChoiceGenderViewModelItems)).
+                     DisposeWith(disposable);
 
-                //this.CategoryListView.Events().ItemTapped.
-                //     Select(_ => CategoryListView.SelectedItem).
-                //     InvokeCommand(this, x => x.ViewModel!.SelectedChoiceGenderViewModel.ChoiceBaseTapCommand).
-                //     DisposeWith(disposable);
+                this.Bind(ViewModel, x => x.SelectedGenderViewModelItem, x => x.CategoryCarouselView.CurrentItem).
+                     DisposeWith(disposable);
             });
         }
+
+        /// <summary>
+        /// Получить индекс типа пола
+        /// </summary>
+        private static int GetGenderViewModelItemIndex(ChoiceGenderViewModelItem? choiceGenderViewModelItem,
+                                                       IList<ChoiceGenderViewModelItem>? choiceGenderViewModelItems) =>
+            choiceGenderViewModelItem != null 
+                ? choiceGenderViewModelItems?.IndexOf(choiceGenderViewModelItem) ?? -1
+                : -1;
+
+        /// <summary>
+        /// Получить типа пола пол индексу
+        /// </summary>
+        private static ChoiceGenderViewModelItem? GetGenderViewModelItemByIndex(int index, IList<ChoiceGenderViewModelItem>? choiceGenderViewModelItems) =>
+           index >= 0 && choiceGenderViewModelItems != null  && choiceGenderViewModelItems.Count > index
+               ? choiceGenderViewModelItems[index]
+               : null;
     }
 }

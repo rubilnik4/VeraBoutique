@@ -3,7 +3,7 @@ using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
 {
     /// <summary>
     /// Категория одежды

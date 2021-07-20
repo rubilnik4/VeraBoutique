@@ -1,4 +1,4 @@
-﻿using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;
+﻿using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using ReactiveUI.XamForms;
 
 namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems

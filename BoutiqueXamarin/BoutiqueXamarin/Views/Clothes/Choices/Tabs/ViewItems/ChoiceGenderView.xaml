@@ -2,17 +2,8 @@
 <viewItems:ChoiceGenderBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
-             xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceTabViewModels.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems.ChoiceGenderView">
-
-    <!--<Frame HasShadow="True"
-           BackgroundColor="LightGray"
-           HorizontalOptions="CenterAndExpand"
-           WidthRequest="150">-->
-        <Label x:Name="GenderLabel"
-               Style="{StaticResource LabelTitle}"
-               HorizontalOptions="CenterAndExpand" 
-               VerticalOptions="CenterAndExpand"
-               BackgroundColor="LightGray"/>
-    <!--</Frame>-->
+    <Label x:Name="GenderLabel"
+           Style="{StaticResource LabelTitle}"
+           HorizontalOptions="CenterAndExpand"/>
 </viewItems:ChoiceGenderBase>
