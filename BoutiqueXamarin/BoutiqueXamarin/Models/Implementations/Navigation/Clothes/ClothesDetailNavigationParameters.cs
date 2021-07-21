@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Enums.Clothes;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 
 namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
@@ -8,14 +9,14 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// </summary>
     public class ClothesDetailNavigationParameters : EmptyNavigationParameters
     {
-        public ClothesDetailNavigationParameters(int clothesId)
+        public ClothesDetailNavigationParameters(IClothesDetailDomain clothesDetail)
         {
-            ClothesId = clothesId;
+            ClothesDetail = clothesDetail;
         }
 
         /// <summary>
         /// Тип пола
         /// </summary>
-        public int ClothesId { get; }
+        public IClothesDetailDomain ClothesDetail { get; }
     }
 }

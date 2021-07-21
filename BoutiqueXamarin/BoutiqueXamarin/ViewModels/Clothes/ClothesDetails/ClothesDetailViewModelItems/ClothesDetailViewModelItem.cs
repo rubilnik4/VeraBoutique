@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using Xamarin.Forms;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesDetailViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems
 {
     /// <summary>
     /// Модель одежды

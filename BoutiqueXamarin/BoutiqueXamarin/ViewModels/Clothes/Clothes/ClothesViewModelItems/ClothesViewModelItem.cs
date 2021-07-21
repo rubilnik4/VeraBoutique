@@ -94,7 +94,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Переход на страницу детализации одежды
         /// </summary>
         private async Task ToClothesDetail() =>
-            await _clothesDetailNavigationService.NavigateTo(ClothesDetailDomain.Id);
+            await _clothesDetailNavigationService.NavigateTo(ClothesDetailDomain);
 
         /// <summary>
         /// Преобразовать изображение в поток

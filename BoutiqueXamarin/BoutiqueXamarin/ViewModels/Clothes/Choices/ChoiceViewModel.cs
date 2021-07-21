@@ -69,7 +69,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// Получить модели типа пола одежды
         /// </summary>
         private static async Task<IList<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
-                                                                                                       IGenderRestService genderRestService) =>
+                                                                                         IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
                 genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).

@@ -8,7 +8,7 @@
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout>
+    <StackLayout Spacing="0">
         <Label Style="{StaticResource LabelVeraBoutique}"
                Text="VeraBoutique" />
 
@@ -23,7 +23,9 @@
             </xct:TabView.TabViewItemDataTemplate>
         </xct:TabView>
 
-        <CarouselView x:Name="CategoryCarouselView">
+        <CarouselView x:Name="CategoryCarouselView"
+                      Loop ="False"
+                      Margin="10, 20, 0, 0">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
                     <viewItems:ChoiceGenderTabView />
