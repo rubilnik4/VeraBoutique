@@ -2,10 +2,9 @@
 <views:ChoicePageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices;assembly=BoutiqueXamarin"
-             xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
-             xmlns:sho="http://sharpnado.com"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
+             xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
     <StackLayout Spacing="0">
@@ -18,7 +17,7 @@
 
             <xct:TabView.TabViewItemDataTemplate>
                 <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                    <viewItems:ChoiceGenderView />
+                    <choiceViewItems:ChoiceGenderView />
                 </DataTemplate>
             </xct:TabView.TabViewItemDataTemplate>
         </xct:TabView>
@@ -28,7 +27,7 @@
                       Margin="10, 20, 0, 0">
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                    <viewItems:ChoiceGenderTabView />
+                    <choiceViewItems:ChoiceGenderTabView />
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>

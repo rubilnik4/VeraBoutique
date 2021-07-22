@@ -2,7 +2,6 @@
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Views.Clothes.Choices;
-using BoutiqueXamarin.Views.Clothes.Choices.Tabs;
 using BoutiqueXamarin.Views.Clothes.Clothes;
 using Prism.Navigation;
 

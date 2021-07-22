@@ -8,18 +8,18 @@ using ReactiveUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems
+namespace BoutiqueXamarin.Views.Clothes.ClothesDetails.ClothesDetailsViewItems
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ChoiceCategoryView : ChoiceCategoryBase
+    public partial class ClothesDetailImageView : ClothesDetailImageBase
     {
-        public ChoiceCategoryView()
+        public ClothesDetailImageView()
         {
             InitializeComponent();
 
             this.WhenActivated(disposable =>
             {
-                this.OneWayBind(ViewModel, x => x.CategoryName, x => x.CategoryName.Text).
+                this.OneWayBind(ViewModel, x => x.Image, x => x.ClothesImage.Source).
                      DisposeWith(disposable);
             });
         }

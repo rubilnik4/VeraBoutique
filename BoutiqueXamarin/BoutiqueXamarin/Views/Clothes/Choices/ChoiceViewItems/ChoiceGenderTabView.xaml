@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<viewItems:ChoiceGenderTabBase xmlns="http://xamarin.com/schemas/2014/forms" 
+<choiceViewItems:ChoiceGenderTabBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems;assembly=BoutiqueXamarin"
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
-             x:Class="BoutiqueXamarin.Views.Clothes.Choices.Tabs.ViewItems.ChoiceGenderTabView">
+             xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems.ChoiceGenderTabView">
     <ContentView.Resources>
         <DataTemplate x:Key="ChoiceCategory" 
                       x:DataType="{x:Type choiceViewModelItems:ChoiceCategoryViewModelItem}">
-            <viewItems:ChoiceCategoryView/>
+            <choiceViewItems:ChoiceCategoryView/>
         </DataTemplate>
 
         <DataTemplate x:Key="ChoiceClothesType" 
                       x:DataType="{x:Type choiceViewModelItems:ChoiceClothesTypeViewModelItem}">
-            <viewItems:ChoiceClothesTypeView/>
+            <choiceViewItems:ChoiceClothesTypeView/>
         </DataTemplate>
 
         <choiceViewModelItems:ChoiceDataTemplateSelector x:Key="ChoiceSelector"
@@ -23,4 +23,4 @@
     <ListView x:Name="CategoryListView"
               Style="{StaticResource ListViewUnevenDefault}"
               ItemTemplate="{StaticResource ChoiceSelector}" />
-</viewItems:ChoiceGenderTabBase>
+</choiceViewItems:ChoiceGenderTabBase>

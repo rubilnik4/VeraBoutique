@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<choiceViewItems:ChoiceGenderBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems.ChoiceGenderView">
+    <Label x:Name="GenderLabel"
+           Style="{StaticResource LabelTitle}"
+           HorizontalOptions="CenterAndExpand"/>
+</choiceViewItems:ChoiceGenderBase>

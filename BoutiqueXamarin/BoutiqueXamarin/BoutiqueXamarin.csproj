@@ -32,7 +32,7 @@
     <Compile Update="Views\Clothes\Choices\ChoicePage.xaml.cs">
       <DependentUpon>ChoicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceGenderView.xaml.cs">
+    <Compile Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceGenderView.xaml.cs">
       <DependentUpon>ChoiceGenderView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesItemView.xaml.cs">
@@ -56,19 +56,22 @@
     <EmbeddedResource Update="Views\Clothes\Choices\ChoicePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceCategoryView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceCategoryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceClothesTypeView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceClothesTypeView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceGenderTabView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceGenderTabView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Clothes\Choices\Tabs\ViewItems\ChoiceGenderView.xaml">
+    <EmbeddedResource Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceGenderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailsViewItems\ClothesDetailImageView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\Clothes\ClothesPage.xaml">

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.NotifyTasks;
 using BoutiqueXamarin.ViewModels.Base;
@@ -104,6 +105,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
                                    _ => new byte[0]).
-            MapTaskAsync(bytes => ImageSource.FromStream(() => new MemoryStream(bytes)));
+            MapTaskAsync(ImageConverter.ToImageSource);
     }
 }
