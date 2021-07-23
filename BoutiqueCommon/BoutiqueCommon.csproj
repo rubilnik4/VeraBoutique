@@ -9,6 +9,7 @@
     <Description>Common library for Vera-Boutique application</Description>
     <Copyright>Ivan Rubilnik</Copyright>
     <Configurations>Debug;Release;Test</Configurations>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>

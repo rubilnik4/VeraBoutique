@@ -8,6 +8,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups
     /// Группа размеров одежды с включенными размерами
     /// </summary>
     public interface ISizeGroupMainBase<TSize>: ISizeGroupBase, IEquatable<ISizeGroupMainBase<TSize>>
+        where TSize : ISizeBase
     {
         /// <summary>
         /// Размеры одежды

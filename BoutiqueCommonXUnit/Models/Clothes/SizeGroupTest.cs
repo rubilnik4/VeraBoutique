@@ -76,7 +76,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         }
 
         /// <summary>
-        /// Проверка идентичности
+        /// Проверка перевода в строку
         /// </summary>
         [Fact]
         public void ClothesSizeGroup_ToString()
@@ -90,6 +90,21 @@ namespace BoutiqueCommonXUnit.Models.Clothes
 
             Assert.Equal(expectedGroupName, sizeBaseGroupName);
             Assert.Equal(expectedGroupName, sizeGroupName);
+        }
+
+        /// <summary>
+        /// Проверка перевода в строку
+        /// </summary>
+        [Fact]
+        public void ClothesSizeGroupDefault_ToString()
+        {
+            const SizeType sizeType = SizeType.American;
+            var sizeGroupMainDomain= SizeGroupData.SizeGroupMainDomains.First();
+            var sizeGroupDefaultDomain = new SizeGroupDefaultDomain(sizeGroupMainDomain, sizeType);
+
+            string sizeGroupName = sizeGroupDefaultDomain.ToString();
+
+            Assert.Equal(sizeGroupName, sizeGroupMainDomain.GetBaseGroupName(sizeType));
         }
     }
 }

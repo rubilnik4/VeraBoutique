@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes
     /// <summary>
     /// Цвет одежды
     /// </summary>
-    public interface IColorBase : IModel<string>, IEquatable<IColorBase>
+    public interface IColorBase : IModel<string>, IEquatable<IColorBase>, IFormattable
     {
         /// <summary>
         /// Наименование

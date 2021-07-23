@@ -10,7 +10,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
     /// <summary>
     /// Цвет одежды. Тесты
     /// </summary>
-    public class ColorClothesTest
+    public class ColorTest
     {
         /// <summary>
         /// Проверка идентичности
@@ -36,6 +36,18 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var second = ColorData.ColorDomains.First();
 
             Assert.True(first.Equals(second));
+        }
+
+        /// <summary>
+        /// Проверка перевода в строку
+        /// </summary>
+        [Fact]
+        public void Color_ToString()
+        {
+            var color = ColorData.ColorDomains.First();
+            string? colorString = color.ToString();
+
+            Assert.Equal(colorString, color.Name);
         }
     }
 }

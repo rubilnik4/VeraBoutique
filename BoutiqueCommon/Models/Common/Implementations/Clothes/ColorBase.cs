@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -33,6 +34,14 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
             other?.Id == Id;
 
         public override int GetHashCode() => HashCode.Combine(Id);
+        #endregion
+
+        #region IFormattable Support
+        public override string ToString() => 
+            ToString(String.Empty, CultureInfo.CurrentCulture);
+
+        public string ToString(string? format, IFormatProvider? formatProvider) =>
+            Name;
         #endregion
     }
 }
