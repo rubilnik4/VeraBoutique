@@ -38,8 +38,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     public class ClothesViewModel : NavigationBaseViewModel<ClothesNavigationParameters, IClothesNavigationService>
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
-                              IChoiceNavigationService choiceNavigationService,
-                              IClothesDetailNavigationService clothesDetailNavigationService)
+                                IChoiceNavigationService choiceNavigationService,
+                                IClothesDetailNavigationService clothesDetailNavigationService)
             :base(clothesNavigationService)
         {
             _clothes = this.WhenAnyValue(x => x.NavigationParameters).
@@ -158,9 +158,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                                                                                         IClothesRestService clothesRestService,
                                                                                         IClothesDetailNavigationService clothesDetailNavigationService) =>
             await clothesParameters.ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound, nameof(ClothesNavigationParameters))).
-            ResultValueBindOkToCollectionAsync(parameters => clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name)).
-            ResultCollectionOkTaskAsync(clothes => clothes.Select(clotheItem => new ClothesViewModelItem(clotheItem, clothesRestService,
-                                                                                                         clothesDetailNavigationService))).
+            ResultValueBindOkToCollectionAsync(parameters => 
+                clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
+                ResultCollectionOkTaskAsync(clothes => 
+                    clothes.Select(clotheItem => new ClothesViewModelItem(clotheItem, parameters.ClothesTypeDomain, 
+                                                                          clothesRestService, clothesDetailNavigationService)))).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
                                    result => new List<ClothesViewModelItem>());

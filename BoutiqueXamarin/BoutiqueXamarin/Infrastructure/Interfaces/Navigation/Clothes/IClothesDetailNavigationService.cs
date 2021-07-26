@@ -14,6 +14,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        Task NavigateTo(IClothesDetailDomain clothesDetail);
+        Task NavigateTo(IClothesDetailDomain clothesDetail, SizeType defaultSizeType);
     }
 }

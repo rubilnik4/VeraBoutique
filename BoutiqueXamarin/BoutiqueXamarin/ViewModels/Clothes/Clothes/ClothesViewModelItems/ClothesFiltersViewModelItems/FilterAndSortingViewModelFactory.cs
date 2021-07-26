@@ -24,7 +24,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
                                                                                   SizeType sizeTypeDefault,
                                                                                   ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand) =>
             clothes.
-            SelectMany(clothesItem => clothesItem.ClothesDetailDomain.SizeGroups).
+            SelectMany(clothesItem => clothesItem.ClothesDetail.SizeGroups).
             Distinct().
             Where(sizeGroup => sizeGroup.Sizes.Any(size => size.SizeType == sizeTypeDefault)).
             OrderBy(sizeGroup => sizeGroup.SizeNormalize).
@@ -37,7 +37,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         public static IReadOnlyCollection<FilterColorViewModelItem> GetFilterColors(IEnumerable<ClothesViewModelItem> clothes,
                                                                                     ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand) =>
             clothes.
-            SelectMany(clothesItem => clothesItem.ClothesDetailDomain.Colors).
+            SelectMany(clothesItem => clothesItem.ClothesDetail.Colors).
             Distinct().
             OrderBy(color => color.Name).
             Select(color => new FilterColorViewModelItem(color, clothesFilterCommand)).
@@ -49,7 +49,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         public static FilterPriceViewModelItem GetFilterPrices(IEnumerable<ClothesViewModelItem> clothes,
                                                                ReactiveCommand<Unit, IReadOnlyList<ClothesViewModelItem>> clothesFilterCommand) =>
             clothes.
-            Select(clothesItem => clothesItem.ClothesDetailDomain.Price).
+            Select(clothesItem => clothesItem.ClothesDetail.Price).
             OrderBy(price => price).
             ToList().
             Map(prices => new FilterPriceViewModelItem(prices.First(), prices.Last(), clothesFilterCommand));
@@ -79,9 +79,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
                                                                                    (double, double) priceRange,
                                                                                    ClothesSortingType clothesSortingType) =>
             clothesItems.
-            Where(clothes => SizeFilterFunc(clothes.ClothesDetailDomain, filterSizes) &&
-                             ColorFilterFunc(clothes.ClothesDetailDomain, filterColors) &&
-                             PriceFilterFunc(clothes.ClothesDetailDomain, priceRange)).
+            Where(clothes => SizeFilterFunc(clothes.ClothesDetail, filterSizes) &&
+                             ColorFilterFunc(clothes.ClothesDetail, filterColors) &&
+                             PriceFilterFunc(clothes.ClothesDetail, priceRange)).
             Map(clothes => ClothesSorting(clothes, clothesSortingType)).
             ToList();
 
@@ -114,9 +114,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
                                                                         ClothesSortingType clothesSortingType) =>
             clothesSortingType switch
             {
-                ClothesSortingType.Naming => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Name),
-                ClothesSortingType.Price => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Price),
-                _ => clothes.OrderBy(clothesItem => clothesItem.ClothesDetailDomain.Name),
+                ClothesSortingType.Naming => clothes.OrderBy(clothesItem => clothesItem.ClothesDetail.Name),
+                ClothesSortingType.Price => clothes.OrderBy(clothesItem => clothesItem.ClothesDetail.Price),
+                _ => clothes.OrderBy(clothesItem => clothesItem.ClothesDetail.Name),
             };
     }
 }

@@ -28,7 +28,8 @@
                 </Grid>
             </StackLayout>
 
-            <StackLayout Grid.Row="1">
+            <StackLayout Grid.Row="1" 
+                         Spacing="20">
                 <CarouselView x:Name="CarouselImages"
                               IndicatorView="CarouselIndicatorView"
                               Loop="False">
@@ -39,6 +40,8 @@
                     </CarouselView.ItemTemplate>
                 </CarouselView>
                 <IndicatorView x:Name="CarouselIndicatorView"
+                               IndicatorColor="LightGray"
+                               SelectedIndicatorColor="DarkGray"
                                HorizontalOptions="Center" />
             </StackLayout>
 
@@ -77,6 +80,7 @@
                     <Picker x:Name="SizePicker"
                             Grid.Row="0"
                             Grid.Column="1"
+                            Title="Выберите размер"
                             HorizontalOptions="FillAndExpand"/>
 
                     <Label Style="{StaticResource LabelDescription}"
@@ -86,9 +90,10 @@
                     <Picker x:Name="ColorPicker"
                             Grid.Row="1"
                             Grid.Column="1"
+                            Title="Выберите цвет"
                             HorizontalOptions="FillAndExpand"/>
                 </Grid>
-               
+
                 <Button x:Name="AddButton"
                         Style="{StaticResource ButtonMain}"
                         Text="Добавить"/>

@@ -5,7 +5,9 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
@@ -27,14 +29,16 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// </summary>
     public class ClothesViewModelItem: BaseViewModel
     {
-        public ClothesViewModelItem(IClothesDetailDomain clothesDetailDomain, IClothesRestService clothesRestService,
+        public ClothesViewModelItem(IClothesDetailDomain clothesDetail, IClothesTypeDomain clothesType, 
+                                    IClothesRestService clothesRestService,
                                     IClothesDetailNavigationService clothesDetailNavigationService)
         {
-            ClothesDetailDomain = clothesDetailDomain;
+            ClothesDetail = clothesDetail;
+            _clothesType = clothesType;
             _clothesDetailNavigationService = clothesDetailNavigationService;
             _image = Observable.Return(ImageSource.FromFile("empty_image.png")).
                                 ToProperty(this, nameof(Image));
-            ImageCommand = ReactiveCommand.CreateFromTask(() => GetImageSource(clothesRestService, ClothesDetailDomain.Id));
+            ImageCommand = ReactiveCommand.CreateFromTask(() => GetImageSource(clothesRestService, ClothesDetail.Id));
             _image = ImageCommand.ToProperty(this, nameof(Image), scheduler: RxApp.MainThreadScheduler);
             this.WhenAnyValue(x => x.Image).
                  Where(x => x != null).
@@ -46,7 +50,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Одежда. Доменная модель
         /// </summary>
-        public IClothesDetailDomain ClothesDetailDomain { get; }
+        public IClothesDetailDomain ClothesDetail { get; }
+
+        /// <summary>
+        /// Вид одежды
+        /// </summary>
+        private readonly IClothesTypeDomain _clothesType;
 
         /// <summary>
         /// Сервис навигации к странице детализации одежды
@@ -57,13 +66,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Наименование
         /// </summary>
         public string Name =>
-            ClothesDetailDomain.Name;
+            ClothesDetail.Name;
 
         /// <summary>
         /// Цена
         /// </summary>
         public decimal Price =>
-            ClothesDetailDomain.Price;
+            ClothesDetail.Price;
 
         /// <summary>
         /// Изображение
@@ -95,7 +104,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Переход на страницу детализации одежды
         /// </summary>
         private async Task ToClothesDetail() =>
-            await _clothesDetailNavigationService.NavigateTo(ClothesDetailDomain);
+            await _clothesDetailNavigationService.NavigateTo(ClothesDetail, _clothesType.SizeTypeDefault);
 
         /// <summary>
         /// Преобразовать изображение в поток

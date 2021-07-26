@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
@@ -31,48 +34,32 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
                                       IClothesDetailNavigationService clothesDetailNavigationService)
             : base(clothesDetailNavigationService)
         {
-            _clothesDetail = this.WhenAnyValue(x => x.NavigationParameters).
-                                  WhereNotNull().
-                                  Select(GetClothes).
-                                  ToProperty(this, nameof(ClothesDetail));
+            var clothesParameters = this.WhenAnyValue(x => x.NavigationParameters).
+                                     WhereNotNull().
+                                     Select(GetClothesParameters);
 
-            _clothesDetailImageViewModelItems = this.WhenAnyValue(x => x.ClothesDetail).
-                                                     WhereNotNull().
-                                                     SelectMany(clothes => GetClothesImages(clothesRestService, clothes.Id)).
-                                                     ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);
+            _clothesDetailImageViewModelItems = clothesParameters.
+                                                SelectMany(parameters => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id)).
+                                                ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);
 
-            _name = this.WhenAnyValue(x => x.ClothesDetail).
-                         WhereNotNull().
-                         Select(clothes => clothes.Name).
-                         ToProperty(this, nameof(Name));
-            _description = this.WhenAnyValue(x => x.ClothesDetail).
-                                WhereNotNull().
-                                Select(clothes => clothes.Description).
-                                ToProperty(this, nameof(Description));
-            _price = this.WhenAnyValue(x => x.ClothesDetail).
-                          WhereNotNull().
-                          Select(clothes => clothes.Price).
-                          ToProperty(this, nameof(Price));
-            _sizes = this.WhenAnyValue(x => x.ClothesDetail).
-                          WhereNotNull().
-                          Select(clothes => clothes.SizeGroups).
-                          ToProperty(this, nameof(Sizes));
-            _colors = this.WhenAnyValue(x => x.ClothesDetail).
-                           WhereNotNull().
-                           Select(clothes => clothes.Colors).
-                           ToProperty(this, nameof(Colors));
+            _name = clothesParameters.
+                    Select(parameters => parameters.ClothesDetail.Name).
+                    ToProperty(this, nameof(Name));
+            _description = clothesParameters.
+                           Select(parameters => parameters.ClothesDetail.Description).
+                           ToProperty(this, nameof(Description));
+            _price = clothesParameters.
+                     Select(parameters => parameters.ClothesDetail.Price).
+                     ToProperty(this, nameof(Price));
+            _sizes = clothesParameters.
+                     Select(parameters => (IReadOnlyCollection<ISizeGroupDefaultDomain>)parameters.ClothesDetail.SizeGroups.
+                                          Select(sizeGroup => new SizeGroupDefaultDomain(sizeGroup, parameters.DefaultSizeType)).
+                                          ToList()).
+                     ToProperty(this, nameof(Sizes));
+            _colors = clothesParameters.
+                      Select(parameters => parameters.ClothesDetail.Colors).
+                      ToProperty(this, nameof(Colors));
         }
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<IClothesDetailDomain> _clothesDetail;
-
-        /// <summary>
-        /// Наименование
-        /// </summary>
-        public IClothesDetailDomain ClothesDetail =>
-            _clothesDetail.Value;
 
         /// <summary>
         /// Наименование
@@ -110,12 +97,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// <summary>
         /// Размеры одежды
         /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ISizeGroupMainDomain>> _sizes;
+        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ISizeGroupDefaultDomain>> _sizes;
 
         /// <summary>
         /// Размеры одежды
         /// </summary>
-        public IReadOnlyCollection<ISizeGroupMainDomain> Sizes =>
+        public IReadOnlyCollection<ISizeGroupDefaultDomain> Sizes =>
             _sizes.Value;
 
         /// <summary>
@@ -143,9 +130,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        private static IClothesDetailDomain GetClothes(ClothesDetailNavigationParameters? clothesDetailsParameters) =>
+        private static ClothesDetailNavigationParameters GetClothesParameters(ClothesDetailNavigationParameters? clothesDetailsParameters) =>
             clothesDetailsParameters.ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound, nameof(ClothesDetailNavigationParameters))).
-            ResultValueOk(parameters => parameters.ClothesDetail).
+            ResultValueOk(parameters => parameters).
             Map(result => result.Value);
 
         /// <summary>
@@ -159,6 +146,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
                                    _ => new byte[0]).
             MapTaskAsync(ImageConverter.ToImageSource).
             MapTaskAsync(imageSource => new ClothesDetailImageViewModelItem(imageSource)).
-            MapTaskAsync(clothesDetailImage => new List<ClothesDetailImageViewModelItem> { clothesDetailImage });
+            MapTaskAsync(clothesDetailImage => new List<ClothesDetailImageViewModelItem> { clothesDetailImage, clothesDetailImage });
     }
 }

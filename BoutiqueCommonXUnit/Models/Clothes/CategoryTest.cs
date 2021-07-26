@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;

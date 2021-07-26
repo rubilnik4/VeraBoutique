@@ -9,14 +9,20 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// </summary>
     public class ClothesDetailNavigationParameters : EmptyNavigationParameters
     {
-        public ClothesDetailNavigationParameters(IClothesDetailDomain clothesDetail)
+        public ClothesDetailNavigationParameters(IClothesDetailDomain clothesDetail, SizeType defaultSizeType)
         {
             ClothesDetail = clothesDetail;
+            DefaultSizeType = defaultSizeType;
         }
 
         /// <summary>
         /// Тип пола
         /// </summary>
         public IClothesDetailDomain ClothesDetail { get; }
+
+        /// <summary>
+        /// Размер по умолчанию
+        /// </summary>
+        public SizeType DefaultSizeType { get; }
     }
 }
