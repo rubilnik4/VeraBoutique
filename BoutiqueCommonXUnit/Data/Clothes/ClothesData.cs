@@ -18,12 +18,14 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         public static IReadOnlyCollection<IClothesMainDomain> ClothesMainDomains =>
             new List<IClothesMainDomain>
             {
-                new ClothesMainDomain(1, "Верхонки", "Верхонки батраческие", 55.55m, Properties.Resources.TestImage,
+                new ClothesMainDomain(1, "Верхонки", "Верхонки батраческие", 55.55m,
+                                      new List<byte[]>{Properties.Resources.TestImage },
                                   GenderData.GenderDomains.First(),
                                   ClothesTypeData.ClothesTypeDomains.First(),
                                   ColorData.ColorDomains,
                                   SizeGroupData.SizeGroupMainDomains),
-                new ClothesMainDomain(2, "Варежки", "Варежки простолюдинные", 0.66m, Properties.Resources.TestImage,
+                new ClothesMainDomain(2, "Варежки", "Варежки простолюдинные", 0.66m, 
+                                      new List<byte[]>{Properties.Resources.TestImage },
                                   GenderData.GenderDomains.Last(),
                                   ClothesTypeData.ClothesTypeDomains.Last(),
                                   ColorData.ColorDomains,

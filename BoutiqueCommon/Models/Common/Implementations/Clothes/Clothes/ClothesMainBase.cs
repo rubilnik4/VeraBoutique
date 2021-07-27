@@ -24,12 +24,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         where TSizeGroup : ISizeGroupMainBase<TSize>
         where TSize : ISizeBase
     {
-        protected ClothesMainBase(int id, string name, string description, decimal price, byte[] image,
+        protected ClothesMainBase(int id, string name, string description, decimal price, IEnumerable<byte[]> images,
                                   TGender gender, TClothesType clothesType,
                                   IEnumerable<TColor> colors, IEnumerable<TSizeGroup> sizeGroups)
             : base(id, name, description, price, gender.GenderType, clothesType.Name, colors, sizeGroups)
         {
-            Image = image;
+            Images = images.ToList();
             Gender = gender;
             ClothesType = clothesType;
         }
@@ -37,7 +37,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        public byte[] Image { get; }
+        public IReadOnlyCollection<byte[]> Images { get; }
 
         /// <summary>
         /// Тип пола
@@ -57,15 +57,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
 
         public bool Equals(IClothesMainBase<TGender, TClothesType, TColor, TSizeGroup, TSize>? other) =>
             base.Equals(other) &&
-            other?.Image.SequenceEqual(Image) == true &&
             other?.Gender.Equals(Gender) == true &&
-            other?.ClothesType.Equals(ClothesType) == true &&
-            other?.Colors.Cast<IColorBase>().SequenceEqual(Colors.Cast<IColorBase>()) == true &&
-            other?.SizeGroups.SequenceEqual(SizeGroups) == true;
+            other?.ClothesType.Equals(ClothesType) == true;
 
         public override int GetHashCode() =>
             HashCode.Combine(HashCode.Combine(Id, Name, Price, Description), 
-                             Image, Gender.GetHashCode(), ClothesType.GetHashCode(),
+                             Gender.GetHashCode(), ClothesType.GetHashCode(),
                              Colors.GetHashCodes(), SizeGroups.GetHashCodes());
         #endregion
     }

@@ -26,6 +26,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesDomain clothesDomain) =>
-            new ClothesEntity(clothesDomain, null!);
+            new ClothesEntity(clothesDomain);
     }
 }

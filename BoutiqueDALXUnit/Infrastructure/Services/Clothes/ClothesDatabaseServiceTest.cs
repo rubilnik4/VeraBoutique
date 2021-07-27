@@ -155,7 +155,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
             Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.SequenceEqual(clothesEntity.Image));
+            Assert.True(clothesResults.Value.SequenceEqual(clothesEntity.Images));
         }
 
         /// <summary>

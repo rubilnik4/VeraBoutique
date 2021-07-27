@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Sync.ResultExtension;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -53,6 +54,14 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// </summary>
         public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue?> @this, IErrorResult errorNull) 
             where TValue : class =>
+            await @this.
+            MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullCheck(errorNull));
+
+        /// <summary>
+        /// Преобразовать значение в результирующий ответ с проверкой на нуль для задачи-объекта
+        /// </summary>
+        public static async Task<IResultValue<TValue>> ToResultValueNullCheckTaskAsync<TValue>(this Task<TValue?> @this, IErrorResult errorNull)
+            where TValue : struct =>
             await @this.
             MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullCheck(errorNull));
     }

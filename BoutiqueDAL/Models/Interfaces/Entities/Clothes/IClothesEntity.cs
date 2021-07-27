@@ -2,6 +2,7 @@
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
 namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
@@ -14,7 +15,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        byte[]? Image { get; }
+        IReadOnlyCollection<ImageEntity>? Images { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

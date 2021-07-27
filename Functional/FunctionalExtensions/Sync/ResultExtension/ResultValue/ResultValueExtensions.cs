@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -41,6 +43,15 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
             where TValue : class =>
             @this != null
                 ? new ResultValue<TValue>(@this)
+                : new ResultValue<TValue>(errorNull);
+
+        /// <summary>
+        /// Преобразовать значение в результирующий ответ с проверкой на нуль
+        /// </summary>
+        public static IResultValue<TValue> ToResultValueNullCheck<TValue>(this TValue? @this, IErrorResult errorNull)
+            where TValue : struct =>
+            @this != null
+                ? new ResultValue<TValue>((TValue)@this)
                 : new ResultValue<TValue>(errorNull);
     }
 }

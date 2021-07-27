@@ -21,7 +21,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IReadOnlyCollection<ClothesEntity> ClothesEntities =>
             ClothesData.ClothesMainDomains.
             Select(clothes =>
-                new ClothesEntity(clothes, clothes.Image,
+                new ClothesEntity(clothes, clothes.Images,
                                   new GenderEntity(clothes.Gender),
                                   GetClothesTypeEntity(clothes.ClothesType),
                                   GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),

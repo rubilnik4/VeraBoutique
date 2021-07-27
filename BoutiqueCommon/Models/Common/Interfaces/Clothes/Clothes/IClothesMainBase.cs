@@ -23,7 +23,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        byte[] Image { get; }
+        IReadOnlyCollection<byte[]> Images { get; }
 
         /// <summary>
         /// Тип пола

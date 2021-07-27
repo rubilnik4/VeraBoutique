@@ -10,14 +10,19 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewMod
     /// </summary>
     public class ClothesDetailImageViewModelItem : BaseViewModel
     {
-        public ClothesDetailImageViewModelItem(ImageSource image)
+        public ClothesDetailImageViewModelItem(byte[] imageByte)
         {
-            Image = image;
+              _imageByte = imageByte;
         }
+
+        /// <summary>
+        /// Изображение. Массив
+        /// </summary>
+        private readonly byte[] _imageByte;
 
         /// <summary>
         /// Изображение
         /// </summary>
-        public ImageSource Image { get; }
+        public ImageSource Image => ImageConverter.ToImageSource(_imageByte);
     }
 }

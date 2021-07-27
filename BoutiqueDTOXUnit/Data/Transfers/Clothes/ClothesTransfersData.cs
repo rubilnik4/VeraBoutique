@@ -22,7 +22,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
             ClothesData.ClothesMainDomains.
             Select(clothes => 
                 new ClothesMainTransfer(clothes,
-                                        clothes.Image,
+                                        clothes.Images,
                                         new GenderTransfer(clothes.Gender), 
                                         new ClothesTypeTransfer(clothes.ClothesType),
                                         clothes.Colors.Select(color => new ColorTransfer(color)),

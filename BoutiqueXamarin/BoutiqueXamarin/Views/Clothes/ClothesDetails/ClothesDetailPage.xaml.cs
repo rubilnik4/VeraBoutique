@@ -47,7 +47,7 @@ namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
                      Select(items => (IList)items).
                      BindTo(this, x => x.ColorPicker.ItemsSource).
                      DisposeWith(disposable);
-              
+
                 this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton).
                      DisposeWith(disposable);
             });

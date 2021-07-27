@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -141,8 +142,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Запрос проверки наличия дублирующей сущности
         /// </summary>
-        private Func<IQueryable<TEntity>, IQueryable<TId>> ValidateIdQuery(TId id) =>
-            entities => entities.Where(_dataTable.IdPredicate(id)).Select(_dataTable.IdSelect());
+        private Func<IQueryable<TEntity>, Task<TId>> ValidateIdQuery(TId id) =>
+            entities => entities.FirstOrDefaultAsync(_dataTable.IdPredicate(id)).
+                        MapTaskAsync(entity => entity.Id);
 
         /// <summary>
         /// Запрос проверки наличия дублирующих сущностей

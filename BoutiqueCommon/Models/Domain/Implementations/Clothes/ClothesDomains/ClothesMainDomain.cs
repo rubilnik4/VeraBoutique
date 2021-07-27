@@ -16,16 +16,16 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains
     public class ClothesMainDomain : ClothesMainBase<IGenderDomain, IClothesTypeDomain, IColorDomain, ISizeGroupMainDomain, ISizeDomain>, 
                                      IClothesMainDomain
     {
-        public ClothesMainDomain(IClothesBase clothes, byte[] image,
+        public ClothesMainDomain(IClothesBase clothes, IEnumerable<byte[]> images,
                                  IGenderDomain gender, IClothesTypeDomain clothesType,
                                  IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupMainDomain> sizeGroups)
-           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image, gender, clothesType, colors, sizeGroups)
+           : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, images, gender, clothesType, colors, sizeGroups)
         { }
 
-        public ClothesMainDomain(int id, string name, string description, decimal price, byte[] image,
+        public ClothesMainDomain(int id, string name, string description, decimal price, IEnumerable<byte[]> images,
                                  IGenderDomain gender, IClothesTypeDomain clothesType,
                                  IEnumerable<IColorDomain> colors, IEnumerable<ISizeGroupMainDomain> sizeGroups)
-            : base(id, name, description, price, image, gender, clothesType, colors, sizeGroups)
+            : base(id, name, description, price, images, gender, clothesType, colors, sizeGroups)
         { }
     }
 }

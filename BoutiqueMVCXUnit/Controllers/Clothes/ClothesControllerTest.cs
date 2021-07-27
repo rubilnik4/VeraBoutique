@@ -129,7 +129,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         {
             var clothesDomain = ClothesData.ClothesMainDomains.First();
             var clotheId = clothesDomain.Id;
-            var clothesResult = new ResultValue<byte[]>(clothesDomain.Image);
+            var clothesResult = new ResultValue<byte[]>(clothesDomain.Images);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
             var clothesController = GetClothesController(clothesDatabaseService.Object);
 
@@ -137,7 +137,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
 
             Assert.IsType<FileContentResult>(imageResult.Result);
             var fileContentResult = (FileContentResult)imageResult.Result;
-            Assert.True(fileContentResult.FileContents.SequenceEqual(clothesDomain.Image));
+            Assert.True(fileContentResult.FileContents.SequenceEqual(clothesDomain.Images));
         }
 
         /// <summary>

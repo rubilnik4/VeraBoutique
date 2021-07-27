@@ -10,6 +10,7 @@
     <AssemblyName>BoutiqueDAL</AssemblyName>
     <Copyright>Ivan Rubilnik</Copyright>
     <Configurations>Debug;Release;Test</Configurations>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +37,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Implementations\Entities\Clothes\Owns\" />
   </ItemGroup>
 
 </Project>

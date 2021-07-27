@@ -60,7 +60,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_GenderNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, null, clothes.ClothesType,
+            var clothesNull = GetClothesEntity(clothes, clothes.Images, null, clothes.ClothesType,
                                                clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
 
@@ -77,7 +77,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ClothesTypeNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, null,
+            var clothesNull = GetClothesEntity(clothes, clothes.Images, clothes.Gender, null,
                                                clothes.ClothesColorComposites, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
 
@@ -94,7 +94,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_ColorNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, clothes.ClothesType,
+            var clothesNull = GetClothesEntity(clothes, clothes.Images, clothes.Gender, clothes.ClothesType,
                                                null, clothes.ClothesSizeGroupComposites);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
 
@@ -111,7 +111,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         public void FromEntity_SizeGroupNotFound()
         {
             var clothes = ClothesEntitiesData.ClothesEntities.First();
-            var clothesNull = GetClothesEntity(clothes, clothes.Image, clothes.Gender, clothes.ClothesType,
+            var clothesNull = GetClothesEntity(clothes, clothes.Images, clothes.Gender, clothes.ClothesType,
                                                clothes.ClothesColorComposites, null);
             var clothesEntityConverter = ClothesEntityConverterMock.ClothesMainEntityConverter;
 

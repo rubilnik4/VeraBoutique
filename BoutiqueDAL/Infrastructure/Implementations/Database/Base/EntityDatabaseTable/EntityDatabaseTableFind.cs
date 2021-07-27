@@ -9,6 +9,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
@@ -58,12 +59,19 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        public async Task<IResultValue<TOut>> FindExpressionAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc, TId id)
-            where TOut : notnull =>
-            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync().
-                                                ToResultValueWhereTaskAsync(ids => ids.Count > 0,
-                                                                            _ => DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)).
-                                                ResultValueOkTaskAsync(ids => ids.First()), 
+        public async Task<IResultValue<TOut>> FindExpressionClassAsync<TOut>(Func<IQueryable<TEntity>, Task<TOut?>> queryFunc, TId id)
+            where TOut : class =>
+            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
+                                          TableAccessError);
+
+        /// <summary>
+        /// Выполнить запрос в таблице и выгрузить сущности
+        /// </summary>
+        public async Task<IResultValue<TOut>> FindExpressionStructAsync<TOut>(Func<IQueryable<TEntity>, Task<TOut?>> queryFunc, TId id)
+            where TOut : struct =>
+            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
 
         /// <summary>
@@ -83,7 +91,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Поиск элемента с проверкой
         /// </summary>
         private async Task<IResultValue<TEntity>> FindAsyncWrapper(Func<Task<TEntity?>> getEntity, TId id) =>
-            await ResultValueBindTryAsync(() => getEntity().
+            await ResultValueBindTryAsync(() => getEntity()!.
                                                 ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessError);
 

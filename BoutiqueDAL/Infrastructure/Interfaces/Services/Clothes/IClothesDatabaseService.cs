@@ -25,6 +25,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes
         /// <summary>
         /// Получить изображение одежды по идентификатору
         /// </summary>
-        Task<IResultValue<byte[]>> GetImage(int id);
+        Task<IResultCollection<byte[]>> GetImage(int id);
     }
 }

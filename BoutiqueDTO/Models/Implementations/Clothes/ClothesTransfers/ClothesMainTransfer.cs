@@ -20,18 +20,18 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers
         ClothesMainBase<GenderTransfer, ClothesTypeTransfer, ColorTransfer, SizeGroupMainTransfer, SizeTransfer>,
         IClothesMainTransfer
     {
-        public ClothesMainTransfer(IClothesBase clothes, byte[] image,
+        public ClothesMainTransfer(IClothesBase clothes, IEnumerable<byte[]> images,
                                    GenderTransfer gender, ClothesTypeTransfer clothesType,
                                    IEnumerable<ColorTransfer> colors, IEnumerable<SizeGroupMainTransfer> sizeGroups)
-            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
+            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, images.ToList(),
                    gender, clothesType, colors.ToList(), sizeGroups.ToList())
         { }
 
         [JsonConstructor]
-        public ClothesMainTransfer(int id, string name, string description, decimal price, byte[] image,
+        public ClothesMainTransfer(int id, string name, string description, decimal price, IReadOnlyCollection<byte[]> images,
                                GenderTransfer gender, ClothesTypeTransfer clothesType,
                                IReadOnlyCollection<ColorTransfer> colors, IReadOnlyCollection<SizeGroupMainTransfer> sizeGroups)
-            : base(id, name, description, price, image, gender, clothesType, colors, sizeGroups)
+            : base(id, name, description, price, images, gender, clothesType, colors, sizeGroups)
         { }
     }
 }

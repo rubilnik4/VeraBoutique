@@ -89,9 +89,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// <summary>
         /// Получить изображение одежды по идентификатору
         /// </summary>
-        public async Task<IResultValue<byte[]>> GetImage(int id) =>
+        public async Task<IResultCollection<byte[]>> GetImage(int id) =>
              await _clothesTable.
-             FindByIdAsync(id).
-             ResultValueOkTaskAsync(clothes => clothes.Image);
+             FindExpressionAsync(clothes => clothes.Include(clothesEntity => clothesEntity.Images).
+                                                    FirstOrDefaultAsync(clothesEntity => clothesEntity.Id == id),
+                                 id).
+             ResultValueOkTaskAsync(clothes => clothes.Images!.Select(image => image.Image)).
+             ToResultCollectionTaskAsync();
     }
 }

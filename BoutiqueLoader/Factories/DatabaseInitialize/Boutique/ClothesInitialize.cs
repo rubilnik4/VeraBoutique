@@ -29,10 +29,9 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         private static IEnumerable<IClothesMainDomain> ClothesTShirts =>
             Enumerable.Range(1, 25).
             Select(index => new ClothesMainDomain(0, $"Футболка {index}", $"Футболка тестовая шерстяная {index}",
-                                                  index * 100, ImageResource, GenderInitialize.Male,
-                                                  ClothesTypeInitialize.TshirtClothesType,
-                                                  Colors,
-                                                  Sizes));
+                                                  index * 100,
+                                                  Enumerable.Range(1, RandomNumbers.GetRandom(1, 3)).Select(_ => ImageResource),
+                                                  GenderInitialize.Male, ClothesTypeInitialize.TshirtClothesType, Colors, Sizes));
 
         /// <summary>
         /// Случайные цвета

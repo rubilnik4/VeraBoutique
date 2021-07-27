@@ -39,7 +39,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
                                      Select(GetClothesParameters);
 
             _clothesDetailImageViewModelItems = clothesParameters.
-                                                SelectMany(parameters => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id)).
+                                                SelectMany(parameters => Observable.FromAsync(() => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id))).
                                                 ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);
 
             _name = clothesParameters.
@@ -138,14 +138,15 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// <summary>
         /// Получить модели изображений
         /// </summary>
-        private static async Task<IReadOnlyCollection<ClothesDetailImageViewModelItem>> GetClothesImages(IClothesRestService clothesRestService, 
-                                                                                                         int clothesId) =>
+        private static async Task<IReadOnlyCollection<ClothesDetailImageViewModelItem>> GetClothesImages(IClothesRestService clothesRestService, int clothesId) =>
             await clothesRestService.GetImage(clothesId).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
                                    _ => new byte[0]).
-            MapTaskAsync(ImageConverter.ToImageSource).
-            MapTaskAsync(imageSource => new ClothesDetailImageViewModelItem(imageSource)).
-            MapTaskAsync(clothesDetailImage => new List<ClothesDetailImageViewModelItem> { clothesDetailImage, clothesDetailImage });
+            MapTaskAsync(clothesDetailImage => new List<ClothesDetailImageViewModelItem> 
+            { 
+                new ClothesDetailImageViewModelItem(clothesDetailImage),
+               // new ClothesDetailImageViewModelItem(clothesDetailImage) 
+            });
     }
 }

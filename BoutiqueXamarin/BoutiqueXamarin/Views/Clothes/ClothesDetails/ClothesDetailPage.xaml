@@ -28,11 +28,10 @@
                 </Grid>
             </StackLayout>
 
-            <StackLayout Grid.Row="1" 
-                         Spacing="20">
+           <StackLayout Grid.Row="1">
                 <CarouselView x:Name="CarouselImages"
-                              IndicatorView="CarouselIndicatorView"
-                              Loop="False">
+                              Loop="False"
+                              IndicatorView="CarouselIndicatorView">
                     <CarouselView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type clothesDetailsItems:ClothesDetailImageViewModelItem}">
                             <clothesDetailsViewItems:ClothesDetailImageView />
@@ -41,8 +40,8 @@
                 </CarouselView>
                 <IndicatorView x:Name="CarouselIndicatorView"
                                IndicatorColor="LightGray"
-                               SelectedIndicatorColor="DarkGray"
-                               HorizontalOptions="Center" />
+                               SelectedIndicatorColor="Black"
+                               HorizontalOptions="CenterAndExpand " />
             </StackLayout>
 
             <StackLayout Grid.Row="2">
