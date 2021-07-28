@@ -35,7 +35,7 @@ namespace BoutiqueCommonXUnit.Models.Authorize
         public void Authorize_Equal_Authorize()
         {
             var first = AuthorizeData.AuthorizeDomains.First();
-            var second = AuthorizeData.AuthorizeDomains.First();
+            var second = new AuthorizeDomain(first.UserName , first.Password);
 
             Assert.True(first.Equals(second));
         }

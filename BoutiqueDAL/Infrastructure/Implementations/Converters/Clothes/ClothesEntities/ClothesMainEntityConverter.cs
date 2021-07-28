@@ -85,7 +85,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesMainDomain clothesMainDomain) =>
-            new ClothesEntity(clothesMainDomain, clothesMainDomain.Images.Select(image => new ImageEntity(0, image)),
+            new ClothesEntity(clothesMainDomain, clothesMainDomain.Images.Select(image => new ClothesImageEntity(0, image)),
                               ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id, _colorClothesEntityConverter),
                               SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id, _sizeGroupMainEntityConverter));
 
@@ -153,7 +153,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Получить изображения
         /// </summary>
-        private static IResultValue<IReadOnlyCollection<byte[]>> GetImages(IEnumerable<ImageEntity>? imageEntities) =>
+        private static IResultValue<IReadOnlyCollection<byte[]>> GetImages(IEnumerable<ClothesImageEntity>? imageEntities) =>
             imageEntities.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(imageEntities))).
             ResultValueOk(images => images.Select(image => image.Image).ToList());

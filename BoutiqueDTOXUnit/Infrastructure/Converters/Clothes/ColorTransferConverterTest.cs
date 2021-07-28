@@ -11,7 +11,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
     /// <summary>
     /// Конвертер цвета одежды в трансферную модель. Тесты
     /// </summary>
-    public class ColorClothesTransferConverterTest
+    public class ClothesImageTransferConverterTest
     {
         /// <summary>
         /// Преобразования модели цвета одежды в трансферную модель
@@ -19,14 +19,14 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var colors = ColorData.ColorDomains.First();
-            var colorClothesTransferConverter = ColorClothesTransferConverterMock.ColorTransferConverter;
+            var color = ColorData.ColorDomains.First();
+            var colorClothesTransferConverter = ColorTransferConverterMock.ColorTransferConverter;
 
-            var colorsTransfer = colorClothesTransferConverter.ToTransfer(colors);
+            var colorsTransfer = colorClothesTransferConverter.ToTransfer(color);
             var colorsAfterConverter = colorClothesTransferConverter.FromTransfer(colorsTransfer);
 
             Assert.True(colorsAfterConverter.OkStatus);
-            Assert.True(colors.Equals(colorsAfterConverter.Value));
+            Assert.True(color.Equals(colorsAfterConverter.Value));
         }
     }
 }

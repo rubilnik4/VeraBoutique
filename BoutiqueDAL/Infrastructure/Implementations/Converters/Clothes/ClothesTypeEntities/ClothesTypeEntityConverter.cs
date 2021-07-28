@@ -29,7 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// </summary>
         public override IResultValue<IClothesTypeDomain> FromEntity(ClothesTypeEntity clothesTypeEntity) =>
             new ClothesTypeDomain(clothesTypeEntity).
-            Map(clothesTypeShort => new ResultValue<IClothesTypeDomain>(clothesTypeShort));
+            ToResultValue();
 
         /// <summary>
         /// Преобразовать группу размеров одежды в модель базы данных

@@ -26,8 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Запрос поиска по идентификатору с включением сущностей
         /// </summary>
-        IQueryable<TEntity> Where<TIdOut, TEntityOut>(TId id,
-                                                      Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
+        IQueryable<TEntity> Where<TIdOut, TEntityOut>(TId id, Expression<Func<TEntity, IEnumerable<TEntityOut>?>> include)
             where TEntityOut : IEntityModel<TIdOut>
             where TIdOut : notnull;
 

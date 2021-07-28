@@ -23,13 +23,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать размеры одежды в трансферную модель
         /// </summary>
         public override SizeTransfer ToTransfer(ISizeDomain sizeDomain) =>
-            new SizeTransfer(sizeDomain.SizeType,  sizeDomain.Name);
+            new SizeTransfer(sizeDomain);
 
         /// <summary>
         /// Преобразовать размеры одежды из трансферной модели
         /// </summary>
         public override IResultValue<ISizeDomain> FromTransfer(SizeTransfer sizeTransfer) =>
-            new SizeDomain(sizeTransfer.SizeType, sizeTransfer.Name).
-            Map(sizeDomain => new ResultValue<ISizeDomain>(sizeDomain));
+            new SizeDomain(sizeTransfer).
+            ToResultValue();
     }
 }

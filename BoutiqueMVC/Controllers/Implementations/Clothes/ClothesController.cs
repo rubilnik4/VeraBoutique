@@ -4,12 +4,15 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers;
 using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
@@ -31,12 +34,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesMainTransferConverter clothesMainTransferConverter,
                                  IClothesDetailTransferConverter clothesDetailTransferConverter,
-                                 IClothesTransferConverter clothesTransferConverter)
+                                 IClothesTransferConverter clothesTransferConverter, 
+                                 IClothesImageTransferConverter clothesImageTransferConverter)
            : base(clothesDatabaseService, clothesMainTransferConverter)
         {
             _clothesDatabaseService = clothesDatabaseService;
             _clothesDetailTransferConverter = clothesDetailTransferConverter;
             _clothesTransferConverter = clothesTransferConverter;
+            _clothesImageTransferConverter = clothesImageTransferConverter;
         }
 
         /// <summary>
@@ -53,6 +58,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// Конвертер вида одежды в трансферную модель
         /// </summary>
         private readonly IClothesTransferConverter _clothesTransferConverter;
+
+        /// <summary>
+        /// Конвертер изображений в трансферную модель
+        /// </summary>
+        private readonly IClothesImageTransferConverter _clothesImageTransferConverter;
 
         /// <summary>
         /// Получить одежду по типу пола и категории
@@ -79,7 +89,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
             ToActionResultCollectionTaskAsync<int, ClothesDetailTransfer>();
 
         /// <summary>
-        /// Получить изображение одежды по идентификатору
+        /// Получить главное изображение одежды по идентификатору
         /// </summary>
         [HttpGet(ClothesRoutes.IMAGE_ROUTE + "/{id:int}")]
         [AllowAnonymous]
@@ -89,5 +99,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         public async Task<ActionResult<byte[]>> GetImage(int id) =>
             await _clothesDatabaseService.GetImage(id).
             ToImageResultValueTaskAsync();
+
+        /// <summary>
+        /// Получить изображения одежды по идентификатору
+        /// </summary>
+        [HttpGet(ClothesRoutes.IMAGE_ROUTE + "/{id:int}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IReadOnlyCollection<ClothesImageTransfer>>> GetImages(int id) =>
+            await _clothesDatabaseService.GetImages(id).
+            ResultCollectionOkTaskAsync(images => _clothesImageTransferConverter.ToTransfers(images)).
+            ToActionResultCollectionTaskAsync<int, ClothesImageTransfer>();
     }
 }

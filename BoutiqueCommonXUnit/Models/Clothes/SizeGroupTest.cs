@@ -57,10 +57,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void SizeGroup_EqualSizes()
         {
-            var clothesSizeDomainFirst = SizeGroupData.SizeGroupDomains.First();
-            var clothesSizeDomainSecond = SizeGroupData.SizeGroupDomains.First();
+            var first = SizeGroupData.SizeGroupDomains.First();
+            var second = new SizeGroupDomain(first.ClothesSizeType, first.SizeNormalize);
 
-            Assert.True(clothesSizeDomainFirst.Equals(clothesSizeDomainSecond));
+            Assert.True(first.Equals(second));
         }
 
         /// <summary>
@@ -69,10 +69,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void SizeGroupMain_EqualSizes()
         {
-            var sizeGroupMainDomainFirst = SizeGroupData.SizeGroupMainDomains.First();
-            var sizeGroupMainDomainSecond = SizeGroupData.SizeGroupMainDomains.First();
+            var first = SizeGroupData.SizeGroupMainDomains.First();
+            var second = new SizeGroupMainDomain(first.ClothesSizeType, first.SizeNormalize, first.Sizes);
 
-            Assert.True(sizeGroupMainDomainFirst.Equals(sizeGroupMainDomainSecond));
+            Assert.True(first.Equals(second));
         }
 
         /// <summary>

@@ -3,9 +3,14 @@
     public class ClothesRoutes
     {
         /// <summary>
-        /// Путь к типу пола с категорией
+        /// Путь получения главного изображения
         /// </summary>
         public const string IMAGE_ROUTE = "Image";
+
+        /// <summary>
+        /// Путь получения изображений
+        /// </summary>
+        public const string IMAGES_ROUTE = "Images";
 
         /// <summary>
         /// Путь к типу пола с категорией

@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
@@ -39,12 +40,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                       IClothesDatabaseValidateService clothesDatabaseValidateService,
                                       IClothesEntityConverter clothesEntityConverter,
                                       IClothesDetailEntityConverter clothesDetailEntityConverter,
-                                      IClothesMainEntityConverter clothesMainEntityConverter)
+                                      IClothesMainEntityConverter clothesMainEntityConverter,
+                                      IClothesImageEntityConverter clothesImageEntityConverter)
           : base(boutiqueDatabase, boutiqueDatabase.ClothesTable, clothesDatabaseValidateService, clothesMainEntityConverter)
         {
             _clothesTable = boutiqueDatabase.ClothesTable;
             _clothesEntityConverter = clothesEntityConverter;
             _clothesDetailEntityConverter = clothesDetailEntityConverter;
+            _clothesImageEntityConverter = clothesImageEntityConverter;
         }
 
         /// <summary>
@@ -63,13 +66,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         private readonly IClothesDetailEntityConverter _clothesDetailEntityConverter;
 
         /// <summary>
+        /// Преобразования модели изображения в модель базы данных
+        /// </summary>
+        private readonly IClothesImageEntityConverter _clothesImageEntityConverter;
+
+        /// <summary>
         /// Получить одежду без изображений по типу полу и типу одежды
         /// </summary>
         public async Task<IResultCollection<IClothesDomain>> GetClothes(GenderType genderType, string clothesType) =>
             await _clothesTable.
             FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.GenderType == genderType &&
                                                                            clothesEntity.ClothesTypeName == clothesType)).
-            ResultCollectionBindOkTaskAsync(clothesDomains => _clothesEntityConverter.FromEntities(clothesDomains));
+            ResultCollectionBindOkTaskAsync(clothesEntities => _clothesEntityConverter.FromEntities(clothesEntities));
 
         /// <summary>
         /// Получить уточненную информацию об одежде по типу полу и типу одежды
@@ -84,17 +92,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                                     ThenInclude(clothesColor => clothesColor.SizeGroup).
                                                     ThenInclude(sizeGroups => sizeGroups!.SizeGroupComposites).
                                                     ThenInclude(sizeComposites => sizeComposites.Size)).
-            ResultCollectionBindOkTaskAsync(clothesDomains => _clothesDetailEntityConverter.FromEntities(clothesDomains));
+            ResultCollectionBindOkTaskAsync(clothesEntities => _clothesDetailEntityConverter.FromEntities(clothesEntities));
 
         /// <summary>
         /// Получить изображение одежды по идентификатору
         /// </summary>
-        public async Task<IResultCollection<byte[]>> GetImage(int id) =>
+        public async Task<IResultValue<byte[]>> GetImage(int id) =>
              await _clothesTable.
-             FindExpressionAsync(clothes => clothes.Include(clothesEntity => clothesEntity.Images).
-                                                    FirstOrDefaultAsync(clothesEntity => clothesEntity.Id == id),
+             FindExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
+                                                    Include(clothesEntity => clothesEntity.Images).
+                                                    SelectMany(imageEntity => imageEntity.Images).
+                                                    FirstOrDefaultAsync(imageEntity => imageEntity.IsMain),
                                  id).
-             ResultValueOkTaskAsync(clothes => clothes.Images!.Select(image => image.Image)).
-             ToResultCollectionTaskAsync();
+             ResultValueOkTaskAsync(imageEntity => imageEntity.Image);
     }
 }

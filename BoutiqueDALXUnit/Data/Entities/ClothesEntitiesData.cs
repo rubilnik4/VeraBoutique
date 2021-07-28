@@ -7,6 +7,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {
@@ -21,7 +22,7 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IReadOnlyCollection<ClothesEntity> ClothesEntities =>
             ClothesData.ClothesMainDomains.
             Select(clothes =>
-                new ClothesEntity(clothes, clothes.Images,
+                new ClothesEntity(clothes, clothes.Images.Select(image => new ClothesImageEntity(0, image)),
                                   new GenderEntity(clothes.Gender),
                                   GetClothesTypeEntity(clothes.ClothesType),
                                   GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),

@@ -52,7 +52,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void Gender_Equal_Gender()
         {
             var first = GenderData.GenderDomains.First();
-            var second = GenderData.GenderDomains.First();
+            var second = new GenderDomain(first.GenderType, first.Name);
 
             Assert.True(first.Equals(second));
         }
@@ -64,7 +64,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void GenderCategory_Equal_GenderCategory()
         {
             var first = GenderData.GenderCategoryDomains.First();
-            var second = GenderData.GenderCategoryDomains.First();
+            var second = new GenderCategoryDomain(first.GenderType, first.Name, first.Categories);
 
             Assert.True(first.Equals(second));
         }

@@ -23,14 +23,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
                    null, null, null, null, null)
         { }
 
-        public ClothesEntity(IClothesBase clothes, IEnumerable<ImageEntity> images,
+        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> images,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.GenderType, clothes.ClothesTypeName,
                   images, null, null, clothesColorComposites, clothesSizeGroupComposites)
         { }
 
-        public ClothesEntity(IClothesBase clothes, IEnumerable<ImageEntity> images,
+        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> images,
                              GenderEntity gender, ClothesTypeEntity clothesType,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
@@ -39,7 +39,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         { }
 
         public ClothesEntity(int id, string name, string description, decimal price, GenderType genderType, string clothesTypeName,
-                             IEnumerable<ImageEntity>? images, GenderEntity? gender, ClothesTypeEntity? clothesType,
+                             IEnumerable<ClothesImageEntity>? images, GenderEntity? gender, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
           : base(id, name, description, price, genderType, clothesTypeName)
@@ -54,7 +54,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        public IReadOnlyCollection<ImageEntity>? Images { get; }
+        public IReadOnlyCollection<ClothesImageEntity>? Images { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

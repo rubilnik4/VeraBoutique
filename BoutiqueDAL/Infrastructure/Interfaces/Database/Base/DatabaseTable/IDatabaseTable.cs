@@ -18,7 +18,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         IDatabaseTableValidate<TId, TDomain, TEntity>,
         IDatabaseTableWhere<TId, TEntity> 
         where TDomain: IDomainModel<TId>
-        where TEntity : IEntityModel<TId>
+        where TEntity : class, IEntityModel<TId>
         where TId: notnull
     {
         /// <summary>

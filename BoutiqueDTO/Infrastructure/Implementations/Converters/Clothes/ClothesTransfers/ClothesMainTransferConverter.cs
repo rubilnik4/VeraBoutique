@@ -8,12 +8,14 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -22,7 +24,7 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers
 {
-    using ClothesFunc = Func<IGenderDomain, IClothesTypeDomain, IEnumerable<IColorDomain>, 
+    using ClothesFunc = Func<IEnumerable<IClothesImageDomain>, IGenderDomain, IClothesTypeDomain, IEnumerable<IColorDomain>, 
                              IEnumerable<ISizeGroupMainDomain>, IClothesMainDomain>;
    
     /// <summary>
@@ -31,16 +33,23 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
     public class ClothesMainTransferConverter : TransferConverter<int, IClothesMainDomain, ClothesMainTransfer>,
                                             IClothesMainTransferConverter
     {
-        public ClothesMainTransferConverter(IGenderTransferConverter genderTransferConverter,
-                                        IClothesTypeTransferConverter clothesTypeShortTransferConverter,
-                                        IColorTransferConverter colorTransferConverter,
-                                        ISizeGroupMainTransferConverter sizeGroupMainTransferConverter)
+        public ClothesMainTransferConverter(IClothesImageTransferConverter clothesImageTransferConverter,
+                                            IGenderTransferConverter genderTransferConverter,
+                                            IClothesTypeTransferConverter clothesTypeShortTransferConverter,
+                                            IColorTransferConverter colorTransferConverter,
+                                            ISizeGroupMainTransferConverter sizeGroupMainTransferConverter)
         {
+            _clothesImageTransferConverter = clothesImageTransferConverter;
             _genderTransferConverter = genderTransferConverter;
             _clothesTypeShortTransferConverter = clothesTypeShortTransferConverter;
             _colorTransferConverter = colorTransferConverter;
             _sizeGroupMainTransferConverter = sizeGroupMainTransferConverter;
         }
+
+        /// <summary>
+        /// Конвертер изображений в трансферную модель
+        /// </summary>
+        private readonly IClothesImageTransferConverter _clothesImageTransferConverter;
 
         /// <summary>
         /// Конвертер вида одежды в трансферную модель
@@ -66,7 +75,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать одежду в трансферную модель
         /// </summary>
         public override ClothesMainTransfer ToTransfer(IClothesMainDomain clothesMainDomain) =>
-            new ClothesMainTransfer(clothesMainDomain, clothesMainDomain.Images,
+            new ClothesMainTransfer(clothesMainDomain,
+                                    _clothesImageTransferConverter.ToTransfers(clothesMainDomain.Images),
                                     _genderTransferConverter.ToTransfer(clothesMainDomain.Gender),
                                     _clothesTypeShortTransferConverter.ToTransfer(clothesMainDomain.ClothesType),
                                     _colorTransferConverter.ToTransfers(clothesMainDomain.Colors),
@@ -76,7 +86,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать одежду из трансферной модели
         /// </summary>
         public override IResultValue<IClothesMainDomain> FromTransfer(ClothesMainTransfer clothesMainTransfer) =>
-              GetClothesFunc(clothesMainTransfer, clothesMainTransfer.Images).
+              GetClothesFunc(clothesMainTransfer).
+              ResultValueCurryOk(_clothesImageTransferConverter.GetDomains(clothesMainTransfer.Images)).
               ResultValueCurryOk(_genderTransferConverter.GetDomain(clothesMainTransfer.Gender)).
               ResultValueCurryOk(_clothesTypeShortTransferConverter.GetDomain(clothesMainTransfer.ClothesType)).
               ResultValueCurryOk(_colorTransferConverter.GetDomains(clothesMainTransfer.Colors)).
@@ -86,9 +97,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// <summary>
         /// Функция получения одежды
         /// </summary>
-        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes, IReadOnlyCollection<byte[]> images) =>
+        private static IResultValue<ClothesFunc> GetClothesFunc(IClothesBase clothes) =>
             new ResultValue<ClothesFunc>(
-                (gender, clothesTypeShort, colors, sizeGroups) => 
+                (images, gender, clothesTypeShort, colors, sizeGroups) => 
                     new ClothesMainDomain(clothes, images, gender, clothesTypeShort, colors, sizeGroups));
     }
 }

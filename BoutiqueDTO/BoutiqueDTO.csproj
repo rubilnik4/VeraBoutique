@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Extensions\Json\Async\" />
     <Folder Include="Models\Enums\RestClients\" />
+    <Folder Include="Models\Implementations\Clothes\ImageTransfers\" />
     <Folder Include="Models\Interfaces\RestClients\" />
     <Folder Include="Routes\Clothes\" />
   </ItemGroup>

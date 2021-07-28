@@ -4,6 +4,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -26,6 +27,5 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// </summary>
         public override IResultValue<IClothesDomain> FromTransfer(ClothesTransfer clothesTransfer) =>
             new ClothesDomain(clothesTransfer).
-            Map(clothesShort => new ResultValue<IClothesDomain>(clothesShort));
+            ToResultValue();
     }
-}

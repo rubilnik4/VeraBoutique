@@ -4,6 +4,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -20,7 +21,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
         /// </summary>
         public override IResultValue<ICategoryDomain> FromEntity(CategoryEntity categoryEntity) =>
             new CategoryDomain(categoryEntity).
-            Map(category => new ResultValue<ICategoryDomain>(category));
+            ToResultValue();
 
         /// <summary>
         /// Преобразовать категорию одежды в модель базы данных

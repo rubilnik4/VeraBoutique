@@ -7,8 +7,10 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
@@ -72,7 +74,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
-            var images = new List<byte[]>() { Resources.TestImage };
+            var images = new List<IClothesImageDomain> { new ClothesImageDomain(1, Resources.TestImage, true) };
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeDomain("Тряпье нательное", SizeType.American, "Тряпье");
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
@@ -93,7 +95,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void Clothes_Equal_Clothes()
         {
             var first = ClothesData.ClothesDomains.First();
-            var second = ClothesData.ClothesDomains.First();
+            var second = new ClothesDomain(first.Id, first.Name, first.Description, first.Price,
+                                           first.GenderType, first.ClothesTypeName);
 
             Assert.True(first.Equals(second));
         }
@@ -105,7 +108,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesDetail_Equal_ClothesDetail()
         {
             var first = ClothesData.ClothesDetailDomains.First();
-            var second = ClothesData.ClothesDetailDomains.First();
+            var second = new ClothesDetailDomain(first.Id, first.Name, first.Description, first.Price,
+                                                 first.GenderType, first.ClothesTypeName, first.Colors, first.SizeGroups);
 
             Assert.True(first.Equals(second));
         }
@@ -117,7 +121,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesMain_Equal_ClothesMain()
         {
             var first = ClothesData.ClothesMainDomains.First();
-            var second = ClothesData.ClothesMainDomains.First();
+            var second = new ClothesMainDomain(first.Id, first.Name, first.Description, first.Price, first.Images,
+                                               first.Gender, first.ClothesType, first.Colors, first.SizeGroups);
 
             Assert.True(first.Equals(second));
         }
@@ -141,8 +146,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesMain_Equal_Color()
         {
             var first = ClothesData.ClothesDomains.First();
-            var images = new List<byte[]> { Resources.TestImage };
-            var second =new ClothesMainDomain(first, images, GenderData.GenderCategoryDomains.First(), 
+            var images = new List<IClothesImageDomain> { new ClothesImageDomain(1, Resources.TestImage, true) };
+            var second = new ClothesMainDomain(first, images, GenderData.GenderCategoryDomains.First(),
                                               ClothesTypeData.ClothesTypeMainDomains.First(),
                                               ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);
 

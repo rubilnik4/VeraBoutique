@@ -43,7 +43,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_ColorsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
-            var clothesNull = new ClothesMainTransfer(clothes, clothes.Image, clothes.Gender, clothes.ClothesType,
+            var clothesNull = new ClothesMainTransfer(clothes, clothes.Images, clothes.Gender, clothes.ClothesType,
                                                       clothes.Colors.Append(null!)!, clothes.SizeGroups);
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 
@@ -60,7 +60,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         public void Clothes_ToTransfer_SizeGroupsCollectionNull()
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
-            var clothesNull = new ClothesMainTransfer(clothes, clothes.Image, clothes.Gender, clothes.ClothesType, 
+            var clothesNull = new ClothesMainTransfer(clothes, clothes.Images, clothes.Gender, clothes.ClothesType, 
                                                       clothes.Colors, clothes.SizeGroups.Append(null!)!);
             var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
 

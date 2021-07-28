@@ -5,6 +5,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -20,13 +21,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать категории одежды в трансферную модель
         /// </summary>
         public override ColorTransfer ToTransfer(IColorDomain colorDomain) =>
-            new ColorTransfer(colorDomain.Name);
+            new ColorTransfer(colorDomain);
 
         /// <summary>
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
         public override IResultValue<IColorDomain> FromTransfer(ColorTransfer colorTransfer) =>
-            new ColorDomain(colorTransfer.Name).
-            Map(colorClothesDomain => new ResultValue<IColorDomain>(colorClothesDomain));
+            new ColorDomain(colorTransfer).
+            ToResultValue();
     }
 }

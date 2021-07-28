@@ -33,7 +33,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void Color_Equal_Color()
         {
             var first = ColorData.ColorDomains.First();
-            var second = ColorData.ColorDomains.First();
+            var second = new ColorDomain(first.Name);
 
             Assert.True(first.Equals(second));
         }

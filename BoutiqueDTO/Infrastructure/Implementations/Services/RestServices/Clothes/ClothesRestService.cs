@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Extensions.RestResponses.Async;
@@ -12,6 +13,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueDTO.Routes.Clothes;
@@ -68,10 +70,18 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
             ResultCollectionBindOkTaskAsync(transfers => _clothesDetailTransferConverter.FromTransfers(transfers));
 
         /// <summary>
-        /// Получить изображение одежды
+        /// Получить главное изображение одежды
         /// </summary>
         public async Task<IResultValue<byte[]>> GetImage(int clothesId) =>
             await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGE_ROUTE).
             MapAsync(request => RestHttpClient.GetByteAsync(request));
+
+        /// <summary>
+        /// Получить изображения одежды
+        /// </summary>
+        public async Task<IResultCollection<IClothesImageDomain>> GetImages(int clothesId) =>
+            await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGES_ROUTE).
+            MapAsync(request => RestHttpClient.GetCollectionAsync<ClothesImageTransfer>(request)).
+            ResultCollectionBindOkTaskAsync(transfers => _clothesDetailTransferConverter.FromTransfers(transfers));
     }
 }

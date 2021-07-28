@@ -6,6 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
@@ -22,7 +23,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         public override IResultValue<ISizeGroupDomain> FromEntity(SizeGroupEntity sizeGroupEntity) =>
             new SizeGroupDomain(sizeGroupEntity).
-            Map(sizeGroup => new ResultValue<ISizeGroupDomain>(sizeGroup));
+            ToResultValue();
 
         /// <summary>
         /// Преобразовать группу размеров одежды в модель базы данных

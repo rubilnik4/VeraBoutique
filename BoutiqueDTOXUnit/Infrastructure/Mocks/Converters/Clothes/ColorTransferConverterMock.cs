@@ -6,7 +6,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes
     /// <summary>
     /// Конвертер цвета одежды в трансферную модель
     /// </summary>
-    public class ColorClothesTransferConverterMock
+    public static class ColorTransferConverterMock
     {
         /// <summary>
         /// Конвертер цвета одежды в трансферную модель

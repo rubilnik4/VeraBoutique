@@ -48,7 +48,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
 
         public bool Equals(IClothesDetailBase<TColor, TSizeGroup, TSize>? other) =>
             base.Equals(other) &&
-            other?.Colors.Cast<IColorBase>().SequenceEqual(Colors.Cast<IColorBase>()) == true &&
+            other?.Colors.SequenceEqual(Colors) == true &&
             other?.SizeGroups.SequenceEqual(SizeGroups) == true;
 
         public override int GetHashCode() =>

@@ -5,6 +5,7 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
@@ -87,12 +88,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
         /// <summary>
         /// Получить сущность одежды
         /// </summary>
-        private static ClothesEntity GetClothesEntity(IClothesBase clothes, byte[] image,
+        private static ClothesEntity GetClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity>? images,
                                                       GenderEntity? gender, ClothesTypeEntity? clothesType,
                                                       IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                                                       IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites) =>
-            new(clothes.Id, clothes.Name, clothes.Description, clothes.Price, image,
-                 clothes.GenderType, clothes.ClothesTypeName, gender, clothesType,
+            new(clothes.Id, clothes.Name, clothes.Description, clothes.Price, 
+                 clothes.GenderType, clothes.ClothesTypeName, images, gender, clothesType,
                  clothesColorComposites, clothesSizeGroupComposites);
     }
 }

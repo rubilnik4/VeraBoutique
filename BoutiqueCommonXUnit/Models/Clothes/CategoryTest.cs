@@ -35,7 +35,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void Category_Equal_Category()
         {
             var first = CategoryData.CategoryDomains.First();
-            var second = CategoryData.CategoryDomains.First();
+            var second = new CategoryDomain(first.Name);
 
             Assert.True(first.Equals(second));
         }
@@ -61,7 +61,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void CategoryMain_Equal_CategoryMain()
         {
             var first = CategoryData.CategoryMainDomains.First();
-            var second = CategoryData.CategoryMainDomains.First();
+            var second =new CategoryMainDomain(first, first.Genders);
 
             Assert.True(first.Equals(second));
         }
