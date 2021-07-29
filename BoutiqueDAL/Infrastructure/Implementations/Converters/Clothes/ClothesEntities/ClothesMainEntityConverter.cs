@@ -9,6 +9,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
@@ -16,6 +17,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
@@ -29,7 +31,7 @@ using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities
 {
-    using ClothesFunc = Func<IReadOnlyCollection<byte[]>, IGenderDomain,  IClothesTypeDomain,
+    using ClothesFunc = Func<IEnumerable<IClothesImageDomain>, IGenderDomain,  IClothesTypeDomain,
                              IEnumerable<IColorDomain>, IEnumerable<ISizeGroupMainDomain>,
                              IClothesMainDomain>;
 
@@ -41,12 +43,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         public ClothesMainEntityConverter(IGenderEntityConverter genderEntityConverter,
                                           IClothesTypeEntityConverter clothesTypeEntityConverter,
                                           IColorClothesEntityConverter colorClothesEntityConverter,
-                                          ISizeGroupMainEntityConverter sizeGroupMainEntityConverter)
+                                          ISizeGroupMainEntityConverter sizeGroupMainEntityConverter,
+                                          IClothesImageEntityConverter clothesImageEntityConverter)
         {
             _genderEntityConverter = genderEntityConverter;
             _clothesTypeEntityConverter = clothesTypeEntityConverter;
             _colorClothesEntityConverter = colorClothesEntityConverter;
             _sizeGroupMainEntityConverter = sizeGroupMainEntityConverter;
+            _clothesImageEntityConverter = clothesImageEntityConverter;
         }
 
         /// <summary>
@@ -70,6 +74,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         private readonly ISizeGroupMainEntityConverter _sizeGroupMainEntityConverter;
 
         /// <summary>
+        /// Преобразования модели изображения в модель базы данных
+        /// </summary>
+        private readonly IClothesImageEntityConverter _clothesImageEntityConverter;
+
+        /// <summary>
         /// Преобразовать категорию одежды из модели базы данных
         /// </summary>
         public override IResultValue<IClothesMainDomain> FromEntity(ClothesEntity clothesEntity) =>
@@ -85,7 +94,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesMainDomain clothesMainDomain) =>
-            new ClothesEntity(clothesMainDomain, clothesMainDomain.Images.Select(image => new ClothesImageEntity(0, image)),
+            new ClothesEntity(clothesMainDomain,
+                              _clothesImageEntityConverter.ToEntities(clothesMainDomain.Images),
                               ColorClothesToComposite(clothesMainDomain.Colors, clothesMainDomain.Id, _colorClothesEntityConverter),
                               SizeGroupToComposite(clothesMainDomain.SizeGroups, clothesMainDomain.Id, _sizeGroupMainEntityConverter));
 
@@ -153,10 +163,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Получить изображения
         /// </summary>
-        private static IResultValue<IReadOnlyCollection<byte[]>> GetImages(IEnumerable<ClothesImageEntity>? imageEntities) =>
+        private IResultCollection<IClothesImageDomain> GetImages(IEnumerable<ClothesImageEntity>? imageEntities) =>
             imageEntities.
             ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(imageEntities))).
-            ResultValueOk(images => images.Select(image => image.Image).ToList());
+            ToResultCollection().
+            ResultCollectionBindOk(images => _clothesImageEntityConverter.FromEntities(images));
 
         /// <summary>
         /// Получить сущности цвета одежды

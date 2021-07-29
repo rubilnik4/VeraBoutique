@@ -94,6 +94,34 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         /// Проверить объект на нул. Без ошибок
         /// </summary>
         [Fact]
+        public void ToResultValueNullValueCheck_Ok()
+        {
+            const string initialString = "NotNull";
+
+            var resultString = initialString.ToResultValueNullValueCheck(CreateErrorTest());
+
+            Assert.True(resultString.OkStatus);
+            Assert.Equal(initialString, resultString.Value);
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void ToResultValueNullValueCheck_ErrorNull()
+        {
+            const string? initialString = null;
+            var initialError = CreateErrorTest();
+            var resultString = initialString!.ToResultValueNullValueCheck(initialError);
+
+            Assert.True(resultString.HasErrors);
+            Assert.True(resultString.Errors.First().Equals(initialError));
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Без ошибок
+        /// </summary>
+        [Fact]
         public void ToResultValueNullCheck_Ok()
         {
             const string initialString = "NotNull";

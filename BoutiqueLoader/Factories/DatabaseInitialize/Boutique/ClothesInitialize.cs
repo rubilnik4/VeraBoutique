@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BoutiqueCommon.Infrastructure.Implementation.Calculate;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
@@ -30,7 +31,8 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
             Enumerable.Range(1, 25).
             Select(index => new ClothesMainDomain(0, $"Футболка {index}", $"Футболка тестовая шерстяная {index}",
                                                   index * 100,
-                                                  Enumerable.Range(1, RandomNumbers.GetRandom(1, 3)).Select(_ => ImageResource),
+                                                  Enumerable.Range(1, RandomNumbers.GetRandom(1, 3)).
+                                                             Select(indexImage => new ClothesImageDomain(0, ImageResource, indexImage == 1)),
                                                   GenderInitialize.Male, ClothesTypeInitialize.TshirtClothesType, Colors, Sizes));
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
         private static IReadOnlyCollection<IColorDomain> Colors =>
             ColorInitialize.ColorClothes.ToList().
             Map(colors => colors[RandomNumbers.GetRandom(0, colors.Count)]).
-            Map(color => new List<IColorDomain>() { color });
+            Map(color => new List<IColorDomain> { color });
 
         /// <summary>
         /// Случайные цвета

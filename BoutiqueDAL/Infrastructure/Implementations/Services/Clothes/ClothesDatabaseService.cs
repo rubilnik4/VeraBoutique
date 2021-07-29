@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
@@ -17,6 +18,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
@@ -105,5 +107,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
                                                     FirstOrDefaultAsync(imageEntity => imageEntity.IsMain),
                                  id).
              ResultValueOkTaskAsync(imageEntity => imageEntity.Image);
+
+        /// <summary>
+        /// Получить изображение одежды по идентификатору
+        /// </summary>
+        public async Task<IResultCollection<IClothesImageDomain>> GetImages(int id) =>
+             await _clothesTable.
+             FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
+                                                                         Include(clothesEntity => clothesEntity.Images).
+                                                                         SelectMany(imageEntity => imageEntity.Images)).
+             ResultCollectionBindOkTaskAsync(imageEntities => _clothesImageEntityConverter.FromEntities(imageEntities));
     }
 }

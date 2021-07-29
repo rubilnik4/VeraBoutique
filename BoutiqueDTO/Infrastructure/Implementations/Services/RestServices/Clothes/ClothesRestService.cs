@@ -10,6 +10,7 @@ using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
@@ -34,11 +35,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         public ClothesRestService(IRestHttpClient restHttpClient,
                                   IClothesTransferConverter clothesTransferConverter,
                                   IClothesDetailTransferConverter clothesDetailTransferConverter,
-                                  IClothesMainTransferConverter clothesMainTransferConverter)
+                                  IClothesMainTransferConverter clothesMainTransferConverter,
+                                  IClothesImageTransferConverter clothesImageTransferConverter)
             : base(restHttpClient, clothesMainTransferConverter)
         {
             _clothesTransferConverter = clothesTransferConverter;
             _clothesDetailTransferConverter = clothesDetailTransferConverter;
+            _clothesImageTransferConverter = clothesImageTransferConverter;
         }
 
         /// <summary>
@@ -50,6 +53,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         /// Конвертер уточненной информации об одежде в трансферную модель
         /// </summary>
         private readonly IClothesDetailTransferConverter _clothesDetailTransferConverter;
+
+        /// <summary>
+        /// Конвертер изображений в трансферную модель
+        /// </summary>
+        private readonly IClothesImageTransferConverter _clothesImageTransferConverter;
 
         /// <summary>
         /// Получить данные одежды
@@ -82,6 +90,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         public async Task<IResultCollection<IClothesImageDomain>> GetImages(int clothesId) =>
             await RestRequest.GetRequest(clothesId, ControllerName, ClothesRoutes.IMAGES_ROUTE).
             MapAsync(request => RestHttpClient.GetCollectionAsync<ClothesImageTransfer>(request)).
-            ResultCollectionBindOkTaskAsync(transfers => _clothesDetailTransferConverter.FromTransfers(transfers));
+            ResultCollectionBindOkTaskAsync(transfers => _clothesImageTransferConverter.FromTransfers(transfers));
     }
 }

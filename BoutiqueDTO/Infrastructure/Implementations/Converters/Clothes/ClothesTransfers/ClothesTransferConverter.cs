@@ -29,3 +29,4 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
             new ClothesDomain(clothesTransfer).
             ToResultValue();
     }
+}

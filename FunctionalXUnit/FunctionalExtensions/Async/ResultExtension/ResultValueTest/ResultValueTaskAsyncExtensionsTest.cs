@@ -137,5 +137,33 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             Assert.True(resultString.HasErrors);
             Assert.True(resultString.Errors.First().Equals(initialError));
         }
+
+        /// <summary>
+        /// Проверить объект на нул для задачи-объекта. Без ошибок
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueNullCheckValueTaskAsync_Ok()
+        {
+            var initialString = Task.FromResult("NotNull");
+
+            var resultString = await initialString!.ToResultValueNullValueCheckTaskAsync(CreateErrorTest());
+
+            Assert.True(resultString.OkStatus);
+            Assert.Equal(initialString.Result, resultString.Value);
+        }
+
+        /// <summary>
+        /// Проверить объект на нул для задачи-объекта. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueNullCheckValueTaskAsync_ErrorNull()
+        {
+            var initialString = Task.FromResult<string>(null!);
+            var initialError = CreateErrorTest();
+            var resultString = await initialString.ToResultValueNullValueCheckTaskAsync(initialError);
+
+            Assert.True(resultString.HasErrors);
+            Assert.True(resultString.Errors.First().Equals(initialError));
+        }
     }
 }

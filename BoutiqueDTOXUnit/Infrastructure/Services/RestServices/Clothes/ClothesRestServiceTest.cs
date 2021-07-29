@@ -176,6 +176,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         private static IClothesRestService GetClothesRestService(IRestHttpClient restClient) =>
             new ClothesRestService(restClient, ClothesTransferConverterMock.ClothesTransferConverter,
                                    ClothesTransferConverterMock.ClothesDetailTransferConverter,
-                                   ClothesTransferConverterMock.ClothesMainTransferConverter);
+                                   ClothesTransferConverterMock.ClothesMainTransferConverter,
+                                   ClothesImageTransferConverterMock.ClothesImageTransferConverter);
     }
 }

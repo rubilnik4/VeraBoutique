@@ -148,6 +148,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         {
             var clothesEntities = ClothesEntitiesData.ClothesEntities;
             var clothesEntity = clothesEntities.First();
+            var image = clothesEntity.Images!.First(imageEntity => imageEntity.IsMain).Image;
             var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
             var database = GetDatabase(clothesTable);
             var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable));
@@ -155,7 +156,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
             Assert.True(clothesResults.OkStatus);
-            Assert.True(clothesResults.Value.SequenceEqual(clothesEntity.Images));
+            Assert.True(clothesResults.Value.SequenceEqual(image));
         }
 
         /// <summary>
@@ -255,6 +256,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             new ClothesDatabaseService(database, clothesDatabaseValidateService,
                                        ClothesEntityConverterMock.ClothesEntityConverter,
                                        ClothesEntityConverterMock.ClothesDetailEntityConverter,
-                                       ClothesEntityConverterMock.ClothesMainEntityConverter);
+                                       ClothesEntityConverterMock.ClothesMainEntityConverter,
+                                       ClothesImageEntityConverterMock.ClothesImageEntityConverter);
     }
 }

@@ -9,6 +9,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTran
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
@@ -97,9 +98,11 @@ namespace BoutiqueLoader.Factories.Services
                                     new ClothesTransferConverter(),
                                     new ClothesDetailTransferConverter(new ColorTransferConverter(),
                                                                       new SizeGroupMainTransferConverter(new SizeTransferConverter())),
-                                    new ClothesMainTransferConverter(new GenderTransferConverter(),
+                                    new ClothesMainTransferConverter(new ClothesImageTransferConverter(),
+                                                                     new GenderTransferConverter(),
                                                                      new ClothesTypeTransferConverter(),
                                                                      new ColorTransferConverter(),
-                                                                     new SizeGroupMainTransferConverter(new SizeTransferConverter())));
+                                                                     new SizeGroupMainTransferConverter(new SizeTransferConverter())),
+                                    new ClothesImageTransferConverter());
     }
 }

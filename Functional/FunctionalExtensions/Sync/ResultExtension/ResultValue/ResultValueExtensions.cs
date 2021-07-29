@@ -39,6 +39,15 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
         /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль
         /// </summary>
+        public static IResultValue<TValue> ToResultValueNullValueCheck<TValue>([AllowNull]this TValue @this, IErrorResult errorNull)
+            where TValue : notnull =>
+            @this != null
+                ? new ResultValue<TValue>(@this)
+                : new ResultValue<TValue>(errorNull);
+
+        /// <summary>
+        /// Преобразовать значение в результирующий ответ с проверкой на нуль
+        /// </summary>
         public static IResultValue<TValue> ToResultValueNullCheck<TValue>(this TValue? @this, IErrorResult errorNull)
             where TValue : class =>
             @this != null

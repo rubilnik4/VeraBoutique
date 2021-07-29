@@ -6,6 +6,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
+using BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 
 namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
@@ -22,7 +23,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
             ClothesData.ClothesMainDomains.
             Select(clothes => 
                 new ClothesMainTransfer(clothes,
-                                        clothes.Images,
+                                        clothes.Images.Select(image => new ClothesImageTransfer(image)),
                                         new GenderTransfer(clothes.Gender), 
                                         new ClothesTypeTransfer(clothes.ClothesType),
                                         clothes.Colors.Select(color => new ColorTransfer(color)),

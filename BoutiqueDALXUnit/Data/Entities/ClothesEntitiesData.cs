@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
@@ -22,12 +23,18 @@ namespace BoutiqueDALXUnit.Data.Entities
         public static IReadOnlyCollection<ClothesEntity> ClothesEntities =>
             ClothesData.ClothesMainDomains.
             Select(clothes =>
-                new ClothesEntity(clothes, clothes.Images.Select(image => new ClothesImageEntity(0, image)),
+                new ClothesEntity(clothes, GetClothesImageEntities(clothes.Images),
                                   new GenderEntity(clothes.Gender),
                                   GetClothesTypeEntity(clothes.ClothesType),
                                   GetClothesColorCompositeEntities(clothes.Colors, clothes.Id),
                                   GetClothesSizeGroupCompositeEntities(clothes.SizeGroups, clothes.Id))).
             ToList();
+
+        /// <summary>
+        /// Получить сущности изображений
+        /// </summary>
+        private static IEnumerable<ClothesImageEntity> GetClothesImageEntities(IEnumerable<IClothesImageDomain> clothesImageDomains) =>
+            clothesImageDomains.Select(image => new ClothesImageEntity(image));
 
         /// <summary>
         /// Получить связующие сущности одежды и цвета

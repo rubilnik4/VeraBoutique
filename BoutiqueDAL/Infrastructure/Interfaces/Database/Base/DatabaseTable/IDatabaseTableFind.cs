@@ -44,7 +44,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        Task<IResultValue<TEntityOut>> FindExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, Task<TEntityOut>> queryFunc, TId id)
+        Task<IResultValue<TEntityOut>> FindExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, Task<TEntityOut?>> queryFunc, TId id)
             where TEntityOut : class, IEntityModel<TId>;
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        Task<IResultCollection<TEntity>> FindsExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, IQueryable<TEntityOut>> queryFunc)
+        Task<IResultCollection<TEntityOut>> FindsExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, IQueryable<TEntityOut>> queryFunc)
              where TEntityOut : class, IEntityModel<TId>;
     }
 }

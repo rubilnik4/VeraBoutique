@@ -37,6 +37,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
         }
 
         /// <summary>
+        /// Преобразования модели информации об одежде в трансферную модель. Ошибка изображений
+        /// </summary>
+        [Fact]
+        public void Clothes_ToTransfer_ImagesCollectionNull()
+        {
+            var clothes = ClothesTransfersData.ClothesMainTransfers.First();
+            var clothesNull = new ClothesMainTransfer(clothes, clothes.Images.Append(null!)!, clothes.Gender, clothes.ClothesType,
+                                                      clothes.Colors, clothes.SizeGroups);
+            var clothesTransferConverter = ClothesTransferConverterMock.ClothesMainTransferConverter;
+
+            var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
+
+            Assert.True(clothesAfterConverter.HasErrors);
+            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+        }
+
+        /// <summary>
         /// Преобразования модели информации об одежде в трансферную модель. Ошибка цветов
         /// </summary>
         [Fact]
