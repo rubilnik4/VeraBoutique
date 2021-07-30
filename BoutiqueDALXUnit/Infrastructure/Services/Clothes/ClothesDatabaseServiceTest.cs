@@ -9,6 +9,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
@@ -167,7 +168,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         {
             var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
             var errorInitial = ErrorData.DatabaseError;
-            var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
+            var clothesResult = new ResultValue<ClothesImageEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
             var database = GetDatabase(clothesTable.Object);
             var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));
@@ -186,7 +187,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         {
             var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
             var errorInitial = ErrorData.NotFoundError;
-            var clothesResult = new ResultValue<ClothesEntity>(errorInitial);
+            var clothesResult = new ResultValue<ClothesImageEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
             var database = GetDatabase(clothesTable.Object);
             var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable.Object));

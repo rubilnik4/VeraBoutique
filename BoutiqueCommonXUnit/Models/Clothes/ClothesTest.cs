@@ -82,7 +82,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var sizeGroups = new List<ISizeGroupMainDomain> { new SizeGroupMainDomain(ClothesSizeType.Shirt, 1, sizes) };
             var clothes = new ClothesMainDomain(id, name, description, price, images, gender, clothesType, colors, sizeGroups);
 
-            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description),
+            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description), 
+                                               images.GetHashCodes(),
                                                gender.GetHashCode(), clothesType.GetHashCode(),
                                                colors.GetHashCodes(), sizeGroups.GetHashCodes());
             Assert.Equal(clothesHash, clothes.GetHashCode());

@@ -115,7 +115,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         protected async Task<IResultError> ValidateDuplicate(TId id) =>
              await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).           
              ResultValueBindOkBadTaskAsync(
-                okFunc: idValidate => GetDuplicateErrorResult(idValidate, _dataTable.GetType().Name),
+                okFunc: idCount => GetDuplicateErrorResult(id, _dataTable.GetType().Name),
                 badFunc: _ => new ResultValue<TId>(id));
 
         /// <summary>
@@ -142,10 +142,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Запрос проверки наличия дублирующей сущности
         /// </summary>
-        private Func<IQueryable<TEntity>, Task<TId>> ValidateQuery(TId id) =>
+        private Func<IQueryable<TEntity>, Task<int>> ValidateQuery(TId id) =>
             entities => entities.Where(_dataTable.IdPredicate(id)).
                                  Select(_dataTable.IdSelect()).
-                                 FirstOrDefaultAsync();
+                                 CountAsync();
 
         /// <summary>
         /// Запрос проверки наличия дублирующих сущностей

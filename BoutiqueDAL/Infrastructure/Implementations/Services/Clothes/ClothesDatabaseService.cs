@@ -20,6 +20,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -104,7 +105,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
              FindExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
                                                     Include(clothesEntity => clothesEntity.Images).
                                                     SelectMany(imageEntity => imageEntity.Images).
-                                                    FirstOrDefaultAsync(imageEntity => imageEntity.IsMain),
+                                                    FirstOrDefaultAsync(imageEntity => imageEntity.IsMain).
+                                                    MapTaskAsync(entity => (ClothesImageEntity?)entity),
                                  id).
              ResultValueOkTaskAsync(imageEntity => imageEntity.Image);
 

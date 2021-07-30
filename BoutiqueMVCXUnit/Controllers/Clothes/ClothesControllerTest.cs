@@ -212,7 +212,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var initialError = ErrorData.DatabaseError;
             var clothesDomain = ClothesData.ClothesMainDomains.First();
             var clotheId = clothesDomain.Id;
-            var clothesResult = new ResultValue<byte[]>(initialError);
+            var clothesResult = new ResultCollection<IClothesImageDomain>(initialError);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
             var clothesController = GetClothesController(clothesDatabaseService.Object);
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
@@ -39,9 +41,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
         /// <summary>
         /// Получить таблицу одежды
         /// </summary>
-        public static Mock<IClothesTable> GetClothesTable(IResultValue<ClothesEntity> clothesEntity) =>
+        public static Mock<IClothesTable> GetClothesTable(IResultValue<ClothesImageEntity> clothesImageEntity) =>
             new Mock<IClothesTable>().
-            Void(tableMock => tableMock.Setup(table => table.FindByIdAsync(It.IsAny<int>())).
-                              ReturnsAsync(clothesEntity));
+            Void(tableMock => tableMock.Setup(table => table.FindExpressionAsync(It.IsAny<Func<IQueryable<ClothesEntity>, Task<ClothesImageEntity?>>>(),
+                                                                                 It.IsAny<int>())).
+                              ReturnsAsync(clothesImageEntity));
     }
 }

@@ -122,7 +122,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
             var error = ErrorTransferData.ErrorBadRequest;
-            var resultClothes = new ResultCollection<byte[]>(error);
+            var resultClothes = new ResultValue<byte[]>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);
 
@@ -160,7 +160,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
             var error = ErrorTransferData.ErrorBadRequest;
-            var resultClothes = new ResultCollection<byte[]>(error);
+            var resultClothes = new ResultCollection<ClothesImageTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);
 
