@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
@@ -8,14 +9,14 @@ using Moq;
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet
 {
     /// <summary>
-    /// Сущности базы данных группы размеров
+    /// Сущности базы данных изображений
     /// </summary>
-    public static class SizeGroupDatabaseSetMock
+    public class ClothesImageDatabaseSetMock
     {
         /// <summary>
         /// Сущности базы данных
         /// </summary>
-        public static Mock<DbSet<SizeGroupEntity>> GetSizeGroupDbSet(IEnumerable<SizeGroupEntity> sizeGroups) =>
-            sizeGroups.AsQueryable().BuildMockDbSet();
+        public static Mock<DbSet<ClothesImageEntity>> GetClothesImageDbSet(IEnumerable<ClothesImageEntity> clothesImages) =>
+            clothesImages.AsQueryable().BuildMockDbSet();
     }
 }

@@ -9,11 +9,12 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Images
     /// </summary>
     public abstract class ClothesImageBase : IClothesImageBase
     {
-        protected ClothesImageBase(int id, byte[] image, bool isMain)
+        protected ClothesImageBase(int id, byte[] image, bool isMain, int clothesId)
         {
             Id = id;
             Image = image;
             IsMain = isMain;
+            ClothesId = clothesId;
         }
 
         /// <summary>
@@ -31,13 +32,20 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Images
         /// </summary>
         public bool IsMain { get; }
 
+        /// <summary>
+        /// Идентификатор одежды
+        /// </summary>
+        public int ClothesId { get; }
+
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IClothesImageBase clothesImage && Equals(clothesImage);
+        public override bool Equals(object? obj) =>
+            obj is IClothesImageBase clothesImage && Equals(clothesImage);
 
         public bool Equals(IClothesImageBase? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(Id);
+        public override int GetHashCode() => 
+            HashCode.Combine(Id);
         #endregion
     }
 }

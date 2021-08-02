@@ -1,6 +1,7 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
         /// </summary>
         public static void ApplyConfiguration(ModelBuilder modelBuilder)
         {
-            ClothesSequences.ApplyGenerator(modelBuilder);
+            DatabaseSequence.ClothesSequence.ApplyGenerator(modelBuilder);
+            DatabaseSequence.ClothesImageSequence.ApplyGenerator(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());

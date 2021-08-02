@@ -16,9 +16,9 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue
                                                                       Func<TValue, bool> predicate,
                                                                       Func<TValue, IErrorResult> badFunc)
             where TValue : notnull =>
-          @this.WhereContinue(predicate,
-                              value => (IResultValue<TValue>)new ResultValue<TValue>(value),
-                              value => new ResultValue<TValue>(badFunc(value)));
+            @this.WhereContinue(predicate,
+                                value => (IResultValue<TValue>)new ResultValue<TValue>(value),
+                                value => new ResultValue<TValue>(badFunc(value)));
 
         /// <summary>
         /// Преобразовать значения в результирующий ответ с условием

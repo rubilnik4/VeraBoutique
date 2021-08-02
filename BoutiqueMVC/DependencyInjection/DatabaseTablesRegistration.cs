@@ -18,6 +18,7 @@ namespace BoutiqueMVC.DependencyInjection
         {
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.CategoryTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClothesTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClothesImageTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ClotheTypeTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.ColorClothesTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.GendersTable);

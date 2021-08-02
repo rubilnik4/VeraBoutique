@@ -42,6 +42,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         private readonly IDatabaseTable<TId, TDomain, TEntity> _dataTable;
 
         /// <summary>
+        /// Проверить модель
+        /// </summary>
+        public abstract IResultError ValidateModel(TDomain domain);
+
+        /// <summary>
+        /// Проверить модели
+        /// </summary>
+        public IResultError ValidateModels(IEnumerable<TDomain> domains) =>
+            domains.Select(ValidateModel).ToResultError();
+
+        /// <summary>
         /// Комплексная проверка сущности для записи
         /// </summary>
         public async Task<IResultError> ValidatePost(TDomain domain) =>
@@ -72,7 +83,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Проверить наличие сущности
         /// </summary>
         public async Task<IResultError> ValidateFind(TId id) =>
-            await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id);
+            await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).
+            ResultValueBindWhereTaskAsync(idCount => idCount > 0,
+                okFunc: idCount => new ResultValue<TId>(id),
+                badFunc: _ => new ResultValue<TId>(DatabaseErrors.ValueNotFoundError(id, _dataTable.TableName)));
 
         /// <summary>
         /// Проверить наличие сущностей
@@ -99,24 +113,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
             _ => DatabaseErrors.CollectionEmpty(typeof(TDomain).Name, _dataTable.TableName));
 
         /// <summary>
-        /// Проверить модель
-        /// </summary>
-        protected abstract IResultError ValidateModel(TDomain domain);
-
-        /// <summary>
-        /// Проверить модели
-        /// </summary>
-        protected IResultError ValidateModels(IEnumerable<TDomain> domains) =>
-            domains.Select(ValidateModel).ToResultError();
-
-        /// <summary>
         /// Получить ошибку дублирования
         /// </summary>
         protected async Task<IResultError> ValidateDuplicate(TId id) =>
-             await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).           
-             ResultValueBindOkBadTaskAsync(
-                okFunc: idCount => GetDuplicateErrorResult(id, _dataTable.GetType().Name),
-                badFunc: _ => new ResultValue<TId>(id));
+             await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).
+             ResultValueBindWhereTaskAsync(idCount => idCount == 0,
+                okFunc: idCount => new ResultValue<TId>(id) ,
+                badFunc: _ => GetDuplicateErrorResult(id, _dataTable.GetType().Name));
 
         /// <summary>
         /// Получить ошибки дублирования

@@ -11,11 +11,16 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Images
         /// <summary>
         /// Изображение
         /// </summary>
-        public byte[] Image { get; }
+        byte[] Image { get; }
 
         /// <summary>
         /// Главное изображение
         /// </summary>
-        public bool IsMain { get; }
+        bool IsMain { get; }
+         
+        /// <summary>
+        /// Идентификатор одежды
+        /// </summary>
+        int ClothesId { get; }
     }
 }

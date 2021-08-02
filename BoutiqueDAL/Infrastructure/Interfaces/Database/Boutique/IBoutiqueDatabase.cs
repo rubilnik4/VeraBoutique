@@ -23,6 +23,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique
         ICategoryTable CategoryTable { get; }
 
         /// <summary>
+        /// Таблица базы данных изображений одежды
+        /// </summary>
+        IClothesImageTable ClothesImageTable { get; }
+
+        /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
         IClothesTypeTable ClotheTypeTable { get; }

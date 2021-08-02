@@ -15,7 +15,7 @@ namespace BoutiqueDTOXUnit.Data.Transfers.Clothes
         /// Изображения. Трансферные модели
         /// </summary>
         public static IReadOnlyCollection<ClothesImageTransfer> ClothesImageTransfers =>
-            ImageData.ClothesImageDomains.
+            ClothesImageData.ClothesImageDomains.
             Select(image => new ClothesImageTransfer(image)).
             ToList();
     }

@@ -11,6 +11,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Async;
 using Functional.Models.Interfaces.Result;
@@ -59,6 +60,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Таблица базы данных  одежды
         /// </summary>
+        public DbSet<ClothesImageEntity> ClothesImage { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных  одежды
+        /// </summary>
         public DbSet<ClothesEntity> Clothes { get; set; } = null!;
 
         /// <summary>
@@ -90,6 +96,11 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица базы данных вида одежды
         /// </summary>
         public IClothesTypeTable ClotheTypeTable => new ClothesTypeTable(ClothesTypes);
+
+        /// <summary>
+        /// Таблица базы данных одежды
+        /// </summary>
+        public IClothesImageTable ClothesImageTable => new ClothesImageTable(ClothesImage);
 
         /// <summary>
         /// Таблица базы данных одежды

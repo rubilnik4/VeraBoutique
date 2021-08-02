@@ -19,13 +19,13 @@ namespace BoutiqueCommonXUnit.Data.Clothes
             new List<IClothesMainDomain>
             {
                 new ClothesMainDomain(1, "Верхонки", "Верхонки батраческие", 55.55m,
-                                      ImageData.ClothesImageDomains,
+                                      ClothesImageData.ClothesImageDomains,
                                       GenderData.GenderDomains.First(),
                                       ClothesTypeData.ClothesTypeDomains.First(),
                                       ColorData.ColorDomains,
                                       SizeGroupData.SizeGroupMainDomains),
                 new ClothesMainDomain(2, "Варежки", "Варежки простолюдинные", 0.66m,
-                                      ImageData.ClothesImageDomains,
+                                      ClothesImageData.ClothesImageDomains,
                                       GenderData.GenderDomains.Last(),
                                       ClothesTypeData.ClothesTypeDomains.Last(),
                                       ColorData.ColorDomains,

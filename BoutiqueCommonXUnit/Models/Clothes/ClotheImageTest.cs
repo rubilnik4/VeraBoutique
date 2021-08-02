@@ -19,7 +19,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             var image = new byte[0];
             const bool isMain = false;
 
-            var clothesImageDomain = new ClothesImageDomain(id, image, isMain);
+            var clothesImageDomain = new ClothesImageDomain(id, image, isMain,0);
 
             int clothesImageHash = HashCode.Combine(id);
             Assert.Equal(clothesImageHash, clothesImageDomain.GetHashCode());
@@ -31,8 +31,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesImage_Equal_ClothesImage()
         {
-            var first = ImageData.ClothesImageDomains.First();
-            var second = new ClothesImageDomain(first.Id, first.Image, first.IsMain);
+            var first = ClothesImageData.ClothesImageDomains.First();
+            var second = new ClothesImageDomain(first.Id, first.Image, first.IsMain, 0);
 
             Assert.True(first.Equals(second));
         }

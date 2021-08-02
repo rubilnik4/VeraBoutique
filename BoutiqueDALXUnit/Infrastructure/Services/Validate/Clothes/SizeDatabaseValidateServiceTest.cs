@@ -14,7 +14,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
     /// <summary>
     /// Сервис проверки данных из базы размера одежды. Тесты
     /// </summary>
-    public class SizeDatabaseValidateServiceTest: SizeDatabaseValidateService
+    public class SizeDatabaseValidateServiceTest : SizeDatabaseValidateService
     {
         public SizeDatabaseValidateServiceTest()
            : base(SizeTable.Object)
@@ -51,6 +51,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         /// Таблица базы данных размеров одежды
         /// </summary>
         private static Mock<ISizeTable> SizeTable =>
-            new Mock<ISizeTable>();
+            new();
     }
 }

@@ -21,6 +21,16 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
        where TId : notnull
     {
         /// <summary>
+        /// Проверить модель
+        /// </summary>
+        IResultError ValidateModel(TDomain domain);
+
+        /// <summary>
+        /// Проверить модели
+        /// </summary>
+        IResultError ValidateModels(IEnumerable<TDomain> domains);
+
+        /// <summary>
         /// Комплексная проверка сущности для записи
         /// </summary>
         Task<IResultError> ValidatePost(TDomain domain);

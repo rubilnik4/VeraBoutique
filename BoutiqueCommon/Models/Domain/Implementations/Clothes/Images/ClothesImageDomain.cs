@@ -10,11 +10,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Clothes.Images
     public class ClothesImageDomain : ClothesImageBase, IClothesImageDomain
     {
         public ClothesImageDomain(IClothesImageBase clothesImage)
-            : this(clothesImage.Id, clothesImage.Image, clothesImage.IsMain)
+            : this(clothesImage.Id, clothesImage.Image, clothesImage.IsMain, clothesImage.ClothesId)
         { }
 
-        public ClothesImageDomain(int id, byte[] image, bool isMain)
-            : base(id, image, isMain)
+        public ClothesImageDomain(int id, byte[] image, bool isMain, int clothesId)
+            : base(id, image, isMain, clothesId)
         { }
     }
 }

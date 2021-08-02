@@ -32,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(ISizeDomain size) =>
+        public override IResultError ValidateModel(ISizeDomain size) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateName(size));
 

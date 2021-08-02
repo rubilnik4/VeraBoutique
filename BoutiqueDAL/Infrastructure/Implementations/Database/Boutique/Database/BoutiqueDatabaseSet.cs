@@ -1,6 +1,7 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
@@ -24,6 +25,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// Таблица базы данных цвета одежды
         /// </summary>
         public DbSet<ColorEntity> ColorClothes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных цвета одежды
+        /// </summary>
+        public DbSet<ClothesImageEntity> ClothesImage { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных вида одежды

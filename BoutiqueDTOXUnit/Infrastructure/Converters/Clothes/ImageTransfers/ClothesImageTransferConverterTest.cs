@@ -16,7 +16,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ImageTransfers
         [Fact]
         public void ToTransfer_FromTransfer()
         {
-            var image = ImageData.ClothesImageDomains.First();
+            var image = ClothesImageData.ClothesImageDomains.First();
             var clothesImageTransferConverter = ClothesImageTransferConverterMock.ClothesImageTransferConverter;
 
             var imageTransfer = clothesImageTransferConverter.ToTransfer(image);

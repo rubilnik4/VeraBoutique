@@ -86,6 +86,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupDatabaseValidateService, SizeGroupDatabaseValidateService>();
             services.AddTransient<IColorClothesDatabaseValidateService, ColorClothesDatabaseValidateService>();
             services.AddTransient<IClothesDatabaseValidateService, ClothesDatabaseValidateService>();
+            services.AddTransient<IClothesImageDatabaseValidateService, ClothesImageDatabaseValidateService>();
         }
 
         /// <summary>

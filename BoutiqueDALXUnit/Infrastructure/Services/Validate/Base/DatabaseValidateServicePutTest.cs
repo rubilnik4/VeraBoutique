@@ -58,7 +58,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
         }
 
         /// <summary>
-        /// Комплексная проверка сущности для записи. Ошибка дублирования
+        /// Комплексная проверка сущности для записи. Сущность не найдена
         /// </summary>
         [Fact]
         public async Task ValidatePut_ValidateNotFound()

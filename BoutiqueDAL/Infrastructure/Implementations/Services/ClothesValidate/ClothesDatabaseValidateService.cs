@@ -16,6 +16,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -33,13 +34,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
                                               IGenderDatabaseValidateService genderDatabaseValidateService,
                                               IClothesTypeDatabaseValidateService clothesTypeDatabaseValidateService,
                                               IColorClothesDatabaseValidateService colorClothesDatabaseValidateService,
-                                              ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService)
+                                              ISizeGroupDatabaseValidateService sizeGroupDatabaseValidateService,
+                                              IClothesImageDatabaseValidateService clothesImageDatabaseValidateService)
             : base(clothesTable)
         {
             _genderDatabaseValidateService = genderDatabaseValidateService;
             _clothesTypeDatabaseValidateService = clothesTypeDatabaseValidateService;
             _colorClothesDatabaseValidateService = colorClothesDatabaseValidateService;
             _sizeGroupDatabaseValidateService = sizeGroupDatabaseValidateService;
+            _clothesImageDatabaseValidateService = clothesImageDatabaseValidateService;
         }
 
         /// <summary>
@@ -63,14 +66,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private readonly ISizeGroupDatabaseValidateService _sizeGroupDatabaseValidateService;
 
         /// <summary>
+        /// Сервис проверки данных из базы изображений одежды
+        /// </summary>
+        private readonly IClothesImageDatabaseValidateService _clothesImageDatabaseValidateService;
+
+        /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(IClothesMainDomain clothesMain) =>
+        public override IResultError ValidateModel(IClothesMainDomain clothesMain) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateName(clothesMain)).
             ResultErrorBindOk(() => ValidateDescription(clothesMain)).
             ResultErrorBindOk(() => ValidatePrice(clothesMain)).
             ResultErrorBindOk(() => ValidateClothesTypeName(clothesMain)).
+            ResultErrorBindOk(() => ValidateImages(clothesMain)).
             ResultErrorBindOk(() => ValidateColors(clothesMain)).
             ResultErrorBindOk(() => ValidateSizeGroups(clothesMain));
 
@@ -135,6 +144,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
             clothesMain.ClothesTypeName.ToResultValueWhere(
                 clothesTypeName => !String.IsNullOrWhiteSpace(clothesTypeName),
                 _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.ClothesTypeName), clothesMain));
+
+        /// <summary>
+        /// Проверка изображений
+        /// </summary>
+        private IResultError ValidateImages(IClothesMainDomain clothesMain) =>
+            _clothesImageDatabaseValidateService.ValidateQuantity(clothesMain.Images).
+             ResultErrorBindOk(() => _clothesImageDatabaseValidateService.ValidateByMain(clothesMain.Images)).
+             ResultErrorBindOk(() => _clothesImageDatabaseValidateService.ValidateModels(clothesMain.Images));
 
         /// <summary>
         /// Проверка цветов

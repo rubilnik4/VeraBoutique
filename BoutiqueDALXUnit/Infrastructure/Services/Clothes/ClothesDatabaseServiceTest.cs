@@ -239,6 +239,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         private static Mock<ISizeGroupDatabaseValidateService> SizeGroupDatabaseValidateService =>
             new();
 
+
+        /// <summary>
+        /// Сервис проверки данных из базы пола одежды
+        /// </summary>
+        private static Mock<IClothesImageDatabaseValidateService> ClothesImageDatabaseValidateService =>
+            new();
+
         /// <summary>
         /// Сервис проверки данных из базы
         /// </summary>
@@ -247,7 +254,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
                                                GenderDatabaseValidateService.Object,
                                                ClothesTypeDatabaseValidateService.Object,
                                                ColorClothesDatabaseValidateService.Object,
-                                               SizeGroupDatabaseValidateService.Object);
+                                               SizeGroupDatabaseValidateService.Object,
+                                               ClothesImageDatabaseValidateService.Object);
 
         /// <summary>
         /// Получить сервис базы данных с одеждой

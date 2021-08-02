@@ -45,7 +45,7 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         /// <summary>
         /// Проверить модель
         /// </summary>
-        protected override IResultError ValidateModel(ITestDomain test) =>
+        public override IResultError ValidateModel(ITestDomain test) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateName(test));
 

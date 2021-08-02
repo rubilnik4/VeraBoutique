@@ -11,12 +11,12 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers
     public class ClothesImageTransfer : ClothesImageBase, IClothesImageTransfer
     {
         public ClothesImageTransfer(IClothesImageBase clothesImage)
-          : this(clothesImage.Id, clothesImage.Image, clothesImage.IsMain)
+          : this(clothesImage.Id, clothesImage.Image, clothesImage.IsMain, clothesImage.ClothesId)
         { }
 
         [JsonConstructor]
-        public ClothesImageTransfer(int id, byte[] image, bool isMain)
-            : base(id, image, isMain)
+        public ClothesImageTransfer(int id, byte[] image, bool isMain, int clothesId)
+            : base(id, image, isMain, clothesId)
         { }
     }
 }

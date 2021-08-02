@@ -10,7 +10,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
     /// <summary>
     /// Изображения
     /// </summary>
-    public static class ImageData
+    public static class ClothesImageData
     {
         /// <summary>
         /// Получить информацию об одежде
@@ -18,8 +18,18 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         public static IReadOnlyCollection<IClothesImageDomain> ClothesImageDomains =>
             new List<IClothesImageDomain>
             {
-                new ClothesImageDomain(1, Properties.Resources.TestImage, true),
-                new ClothesImageDomain(2, Properties.Resources.TestImage, false),
+                new ClothesImageDomain(1, Properties.Resources.TestImage, true, 0),
+                new ClothesImageDomain(2, Properties.Resources.TestImage, false, 0),
             };
+
+        /// <summary>
+        /// Изображения с индексом одежды
+        /// </summary>
+        public static IReadOnlyCollection<IClothesImageDomain> GetClothesImageFromClothes(int clothesId) =>
+            ClothesImageDomains.
+            Select(clothesImage => new ClothesImageDomain(clothesImage.Id, clothesImage.Image, clothesImage.IsMain, clothesId)).
+            ToList();
+
+
     }
 }

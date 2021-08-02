@@ -1,4 +1,5 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -13,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         public void Configure(EntityTypeBuilder<ClothesEntity> builder)
         {
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Id).HasDefaultValueSql($"nextval('\"{ClothesSequences.CLOTHES_ID_GENERATOR}\"')").IsRequired();
+            builder.Property(t => t.Id).HasDefaultValueSql(DatabaseSequence.ClothesSequence.SqlSequenceCommand).IsRequired();
             builder.Property(t => t.Name).IsRequired();
             builder.Property(t => t.Description).IsRequired();
             builder.Property(t => t.Price).IsRequired();

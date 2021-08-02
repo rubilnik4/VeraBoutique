@@ -10,7 +10,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate
     /// <summary>
     /// Сервис проверки данных из базы группы размера одежды
     /// </summary>
-    public class SizeGroupDatabaseValidateServiceMock
+    public static class SizeGroupDatabaseValidateServiceMock
     {
         /// <summary>
         /// Сервис проверки данных из базы группы размера одежды
