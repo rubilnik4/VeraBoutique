@@ -21,7 +21,6 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -83,7 +82,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         public override IResultValue<IClothesMainDomain> FromEntity(ClothesEntity clothesEntity) =>
             GetClothesFunc(clothesEntity).
-            ResultValueCurryOk(GetImages(clothesEntity.Images)).
+            ResultValueCurryOk(GetImages(clothesEntity.ClothesImages)).
             ResultValueCurryOk(GetGender(clothesEntity.Gender)).
             ResultValueCurryOk(GetClothesType(clothesEntity.ClothesType)).
             ResultValueCurryOk(ColorClothesFromComposite(clothesEntity.ClothesColorComposites, _colorClothesEntityConverter)).

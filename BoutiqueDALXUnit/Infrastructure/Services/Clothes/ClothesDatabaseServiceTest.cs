@@ -9,7 +9,6 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
@@ -149,7 +148,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         {
             var clothesEntities = ClothesEntitiesData.ClothesEntities;
             var clothesEntity = clothesEntities.First();
-            var image = clothesEntity.Images!.First(imageEntity => imageEntity.IsMain).Image;
+            var image = clothesEntity.ClothesImages!.First(imageEntity => imageEntity.IsMain).Image;
             var clothesTable = ClothesTableMock.GetClothesTable(clothesEntities);
             var database = GetDatabase(clothesTable);
             var clothesDatabaseService = GetClothesDatabaseService(database.Object, GetDatabaseValidationService(clothesTable));

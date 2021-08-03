@@ -5,7 +5,6 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;

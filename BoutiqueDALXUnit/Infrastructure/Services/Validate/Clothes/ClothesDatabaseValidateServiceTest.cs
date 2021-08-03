@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
@@ -15,7 +16,6 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using Functional.Models.Enums;
@@ -100,13 +100,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
         }
-
-
+        
         /// <summary>
         /// Проверить модель. Ошибка изображений
         /// </summary>
         [Fact]
-        public void ValidateModel_ImagesError()
+        public void ValidateModel_ImagesQuantityError()
         {
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price, 
@@ -117,6 +116,42 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
+        }
+
+        /// <summary>
+        /// Проверить модель. Ошибка изображений
+        /// </summary>
+        [Fact]
+        public void ValidateModel_ImagesHasMainError()
+        {
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesImage = ClothesImageData.ClothesImageDomains.First();
+            var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price,
+                                                           clothes.Images.Append(new ClothesImageDomain(0, clothesImage.Image, true, clothes.Id)),
+                                                           clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
+
+            var result = ValidateModel(clothesEmptyImages);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+        }
+
+        /// <summary>
+        /// Проверить модель. Ошибка изображений
+        /// </summary>
+        [Fact]
+        public void ValidateModel_ImagesModelError()
+        {
+            var clothes = ClothesData.ClothesMainDomains.First();
+            var clothesImage = ClothesImageData.ClothesImageDomains.First();
+            var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price,
+                                                           clothes.Images.Append(new ClothesImageDomain(0, null!, false, clothes.Id)),
+                                                           clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
+
+            var result = ValidateModel(clothesEmptyImages);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
         }
 
         /// <summary>

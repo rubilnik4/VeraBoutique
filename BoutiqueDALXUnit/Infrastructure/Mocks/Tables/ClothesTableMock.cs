@@ -6,7 +6,6 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;

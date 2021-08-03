@@ -1,14 +1,13 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes
 {
     /// <summary>
-    /// Изоражения. Схема базы данных
+    /// Изображения. Схема базы данных
     /// </summary>
     public class ClothesImageConfiguration : IEntityTypeConfiguration<ClothesImageEntity>
     {
@@ -20,7 +19,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
             builder.Property(t => t.IsMain).IsRequired();
 
             builder.HasOne(t => t.Clothes)
-                   .WithMany(s => s!.Images)
+                   .WithMany(s => s!.ClothesImages)
                    .HasForeignKey(sc => sc.ClothesId)
                    .IsRequired();
         }

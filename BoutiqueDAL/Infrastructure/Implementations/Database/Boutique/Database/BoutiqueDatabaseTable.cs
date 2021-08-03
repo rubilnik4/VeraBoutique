@@ -48,7 +48,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// Таблица базы данных одежды
         /// </summary>
         public IClothesImageTable ClothesImageTable =>
-            new ClothesImageTable(ClothesImage);
+            new ClothesImageTable(ClothesImages);
 
         /// <summary>
         /// Таблица базы данных одежды

@@ -6,6 +6,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTran
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
@@ -14,6 +15,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
@@ -45,6 +47,7 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<IColorTransferConverter, ColorTransferConverter>();
             container.Register<IClothesTransferConverter, ClothesTransferConverter>();
             container.Register<IClothesDetailTransferConverter, ClothesDetailTransferConverter>();
+            container.Register<IClothesImageTransferConverter, ClothesImageTransferConverter>();
             container.Register<IClothesMainTransferConverter, ClothesMainTransferConverter>();
 
             container.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();

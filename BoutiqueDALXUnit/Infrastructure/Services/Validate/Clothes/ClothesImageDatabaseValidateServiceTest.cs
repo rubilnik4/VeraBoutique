@@ -123,6 +123,35 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         }
 
         /// <summary>
+        /// Проверить по наличию главного изображения. Отсутствие
+        /// </summary>
+        [Fact]
+        public void ValidateByMain_Empty()
+        {
+            var imageDomains = ClothesImageData.ClothesImageDomains.Where(clothesImage => !clothesImage.IsMain);
+
+            var result = ValidateByMain(imageDomains);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+        }
+
+        /// <summary>
+        /// Проверить по наличию главного изображения. Несколько главных
+        /// </summary>
+        [Fact]
+        public void ValidateByMain_Multiple()
+        {
+            var imageDomains = ClothesImageData.ClothesImageDomains.
+                               Append(new ClothesImageDomain(0, ClothesImageData.ClothesImageDomains.First().Image, true, 0));
+
+            var result = ValidateByMain(imageDomains);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+        }
+
+        /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
         private static Mock<IClothesImageTable> ClothesImageTable =>

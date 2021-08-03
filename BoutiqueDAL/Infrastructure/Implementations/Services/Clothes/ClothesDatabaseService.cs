@@ -18,7 +18,6 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
@@ -103,8 +102,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultValue<byte[]>> GetImage(int id) =>
              await _clothesTable.
              FindExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
-                                                    Include(clothesEntity => clothesEntity.Images).
-                                                    SelectMany(imageEntity => imageEntity.Images).
+                                                    Include(clothesEntity => clothesEntity.ClothesImages).
+                                                    SelectMany(imageEntity => imageEntity.ClothesImages).
                                                     FirstOrDefaultAsync(imageEntity => imageEntity.IsMain).
                                                     MapTaskAsync(entity => (ClothesImageEntity?)entity),
                                  id).
@@ -116,8 +115,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IClothesImageDomain>> GetImages(int id) =>
              await _clothesTable.
              FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
-                                                                         Include(clothesEntity => clothesEntity.Images).
-                                                                         SelectMany(imageEntity => imageEntity.Images)).
+                                                                         Include(clothesEntity => clothesEntity.ClothesImages).
+                                                                         SelectMany(imageEntity => imageEntity.ClothesImages)).
              ResultCollectionBindOkTaskAsync(imageEntities => _clothesImageEntityConverter.FromEntities(imageEntities));
     }
 }

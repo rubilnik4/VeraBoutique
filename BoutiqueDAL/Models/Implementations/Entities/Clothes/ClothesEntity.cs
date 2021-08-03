@@ -4,7 +4,6 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
@@ -23,28 +22,28 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
                    null, null, null, null, null)
         { }
 
-        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> images,
+        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> clothesImages,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
            : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, clothes.GenderType, clothes.ClothesTypeName,
-                  images, null, null, clothesColorComposites, clothesSizeGroupComposites)
+                  clothesImages, null, null, clothesColorComposites, clothesSizeGroupComposites)
         { }
 
-        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> images,
+        public ClothesEntity(IClothesBase clothes, IEnumerable<ClothesImageEntity> clothesImages,
                              GenderEntity gender, ClothesTypeEntity clothesType,
                              IEnumerable<ClothesColorCompositeEntity> clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupComposites)
             : this(clothes.Id, clothes.Name, clothes.Description, clothes.Price, gender.GenderType, clothesType.Name,
-                   images, gender, clothesType, clothesColorComposites, clothesSizeGroupComposites)
+                   clothesImages, gender, clothesType, clothesColorComposites, clothesSizeGroupComposites)
         { }
 
         public ClothesEntity(int id, string name, string description, decimal price, GenderType genderType, string clothesTypeName,
-                             IEnumerable<ClothesImageEntity>? images, GenderEntity? gender, ClothesTypeEntity? clothesType,
+                             IEnumerable<ClothesImageEntity>? clothesImages, GenderEntity? gender, ClothesTypeEntity? clothesType,
                              IEnumerable<ClothesColorCompositeEntity>? clothesColorComposites,
                              IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupComposites)
           : base(id, name, description, price, genderType, clothesTypeName)
         {
-            Images = images?.ToList();
+            ClothesImages = clothesImages?.ToList();
             Gender = gender;
             ClothesType = clothesType;
             ClothesColorComposites = clothesColorComposites?.ToList();
@@ -54,7 +53,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         /// <summary>
         /// Изображение
         /// </summary>
-        public IReadOnlyCollection<ClothesImageEntity>? Images { get; }
+        public IReadOnlyCollection<ClothesImageEntity>? ClothesImages { get; }
 
         /// <summary>
         /// Связующая сущность типа одежды

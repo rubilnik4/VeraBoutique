@@ -2,6 +2,7 @@
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
+using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new ColorClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesTypeConfiguration());
             modelBuilder.ApplyConfiguration(new GenderCategoryCompositeConfiguration());
+            modelBuilder.ApplyConfiguration(new ClothesImageConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesColorCompositeConfiguration());
             modelBuilder.ApplyConfiguration(new ClothesSizeGroupCompositeConfiguration());

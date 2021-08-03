@@ -8,7 +8,6 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {

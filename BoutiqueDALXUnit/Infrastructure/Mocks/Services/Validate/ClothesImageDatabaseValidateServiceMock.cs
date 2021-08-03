@@ -3,7 +3,6 @@ using System.Linq;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
 using Moq;
 

@@ -11,7 +11,6 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
@@ -65,8 +64,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         public IResultError ValidateByMain(IEnumerable<IClothesImageDomain> clothesImages) =>
              clothesImages.Where(clothesImage => clothesImage.IsMain).ToList().
              ToResultValueWhere(images => images.Count == 1,
-                badFunc: images => ModelsErrors.FieldNotValid<int, IClothesImageDomain>(nameof(IClothesImageDomain.IsMain), 
-                                                                                        images.First()));
+                badFunc: images => ModelsErrors.FieldNotValid<int, IClothesImageDomain>(nameof(IClothesImageDomain.IsMain)));
 
         /// <summary>
         /// Проверка изображения

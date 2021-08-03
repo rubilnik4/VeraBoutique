@@ -15,6 +15,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// <summary>
         /// Ошибка некорректного поля
         /// </summary>
+        public static IErrorResult FieldNotValid<TId, TDomain>(string fieldName)
+            where TDomain : IDomainModel<TId>
+            where TId : notnull =>
+            new ErrorResult(ErrorResultType.ValueNotValid, $"Некорректное значение {fieldName} в [{typeof(TDomain).Name}]");
+
+        /// <summary>
+        /// Ошибка некорректного поля
+        /// </summary>
         public static IErrorResult FieldNotValid<TId, TDomain>(string fieldName, TDomain domain)
             where TDomain : IDomainModel<TId>
             where TId : notnull =>

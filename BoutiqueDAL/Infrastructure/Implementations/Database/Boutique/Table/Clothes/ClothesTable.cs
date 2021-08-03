@@ -48,7 +48,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// Включение сущностей при загрузке полных данных
         /// </summary>
         protected override IQueryable<ClothesEntity> EntitiesIncludes =>
-            _clothesSet.Include(entity => entity.Images).
+            _clothesSet.Include(entity => entity.ClothesImages).
                         Include(entity => entity.Gender).
                         Include(entity => entity.ClothesType).
                         Include(entity => entity.ClothesColorComposites).

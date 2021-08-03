@@ -2,7 +2,6 @@
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Entities.Clothes.Owns;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
