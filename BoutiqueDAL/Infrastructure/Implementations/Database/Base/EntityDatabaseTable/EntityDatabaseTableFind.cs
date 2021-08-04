@@ -40,8 +40,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Вернуть полную запись из таблицы по идентификатору асинхронно
         /// </summary>
         public async Task<IResultValue<TEntity>> FindMainByIdAsync(TId id) =>
-            await FindAsyncWrapper(() => EntitiesIncludes.AsNoTracking().FirstOrDefaultAsync(IdPredicate(id))!,
-                                   id);
+            await FindAsyncWrapper(() => EntitiesIncludes.AsNoTracking().FirstOrDefaultAsync(IdPredicate(id))!, id);
 
         /// <summary>
         /// Найти записи в таблице по идентификаторам
@@ -91,6 +90,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Выгрузка сущностей с включенными данными
         /// </summary>
         protected virtual IQueryable<TEntity> EntitiesIncludes =>
+            _databaseSet;
+
+        /// <summary>
+        /// Выгрузка сущностей с включенными данными при удалении
+        /// </summary>
+        protected virtual IQueryable<TEntity> EntitiesIncludesDelete =>
             _databaseSet;
 
         /// <summary>

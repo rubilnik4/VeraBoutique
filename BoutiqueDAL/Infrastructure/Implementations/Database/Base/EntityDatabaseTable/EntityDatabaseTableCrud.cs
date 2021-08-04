@@ -5,6 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
@@ -45,7 +46,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Удалить элемент в таблице
         /// </summary>
         public new IResultValue<TEntity> Remove(TEntity entity) =>
-            ResultValueTry(() => _databaseSet.Remove(entity).Entity, TableAccessError);
+            ResultValueTry(() => _databaseSet.Remove(entity).
+                                 Map(_ => entity), TableAccessError);
 
         /// <summary>
         /// Удалить элементы в таблице
@@ -57,6 +59,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Удалить все элементы в таблице
         /// </summary>
         public IResultError Remove() =>
-            ResultErrorTry(() => _databaseSet.RemoveRange(_databaseSet), TableAccessError);
+            ResultErrorTry(() => _databaseSet.RemoveRange(EntitiesIncludesDelete), TableAccessError);
     }
 }

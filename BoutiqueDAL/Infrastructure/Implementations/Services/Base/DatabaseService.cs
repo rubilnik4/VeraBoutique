@@ -21,21 +21,22 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
 {
     /// <summary>
     /// Базовый сервис получения данных из базы
     /// </summary>
-    public abstract class DatabaseService<TId, TDomain, TEntityOut> : IDatabaseService<TId, TDomain>
+    public abstract class DatabaseService<TId, TDomain, TEntity> : IDatabaseService<TId, TDomain>
        where TDomain : IDomainModel<TId>
-       where TEntityOut : class, IEntityModel<TId>
+       where TEntity : class, IEntityModel<TId>
        where TId : notnull
     {
         protected DatabaseService(IDatabase database,
-                                  IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
+                                  IDatabaseTable<TId, TDomain, TEntity> dataTable,
                                   IDatabaseValidateService<TId, TDomain> databaseValidateService,
-                                  IEntityConverter<TId, TDomain, TEntityOut> mainEntityConverter)
+                                  IEntityConverter<TId, TDomain, TEntity> mainEntityConverter)
         {
             _database = database;
             _dataTable = dataTable;
@@ -51,7 +52,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Таблица базы данных
         /// </summary>
-        private readonly IDatabaseTable<TId, TDomain, TEntityOut> _dataTable;
+        private readonly IDatabaseTable<TId, TDomain, TEntity> _dataTable;
 
         /// <summary>
         /// Базовый сервис проверки данных из базы
@@ -61,7 +62,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
-        private readonly IEntityConverter<TId, TDomain, TEntityOut> _mainEntityConverter;
+        private readonly IEntityConverter<TId, TDomain, TEntity> _mainEntityConverter;
 
         /// <summary>
         /// Получить полные модели из базы
@@ -117,7 +118,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Удалить модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Delete(TId id) =>
-            await _dataTable.FindByIdAsync(id).
+            await _dataTable.FindExpressionAsync(entities => entities.FirstOrDefaultAsync(_dataTable.IdPredicate(id)).
+                                                             MapTaskAsync(entity => (TEntity?)entity),
+                                                 id).
             ResultValueBindOkBindAsync(DeleteWithSaving);
 
         /// <summary>
@@ -130,7 +133,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Добавить модели в базу и сохранить
         /// </summary>
-        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntityOut> dataTable,
+        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntity> dataTable,
                                                                       IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_mainEntityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
@@ -145,7 +148,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
-        private async Task<IResultValue<TDomain>> DeleteWithSaving(TEntityOut entity) =>
+        private async Task<IResultValue<TDomain>> DeleteWithSaving(TEntity entity) =>
             await _dataTable.Remove(entity).
             ResultValueBindOk(_mainEntityConverter.FromEntity).
             ResultValueBindErrorsOkAsync(_ => DatabaseSaveChanges());

@@ -31,8 +31,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
-                                                                         testConverter);
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock, testConverter);
 
             var testResult = await testService.Get();
             var testEntitiesGet = testConverter.FromEntities(testEntities);

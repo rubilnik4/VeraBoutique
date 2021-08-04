@@ -21,12 +21,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task DeleteAll_Ok()
         {
-            var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities);
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testEntities = TestEntitiesData.TestEntities;
+            var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(testEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
-                                                                         testConverter);
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock, testConverter);
 
             var resultEntity = await testService.Delete();
 
@@ -42,7 +41,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var errorInitial = ErrorData.DatabaseError;
             var resultDelete = new ResultError(errorInitial);
             var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities, resultDelete);
+            var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(testResultEntities, resultDelete);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
@@ -61,12 +60,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Delete_Ok()
         {
             var testDelete = TestData.TestDomains.Last();
-            var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities);
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testEntities = TestEntitiesData.TestEntities;
+            var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(testEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
-                                                                         testConverter);
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock, testConverter);
 
             var resultEntity = await testService.Delete(testDelete.Id);
 
@@ -82,8 +80,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         {
             var testDelete = TestData.TestDomains.Last();
             var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities,
-                                                                             DatabaseTableDeleteTest.DeleteErrorFunc());
+            var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(testResultEntities,
+                                                                             DatabaseTableDeleteMock.DeleteErrorFunc());
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
@@ -103,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         {
             var testDelete = TestData.TestDomains.Last();
             var testResultEntities = TestEntitiesData.TestResultEntities;
-            var testTableMock = DatabaseTableDeleteTest.GetTestDatabaseTable(testResultEntities,
+            var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(testResultEntities,
                                                                              DatabaseTableGetMock.FirstNotFoundFunc(testResultEntities));
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var testConverter = TestEntityConverterMock.TestEntityConverter;

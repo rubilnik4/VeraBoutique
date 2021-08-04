@@ -57,5 +57,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
                         ThenInclude(composite => composite.SizeGroup).
                         ThenInclude(composite => composite!.SizeGroupComposites).
                         ThenInclude(composite => composite.Size);
+
+        /// <summary>
+        /// Включение сущностей при загрузке полных данных
+        /// </summary>
+        protected override IQueryable<ClothesEntity> EntitiesIncludesDelete =>
+            _clothesSet.Include(entity => entity.ClothesImages);
     }
 }

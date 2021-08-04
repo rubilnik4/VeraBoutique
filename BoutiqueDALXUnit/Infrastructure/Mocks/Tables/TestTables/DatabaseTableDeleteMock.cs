@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
@@ -14,13 +17,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
     /// <summary>
     /// Таблицы баз данных. Удаление
     /// </summary>
-    public static class DatabaseTableDeleteTest
+    public static class DatabaseTableDeleteMock
     {
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities) =>
-            GetTestDatabaseTable(testEntities, DeleteOk, DeleteOkFunc(), DatabaseTableGetMock.FindIdOkFunc(testEntities));
+        public static ITestTable GetTestDatabaseTable(IEnumerable<TestEntity> testEntities) =>
+             new TestTable(TestDatabaseSetMock.GetDbSetTest(testEntities).Object);
 
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
@@ -32,8 +35,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// <summary>
         /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities,
-                                                              IResultError resultDelete) =>
+        public static Mock<ITestTable> GetTestDatabaseTable(IResultCollection<TestEntity> testEntities, IResultError resultDelete) =>
             GetTestDatabaseTable(testEntities, resultDelete, DeleteOkFunc(), DatabaseTableGetMock.FindIdOkFunc(testEntities));
 
         /// <summary>
@@ -56,8 +58,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
             Void(tableMock => tableMock.Setup(table => table.Remove()).
                                         Returns(resultDelete)).
             Void(tableMock => tableMock.Setup(table => table.FindByIdAsync(It.IsAny<TestEnum>())).
-                  
-            ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
+                                        ReturnsAsync((TestEnum id) => testEntities.ToResultValue().ResultValueBindOk(_ => findIdFunc(id))));
 
         /// <summary>
         /// Удаление
