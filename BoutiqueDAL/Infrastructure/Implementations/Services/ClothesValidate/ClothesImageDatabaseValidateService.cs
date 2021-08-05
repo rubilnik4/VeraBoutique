@@ -23,17 +23,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     public class ClothesImageDatabaseValidateService : DatabaseValidateService<int, IClothesImageDomain, ClothesImageEntity>,
                                                        IClothesImageDatabaseValidateService
     {
-        public ClothesImageDatabaseValidateService(IClothesImageTable clothesImageTable,
-                                                   IClothesDatabaseValidateService clothesDatabaseValidateService)
+        public ClothesImageDatabaseValidateService(IClothesImageTable clothesImageTable)
             : base(clothesImageTable)
-        {
-            _clothesDatabaseValidateService = clothesDatabaseValidateService;
-        }
-
-        /// <summary>
-        /// Сервис проверки данных из базы одежды
-        /// </summary>
-        private readonly IClothesDatabaseValidateService _clothesDatabaseValidateService;
+        { }
 
         /// <summary>
         /// Проверить модель
@@ -41,22 +33,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         public override IResultError ValidateModel(IClothesImageDomain clothesImage) =>
             new ResultError().
             ResultErrorBindOk(() => ValidateImage(clothesImage));
-
-        /// <summary>
-        /// Проверить наличие вложенных моделей
-        /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IClothesImageDomain clothesImage) =>
-             await new ResultError().
-            ResultErrorBindOkAsync(() => _clothesDatabaseValidateService.ValidateFind(clothesImage.ClothesId));
-
-        /// <summary>
-        /// Проверить наличие вложенных моделей
-        /// </summary>
-        protected override async Task<IResultError> ValidateIncludes(IEnumerable<IClothesImageDomain> clothesImages) =>
-            await new ResultError().
-            ResultErrorBindOkAsync(() => clothesImages.Select(clothesImage => clothesImage.ClothesId).
-                                                       Distinct().
-                                         Map(ids => _clothesDatabaseValidateService.ValidateFinds(ids)));
 
         /// <summary>
         /// Проверка на наличие главного изображения

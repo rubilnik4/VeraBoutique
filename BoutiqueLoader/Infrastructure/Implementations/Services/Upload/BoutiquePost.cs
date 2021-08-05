@@ -28,7 +28,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// <summary>
         /// Длина пачек запросов
         /// </summary>
-        private const int POST_CHUNK = 10;
+        private const int POST_CHUNK = 2;
 
         /// <summary>
         /// Загрузить данные в базу
@@ -92,9 +92,13 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// </summary>
         private static async Task<IResultError> ClothesUpload(IRestHttpClient restClient, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetClothesRestService(restClient).
-            MapAsync(service => ClothesInitialize.ClothesMains.SelectChunk(POST_CHUNK).
-                                Select(clothesMains => ServicePostAction(service, clothesMains, boutiqueLogger)).
-                                ToResultErrorsTaskAsync());
+            MapAsync(service =>
+                ClothesInitialize.ClothesMains.
+                SelectChunk(POST_CHUNK).ToList().
+                Map(clothesMainsChucked => clothesMainsChucked.
+                                           Select((clothesMains, index) => ServicePostAction(service, clothesMains, boutiqueLogger,
+                                                                                             index, clothesMainsChucked.Count - 1)).
+                                           ToResultErrorsTaskAsync()));
 
         /// <summary>
         /// Логгирование загрузки
@@ -105,5 +109,17 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
             where TId : notnull =>
             await restService.PostCollectionAsync(domains).
             VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post));
+
+        /// <summary>
+        /// Логгирование загрузки
+        /// </summary>
+        private static async Task<IResultError> ServicePostAction<TId, TDomain>(IRestServiceBase<TId, TDomain> restService,
+                                                                                IEnumerable<TDomain> domains, IBoutiqueLogger boutiqueLogger,
+                                                                                int index, int indexMax)
+            where TDomain : IDomainModel<TId>
+            where TId : notnull =>
+            await restService.PostCollectionAsync(domains).
+            VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post,
+                                                                                      index, indexMax));
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
@@ -24,11 +25,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Put_Ok()
         {
             var testDomainPut = TestData.TestDomains.First();
-            var testTableMock = DatabaseTablePutMock.GetTestDatabaseTable();
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testTableMock = DatabaseTablePutMock.GetTestDatabaseTable(TestEntitiesData.TestEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePutMock.GetDatabaseValidateService();
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
             var result = await testService.Put(testDomainPut);

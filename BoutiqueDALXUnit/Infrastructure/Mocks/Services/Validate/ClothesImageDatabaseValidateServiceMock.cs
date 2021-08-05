@@ -14,7 +14,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate
         /// Сервис проверки данных из базы изображений одежды
         /// </summary>
         public static IClothesImageDatabaseValidateService GetClothesImageDatabaseValidateService(IEnumerable<ClothesImageEntity> clothesImage) =>
-            new ClothesImageDatabaseValidateService(ClothesImageTableMock.GetClothesImageTable(clothesImage),
-                                                    new Mock<IClothesDatabaseValidateService>().Object);
+            new ClothesImageDatabaseValidateService(ClothesImageTableMock.GetClothesImageTable(clothesImage));
     }
 }

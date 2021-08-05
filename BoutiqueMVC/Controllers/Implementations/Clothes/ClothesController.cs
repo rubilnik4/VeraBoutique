@@ -103,7 +103,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         /// <summary>
         /// Получить изображения одежды по идентификатору
         /// </summary>
-        [HttpGet(ClothesRoutes.IMAGE_ROUTE + "/{id:int}")]
+        [HttpGet(ClothesRoutes.IMAGES_ROUTE + "/{id:int}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

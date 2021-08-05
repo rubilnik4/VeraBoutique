@@ -23,8 +23,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
     public class ClothesImageDatabaseValidateServiceTest : ClothesImageDatabaseValidateService
     {
         public ClothesImageDatabaseValidateServiceTest()
-         : base(ClothesImageTable.Object,
-                ClothesDatabaseValidateServiceMock.GetClothesDatabaseValidateService(ClothesEntitiesData.ClothesEntities))
+         : base(ClothesImageTable.Object)
         { }
 
         /// <summary>
@@ -52,61 +51,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
-        }
-
-        /// <summary>
-        /// Проверить вложенные модели 
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludes_Ok()
-        {
-            var imageDomain = ClothesImageData.GetClothesImageFromClothes(ClothesEntitiesData.ClothesEntities.First().Id).First();
-
-            var result = await ValidateIncludes(imageDomain);
-
-            Assert.True(result.OkStatus);
-        }
-
-        /// <summary>
-        /// Проверить вложенные модели. Одежда не найдена
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludes_ClothesNotFound()
-        {
-            var imageDomain = ClothesImageData.GetClothesImageFromClothes(0).First();
-
-            var result = await ValidateIncludes(imageDomain);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
-        }
-
-        /// <summary>
-        /// Проверить вложенные модели 
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludesCollection_Ok()
-        {
-            var imageDomains = ClothesImageData.GetClothesImageFromClothes(ClothesEntitiesData.ClothesEntities.First().Id);
-
-            var result = await ValidateIncludes(imageDomains);
-
-            Assert.True(result.OkStatus);
-        }
-
-        /// <summary>
-        /// Проверить вложенные модели. Одежда не найдена
-        /// </summary>
-        [Fact]
-        public async Task ValidateIncludesCollection_ImagesNotFound()
-        {
-            var imageDomains = ClothesImageData.GetClothesImageFromClothes(ClothesEntitiesData.ClothesEntities.First().Id).
-                               Append(new ClothesImageDomain(0, ClothesImageData.ClothesImageDomains.First().Image, false, 0));
-
-            var result = await ValidateIncludes(imageDomains);
-
-            Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
         }
 
         /// <summary>

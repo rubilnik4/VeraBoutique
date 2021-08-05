@@ -17,6 +17,7 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems;
 using Functional.FunctionalExtensions.Async;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
@@ -139,14 +140,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// Получить модели изображений
         /// </summary>
         private static async Task<IReadOnlyCollection<ClothesDetailImageViewModelItem>> GetClothesImages(IClothesRestService clothesRestService, int clothesId) =>
-            await clothesRestService.GetImage(clothesId).
-            WhereContinueTaskAsync(result => result.OkStatus,
-                                   result => result.Value,
-                                   _ => new byte[0]).
-            MapTaskAsync(clothesDetailImage => new List<ClothesDetailImageViewModelItem> 
-            { 
-                new ClothesDetailImageViewModelItem(clothesDetailImage),
-               // new ClothesDetailImageViewModelItem(clothesDetailImage) 
-            });
+            await clothesRestService.GetImages(clothesId).
+            ResultCollectionOkTaskAsync(clothes => clothes.OrderBy(clothesItem => clothesItem.IsMain).
+                                                   ThenBy(clothesItem => clothesItem.Id)).
+            ResultCollectionOkTaskAsync(clothes => 
+                clothes.Select(clothesItem => new ClothesDetailImageViewModelItem(clothesItem.Image))).
+             WhereContinueTaskAsync(result => result.OkStatus,
+                                    result => result.Value,
+                                    result => new List<ClothesDetailImageViewModelItem>());
     }
 }

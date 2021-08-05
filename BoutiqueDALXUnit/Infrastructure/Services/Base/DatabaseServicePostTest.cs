@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
@@ -23,11 +25,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Post_Value_OK()
         {
             var testDomain = TestData.TestDomains.First();
-            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable(Enumerable.Empty<TestEntity>());
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePostMock.GetDatabaseValidateService();
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object, 
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock, 
                                                                          validateService.Object, testConverter);
 
             var resultId = await testService.Post(testDomain);
@@ -43,11 +45,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Post_Value_ValidateError()
         {
             var testDomain = TestData.TestDomains.First();
-            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable(TestEntitiesData.TestEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePostMock.GetDatabaseValidateService(TestValidateServicePostMock.DuplicateValueFunc());
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
             var resultId = await testService.Post(testDomain);
@@ -83,11 +85,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Post_Collection_OK()
         {
             var testDomains = TestData.TestDomains;
-            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable(Enumerable.Empty<TestEntity>());
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePostMock.GetDatabaseValidateService();
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
             var resultIds = await testService.Post(testDomains);
@@ -103,11 +105,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         public async Task Post_Collection_Error()
         {
             var testDomains = TestData.TestDomains;
-            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable();
-            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
+            var testTableMock = DatabaseTablePostMock.GetTestDatabaseTable(TestEntitiesData.TestEntities);
+            var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePostMock.GetDatabaseValidateService(TestValidateServicePostMock.DuplicateCollectionFunc());
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
             var resultIds = await testService.Post(testDomains);

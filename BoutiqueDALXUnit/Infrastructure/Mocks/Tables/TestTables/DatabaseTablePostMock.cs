@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
@@ -18,10 +20,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
     public static class DatabaseTablePostMock
     {
         /// <summary>
-        /// Получить тестовую таблицу
+        /// Получить тестовую таблицу в стандартном исполнении
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable() =>
-            GetTestDatabaseTable(AddIdOk(), AddRangeIdOk());
+        public static ITestTable GetTestDatabaseTable(IEnumerable<TestEntity> testEntities) =>
+             new TestTable(TestDatabaseSetMock.GetDbSetTest(testEntities).Object);
 
         /// <summary>
         /// Получить тестовую таблицу

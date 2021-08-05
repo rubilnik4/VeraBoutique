@@ -115,8 +115,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public async Task<IResultCollection<IClothesImageDomain>> GetImages(int id) =>
              await _clothesTable.
              FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
-                                                                         Include(clothesEntity => clothesEntity.ClothesImages).
-                                                                         SelectMany(imageEntity => imageEntity.ClothesImages)).
+                                                                            Include(clothesEntity => clothesEntity.ClothesImages).
+                                                                            SelectMany(imageEntity => imageEntity.ClothesImages)).
              ResultCollectionBindOkTaskAsync(imageEntities => _clothesImageEntityConverter.FromEntities(imageEntities));
     }
 }
