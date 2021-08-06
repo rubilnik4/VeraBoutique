@@ -19,6 +19,7 @@
         <Setter Property="HeightRequest" Value="1" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+        <Setter Property="Margin" Value="0" />
     </Style>
 
 </ResourceDictionary>

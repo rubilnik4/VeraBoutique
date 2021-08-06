@@ -3,10 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
                     xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
-   
-
-    
-   
 
     <Style x:Key="SvgImage"
            TargetType="{x:Type svg:SvgCachedImage}">
@@ -21,5 +17,11 @@
         <Setter Property="WidthRequest" Value="26" />
         <Setter Property="HeightRequest" Value="26" />
         <Setter Property="Source" Value="arrow_left_solid.svg" />
+    </Style>
+
+    <Style x:Key="SvgCart"
+           TargetType="{x:Type svg:SvgCachedImage}"
+           BasedOn="{StaticResource SvgImageBack}">
+        <Setter Property="Source" Value="shopping_cart_solid.svg" />
     </Style>
 </ResourceDictionary>

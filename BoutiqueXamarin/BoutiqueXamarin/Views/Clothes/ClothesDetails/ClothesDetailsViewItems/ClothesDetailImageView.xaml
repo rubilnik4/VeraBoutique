@@ -4,5 +4,5 @@
              xmlns:clothesDetails="clr-namespace:BoutiqueXamarin.Views.Clothes.ClothesDetails.ClothesDetailsViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.ClothesDetails.ClothesDetailsViewItems.ClothesDetailImageView">
     <Image x:Name="ClothesImage"
-           Aspect="AspectFit"/>
+           Aspect="AspectFill"/>
 </clothesDetails:ClothesDetailImageBase>

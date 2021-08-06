@@ -12,6 +12,7 @@ using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate;
 
 namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
 {
@@ -24,31 +25,36 @@ namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
 
             this.WhenActivated(disposable =>
             {
-                //this.OneWayBind(ViewModel, x => x.ClothesDetailImageViewModelItems, x => x.CarouselImages.ItemsSource).
-                //     DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.ClothesDetailImageViewModelItems, x => x.CarouselImages.ItemsSource).
+                     DisposeWith(disposable);
 
-                //this.OneWayBind(ViewModel, x => x.Name, x => x.NameLabel.Text).
-                //     DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.Name, x => x.NameLabel.Text).
+                     DisposeWith(disposable);
 
-                //this.OneWayBind(ViewModel, x => x.Price, x => x.PriceLabel.Text).
-                //     DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.Price, x => x.PriceLabel.Text, ClothesPrices.ConvertingPrice).
+                     DisposeWith(disposable);
 
-                //this.OneWayBind(ViewModel, x => x.Description, x => x.DescriptionLabel.Text).
-                //     DisposeWith(disposable);
+                this.OneWayBind(ViewModel, x => x.Description, x => x.DescriptionLabel.Text).
+                     DisposeWith(disposable);
 
-                //this.WhenAnyValue(x => x.ViewModel!.Sizes).
-                //     WhereNotNull().
-                //     Select(items => (IList)items).
-                //     BindTo(this, x => x.SizePicker.ItemsSource).
-                //     DisposeWith(disposable);
+                this.WhenAnyValue(x => x.ViewModel!.Sizes).
+                     WhereNotNull().
+                     Select(items => (IList)items).
+                     BindTo(this, x => x.SizePicker.ItemsSource).
+                     DisposeWith(disposable);
 
-                //this.WhenAnyValue(x => x.ViewModel!.Colors).
-                //     WhereNotNull().
-                //     Select(items => (IList)items).
-                //     BindTo(this, x => x.ColorPicker.ItemsSource).
-                //     DisposeWith(disposable);
+                this.WhenAnyValue(x => x.ViewModel!.Colors).
+                     WhereNotNull().
+                     Select(items => (IList)items).
+                     BindTo(this, x => x.ColorPicker.ItemsSource).
+                     DisposeWith(disposable);
 
                 this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton).
+                     DisposeWith(disposable);
+
+                this.WhenAnyValue(x => x.ScrollClothes.Height).
+                     Where(heightRequest => heightRequest > 0).
+                     Subscribe(heightRequest => CarouselImages.HeightRequest = heightRequest * 2 / 3).
                      DisposeWith(disposable);
             });
         }

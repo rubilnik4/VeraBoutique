@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueColors.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueButtonElements.xaml" />
+                <ResourceDictionary Source="Views/Dictionaries/BoutiqueGridElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueImageElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueLabelElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueStackLayoutElements.xaml" />

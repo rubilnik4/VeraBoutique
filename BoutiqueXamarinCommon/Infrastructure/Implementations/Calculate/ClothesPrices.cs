@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Functional.FunctionalExtensions.Sync;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate
@@ -17,5 +18,11 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate
             Map(pow => Math.Pow(10, pow) / 100).
             Map(step => (int)Math.Floor(step)).
             Map(step => Math.Max(step, 1));
+
+        /// <summary>
+        /// Преобразовать цену в строковое значение
+        /// </summary>
+        public static string ConvertingPrice(decimal price) =>
+            price.ToString("N0", CultureInfo.CurrentCulture) + " руб.";
     }
 }

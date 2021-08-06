@@ -29,28 +29,28 @@
                 <BoxView Style="{StaticResource SeparatorBox}" />
             </StackLayout>
 
-            <CarouselView x:Name="CarouselImages"
-                          Grid.Row="1"
-                          Loop="False">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type clothesDetailsItems:ClothesDetailImageViewModelItem}">
-                        <clothesDetailsViewItems:ClothesDetailImageView />
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+            <ScrollView x:Name="ScrollClothes"
+                        Grid.Row="1">
+                <StackLayout Spacing="10">
+                    <StackLayout Style="{StaticResource StackLayoutCarousel}">
+                        <CarouselView x:Name="CarouselImages"
+                                  Loop="False"
+                                  IndicatorView="CarouselIndicatorView">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Type clothesDetailsItems:ClothesDetailImageViewModelItem}">
+                                    <clothesDetailsViewItems:ClothesDetailImageView />
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
 
-            <!--<ListView Grid.Row="1"></ListView>-->
-
-
-            <!--<ScrollView Grid.Row="1" VerticalOptions="FillAndExpand">
-                <StackLayout VerticalOptions="FillAndExpand">
-                  
-                    <IndicatorView x:Name="CarouselIndicatorView"
+                        <IndicatorView x:Name="CarouselIndicatorView"
                                IndicatorColor="LightGray"
                                SelectedIndicatorColor="Black"
                                HorizontalOptions="CenterAndExpand " />
+                    </StackLayout>
 
-                    <StackLayout>
+                    <StackLayout Spacing="10"
+                                 Margin="10, 0, 5, 0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -59,16 +59,13 @@
 
                             <Label x:Name="NameLabel"
                                    Grid.Column="0"
-                                   Style="{StaticResource LabelTitle}" />
+                                   Style="{StaticResource LabelTitle}"/>
                             <Label x:Name="PriceLabel"
                                    Grid.Column="1"
-                                   Style="{StaticResource LabelTitle}" />
+                                   Style="{StaticResource LabelTitle}"/>
                         </Grid>
 
-                        <Label x:Name="DescriptionLabel"
-                               Style="{StaticResource LabelDescription}" />
-
-                        <Grid>
+                        <Grid >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -81,7 +78,8 @@
                             <Label Style="{StaticResource LabelDescription}"
                                    Grid.Row="0"
                                    Grid.Column="0"
-                                   Text="Размер:" />
+                                   Text="Размер:" 
+                                   FontAttributes="None"/>
                             <Picker x:Name="SizePicker"
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -91,29 +89,45 @@
                             <Label Style="{StaticResource LabelDescription}"
                                    Grid.Row="1"
                                    Grid.Column="0"
-                                   Text="Цвет:" />
+                                   Text="Цвет:" 
+                                   FontAttributes="None"/>
                             <Picker x:Name="ColorPicker"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Title="Выберите цвет"
                                     HorizontalOptions="FillAndExpand" />
                         </Grid>
+
+                        <Label x:Name="DescriptionLabel"
+                               Style="{StaticResource LabelCommon}" />
                     </StackLayout>
                 </StackLayout>
-            </ScrollView>-->
+            </ScrollView>
 
-            <StackLayout Grid.Row="2"
-                                 Orientation="Vertical">
+            <StackLayout Grid.Row="2">
                 <BoxView Style="{StaticResource SeparatorBox}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <Button x:Name="AddButton"
+                            Grid.Column="0"
                             Style="{StaticResource ButtonMain}"
+                            Margin="2"
                             Text="Добавить"/>
+
+                    <Label x:Name="TotalLabel"
+                           Grid.Column="1"  
+                           Style="{StaticResource LabelTitle}"
+                           HorizontalTextAlignment="End"
+                           Text="Итого:"/>
+
+                    <controls:SvgButton x:Name="CartButton"
+                                        Grid.Column="2"
+                                        Style="{StaticResource SvgCart}" />
                 </Grid>
             </StackLayout>
         </Grid>
