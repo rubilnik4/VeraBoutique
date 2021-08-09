@@ -30,7 +30,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         public GenderRestService(IRestHttpClient restHttpClient,
                                  IGenderTransferConverter genderTransferConverter,
                                  IGenderCategoryTransferConverter genderCategoryTransferConverter)
-            :base(restHttpClient, genderTransferConverter)
+            : base(restHttpClient, genderTransferConverter)
         {
             _genderCategoryTransferConverter = genderCategoryTransferConverter;
         }
@@ -44,7 +44,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
         /// Получить данные типа пола с категорией
         /// </summary>
         public async Task<IResultCollection<IGenderCategoryDomain>> GetGenderCategories() =>
-            await RestRequest.GetRequest(ControllerName, GenderRoutes.GENDER_CATEGORY_ROUTE).
+            await RestRequest.GetRequest(ControllerName, GenderRoutes.GENDER_CATEGORY_ROUTE + "1").
             MapAsync(request => RestHttpClient.GetCollectionAsync<GenderCategoryTransfer>(request)).
             ResultCollectionBindOkTaskAsync(transfers => _genderCategoryTransferConverter.FromTransfers(transfers));
     }

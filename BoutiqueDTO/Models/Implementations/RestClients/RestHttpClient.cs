@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
+using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Result;
@@ -15,7 +17,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
     /// <summary>
     /// Клиент для http запросов
     /// </summary>
-    public class RestHttpClient: IRestHttpClient
+    public class RestHttpClient : IRestHttpClient
     {
         public RestHttpClient(HttpClient httpClient)
         {
@@ -58,67 +60,82 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultValue<TOut>> GetValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await _httpClient.GetAsync(request).
-            ToRestResultValueTaskAsync<TOut>();
-
-        /// <summary>
-        /// Получить байтовый массив по идентификатору Api
-        /// </summary>
-        public async Task<IResultValue<byte[]>> GetByteAsync(string request) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request),
-                                                                    new ErrorResult(ErrorResultType.BadRequest, "Невозможно загрузить байтовый массив"));
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundError).
+            ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
         /// Получить данные Api
         /// </summary>
         public async Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request)
             where TOut : notnull =>
-             await _httpClient.GetAsync(request).
-             ToRestResultCollectionTaskAsync<TOut>();
+             await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundError).
+             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
+
+        /// <summary>
+        /// Получить байтовый массив по идентификатору Api
+        /// </summary>
+        public async Task<IResultValue<byte[]>> GetByteAsync(string request) =>
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request), ServerNotFoundError);
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<string>> PostAsync(string request, string jsonContent) =>
-            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
-            ToRestResultTaskAsync();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundError).
+            ResultValueBindOkBindAsync(response => response.ToRestResultAsync());
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<TOut>> PostValueAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
-            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
-            ToRestResultValueTaskAsync<TOut>();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundError).
+            ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
         /// Добавить коллекцию данных Api
         /// </summary>
-        public async Task<IResultCollection<TOut>> PostCollectionAsync<TOut>(string request, string jsonContent) 
+        public async Task<IResultCollection<TOut>> PostCollectionAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
-            await _httpClient.PostAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
-            ToRestResultCollectionTaskAsync<TOut>();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundError).
+            ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
         /// Обновить данные Api по идентификатору
         /// </summary>
         public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
-            await _httpClient.PutAsync(request, new StringContent(jsonContent, Encoding.UTF8, "application/json")).
-            ToRestResultErrorTaskAsync();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => _httpClient.PutAsync(request, ToStringContent(jsonContent)), ServerNotFoundError).
+            ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
 
         /// <summary>
         /// Удалить данные по идентификатору Api
         /// </summary>
         public async Task<IResultValue<TOut>> DeleteValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await _httpClient.DeleteAsync(request).
-            ToRestResultValueTaskAsync<TOut>();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), ServerNotFoundError).
+            ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
         /// Удалить данные Api
         /// </summary>
         public async Task<IResultError> DeleteCollectionAsync(string request) =>
-            await _httpClient.DeleteAsync(request).
-            ToRestResultErrorTaskAsync();
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), ServerNotFoundError).
+            ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
+
+        /// <summary>
+        /// Ошибка. Сервер не найден
+        /// </summary>
+        private static IErrorResult ServerNotFoundError =>
+             new ErrorResult(ErrorResultType.ServerNotFound, "Сервер не найден");
+
+        /// <summary>
+        /// Преобразование в json
+        /// </summary>
+        private static StringContent ToStringContent(string jsonContent) =>
+            new StringContent(jsonContent, Encoding.UTF8, "application/json");
     }
 }

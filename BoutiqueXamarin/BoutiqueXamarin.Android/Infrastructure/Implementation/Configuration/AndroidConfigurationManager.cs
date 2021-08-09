@@ -32,7 +32,7 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
         /// Параметры для дополнительных конфигураций
         /// </summary>
         private static string ConfigurationAdditional =>
-#if DEVELOPMENT
+#if DEBUG
             ".Development";
 #elif TEST
             ".Test";
