@@ -36,9 +36,22 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
                                IClothesNavigationService clothesNavigationService)
             : base(choiceNavigationService)
         {
-            _choiceGenderViewModelItems = Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService)).
-                                          ToProperty(this, nameof(ChoiceGenderViewModelItems), scheduler: RxApp.MainThreadScheduler);
+            var choiceGendersObservable = Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService),
+                                                               RxApp.MainThreadScheduler);
+            _choiceGenderViewModelItems = choiceGendersObservable.
+                                          Where(choiceGendersResult => choiceGendersResult.OkStatus).
+                                          Select(choiceGendersResult => (IList<ChoiceGenderViewModelItem>)choiceGendersResult.Value).
+                                          ToProperty(this, nameof(ChoiceGenderViewModelItems));
+            InitializeErrorsObservable = choiceGendersObservable.
+                                         Where(choiceGendersResult => choiceGendersResult.HasErrors).
+                                         Select(choiceGendersResult => (IResultError)choiceGendersResult).
+                                         ToProperty(this, nameof(InitializeErrors));
         }
+
+        /// <summary>
+        /// Ошибки при инициализации
+        /// </summary>
+        protected override ObservableAsPropertyHelper<IResultError> InitializeErrorsObservable { get; }
 
         /// <summary>
         /// Модели типа пола одежды
@@ -68,11 +81,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
-        private static async Task<IList<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
+        private static async Task<IResultCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
                                                                                          IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
-                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory))).
-            MapTaskAsync(result => result.Value.ToList());
+                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)));
     }
 }

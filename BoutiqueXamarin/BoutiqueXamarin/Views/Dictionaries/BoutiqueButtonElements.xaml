@@ -17,6 +17,14 @@
         <Setter Property="TextTransform" Value="Uppercase" />
     </Style>
 
+    <Style x:Key="ButtonAccent" 
+           BasedOn="{StaticResource ButtonTransparent}"
+           TargetType="{x:Type Button}">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimaryLight}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorAccent}" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+    </Style>
+
     <Style x:Key="ButtonGlyph" 
            TargetType="{x:Type controls:ImageButtonGlyph}">
         <Setter Property="BackgroundColor" Value="Transparent" />

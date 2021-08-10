@@ -7,30 +7,49 @@
              xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout Spacing="0">
-        <Label Style="{StaticResource LabelVeraBoutique}"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" 
+               Style="{StaticResource LabelVeraBoutique}"
                Text="VeraBoutique" />
 
-        <xct:TabView x:Name="GenderTab"
+        <StackLayout x:Name="MainStackLayout"
+                     Grid.Row="1" >
+            <xct:TabView x:Name="GenderTab"
                      TabStripPlacement="Top"
                      TabIndicatorColor="{StaticResource ColorAccent}">
 
-            <xct:TabView.TabViewItemDataTemplate>
-                <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                    <choiceViewItems:ChoiceGenderView />
-                </DataTemplate>
-            </xct:TabView.TabViewItemDataTemplate>
-        </xct:TabView>
+                <xct:TabView.TabViewItemDataTemplate>
+                    <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
+                        <choiceViewItems:ChoiceGenderView />
+                    </DataTemplate>
+                </xct:TabView.TabViewItemDataTemplate>
+            </xct:TabView>
 
-        <CarouselView x:Name="CategoryCarouselView"
+            <CarouselView x:Name="CategoryCarouselView"
                       Loop ="False"
                       Margin="10, 20, 0, 0">
-            <CarouselView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                    <choiceViewItems:ChoiceGenderTabView />
-                </DataTemplate>
-            </CarouselView.ItemTemplate>
-        </CarouselView>
-    </StackLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
+                        <choiceViewItems:ChoiceGenderTabView />
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </StackLayout>
+
+        <StackLayout x:Name="ErrorStackLayout"
+                     Grid.Row="1" 
+                     Style="{StaticResource StackLayoutError}">
+            <Label Style="{StaticResource LabelCommonError}"
+                   Text="Ошибка подключения"/>
+
+            <Button Style="{StaticResource ButtonAccent}"
+                    Text="Попробовать снова"/>
+        </StackLayout>
+
+    </Grid>
 
 </views:ChoicePageBase>

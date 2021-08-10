@@ -68,8 +68,8 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request)
             where TOut : notnull =>
-             await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundError).
-             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundError).
+            ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
         /// Получить байтовый массив по идентификатору Api

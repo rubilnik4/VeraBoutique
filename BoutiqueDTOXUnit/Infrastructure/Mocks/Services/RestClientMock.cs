@@ -93,30 +93,5 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services
             new Mock<IRestHttpClient>().
             Void(mock => mock.Setup(client => client.DeleteValueAsync<TValue>(It.IsAny<string>())).
                               ReturnsAsync(result));
-
-        /// <summary>
-        /// Получить клиент для Api сервисов с ошибкой
-        /// </summary>
-        public static Mock<IRestHttpClient> GetRestClientException<TValue>()
-            where TValue : notnull =>
-            new Mock<IRestHttpClient>().
-            Void(mock => mock.Setup(client => client.GetCollectionAsync<TValue>(It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.GetValueAsync<TValue>(It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.GetByteAsync(It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.PostCollectionAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.PostValueAsync<TValue>(It.IsAny<string>(), It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.PutValueAsync(It.IsAny<string>(), It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.DeleteCollectionAsync(It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException())).
-            Void(mock => mock.Setup(client => client.DeleteValueAsync<TValue>(It.IsAny<string>())).
-                              ThrowsAsync(new HttpRequestException()));
     }
 }

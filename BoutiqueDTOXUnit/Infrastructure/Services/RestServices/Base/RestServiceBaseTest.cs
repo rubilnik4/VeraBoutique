@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Sources;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Authorize;
@@ -10,6 +13,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.RestClients;
+using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Implementations.Converters;
@@ -87,6 +92,22 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         }
 
         /// <summary>
+        /// Получение данных
+        /// </summary>
+        [Fact]
+        public async Task GetAsync_ErrorException()
+        {
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.GetAsync();
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+        }
+
+        /// <summary>
         /// Получение данных по идентификатору
         /// </summary>
         [Fact]
@@ -121,6 +142,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Получение данных по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task GetByIdAsync_ErrorException()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.GetAsync(test.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
         }
 
         /// <summary>
@@ -162,6 +200,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         }
 
         /// <summary>
+        /// Загрузка данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task PostCollectionAsync_ErrorException()
+        {
+            var tests = TestData.TestDomains;
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.PostCollectionAsync(tests);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+        }
+
+        /// <summary>
         /// Загрузка данных
         /// </summary>
         [Fact]
@@ -197,6 +252,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Загрузка данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task PostAsync_ErrorException()
+        {
+            var test = TestData.TestDomains.First();
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.PostAsync(test);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
         }
 
         /// <summary>
@@ -238,6 +310,23 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         }
 
         /// <summary>
+        /// Загрузка данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task PostValueAsync_ErrorException()
+        {
+            var test = TestData.TestDomains.First();
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.PostValueAsync(test);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+        }
+
+        /// <summary>
         /// Обновление данных
         /// </summary>
         [Fact]
@@ -261,17 +350,34 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         [Fact]
         public async Task PutAsync_Error()
         {
-            var testDomain = TestData.TestDomains.First();
+            var test = TestData.TestDomains.First();
             var error = ErrorTransferData.ErrorBadRequest;
             var resultTest = new ResultError(error);
             var restClient = RestClientMock.PutRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
-            var result = await testRestService.PutAsync(testDomain);
+            var result = await testRestService.PutAsync(test);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Обновление данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task PutAsync_ErrorException()
+        {
+            var test = TestData.TestDomains.First();
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.PutAsync(test);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
         }
 
         /// <summary>
@@ -306,6 +412,22 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+        }
+
+        /// <summary>
+        /// Удаление данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task DeleteAsync_ErrorException()
+        {
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.DeleteAsync();
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
         }
 
         /// <summary>
@@ -345,11 +467,39 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
         }
 
+        /// <summary>
+        /// Удаление данных. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task DeleteByIdAsync_ErrorException()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var restClient = NotFoundRestHttpClient;
+            var testTransferConverter = TestTransferConverter;
+            var testRestService = new TestRestService(restClient, testTransferConverter);
+
+            var result = await testRestService.DeleteAsync(test.Id);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+        }
+
 
         /// <summary>
         /// Тестовый конвертер трансферных моделей
         /// </summary>
         private static ITestTransferConverter TestTransferConverter =>
             TestTransferConverterMock.TestTransferConverter;
+
+        /// <summary>
+        /// Подключение к несуществующему серверу
+        /// </summary>
+        private static IRestHttpClient NotFoundRestHttpClient =>
+             new HttpClient()
+             {
+                 BaseAddress = new Uri("https://ServerNotFound"),
+                 Timeout = TimeSpan.FromMilliseconds(10)
+             }.
+             Map(httpClient => new RestHttpClient(httpClient));
     }
 }
