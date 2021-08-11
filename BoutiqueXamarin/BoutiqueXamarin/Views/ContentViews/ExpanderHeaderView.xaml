@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BoutiqueXamarin.Views.Controls.ExpanderHeaderView"
+             x:Class="BoutiqueXamarin.Views.ContentViews.ExpanderHeaderView"
              xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin">

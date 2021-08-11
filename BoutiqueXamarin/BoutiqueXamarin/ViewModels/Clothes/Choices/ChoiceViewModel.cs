@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -42,16 +43,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
                                           Where(choiceGendersResult => choiceGendersResult.OkStatus).
                                           Select(choiceGendersResult => (IList<ChoiceGenderViewModelItem>)choiceGendersResult.Value).
                                           ToProperty(this, nameof(ChoiceGenderViewModelItems));
-            InitializeErrorsObservable = choiceGendersObservable.
-                                         Where(choiceGendersResult => choiceGendersResult.HasErrors).
-                                         Select(choiceGendersResult => (IResultError)choiceGendersResult).
-                                         ToProperty(this, nameof(InitializeErrors));
+            ErrorConnectionViewModelObservable =
+                choiceGendersObservable.
+                Where(choiceGendersResult => choiceGendersResult.HasErrors).
+                Select(choiceGendersResult => new ErrorConnectionViewModel(choiceGendersResult, _ => Task.FromResult(Unit.Default))).
+                ToProperty(this, nameof(ErrorConnectionViewModel));
         }
 
         /// <summary>
         /// Ошибки при инициализации
         /// </summary>
-        protected override ObservableAsPropertyHelper<IResultError> InitializeErrorsObservable { get; }
+        protected override ObservableAsPropertyHelper<ErrorConnectionViewModel> ErrorConnectionViewModelObservable { get; }
 
         /// <summary>
         /// Модели типа пола одежды

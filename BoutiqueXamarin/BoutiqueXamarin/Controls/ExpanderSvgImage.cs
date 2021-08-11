@@ -1,4 +1,5 @@
 ﻿using System;
+using BoutiqueXamarin.Views.ContentViews;
 using BoutiqueXamarin.Views.Controls;
 using FFImageLoading.Svg.Forms;
 using Xamarin.CommunityToolkit.UI.Views;

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<contentViews:ErrorConnectionBase xmlns="http://xamarin.com/schemas/2014/forms"
+                                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                                  xmlns:contentViews="clr-namespace:BoutiqueXamarin.Views.ContentViews;assembly=BoutiqueXamarin"
+                                  x:Class="BoutiqueXamarin.Views.ContentViews.ErrorConnectionView">
+    <StackLayout Style="{StaticResource StackLayoutError}">
+        <Label Style="{StaticResource LabelCommonError}"
+               Text="Ошибка подключения" />
+
+        <Button Style="{StaticResource ButtonAccent}"
+                Text="Попробовать снова" />
+    </StackLayout>
+</contentViews:ErrorConnectionBase>

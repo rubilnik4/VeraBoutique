@@ -5,6 +5,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
+             xmlns:contentViews="clr-namespace:BoutiqueXamarin.Views.ContentViews;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
     <Grid>
@@ -40,16 +41,8 @@
             </CarouselView>
         </StackLayout>
 
-        <StackLayout x:Name="ErrorStackLayout"
-                     Grid.Row="1" 
-                     Style="{StaticResource StackLayoutError}">
-            <Label Style="{StaticResource LabelCommonError}"
-                   Text="Ошибка подключения"/>
-
-            <Button Style="{StaticResource ButtonAccent}"
-                    Text="Попробовать снова"/>
-        </StackLayout>
-
+        <contentViews:ErrorConnectionView x:Name="ErrorView"
+                                          Grid.Row="1"/>
     </Grid>
 
 </views:ChoicePageBase>

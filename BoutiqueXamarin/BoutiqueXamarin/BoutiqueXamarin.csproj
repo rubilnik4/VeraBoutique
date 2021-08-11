@@ -86,7 +86,10 @@
     <EmbeddedResource Update="Views\Clothes\Clothes\ClothesViewItems\ClothesFilters\FilterView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Controls\ExpanderHeaderView.xaml">
+    <EmbeddedResource Update="Views\ContentViews\ErrorConnectionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ContentViews\ExpanderHeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Controls\RadioButtonControl.xaml">

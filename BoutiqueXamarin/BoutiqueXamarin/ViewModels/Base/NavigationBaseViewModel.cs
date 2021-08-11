@@ -28,8 +28,6 @@ namespace BoutiqueXamarin.ViewModels.Base
         protected NavigationBaseViewModel(TNavigate navigateService)
         {
             NavigateService = navigateService;
-            InitializeErrorsObservable = Observable.Return((IResultError)new ResultError()).
-                                         ToProperty(this, nameof(InitializeErrors));
             NavigateBackCommand = ReactiveCommand.CreateFromTask(_ => NavigateService.NavigateBack());
         }
 
@@ -55,13 +53,13 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Ошибки при инициализации
         /// </summary>
-        protected virtual ObservableAsPropertyHelper<IResultError> InitializeErrorsObservable { get; }
+        protected abstract ObservableAsPropertyHelper<ErrorConnectionViewModel> ErrorConnectionViewModelObservable { get; }
 
         /// <summary>
         /// Ошибки при инициализации
         /// </summary>
-        public IResultError InitializeErrors =>
-            InitializeErrorsObservable.Value;
+        public ErrorConnectionViewModel ErrorConnectionViewModel =>
+            ErrorConnectionViewModelObservable.Value;
 
         /// <summary>
         /// Команда. Вернуться назад
