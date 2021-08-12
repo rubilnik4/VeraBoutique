@@ -1,4 +1,5 @@
-﻿using System.Reactive;
+﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
@@ -23,10 +24,11 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// </summary>
     public abstract class NavigationBaseViewModel<TParameter, TNavigate> : BaseViewModel
         where TParameter : EmptyNavigationParameters
-        where TNavigate: IBaseNavigationService<TParameter>
+        where TNavigate : IBaseNavigationService<TParameter>
     {
         protected NavigationBaseViewModel(TNavigate navigateService)
         {
+            ErrorConnectionViewModelObservable = Observable.Return(ErrorConnectionViewModel.EmptyErrorConnectionViewModel);
             NavigateService = navigateService;
             NavigateBackCommand = ReactiveCommand.CreateFromTask(_ => NavigateService.NavigateBack());
         }
@@ -53,13 +55,7 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Ошибки при инициализации
         /// </summary>
-        protected abstract ObservableAsPropertyHelper<ErrorConnectionViewModel> ErrorConnectionViewModelObservable { get; }
-
-        /// <summary>
-        /// Ошибки при инициализации
-        /// </summary>
-        public ErrorConnectionViewModel ErrorConnectionViewModel =>
-            ErrorConnectionViewModelObservable.Value;
+        public virtual IObservable<ErrorConnectionViewModel> ErrorConnectionViewModelObservable { get; }
 
         /// <summary>
         /// Команда. Вернуться назад

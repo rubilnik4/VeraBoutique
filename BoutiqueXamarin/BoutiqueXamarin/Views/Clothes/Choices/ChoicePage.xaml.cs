@@ -23,19 +23,25 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
 
             this.WhenActivated(disposable =>
             {
-                this.WhenAnyValue(x => x.ViewModel!.ErrorConnectionViewModel).
+                this.ViewModel!.ErrorConnectionViewModelObservable.
+                    WhereNotNull().
+                    BindTo(this, x => x.ErrorView.ViewModel).
+                    DisposeWith(disposable);
+
+                this.ViewModel!.ErrorConnectionViewModelObservable.
                      WhereNotNull().
                      Select(x => x.ResultError.HasErrors).
                      BindTo(this, x => x.ErrorView.IsVisible).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.ErrorConnectionViewModel).
+                this.ViewModel!.ErrorConnectionViewModelObservable.
                      WhereNotNull().
                      Select(x => x.ResultError.OkStatus).
                      BindTo(this, x => x.MainStackLayout.IsVisible).
                      DisposeWith(disposable);
 
                 this.WhenAnyValue(x => x.ViewModel!.ChoiceGenderViewModelItems).
+                     WhereNotNull().
                      Select(items => (IList)items).
                      BindTo(this, x => x.GenderTab.TabItemsSource).
                      DisposeWith(disposable);

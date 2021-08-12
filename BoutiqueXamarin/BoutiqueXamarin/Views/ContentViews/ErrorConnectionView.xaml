@@ -7,7 +7,8 @@
         <Label Style="{StaticResource LabelCommonError}"
                Text="Ошибка подключения" />
 
-        <Button Style="{StaticResource ButtonAccent}"
+        <Button x:Name="ReloadButton"
+                Style="{StaticResource ButtonAccent}"
                 Text="Попробовать снова" />
     </StackLayout>
 </contentViews:ErrorConnectionBase>

@@ -10,12 +10,12 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// <summary>
     /// Ошибки соединения
     /// </summary>
-    public class ErrorConnectionViewModel: BaseViewModel
+    public class ErrorConnectionViewModel : BaseViewModel
     {
-        public ErrorConnectionViewModel(IResultError resultError, Func<Unit, Task> reloadFunc)
+        public ErrorConnectionViewModel(IResultError resultError, Func<Unit> reloadFunc)
         {
             ResultError = resultError;
-            ReloadCommand = ReactiveCommand.CreateFromTask(reloadFunc);
+            ReloadCommand = ReactiveCommand.Create(reloadFunc);
         }
 
         /// <summary>
@@ -32,6 +32,6 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// Создать модель без ошибок
         /// </summary>
         public static ErrorConnectionViewModel EmptyErrorConnectionViewModel =>
-            new ErrorConnectionViewModel(new ResultError(), _ => Task.FromResult(Unit.Default));
+            new ErrorConnectionViewModel(new ResultError(), () => Unit.Default);
     }
 }
