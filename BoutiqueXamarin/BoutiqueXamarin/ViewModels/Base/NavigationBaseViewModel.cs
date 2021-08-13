@@ -22,13 +22,13 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// <summary>
     /// Базовая модель с навигацией
     /// </summary>
-    public abstract class NavigationBaseViewModel<TParameter, TNavigate> : BaseViewModel
+    public abstract class NavigationBaseViewModel<TParameter, TNavigate> : ErrorBaseViewModel
         where TParameter : EmptyNavigationParameters
         where TNavigate : IBaseNavigationService<TParameter>
     {
         protected NavigationBaseViewModel(TNavigate navigateService)
         {
-            ErrorConnectionViewModelObservable = Observable.Return(ErrorConnectionViewModel.EmptyErrorConnectionViewModel);
+          
             NavigateService = navigateService;
             NavigateBackCommand = ReactiveCommand.CreateFromTask(_ => NavigateService.NavigateBack());
         }
@@ -51,11 +51,6 @@ namespace BoutiqueXamarin.ViewModels.Base
             get => _navigationParameters;
             set => this.RaiseAndSetIfChanged(ref _navigationParameters, value);
         }
-
-        /// <summary>
-        /// Ошибки при инициализации
-        /// </summary>
-        public virtual IObservable<ErrorConnectionViewModel> ErrorConnectionViewModelObservable { get; }
 
         /// <summary>
         /// Команда. Вернуться назад

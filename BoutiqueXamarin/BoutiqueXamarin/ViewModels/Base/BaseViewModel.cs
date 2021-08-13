@@ -1,10 +1,5 @@
-﻿using System.Threading.Tasks;
-using BoutiqueXamarinCommon.Models.Enums.ViewModels;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
-using Prism.Mvvm;
+﻿using System;
+using System.Reactive.Linq;
 using Prism.Navigation;
 using ReactiveUI;
 

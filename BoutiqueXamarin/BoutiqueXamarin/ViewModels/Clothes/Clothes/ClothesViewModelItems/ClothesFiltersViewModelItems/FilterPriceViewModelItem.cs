@@ -16,6 +16,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.Cloth
         {
             _priceMinimum = priceMinimum;
             _priceMaximum = priceMaximum;
+            PriceMinimumValue = (double)_priceMinimum;
+            PriceMaximumValue = (double)_priceMaximum;
             ClothesFilterCommand = clothesFilterCommand;
         }
 

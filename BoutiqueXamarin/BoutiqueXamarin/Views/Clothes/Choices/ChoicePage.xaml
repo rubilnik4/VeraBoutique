@@ -17,30 +17,31 @@
                Style="{StaticResource LabelVeraBoutique}"
                Text="VeraBoutique" />
 
-        <StackLayout x:Name="MainStackLayout"
-                     Grid.Row="1" >
-            <xct:TabView x:Name="GenderTab"
+        <ContentView x:Name="MainView"
+                     Grid.Row="1">
+            <StackLayout>
+                <xct:TabView x:Name="GenderTab"
                      TabStripPlacement="Top"
                      TabIndicatorColor="{StaticResource ColorAccent}">
 
-                <xct:TabView.TabViewItemDataTemplate>
-                    <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                        <choiceViewItems:ChoiceGenderView />
-                    </DataTemplate>
-                </xct:TabView.TabViewItemDataTemplate>
-            </xct:TabView>
+                    <xct:TabView.TabViewItemDataTemplate>
+                        <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
+                            <choiceViewItems:ChoiceGenderView />
+                        </DataTemplate>
+                    </xct:TabView.TabViewItemDataTemplate>
+                </xct:TabView>
 
-            <CarouselView x:Name="CategoryCarouselView"
+                <CarouselView x:Name="CategoryCarouselView"
                       Loop ="False"
                       Margin="10, 20, 0, 0">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
-                        <choiceViewItems:ChoiceGenderTabView />
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
-        </StackLayout>
-
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type choiceViewModelItems:ChoiceGenderViewModelItem}">
+                            <choiceViewItems:ChoiceGenderTabView />
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </StackLayout>
+        </ContentView>
         <contentViews:ErrorConnectionView x:Name="ErrorView"
                                           Grid.Row="1"/>
     </Grid>

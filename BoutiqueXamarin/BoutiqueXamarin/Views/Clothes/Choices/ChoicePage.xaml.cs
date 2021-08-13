@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
+using ReactiveUI.XamForms;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -23,23 +25,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
 
             this.WhenActivated(disposable =>
             {
-                this.ViewModel!.ErrorConnectionViewModelObservable.
-                    WhereNotNull().
-                    BindTo(this, x => x.ErrorView.ViewModel).
-                    DisposeWith(disposable);
-
-                this.ViewModel!.ErrorConnectionViewModelObservable.
-                     WhereNotNull().
-                     Select(x => x.ResultError.HasErrors).
-                     BindTo(this, x => x.ErrorView.IsVisible).
-                     DisposeWith(disposable);
-
-                this.ViewModel!.ErrorConnectionViewModelObservable.
-                     WhereNotNull().
-                     Select(x => x.ResultError.OkStatus).
-                     BindTo(this, x => x.MainStackLayout.IsVisible).
-                     DisposeWith(disposable);
-
                 this.WhenAnyValue(x => x.ViewModel!.ChoiceGenderViewModelItems).
                      WhereNotNull().
                      Select(items => (IList)items).
@@ -60,11 +45,23 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
         }
 
         /// <summary>
+        /// Главное окно
+        /// </summary>
+        protected override ContentView MainContentView =>
+            this.MainView;
+
+        /// <summary>
+        /// Окно ошибок
+        /// </summary>
+        protected override ReactiveContentView<ErrorConnectionViewModel> ErrorContentView =>
+            this.ErrorView;
+
+        /// <summary>
         /// Получить индекс типа пола
         /// </summary>
         private static int GetGenderViewModelItemIndex(ChoiceGenderViewModelItem? choiceGenderViewModelItem,
                                                        IList<ChoiceGenderViewModelItem>? choiceGenderViewModelItems) =>
-            choiceGenderViewModelItem != null 
+            choiceGenderViewModelItem != null
                 ? choiceGenderViewModelItems?.IndexOf(choiceGenderViewModelItem) ?? -1
                 : -1;
 
@@ -72,7 +69,7 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
         /// Получить типа пола пол индексу
         /// </summary>
         private static ChoiceGenderViewModelItem? GetGenderViewModelItemByIndex(int index, IList<ChoiceGenderViewModelItem>? choiceGenderViewModelItems) =>
-           index >= 0 && choiceGenderViewModelItems != null  && choiceGenderViewModelItems.Count > index
+           index >= 0 && choiceGenderViewModelItems != null && choiceGenderViewModelItems.Count > index
                ? choiceGenderViewModelItems[index]
                : null;
     }
