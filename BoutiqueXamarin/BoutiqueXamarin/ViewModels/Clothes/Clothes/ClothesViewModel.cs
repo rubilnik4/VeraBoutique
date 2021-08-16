@@ -43,40 +43,21 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             : base(clothesNavigationService)
         {
             Initialize(clothesRestService, clothesDetailNavigationService);
-
-            _clothes = ClothesObservable!.
-                       WhereNotNull().
-                       Where(clothesResult => clothesResult.OkStatus).
-                       Select(clothesResult => clothesResult.Value).
-                       ToProperty(this, nameof(Clothes));
-            ErrorViewModelObservable = GetErrorViewModel(clothesRestService, clothesDetailNavigationService);
+            _clothes = GetClothesViewModelsObservable(ClothesObservable);
+            ErrorViewModelObservable = GetErrorViewModelObservable(ClothesObservable, clothesRestService, clothesDetailNavigationService);
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(_ => GetClothesViewModelItems());
-           
-            _sortingViewModel = Observable.Return(new SortingViewModel(ClothesFilterCommand)).
-                                ToProperty(this, nameof(SortingViewModel));
-
-            _filterViewModel = this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
-                                    Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.parameters != null).
-                                    Select(clothesNavigation => new FilterViewModel(clothesNavigation.parameters!, clothesNavigation.clothes,
-                                                                                    ClothesFilterCommand)).
-                                    ToProperty(this, nameof(FilterViewModel));
+            SortingViewModel = new SortingViewModel(ClothesFilterCommand);
+            _filterViewModel = GetFilterViewModelObservable();
 
             this.WhenAnyValue(x => x.FilterViewModel).
                  WhereNotNull().
                  Select(_ => Unit.Default).
                  InvokeCommand(this, x => x.ClothesFilterCommand);
             _clothesFiltered = ClothesFilterCommand.ToProperty(this, nameof(ClothesFiltered));
+            _clothesViewModelColumnItems = GetClothesColumnsObservable();
 
-            _clothesViewModelColumnItems = this.WhenAnyValue(x => x.ClothesFiltered).
-                                                WhereNotNull().
-                                                Select(GetClothesItems).
-                                                ToProperty(this, nameof(ClothesViewModelColumnItems));
-
-            ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(
-                itemIndex => ClothesViewModelColumnItems[itemIndex].ClothesViewModelItemLeft!.
-                             ImageCommand.Execute(Unit.Default));
-
+            ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(GetImageObservable);
             ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationParameters()));
         }
 
@@ -84,10 +65,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// Инициализация
         /// </summary>
         private Unit Initialize(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService) =>
-             this.WhenAnyValue(x => x.NavigationParameters).
-                  WhereNotNull().
-                  SelectMany(parameters => Observable.FromAsync(() => GetClothes(parameters, clothesRestService, clothesDetailNavigationService),
-                                                                RxApp.MainThreadScheduler)).
+             GetClothesObservable(clothesRestService, clothesDetailNavigationService).
              Void(clothesObservable => ClothesObservable = clothesObservable).
              Map(_ => Unit.Default);
 
@@ -137,13 +115,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// <summary>
         /// Сортировка
         /// </summary>
-        private readonly ObservableAsPropertyHelper<SortingViewModel> _sortingViewModel;
-
-        /// <summary>
-        /// Сортировка
-        /// </summary>
-        public SortingViewModel SortingViewModel =>
-            _sortingViewModel.Value;
+        public SortingViewModel SortingViewModel { get; }
 
         /// <summary>
         /// Фильтрация
@@ -172,14 +144,53 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         public ReactiveCommand<Unit, Unit> ChoiceNavigateCommand { get; }
 
         /// <summary>
+        /// Получить модели одежды
+        /// </summary>
+        private IObservable<IResultCollection<ClothesViewModelItem>> GetClothesObservable(IClothesRestService clothesRestService,
+                                                                                          IClothesDetailNavigationService clothesDetailNavigationService) =>
+
+            this.WhenAnyValue(x => x.NavigationParameters).
+                 WhereNotNull().
+                 SelectMany(parameters => Observable.FromAsync(() => ClothesViewModelFactory.GetClothes(parameters, clothesRestService,
+                                                                                                        clothesDetailNavigationService),
+                                                                RxApp.MainThreadScheduler));
+        /// <summary>
+        /// Получить модели одежды
+        /// </summary>
+        private ObservableAsPropertyHelper<IReadOnlyCollection<ClothesViewModelItem>> GetClothesViewModelsObservable(IObservable<IResultCollection<ClothesViewModelItem>>? clothesObservable) =>
+            clothesObservable!.
+            WhereNotNull().
+            Where(clothesResult => clothesResult.OkStatus).
+            Select(clothesResult => clothesResult.Value).
+            ToProperty(this, nameof(Clothes));
+
+        /// <summary>
         /// Получить модель ошибок
         /// </summary>
-        private IObservable<ErrorConnectionViewModel> GetErrorViewModel(IClothesRestService clothesRestService,
-                                                                        IClothesDetailNavigationService clothesDetailNavigationService) =>
-            ClothesObservable!.
+        private IObservable<ErrorConnectionViewModel> GetErrorViewModelObservable(IObservable<IResultCollection<ClothesViewModelItem>>? clothesObservable,
+                                                                                  IClothesRestService clothesRestService,
+                                                                                  IClothesDetailNavigationService clothesDetailNavigationService) =>
+            clothesObservable!.
             WhereNotNull().
-            Select(clothesResult => new ErrorConnectionViewModel(clothesResult,
-                                                                 () => Initialize(clothesRestService, clothesDetailNavigationService)));
+            Select(clothesResult => new ErrorConnectionViewModel(clothesResult, () => Initialize(clothesRestService, clothesDetailNavigationService)));
+
+        /// <summary>
+        /// Получить модель фильтрации
+        /// </summary>
+        private ObservableAsPropertyHelper<FilterViewModel> GetFilterViewModelObservable() =>
+            this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
+                 Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.parameters != null).
+                 Select(clothesNavigation => new FilterViewModel(clothesNavigation.parameters!, clothesNavigation.clothes, ClothesFilterCommand)).
+                 ToProperty(this, nameof(FilterViewModel));
+
+        /// <summary>
+        /// Получить колонки с одеждой
+        /// </summary>
+        private ObservableAsPropertyHelper<IReadOnlyList<ClothesColumnViewModelItem>> GetClothesColumnsObservable() =>
+            this.WhenAnyValue(x => x.ClothesFiltered).
+                 WhereNotNull().
+                 Select(ClothesViewModelFactory.GetClothesItems).
+                 ToProperty(this, nameof(ClothesViewModelColumnItems));
 
         /// <summary>
         /// Получить отфильтрованные модели
@@ -187,28 +198,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         private IReadOnlyList<ClothesViewModelItem> GetClothesViewModelItems() =>
             FilterAndSortingViewModelFactory.GetClothesFiltered(Clothes, FilterViewModel.ClothesFilters, SortingViewModel.ClothesSortingType);
 
-        /// <summary> 
-        /// Получить модели одежды
-        /// </summary>
-        private static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationParameters? clothesParameters,
-                                                                                      IClothesRestService clothesRestService,
-                                                                                      IClothesDetailNavigationService clothesDetailNavigationService) =>
-            await clothesParameters.ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound, nameof(ClothesNavigationParameters))).
-            ResultValueBindOkToCollectionAsync(parameters =>
-                clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
-                ResultCollectionOkTaskAsync(clothes =>
-                    clothes.Select(clotheItem => new ClothesViewModelItem(clotheItem, parameters.ClothesTypeDomain,
-                                                                          clothesRestService, clothesDetailNavigationService))));
-
         /// <summary>
-        /// Преобразовать в модели одежды
+        /// Получить изображение
         /// </summary>
-        private static IReadOnlyList<ClothesColumnViewModelItem> GetClothesItems(IReadOnlyList<ClothesViewModelItem> clothesViewModels) =>
-            clothesViewModels.
-            Map(clothesItems => (columnLeft: clothesItems.Where((clothes, index) => index % 2 == 0),
-                                 columnRight: clothesItems.Where((clothes, index) => index % 2 != 0))).
-            Map(clothesPair => clothesPair.columnLeft.ZipLong(clothesPair.columnRight,
-                                                              (first, second) => new ClothesColumnViewModelItem(first, second))).
-            ToList();
+        private IObservable<ImageSource> GetImageObservable(int itemIndex) =>
+             ClothesViewModelColumnItems[itemIndex].ClothesViewModelItemLeft!.ImageCommand.Execute(Unit.Default);
     }
 }

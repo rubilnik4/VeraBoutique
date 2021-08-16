@@ -24,4 +24,10 @@
            BasedOn="{StaticResource SvgImageBack}">
         <Setter Property="Source" Value="shopping_cart_solid.svg" />
     </Style>
+
+    <Style x:Key="SvgUser"
+           TargetType="{x:Type svg:SvgCachedImage}"
+           BasedOn="{StaticResource SvgImageBack}">
+        <Setter Property="Source" Value="user_solid.svg" />
+    </Style>
 </ResourceDictionary>

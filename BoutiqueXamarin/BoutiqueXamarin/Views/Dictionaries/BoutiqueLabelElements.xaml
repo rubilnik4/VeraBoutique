@@ -24,6 +24,12 @@
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}"/>
     </Style>
 
+    <Style x:Key="LabelTitleCommon"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelCommon}">
+        <Setter Property="TextTransform" Value="Uppercase"/>
+    </Style>
+
     <Style x:Key="LabelCommonError"
            TargetType="{x:Type Label}"
            BasedOn="{StaticResource LabelCommon}">

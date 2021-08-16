@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarinCommon.Models.Enums.ViewModels;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
@@ -28,8 +29,8 @@ namespace BoutiqueXamarin.ViewModels.Base
     {
         protected NavigationBaseViewModel(TNavigate navigateService)
         {
-          
             NavigateService = navigateService;
+            UserRightMenuViewModel = new UserRightMenuViewModel();
             NavigateBackCommand = ReactiveCommand.CreateFromTask(_ => NavigateService.NavigateBack());
         }
 
@@ -37,6 +38,11 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// Сервис навигации
         /// </summary>
         public TNavigate NavigateService { get; }
+
+        /// <summary>
+        /// Правое меню пользователя
+        /// </summary>
+        public UserRightMenuViewModel UserRightMenuViewModel { get; }
 
         /// <summary>
         /// Параметры навигации

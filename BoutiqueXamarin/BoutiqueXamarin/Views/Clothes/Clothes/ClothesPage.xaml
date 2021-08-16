@@ -2,15 +2,13 @@
 <views:ClothesPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes;assembly=BoutiqueXamarin"
-             xmlns:viewModels="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes;assembly=BoutiqueXamarin"
              xmlns:viewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;assembly=BoutiqueXamarin"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
              xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              xmlns:clothesViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems;assembly=BoutiqueXamarin"
-             xmlns:clothesFiltersViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;assembly=BoutiqueXamarin"
              xmlns:clothesFilters="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters;assembly=BoutiqueXamarin"
              xmlns:clothesSorting="clr-namespace:BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesSorting;assembly=BoutiqueXamarin"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Clothes.ClothesPage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
@@ -85,6 +83,9 @@
                                     Grid.Column="1"
                                     Style="{StaticResource ButtonTransparent}"
                                     Text="Меню" />
+
+                            <menuItems:UserRightMenuView x:Name ="UserRightMenuView"
+                                                         Grid.Column="2"/>
                         </Grid>
                     </StackLayout>
                 </Grid>

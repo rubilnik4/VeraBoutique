@@ -31,7 +31,7 @@
 
             <ScrollView x:Name="ScrollClothes"
                         Grid.Row="1">
-                <StackLayout Spacing="10">
+                <StackLayout Style="{StaticResource StackLayoutControl}">
                     <StackLayout Style="{StaticResource StackLayoutCarousel}">
                         <CarouselView x:Name="CarouselImages"
                                   Loop="False"
@@ -49,58 +49,8 @@
                                HorizontalOptions="CenterAndExpand " />
                     </StackLayout>
 
-                    <StackLayout Spacing="10"
-                                 Margin="10, 0, 5, 0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label x:Name="NameLabel"
-                                   Grid.Column="0"
-                                   Style="{StaticResource LabelTitle}"/>
-                            <Label x:Name="PriceLabel"
-                                   Grid.Column="1"
-                                   Style="{StaticResource LabelTitle}"/>
-                        </Grid>
-
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Label Style="{StaticResource LabelDescription}"
-                                   Grid.Row="0"
-                                   Grid.Column="0"
-                                   Text="Размер:" 
-                                   FontAttributes="None"/>
-                            <Picker x:Name="SizePicker"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Title="Выберите размер"
-                                    HorizontalOptions="FillAndExpand" />
-
-                            <Label Style="{StaticResource LabelDescription}"
-                                   Grid.Row="1"
-                                   Grid.Column="0"
-                                   Text="Цвет:" 
-                                   FontAttributes="None"/>
-                            <Picker x:Name="ColorPicker"
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Title="Выберите цвет"
-                                    HorizontalOptions="FillAndExpand" />
-                        </Grid>
-
-                        <Label x:Name="DescriptionLabel"
-                               Style="{StaticResource LabelCommon}" />
-                    </StackLayout>
+                    <clothesDetailsViewItems:ClothesDetailDescriptionView x:Name ="ClothesDetailDescriptionView"
+                                                                          Margin="10, 0, 5, 0" />
                 </StackLayout>
             </ScrollView>
 

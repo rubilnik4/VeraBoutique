@@ -29,11 +29,11 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters
                      Subscribe(priceMaximum => PriceSlider.MaximumValue = (double)priceMaximum).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.PriceMinimum).
+                this.WhenAnyValue(x => x.ViewModel!.PriceMinimumValue).
                      Subscribe(priceMinimum => PriceSlider.LowerValue = (double)priceMinimum).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.PriceMaximum).
+                this.WhenAnyValue(x => x.ViewModel!.PriceMaximumValue).
                      Subscribe(priceMaximum => PriceSlider.UpperValue = (double)priceMaximum).
                      DisposeWith(disposable);
 

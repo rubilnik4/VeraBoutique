@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<clothesDetails:ClothesDetailDescriptionBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:clothesDetails="clr-namespace:BoutiqueXamarin.Views.Clothes.ClothesDetails.ClothesDetailsViewItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Clothes.ClothesDetails.ClothesDetailsViewItems.ClothesDetailDescriptionView">
+    <StackLayout Style="{StaticResource StackLayoutControl}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label x:Name="NameLabel"
+                   Grid.Column="0"
+                   Style="{StaticResource LabelTitle}" />
+            <Label x:Name="PriceLabel"
+                   Grid.Column="1"
+                   Style="{StaticResource LabelTitle}" />
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Style="{StaticResource LabelTitleCommon}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Размер:"/>
+            <Picker x:Name="SizePicker"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Title="Выберите размер" />
+
+            <Label Style="{StaticResource LabelTitleCommon}"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Цвет:" />
+            <Picker x:Name="ColorPicker"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Title="Выберите цвет"/>
+        </Grid>
+
+        <Label x:Name="DescriptionLabel"
+               Style="{StaticResource LabelCommon}" />
+    </StackLayout>
+</clothesDetails:ClothesDetailDescriptionBase>

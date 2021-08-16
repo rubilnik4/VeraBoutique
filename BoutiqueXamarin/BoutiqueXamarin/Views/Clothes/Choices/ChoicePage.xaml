@@ -6,6 +6,7 @@
              xmlns:choiceViewModelItems="clr-namespace:BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;assembly=BoutiqueXamarin"
              xmlns:choiceViewItems="clr-namespace:BoutiqueXamarin.Views.Clothes.Choices.ChoiceViewItems;assembly=BoutiqueXamarin"
              xmlns:contentViews="clr-namespace:BoutiqueXamarin.Views.ContentViews;assembly=BoutiqueXamarin"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Clothes.Choices.ChoicePage"
              NavigationPage.HasNavigationBar="False">
     <Grid>
@@ -13,9 +14,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" 
-               Style="{StaticResource LabelVeraBoutique}"
-               Text="VeraBoutique" />
+
+        <menuItems:LogoMenuView Grid.Row="0" />
 
         <ContentView x:Name="MainView"
                      Grid.Row="1">

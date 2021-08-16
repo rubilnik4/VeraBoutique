@@ -50,6 +50,12 @@
     <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesSorting\SortingView.xaml.cs">
       <DependentUpon>SortingView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ContentViews\MenuItems\LogoMenuView.xaml.cs">
+      <DependentUpon>LogoMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ContentViews\MenuItems\UserRightMenuView.xaml.cs">
+      <DependentUpon>UserRightMenuView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +75,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailsViewItems\ClothesDetailDescriptionView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Clothes\ClothesDetails\ClothesDetailsViewItems\ClothesDetailImageView.xaml">
@@ -92,10 +101,19 @@
     <EmbeddedResource Update="Views\ContentViews\ExpanderHeaderView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ContentViews\MenuItems\LogoMenuView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ContentViews\MenuItems\UserRightMenuView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Controls\RadioButtonControl.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Dictionaries\BoutiqueColors.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

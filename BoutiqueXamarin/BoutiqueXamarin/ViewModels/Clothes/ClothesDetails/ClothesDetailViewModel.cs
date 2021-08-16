@@ -35,87 +35,20 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
                                       IClothesDetailNavigationService clothesDetailNavigationService)
             : base(clothesDetailNavigationService)
         {
-            var clothesParameters = this.WhenAnyValue(x => x.NavigationParameters).
-                                     WhereNotNull().
-                                     Select(GetClothesParameters);
-
-            _clothesDetailImageViewModelItems = clothesParameters.
-                                                SelectMany(parameters => Observable.FromAsync(() => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id))).
-                                                ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);
-
-            _name = clothesParameters.
-                    Select(parameters => parameters.ClothesDetail.Name).
-                    ToProperty(this, nameof(Name));
-            _description = clothesParameters.
-                           Select(parameters => parameters.ClothesDetail.Description).
-                           ToProperty(this, nameof(Description));
-            _price = clothesParameters.
-                     Select(parameters => parameters.ClothesDetail.Price).
-                     ToProperty(this, nameof(Price));
-            _sizes = clothesParameters.
-                     Select(parameters => (IReadOnlyCollection<ISizeGroupDefaultDomain>)parameters.ClothesDetail.SizeGroups.
-                                          Select(sizeGroup => new SizeGroupDefaultDomain(sizeGroup, parameters.DefaultSizeType)).
-                                          ToList()).
-                     ToProperty(this, nameof(Sizes));
-            _colors = clothesParameters.
-                      Select(parameters => parameters.ClothesDetail.Colors).
-                      ToProperty(this, nameof(Colors));
+            _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
+            _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);
         }
 
         /// <summary>
-        /// Наименование
+        /// Детальное описание одежды
         /// </summary>
-        private readonly ObservableAsPropertyHelper<string> _name;
+        private readonly ObservableAsPropertyHelper<ClothesDetailDescriptionViewModel> _clothesDetailDescriptionViewModel;
 
         /// <summary>
-        /// Наименование
+        /// Детальное описание одежды
         /// </summary>
-        public string Name =>
-            _name.Value;
-
-        /// <summary>
-        /// Описание
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<string> _description;
-
-        /// <summary>
-        /// Описание
-        /// </summary>
-        public string Description =>
-            _description.Value;
-
-        /// <summary>
-        /// Изображения
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<decimal> _price;
-
-        /// <summary>
-        /// Изображения
-        /// </summary>
-        public decimal Price =>
-            _price.Value;
-
-        /// <summary>
-        /// Размеры одежды
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<ISizeGroupDefaultDomain>> _sizes;
-
-        /// <summary>
-        /// Размеры одежды
-        /// </summary>
-        public IReadOnlyCollection<ISizeGroupDefaultDomain> Sizes =>
-            _sizes.Value;
-
-        /// <summary>
-        /// Цвета одежды
-        /// </summary>
-        private readonly ObservableAsPropertyHelper<IReadOnlyCollection<IColorDomain>> _colors;
-
-        /// <summary>
-        /// Цвета одежды
-        /// </summary>
-        public IReadOnlyCollection<IColorDomain> Colors =>
-            _colors.Value;
+        public ClothesDetailDescriptionViewModel ClothesDetailDescriptionViewModel =>
+            _clothesDetailDescriptionViewModel.Value;
 
         /// <summary>
         /// Изображения
@@ -129,12 +62,22 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
             _clothesDetailImageViewModelItems.Value;
 
         /// <summary>
-        /// Получить информацию об одежде
+        /// Получить модели детальной одежды
         /// </summary>
-        private static ClothesDetailNavigationParameters GetClothesParameters(ClothesDetailNavigationParameters? clothesDetailsParameters) =>
-            clothesDetailsParameters.ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound, nameof(ClothesDetailNavigationParameters))).
-            ResultValueOk(parameters => parameters).
-            Map(result => result.Value);
+        private ObservableAsPropertyHelper<ClothesDetailDescriptionViewModel> GetClothesDetailDescriptionViewModelObservable() =>
+            this.WhenAnyValue(x => x.NavigationParameters).
+                 WhereNotNull().
+                 Select(parameters => new ClothesDetailDescriptionViewModel(parameters.ClothesDetail, parameters.DefaultSizeType)).
+                 ToProperty(this, nameof(ClothesDetailDescriptionViewModel));
+
+        /// <summary>
+        /// Получить модели детальной одежды
+        /// </summary>
+        private ObservableAsPropertyHelper<IReadOnlyCollection<ClothesDetailImageViewModelItem>> GetClothesDetailImageViewModelsObservable(IClothesRestService clothesRestService) =>
+            this.WhenAnyValue(x => x.NavigationParameters).
+                 WhereNotNull().
+                 SelectMany(parameters => Observable.FromAsync(() => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id))).
+                 ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);
 
         /// <summary>
         /// Получить модели изображений
@@ -143,7 +86,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
             await clothesRestService.GetImages(clothesId).
             ResultCollectionOkTaskAsync(clothes => clothes.OrderBy(clothesItem => clothesItem.IsMain).
                                                    ThenBy(clothesItem => clothesItem.Id)).
-            ResultCollectionOkTaskAsync(clothes => 
+            ResultCollectionOkTaskAsync(clothes =>
                 clothes.Select(clothesItem => new ClothesDetailImageViewModelItem(clothesItem.Image))).
              WhereContinueTaskAsync(result => result.OkStatus,
                                     result => result.Value,

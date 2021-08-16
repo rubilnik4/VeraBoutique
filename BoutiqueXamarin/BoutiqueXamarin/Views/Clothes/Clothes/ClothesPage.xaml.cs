@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
 using BoutiqueXamarin.Views.Clothes.Choices;
 using ReactiveUI;
@@ -64,8 +65,9 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                          DisposeWith(disposable);
 
                     this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton);
-
                     this.BindCommand(ViewModel, x => x.ChoiceNavigateCommand, x => x.MenuButton);
+
+                    this.OneWayBind(ViewModel, x => x.UserRightMenuViewModel, x => x.UserRightMenuView.ViewModel);
                 });
         }
     }

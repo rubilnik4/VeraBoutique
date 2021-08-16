@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<menuItems:UserRightMenuBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.ContentViews.MenuItems.UserRightMenuView">
+    <StackLayout Style="{StaticResource StackLayoutIcon}"
+                 HorizontalOptions="EndAndExpand">
+        <controls:SvgButton x:Name="UserButton"
+                            Style="{StaticResource SvgUser}"/>
+        <controls:SvgButton x:Name="CartButton"
+                            Style="{StaticResource SvgCart}" />
+    </StackLayout>
+</menuItems:UserRightMenuBase>

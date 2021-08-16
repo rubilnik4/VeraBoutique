@@ -7,10 +7,11 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Models.Enums;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems
+namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
 {
     /// <summary>
     /// Модели фильтрации
