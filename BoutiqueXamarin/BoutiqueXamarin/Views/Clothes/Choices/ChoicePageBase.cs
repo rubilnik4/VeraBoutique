@@ -12,6 +12,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
     /// <summary>
     /// Базовый класс страницы выбора
     /// </summary>
-    public abstract class ChoicePageBase : BaseContentPage<ChoiceViewModel>
+    public abstract class ChoicePageBase : ErrorBaseContentPage<ChoiceViewModel>
     { }
 }

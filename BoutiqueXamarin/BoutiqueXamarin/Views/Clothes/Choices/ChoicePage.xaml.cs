@@ -6,6 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
+using BoutiqueXamarin.Views.ContentViews;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 using ReactiveUI.XamForms;
@@ -53,7 +54,7 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
         /// <summary>
         /// Окно ошибок
         /// </summary>
-        protected override ReactiveContentView<ErrorConnectionViewModel> ErrorContentView =>
+        protected override ErrorConnectionView ErrorContentView =>
             this.ErrorView;
 
         /// <summary>

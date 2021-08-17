@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices;
+using BoutiqueXamarin.Views.ContentViews;
 using ReactiveUI;
 using ReactiveUI.XamForms;
 using Xamarin.Forms;
@@ -11,17 +12,17 @@ namespace BoutiqueXamarin.Views.Base
     /// <summary>
     /// Базовый класс страницы
     /// </summary>
-    public abstract class BaseContentPage<TViewModel> : ReactiveContentPage<TViewModel>
+    public abstract class ErrorBaseContentPage<TViewModel> : ReactiveContentPage<TViewModel>
         where TViewModel: ErrorBaseViewModel
     {
-        protected BaseContentPage()
+        protected ErrorBaseContentPage()
         {
             this.WhenActivated(disposable =>
             {
                 this.ViewModel!.ErrorViewModelObservable.
-                      WhereNotNull().
-                      BindTo(this, x => x.ErrorContentView.ViewModel).
-                      DisposeWith(disposable);
+                     WhereNotNull().
+                     BindTo(this, x => x.ErrorContentView.ViewModel).
+                     DisposeWith(disposable);
 
                 this.ViewModel!.ErrorViewModelObservable.
                      WhereNotNull().
@@ -45,6 +46,6 @@ namespace BoutiqueXamarin.Views.Base
         /// <summary>
         /// Окно ошибок
         /// </summary>
-        protected abstract ReactiveContentView<ErrorConnectionViewModel> ErrorContentView { get; }
+        protected abstract ErrorConnectionView ErrorContentView { get; }
     }
 }

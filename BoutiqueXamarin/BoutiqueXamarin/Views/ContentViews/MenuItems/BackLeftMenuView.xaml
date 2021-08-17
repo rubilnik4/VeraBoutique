@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<menuItems:BackLeftMenuBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.ContentViews.MenuItems.BackLeftMenuView">
+    <StackLayout Style="{StaticResource StackLayoutIcon}"
+                 HorizontalOptions="StartAndExpand">
+        <controls:SvgButton x:Name="BackButton"
+                            Style="{StaticResource SvgImageBack}" />
+    </StackLayout>
+</menuItems:BackLeftMenuBase>

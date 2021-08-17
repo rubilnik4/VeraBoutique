@@ -7,7 +7,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
     /// <summary>
     /// Базовый сервис навигации
     /// </summary>
-    public interface IBaseNavigationService<in TParameter>
+    public interface IBaseNavigationService<in TParameter>: IBackNavigationService
         where TParameter : EmptyNavigationParameters
     {
         /// <summary>
@@ -24,10 +24,5 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
         /// Перейти к странице
         /// </summary>
         Task NavigateTo(TParameter parameter);
-
-        /// <summary>
-        /// Перейти назад
-        /// </summary>
-        Task NavigateBack();
     }
 }

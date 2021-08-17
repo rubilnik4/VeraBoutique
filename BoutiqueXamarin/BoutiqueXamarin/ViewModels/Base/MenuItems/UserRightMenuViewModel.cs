@@ -10,14 +10,14 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
     {
         public UserRightMenuViewModel()
         {
-            UserCommand = ReactiveCommand.Create<Unit, Unit>(_ => Unit.Default);
+            UserNavigateCommand = ReactiveCommand.Create<Unit, Unit>(_ => Unit.Default);
             CartCommand = ReactiveCommand.Create<Unit, Unit>(_ => Unit.Default);
         }
 
         /// <summary>
         /// Команда информации о пользователе
         /// </summary>
-        public ReactiveCommand<Unit, Unit> UserCommand { get; }
+        public ReactiveCommand<Unit, Unit> UserNavigateCommand { get; }
 
         /// <summary>
         /// Команда информации о корзине

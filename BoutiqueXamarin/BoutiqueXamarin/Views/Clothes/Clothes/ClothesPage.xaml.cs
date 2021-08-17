@@ -3,10 +3,14 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
 using BoutiqueXamarin.Views.Clothes.Choices;
+using BoutiqueXamarin.Views.ContentViews;
+using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
+using ReactiveUI.XamForms;
 using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -64,11 +68,28 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                          Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
                          DisposeWith(disposable);
 
-                    this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton);
                     this.BindCommand(ViewModel, x => x.ChoiceNavigateCommand, x => x.MenuButton);
 
                     this.OneWayBind(ViewModel, x => x.UserRightMenuViewModel, x => x.UserRightMenuView.ViewModel);
                 });
         }
+
+        /// <summary>
+        /// Главное окно
+        /// </summary>
+        protected override ContentView MainContentView =>
+            this.MainView;
+
+        /// <summary>
+        /// Окно ошибок
+        /// </summary>
+        protected override ErrorConnectionView ErrorContentView =>
+            this.ErrorView;
+
+        /// <summary>
+        /// Главное окно
+        /// </summary>
+        protected override BackLeftMenuView BackLeftMenuView =>
+            this.MainView;
     }
 }

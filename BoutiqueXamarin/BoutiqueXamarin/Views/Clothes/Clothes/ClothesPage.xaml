@@ -38,12 +38,9 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <controls:SvgButton Grid.Column="0"
-                                                x:Name="BackButton"
-                                                Style="{StaticResource SvgImageBack}" />
+                            <menuItems:BackLeftMenuView Grid.Column="0"/>
 
                             <StackLayout Grid.Column="2"
                                          Orientation="Horizontal">

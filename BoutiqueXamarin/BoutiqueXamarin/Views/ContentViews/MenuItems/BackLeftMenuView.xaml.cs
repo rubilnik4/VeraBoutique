@@ -10,15 +10,15 @@ using Xamarin.Forms.Xaml;
 namespace BoutiqueXamarin.Views.ContentViews.MenuItems
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class UserRightMenuView : UserRightMenuBase
+    public partial class BackLeftMenuView : BackLeftMenuBase
     {
-        public UserRightMenuView()
+        public BackLeftMenuView()
         {
             InitializeComponent();
 
             this.WhenActivated(disposable =>
             {
-                this.BindCommand(ViewModel, x => x.UserNavigateCommand, x => x.UserButton);
+                this.BindCommand(ViewModel, x => x.BackNavigateCommand, x => x.BackButton);
             });
         }
     }

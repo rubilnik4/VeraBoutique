@@ -35,6 +35,9 @@
     <Compile Update="Views\Clothes\Choices\ChoiceViewItems\ChoiceGenderView.xaml.cs">
       <DependentUpon>ChoiceGenderView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Clothes\Clothes\ClothesPage.xaml.cs">
+      <DependentUpon>ClothesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Clothes\Clothes\ClothesViewItems\ClothesItemView.xaml.cs">
       <DependentUpon>ClothesItemView.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ContentViews\ExpanderHeaderView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ContentViews\MenuItems\BackLeftMenuView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ContentViews\MenuItems\LogoMenuView.xaml">

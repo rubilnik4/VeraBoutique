@@ -30,14 +30,19 @@ namespace BoutiqueXamarin.ViewModels.Base
         protected NavigationBaseViewModel(TNavigate navigateService)
         {
             NavigateService = navigateService;
+            BackLeftMenuViewModel = new BackLeftMenuViewModel<TParameter, TNavigate>(navigateService);
             UserRightMenuViewModel = new UserRightMenuViewModel();
-            NavigateBackCommand = ReactiveCommand.CreateFromTask(_ => NavigateService.NavigateBack());
         }
 
         /// <summary>
         /// Сервис навигации
         /// </summary>
         public TNavigate NavigateService { get; }
+
+        /// <summary>
+        /// Меню навигации назад
+        /// </summary>
+        public BackLeftMenuViewModel<TParameter, TNavigate> BackLeftMenuViewModel { get; }
 
         /// <summary>
         /// Правое меню пользователя
@@ -57,11 +62,6 @@ namespace BoutiqueXamarin.ViewModels.Base
             get => _navigationParameters;
             set => this.RaiseAndSetIfChanged(ref _navigationParameters, value);
         }
-
-        /// <summary>
-        /// Команда. Вернуться назад
-        /// </summary>
-        public ReactiveCommand<Unit, Unit> NavigateBackCommand { get; }
 
         /// <summary>
         /// Параметры инициализации формы с изменением состояния
