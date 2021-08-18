@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;
 using BoutiqueLoader.Factories.Services;
@@ -15,7 +13,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorization
+namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorize
 {
     /// <summary>
     /// Авторизация в сервисе одежды

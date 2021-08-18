@@ -1,23 +1,16 @@
 ﻿using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
-using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
-using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
-using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
-using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
 using Functional.Models.Implementations.Result;
-using Functional.Models.Interfaces.Result;
-using Moq;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorization
+namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
 {
     /// <summary>
     /// Сервис авторизации. Тесты

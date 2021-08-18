@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization
+namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize
 {
     /// <summary>
     /// Сервис авторизации

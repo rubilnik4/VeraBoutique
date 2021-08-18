@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
@@ -24,14 +25,14 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// Базовая модель с навигацией
     /// </summary>
     public abstract class NavigationBaseViewModel<TParameter, TNavigate> : ErrorBaseViewModel
-        where TParameter : EmptyNavigationParameters
+        where TParameter : BaseNavigationParameters
         where TNavigate : IBaseNavigationService<TParameter>
     {
-        protected NavigationBaseViewModel(TNavigate navigateService)
+        protected NavigationBaseViewModel(TNavigate navigateService, ILoginNavigationService loginNavigationService)
         {
             NavigateService = navigateService;
-            BackLeftMenuViewModel = new BackLeftMenuViewModel<TParameter, TNavigate>(navigateService);
-            UserRightMenuViewModel = new UserRightMenuViewModel();
+            BackLeftMenuViewModel = new BackLeftMenuViewModel(navigateService);
+            UserRightMenuViewModel = new UserRightMenuViewModel(loginNavigationService);
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Меню навигации назад
         /// </summary>
-        public BackLeftMenuViewModel<TParameter, TNavigate> BackLeftMenuViewModel { get; }
+        public BackLeftMenuViewModel BackLeftMenuViewModel { get; }
 
         /// <summary>
         /// Правое меню пользователя

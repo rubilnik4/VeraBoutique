@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <menuItems:LogoMenuView Grid.Row="0" />
@@ -44,6 +45,19 @@
         </ContentView>
         <contentViews:ErrorConnectionView x:Name="ErrorView"
                                           Grid.Row="1"/>
+
+        <StackLayout Grid.Row="2">
+            <BoxView Style="{StaticResource SeparatorBox}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <menuItems:UserRightMenuView x:Name="UserRightMenu"
+                                             Grid.Column="1" />
+            </Grid>
+        </StackLayout>
     </Grid>
 
 </views:ChoicePageBase>

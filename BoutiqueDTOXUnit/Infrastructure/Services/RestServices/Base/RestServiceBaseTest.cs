@@ -10,7 +10,6 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
-using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Implementations.RestClients;

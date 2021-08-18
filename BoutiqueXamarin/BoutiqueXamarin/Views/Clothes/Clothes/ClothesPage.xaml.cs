@@ -46,8 +46,8 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                          Subscribe(_ =>
                             {
                                 SideMenuView.State = SideMenuState.RightMenuShown;
-                                FilterViewControl.IsVisible = true;
-                                SortingViewControl.IsVisible = false;
+                                FilterViewControl.IsVisible = false;
+                                SortingViewControl.IsVisible = true;
                             }).
                          DisposeWith(disposable);
 
@@ -55,22 +55,34 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
                          Subscribe(_ =>
                             {
                                 SideMenuView.State = SideMenuState.RightMenuShown;
-                                FilterViewControl.IsVisible = false;
-                                SortingViewControl.IsVisible = true;
+                                FilterViewControl.IsVisible = true;
+                                SortingViewControl.IsVisible = false;
                             }).
                          DisposeWith(disposable);
 
                     this.FilterViewControl.FilterHideButtonClick.
-                         Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
+                         Merge(SortingViewControl.SortingHideButtonClick).
+                         Subscribe(_ =>
+                         {
+                             SideMenuView.State = SideMenuState.MainViewShown;
+                             FilterViewControl.IsVisible = false;
+                             SortingViewControl.IsVisible = false;
+                         }).
                          DisposeWith(disposable);
 
-                    this.SortingViewControl.SortingHideButtonClick.
-                         Subscribe(_ => SideMenuView.State = SideMenuState.MainViewShown).
+                    this.WhenAnyValue(x => x.SideMenuView.State).
+                         Where(state => state == SideMenuState.MainViewShown).
+                         Subscribe(_ =>
+                         {
+                             FilterViewControl.IsVisible = false;
+                             SortingViewControl.IsVisible = false;
+                         }).
                          DisposeWith(disposable);
 
-                    this.BindCommand(ViewModel, x => x.ChoiceNavigateCommand, x => x.MenuButton);
-
-                    this.OneWayBind(ViewModel, x => x.UserRightMenuViewModel, x => x.UserRightMenuView.ViewModel);
+                    this.BindCommand(ViewModel, x => x.ChoiceNavigateCommand, x => x.MenuButton).
+                         DisposeWith(disposable);
+                    this.OneWayBind(ViewModel, x => x.UserRightMenuViewModel, x => x.UserRightMenuView.ViewModel).
+                         DisposeWith(disposable);
                 });
         }
 
@@ -90,6 +102,12 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
         /// Главное окно
         /// </summary>
         protected override BackLeftMenuView BackLeftMenuView =>
-            this.MainView;
+            this.BackLeftMenu;
+
+        /// <summary>
+        /// Меню навигации назад
+        /// </summary>
+        protected override UserRightMenuView UserRightMenuView =>
+            this.UserRightMenu;
     }
 }

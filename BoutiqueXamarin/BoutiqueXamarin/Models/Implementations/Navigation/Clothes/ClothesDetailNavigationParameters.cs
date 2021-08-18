@@ -7,7 +7,7 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// <summary>
     /// Параметры перехода к детализации одежды
     /// </summary>
-    public class ClothesDetailNavigationParameters : EmptyNavigationParameters
+    public class ClothesDetailNavigationParameters : BaseNavigationParameters
     {
         public ClothesDetailNavigationParameters(IClothesDetailDomain clothesDetail, SizeType defaultSizeType)
         {

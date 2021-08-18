@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<authorize:LoginPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
+             xmlns:authorize="clr-namespace:BoutiqueXamarin.Views.Authorize;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <menuItems:BackLeftMenuView x:Name="BackLeftMenu"
+                                            Grid.Column="0"/>
+            </Grid>
+        </StackLayout>
+
+        <menuItems:LogoMenuView Grid.Row="1" />
+
+        <StackLayout Grid.Row="2"
+                     Style="{StaticResource StackLayoutControl}"
+                     Margin="10, 10, 10, 0">
+            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                <Entry x:Name="LoginEntry"
+                       Placeholder="Адрес почты" />
+                <Entry x:Name="PasswordEntry"
+                       IsPassword="True"
+                       Placeholder="Пароль" />
+            </StackLayout>
+
+            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                <Button x:Name="LoginButton"
+                        Style="{StaticResource ButtonMain}"
+                        Text="Войти" />
+                <Button x:Name="RegisterButton"
+                        Style="{StaticResource ButtonMain}"
+                        Text="Регистрация" />
+            </StackLayout>
+
+            <Label Style="{StaticResource LabelCommon}"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Забыли пароль?" />
+        </StackLayout>
+    </Grid>
+</authorize:LoginPageBase>

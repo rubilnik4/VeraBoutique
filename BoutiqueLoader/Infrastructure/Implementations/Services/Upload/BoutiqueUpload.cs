@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueLoader.Factories.Services;
-using BoutiqueLoader.Infrastructure.Implementations.Services.Authorization;
+using BoutiqueLoader.Infrastructure.Implementations.Services.Authorize;
 using BoutiqueLoader.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
 using Functional.Models.Interfaces.Result;

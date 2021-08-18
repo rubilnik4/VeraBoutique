@@ -1,7 +1,9 @@
-﻿using BoutiqueXamarin.ViewModels.Clothes.Choices;
+﻿using BoutiqueXamarin.ViewModels.Authorize;
+using BoutiqueXamarin.ViewModels.Clothes.Choices;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes;
 using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails;
 using BoutiqueXamarin.Views;
+using BoutiqueXamarin.Views.Authorize;
 using BoutiqueXamarin.Views.Clothes;
 using BoutiqueXamarin.Views.Clothes.Choices;
 using BoutiqueXamarin.Views.Clothes.Clothes;
@@ -25,6 +27,7 @@ namespace BoutiqueXamarin.DependencyInjection
             containerRegistry.RegisterForNavigation<ChoicePage, ChoiceViewModel>();
             containerRegistry.RegisterForNavigation<ClothesPage, ClothesViewModel>();
             containerRegistry.RegisterForNavigation<ClothesDetailPage, ClothesDetailViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginViewModel>();
         }
     }
 }

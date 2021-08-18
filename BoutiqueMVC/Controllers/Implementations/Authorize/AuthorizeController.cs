@@ -4,9 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
@@ -20,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace BoutiqueMVC.Controllers.Implementations.Authorization
+namespace BoutiqueMVC.Controllers.Implementations.Authorize
 {
     /// <summary>
     /// Контроллер авторизации

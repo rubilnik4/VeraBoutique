@@ -1,21 +1,17 @@
 ﻿using System.Threading.Tasks;
-using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Implementations.Identity;
-using BoutiqueDTO.Models.Interfaces.Identity;
 using BoutiqueDTO.Models.Interfaces.RestClients;
+using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization
+namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
 {
     /// <summary>
     /// Сервис авторизации
@@ -46,6 +42,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await _authorizeTransferConverter.ToTransfer(authorizeDomain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
+            ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
+            MapTaskAsync(tt => tt);
     }
 }

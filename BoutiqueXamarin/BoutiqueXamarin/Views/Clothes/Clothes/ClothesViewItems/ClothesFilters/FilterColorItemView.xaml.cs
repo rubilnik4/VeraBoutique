@@ -17,7 +17,7 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes.ClothesViewItems.ClothesFilters
             this.WhenActivated(disposable =>
             {
                 this.Bind(ViewModel, x => x.IsChecked, x => x.ColorCheck.IsChecked).
-                    DisposeWith(disposable);
+                     DisposeWith(disposable);
 
                 this.OneWayBind(ViewModel, x => x.ColorName, x => x.ColorName.Text).
                      DisposeWith(disposable);

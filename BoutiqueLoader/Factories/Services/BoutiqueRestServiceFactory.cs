@@ -11,9 +11,9 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeT
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
-using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorization;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;

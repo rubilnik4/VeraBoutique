@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueDTO.Factory.HttpClients;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
@@ -40,6 +42,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         private static void RegisterRestServices(IBoutiqueContainer container)
         {
+            container.Register<IAuthorizeRestService, AuthorizeRestService>();
             container.Register<IGenderRestService, GenderRestService>();
             container.Register<ICategoryRestService, CategoryRestService>();
             container.Register<IClothesTypeRestService, ClothesTypeRestService>();
@@ -48,7 +51,5 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<ISizeGroupRestService, SizeGroupRestService>();
             container.Register<IClothesRestService, ClothesRestService>();
         }
-
-
     }
 }

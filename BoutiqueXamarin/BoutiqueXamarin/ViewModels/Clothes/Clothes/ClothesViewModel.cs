@@ -10,6 +10,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -39,8 +40,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
                                 IChoiceNavigationService choiceNavigationService,
-                                IClothesDetailNavigationService clothesDetailNavigationService)
-            : base(clothesNavigationService)
+                                IClothesDetailNavigationService clothesDetailNavigationService, 
+                                ILoginNavigationService loginNavigationService)
+            : base(clothesNavigationService, loginNavigationService)
         {
             Initialize(clothesRestService, clothesDetailNavigationService);
             _clothes = GetClothesViewModelsObservable(ClothesObservable);

@@ -7,6 +7,7 @@ using System.Reactive.Linq;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using BoutiqueXamarin.Views.ContentViews;
+using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using Functional.FunctionalExtensions.Sync;
 using ReactiveUI;
 using ReactiveUI.XamForms;
@@ -56,6 +57,12 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
         /// </summary>
         protected override ErrorConnectionView ErrorContentView =>
             this.ErrorView;
+
+        /// <summary>
+        /// Меню навигации назад
+        /// </summary>
+        protected override UserRightMenuView UserRightMenuView =>
+            UserRightMenu;
 
         /// <summary>
         /// Получить индекс типа пола

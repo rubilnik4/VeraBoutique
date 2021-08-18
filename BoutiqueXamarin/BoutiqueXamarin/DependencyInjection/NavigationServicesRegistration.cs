@@ -13,7 +13,9 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransf
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
+using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Converters;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
@@ -33,6 +35,7 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<IChoiceNavigationService, ChoiceNavigationService>();
             container.Register<IClothesNavigationService, ClothesNavigationService>();
             container.Register<IClothesDetailNavigationService, ClothesDetailNavigationService>();
+            container.Register<ILoginNavigationService, LoginNavigationService>();
         }
     }
 }

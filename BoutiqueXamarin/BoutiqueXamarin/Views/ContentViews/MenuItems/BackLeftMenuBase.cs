@@ -1,5 +1,7 @@
-﻿using BoutiqueXamarin.ViewModels.Base.MenuItems;
+﻿using BoutiqueXamarin.Controls;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using ReactiveUI.XamForms;
+using Xamarin.Forms;
 
 namespace BoutiqueXamarin.Views.ContentViews.MenuItems
 {

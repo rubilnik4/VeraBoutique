@@ -1,5 +1,8 @@
-﻿using BoutiqueXamarin.ViewModels.Clothes.Clothes;
+﻿using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes;
 using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails;
+using BoutiqueXamarin.Views.Base;
 using ReactiveUI.XamForms;
 
 namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
@@ -7,6 +10,7 @@ namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
     /// <summary>
     /// Подробная информация об одежде
     /// </summary>
-    public class ClothesDetailPageBase: ReactiveContentPage<ClothesDetailViewModel>
+    public abstract class ClothesDetailPageBase :
+        NavigationBaseContentPage<ClothesDetailViewModel, ClothesDetailNavigationParameters, IClothesDetailNavigationService>
     { }
 }

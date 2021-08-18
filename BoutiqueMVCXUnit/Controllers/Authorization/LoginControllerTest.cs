@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BoutiqueMVC.Controllers.Implementations.Authorization;
+using BoutiqueMVC.Controllers.Implementations.Authorize;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;

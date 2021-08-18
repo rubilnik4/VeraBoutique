@@ -12,6 +12,8 @@ using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using BoutiqueXamarin.Views.ContentViews;
+using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate;
 
 namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
@@ -31,14 +33,35 @@ namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
                 this.OneWayBind(ViewModel, x => x.ClothesDetailDescriptionViewModel, x => x.ClothesDetailDescriptionView.ViewModel).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.NavigateBackCommand, x => x.BackButton).
-                     DisposeWith(disposable);
-
                 this.WhenAnyValue(x => x.ScrollClothes.Height).
                      Where(heightRequest => heightRequest > 0).
                      Subscribe(heightRequest => CarouselImages.HeightRequest = heightRequest * 2 / 3).
                      DisposeWith(disposable);
             });
         }
+
+        /// <summary>
+        /// Главное окно
+        /// </summary>
+        protected override ContentView MainContentView =>
+            this.MainView;
+
+        /// <summary>
+        /// Окно ошибок
+        /// </summary>
+        protected override ErrorConnectionView ErrorContentView =>
+            this.ErrorView;
+
+        /// <summary>
+        /// Главное окно
+        /// </summary>
+        protected override BackLeftMenuView BackLeftMenuView =>
+            this.BackLeftMenu;
+
+        /// <summary>
+        /// Меню навигации назад
+        /// </summary>
+        protected override UserRightMenuView UserRightMenuView =>
+            this.UserRightMenu;
     }
 }
