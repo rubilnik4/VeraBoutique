@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using Akavache;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
@@ -23,10 +24,10 @@ namespace BoutiqueXamarin.ViewModels.Authorize
           : base(loginNavigationService, loginNavigationService)
         {
             AuthorizeCommand = ReactiveCommand.CreateFromTask<IAuthorizeDomain, IResultValue<string>>(authorizeRestService.AuthorizeJwt);
-            _token = AuthorizeCommand.ToProperty(this, nameof(Token));
-            _authorize = this.WhenAnyValue(x => x.Login, x => x.Password).
-                                       Select(x =>(IAuthorizeDomain) new AuthorizeDomain(x.Item1, x.Item2)).
-                                       ToProperty(this, nameof(Authorize));
+
+            _authorize = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
+                              Select(x => (IAuthorizeDomain)new AuthorizeDomain(x.Login, x.Password)).
+                              ToProperty(this, nameof(Authorize));
         }
 
         /// <summary>
@@ -57,15 +58,16 @@ namespace BoutiqueXamarin.ViewModels.Authorize
             set => this.RaiseAndSetIfChanged(ref _password, value);
         }
 
+        /// <summary>
+        /// Параметры авторизации
+        /// </summary>
         private readonly ObservableAsPropertyHelper<IAuthorizeDomain> _authorize;
 
+        /// <summary>
+        /// Параметры авторизации
+        /// </summary>
         public IAuthorizeDomain Authorize =>
             _authorize.Value;
-
-        private readonly ObservableAsPropertyHelper<IResultValue<string>> _token;
-
-        public IResultValue<string> Token =>
-            _token.Value;
 
         /// <summary>
         /// Команда авторизации

@@ -15,6 +15,7 @@ using Prism.Ioc;
 using Prism.Unity;
 using Sharpnado.HorizontalListView.Droid;
 using Unity;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -37,6 +38,7 @@ namespace BoutiqueXamarin.Droid
             SharpnadoInitializer.Initialize();
             Sharpnado.Tabs.Initializer.Initialize(false, false);
             Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            Akavache.Registrations.Start(AppInfo.Name);
             LoadApplication(new App(new AndroidInitializer()));
         }
 
