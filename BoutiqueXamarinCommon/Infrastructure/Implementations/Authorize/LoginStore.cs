@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -34,11 +35,20 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// Получить токен
         /// </summary>
         public static async Task<IResultValue<string>> GetToken() =>
-            await BlobCache.Secure.GetObject<string>(TOKEN_KEY).
+            await BlobCache.Secure.GetAllKeys().
             ToTask().
-            ToResultValueNullCheckTaskAsync(TokenError).
+            ToResultValueWhereTaskAsync(keys => keys.Contains(TOKEN_KEY),
+                                    _ => TokenError).
+            ResultValueOkBindAsync(_ => BlobCache.Secure.GetObject<string>(TOKEN_KEY).ToTask()).
+            ResultValueBindOkTaskAsync(token => token.ToResultValueNullCheck(TokenError)).
             ResultValueBindOkTaskAsync(token => token.ToResultValueWhere(_ => !String.IsNullOrWhiteSpace(token),
                                                                          _ => TokenError));
+
+        /// <summary>
+        /// Очистить токен
+        /// </summary>
+        public static async Task ClearToken() =>
+             await BlobCache.Secure.Invalidate(TOKEN_KEY);
 
         /// <summary>
         /// Ошибка получения токена
