@@ -5,7 +5,8 @@
                                   x:Class="BoutiqueXamarin.Views.ContentViews.ErrorConnectionView"
                                   IsVisible="False">
     <StackLayout Style="{StaticResource StackLayoutError}">
-        <Label Style="{StaticResource LabelCommonError}"
+        <Label Style="{StaticResource LabelCommon}"
+               HorizontalTextAlignment="Center"
                Text="Ошибка подключения" />
 
         <Button x:Name="ReloadButton"

@@ -30,6 +30,24 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
         }
 
         /// <summary>
+        /// Сохранение токена дважды
+        /// </summary>
+        [Fact]
+        public async Task DoubleSave()
+        {
+            const string tokenFirst = "tokenFirst";
+            const string tokenSecond = "tokenFirst";
+            var saveResultFirst = await LoginStore.SaveToken(tokenFirst);
+            var saveResultSecond = await LoginStore.SaveToken(tokenSecond);
+            var getResult = await LoginStore.GetToken();
+            await LoginStore.ClearToken();
+
+            Assert.True(saveResultFirst.OkStatus);
+            Assert.True(saveResultSecond.OkStatus);
+            Assert.Equal(tokenSecond, getResult.Value);
+        }
+
+        /// <summary>
         /// Сохранение токена. Ошибка
         /// </summary>
         [Theory]

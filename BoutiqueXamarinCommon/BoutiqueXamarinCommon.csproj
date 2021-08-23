@@ -16,8 +16,4 @@
     <ProjectReference Include="..\BoutiqueDTO\BoutiqueDTO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\Implementations\Authorize\" />
-  </ItemGroup>
-
 </Project>

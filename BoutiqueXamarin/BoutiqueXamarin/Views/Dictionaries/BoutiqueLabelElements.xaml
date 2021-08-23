@@ -30,12 +30,6 @@
         <Setter Property="TextTransform" Value="Uppercase"/>
     </Style>
 
-    <Style x:Key="LabelCommonError"
-           TargetType="{x:Type Label}"
-           BasedOn="{StaticResource LabelCommon}">
-        <Setter Property="HorizontalTextAlignment" Value="Center"/>
-    </Style>
-
     <Style x:Key="LabelVeraBoutique"
            TargetType="{x:Type Label}"
            BasedOn="{StaticResource LabelTitle}">

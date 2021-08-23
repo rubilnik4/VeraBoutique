@@ -25,8 +25,8 @@ namespace BoutiqueXamarin.Views.Authorize
                 this.Bind(ViewModel, x => x.Password, x => x.PasswordEntry.Text).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, x => x.Authorize).
-                     DisposeWith(disposable);
+                //this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, x => x.Authorize).
+                //     DisposeWith(disposable);
             });
         }
 

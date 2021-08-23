@@ -29,8 +29,16 @@
                      Style="{StaticResource StackLayoutControl}"
                      Margin="10, 10, 10, 0">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                <Entry x:Name="LoginEntry"
-                       Placeholder="Адрес почты" />
+                <StackLayout>
+                    <Entry x:Name="LoginEntry"
+                           Placeholder="Адрес почты"/>
+                    <Label x:Name="LoginErrorLabel"
+                           Style="{StaticResource LabelCommon}"
+                           TextColor="Red"
+                           IsVisible="False"
+                           Text="Укажите логин"/>
+                </StackLayout>
+               
                 <Entry x:Name="PasswordEntry"
                        IsPassword="True"
                        Placeholder="Пароль" />
