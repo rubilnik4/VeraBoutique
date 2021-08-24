@@ -10,7 +10,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

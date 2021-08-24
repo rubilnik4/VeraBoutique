@@ -5,8 +5,8 @@ using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Configuration

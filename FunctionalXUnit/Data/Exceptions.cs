@@ -1,6 +1,5 @@
 ﻿using System;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace FunctionalXUnit.Data

@@ -14,8 +14,8 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfer
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Implementations.Identity;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers

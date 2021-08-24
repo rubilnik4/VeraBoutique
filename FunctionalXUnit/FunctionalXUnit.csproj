@@ -9,6 +9,8 @@
     <Description>Functional library tests</Description>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Test</Configurations>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync

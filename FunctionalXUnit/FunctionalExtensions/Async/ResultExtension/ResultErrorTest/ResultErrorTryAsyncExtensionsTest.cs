@@ -4,7 +4,7 @@ using Functional.Models.Enums;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors.ResultErrorTryAsyncExtensions;
 
 namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultErrorTest
 {

@@ -8,8 +8,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +58,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Ошибка доступа к таблице базы данных
         /// </summary>
-        private IErrorResult TableAccessError => DatabaseErrors.TableAccessError(TableName);
+        private IErrorResult TableAccessErrorType => DatabaseErrors.TableAccessError(TableName);
     }
 }

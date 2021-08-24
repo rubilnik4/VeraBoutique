@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 

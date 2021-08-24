@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.ResultFactory;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;

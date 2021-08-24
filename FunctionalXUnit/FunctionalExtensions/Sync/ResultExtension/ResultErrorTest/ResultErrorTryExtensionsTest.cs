@@ -3,7 +3,7 @@ using Functional.Models.Enums;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors.ResultErrorTryExtensions;
 
 namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorTest
 {

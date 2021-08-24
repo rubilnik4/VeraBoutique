@@ -5,8 +5,8 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueMVCXUnit.Data.Database.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -42,6 +42,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция поиска по идентификатору. Элемент не найден
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> GetByIdNotFoundFunc() =>
-            id => new ResultValue<ITestDomain>(ErrorData.NotFoundError);
+            id => new ResultValue<ITestDomain>(ErrorData.NotFoundErrorType);
     }
 }

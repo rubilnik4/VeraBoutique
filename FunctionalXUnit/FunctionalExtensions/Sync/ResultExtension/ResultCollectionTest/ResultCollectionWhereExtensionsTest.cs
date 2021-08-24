@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Data.Collections;

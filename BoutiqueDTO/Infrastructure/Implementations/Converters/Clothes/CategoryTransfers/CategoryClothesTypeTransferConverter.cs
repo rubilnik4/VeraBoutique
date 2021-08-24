@@ -11,8 +11,8 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransf
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers

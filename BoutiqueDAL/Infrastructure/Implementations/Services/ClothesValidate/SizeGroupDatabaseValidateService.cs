@@ -11,13 +11,13 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate

@@ -11,12 +11,9 @@ using BoutiqueLoader.Infrastructure.Implementations;
 using BoutiqueLoader.Infrastructure.Implementations.Logger;
 using BoutiqueLoader.Infrastructure.Implementations.Services.Upload;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader

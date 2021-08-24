@@ -5,7 +5,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueCommonXUnit.Data

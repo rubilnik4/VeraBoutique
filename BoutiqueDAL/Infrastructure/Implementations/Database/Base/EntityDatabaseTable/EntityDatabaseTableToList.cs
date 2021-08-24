@@ -7,7 +7,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Interfaces.Result;
 using Microsoft.EntityFrameworkCore;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection.ResultCollectionTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections.ResultCollectionTryAsyncExtensions;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable
 {
@@ -23,13 +23,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Вернуть записи из таблицы асинхронно
         /// </summary>
         public async Task<IResultCollection<TEntity>> ToListAsync() =>
-            await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().ToListAsync(), TableAccessError);
+            await ResultCollectionTryAsync(() => _databaseSet.AsNoTracking().ToListAsync(), TableAccessErrorType);
 
         /// <summary>
         /// Вернуть полные записи из таблицы асинхронно
         /// </summary>
         public async Task<IResultCollection<TEntity>> ToListMainAsync() =>
             await ResultCollectionTryAsync(() => EntitiesIncludes.ToListAsync(), 
-                                           TableAccessError);
+                                           TableAccessErrorType);
     }
 }

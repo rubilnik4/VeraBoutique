@@ -8,7 +8,7 @@ using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -65,12 +65,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
         public static Func<TestEntity, IResultValue<TestEnum>> AddIdError() =>
-           _ => new ResultValue<TestEnum>(ErrorData.DatabaseError);
+           _ => new ResultValue<TestEnum>(ErrorData.DatabaseErrorType);
 
         /// <summary>
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
         public static Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> AddRangeIdError() =>
-           _ => new ResultCollection<TestEnum>(ErrorData.DatabaseError);
+           _ => new ResultCollection<TestEnum>(ErrorData.DatabaseErrorType);
     }
 }

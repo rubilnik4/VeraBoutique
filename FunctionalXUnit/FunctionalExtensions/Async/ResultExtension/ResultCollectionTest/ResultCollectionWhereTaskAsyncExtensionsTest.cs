@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using Xunit;

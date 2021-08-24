@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses

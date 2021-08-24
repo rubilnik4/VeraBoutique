@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using FunctionalXUnit.Data;
 using Xunit;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection.ResultCollectionTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections.ResultCollectionTryExtensions;
 using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;

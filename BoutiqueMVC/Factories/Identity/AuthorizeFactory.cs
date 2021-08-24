@@ -8,9 +8,9 @@ using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Identity;
 
@@ -63,27 +63,27 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<string> UserName =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.USER_NAME).
-            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Имя пользователя не найдено"));
+            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Имя пользователя не найдено"));
 
         /// <summary>
         /// Пароль
         /// </summary>
         private static IResultValue<string> Password =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PASSWORD).
-            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Пароль пользователя не найден"));
+            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Пароль пользователя не найден"));
 
         /// <summary>
         /// Почта
         /// </summary>
         private static IResultValue<string> Email =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.EMAIL).
-            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Почта пользователя не найдена"));
+            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Почта пользователя не найдена"));
 
         /// <summary>
         /// Телефон
         /// </summary>
         private static IResultValue<string> Phone =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PHONE).
-            ToResultValueNullCheck(new ErrorResult(ErrorResultType.UserDefaultNotFound, "Телефон пользователя не найден"));
+            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Телефон пользователя не найден"));
     }
 }

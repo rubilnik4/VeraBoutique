@@ -8,7 +8,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize

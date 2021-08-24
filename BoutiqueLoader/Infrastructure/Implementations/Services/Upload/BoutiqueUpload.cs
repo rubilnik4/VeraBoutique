@@ -3,7 +3,7 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueLoader.Factories.Services;
 using BoutiqueLoader.Infrastructure.Implementations.Services.Authorize;
 using BoutiqueLoader.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload

@@ -12,7 +12,7 @@ using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
@@ -49,7 +49,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         [Fact]
         public async Task GetGenderCategories_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultGenders = new ResultCollection<GenderCategoryTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultGenders);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;

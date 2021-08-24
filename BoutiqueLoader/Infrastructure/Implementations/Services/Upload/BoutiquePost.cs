@@ -12,10 +12,10 @@ using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
 using BoutiqueLoader.Factories.Services;
 using BoutiqueLoader.Models.Enums;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload

@@ -14,7 +14,7 @@ using BoutiqueDTO.Models.Interfaces.Clothes;
 using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

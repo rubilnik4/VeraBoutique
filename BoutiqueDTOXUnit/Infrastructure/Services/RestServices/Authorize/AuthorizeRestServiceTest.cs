@@ -6,8 +6,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
@@ -42,7 +42,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
         [Fact]
         public async Task AuthorizeJwt_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var jwtTokenResult = new ResultValue<string>(error);
             var authorize = AuthorizeData.AuthorizeDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);

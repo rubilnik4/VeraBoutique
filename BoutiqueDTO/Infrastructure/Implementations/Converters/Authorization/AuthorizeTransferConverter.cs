@@ -9,7 +9,7 @@ using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Interfaces.Identity;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization

@@ -4,8 +4,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.CategoryEntities

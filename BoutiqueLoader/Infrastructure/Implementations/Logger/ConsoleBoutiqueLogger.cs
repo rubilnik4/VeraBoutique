@@ -29,7 +29,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Logger
         {
             foreach (var error in errors)
             {
-                Console.WriteLine($"Ошибка [{error.ErrorResultType}]. {error.Description}");
+                Console.WriteLine($"Ошибка [{error.ErrorType}]. {error.Description}");
             }
         }
     }

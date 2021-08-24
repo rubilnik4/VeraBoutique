@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace Functional.Models.Implementations.ResultFactory
@@ -19,8 +19,8 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
-        public static Task<IResultError> CreateTaskResultError(IErrorResult error)=>
-            Task.FromResult((IResultError)new ResultError(error));
+        public static Task<IResultError> CreateTaskResultError(IErrorResult errorType)=>
+            Task.FromResult((IResultError)new ResultError(errorType));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой
@@ -43,8 +43,8 @@ namespace Functional.Models.Implementations.ResultFactory
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
-        public static async Task<IResultError> CreateTaskResultErrorAsync(IErrorResult error)=>
-            await Task.FromResult((IResultError)new ResultError(error));
+        public static async Task<IResultError> CreateTaskResultErrorAsync(IErrorResult errorType)=>
+            await Task.FromResult((IResultError)new ResultError(errorType));
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой

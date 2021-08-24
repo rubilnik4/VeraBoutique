@@ -5,9 +5,9 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueMVCXUnit.Data.Database.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -53,7 +53,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция записи значения. Элемент не найден
         /// </summary>
         public static Func<ITestDomain, IResultValue<TestEnum>> PostValueFoundFunc() =>
-            _ => new ResultValue<TestEnum>(ErrorData.NotFoundError);
+            _ => new ResultValue<TestEnum>(ErrorData.NotFoundErrorType);
 
         /// <summary>
         /// Функция записи коллекции

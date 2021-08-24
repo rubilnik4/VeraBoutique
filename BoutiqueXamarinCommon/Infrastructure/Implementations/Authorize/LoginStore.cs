@@ -5,10 +5,9 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Akavache;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
@@ -28,7 +27,7 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// </summary>
         public static async Task<IResultError> SaveToken(string tokenInit) =>
              await tokenInit.ToResultValueWhere(token => !String.IsNullOrWhiteSpace(token),
-                                                _ => TokenError).
+                                                _ => TokenErrorType).
              ResultValueOkAsync(async token => await BlobCache.Secure.InsertObject(TOKEN_KEY, token));
 
         /// <summary>
@@ -38,11 +37,11 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
             await BlobCache.Secure.GetAllKeys().
             ToTask().
             ToResultValueWhereTaskAsync(keys => keys.Contains(TOKEN_KEY),
-                                    _ => TokenError).
+                                    _ => TokenErrorType).
             ResultValueOkBindAsync(_ => BlobCache.Secure.GetObject<string>(TOKEN_KEY).ToTask()).
-            ResultValueBindOkTaskAsync(token => token.ToResultValueNullCheck(TokenError)).
+            ResultValueBindOkTaskAsync(token => token.ToResultValueNullCheck(TokenErrorType)).
             ResultValueBindOkTaskAsync(token => token.ToResultValueWhere(_ => !String.IsNullOrWhiteSpace(token),
-                                                                         _ => TokenError));
+                                                                         _ => TokenErrorType));
 
         /// <summary>
         /// Очистить токен
@@ -53,7 +52,7 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// <summary>
         /// Ошибка получения токена
         /// </summary>
-        private static IErrorResult TokenError =>
+        private static IErrorResult TokenErrorType =>
             new ErrorResult(ErrorResultType.ValueNotValid, "Токен не задан");
     }
 }

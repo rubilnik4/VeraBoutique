@@ -15,7 +15,7 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Moq;
 using Xunit;
 
@@ -61,7 +61,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         [Fact]
         public async Task GetClothes_Error()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var genderEntities = GenderEntitiesData.GenderEntities;
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
@@ -80,7 +80,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         [Fact]
         public async Task GetClothesDetails_Error()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var genderEntities = GenderEntitiesData.GenderEntities;
             var clothesTypeEntities = ClothesTypeEntitiesData.ClothesTypeEntities;
             var genderType = genderEntities.First().GenderType;
@@ -137,7 +137,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetClothesDetails(genderType, clothesType);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         public async Task GetImage_ErrorDatabase()
         {
             var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var clothesResult = new ResultValue<ClothesImageEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
             var database = GetDatabase(clothesTable.Object);
@@ -175,7 +175,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, clothesResults.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, clothesResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         public async Task GetImage_NotFound()
         {
             var clothesEntity = ClothesEntitiesData.ClothesEntities.First();
-            var errorInitial = ErrorData.NotFoundError;
+            var errorInitial = ErrorData.NotFoundErrorType;
             var clothesResult = new ResultValue<ClothesImageEntity>(errorInitial);
             var clothesTable = ClothesTableMock.GetClothesTable(clothesResult);
             var database = GetDatabase(clothesTable.Object);

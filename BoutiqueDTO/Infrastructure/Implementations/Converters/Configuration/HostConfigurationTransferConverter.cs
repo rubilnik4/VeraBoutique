@@ -10,9 +10,10 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueDTO.Models.Implementations.Configuration;
 using BoutiqueDTO.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
@@ -37,9 +38,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
             ResultValueCurryOk(hostConfigurationTransfer.Host.
                               ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(hostConfigurationTransfer.Host)))).
             ResultValueCurryOk(hostConfigurationTransfer.TimeOut.
-                              ToResultValueWhere(timeOut => timeOut.TotalSeconds > 0,
-                                                 _ => new ErrorResult(ErrorResultType.ValueNotValid,
-                                                                      $"Значение {nameof(hostConfigurationTransfer.TimeOut)} должно быть больше 0"))).
+                               ToResultValueWhere(timeOut => timeOut.TotalSeconds > 0,
+                                                  _ => CommonErrorType.ValueNotValid.
+                                                       ToErrorTypeResult($"Значение {nameof(hostConfigurationTransfer.TimeOut)} должно быть больше 0"))).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

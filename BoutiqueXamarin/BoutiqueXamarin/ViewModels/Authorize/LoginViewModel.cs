@@ -12,10 +12,9 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using ReactiveUI;
 
@@ -98,8 +97,8 @@ namespace BoutiqueXamarin.ViewModels.Authorize
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(IAuthorizeDomain authorizeDomain, IAuthorizeRestService authorizeRestService) =>
             await authorizeDomain.ToResultValue().
-            ResultValueBindErrorsOk(authorize => ValidateByLogin(authorize.UserName)).
-            ResultValueBindErrorsOk(authorize => ValidateByPassword(authorize.Password)).
+            ConcatErrors(ValidateByLogin(authorizeDomain.UserName).Errors).
+            ConcatErrors(ValidateByPassword(authorizeDomain.Password).Errors).
             ResultValueBindOkAsync(authorizeRestService.AuthorizeJwt).
             ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
 

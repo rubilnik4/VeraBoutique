@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
+using Functional.Models.Implementations.Results;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;

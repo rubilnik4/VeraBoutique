@@ -13,7 +13,7 @@ namespace BoutiqueDALXUnit.Data
         /// <summary>
         /// Ошибка ненайденного элемента
         /// </summary>
-        public static IErrorResult NotFoundError => DatabaseErrors.ValueNotFoundError(String.Empty, String.Empty);
+        public static IErrorResult NotFoundErrorType => DatabaseErrors.ValueNotFoundError(String.Empty, String.Empty);
 
         /// <summary>
         /// Ошибка дублирующего элемента

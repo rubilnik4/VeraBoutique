@@ -9,7 +9,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueMVC.Controllers.Implementations.Clothes;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +49,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetGenderCategoris_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseError;
+            var initialError = ErrorData.DatabaseErrorType;
             var gendersResult = new ResultCollection<IGenderCategoryDomain>(initialError);
             var clothesDatabaseService = GetGenderDatabaseService(gendersResult);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
@@ -63,7 +63,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
         }
 
         /// <summary>

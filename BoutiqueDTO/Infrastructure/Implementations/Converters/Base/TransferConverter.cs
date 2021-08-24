@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base

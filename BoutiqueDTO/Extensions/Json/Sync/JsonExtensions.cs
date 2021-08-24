@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Newtonsoft.Json;
 
@@ -51,13 +52,13 @@ namespace BoutiqueDTO.Extensions.Json.Sync
         /// </summary>
         private static IErrorResult GetJsonError<TValue>()
             where TValue : notnull =>
-            new ErrorResult(ErrorResultType.JsonConvertion, $"Ошибка конвертации Json типа [{typeof(TValue).Name}]");
+            ConvertionErrorType.JsonConvertion.ToErrorTypeResult($"Ошибка конвертации Json типа [{typeof(TValue).Name}]");
 
         /// <summary>
         /// Ошибка конвертации в Json коллекции
         /// </summary>
         private static IErrorResult GetJsonListError<TValue>()
             where TValue : notnull =>
-            new ErrorResult(ErrorResultType.JsonConvertion, $"Ошибка конвертации Json коллекцию типа [{typeof(List<TValue>).Name}]");
+            ConvertionErrorType.JsonConvertion.ToErrorTypeResult($"Ошибка конвертации Json коллекцию типа [{typeof(List<TValue>).Name}]");
     }
 }

@@ -2,9 +2,8 @@
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Newtonsoft.Json;
 

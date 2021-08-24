@@ -23,9 +23,9 @@ using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 using Xunit;
@@ -78,7 +78,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         [Fact]
         public async Task GetAsync_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultTests = new ResultCollection<TestTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultTests);
             var testTransferConverter = TestTransferConverter;
@@ -131,7 +131,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task GetByIdAsync_Error()
         {
             var test = TestTransferData.TestTransfers.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultTest = new ResultValue<TestTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;
@@ -186,7 +186,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostCollectionAsync_Error()
         {
             var tests = TestData.TestDomains;
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultIds = new ResultCollection<TestEnum>(error);
             var restClient = RestClientMock.PostRestClient(resultIds);
             var testTransferConverter = TestTransferConverter;
@@ -241,7 +241,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostAsync_Error()
         {
             var test = TestData.TestDomains.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultIds = new ResultValue<string>(error);
             var restClient = RestClientMock.PostRestClient(resultIds);
             var testTransferConverter = TestTransferConverter;
@@ -296,7 +296,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostValueAsync_Error()
         {
             var test = TestData.TestDomains.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultIds = new ResultValue<TestEnum>(error);
             var restClient = RestClientMock.PostRestClient(resultIds);
             var testTransferConverter = TestTransferConverter;
@@ -350,7 +350,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PutAsync_Error()
         {
             var test = TestData.TestDomains.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultTest = new ResultError(error);
             var restClient = RestClientMock.PutRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;
@@ -401,7 +401,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         [Fact]
         public async Task DeleteAsync_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultTest = new ResultError(error);
             var restClient = RestClientMock.DeleteRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;
@@ -454,7 +454,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task DeleteByIdAsync_Error()
         {
             var test = TestTransferData.TestTransfers.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultTest = new ResultValue<TestTransfer>(error);
             var restClient = RestClientMock.DeleteRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;

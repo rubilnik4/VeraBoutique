@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Threading.Tasks;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using ReactiveUI;
 

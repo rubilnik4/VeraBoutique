@@ -5,12 +5,12 @@ using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
@@ -26,7 +26,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationParameters? clothesParameters,
                                                                                       IClothesRestService clothesRestService,
                                                                                       IClothesDetailNavigationService clothesDetailNavigationService) =>
-            await clothesParameters.ToResultValueNullCheck(new ErrorResult(ErrorResultType.ValueNotFound, nameof(ClothesNavigationParameters))).
+            await clothesParameters.
+            ToResultValueNullCheck(new ErrorTypeResult<CommonErrorType>(CommonErrorType.ValueNotFound, nameof(ClothesNavigationParameters))).
             ResultValueBindOkToCollectionAsync(parameters =>
                 clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
                 ResultCollectionOkTaskAsync(clothes =>

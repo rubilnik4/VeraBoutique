@@ -5,11 +5,10 @@ using BoutiqueLoader.Infrastructure.Implementations.Configuration;
 using BoutiqueLoader.Infrastructure.Implementations.Converters;
 using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
 using BoutiqueLoader.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader.Factories.Configuration

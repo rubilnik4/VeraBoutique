@@ -14,7 +14,7 @@ using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
@@ -49,7 +49,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         [Fact]
         public async Task GetClothes_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultClothes = new ResultCollection<ClothesTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);
@@ -85,7 +85,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         [Fact]
         public async Task GetClothesDetail_Error()
         {
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultClothes = new ResultCollection<ClothesDetailTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);
@@ -121,7 +121,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         public async Task GetClothesImage_Error()
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultClothes = new ResultValue<byte[]>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);
@@ -159,7 +159,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
         public async Task GetClothesImages_Error()
         {
             var clothes = ClothesTransfersData.ClothesMainTransfers.First();
-            var error = ErrorTransferData.ErrorBadRequest;
+            var error = ErrorTransferData.ErrorTypeBadRequest;
             var resultClothes = new ResultCollection<ClothesImageTransfer>(error);
             var restClient = RestClientMock.GetRestClient(resultClothes);
             var clothesRestService = GetClothesRestService(restClient.Object);

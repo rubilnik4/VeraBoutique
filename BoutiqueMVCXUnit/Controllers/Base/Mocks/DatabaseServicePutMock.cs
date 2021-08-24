@@ -5,7 +5,7 @@ using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueMVCXUnit.Data.Database.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -43,6 +43,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция изменения. Элемент не найден
         /// </summary>
         public static Func<IResultError> PutNotFoundFunc() =>
-            () => new ResultError(ErrorData.NotFoundError);
+            () => new ResultError(ErrorData.NotFoundErrorType);
     }
 }

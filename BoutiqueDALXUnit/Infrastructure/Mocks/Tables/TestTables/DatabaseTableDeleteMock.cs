@@ -11,8 +11,8 @@ using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -64,12 +64,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция удаления с ошибкой
         /// </summary>
         public static IResultValue<TestEntity> DeleteError =>
-             new ResultValue<TestEntity>(ErrorData.DatabaseError);
+             new ResultValue<TestEntity>(ErrorData.DatabaseErrorType);
 
         /// <summary>
         /// Функция получения по идентификатору. Не найдено
         /// </summary>
         public static IResultValue<TestEntity> FirstNotFound =>
-             new ResultValue<TestEntity>(Errors.NotFoundError);
+             new ResultValue<TestEntity>(Errors.NotFoundErrorType);
     }
 }

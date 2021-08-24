@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValue.ResultValueTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultValues.ResultValueTryAsyncExtensions;
 using static FunctionalXUnit.Data.ErrorData;
 
 namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValueTest

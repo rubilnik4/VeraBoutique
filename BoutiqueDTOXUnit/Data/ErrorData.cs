@@ -1,5 +1,4 @@
 ﻿using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDTOXUnit.Data
@@ -9,7 +8,7 @@ namespace BoutiqueDTOXUnit.Data
         /// <summary>
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
-        public static IErrorResult ErrorBadRequest =>
+        public static IErrorResult ErrorTypeBadRequest =>
             new ErrorResult(ErrorResultType.BadRequest, "BadRequest");
     }
 }

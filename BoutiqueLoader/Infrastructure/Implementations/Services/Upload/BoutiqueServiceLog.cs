@@ -4,7 +4,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueLoader.Models.Enums;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultError;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload

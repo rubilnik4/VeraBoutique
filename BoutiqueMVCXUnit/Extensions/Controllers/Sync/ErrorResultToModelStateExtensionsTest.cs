@@ -21,7 +21,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.False(modelState.IsValid);
             Assert.Equal(errorInitial.Count, modelState.ErrorCount);
-            Assert.Equal(errorInitial.First().ErrorResultType.ToString(), modelState.Keys.First());
+            Assert.Equal(errorInitial.First().ErrorType.ToString(), modelState.Keys.First());
         }
     }
 }

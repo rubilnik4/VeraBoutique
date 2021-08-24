@@ -11,7 +11,7 @@ using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Moq;
 using Xunit;
 
@@ -57,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         [Fact]
         public async Task GetGenderCategories_Error()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var genderCategoryEntities = GenderEntitiesData.GenderCategoryEntities;
             var genderResult = new ResultCollection<GenderEntity>(errorInitial);
             var categoryEntities = CategoryEntitiesData.CategoryEntities;
@@ -78,7 +78,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var genderResults = await genderDatabaseService.GetGenderCategories();
 
             Assert.True(genderResults.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, genderResults.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, genderResults.Errors.First().ErrorResultType);
         }
 
         /// <summary>

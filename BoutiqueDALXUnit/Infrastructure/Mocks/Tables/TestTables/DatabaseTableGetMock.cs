@@ -8,9 +8,9 @@ using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -64,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция получения по идентификатору. Не найдено
         /// </summary>
         public static Func<TestEnum, IResultValue<TestEntity>> FirstNotFoundFunc(IResultCollection<TestEntity> entitiesResult) =>
-            _ => entitiesResult.ResultValueBindOk(_ => new ResultValue<TestEntity>(Errors.NotFoundError));
+            _ => entitiesResult.ResultValueBindOk(_ => new ResultValue<TestEntity>(Errors.NotFoundErrorType));
 
         /// <summary>
         /// Получить тестовую таблицу

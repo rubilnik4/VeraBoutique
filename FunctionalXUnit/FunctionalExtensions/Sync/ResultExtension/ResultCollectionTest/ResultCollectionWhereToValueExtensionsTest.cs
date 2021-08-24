@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using Functional.Models.Implementations.Results;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;

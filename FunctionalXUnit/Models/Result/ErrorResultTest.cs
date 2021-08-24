@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
@@ -74,7 +73,7 @@ namespace FunctionalXUnit.Models.Result
         {
             var error = CreateErrorTest();
 
-            Assert.Equal(error.ErrorResultType.ToString(), error.ToString());
+            Assert.Equal(error.ErrorType.ToString(), error.ToString());
         }
 
         [Fact]

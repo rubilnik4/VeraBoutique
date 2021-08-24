@@ -7,7 +7,7 @@ using BoutiqueDTOXUnit.Data.Services.Interfaces;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -45,7 +45,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task Put_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseError;
+            var initialError = ErrorData.DatabaseErrorType;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testPut = TestData.TestResultDomains.Value.Last();
             var testService = DatabaseServicePutMock.GetTestDatabaseTable(testDomains);
@@ -59,7 +59,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorResultType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
         }
 
         /// <summary>

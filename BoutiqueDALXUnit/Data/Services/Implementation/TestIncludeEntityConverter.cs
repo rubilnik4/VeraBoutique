@@ -4,7 +4,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation

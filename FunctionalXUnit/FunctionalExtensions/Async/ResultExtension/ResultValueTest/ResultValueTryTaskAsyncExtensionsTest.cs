@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;

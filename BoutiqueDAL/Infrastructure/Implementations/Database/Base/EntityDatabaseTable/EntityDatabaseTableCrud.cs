@@ -3,13 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultError;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Interfaces.Result;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultError.ResultErrorTryExtensions;
-using static Functional.FunctionalExtensions.Async.ResultExtension.ResultError.ResultErrorTryAsyncExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues.ResultValueTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors.ResultErrorTryExtensions;
+using static Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors.ResultErrorTryAsyncExtensions;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable
 {
@@ -25,14 +25,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Добавить запись в таблицу
         /// </summary>
         public async Task<IResultValue<TId>> AddAsync(TEntity entity) =>
-            await ResultErrorTryAsync(() => _databaseSet.AddAsync(entity).AsTask(), TableAccessError).
+            await ResultErrorTryAsync(() => _databaseSet.AddAsync(entity).AsTask(), TableAccessErrorType).
                   ToResultValueTaskAsync(entity.Id);
 
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
         public async Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities) =>
-            await ResultErrorTryAsync(() => _databaseSet.AddRangeAsync(entities), TableAccessError).
+            await ResultErrorTryAsync(() => _databaseSet.AddRangeAsync(entities), TableAccessErrorType).
                   ToResultValueTaskAsync(entities.Select(entity => entity.Id)).
                   ToResultCollectionTaskAsync();
 
@@ -40,25 +40,25 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Обновить элемент в таблице
         /// </summary>
         public new IResultError Update(TEntity entity) =>
-            ResultErrorTry(() => _databaseSet.Update(entity), TableAccessError);
+            ResultErrorTry(() => _databaseSet.Update(entity), TableAccessErrorType);
 
         /// <summary>
         /// Удалить элемент в таблице
         /// </summary>
         public new IResultValue<TEntity> Remove(TEntity entity) =>
             ResultValueTry(() => _databaseSet.Remove(entity).
-                                 Map(_ => entity), TableAccessError);
+                                 Map(_ => entity), TableAccessErrorType);
 
         /// <summary>
         /// Удалить элементы в таблице
         /// </summary>
         public new IResultError RemoveRange(IEnumerable<TEntity> entities) =>
-            ResultErrorTry(() => _databaseSet.RemoveRange(entities), TableAccessError);
+            ResultErrorTry(() => _databaseSet.RemoveRange(entities), TableAccessErrorType);
 
         /// <summary>
         /// Удалить все элементы в таблице
         /// </summary>
         public IResultError Remove() =>
-            ResultErrorTry(() => _databaseSet.RemoveRange(EntitiesIncludesDelete), TableAccessError);
+            ResultErrorTry(() => _databaseSet.RemoveRange(EntitiesIncludesDelete), TableAccessErrorType);
     }
 }

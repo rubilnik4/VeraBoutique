@@ -1,6 +1,5 @@
 ﻿using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data.Database.Implementation
@@ -28,7 +27,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Ошибка подключения к базе
         /// </summary>
-        public static IErrorResult ErrorConnection =>
+        public static IErrorResult ErrorTypeConnection =>
             new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "ErrorConnection");
     }
 }

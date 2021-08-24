@@ -7,10 +7,10 @@ using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;
 using BoutiqueLoader.Factories.Services;
 using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorize

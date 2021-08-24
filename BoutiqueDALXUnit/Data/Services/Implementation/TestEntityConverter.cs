@@ -15,8 +15,8 @@ using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
-using Functional.Models.Implementations.Result;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation

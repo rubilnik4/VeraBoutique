@@ -10,7 +10,7 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Moq;
 using Xunit;
 
@@ -46,7 +46,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Get_Error()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
@@ -57,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get();
 
             Assert.True(testResult.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, testResult.Errors.First().ErrorResultType);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task GetId_Error()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
@@ -98,7 +98,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
          
             Assert.True(testResult.HasErrors);
-            Assert.Equal(errorInitial.ErrorResultType, testResult.Errors.First().ErrorResultType);
+            Assert.Equal(errorInitial.ErrorType, testResult.Errors.First().ErrorResultType);
         }
 
         /// <summary>

@@ -6,10 +6,10 @@ using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Mvc;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValue.ResultValueTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues.ResultValueTryExtensions;
 
 namespace BoutiqueMVC.Extensions.Controllers.Async
 {

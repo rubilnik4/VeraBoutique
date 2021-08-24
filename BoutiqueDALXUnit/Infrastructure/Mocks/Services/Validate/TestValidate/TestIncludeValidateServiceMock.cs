@@ -4,7 +4,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 
@@ -36,6 +36,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate
         /// Функция проверки наличия
         /// </summary>
         public static Func<IEnumerable<string>, IResultError> ValidateFindsError() =>
-            _ => new ResultError(ErrorData.NotFoundError);
+            _ => new ResultError(ErrorData.NotFoundErrorType);
     }
 }

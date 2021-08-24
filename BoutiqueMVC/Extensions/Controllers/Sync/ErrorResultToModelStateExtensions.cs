@@ -17,7 +17,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
             var modelState = new ModelStateDictionary();
             foreach (var error in errors)
             {
-                modelState.TryAddModelError(error.ErrorResultType.ToString(), error.Description);
+                modelState.TryAddModelError(error.ErrorType.ToString(), error.Description);
             }
             return modelState;
         }

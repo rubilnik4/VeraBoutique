@@ -6,7 +6,7 @@ using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Moq;
 
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
@@ -46,6 +46,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция обновления c ошибкой
         /// </summary>
         public static Func<TestEntity, ResultError> UpdateError() =>
-            _ => new ResultError(ErrorData.DatabaseError);
+            _ => new ResultError(ErrorData.DatabaseErrorType);
     }
 }

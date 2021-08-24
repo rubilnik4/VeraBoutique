@@ -7,7 +7,7 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base
@@ -38,7 +38,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task DeleteAll_DeleteError()
         {
-            var errorInitial = ErrorData.DatabaseError;
+            var errorInitial = ErrorData.DatabaseErrorType;
             var resultDelete = new ResultError(errorInitial);
             var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(resultDelete);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);

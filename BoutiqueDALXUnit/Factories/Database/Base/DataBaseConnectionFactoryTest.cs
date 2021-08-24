@@ -5,7 +5,7 @@ using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Factories.Database.Base
@@ -137,7 +137,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadHost()
         {
-            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.ErrorConnection);
+            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.ErrorTypeConnection);
             var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
             var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
 
@@ -154,7 +154,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         public void GetDatabaseConfiguration_BadAuthorization()
         {
             var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(TestConnectionData.ErrorConnection);
+            var authorization = new ResultValue<Authorization>(TestConnectionData.ErrorTypeConnection);
             var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
@@ -171,7 +171,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         {
             var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
             var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(TestConnectionData.ErrorConnection);
+            var database = new ResultValue<string>(TestConnectionData.ErrorTypeConnection);
 
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 

@@ -30,7 +30,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(errorResultType, errorResult.ErrorResultType);
+            Assert.Equal(errorResultType, errorResult.ErrorType);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(ErrorResultType.ServerNotFound, errorResult.ErrorResultType);
+            Assert.Equal(ErrorResultType.ServerNotFound, errorResult.ErrorType);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(ErrorResultType.InternalServerError, errorResult.ErrorResultType);
+            Assert.Equal(ErrorResultType.InternalServerError, errorResult.ErrorType);
         }
 
         /// <summary>

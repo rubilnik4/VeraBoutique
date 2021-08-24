@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 
 namespace FunctionalXUnit.Data
@@ -15,13 +15,13 @@ namespace FunctionalXUnit.Data
         /// Создать тестовый экземпляр ошибки
         /// </summary>
         public static IErrorResult CreateErrorTest() =>
-            new ErrorResult(ErrorResultType.Unknown, "Unknown error");
+            new ErrorTypeResult<TestErrorType>(TestErrorType.TestType, "Test error");
 
         /// <summary>
         /// Создать тестовый экземпляр списка ошибок
         /// </summary>
         public static IReadOnlyList<IErrorResult> CreateErrorListTwoTest() =>
-            new List<IErrorResult>()
+            new List<IErrorResult>
             {
                 CreateErrorTest(),
                 CreateErrorTest(),
@@ -44,10 +44,5 @@ namespace FunctionalXUnit.Data
         /// </summary>
         public static Task<IEnumerable<IErrorResult>> CreateErrorListTwoTestTask() =>
             Task.FromResult(CreateErrorEnumerableTwoTest());
-
-        /// <summary>
-        /// ОШибка деления на ноль
-        /// </summary>
-        public static IErrorResult GetDivisionError() => new ErrorResult(ErrorResultType.DivideByZero, "DivisionError");
     }
 }

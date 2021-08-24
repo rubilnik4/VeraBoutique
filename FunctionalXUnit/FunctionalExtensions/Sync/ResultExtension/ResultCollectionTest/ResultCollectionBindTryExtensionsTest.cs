@@ -1,13 +1,13 @@
 ﻿using System.Linq;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.Models.Enums;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.Collections;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Mocks.Implementation.SyncFunctions;
-using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollection.ResultCollectionBindTryExtensions;
+using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections.ResultCollectionBindTryExtensions;
 
 namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollectionTest
 {

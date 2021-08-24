@@ -5,7 +5,7 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Result;
+using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Result;
 using Moq;
 

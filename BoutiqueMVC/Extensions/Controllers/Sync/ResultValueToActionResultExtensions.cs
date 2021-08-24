@@ -99,7 +99,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// Получить объект со значением или вернуть ошибку
         /// </summary>
         private static ActionResult GetBadRequestByErrors(IReadOnlyCollection<IErrorResult> errors) =>
-            errors.First().ErrorResultType switch
+            errors.First().ErrorType switch
             {
                 ErrorResultType.ValueNotFound => new NotFoundResult(),
                 ErrorResultType.CollectionEmpty => new NotFoundResult(),
