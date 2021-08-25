@@ -6,7 +6,7 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueMVCXUnit.Data.Database.Interfaces;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Moq;
 
 namespace BoutiqueMVCXUnit.Controllers.Base.Mocks

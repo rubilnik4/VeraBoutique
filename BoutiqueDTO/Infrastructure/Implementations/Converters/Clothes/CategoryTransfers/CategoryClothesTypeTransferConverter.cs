@@ -13,7 +13,7 @@ using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using BoutiqueDTO.Models.Interfaces.Clothes.ClothesTransfers;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers
 {

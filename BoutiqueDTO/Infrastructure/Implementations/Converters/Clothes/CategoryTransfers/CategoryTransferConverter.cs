@@ -5,7 +5,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers
 using BoutiqueDTO.Models.Implementations.Clothes.CategoryTransfers;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers
 {

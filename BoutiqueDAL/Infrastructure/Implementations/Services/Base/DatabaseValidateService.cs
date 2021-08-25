@@ -18,7 +18,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
@@ -85,7 +85,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         public async Task<IResultError> ValidateFind(TId id) =>
             await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).
             ResultValueBindWhereTaskAsync(idCount => idCount > 0,
-                okFunc: idCount => new ResultValue<TId>(id),
+                okFunc: _ => new ResultValue<TId>(id),
                 badFunc: _ => new ResultValue<TId>(DatabaseErrors.ValueNotFoundError(id, _dataTable.TableName)));
 
         /// <summary>
@@ -108,9 +108,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Проверить количество вложенных моделей
         /// </summary>
         public IResultError ValidateQuantity(IEnumerable<TDomain> domains) =>
-           domains.ToResultCollectionWhere(
-            idsValidate => idsValidate.Any(),
-            _ => DatabaseErrors.CollectionEmpty(typeof(TDomain).Name, _dataTable.TableName));
+           domains.ToResultCollectionWhere(idsValidate => idsValidate.Any(),
+                                           collection => DatabaseErrors.CollectionEmpty(collection, _dataTable.TableName));
 
         /// <summary>
         /// Получить ошибку дублирования
@@ -118,7 +117,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         protected async Task<IResultError> ValidateDuplicate(TId id) =>
              await _dataTable.FindExpressionValueAsync(ValidateQuery(id), id).
              ResultValueBindWhereTaskAsync(idCount => idCount == 0,
-                okFunc: idCount => new ResultValue<TId>(id) ,
+                okFunc: _ => new ResultValue<TId>(id) ,
                 badFunc: _ => GetDuplicateErrorResult(id, _dataTable.GetType().Name));
 
         /// <summary>

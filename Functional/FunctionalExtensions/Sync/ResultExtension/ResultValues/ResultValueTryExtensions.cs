@@ -1,9 +1,9 @@
 ﻿using System;
-using Functional.Models.Interfaces.Result;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Results;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues
 {

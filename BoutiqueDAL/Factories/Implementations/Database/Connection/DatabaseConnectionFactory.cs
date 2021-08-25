@@ -3,8 +3,10 @@ using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Factories.Implementations.Database.Connection
 {
@@ -49,49 +51,40 @@ namespace BoutiqueDAL.Factories.Implementations.Database.Connection
         /// </summary>
         public static IResultValue<string> GetHost(string? host) =>
            host.
-           WhereContinue(HostConnection.IsHostValid,
-               okFunc: _ => new ResultValue<string>(host!),
-               badFunc: _ => new ErrorTypeResult<>(ErrorResultType.DatabaseIncorrectConnection, "Имя сервера базы данных не задано").
-                                 ToResultValue<string>());
+           ToResultValueWhereNull(HostConnection.IsHostValid,
+                                  _ => ErrorResultFactory.DatabaseConnectionError(nameof(host), "Имя сервера базы данных не задано"));
 
         /// <summary>
         /// Получить порт
         /// </summary>
         public static IResultValue<int> GetPort(string? port) =>
             port.
-            WhereContinue(HostConnection.IsPortValid,
-                okFunc: _ => new ResultValue<int>(Int32.Parse(port!)),
-                badFunc: _ => new ErrorTypeResult<>(ErrorResultType.DatabaseIncorrectConnection, "Порт базы данных не задан").
-                                  ToResultValue<int>());
-
+            ToResultValueWhereNullOkBad(HostConnection.IsPortValid,
+                                        Int32.Parse,
+                                        _ => ErrorResultFactory.DatabaseConnectionError(nameof(port), "Порт базы данных не задан"));
+            
         /// <summary>
         /// Получить имя базы данных
         /// </summary>
-        public static IResultValue<string> GetDatabase(string? database) =>
-            database.
-            WhereContinue(DatabaseConnection.IsDatabaseValid,
-                okFunc: _ => new ResultValue<string>(database!),
-                badFunc: _ => new ErrorTypeResult<>(ErrorResultType.DatabaseIncorrectConnection, "Имя базы данных не задано").
-                              ToResultValue<string>());
+        public static IResultValue<string> GetDatabase(string? databaseName) =>
+            databaseName.
+            ToResultValueWhereNull(DatabaseConnection.IsDatabaseNameValid,
+                                   _ => ErrorResultFactory.DatabaseConnectionError(nameof(databaseName), "Имя базы данных не задано"));
 
         /// <summary>
         /// Получить имя пользователя
         /// </summary>
         public static IResultValue<string> GetUsername(string? username) =>
             username.
-            WhereContinue(Authorization.IsUsernameValid,
-                okFunc: _ => new ResultValue<string>(username!),
-                badFunc: _ => new ErrorTypeResult<>(ErrorResultType.DatabaseIncorrectConnection, "Имя пользователя базы данных не задано").
-                              ToResultValue<string>());
+            ToResultValueWhereNull(Authorization.IsUsernameValid,
+                                   _ => ErrorResultFactory.DatabaseConnectionError(nameof(username), "Имя пользователя базы данных не задано"));
 
         /// <summary>
         /// Получить пароль
         /// </summary>
         public static IResultValue<string> GetPassword(string? password) =>
             password.
-            WhereContinue(Authorization.IsPasswordValid,
-                okFunc: _ => new ResultValue<string>(password!),
-                badFunc: _ => new ErrorTypeResult<>(ErrorResultType.DatabaseIncorrectConnection, "Пароль базы данных не задан").
-                              ToResultValue<string>());
+            ToResultValueWhereNull(Authorization.IsPasswordValid,
+                                   _ => ErrorResultFactory.DatabaseConnectionError(nameof(password), "Пароль базы данных не задан"));
     }
 }

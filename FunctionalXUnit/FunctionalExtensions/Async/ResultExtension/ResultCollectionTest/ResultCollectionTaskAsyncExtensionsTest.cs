@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.Models.Implementations.ResultFactory;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using FunctionalXUnit.Data;
 using Xunit;
 

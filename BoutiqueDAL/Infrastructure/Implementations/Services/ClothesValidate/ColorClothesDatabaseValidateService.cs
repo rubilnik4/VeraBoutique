@@ -9,7 +9,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -36,6 +36,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateSizeName(IColorDomain color) =>
             color.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<string, IColorDomain>(nameof(color.Name), color));
+                _ => DatabaseFieldErrors.FieldNotValid<string, IColorDomain>(nameof(color.Name), color));
     }
 }

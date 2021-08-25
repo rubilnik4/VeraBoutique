@@ -12,7 +12,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -39,6 +39,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateSizeName(IGenderDomain gender) =>
             gender.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<GenderType, IGenderDomain>(nameof(gender.Name), gender));
+                _ => DatabaseFieldErrors.FieldNotValid<GenderType, IGenderDomain>(nameof(gender.Name), gender));
     }
 }

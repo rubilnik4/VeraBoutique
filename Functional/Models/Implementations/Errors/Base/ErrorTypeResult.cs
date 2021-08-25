@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Globalization;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Errors;
 
-namespace Functional.Models.Implementations.Results
+namespace Functional.Models.Implementations.Errors.Base
 {
     /// <summary>
     /// Ошибка результирующего ответа
     /// </summary>
-    public class ErrorTypeResult<TError> : ErrorResult, IErrorTypeResult<TError>
+    public abstract class ErrorTypeResult<TError> : ErrorResult, IErrorTypeResult<TError>
         where TError : struct
     {
-        public ErrorTypeResult(TError errorType, string description)
-            : this(errorType, description, null) { }
+        protected ErrorTypeResult(TError errorType, string description)
+            : this(errorType, description, null) 
+        { }
 
-        public ErrorTypeResult(TError errorType, string description, Exception? exception)
+        protected ErrorTypeResult(TError errorType, string description, Exception? exception)
             : base(description, exception)
         {
             ErrorType = errorType;
@@ -31,12 +31,6 @@ namespace Functional.Models.Implementations.Results
         public override bool HasErrorType<TErrorType>()
             where TErrorType : struct =>
             typeof(TError) == typeof(TErrorType);
-
-        /// <summary>
-        /// Добавить или заменить исключение
-        /// </summary>
-        public override IErrorResult AppendException(Exception exception) =>
-            new ErrorTypeResult<TError>(ErrorType, Description, Exception);
 
         #region IFormattable Support
         public override string ToString() =>

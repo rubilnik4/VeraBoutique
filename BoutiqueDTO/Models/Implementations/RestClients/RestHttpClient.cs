@@ -12,7 +12,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Models.Implementations.RestClients
 {

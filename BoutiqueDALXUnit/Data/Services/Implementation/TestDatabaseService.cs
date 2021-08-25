@@ -13,7 +13,6 @@ using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.Models.Interfaces.Result;
 using Moq;
 using Xunit;
 

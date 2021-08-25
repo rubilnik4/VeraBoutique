@@ -16,7 +16,6 @@ using BoutiqueXamarin.ViewModels.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
 using Prism.Commands;
 using ReactiveUI;
 using Xamarin.Forms;

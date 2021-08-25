@@ -5,7 +5,7 @@ using System.Linq;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.Models.Enums;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync

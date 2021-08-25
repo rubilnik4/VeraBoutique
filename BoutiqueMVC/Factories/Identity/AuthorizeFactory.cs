@@ -10,8 +10,10 @@ using BoutiqueMVC.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 
 namespace BoutiqueMVC.Factories.Identity
@@ -42,7 +44,7 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<IAuthorizeDomain> Login =>
             new ResultValue<Func<string, string, IAuthorizeDomain>>(GetAuthorizeLogin).
-            ResultValueCurryOk(UserName).
+            ResultValueCurryOk(Username).
             ResultValueCurryOk(Password).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
 
@@ -50,7 +52,7 @@ namespace BoutiqueMVC.Factories.Identity
         /// Получить пользователя о умолчанию
         /// </summary>
         private static BoutiqueUser GetDefaultUser(IAuthorizeDomain authorizeDomain, string email, string phone) =>
-            new BoutiqueUser(IdentityRoleTypes.ADMIN_ROLE, authorizeDomain, email, phone);
+            new(IdentityRoleTypes.ADMIN_ROLE, authorizeDomain, email, phone);
 
         /// <summary>
         /// Получить имя пользователя и пароль
@@ -61,29 +63,29 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        private static IResultValue<string> UserName =>
+        private static IResultValue<string> Username =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.USER_NAME).
-            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Имя пользователя не найдено"));
+            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Username, "Имя пользователя по умолчанию не найдено"));
 
         /// <summary>
         /// Пароль
         /// </summary>
         private static IResultValue<string> Password =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PASSWORD).
-            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Пароль пользователя не найден"));
+            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Password, "Пароль умолчанию не найден"));
 
         /// <summary>
         /// Почта
         /// </summary>
         private static IResultValue<string> Email =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.EMAIL).
-            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Почта пользователя не найдена"));
+            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Почта умолчанию не найдена"));
 
         /// <summary>
         /// Телефон
         /// </summary>
         private static IResultValue<string> Phone =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.PHONE).
-            ToResultValueNullCheck(new ErrorTypeResult<>(ErrorResultType.UserDefaultNotFound, "Телефон пользователя не найден"));
+            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Phone, "Телефон умолчанию не найден"));
     }
 }

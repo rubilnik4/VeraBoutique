@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Logger
 {

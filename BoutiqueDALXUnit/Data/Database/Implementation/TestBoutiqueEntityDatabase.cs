@@ -13,7 +13,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Functional.FunctionalExtensions.Async;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;

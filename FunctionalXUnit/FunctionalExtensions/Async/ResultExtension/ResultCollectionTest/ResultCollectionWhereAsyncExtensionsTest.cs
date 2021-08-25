@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Data.Collections;

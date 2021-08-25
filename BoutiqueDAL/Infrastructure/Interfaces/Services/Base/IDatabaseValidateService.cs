@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.Models.Implementations.ResultFactory;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Functional.Models.Enums;
-using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 

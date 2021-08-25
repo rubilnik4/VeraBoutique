@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Functional.Models.Interfaces.Results;
 
-namespace Functional.Models.Interfaces.Result
+namespace Functional.Models.Interfaces.Errors
 {
     /// <summary>
     /// Ошибка результирующего ответа. Базовый класс
@@ -22,7 +23,7 @@ namespace Functional.Models.Interfaces.Result
         /// Наличие типа ошибки
         /// </summary>
         bool HasErrorType<TError>()
-            where TError: struct;
+            where TError : struct;
 
         /// <summary>
         /// Добавить или заменить исключение

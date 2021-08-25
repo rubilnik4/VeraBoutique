@@ -29,7 +29,8 @@ namespace BoutiqueDAL.Models.Implementations.Connection
         /// <summary>
         /// Проверка имени сервера
         /// </summary>
-        public static bool IsHostValid(string? host) => !String.IsNullOrWhiteSpace(host);
+        public static bool IsHostValid(string? host) => 
+            !String.IsNullOrWhiteSpace(host);
 
         /// <summary>
         /// Проверка порта

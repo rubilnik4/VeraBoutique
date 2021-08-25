@@ -7,7 +7,7 @@ using System.Threading;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Moq;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Services

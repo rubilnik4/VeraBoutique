@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Results;
 
 namespace Functional.Models.Implementations.Results
 {

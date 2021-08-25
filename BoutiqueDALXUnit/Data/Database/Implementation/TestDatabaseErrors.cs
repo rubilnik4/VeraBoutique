@@ -1,5 +1,4 @@
 ﻿using Functional.Models.Enums;
-using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data.Database.Implementation
 {

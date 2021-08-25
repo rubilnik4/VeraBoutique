@@ -6,7 +6,7 @@ using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Moq;
 
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate

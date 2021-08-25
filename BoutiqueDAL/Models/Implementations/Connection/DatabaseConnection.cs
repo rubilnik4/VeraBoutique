@@ -9,7 +9,7 @@ namespace BoutiqueDAL.Models.Implementations.Connection
     {
         public DatabaseConnection(HostConnection hostConnection, string database, Authorization authorization)
         {
-            if (!IsDatabaseValid(database)) throw new ArgumentNullException(nameof(database));
+            if (!IsDatabaseNameValid(database)) throw new ArgumentNullException(nameof(database));
 
             HostConnection = hostConnection;
             Database = database;
@@ -59,7 +59,7 @@ namespace BoutiqueDAL.Models.Implementations.Connection
         /// <summary>
         /// Проверка имени базы
         /// </summary>
-        public static bool IsDatabaseValid(string? database) => !String.IsNullOrWhiteSpace(database);
+        public static bool IsDatabaseNameValid(string? database) => !String.IsNullOrWhiteSpace(database);
 
         #region IEquatable
         public override bool Equals(object? obj) =>

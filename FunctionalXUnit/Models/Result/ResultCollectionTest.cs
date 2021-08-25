@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 using static FunctionalXUnit.Data.Collections;

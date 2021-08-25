@@ -6,7 +6,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Base;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues.ResultValueTryExtensions;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors.ResultErrorTryExtensions;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors.ResultErrorTryAsyncExtensions;

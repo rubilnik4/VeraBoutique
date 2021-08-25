@@ -15,7 +15,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -42,6 +42,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(ISizeDomain size) =>
             size.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<int, ISizeDomain>(nameof(size.Name), size));
+                _ => DatabaseFieldErrors.FieldNotValid<int, ISizeDomain>(nameof(size.Name), size));
     }
 }

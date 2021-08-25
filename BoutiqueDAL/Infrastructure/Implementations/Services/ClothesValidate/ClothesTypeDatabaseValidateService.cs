@@ -20,7 +20,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -73,7 +73,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(IClothesTypeDomain clothesType) =>
             clothesType.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.Name), clothesType));
+                _ => DatabaseFieldErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.Name), clothesType));
 
         /// <summary>
         /// Проверка наименования категории 
@@ -81,6 +81,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateCategoryName(IClothesTypeDomain clothesType) =>
             clothesType.CategoryName.ToResultValueWhere(
                 categoryName => !String.IsNullOrWhiteSpace(categoryName),
-                _ => ModelsErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.CategoryName), clothesType));
+                _ => DatabaseFieldErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.CategoryName), clothesType));
     }
 }

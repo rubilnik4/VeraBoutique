@@ -2,7 +2,7 @@
 using System.Reactive;
 using System.Threading.Tasks;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +36,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// <summary>
         /// Сохранить изменения в базе асинхронно
         /// </summary>
-        public async Task<IResultError> SaveChangesAsync() => await ResultErrorTryAsync(() => base.SaveChangesAsync(),
-                                                                                        DatabaseErrors.DatabaseSaveError());
+        public async Task<IResultError> SaveChangesAsync() =>
+            await ResultErrorTryAsync(() => base.SaveChangesAsync(), DatabaseErrors.DatabaseSaveError());
 
         /// <summary>
         /// Отслеживаемые сущности

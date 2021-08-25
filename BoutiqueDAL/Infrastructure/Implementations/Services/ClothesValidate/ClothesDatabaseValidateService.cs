@@ -20,7 +20,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -119,7 +119,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(IClothesMainDomain clothesMain) =>
             clothesMain.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Name), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Name), clothesMain));
 
         /// <summary>
         /// Проверка описания
@@ -127,7 +127,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateDescription(IClothesMainDomain clothesMain) =>
             clothesMain.Description.ToResultValueWhere(
                 description => !String.IsNullOrWhiteSpace(description),
-                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Description), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Description), clothesMain));
 
         /// <summary>
         /// Проверка цены
@@ -135,7 +135,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidatePrice(IClothesMainDomain clothesMain) =>
              clothesMain.Price.ToResultValueWhere(
                 price => price > 0,
-                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(0, nameof(clothesMain.Price), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(0, nameof(clothesMain.Price), clothesMain));
 
         /// <summary>
         /// Проверка имени типа одежды
@@ -143,7 +143,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateClothesTypeName(IClothesMainDomain clothesMain) =>
             clothesMain.ClothesTypeName.ToResultValueWhere(
                 clothesTypeName => !String.IsNullOrWhiteSpace(clothesTypeName),
-                _ => ModelsErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.ClothesTypeName), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.ClothesTypeName), clothesMain));
 
         /// <summary>
         /// Проверка изображений

@@ -6,7 +6,7 @@ using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;
 using Xunit;

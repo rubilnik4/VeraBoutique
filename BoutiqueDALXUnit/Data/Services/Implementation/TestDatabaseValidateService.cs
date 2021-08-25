@@ -20,7 +20,7 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
 {
@@ -72,6 +72,6 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         private static IResultError ValidateName(ITestDomain test) =>
             test.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => ModelsErrors.FieldNotValid<TestEnum, ITestDomain>(nameof(test.Name), test));
+                _ => DatabaseFieldErrors.FieldNotValid<TestEnum, ITestDomain>(nameof(test.Name), test));
     }
 }

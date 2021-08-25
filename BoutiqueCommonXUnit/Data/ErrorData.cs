@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Functional.Models.Enums;
-using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueCommonXUnit.Data
 {

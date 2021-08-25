@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Functional.Models.Enums;
 
-namespace Functional.Models.Interfaces.Result
+namespace Functional.Models.Interfaces.Errors
 {
     /// <summary>
     /// Ошибка результирующего ответа

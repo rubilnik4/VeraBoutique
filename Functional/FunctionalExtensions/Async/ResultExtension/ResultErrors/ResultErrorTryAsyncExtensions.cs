@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Results;
 
 namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors
 {
@@ -20,10 +22,10 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors
             }
             catch (Exception ex)
             {
-                return new Models.Implementations.Results.ResultError(errorType.AppendException(ex));
+                return new ResultError(errorType.AppendException(ex));
             }
 
-            return new Models.Implementations.Results.ResultError();
+            return new ResultError();
         }
     }
 }

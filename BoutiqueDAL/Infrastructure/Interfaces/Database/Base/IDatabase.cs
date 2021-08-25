@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
 

@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
 {

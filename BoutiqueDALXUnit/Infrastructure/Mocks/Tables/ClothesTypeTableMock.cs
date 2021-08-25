@@ -6,7 +6,6 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
 using MockQueryable.Moq;
 using Moq;
 

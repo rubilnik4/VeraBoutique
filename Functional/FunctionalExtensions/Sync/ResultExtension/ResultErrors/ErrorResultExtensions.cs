@@ -1,6 +1,8 @@
 ﻿using System;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Errors;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors
 {

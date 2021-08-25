@@ -11,7 +11,6 @@ using BoutiqueDTOXUnit.Data.Transfers.Configuration;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Configuration;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
 using Newtonsoft.Json;
 using Xunit;
 

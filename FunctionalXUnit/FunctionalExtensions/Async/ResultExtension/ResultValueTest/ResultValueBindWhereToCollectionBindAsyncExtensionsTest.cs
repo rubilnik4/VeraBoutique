@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.Models.Implementations.ResultFactory;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;

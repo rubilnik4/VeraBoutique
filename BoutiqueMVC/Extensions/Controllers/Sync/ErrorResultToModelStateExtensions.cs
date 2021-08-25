@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Functional.Models.Interfaces.Result;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync

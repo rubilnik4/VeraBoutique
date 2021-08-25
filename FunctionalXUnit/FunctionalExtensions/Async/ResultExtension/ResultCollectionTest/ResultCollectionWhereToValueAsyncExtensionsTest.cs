@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;

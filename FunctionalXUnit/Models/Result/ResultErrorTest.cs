@@ -1,5 +1,4 @@
-﻿using Functional.Models.Interfaces.Result;
-using System.Linq;
+﻿using System.Linq;
 using Functional.Models.Implementations.Results;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;

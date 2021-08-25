@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
@@ -16,7 +15,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.CategoryEntities
 {
@@ -45,7 +44,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override CategoryEntity ToEntity(ICategoryClothesTypeDomain categoryClothesTypeDomain) =>
-            new CategoryEntity(categoryClothesTypeDomain);
+            new (categoryClothesTypeDomain);
 
         /// <summary>
         /// Функция получения категории одежды

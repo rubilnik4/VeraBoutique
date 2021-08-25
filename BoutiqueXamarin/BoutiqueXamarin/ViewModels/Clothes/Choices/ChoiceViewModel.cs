@@ -21,7 +21,7 @@ using BoutiqueXamarinCommon.Models.Interfaces;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using Prism.Navigation;
 using ReactiveUI;
 using Splat;

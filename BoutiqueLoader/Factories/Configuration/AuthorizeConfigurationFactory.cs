@@ -9,7 +9,7 @@ using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
 using BoutiqueLoader.Models.Interfaces.Configuration;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueLoader.Factories.Configuration
 {

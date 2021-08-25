@@ -7,7 +7,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers
 {

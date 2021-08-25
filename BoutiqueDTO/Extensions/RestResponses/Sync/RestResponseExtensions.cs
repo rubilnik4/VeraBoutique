@@ -6,7 +6,7 @@ using BoutiqueDTO.Extensions.Json.Async;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Sync
 {

@@ -5,7 +5,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestRespo
 using BoutiqueDTO.Models.Interfaces.Base;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Async
 {

@@ -10,7 +10,7 @@ using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Interfaces.Identity;
 using Functional.FunctionalExtensions.Sync;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization
 {

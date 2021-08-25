@@ -15,7 +15,7 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
 {
@@ -39,7 +39,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         public IResultError ValidateByMain(IEnumerable<IClothesImageDomain> clothesImages) =>
              clothesImages.Where(clothesImage => clothesImage.IsMain).ToList().
              ToResultValueWhere(images => images.Count == 1,
-                badFunc: images => ModelsErrors.FieldNotValid<int, IClothesImageDomain>(nameof(IClothesImageDomain.IsMain)));
+                badFunc: images => DatabaseFieldErrors.FieldNotValid<int, IClothesImageDomain, int>(images.Count, nameof(IClothesImageTable),
+                                                                                                    "Превышено количество главных изображений"));
 
         /// <summary>
         /// Проверка изображения
@@ -47,6 +48,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateImage(IClothesImageDomain clothesImage) =>
             clothesImage.Image.ToResultValueWhere(
                 image => image?.Length > 0,
-                _ => ModelsErrors.FieldNotValid<int, IClothesImageDomain>(nameof(clothesImage.Image), clothesImage));
+                image => DatabaseFieldErrors.FieldNotValid<int, IClothesImageDomain, byte[]>(image, nameof(IClothesImageTable)));
     }
 }

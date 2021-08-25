@@ -8,7 +8,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfer
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers
 {

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Results;
 
-namespace Functional.Models.Implementations.Results
+namespace Functional.Models.Implementations.Errors.Base
 {
     public abstract class ErrorResult : IErrorResult
     {
         protected ErrorResult(string description)
-            : this(description, null) { }
+            : this(description, null)
+        { }
 
         protected ErrorResult(string description, Exception? exception)
         {
@@ -33,9 +36,15 @@ namespace Functional.Models.Implementations.Results
             where TError : struct;
 
         /// <summary>
+        /// Инициализация ошибки
+        /// </summary>
+        protected abstract IErrorResult Initialize(string description, Exception? exception);
+
+        /// <summary>
         /// Добавить или заменить исключение
         /// </summary>
-        public abstract IErrorResult AppendException(Exception exception);
+        public IErrorResult AppendException(Exception exception) =>
+            Initialize(Description, exception);
 
         /// <summary>
         /// Преобразовать в ответ

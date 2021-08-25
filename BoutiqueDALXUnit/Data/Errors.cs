@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using Functional.Models.Interfaces.Result;
 
 namespace BoutiqueDALXUnit.Data
 {

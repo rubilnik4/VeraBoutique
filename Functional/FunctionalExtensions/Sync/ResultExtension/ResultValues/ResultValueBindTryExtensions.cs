@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
+using Functional.Models.Interfaces.Results;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues.ResultValueTryExtensions;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.ResultFactory;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.Collections;

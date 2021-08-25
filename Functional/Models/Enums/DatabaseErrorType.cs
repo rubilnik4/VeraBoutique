@@ -5,10 +5,11 @@
     /// </summary>
     public enum DatabaseErrorType
     {
-        DatabaseIncorrectConnection,
-        DatabaseSave,
-        DatabaseTableAccess,
-        DatabaseValueDuplicate,
-        DatabaseValueNotFound,
+        Connection,
+        Save,
+        TableAccess,
+        ValueDuplicate,
+        ValueNotFound,
+        ValueNotValid,
     }
 }

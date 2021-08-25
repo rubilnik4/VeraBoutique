@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.ResultFactory;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
 using FunctionalXUnit.Data;
 using FunctionalXUnit.Mocks.Implementation;
 using Xunit;

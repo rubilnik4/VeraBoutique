@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Result;
 
 namespace FunctionalXUnit.Data
 {
