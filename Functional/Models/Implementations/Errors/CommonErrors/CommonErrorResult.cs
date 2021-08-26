@@ -7,11 +7,11 @@ namespace Functional.Models.Implementations.Errors.CommonErrors
 {
     public class CommonErrorResult : ErrorTypeResult<CommonErrorType>, IErrorTypeResult<CommonErrorType>
     {
-        protected CommonErrorResult(CommonErrorType commonErrorType, string description)
+        public CommonErrorResult(CommonErrorType commonErrorType, string description)
             : this(commonErrorType, description, null)
         { }
 
-        protected CommonErrorResult(CommonErrorType commonErrorType, string description, Exception? exception)
+        public CommonErrorResult(CommonErrorType commonErrorType, string description, Exception? exception)
             : base(commonErrorType, description, exception)
         { }
 

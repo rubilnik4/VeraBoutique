@@ -5,6 +5,7 @@ using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Results;
 using Newtonsoft.Json;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Results;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections

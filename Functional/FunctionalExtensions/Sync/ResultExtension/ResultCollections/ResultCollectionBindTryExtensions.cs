@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Results;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections.ResultCollectionTryExtensions;
 
@@ -35,8 +36,8 @@ namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections
         /// Связать результирующий ответ со значением со связыванием с обработкой функции при положительном условии
         /// </summary>
         public static IResultCollection<TValueOut> ResultCollectionBindTryOk<TValueIn, TValueOut>(this IResultCollection<TValueIn> @this,
-                                                                                             Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> func,
-                                                                                             IErrorResult error) =>
+                                                                                                  Func<IReadOnlyCollection<TValueIn>, IResultCollection<TValueOut>> func,
+                                                                                                  IErrorResult error) =>
             @this.ResultCollectionBindOk(value => ResultCollectionBindTry(() => func.Invoke(value), error));
     }
 }

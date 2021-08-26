@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Results;
 using static Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues.ResultValueTryExtensions;
 

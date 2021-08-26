@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueCommon.Infrastructure.Interfaces.Logger
