@@ -119,7 +119,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(IClothesMainDomain clothesMain) =>
             clothesMain.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Name), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid(clothesMain.Name, nameof(IClothesTable)));
 
         /// <summary>
         /// Проверка описания
@@ -127,7 +127,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateDescription(IClothesMainDomain clothesMain) =>
             clothesMain.Description.ToResultValueWhere(
                 description => !String.IsNullOrWhiteSpace(description),
-                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.Description), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid(clothesMain.Description, nameof(IClothesTable)));
 
         /// <summary>
         /// Проверка цены
@@ -135,7 +135,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidatePrice(IClothesMainDomain clothesMain) =>
              clothesMain.Price.ToResultValueWhere(
                 price => price > 0,
-                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(0, nameof(clothesMain.Price), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid(0, clothesMain.Price, nameof(IClothesTable)));
 
         /// <summary>
         /// Проверка имени типа одежды
@@ -143,7 +143,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateClothesTypeName(IClothesMainDomain clothesMain) =>
             clothesMain.ClothesTypeName.ToResultValueWhere(
                 clothesTypeName => !String.IsNullOrWhiteSpace(clothesTypeName),
-                _ => DatabaseFieldErrors.FieldNotValid<int, IClothesMainDomain>(nameof(clothesMain.ClothesTypeName), clothesMain));
+                _ => DatabaseFieldErrors.FieldNotValid(clothesMain.ClothesTypeName, nameof(IClothesTable)));
 
         /// <summary>
         /// Проверка изображений

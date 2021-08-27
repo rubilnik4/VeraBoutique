@@ -38,7 +38,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionEnumerableAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionCollectionAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var resultValue = await ResultCollectionTryAsync(() => DivisionListAsync(0), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -128,10 +128,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var initialNumbers = GetRangeNumber();
             var numberResult =new ResultCollection<int>(initialNumbers);
 
-            var numbersAfterTry = await numberResult.ResultCollectionTryOkAsync(DivisionCollectionByZeroAsync, Exceptions.ExceptionError());
+            var resultValue = await numberResult.ResultCollectionTryOkAsync(DivisionCollectionByZeroAsync, Exceptions.ExceptionError());
 
-            Assert.True(numbersAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numbersAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultValue.HasErrors);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>

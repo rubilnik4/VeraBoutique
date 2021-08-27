@@ -64,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция получения по идентификатору. Не найдено
         /// </summary>
         public static Func<TestEnum, IResultValue<TestEntity>> FirstNotFoundFunc(IResultCollection<TestEntity> entitiesResult) =>
-            _ => entitiesResult.ResultValueBindOk(_ => new ResultValue<TestEntity>(Errors.NotFoundErrorType));
+            _ => entitiesResult.ResultValueBindOk(_ => new ResultValue<TestEntity>(DatabaseErrorData.NotFoundError));
 
         /// <summary>
         /// Получить тестовую таблицу

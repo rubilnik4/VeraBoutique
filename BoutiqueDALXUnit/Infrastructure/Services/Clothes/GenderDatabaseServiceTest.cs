@@ -7,6 +7,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
@@ -57,7 +58,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
         [Fact]
         public async Task GetGenderCategories_Error()
         {
-            var errorInitial = ErrorData.DatabaseErrorType;
+            var errorInitial = DatabaseErrorData.TableError;
             var genderCategoryEntities = GenderEntitiesData.GenderCategoryEntities;
             var genderResult = new ResultCollection<GenderEntity>(errorInitial);
             var categoryEntities = CategoryEntitiesData.CategoryEntities;
@@ -78,7 +79,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var genderResults = await genderDatabaseService.GetGenderCategories();
 
             Assert.True(genderResults.HasErrors);
-            Assert.Equal(errorInitial.ErrorType, genderResults.Errors.First().ErrorResultType);
+            Assert.IsType(errorInitial.GetType(), genderResults.Errors.First());
         }
 
         /// <summary>

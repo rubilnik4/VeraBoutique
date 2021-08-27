@@ -14,6 +14,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
@@ -56,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(sizeGroupSizeNormalize);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(sizeGroupEmptySizes);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(sizeGroupNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(sizeGroupsNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>

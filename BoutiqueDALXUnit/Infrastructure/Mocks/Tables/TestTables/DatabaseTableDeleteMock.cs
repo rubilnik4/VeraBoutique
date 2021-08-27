@@ -64,12 +64,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция удаления с ошибкой
         /// </summary>
         public static IResultValue<TestEntity> DeleteError =>
-             new ResultValue<TestEntity>(ErrorData.DatabaseErrorType);
+             new ResultValue<TestEntity>(DatabaseErrorData.TableError);
 
         /// <summary>
         /// Функция получения по идентификатору. Не найдено
         /// </summary>
         public static IResultValue<TestEntity> FirstNotFound =>
-             new ResultValue<TestEntity>(Errors.NotFoundErrorType);
+             new ResultValue<TestEntity>(DatabaseErrorData.NotFoundError);
     }
 }

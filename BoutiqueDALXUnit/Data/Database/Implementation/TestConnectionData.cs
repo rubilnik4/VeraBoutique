@@ -1,5 +1,8 @@
 ﻿using BoutiqueDAL.Models.Implementations.Connection;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
@@ -11,12 +14,12 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static HostConnection HostConnectionOk => new ("localhost", 5432);
+        public static HostConnection HostConnectionOk => new("localhost", 5432);
 
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static Authorization AuthorizationOk => new ("username", "password");
+        public static Authorization AuthorizationOk => new("username", "password");
 
         /// <summary>
         /// Корректные параметры подключения
@@ -27,6 +30,6 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Ошибка подключения к базе
         /// </summary>
         public static IErrorResult ErrorTypeConnection =>
-            new ErrorResult(ErrorResultType.DatabaseIncorrectConnection, "ErrorConnection");
+            ErrorResultFactory.DatabaseConnectionError("host", "ErrorConnection");
     }
 }

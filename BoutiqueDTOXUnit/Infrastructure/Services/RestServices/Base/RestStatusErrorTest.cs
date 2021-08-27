@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
@@ -16,21 +17,22 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Статус ошибки ответа
         /// </summary>
         [Theory]
-        [InlineData(HttpStatusCode.BadGateway, ErrorResultType.BadGateway)]
-        [InlineData(HttpStatusCode.BadRequest, ErrorResultType.BadRequest)]
-        [InlineData(HttpStatusCode.GatewayTimeout, ErrorResultType.GatewayTimeout)]
-        [InlineData(HttpStatusCode.InternalServerError, ErrorResultType.InternalServerError)]
-        [InlineData(HttpStatusCode.NotFound, ErrorResultType.ValueNotFound)]
-        [InlineData(HttpStatusCode.RequestTimeout, ErrorResultType.RequestTimeout)]
-        [InlineData(HttpStatusCode.Unauthorized, ErrorResultType.Unauthorized)]
-        public void HttpStatusCodeStatus(HttpStatusCode httpStatusCode, ErrorResultType errorResultType)
+        [InlineData(HttpStatusCode.BadGateway, RestErrorType.BadGateway)]
+        [InlineData(HttpStatusCode.BadRequest, RestErrorType.BadRequest)]
+        [InlineData(HttpStatusCode.GatewayTimeout, RestErrorType.GatewayTimeout)]
+        [InlineData(HttpStatusCode.InternalServerError, RestErrorType.InternalServerError)]
+        [InlineData(HttpStatusCode.NotFound, RestErrorType.ValueNotFound)]
+        [InlineData(HttpStatusCode.RequestTimeout, RestErrorType.RequestTimeout)]
+        [InlineData(HttpStatusCode.Unauthorized, RestErrorType.Unauthorized)]
+        public void HttpStatusCodeStatus(HttpStatusCode httpStatusCode, RestErrorType errorResultType)
         {
             var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
             var restResponse = GetRestResponse(httpStatusCode, httpStatusCode.ToString(), httpMessage);
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(errorResultType, errorResult.ErrorType);
+            Assert.IsType<RestMessageErrorResult>(errorResult);
+            Assert.Equal(errorResultType, ((RestMessageErrorResult)errorResult).ErrorType);
         }
 
         [Fact]
@@ -41,7 +43,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(ErrorResultType.ServerNotFound, errorResult.ErrorType);
+            Assert.IsType<RestMessageErrorResult>(errorResult);
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)errorResult).ErrorType);
         }
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             var errorResult = RestStatusError.RestStatusToErrorResult(restResponse);
 
-            Assert.Equal(ErrorResultType.InternalServerError, errorResult.ErrorType);
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)errorResult).ErrorType);
         }
 
         /// <summary>

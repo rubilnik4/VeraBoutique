@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.SizeGroupDomain;

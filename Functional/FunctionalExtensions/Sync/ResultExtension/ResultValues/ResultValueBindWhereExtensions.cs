@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues

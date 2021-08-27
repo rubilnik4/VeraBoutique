@@ -8,6 +8,8 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.DatabaseErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base
@@ -54,7 +56,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var result = await testService.Put(testDomainPut);
 
             Assert.True(result.HasErrors);
-            Assert.Equal(ErrorResultType.ValueNotFound, result.Errors.First().ErrorResultType);
+            Assert.IsNotType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var result = await testService.Put(testDomainPut);
 
             Assert.True(result.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseTableAccess, result.Errors.First().ErrorResultType);
+            Assert.IsNotType<DatabaseTableErrorResult>(result.Errors.First());
         }
     }
 }

@@ -1,5 +1,10 @@
 ﻿using System.Collections.Generic;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
+using Functional.Models.Implementations.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueCommonXUnit.Data
 {
@@ -11,20 +16,20 @@ namespace BoutiqueCommonXUnit.Data
         /// <summary>
         /// Тестовый экземпляр ошибки
         /// </summary>
-        public static IErrorResult ErrorTypeTest =>
-            new ErrorResult(ErrorResultType.Unknown, "Unknown error");
+        public static IErrorResult ErrorTest =>
+            new CommonErrorResult(CommonErrorType.Unknown, "Unknown error");
 
         /// <summary>
-        /// Создать тестовый экземпляр ошибки не найденного элемента
+        /// Тестовый экземпляр ошибки
         /// </summary>
-        public static IErrorResult NotFoundErrorType =>
-            new ErrorResult(ErrorResultType.ValueNotFound, "NotFound");
+        public static IErrorResult ErrorTestFirst =>
+            new CommonErrorResult(CommonErrorType.Unknown, "Unknown error first");
 
         /// <summary>
-        /// Создать тестовый экземпляр ошибки базы данных
+        /// Тестовый экземпляр ошибки
         /// </summary>
-        public static IErrorResult DatabaseErrorType =>
-            new ErrorResult(ErrorResultType.DatabaseTableAccess, "DatabaseTableAccess");
+        public static IErrorResult ErrorTestSecond =>
+            new CommonErrorResult(CommonErrorType.Unknown, "Unknown error second");
 
         /// <summary>
         /// Тестовые экземпляры ошибок
@@ -32,8 +37,8 @@ namespace BoutiqueCommonXUnit.Data
         public static IList<IErrorResult> ErrorsTest =>
             new List<IErrorResult>
             {
-                ErrorTypeTest,
-                NotFoundErrorType,
+                ErrorTestFirst,
+                ErrorTestSecond,
             };
     }
 }

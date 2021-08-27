@@ -26,10 +26,10 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Получить модели одежды
         /// </summary>
         public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationParameters? clothesParameters,
-                                                                                      IClothesRestService clothesRestService,
-                                                                                      IClothesDetailNavigationService clothesDetailNavigationService) =>
+                                                                                     IClothesRestService clothesRestService,
+                                                                                     IClothesDetailNavigationService clothesDetailNavigationService) =>
             await clothesParameters.
-            ToResultValueNullCheck(new ErrorTypeResult<CommonErrorType>(CommonErrorType.ValueNotFound, nameof(ClothesNavigationParameters))).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesParameters, typeof(ClothesViewModelFactory))).
             ResultValueBindOkToCollectionAsync(parameters =>
                 clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
                 ResultCollectionOkTaskAsync(clothes =>

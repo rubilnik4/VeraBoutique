@@ -25,6 +25,7 @@ using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.RestErrors;
 using Functional.Models.Implementations.Results;
 using Moq;
 using Xunit;
@@ -86,7 +87,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync();
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -102,7 +104,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync();
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -139,7 +142,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -156,7 +160,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -194,7 +199,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostCollectionAsync(tests);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -211,7 +217,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostCollectionAsync(tests);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -249,7 +256,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -266,7 +274,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -304,7 +313,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostValueAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -321,7 +331,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostValueAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -358,7 +369,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PutAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -375,7 +387,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PutAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -409,7 +422,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync();
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -425,7 +439,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync();
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -462,7 +477,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -479,7 +495,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ServerNotFound);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.ServerNotFound, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
 

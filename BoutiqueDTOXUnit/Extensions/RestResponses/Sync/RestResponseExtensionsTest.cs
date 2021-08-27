@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
@@ -43,7 +44,8 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
             var resultCollection = restResult.ToRestResultError();
 
             Assert.True(resultCollection.HasErrors);
-            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+            Assert.IsType<RestMessageErrorResult>(resultCollection.Errors.First());
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)resultCollection.Errors.First()).ErrorType);
         }
     }
 }

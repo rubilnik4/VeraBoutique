@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace Functional.Models.Implementations.Results
@@ -59,19 +60,19 @@ namespace Functional.Models.Implementations.Results
         /// <summary>
         /// Получить ошибку
         /// </summary>      
-        public IErrorTypeResult<TError>? GetError<TError>()
+        public IErrorBaseResult<TError>? GetError<TError>()
             where TError : struct =>
             Errors.
-            OfType<IErrorTypeResult<TError>>().
+            OfType<IErrorBaseResult<TError>>().
             FirstOrDefault();
 
         /// <summary>
         /// Получить ошибку
         /// </summary>      
-        public IReadOnlyCollection<IErrorTypeResult<TError>> GetErrors<TError>()
+        public IReadOnlyCollection<IErrorBaseResult<TError>> GetErrors<TError>()
             where TError : struct =>
             Errors.
-            OfType<IErrorTypeResult<TError>>().
+            OfType<IErrorBaseResult<TError>>().
             ToList();
 
         /// <summary>

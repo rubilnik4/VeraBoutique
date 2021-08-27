@@ -7,6 +7,7 @@ using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
 {

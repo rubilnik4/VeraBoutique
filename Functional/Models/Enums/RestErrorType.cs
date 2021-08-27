@@ -1,4 +1,4 @@
-﻿namespace BoutiqueDTO.Models.Enums.Errors
+﻿namespace Functional.Models.Enums
 {
     /// <summary>
     /// Ошибки rest сервиса
@@ -12,6 +12,7 @@
         InternalServerError,
         RequestTimeout,
         RequestEntityToLarge,
+        ValueNotFound,
         Unauthorized,
         UnsupportedMediaType,
         UnknownRestStatus,

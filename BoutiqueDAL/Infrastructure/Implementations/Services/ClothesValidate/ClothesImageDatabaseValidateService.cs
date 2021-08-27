@@ -39,8 +39,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         public IResultError ValidateByMain(IEnumerable<IClothesImageDomain> clothesImages) =>
              clothesImages.Where(clothesImage => clothesImage.IsMain).ToList().
              ToResultValueWhere(images => images.Count == 1,
-                badFunc: images => DatabaseFieldErrors.FieldNotValid<int, IClothesImageDomain, int>(images.Count, nameof(IClothesImageTable),
-                                                                                                    "Превышено количество главных изображений"));
+                badFunc: images => DatabaseFieldErrors.FieldNotValid<IClothesImageDomain, int>(images.Count, nameof(IClothesImageTable),
+                                                                                               "Превышено количество главных изображений"));
 
         /// <summary>
         /// Проверка изображения
@@ -48,6 +48,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateImage(IClothesImageDomain clothesImage) =>
             clothesImage.Image.ToResultValueWhere(
                 image => image?.Length > 0,
-                image => DatabaseFieldErrors.FieldNotValid<int, IClothesImageDomain, byte[]>(image, nameof(IClothesImageTable)));
+                image => DatabaseFieldErrors.FieldNotValid<byte[]>(image, nameof(IClothesImageTable)));
     }
 }

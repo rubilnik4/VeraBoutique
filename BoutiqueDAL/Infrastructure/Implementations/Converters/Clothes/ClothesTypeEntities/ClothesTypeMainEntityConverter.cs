@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
@@ -20,6 +19,7 @@ using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Results;
 
@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать вид одежды в модель базы данных
         /// </summary>
         public override ClothesTypeEntity ToEntity(IClothesTypeMainDomain clothesTypeMainDomain) =>
-             new ClothesTypeEntity(clothesTypeMainDomain, clothesTypeMainDomain.CategoryName);
+             new (clothesTypeMainDomain, clothesTypeMainDomain.CategoryName);
 
         /// <summary>
         /// Функция получения типа одежды
@@ -67,7 +67,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// </summary>
         private IResultValue<ICategoryDomain> GetCategory(CategoryEntity? categoryEntity) =>
             categoryEntity.
-            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(categoryEntity))).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(categoryEntity, this)).
             ResultValueBindOk(category => _categoryEntityConverter.FromEntity(category));
     }
 }

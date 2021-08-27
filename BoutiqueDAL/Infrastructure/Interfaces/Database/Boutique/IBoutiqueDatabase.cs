@@ -45,7 +45,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        IColorClothesTable ColorClothesTable { get; }
+        IColorTable ColorTable { get; }
 
         /// <summary>
         /// Таблица базы данных одежды

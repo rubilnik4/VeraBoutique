@@ -5,7 +5,9 @@ using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.DatabaseErrors;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Factories.Database.Base
@@ -44,7 +46,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var hostConnectionResult = DatabaseConnectionFactory.GetHostConnection(host, port);
 
             Assert.True(hostConnectionResult.HasErrors);
-            Assert.True(hostConnectionResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(hostConnectionResult.Errors.First());
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var hostConnectionResult = DatabaseConnectionFactory.GetHostConnection(host, port);
 
             Assert.True(hostConnectionResult.HasErrors);
-            Assert.True(hostConnectionResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(hostConnectionResult.Errors.First());
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var authorizationResult = DatabaseConnectionFactory.GetAuthorization(username, password);
 
             Assert.True(authorizationResult.HasErrors);
-            Assert.True(authorizationResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(authorizationResult.Errors.First());
         }
 
         /// <summary>
@@ -111,7 +113,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var authorizationResult = DatabaseConnectionFactory.GetAuthorization(username, password);
 
             Assert.True(authorizationResult.HasErrors);
-            Assert.True(authorizationResult.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(authorizationResult.Errors.First());
         }
 
         /// <summary>
@@ -144,7 +146,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
-            Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());
         }
 
         /// <summary>
@@ -160,7 +162,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
-            Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());
         }
 
         /// <summary>
@@ -176,7 +178,7 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
             var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
 
             Assert.True(databaseConnection.HasErrors);
-            Assert.True(databaseConnection.Errors.First().ErrorResultType == ErrorResultType.DatabaseIncorrectConnection);
+            Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());
         }
     }
 }

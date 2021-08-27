@@ -8,6 +8,8 @@
     <PackageId>BoutiqueDTOXUnit</PackageId>
     <Configurations>Debug;Release;Test</Configurations>
     <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>

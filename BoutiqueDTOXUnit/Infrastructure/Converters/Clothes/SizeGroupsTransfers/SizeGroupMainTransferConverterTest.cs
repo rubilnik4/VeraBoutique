@@ -8,6 +8,7 @@ using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
@@ -46,7 +47,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
             var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
         }
     }
 }

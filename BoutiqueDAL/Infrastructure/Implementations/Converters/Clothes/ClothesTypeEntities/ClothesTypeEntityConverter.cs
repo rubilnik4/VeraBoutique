@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
@@ -34,6 +33,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// Преобразовать группу размеров одежды в модель базы данных
         /// </summary>
         public override ClothesTypeEntity ToEntity(IClothesTypeDomain clothesTypeDomain) =>
-            new ClothesTypeEntity(clothesTypeDomain);
+            new (clothesTypeDomain);
     }
 }

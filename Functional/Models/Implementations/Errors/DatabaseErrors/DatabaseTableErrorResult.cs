@@ -2,13 +2,15 @@
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 
 namespace Functional.Models.Implementations.Errors.DatabaseErrors
 {
     /// <summary>
     /// Ошибка таблицы базы данных
     /// </summary>
-    public class DatabaseTableErrorResult : ErrorTypeResult<DatabaseErrorType>
+    public class DatabaseTableErrorResult : ErrorBaseResult<DatabaseErrorType>, IDatabaseTableErrorResult
     {
         public DatabaseTableErrorResult(string tableName, string description)
           : this(DatabaseErrorType.TableAccess, tableName, description)

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
@@ -10,7 +11,9 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.DatabaseErrors;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Moq;
 using Xunit;
 
@@ -46,7 +49,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task Get_Error()
         {
-            var errorInitial = ErrorData.DatabaseErrorType;
+            var errorInitial = DatabaseErrorData.TableError;
             var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
@@ -57,7 +60,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get();
 
             Assert.True(testResult.HasErrors);
-            Assert.Equal(errorInitial.ErrorType, testResult.Errors.First().ErrorResultType);
+            Assert.IsNotType<DatabaseTableErrorResult>(testResult.Errors.First());
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         [Fact]
         public async Task GetId_Error()
         {
-            var errorInitial = ErrorData.DatabaseErrorType;
+            var errorInitial = DatabaseErrorData.TableError;
             var testResultEntities = new ResultCollection<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableGetMock.GetTestDatabaseTable(testResultEntities);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
@@ -98,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
          
             Assert.True(testResult.HasErrors);
-            Assert.Equal(errorInitial.ErrorType, testResult.Errors.First().ErrorResultType);
+            Assert.IsNotType<DatabaseTableErrorResult>(testResult.Errors.First());
         }
 
         /// <summary>
@@ -118,7 +121,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
 
             Assert.True(testResult.HasErrors);
-            Assert.Equal(ErrorResultType.ValueNotFound, testResult.Errors.First().ErrorResultType);
+            Assert.IsType<IDatabaseValueNotValidErrorResult>(testResult.Errors.First());
         }
 
     }

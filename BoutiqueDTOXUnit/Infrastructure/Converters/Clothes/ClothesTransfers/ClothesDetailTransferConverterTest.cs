@@ -4,6 +4,7 @@ using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
@@ -42,7 +43,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
         }
     }
 }

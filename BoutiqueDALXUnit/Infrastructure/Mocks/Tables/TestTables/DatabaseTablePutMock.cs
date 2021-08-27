@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommonXUnit.Data;
+using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
@@ -46,6 +47,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Функция обновления c ошибкой
         /// </summary>
         public static Func<TestEntity, ResultError> UpdateError() =>
-            _ => new ResultError(ErrorData.DatabaseErrorType);
+            _ => new ResultError(DatabaseErrorData.TableError);
     }
 }

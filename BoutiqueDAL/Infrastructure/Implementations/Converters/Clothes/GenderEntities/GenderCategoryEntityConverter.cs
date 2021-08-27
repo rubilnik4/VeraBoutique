@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
@@ -17,6 +16,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Results;
 
@@ -50,7 +50,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEn
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override GenderEntity ToEntity(IGenderCategoryDomain genderCategoryDomain) =>
-            new GenderEntity(genderCategoryDomain);
+            new (genderCategoryDomain);
 
         /// <summary>
         /// Функция получения типа пола одежды
@@ -62,9 +62,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEn
         /// <summary>
         /// Преобразовать связующую сущность в категорию одежды
         /// </summary>
-        private IResultCollection<ICategoryClothesTypeDomain> CategoryDomainsFromComposite(IEnumerable<GenderCategoryCompositeEntity>? genderCategoryCompositeEntity) =>
+        private IResultCollection<ICategoryClothesTypeDomain> CategoryDomainsFromComposite(IReadOnlyCollection<GenderCategoryCompositeEntity>? genderCategoryCompositeEntity) =>
             genderCategoryCompositeEntity.
-            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(genderCategoryCompositeEntity))).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(genderCategoryCompositeEntity, this)).
             ResultValueBindOkToCollection(GetCategories).
             ResultCollectionBindOk(categoryEntities => _categoryClothesTypeEntityConverter.FromEntities(categoryEntities));
 
@@ -74,7 +74,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEn
         private static IResultCollection<CategoryEntity> GetCategories(IEnumerable<GenderCategoryCompositeEntity> genderCategoryCompositeEntities) =>
             genderCategoryCompositeEntities.
             Select(composite => composite.Category.
-                                ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(composite.Gender)))).
+                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<CategoryEntity, GenderCategoryEntityConverter>())).
             ToResultCollection();
     }
 }

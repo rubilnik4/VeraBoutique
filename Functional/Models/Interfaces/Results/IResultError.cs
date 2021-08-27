@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Interfaces.Results
 {
@@ -38,13 +39,13 @@ namespace Functional.Models.Interfaces.Results
         /// <summary>
         /// Получить ошибку
         /// </summary>      
-        IErrorTypeResult<TError>? GetError<TError>()
+        IErrorBaseResult<TError>? GetError<TError>()
             where TError : struct;
 
         /// <summary>
         /// Получить ошибку
         /// </summary>      
-        IReadOnlyCollection<IErrorTypeResult<TError>> GetErrors<TError>()
+        IReadOnlyCollection<IErrorBaseResult<TError>> GetErrors<TError>()
             where TError : struct;
 
         /// <summary>

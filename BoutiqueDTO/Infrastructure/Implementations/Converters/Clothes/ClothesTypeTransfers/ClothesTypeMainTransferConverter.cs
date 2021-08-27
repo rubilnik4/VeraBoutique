@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;

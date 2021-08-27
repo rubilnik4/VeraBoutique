@@ -1,5 +1,4 @@
 ﻿using System;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Configuration;
 using BoutiqueCommon.Models.Domain.Implementations.Configuration;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
@@ -13,6 +12,7 @@ using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Results;
 
@@ -36,11 +36,11 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
         public override IResultValue<IHostConfigurationDomain> FromTransfer(HostConfigurationTransfer hostConfigurationTransfer) =>
             GetHostConfigurationFunc(hostConfigurationTransfer).
             ResultValueCurryOk(hostConfigurationTransfer.Host.
-                              ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(hostConfigurationTransfer.Host)))).
+                              ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(hostConfigurationTransfer.Host, this))).
             ResultValueCurryOk(hostConfigurationTransfer.TimeOut.
                                ToResultValueWhere(timeOut => timeOut.TotalSeconds > 0,
-                                                  _ => CommonErrorType.ValueNotValid.
-                                                       ToErrorTypeResult($"Значение {nameof(hostConfigurationTransfer.TimeOut)} должно быть больше 0"))).
+                                    timeOut => ErrorResultFactory.ValueNotValidError(timeOut.TotalSeconds, this,
+                                                    $"Значение {nameof(hostConfigurationTransfer.TimeOut)} должно быть больше 0"))).
             ResultValueOk(func => func.Invoke());
 
         /// <summary>

@@ -38,7 +38,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var resultValue = await ResultValueTryAsync(() => AsyncFunctions.DivisionAsync(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -80,10 +80,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             const int initialValue = 0;
             var numberResult = new ResultValue<int>(initialValue);
 
-            var numberAfterTry = await numberResult.ResultValueTryOkAsync(AsyncFunctions.DivisionAsync, Exceptions.ExceptionError());
+            var resultValue = await numberResult.ResultValueTryOkAsync(AsyncFunctions.DivisionAsync, Exceptions.ExceptionError());
 
-            Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultValue.HasErrors);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>

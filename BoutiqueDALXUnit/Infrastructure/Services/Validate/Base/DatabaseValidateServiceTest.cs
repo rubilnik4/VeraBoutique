@@ -9,6 +9,7 @@ using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
@@ -52,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidateFind(id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidateFinds(ids);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = testValidateService.ValidateQuantity(tests);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.CollectionEmpty);
+            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
     }
 }

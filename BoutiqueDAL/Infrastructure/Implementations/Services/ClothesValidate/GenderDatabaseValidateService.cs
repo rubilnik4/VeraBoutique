@@ -39,6 +39,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateSizeName(IGenderDomain gender) =>
             gender.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<GenderType, IGenderDomain>(nameof(gender.Name), gender));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(gender.Name, nameof(IGenderTable)));
     }
 }

@@ -11,6 +11,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
@@ -67,7 +68,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.True(clothesAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>

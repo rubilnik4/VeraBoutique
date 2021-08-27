@@ -9,5 +9,6 @@
         Password,
         Email,
         Phone,
+        Token
     }
 }

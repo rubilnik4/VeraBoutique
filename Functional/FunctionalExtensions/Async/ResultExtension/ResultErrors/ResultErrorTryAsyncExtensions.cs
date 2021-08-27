@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultErrors

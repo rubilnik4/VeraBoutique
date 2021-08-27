@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 

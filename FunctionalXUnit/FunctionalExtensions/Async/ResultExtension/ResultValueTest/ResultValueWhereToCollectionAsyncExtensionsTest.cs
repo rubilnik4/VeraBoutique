@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
@@ -24,7 +26,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             int initialValue = Numbers.Number;
             var resultValue = new ResultValue<int>(initialValue);
 
-            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(number => true,
+            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(_ => true,
                 okFunc: NumberToCollectionAsync,
                 badFunc: _ => CreateErrorListTwoTestTask());
 
@@ -42,9 +44,9 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var resultValue = new ResultValue<int>(initialValue);
 
             var errorsBad = CreateErrorListTwoTest();
-            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(number => false,
+            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(_ => false,
                 okFunc: NumberToCollectionAsync,
-                badFunc: number => Task.FromResult((IEnumerable<IErrorResult>)errorsBad));
+                badFunc: _ => Task.FromResult((IEnumerable<IErrorResult>)errorsBad));
 
             Assert.True(resultAfterWhere.HasErrors);
             Assert.Equal(errorsBad.Count, resultAfterWhere.Errors.Count);
@@ -59,7 +61,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var errorInitial = CreateErrorTest();
             var resultValue = new ResultValue<int>(errorInitial);
 
-            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(number => true,
+            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(_ => true,
                 okFunc: NumberToCollectionAsync,
                 badFunc: _ => CreateErrorListTwoTestTask());
 
@@ -76,7 +78,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             var errorsInitial = CreateErrorTest();
             var resultValue = new ResultValue<int>(errorsInitial);
 
-            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(number => false,
+            var resultAfterWhere = await resultValue.ResultValueContinueToCollectionAsync(_ => false,
                 okFunc: NumberToCollectionAsync,
                 badFunc: _ => CreateErrorListTwoTestTask());
 

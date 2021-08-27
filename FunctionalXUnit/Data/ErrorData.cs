@@ -4,6 +4,8 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace FunctionalXUnit.Data
 {
@@ -16,7 +18,7 @@ namespace FunctionalXUnit.Data
         /// Создать тестовый экземпляр ошибки
         /// </summary>
         public static IErrorResult CreateErrorTest() =>
-            new ErrorTypeResult<TestErrorType>(TestErrorType.TestType, "Test error");
+            ErrorResultFactory.ErrorType(TestErrorType.TestType, "Test error");
 
         /// <summary>
         /// Создать тестовый экземпляр списка ошибок

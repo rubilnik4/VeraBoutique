@@ -4,14 +4,16 @@ using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
-using BoutiqueDTO.Models.Enums.Errors;
 using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Models.Implementations.RestClients
@@ -132,7 +134,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// Ошибка. Сервер не найден
         /// </summary>
         private IErrorResult ServerNotFoundErrorType =>
-             RestErrorType.ServerNotFound.ToErrorTypeResult($"Сервер не {BaseAddress.Host} найден");
+             ErrorResultFactory.RestError(RestErrorType.ServerNotFound, BaseAddress.Host, $"Сервер не {BaseAddress.Host} найден");
 
         /// <summary>
         /// Преобразование в json

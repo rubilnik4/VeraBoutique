@@ -3,17 +3,21 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Errors.CommonErrors;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.ConvertionErrors
 {
-    public class ConvertionErrorResult<TValue> : ErrorTypeResult<ConvertionErrorType>, IErrorTypeResult<ConvertionErrorType>
-       where TValue : class
+    /// <summary>
+    /// Ошибка сериализации
+    /// </summary>
+    public class SerializeErrorResult<TValue> : ErrorBaseResult<ConvertionErrorType>
+       where TValue : notnull
     {
-        public ConvertionErrorResult(ConvertionErrorType convertionErrorType, TValue value, string description)
+        public SerializeErrorResult(ConvertionErrorType convertionErrorType, TValue value, string description)
           : this(convertionErrorType, value, description, null)
         { }
 
-        protected ConvertionErrorResult(ConvertionErrorType convertionErrorType, TValue value, string description, Exception? exception)
+        protected SerializeErrorResult(ConvertionErrorType convertionErrorType, TValue value, string description, Exception? exception)
             : base(convertionErrorType, description, exception)
         {
             Value = value;
@@ -28,6 +32,6 @@ namespace Functional.Models.Implementations.Errors.ConvertionErrors
         /// Инициализация ошибки
         /// </summary>
         protected override IErrorResult Initialize(string description, Exception? exception) =>
-            new CommonErrorResult(ErrorType, description, exception);
+            new SerializeErrorResult<TValue>(ErrorType, Value, description, exception);
     }
 }

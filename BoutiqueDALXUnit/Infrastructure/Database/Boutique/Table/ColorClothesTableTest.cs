@@ -23,7 +23,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         public void IdSelect()
         {
             var colorClothes = ColorEntityData.ColorEntities.First();
-            var colorClothesTable = ColorClothesTable;
+            var colorClothesTable = ColorTable;
 
             var id = colorClothesTable.IdSelect().Compile()(colorClothes);
 
@@ -37,7 +37,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         public void IdPredicate()
         {
             var colorClothes = ColorEntityData.ColorEntities.First();
-            var colorClothesTable = ColorClothesTable;
+            var colorClothesTable = ColorTable;
 
             bool isFound = colorClothesTable.IdPredicate(colorClothes.Id).Compile()(colorClothes);
 
@@ -51,7 +51,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         public void IdsPredicate()
         {
             var colorsClothes = ColorEntityData.ColorEntities;
-            var colorClothesTable = ColorClothesTable;
+            var colorClothesTable = ColorTable;
 
             bool isFound = colorClothesTable.IdsPredicate(colorsClothes.Select(category => category.Id)).
                                              Compile()(colorsClothes.First());
@@ -68,7 +68,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Database.Boutique.Table
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        private static IColorClothesTable ColorClothesTable =>
-            new ColorClothesTable(DbSet.Object);
+        private static IColorTable ColorTable =>
+            new ColorTable(DbSet.Object);
     }
 }

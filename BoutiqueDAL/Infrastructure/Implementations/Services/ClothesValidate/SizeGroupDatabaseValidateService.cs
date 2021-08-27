@@ -69,11 +69,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         /// </summary>
         private static IResultError ValidateSizeNormalized(ISizeGroupMainDomain sizeGroupMain) =>
             sizeGroupMain.SizeNormalize.ToResultValueWhere(
-                sizeNormalized => sizeNormalized >= SizeGroupBase.SIZE_NORMALIZE_MIN && sizeNormalized <= SizeGroupBase.SIZE_NORMALIZE_MAX,
-                _ => DatabaseFieldErrors.FieldNotValid<int, ISizeGroupDomain>(SizeGroupBase.SIZE_NORMALIZE_MIN, 
-                                                                                               SizeGroupBase.SIZE_NORMALIZE_MAX,
-                                                                                               nameof(sizeGroupMain.SizeNormalize),
-                                                                                               sizeGroupMain));
+                sizeNormalized => sizeNormalized is >= SizeGroupBase.SIZE_NORMALIZE_MIN and <= SizeGroupBase.SIZE_NORMALIZE_MAX,
+                _ => DatabaseFieldErrors.FieldNotValid<ISizeGroupDomain, int>(SizeGroupBase.SIZE_NORMALIZE_MIN, 
+                                                                              SizeGroupBase.SIZE_NORMALIZE_MAX,
+                                                                              sizeGroupMain.SizeNormalize,
+                                                                              nameof(ISizeGroupTable)));
 
         /// <summary>
         /// Проверка размеров

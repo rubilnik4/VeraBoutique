@@ -34,7 +34,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultErrorT
             var resultError = ResultErrorTry(() => SyncFunctions.Division(initialValue), Exceptions.ExceptionError());
 
             Assert.True(resultError.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultError.Errors.First().ErrorResultType);
+            Assert.NotNull(resultError.Errors.First().Exception);
         }
     }
 }

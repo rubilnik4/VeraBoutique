@@ -37,10 +37,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
         public void ResultCollectionBindTry_Exception()
         {
             const int initialValue = 0;
-            var resultValue = ResultCollectionBindTry(() => new ResultCollection<int>(DivisionCollection(initialValue)), Exceptions.ExceptionError());
+            var resultValue = ResultCollectionBindTry(
+                () => new ResultCollection<int>(DivisionCollection(initialValue)), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -82,10 +83,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultCollec
             var initialNumbers = GetRangeNumberWithZero();
             var numberResult = new ResultCollection<int>(initialNumbers);
 
-            var numberAfterTry = numberResult.ResultCollectionBindTryOk(numbers => new ResultCollection<int>(DivisionByCollection(numbers)), Exceptions.ExceptionError());
+            var resultValue = numberResult.ResultCollectionBindTryOk(
+                numbers => new ResultCollection<int>(DivisionByCollection(numbers)), Exceptions.ExceptionError());
 
-            Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultValue.HasErrors);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>

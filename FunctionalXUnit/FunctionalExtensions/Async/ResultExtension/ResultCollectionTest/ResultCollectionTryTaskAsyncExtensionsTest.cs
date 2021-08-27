@@ -55,10 +55,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultColle
             var initialNumbers = GetRangeNumber();
             var numberResult = ResultCollectionFactory.CreateTaskResultCollection(initialNumbers);
 
-            var numbersAfterTry = await numberResult.ResultCollectionTryOkTaskAsync(DivisionCollectionByZero, Exceptions.ExceptionError());
+            var resultCollection = await numberResult.ResultCollectionTryOkTaskAsync(DivisionCollectionByZero, Exceptions.ExceptionError());
 
-            Assert.True(numbersAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numbersAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultCollection.HasErrors);
+            Assert.NotNull(resultCollection.Errors.First().Exception);
         }
 
         /// <summary>

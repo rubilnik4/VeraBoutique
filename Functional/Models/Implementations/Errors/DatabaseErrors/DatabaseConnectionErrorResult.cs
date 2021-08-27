@@ -3,13 +3,14 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.AuthorizeErrors;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.DatabaseErrors
 {
     /// <summary>
     /// Ошибка подключения к базе данных
     /// </summary>
-    public class DatabaseConnectionErrorResult : ErrorTypeResult<DatabaseErrorType>
+    public class DatabaseConnectionErrorResult : ErrorBaseResult<DatabaseErrorType>
     {
         public DatabaseConnectionErrorResult(string parameter, string description)
           : this(parameter, description, null)

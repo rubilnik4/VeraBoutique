@@ -14,6 +14,8 @@ using BoutiqueDALXUnit.Data.Services.Interfaces;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using MockQueryable.Moq;
@@ -62,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(testInvalidName);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.DatabaseValueDuplicate);
+            Assert.IsType<IDatabaseValueDuplicatedErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(test);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -138,7 +140,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(tests);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -157,7 +159,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(tests);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
     }
 }

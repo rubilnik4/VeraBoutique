@@ -61,12 +61,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate
         /// Дублирование записей
         /// </summary>
         public static Func<ITestDomain, IResultError> DuplicateValueFunc() =>
-            testDomain => new ResultError(Errors.GetDuplicateError(testDomain.Id));
+            testDomain => new ResultError(DatabaseErrorData.GetDuplicateError(testDomain.Id));
 
         /// <summary>
         /// Дублирование записей
         /// </summary>
         public static Func<IEnumerable<ITestDomain>, IResultError> DuplicateCollectionFunc() =>
-            testDomains => new ResultError(Errors.GetDuplicateError(testDomains));
+            testDomains => new ResultError(DatabaseErrorData.GetDuplicateError(testDomains));
     }
 }

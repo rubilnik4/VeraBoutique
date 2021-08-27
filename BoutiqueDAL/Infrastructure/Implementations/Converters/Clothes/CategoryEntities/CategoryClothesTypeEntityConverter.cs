@@ -14,6 +14,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Results;
 
@@ -56,9 +57,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
         /// <summary>
         /// Получить типы одежды
         /// </summary>
-        private IResultCollection<IClothesTypeDomain> GetClothesTypes(IEnumerable<ClothesTypeEntity>? clothesTypeEntities) =>
+        private IResultCollection<IClothesTypeDomain> GetClothesTypes(IReadOnlyCollection<ClothesTypeEntity>? clothesTypeEntities) =>
             clothesTypeEntities.
-            ToResultValueNullCheck(ConverterErrors.ValueNotFoundError(nameof(clothesTypeEntities))).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesTypeEntities, this)).
             ToResultCollection().
             ResultCollectionBindOk(clothesTypes => _clothesTypeEntityConverter.FromEntities(clothesTypes));
     }

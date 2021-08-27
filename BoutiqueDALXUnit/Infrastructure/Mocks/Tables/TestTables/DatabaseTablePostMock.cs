@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
+using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
@@ -65,12 +66,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
         public static Func<TestEntity, IResultValue<TestEnum>> AddIdError() =>
-           _ => new ResultValue<TestEnum>(ErrorData.DatabaseErrorType);
+           _ => new ResultValue<TestEnum>(DatabaseErrorData.TableError);
 
         /// <summary>
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
         public static Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> AddRangeIdError() =>
-           _ => new ResultCollection<TestEnum>(ErrorData.DatabaseErrorType);
+           _ => new ResultCollection<TestEnum>(DatabaseErrorData.TableError);
     }
 }

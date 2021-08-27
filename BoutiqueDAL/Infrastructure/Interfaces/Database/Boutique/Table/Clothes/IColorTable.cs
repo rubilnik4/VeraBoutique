@@ -8,6 +8,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes
     /// <summary>
     /// Таблица базы данных цвета одежды
     /// </summary>
-    public interface IColorClothesTable : IDatabaseTable<string, IColorDomain, ColorEntity>
+    public interface IColorTable : IDatabaseTable<string, IColorDomain, ColorEntity>
     { }
 }

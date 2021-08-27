@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
@@ -55,7 +56,8 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             var resultValue = await restResultTask.ToRestResultTaskAsync();
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
+            Assert.IsType<RestMessageErrorResult>(resultValue.Errors.First());
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)resultValue.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -97,7 +99,8 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             var resultValue = await restResultTask.ToRestResultValueTaskAsync<string>();
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.InternalServerError, resultValue.Errors.First().ErrorResultType);
+            Assert.IsType<RestMessageErrorResult>(resultValue.Errors.First());
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)resultValue.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -139,7 +142,8 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             var resultCollection = await restResultTask.ToRestResultCollectionTaskAsync<string>();
 
             Assert.True(resultCollection.HasErrors);
-            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+            Assert.IsType<RestMessageErrorResult>(resultCollection.Errors.First());
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)resultCollection.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -174,7 +178,8 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async
             var resultCollection = await restResultTask.ToRestResultErrorTaskAsync();
 
             Assert.True(resultCollection.HasErrors);
-            Assert.Equal(ErrorResultType.InternalServerError, resultCollection.Errors.First().ErrorResultType);
+            Assert.IsType<RestMessageErrorResult>(resultCollection.Errors.First());
+            Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)resultCollection.Errors.First()).ErrorType);
         }
 
         /// <summary>

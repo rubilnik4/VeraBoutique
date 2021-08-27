@@ -46,6 +46,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать типы пола одежды в доменную модель
         /// </summary>
-        IResultCollection<TDomain> GetDomains(IEnumerable<TTransfer>? transfers);
+        IResultCollection<TDomain> GetDomains(IReadOnlyCollection<TTransfer>? transfers);
     }
 }

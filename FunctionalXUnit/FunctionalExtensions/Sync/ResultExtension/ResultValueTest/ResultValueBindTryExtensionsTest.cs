@@ -37,7 +37,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             var resultValue = ResultValueBindTry(() => new ResultValue<int>(Division(0)), Exceptions.ExceptionError());
 
             Assert.True(resultValue.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, resultValue.Errors.First().ErrorResultType);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
             const int initialNumber = 0;
             var numberResult = new ResultValue<int>(initialNumber);
 
-            var numberAfterTry = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)),
+            var resultValue = numberResult.ResultValueBindTryOk(number => new ResultValue<int>(Division(number)),
                                                                    Exceptions.ExceptionError());
 
-            Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultValue.HasErrors);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>

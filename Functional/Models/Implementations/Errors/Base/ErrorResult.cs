@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Functional.Models.Implementations.Results;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace Functional.Models.Implementations.Errors.Base
@@ -18,6 +19,11 @@ namespace Functional.Models.Implementations.Errors.Base
             Description = description;
             Exception = exception;
         }
+
+        /// <summary>
+        /// Идентификатор ошибки
+        /// </summary>
+        public abstract string Id { get; }
 
         /// <summary>
         /// Описание ошибки

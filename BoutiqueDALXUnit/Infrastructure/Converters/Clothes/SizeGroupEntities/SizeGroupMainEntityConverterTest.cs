@@ -8,6 +8,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
@@ -60,7 +61,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
             var sizeGroupAfterConverter = sizeGroupEntityConverter.FromEntity(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.True(sizeGroupAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
         }
 
         /// <summary>

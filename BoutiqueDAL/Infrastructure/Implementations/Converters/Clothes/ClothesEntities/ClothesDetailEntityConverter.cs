@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueCommon.Infrastructure.Implementation.Errors;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -62,11 +61,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesEntity ToEntity(IClothesDetailDomain clothesDetailDomain) =>
-            new ClothesEntity(clothesDetailDomain, null!,
-                              ClothesMainEntityConverter.ColorClothesToComposite(clothesDetailDomain.Colors, clothesDetailDomain.Id,
-                                                                                 _colorClothesEntityConverter),
-                              ClothesMainEntityConverter.SizeGroupToComposite(clothesDetailDomain.SizeGroups, clothesDetailDomain.Id,
-                                                                              _sizeGroupMainEntityConverter));
+            new(clothesDetailDomain, null!,
+                ClothesMainEntityConverter.ColorClothesToComposite(clothesDetailDomain.Colors, clothesDetailDomain.Id,
+                                                                   _colorClothesEntityConverter),
+                ClothesMainEntityConverter.SizeGroupToComposite(clothesDetailDomain.SizeGroups, clothesDetailDomain.Id,
+                                                                _sizeGroupMainEntityConverter));
 
         /// <summary>
         /// Функция получения информации об одежде

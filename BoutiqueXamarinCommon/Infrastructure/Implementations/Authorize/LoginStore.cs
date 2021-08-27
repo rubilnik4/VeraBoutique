@@ -8,6 +8,9 @@ using Akavache;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
@@ -53,6 +56,6 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// Ошибка получения токена
         /// </summary>
         private static IErrorResult TokenErrorType =>
-            new ErrorResult(ErrorResultType.ValueNotValid, "Токен не задан");
+           ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Token, "Токен не задан");
     }
 }

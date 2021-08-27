@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using Functional.Models.Interfaces.Results;
 
-namespace Functional.Models.Interfaces.Errors
+namespace Functional.Models.Interfaces.Errors.Base
 {
     /// <summary>
     /// Ошибка результирующего ответа. Базовый класс
     /// </summary>
     public interface IErrorResult : IEnumerable<IErrorResult>
     {
+        /// <summary>
+        /// Идентификатор ошибки
+        /// </summary>
+        string Id { get; }
+
         /// <summary>
         /// Описание ошибки
         /// </summary>

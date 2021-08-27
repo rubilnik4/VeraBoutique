@@ -5,6 +5,7 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Moq;
 using Xunit;
 
@@ -43,13 +44,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(colorEmptyName);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        private static Mock<IColorClothesTable> ColorClothesTable =>
-            new Mock<IColorClothesTable>();
+        private static Mock<IColorTable> ColorClothesTable =>
+            new();
     }
 }

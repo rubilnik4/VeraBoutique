@@ -1,43 +1,24 @@
 ﻿using System;
-using System.Globalization;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.Base
 {
-    /// <summary>
-    /// Ошибка результирующего ответа
-    /// </summary>
-    public abstract class ErrorTypeResult<TError> : ErrorResult, IErrorTypeResult<TError>
+    public class ErrorTypeResult<TError> : ErrorBaseResult<TError>
         where TError : struct
     {
-        protected ErrorTypeResult(TError errorType, string description)
-            : this(errorType, description, null) 
+        public ErrorTypeResult(TError errorType, string description)
+           : this(errorType, description, null)
         { }
 
-        protected ErrorTypeResult(TError errorType, string description, Exception? exception)
-            : base(description, exception)
-        {
-            ErrorType = errorType;
-        }
+        public ErrorTypeResult(TError errorType, string description, Exception? exception)
+            : base(errorType, description, exception)
+        { }
 
         /// <summary>
-        /// Тип ошибки при конвертации файлов
+        /// Инициализация ошибки
         /// </summary>
-        public TError ErrorType { get; }
-
-        /// <summary>
-        /// Наличие типа ошибки
-        /// </summary>
-        public override bool HasErrorType<TErrorType>()
-            where TErrorType : struct =>
-            typeof(TError) == typeof(TErrorType);
-
-        #region IFormattable Support
-        public override string ToString() =>
-            ToString(String.Empty, CultureInfo.CurrentCulture);
-
-        public string ToString(string? format, IFormatProvider? formatProvider) =>
-            ErrorType.ToString();
-        #endregion
+        protected override IErrorResult Initialize(string description, Exception? exception) =>
+            new ErrorTypeResult<TError>(ErrorType, description, exception);
     }
 }

@@ -2,10 +2,14 @@
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.CommonErrors
 {
-    public class CommonErrorResult : ErrorTypeResult<CommonErrorType>, IErrorTypeResult<CommonErrorType>
+    /// <summary>
+    /// Ошибка с параметром
+    /// </summary>
+    public class CommonErrorResult : ErrorBaseResult<CommonErrorType>
     {
         public CommonErrorResult(CommonErrorType commonErrorType, string description)
             : this(commonErrorType, description, null)

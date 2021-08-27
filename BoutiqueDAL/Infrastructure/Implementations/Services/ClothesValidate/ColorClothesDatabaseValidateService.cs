@@ -19,8 +19,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
     public class ColorClothesDatabaseValidateService : DatabaseValidateService<string, IColorDomain, ColorEntity>,
                                                       IColorClothesDatabaseValidateService
     {
-        public ColorClothesDatabaseValidateService(IColorClothesTable colorClothesTable)
-            : base(colorClothesTable)
+        public ColorClothesDatabaseValidateService(IColorTable colorTable)
+            : base(colorTable)
         { }
 
         /// <summary>
@@ -36,6 +36,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateSizeName(IColorDomain color) =>
             color.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<string, IColorDomain>(nameof(color.Name), color));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(color.Name, nameof(IColorTable)));
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 using FunctionalXUnit.Mocks.Interfaces;
 using Moq;

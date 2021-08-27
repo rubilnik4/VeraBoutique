@@ -3,13 +3,14 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Errors.CommonErrors;
 using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.AuthorizeErrors
 {
     /// <summary>
     /// Ошибка при авторизации
     /// </summary>
-    public class AuthorizeErrorResult : ErrorTypeResult<AuthorizeErrorType>
+    public class AuthorizeErrorResult : ErrorBaseResult<AuthorizeErrorType>
     {
         public AuthorizeErrorResult(AuthorizeErrorType authorizeErrorType, string description)
             : this(authorizeErrorType, description, null)

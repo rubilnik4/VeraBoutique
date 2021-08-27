@@ -79,7 +79,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public IColorClothesTable ColorClothesTable => new ColorClothesTable(ColorClothes);
+        public IColorTable ColorTable => new ColorTable(ColorClothes);
 
         /// <summary>
         /// Таблица пола базы данных

@@ -12,6 +12,7 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 using Xunit.Sdk;
 
@@ -65,7 +66,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 
             Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.True(clothesTypeAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsType<IValueNotFoundErrorResult>(clothesTypeAfterConverter.Errors.First());
         }
 
 

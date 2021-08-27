@@ -5,9 +5,8 @@
     /// </summary>
     public enum CommonErrorType
     {
-        DivideByZero,
         ValueNotValid,
         ValueNotFound,
-        CollectionEmpty,
+        Unknown,
     }
 }

@@ -15,6 +15,8 @@ using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Results;
 using ReactiveUI;
 
@@ -107,13 +109,13 @@ namespace BoutiqueXamarin.ViewModels.Authorize
         /// </summary>
         private static IResultValue<string> ValidateByLogin(string loginInitial) =>
             loginInitial.ToResultValueWhere(login => !String.IsNullOrWhiteSpace(login),
-                                          _ => new ErrorResult(ErrorResultType.ValueNotValid, "Не указано имя пользователя"));
+                                          _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Username, "Не указано имя пользователя"));
 
         /// <summary>
         /// Проверка по имени пользователя
         /// </summary>
         private static IResultValue<string> ValidateByPassword(string passwordInitial) =>
             passwordInitial.ToResultValueWhere(password => !String.IsNullOrWhiteSpace(password),
-                                          _ => new ErrorResult(ErrorResultType.ValueNotValid, "Не указан пароль"));
+                                          _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Password, "Не указан пароль"));
     }
 }

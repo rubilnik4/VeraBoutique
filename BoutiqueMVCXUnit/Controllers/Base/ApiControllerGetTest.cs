@@ -7,6 +7,7 @@ using BoutiqueDTOXUnit.Data.Services.Interfaces;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
+using Functional.Models.Implementations.Errors.CommonErrors;
 using Functional.Models.Implementations.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task Get_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
@@ -54,7 +55,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(((CommonErrorResult)initialError).ErrorType.ToString(), errors.Keys.First());
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         public async Task GetById_ErrorDatabase()
         {
             var testGetId = TestData.TestDomains.Last().Id;
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
@@ -95,7 +96,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(((CommonErrorResult)initialError).ErrorType.ToString(), errors.Keys.First());
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         public async Task GetById_NotFound()
         {
             var testGetId = TestData.TestDomains.Last().Id;
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServiceGetMock.GetTestDatabaseTable(testDomains, DatabaseServiceGetMock.GetByIdNotFoundFunc());
             var testTransferConverter = TestTransferConverterMock.TestTransferConverter;

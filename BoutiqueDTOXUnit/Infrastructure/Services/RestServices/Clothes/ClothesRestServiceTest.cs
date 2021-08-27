@@ -14,7 +14,9 @@ using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.RestErrors;
 using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
@@ -57,7 +59,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var result = await clothesRestService.GetClothes(GenderType.Male, String.Empty);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -93,7 +96,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var result = await clothesRestService.GetClothesDetails(GenderType.Male, String.Empty);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -129,7 +133,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var result = await clothesRestService.GetImage(clothes.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -167,7 +172,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes
             var result = await clothesRestService.GetImages(clothes.Id);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.BadRequest);
+            Assert.IsType<RestMessageErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>

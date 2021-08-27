@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Logger
@@ -29,7 +31,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Logger
         {
             foreach (var error in errors)
             {
-                Console.WriteLine($"Ошибка [{error.ErrorType}]. {error.Description}");
+                Console.WriteLine($@"Ошибка [{error}]. {error.Description}");
             }
         }
     }

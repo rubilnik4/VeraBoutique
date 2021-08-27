@@ -73,7 +73,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(IClothesTypeDomain clothesType) =>
             clothesType.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.Name), clothesType));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(clothesType.Name, nameof(IClothesTypeTable)));
 
         /// <summary>
         /// Проверка наименования категории 
@@ -81,6 +81,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateCategoryName(IClothesTypeDomain clothesType) =>
             clothesType.CategoryName.ToResultValueWhere(
                 categoryName => !String.IsNullOrWhiteSpace(categoryName),
-                _ => DatabaseFieldErrors.FieldNotValid<string, IClothesTypeDomain>(nameof(clothesType.CategoryName), clothesType));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(clothesType.CategoryName, nameof(IClothesTypeTable)));
     }
 }

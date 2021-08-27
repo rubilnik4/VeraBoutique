@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync
@@ -16,7 +18,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
             var modelState = new ModelStateDictionary();
             foreach (var error in errors)
             {
-                modelState.TryAddModelError(error.ErrorType.ToString(), error.Description);
+                modelState.TryAddModelError(error.Id, error.Description);
             }
             return modelState;
         }

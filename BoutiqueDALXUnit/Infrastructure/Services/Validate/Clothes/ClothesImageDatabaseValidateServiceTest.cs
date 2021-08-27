@@ -12,6 +12,7 @@ using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Moq;
 using Xunit;
 
@@ -50,7 +51,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(imageEmptyImage);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateByMain(imageDomains);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateByMain(imageDomains);
 
             Assert.True(result.HasErrors);
-            Assert.True(result.Errors.First().ErrorResultType == ErrorResultType.ValueNotValid);
+            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>

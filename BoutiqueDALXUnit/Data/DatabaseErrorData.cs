@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueDALXUnit.Data
 {
     /// <summary>
     /// Тестовые ошибки
     /// </summary>
-    public static class Errors
+    public static class DatabaseErrorData
     {
         /// <summary>
         /// Ошибка ненайденного элемента
         /// </summary>
-        public static IErrorResult NotFoundErrorType => DatabaseErrors.ValueNotFoundError(String.Empty, String.Empty);
+        public static IErrorResult NotFoundError => 
+            DatabaseErrors.ValueNotFoundError(String.Empty, String.Empty);
+
+        /// <summary>
+        /// Ошибка ненайденного элемента
+        /// </summary>
+        public static IErrorResult TableError =>
+            DatabaseErrors.TableAccessError("TestTable");
 
         /// <summary>
         /// Ошибка дублирующего элемента

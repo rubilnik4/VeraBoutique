@@ -70,7 +70,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(ICategoryMainDomain categoryMain) =>
             categoryMain.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<string, ICategoryDomain>(nameof(categoryMain.Name), categoryMain));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(categoryMain.Name, nameof(ICategoryTable)));
 
         /// <summary>
         /// Проверка размеров

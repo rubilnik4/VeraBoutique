@@ -23,8 +23,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public IColorClothesTable ColorClothesTable =>
-            new ColorClothesTable(ColorClothes);
+        public IColorTable ColorTable =>
+            new ColorTable(ColorClothes);
 
         /// <summary>
         /// Таблица базы данных вида одежды

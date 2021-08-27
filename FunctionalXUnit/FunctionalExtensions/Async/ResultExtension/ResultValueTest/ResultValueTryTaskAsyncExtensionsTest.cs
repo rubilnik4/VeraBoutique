@@ -54,10 +54,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
             const int initialValue = 0;
             var numberResult = ResultValueFactory.CreateTaskResultValue(initialValue);
 
-            var numberAfterTry = await numberResult.ResultValueTryOkTaskAsync(Division, Exceptions.ExceptionError());
+            var resultValue = await numberResult.ResultValueTryOkTaskAsync(Division, Exceptions.ExceptionError());
 
-            Assert.True(numberAfterTry.HasErrors);
-            Assert.Equal(ErrorResultType.DivideByZero, numberAfterTry.Errors.First().ErrorResultType);
+            Assert.True(resultValue.HasErrors);
+            Assert.NotNull(resultValue.Errors.First().Exception);
         }
 
         /// <summary>

@@ -40,6 +40,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate
         /// Запись не найдена
         /// </summary>
         public static Func<ITestDomain, IResultError> ValueNotFoundFunc() =>
-            testDomain => new ResultError(Errors.NotFoundErrorType);
+            testDomain => new ResultError(DatabaseErrorData.NotFoundError);
     }
 }

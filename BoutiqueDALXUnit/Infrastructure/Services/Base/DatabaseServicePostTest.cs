@@ -9,6 +9,8 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.DatabaseErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base
@@ -29,7 +31,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock);
             var validateService = TestValidateServicePostMock.GetDatabaseValidateService();
             var testConverter = TestEntityConverterMock.TestEntityConverter;
-            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock, 
+            var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
             var resultId = await testService.Post(testDomain);
@@ -55,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultId = await testService.Post(testDomain);
 
             Assert.True(resultId.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueDuplicate, resultId.Errors.First().ErrorResultType);
+            Assert.IsNotType<IDatabaseValueDuplicatedErrorResult>(resultId.Errors.First());
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultId = await testService.Post(testDomain);
 
             Assert.True(resultId.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseTableAccess, resultId.Errors.First().ErrorResultType);
+            Assert.IsNotType<DatabaseTableErrorResult>(resultId.Errors.First());
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultIds = await testService.Post(testDomains);
 
             Assert.True(resultIds.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseValueDuplicate, resultIds.Errors.First().ErrorResultType);
+            Assert.IsNotType<IDatabaseValueDuplicatedErrorResult>(resultIds.Errors.First());
         }
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultIds = await testService.Post(testDomains);
 
             Assert.True(resultIds.HasErrors);
-            Assert.Equal(ErrorResultType.DatabaseTableAccess, resultIds.Errors.First().ErrorResultType);
+            Assert.IsNotType<DatabaseTableErrorResult>(resultIds.Errors.First());
         }
     }
 }

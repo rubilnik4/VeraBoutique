@@ -42,6 +42,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidateName(ISizeDomain size) =>
             size.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<int, ISizeDomain>(nameof(size.Name), size));
+                _ => DatabaseFieldErrors.FieldNotValid<string>(size.Name, nameof(ISizeTable)));
     }
 }

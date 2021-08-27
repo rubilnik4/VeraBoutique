@@ -22,7 +22,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         public ColorDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                            IColorClothesDatabaseValidateService colorClothesDatabaseValidateService,
                                            IColorClothesEntityConverter colorClothesEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.ColorClothesTable, colorClothesDatabaseValidateService, colorClothesEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.ColorTable, colorClothesDatabaseValidateService, colorClothesEntityConverter)
         { }
     }
 }

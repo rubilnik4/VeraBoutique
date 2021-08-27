@@ -5,6 +5,12 @@ using System.Linq;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Models.Implementations.Controller;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors;
+using Functional.Models.Implementations.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors;
+using Functional.Models.Interfaces.Errors.Base;
+using Functional.Models.Interfaces.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Functional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -99,10 +105,10 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// Получить объект со значением или вернуть ошибку
         /// </summary>
         private static ActionResult GetBadRequestByErrors(IReadOnlyCollection<IErrorResult> errors) =>
-            errors.First().ErrorType switch
+            errors.First() switch
             {
-                ErrorResultType.ValueNotFound => new NotFoundResult(),
-                ErrorResultType.CollectionEmpty => new NotFoundResult(),
+                IValueNotFoundErrorResult => new NotFoundResult(),
+                IDatabaseValueNotValidErrorResult => new NotFoundResult(),
                 _ => new BadRequestObjectResult(errors.ToModelState()),
             };
     }

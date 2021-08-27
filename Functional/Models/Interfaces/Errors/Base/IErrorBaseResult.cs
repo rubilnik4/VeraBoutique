@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Functional.Models.Interfaces.Errors
+namespace Functional.Models.Interfaces.Errors.Base
 {
     /// <summary>
     /// Ошибка результирующего ответа
     /// </summary>
-    public interface IErrorTypeResult<out TError> : IErrorResult, IFormattable
+    public interface IErrorBaseResult<out TError> : IErrorResult, IFormattable
         where TError : struct
     {
         /// <summary>
