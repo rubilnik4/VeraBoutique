@@ -72,6 +72,6 @@ namespace BoutiqueDALXUnit.Data.Services.Implementation
         private static IResultError ValidateName(ITestDomain test) =>
             test.Name.ToResultValueWhere(
                 name => !String.IsNullOrWhiteSpace(name),
-                _ => DatabaseFieldErrors.FieldNotValid<ITestDomain>(nameof(test.Name), test));
+                _ => DatabaseFieldErrors.FieldNotValid(nameof(test.Name), nameof(ITestTable)));
     }
 }

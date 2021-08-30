@@ -47,7 +47,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
         /// </summary>
         public IResultValue<TDomain> GetDomain(TTransfer? transfer) =>
             transfer.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(transfer, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(transfer, GetType())).
             ResultValueBindOk(FromTransfer);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
         /// </summary>
         public IResultCollection<TDomain> GetDomains(IReadOnlyCollection<TTransfer>? transfers) =>
             transfers.
-            ToResultCollectionNullCheck(ErrorResultFactory.ValueNotFoundError(transfers, this)).
+            ToResultCollectionNullCheck(ErrorResultFactory.ValueNotFoundError(transfers, GetType())).
             ResultCollectionBindOk(FromTransfers);
     }
 }

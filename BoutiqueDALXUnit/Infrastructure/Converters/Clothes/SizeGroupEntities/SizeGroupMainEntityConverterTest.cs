@@ -61,7 +61,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.SizeGroupEntities
             var sizeGroupAfterConverter = sizeGroupEntityConverter.FromEntity(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
         }
 
         /// <summary>

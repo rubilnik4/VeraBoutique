@@ -111,7 +111,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(resultEntity.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(resultEntity.Errors.First());
         }
     }
 }

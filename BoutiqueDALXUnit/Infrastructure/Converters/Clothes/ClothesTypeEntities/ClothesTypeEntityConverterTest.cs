@@ -66,7 +66,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities
             var clothesTypeAfterConverter = clothesTypeEntityConverter.FromEntity(clothesTypeNull);
 
             Assert.True(clothesTypeAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(clothesTypeAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesTypeAfterConverter.Errors.First());
         }
 
 

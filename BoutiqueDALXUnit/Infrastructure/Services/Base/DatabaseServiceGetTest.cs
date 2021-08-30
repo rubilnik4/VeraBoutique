@@ -121,7 +121,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
 
             Assert.True(testResult.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(testResult.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(testResult.Errors.First());
         }
 
     }

@@ -47,7 +47,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         public async Task Post_Value_ErrorDatabase()
         {
             var testDomain = TestData.TestDomains.First();
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServicePostMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
@@ -60,7 +60,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task Post_Collection_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testService = DatabaseServicePostMock.GetTestDatabaseTable(testDomains);
             var testTransferConverter = TestTransferConverterMock.TestTransferConverter;
@@ -120,7 +120,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
     }
 }

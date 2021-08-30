@@ -61,7 +61,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetByGender_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var clothesDomains = new ResultCollection<IClothesDomain>(initialError);
             var clothesDomain = ClothesData.ClothesMainDomains.First();
             var genderType = clothesDomain.Gender.GenderType;
@@ -75,7 +75,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetByGenderDetails_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var clothesDomains = new ResultCollection<IClothesDetailDomain>(initialError);
             var clothesDomain = ClothesData.ClothesDetailDomains.First();
             var genderType = clothesDomain.GenderType;
@@ -119,7 +119,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetImage_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var clothesDomain = ClothesData.ClothesMainDomains.First();
             var clotheId = clothesDomain.Id;
             var clothesResult = new ResultValue<byte[]>(initialError);
@@ -161,7 +161,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)imageResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         public async Task GetImage_NotFound()
         {
             var clothesDomain = ClothesData.ClothesMainDomains.First();
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var clothesResult = new ResultValue<byte[]>(initialError);
             var clothesDatabaseService = GetClothesDatabaseService(clothesResult);
             var clothesController = GetClothesController(clothesDatabaseService.Object);
@@ -209,7 +209,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         [Fact]
         public async Task GetImages_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var clothesDomain = ClothesData.ClothesMainDomains.First();
             var clotheId = clothesDomain.Id;
             var clothesResult = new ResultCollection<IClothesImageDomain>(initialError);
@@ -222,7 +222,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)imageResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>

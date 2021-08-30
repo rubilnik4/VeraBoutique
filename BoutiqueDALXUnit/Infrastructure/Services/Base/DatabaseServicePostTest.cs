@@ -57,7 +57,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultId = await testService.Post(testDomain);
 
             Assert.True(resultId.HasErrors);
-            Assert.IsNotType<IDatabaseValueDuplicatedErrorResult>(resultId.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueDuplicatedErrorResult>(resultId.Errors.First());
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultIds = await testService.Post(testDomains);
 
             Assert.True(resultIds.HasErrors);
-            Assert.IsNotType<IDatabaseValueDuplicatedErrorResult>(resultIds.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueDuplicatedErrorResult>(resultIds.Errors.First());
         }
 
         /// <summary>

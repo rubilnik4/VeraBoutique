@@ -64,7 +64,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция удаления по идентификатору.Элемент не найден
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> DeleteNotFoundFunc() =>
-            _ => new ResultValue<ITestDomain>(ErrorData.NotFoundErrorType);
+            _ => ErrorData.ErrorNotFound.ToResultValue<ITestDomain>();
 
     }
 }

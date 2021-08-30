@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
 using Functional.Models.Enums;
+using Functional.Models.Implementations.Errors.AuthorizeErrors;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
@@ -59,7 +61,7 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
             await LoginStore.ClearToken();
 
             Assert.True(saveResult.HasErrors);
-            Assert.Equal(ErrorResultType.ValueNotValid, saveResult.Errors.First().ErrorResultType);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(saveResult.Errors.First());
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
             var getResult = await LoginStore.GetToken();
 
             Assert.True(getResult.HasErrors);
-            Assert.Equal(ErrorResultType.ValueNotValid, getResult.Errors.First().ErrorResultType);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(getResult.Errors.First());
         }
     }
 }

@@ -62,7 +62,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         /// </summary>
         private IResultCollection<ISizeDomain> SizeDomainsFromComposite(IReadOnlyCollection<SizeGroupCompositeEntity>? sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(sizeGroupCompositeEntities, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(sizeGroupCompositeEntities, GetType())).
             ResultValueBindOkToCollection(GetSizes).
             ResultCollectionBindOk(sizeEntities => _sizeEntityConverter.FromEntities(sizeEntities));
 
@@ -80,7 +80,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGrou
         private static IResultCollection<SizeEntity> GetSizes(IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities) =>
             sizeGroupCompositeEntities.
             Select(composite => composite.Size.
-                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError< SizeEntity, SizeGroupMainEntityConverter>())).
+                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(composite.Size, typeof(SizeGroupMainEntityConverter)))).
             ToResultCollection();
     }
 }

@@ -64,7 +64,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(testInvalidName);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueDuplicatedErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(tests);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePost(tests);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
     }
 }

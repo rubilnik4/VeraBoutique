@@ -67,7 +67,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesT
         /// </summary>
         private IResultValue<ICategoryDomain> GetCategory(CategoryEntity? categoryEntity) =>
             categoryEntity.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(categoryEntity, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(categoryEntity, GetType())).
             ResultValueBindOk(category => _categoryEntityConverter.FromEntity(category));
     }
 }

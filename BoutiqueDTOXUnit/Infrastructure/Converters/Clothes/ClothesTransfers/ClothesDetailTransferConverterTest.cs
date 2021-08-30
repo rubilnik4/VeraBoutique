@@ -43,7 +43,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
         }
     }
 }

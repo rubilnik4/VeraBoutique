@@ -101,7 +101,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
              await _clothesTable.
              FindExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
                                                     Include(clothesEntity => clothesEntity.ClothesImages).
-                                                    SelectMany(imageEntity => imageEntity.ClothesImages).
+                                                    SelectMany(imageEntity => imageEntity.ClothesImages 
+                                                                              ?? Enumerable.Empty<ClothesImageEntity>()).
                                                     FirstOrDefaultAsync(imageEntity => imageEntity.IsMain).
                                                     MapTaskAsync(entity => (ClothesImageEntity?)entity),
                                  id).
@@ -114,7 +115,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
              await _clothesTable.
              FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
                                                                             Include(clothesEntity => clothesEntity.ClothesImages).
-                                                                            SelectMany(imageEntity => imageEntity.ClothesImages)).
+                                                                            SelectMany(imageEntity => imageEntity.ClothesImages 
+                                                                                                      ?? Enumerable.Empty<ClothesImageEntity>())).
              ResultCollectionBindOkTaskAsync(imageEntities => _clothesImageEntityConverter.FromEntities(imageEntities));
     }
 }

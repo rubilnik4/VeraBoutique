@@ -10,7 +10,7 @@
     <AssemblyName>BoutiqueDAL</AssemblyName>
     <Copyright>Ivan Rubilnik</Copyright>
     <Configurations>Debug;Release;Test</Configurations>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>

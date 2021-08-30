@@ -25,14 +25,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// <summary>
         /// Ошибка некорректного поля
         /// </summary>
-        public static IErrorResult FieldNotValid<TValue>(int min, TValue value, string tableName)
+        public static IErrorResult FieldRangeNotValid<TValue>(int min, TValue value, string tableName)
             where TValue : notnull =>
             FieldNotValid(value, tableName, $"Меньше допустимого значения {min}");
 
         /// <summary>
         /// Ошибка некорректного поля
         /// </summary>
-        public static IErrorResult FieldNotValid<TValue>(int min, int max, TValue value, string tableName)
+        public static IErrorResult FieldRangeNotValid<TValue>(int min, int max, TValue value, string tableName)
             where TValue : notnull =>
             FieldNotValid(value, tableName, $"Превышает допустимые пределы от {min} до {max}");
 

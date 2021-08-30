@@ -45,7 +45,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
         [Fact]
         public async Task Put_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var testDomains = new ResultCollection<ITestDomain>(initialError);
             var testPut = TestData.TestResultDomains.Value.Last();
             var testService = DatabaseServicePutMock.GetTestDatabaseTable(testDomains);
@@ -59,7 +59,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var badRequest = (BadRequestObjectResult)actionResult;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>

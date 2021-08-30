@@ -55,7 +55,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePut(testInvalidName);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePut(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidatePut(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
     }
 }

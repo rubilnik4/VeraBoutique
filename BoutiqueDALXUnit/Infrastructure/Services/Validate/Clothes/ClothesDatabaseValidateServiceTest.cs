@@ -66,7 +66,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyName);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyDescription);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesPrice);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
         
         /// <summary>
@@ -117,7 +117,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyImages);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyImages);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -145,7 +145,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public void ValidateModel_ImagesModelError()
         {
             var clothes = ClothesData.ClothesMainDomains.First();
-            var clothesImage = ClothesImageData.ClothesImageDomains.First();
             var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price,
                                                            clothes.Images.Append(new ClothesImageDomain(0, null!, false, clothes.Id)),
                                                            clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
@@ -153,7 +152,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyImages);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -170,7 +169,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptyColors);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -187,7 +186,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(clothesEmptySizeGroups);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -217,7 +216,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -234,7 +233,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -251,7 +250,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -268,7 +267,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -299,7 +298,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -317,7 +316,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -335,7 +334,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -353,7 +352,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(clothesNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>

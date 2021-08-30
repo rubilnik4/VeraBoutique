@@ -6,6 +6,7 @@ using BoutiqueXamarinCommon.Models.Implementation.Configuration;
 using BoutiqueXamarinCommonXUnit.Data.Transfers.Configuration;
 using BoutiqueXamarinCommonXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueXamarinCommonXUnit.Infrastructure.Converters
@@ -43,7 +44,7 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Converters
             var xamarinConfigurationAfterConverter = xamarinConfigurationTransferConverter.FromTransfer(hostConfigurationNull);
 
             Assert.True(xamarinConfigurationAfterConverter.HasErrors);
-            Assert.True(xamarinConfigurationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(xamarinConfigurationAfterConverter.Errors.First());
         }
     }
 }

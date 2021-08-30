@@ -22,20 +22,19 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains) =>
-            GetTestDatabaseTable(testDomains, PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains));
+            GetTestDatabaseTable(PostValueOkFunc(testDomains), PostCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
                                                                       Func<ITestDomain, IResultValue<TestEnum>> postValueFunc) =>
-            GetTestDatabaseTable(testDomains, postValueFunc, PostCollectionOkFunc(testDomains));
+            GetTestDatabaseTable(postValueFunc, PostCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
-        public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<ITestDomain, IResultValue<TestEnum>> postValueFunc,
+        public static Mock<ITestDatabaseService> GetTestDatabaseTable(Func<ITestDomain, IResultValue<TestEnum>> postValueFunc,
                                                                       Func<IResultCollection<TestEnum>> postCollectionFunc) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<ITestDomain>())).
@@ -53,7 +52,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция записи значения. Элемент не найден
         /// </summary>
         public static Func<ITestDomain, IResultValue<TestEnum>> PostValueFoundFunc() =>
-            _ => new ResultValue<TestEnum>(ErrorData.NotFoundErrorType);
+            _ => ErrorData.ErrorNotFound.ToResultValue<TestEnum>();
 
         /// <summary>
         /// Функция записи коллекции

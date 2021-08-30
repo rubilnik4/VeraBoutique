@@ -41,7 +41,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultValue_Id_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var testTransfer = new ResultValue<TestEnum>(initialError);
 
             var actionResult = testTransfer.ToActionResultValue();
@@ -50,7 +50,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultValue_Id_NotFound()
         {
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var testTransfer = new ResultValue<TestEnum>(initialError);
 
             var actionResult = testTransfer.ToActionResultValue();
@@ -91,7 +91,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToImageResultValue_Id_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var imageResult = new ResultValue<byte[]>(initialError);
 
             var actionResult = imageResult.ToImageResultValue();
@@ -100,7 +100,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToImageResultValue_Id_NotFound()
         {
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var testTransfer = new ResultValue<byte[]>(initialError);
 
             var actionResult = testTransfer.ToImageResultValue();
@@ -139,7 +139,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultValue_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var testTransfer = new ResultValue<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultValue<TestEnum, ITestTransfer>();
@@ -148,7 +148,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultValue_NotFound()
         {
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var testTransfer = new ResultValue<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultValue<TestEnum, ITestTransfer>();
@@ -188,7 +188,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultCollection_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var testTransfer = new ResultCollection<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultCollection<TestEnum, ITestTransfer>();
@@ -197,7 +197,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultCollection_NotFound()
         {
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var testTransfer = new ResultCollection<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultCollection<TestEnum, ITestTransfer>();
@@ -237,7 +237,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultCollection_Id_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var testTransfer = new ResultCollection<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultCollection();
@@ -246,7 +246,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToActionResultCollection_Id_NotFound()
         {
-            var initialError = ErrorData.NotFoundErrorType;
+            var initialError = ErrorData.ErrorNotFound;
             var testTransfer = new ResultCollection<ITestTransfer>(initialError);
 
             var actionResult = testTransfer.ToActionResultCollection();
@@ -288,7 +288,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToPostActionResultValue_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var createdResult = new ResultValue<CreatedActionValue<TestEnum, ITestTransfer>>(initialError);
 
             var actionResult = createdResult.ToCreateActionResult();
@@ -296,14 +296,13 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var errors = (SerializableError)badRequest.Value;
 
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
         /// Преобразовать результирующий ответ со значением в post ответ контроллера. Вернуть корректный ответ
         /// </summary>
         [Fact]
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
         public void ToPostActionResultCollection_Created()
         {
             var createdActionCollection = CreateActionData.CreatedActionCollection;
@@ -314,7 +313,8 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.True(createdActionCollection.Values.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
-            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()!));
+            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()
+                                                                  ?? Enumerable.Empty<TestEnum>()));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToPostActionResultCollection_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var createdResult = new ResultValue<CreatedActionCollection<TestEnum, ITestTransfer>>(initialError);
 
             var actionResult = createdResult.ToCreateActionResult();
@@ -331,7 +331,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var errors = (SerializableError)badRequest.Value;
 
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
         [Fact]
         public void ToNoContentActionResult_BadRequest()
         {
-            var initialError = ErrorData.ErrorTypeTest;
+            var initialError = ErrorData.ErrorTest;
             var result = new ResultError(initialError);
 
             var actionResult = result.ToNoContentActionResult();
@@ -364,7 +364,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
             var badRequest = (BadRequestObjectResult)actionResult;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
     }
 }

@@ -47,7 +47,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.SizeGroupsTransfers
             var sizeGroupAfterConverter = sizeGroupTransferConverter.FromTransfer(sizeGroupNull);
 
             Assert.True(sizeGroupAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(sizeGroupAfterConverter.Errors.First());
         }
     }
 }

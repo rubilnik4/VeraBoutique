@@ -51,7 +51,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers
             var clothesAfterConverter = clothesTransferConverter.FromTransfer(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsType<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
     }
 }

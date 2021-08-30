@@ -109,20 +109,20 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию цветов
         /// </summary>
-        public static IResultCollection<IColorDomain> ColorClothesFromComposite(IEnumerable<ClothesColorCompositeEntity>? clothesColorCompositeEntities,
+        public static IResultCollection<IColorDomain> ColorClothesFromComposite(IReadOnlyCollection<ClothesColorCompositeEntity>? clothesColorCompositeEntities,
                                                                                 IColorClothesEntityConverter colorClothesEntityConverter) =>
             clothesColorCompositeEntities.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<IEnumerable<ClothesColorCompositeEntity>, ClothesMainEntityConverter>()).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesColorCompositeEntities, typeof(ClothesMainEntityConverter))).
             ResultValueBindOkToCollection(GetColorClothes).
             ResultCollectionBindOk(colorClothesEntityConverter.FromEntities);
 
         /// <summary>
         /// Преобразовать связующую сущность в коллекцию размеров
         /// </summary>
-        public static IResultCollection<ISizeGroupMainDomain> SizeGroupFromComposite(IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeCompositeEntities,
+        public static IResultCollection<ISizeGroupMainDomain> SizeGroupFromComposite(IReadOnlyCollection<ClothesSizeGroupCompositeEntity>? clothesSizeCompositeEntities,
                                                                                      ISizeGroupMainEntityConverter sizeGroupMainEntityConverter) =>
             clothesSizeCompositeEntities.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<IEnumerable<ClothesSizeGroupCompositeEntity>, ClothesMainEntityConverter>()).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesSizeCompositeEntities, typeof(ClothesMainEntityConverter))).
             ResultValueBindOkToCollection(GetColorClothes).
             ResultCollectionBindOk(sizeGroupMainEntityConverter.FromEntities);
 
@@ -149,7 +149,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         private IResultValue<IGenderDomain> GetGender(GenderEntity? genderEntity) =>
             genderEntity.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(genderEntity, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(genderEntity, GetType())).
             ResultValueBindOk(gender => _genderEntityConverter.FromEntity(gender));
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         private IResultValue<IClothesTypeDomain> GetClothesType(ClothesTypeEntity? clothesTypeEntity) =>
             clothesTypeEntity.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesTypeEntity, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesTypeEntity, GetType())).
             ResultValueBindOk(clothesType => _clothesTypeEntityConverter.FromEntity(clothesType));
 
         /// <summary>
@@ -165,26 +165,26 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesE
         /// </summary>
         private IResultCollection<IClothesImageDomain> GetImages(IReadOnlyCollection<ClothesImageEntity>? imageEntities) =>
             imageEntities.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(imageEntities, this)).
+            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(imageEntities, GetType())).
             ToResultCollection().
             ResultCollectionBindOk(images => _clothesImageEntityConverter.FromEntities(images));
 
         /// <summary>
         /// Получить сущности цвета одежды
         /// </summary>
-        private static IResultCollection<ColorEntity> GetColorClothes(IEnumerable<ClothesColorCompositeEntity> clothesColorEntities) =>
+        private static IResultCollection<ColorEntity> GetColorClothes(IReadOnlyCollection<ClothesColorCompositeEntity> clothesColorEntities) =>
             clothesColorEntities.
             Select(clothesColor => clothesColor.ColorClothes.
-                                   ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<ColorEntity, ClothesMainEntityConverter>())).
+                                   ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesColorEntities, typeof(ClothesMainEntityConverter)))).
             ToResultCollection();
 
         /// <summary>
         /// Получить сущности группы размеров
         /// </summary>
-        private static IResultCollection<SizeGroupEntity> GetColorClothes(IEnumerable<ClothesSizeGroupCompositeEntity> clothesSizeGroupEntities) =>
+        private static IResultCollection<SizeGroupEntity> GetColorClothes(IReadOnlyCollection<ClothesSizeGroupCompositeEntity> clothesSizeGroupEntities) =>
             clothesSizeGroupEntities.
             Select(sizeGroup => sizeGroup.SizeGroup.
-                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<SizeGroupEntity, ClothesMainEntityConverter>())).
+                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesSizeGroupEntities, typeof(ClothesMainEntityConverter)))).
             ToResultCollection();
     }
 }

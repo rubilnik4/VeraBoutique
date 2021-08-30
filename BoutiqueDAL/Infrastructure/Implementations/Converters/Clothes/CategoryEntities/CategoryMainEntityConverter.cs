@@ -67,7 +67,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
         private IResultCollection<IGenderDomain> GenderDomainsFromComposite(IReadOnlyCollection<GenderCategoryCompositeEntity>? genderCategoryCompositeEntity) =>
             genderCategoryCompositeEntity.
             ToResultValueNullCheck(
-                ErrorResultFactory.ValueNotFoundError(genderCategoryCompositeEntity, this)).
+                ErrorResultFactory.ValueNotFoundError(genderCategoryCompositeEntity, GetType())).
             ResultValueBindOkToCollection(GetGenders).
             ResultCollectionBindOk(genderEntities => _genderEntityConverter.FromEntities(genderEntities));
 
@@ -77,7 +77,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.Category
         private static IResultCollection<GenderEntity> GetGenders(IEnumerable<GenderCategoryCompositeEntity> genderCategoryCompositeEntities) =>
             genderCategoryCompositeEntities.
             Select(composite => composite.Gender.
-                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError<GenderEntity, CategoryMainEntityConverter>())).
+                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(composite.Gender, typeof(CategoryMainEntityConverter)))).
             ToResultCollection();
 
         /// <summary>

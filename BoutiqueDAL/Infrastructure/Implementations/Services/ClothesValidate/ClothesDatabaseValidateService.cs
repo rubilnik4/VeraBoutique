@@ -135,7 +135,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate
         private static IResultError ValidatePrice(IClothesMainDomain clothesMain) =>
              clothesMain.Price.ToResultValueWhere(
                 price => price > 0,
-                _ => DatabaseFieldErrors.FieldNotValid(0, clothesMain.Price, nameof(IClothesTable)));
+                _ => DatabaseFieldErrors.FieldRangeNotValid(0, clothesMain.Price, nameof(IClothesTable)));
 
         /// <summary>
         /// Проверка имени типа одежды

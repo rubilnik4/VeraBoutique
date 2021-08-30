@@ -44,7 +44,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(colorEmptyName);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>

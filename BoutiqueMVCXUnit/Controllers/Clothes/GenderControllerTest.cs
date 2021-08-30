@@ -47,9 +47,9 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
         /// Получить тип пола одежды с категорией. Ошибка
         /// </summary>
         [Fact]
-        public async Task GetGenderCategoris_ErrorDatabase()
+        public async Task GetGenderCategories_ErrorDatabase()
         {
-            var initialError = ErrorData.DatabaseErrorType;
+            var initialError = ErrorData.ErrorTest;
             var gendersResult = new ResultCollection<IGenderCategoryDomain>(initialError);
             var clothesDatabaseService = GetGenderDatabaseService(gendersResult);
             var genderTransferConverter = GenderTransferConverterMock.GenderTransferConverter;
@@ -63,7 +63,7 @@ namespace BoutiqueMVCXUnit.Controllers.Clothes
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(initialError.ErrorType.ToString(), errors.Keys.First());
+            Assert.Equal(initialError.Id, errors.Keys.First());
         }
 
         /// <summary>

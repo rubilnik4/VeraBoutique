@@ -53,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidateFind(id);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = await testValidateService.ValidateFinds(ids);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = testValidateService.ValidateQuantity(tests);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
     }
 }

@@ -6,6 +6,7 @@ using BoutiqueDTOXUnit.Data.Services.Implementations;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
@@ -57,7 +58,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
             var testDomainAfterConverter = testEntityConverter.GetDomain(null);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
             var testDomainAfterConverter = testEntityConverter.GetDomains(null);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
         }
 
         /// <summary>
@@ -95,13 +96,13 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
         [Fact]
         public void GetDomains_NullCollection()
         {
-            var testTransfers = TestTransferData.TestTransfers.Append(null!);
+            var testTransfers = TestTransferData.TestTransfers.Append(null!).ToList();
             var testEntityConverter = TestTransferConverterMock.TestTransferConverter;
 
-            var testDomainAfterConverter = testEntityConverter.GetDomains(testTransfers);
+            var testDomainAfterConverter = testEntityConverter.GetDomains(testTransfers!);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.True(testDomainAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
         }
     }
 }

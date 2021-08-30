@@ -43,6 +43,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция изменения. Элемент не найден
         /// </summary>
         public static Func<IResultError> PutNotFoundFunc() =>
-            () => new ResultError(ErrorData.NotFoundErrorType);
+            () => ErrorData.ErrorNotFound.ToResultValue<ITestDomain>();
     }
 }

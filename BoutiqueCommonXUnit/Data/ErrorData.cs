@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Errors.Base;
@@ -40,5 +41,11 @@ namespace BoutiqueCommonXUnit.Data
                 ErrorTestFirst,
                 ErrorTestSecond,
             };
+
+        /// <summary>
+        /// Тестовый экземпляр ошибки со статусом не найдено
+        /// </summary>
+        public static IErrorResult ErrorNotFound =>
+           ErrorResultFactory.ValueNotFoundError(String.Empty, typeof(ErrorData));
     }
 }

@@ -42,6 +42,6 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Функция поиска по идентификатору. Элемент не найден
         /// </summary>
         public static Func<TestEnum, IResultValue<ITestDomain>> GetByIdNotFoundFunc() =>
-            id => new ResultValue<ITestDomain>(ErrorData.NotFoundErrorType);
+            id => ErrorData.ErrorNotFound.ToResultValue<ITestDomain>();
     }
 }

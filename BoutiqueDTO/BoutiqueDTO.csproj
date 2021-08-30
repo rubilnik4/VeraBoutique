@@ -7,7 +7,8 @@
     <Description>Data transfer models</Description>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Test</Configurations>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

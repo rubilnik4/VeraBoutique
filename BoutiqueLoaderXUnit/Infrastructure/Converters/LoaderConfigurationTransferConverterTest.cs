@@ -3,6 +3,7 @@ using BoutiqueLoader.Models.Implementations.Configuration;
 using BoutiqueLoaderXUnit.Data.Transfers.Configuration;
 using BoutiqueLoaderXUnit.Infrastructure.Mocks.Converters;
 using Functional.Models.Enums;
+using Functional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueLoaderXUnit.Infrastructure.Converters
@@ -37,7 +38,7 @@ namespace BoutiqueLoaderXUnit.Infrastructure.Converters
             var loaderConfigurationAfterConverter = loaderConfigurationTransferConverter.FromTransfer(hostConfigurationNull);
 
             Assert.True(loaderConfigurationAfterConverter.HasErrors);
-            Assert.True(loaderConfigurationAfterConverter.Errors.First().ErrorResultType == ErrorResultType.ValueNotFound);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(loaderConfigurationAfterConverter.Errors.First());
         }
     }
 }
