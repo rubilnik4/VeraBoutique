@@ -127,7 +127,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base
             var result = testValidateService.ValidateQuantity(tests);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
     }
 }

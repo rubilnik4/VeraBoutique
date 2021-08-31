@@ -77,7 +77,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultId = await testService.Post(testDomain);
 
             Assert.True(resultId.HasErrors);
-            Assert.IsNotType<DatabaseTableErrorResult>(resultId.Errors.First());
+            Assert.IsType<DatabaseTableErrorResult>(resultId.Errors.First());
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultIds = await testService.Post(testDomains);
 
             Assert.True(resultIds.HasErrors);
-            Assert.IsNotType<DatabaseTableErrorResult>(resultIds.Errors.First());
+            Assert.IsType<DatabaseTableErrorResult>(resultIds.Errors.First());
         }
     }
 }

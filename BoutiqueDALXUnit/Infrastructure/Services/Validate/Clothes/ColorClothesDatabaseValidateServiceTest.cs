@@ -6,6 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using Functional.Models.Enums;
 using Functional.Models.Interfaces.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Moq;
 using Xunit;
 
@@ -44,7 +45,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(colorEmptyName);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>

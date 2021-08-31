@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ using Functional.FunctionalExtensions.Async;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Functional.FunctionalExtensions.Sync;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using Functional.Models.Implementations.Results;
+using Functional.Models.Interfaces.Errors.Base;
 using Functional.Models.Interfaces.Results;
 using Microsoft.EntityFrameworkCore;
 using static Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections.ResultCollectionTryAsyncExtensions;
@@ -57,7 +60,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
         public async Task<IResultValue<TOut>> FindExpressionValueAsync<TOut>(Func<IQueryable<TEntity>, Task<TOut>> queryFunc, TId id)
-             where TOut : notnull =>
+            where TOut : notnull =>
             await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).
                                                 ToResultValueNullValueCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
                                           TableAccessErrorType);

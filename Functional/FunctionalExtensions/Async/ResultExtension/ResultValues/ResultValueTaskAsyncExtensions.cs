@@ -58,6 +58,7 @@ namespace Functional.FunctionalExtensions.Async.ResultExtension.ResultValues
             await @this.
             MapTaskAsync(awaitedThis => awaitedThis.ToResultValueNullValueCheck(errorNull));
 
+
         /// <summary>
         /// Преобразовать значение в результирующий ответ с проверкой на нуль для задачи-объекта
         /// </summary>

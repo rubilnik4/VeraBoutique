@@ -18,8 +18,7 @@ namespace BoutiqueDTOXUnit.Data.Services.Implementations.Services.RestService
     /// </summary>
     public class TestRestService : RestServiceBase<TestEnum, ITestDomain, TestTransfer>, ITestRestService
     {
-        public TestRestService(IRestHttpClient restHttpClient,
-                               ITestTransferConverter testTransferConverter)
+        public TestRestService(IRestHttpClient restHttpClient, ITestTransferConverter testTransferConverter)
             : base(restHttpClient, testTransferConverter)
         { }
     }

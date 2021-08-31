@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
@@ -41,32 +42,190 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         }
 
         /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNull_Ok()
+        {
+            const string testString = "Test";
+            var errorInitial = CreateErrorTest();
+            var result = testString.ToResultValueWhereNull(_ => true,
+                                                           _ => errorInitial);
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testString, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNull_Bad()
+        {
+            string testString = String.Empty;
+            var errorInitial = CreateErrorTest();
+            var result = testString.ToResultValueWhereNull(_ => false ,
+                                                           _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNull_Null()
+        {
+            string? testString = null;
+            var errorInitial = CreateErrorTest();
+            var result = testString.ToResultValueWhereNull(_ => true,
+                                                           _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullStruct_Ok()
+        {
+            int? testInt = 1;
+            var errorInitial = CreateErrorTest();
+            var result = testInt.ToResultValueWhereNull(_ => true,
+                                                        _ => errorInitial);
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testInt, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullStruct_Bad()
+        {
+            int? testInt = 0;
+            var errorInitial = CreateErrorTest();
+            var result = testInt.ToResultValueWhereNull(_ => false,
+                                                        _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullStruct_Null()
+        {
+            int? testInt = null;
+            var errorInitial = CreateErrorTest();
+            var result = testInt.ToResultValueWhereNull(_ => true,
+                                                        _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
         /// Преобразовать значения в результирующий ответ с условием. Положительное условие
         /// </summary>
         [Fact]
-        public void ToResultValueWhereOkBad_Ok()
+        public void ToResultValueWhereNullOkBad_Ok()
         {
-            const int number = 1;
+            const string testString = "Test";
 
-            var result = number.ToResultValueWhereOkBad(_ => true,
-                                                        value => value.ToString(),
-                                                        _ => CreateErrorTest());
+            var result = testString.ToResultValueWhereNullOkBad(_ => true,
+                                                            test => test,
+                                                            _ => CreateErrorTest());
 
             Assert.True(result.OkStatus);
-            Assert.Equal(number.ToString(), result.Value);
+            Assert.Equal(testString, result.Value);
         }
 
         /// <summary>
         /// Преобразовать значения в результирующий ответ с условием. Негативное условие
         /// </summary>
         [Fact]
-        public void ToResultValueWhereOkBad_BadError()
+        public void ToResultValueWhereNullOkBad_BadError()
         {
-            const int number = 1;
+            string testString = String.Empty;
             var errorInitial = CreateErrorTest();
-            var result = number.ToResultValueWhereOkBad(_ => false,
-                                                        value => value.ToString(),
-                                                        _ => errorInitial);
+
+            var result = testString.ToResultValueWhereNullOkBad(_ => false,
+                                                            test => test.ToString(),
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullOkBad_Null()
+        {
+            string? testString = null;
+            var errorInitial = CreateErrorTest();
+
+            var result = testString.ToResultValueWhereNullOkBad(_ => true,
+                                                            test => test.ToString(),
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Положительное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullOkBadStruct_Ok()
+        {
+            int? testInt = 1;
+
+            var result = testInt.ToResultValueWhereNullOkBad(_ => true,
+                                                            test => test,
+                                                            _ => CreateErrorTest());
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testInt, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullOkBadStruct_BadError()
+        {
+            int? testInt = 0;
+            var errorInitial = CreateErrorTest();
+
+            var result = testInt.ToResultValueWhereNullOkBad(_ => false,
+                                                            test => test.ToString(),
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public void ToResultValueWhereNullOkBadStruct_Null()
+        {
+            int? testInt = null;
+            var errorInitial = CreateErrorTest();
+
+            var result = testInt.ToResultValueWhereNullOkBad(_ => true,
+                                                            test => test.ToString(),
+                                                            _ => errorInitial);
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().Equals(errorInitial));

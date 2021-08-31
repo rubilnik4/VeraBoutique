@@ -1,4 +1,6 @@
-﻿namespace FunctionalXUnit.Data
+﻿using System.Threading.Tasks;
+
+namespace FunctionalXUnit.Data
 {
     /// <summary>
     /// Тестовые числа
@@ -8,6 +10,19 @@
         /// <summary>
         /// Тестовое число
         /// </summary>
-        public static int Number => 2;
+        public static int Number =>
+            2;
+
+        /// <summary>
+        /// Тестовое число
+        /// </summary>
+        public static Task<int?> NumberTask =>
+            Task.FromResult((int?)Number);
+
+        /// <summary>
+        /// Тестовое число
+        /// </summary>
+        public static Task<int?> NumberTaskNull =>
+            Task.FromResult<int?>(null);
     }
 }

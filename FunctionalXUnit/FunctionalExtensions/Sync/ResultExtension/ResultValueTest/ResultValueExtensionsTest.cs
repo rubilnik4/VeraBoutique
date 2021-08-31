@@ -126,10 +126,10 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         {
             const string initialString = "NotNull";
 
-            var resultString = initialString.ToResultValueNullCheck(CreateErrorTest());
+            var result = initialString.ToResultValueNullCheck(CreateErrorTest());
 
-            Assert.True(resultString.OkStatus);
-            Assert.Equal(initialString, resultString.Value);
+            Assert.True(result.OkStatus);
+            Assert.Equal(initialString, result.Value);
         }
 
         /// <summary>
@@ -140,10 +140,38 @@ namespace FunctionalXUnit.FunctionalExtensions.Sync.ResultExtension.ResultValueT
         {
             const string? initialString = null;
             var initialError = CreateErrorTest();
-            var resultString = initialString.ToResultValueNullCheck(initialError);
+            var result = initialString.ToResultValueNullCheck(initialError);
 
-            Assert.True(resultString.HasErrors);
-            Assert.True(resultString.Errors.First().Equals(initialError));
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(initialError));
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Без ошибок
+        /// </summary>
+        [Fact]
+        public void ToResultValueNullCheckStruct_Ok()
+        {
+            int? initialInt = 1;
+
+            var result = initialInt.ToResultValueNullCheck(CreateErrorTest());
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(initialInt, result.Value);
+        }
+
+        /// <summary>
+        /// Проверить объект на нул. Ошибка нулевого значения
+        /// </summary>
+        [Fact]
+        public void ToResultValueNullCheckStruct_ErrorNull()
+        {
+            int? initialInt = null;
+            var initialError = CreateErrorTest();
+            var result = initialInt.ToResultValueNullCheck(initialError);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(initialError));
         }
     }
 }

@@ -58,7 +58,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
             var testDomainAfterConverter = testEntityConverter.GetDomain(null);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
             var testDomainAfterConverter = testEntityConverter.GetDomains(null);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base
             var testDomainAfterConverter = testEntityConverter.GetDomains(testTransfers!);
 
             Assert.True(testDomainAfterConverter.HasErrors);
-            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(testDomainAfterConverter.Errors.First());
         }
     }
 }

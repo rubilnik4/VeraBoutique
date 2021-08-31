@@ -81,7 +81,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetClothes(genderType, clothesType);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.IsNotType(errorInitial.GetType(), clothesResults.Errors.First());
+            Assert.IsType(errorInitial.GetType(), clothesResults.Errors.First());
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetClothesDetails(genderType, clothesType);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.IsNotType(errorInitial.GetType(), clothesResults.Errors.First());
+            Assert.IsType(errorInitial.GetType(), clothesResults.Errors.First());
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.IsNotType(errorInitial.GetType(), clothesResults.Errors.First());
+            Assert.IsType(errorInitial.GetType(), clothesResults.Errors.First());
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Clothes
             var clothesResults = await clothesDatabaseService.GetImage(clothesEntity.Id);
 
             Assert.True(clothesResults.HasErrors);
-            Assert.IsNotType(errorInitial.GetType(), clothesResults.Errors.First());
+            Assert.IsType(errorInitial.GetType(), clothesResults.Errors.First());
         }
 
         /// <summary>

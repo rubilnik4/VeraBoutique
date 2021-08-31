@@ -1,4 +1,9 @@
-﻿using Functional.Models.Enums;
+﻿using System.Linq;
+using System.Net;
+using System.Net.Http;
+using BoutiqueDTO.Extensions.RestResponses.Sync;
+using Functional.FunctionalExtensions.Sync;
+using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Errors;
@@ -12,6 +17,8 @@ namespace BoutiqueDTOXUnit.Data
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
         public static IErrorResult ErrorTypeBadRequest =>
-            ErrorResultFactory.RestError(RestErrorType.BadRequest, "localhost:5000", "BadRequest");
+            new HttpResponseMessage(HttpStatusCode.BadRequest).
+            Map(response => response.ToRestResultError()).
+            Errors.First();
     }
 }

@@ -23,20 +23,20 @@ namespace BoutiqueXamarin.Views.Base
         {
             this.WhenActivated(disposable =>
             {
-                this.ViewModel!.ErrorViewModelObservable.
+                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
                      WhereNotNull().
                      Where(_ => ErrorContentView != null).
                      BindTo(this, x => x.ErrorContentView!.ViewModel).
                      DisposeWith(disposable);
 
-                this.ViewModel!.ErrorViewModelObservable.
-                     WhereNotNull().
+                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
+                    WhereNotNull().
                      Select(x => x.ResultError.HasErrors).
                      Where(_ => ErrorContentView != null).
                      BindTo(this, x => x.ErrorContentView!.IsVisible).
                      DisposeWith(disposable);
 
-                this.ViewModel!.ErrorViewModelObservable.
+                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
                      WhereNotNull().
                      Select(x => x.ResultError.OkStatus).
                      Where(_ => MainContentView != null).

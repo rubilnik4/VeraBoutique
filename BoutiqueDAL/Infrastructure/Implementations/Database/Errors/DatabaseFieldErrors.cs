@@ -41,6 +41,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// </summary>
         public static IErrorResult FieldNotValid<TValue>(TValue value, string tableName, string description)
             where TValue : notnull =>
-            ErrorResultFactory.DatabaseValueNotValidError(value, tableName, $"{description} {value.GetType()} в [{tableName}]");
+            ErrorResultFactory.DatabaseValueNotValidError(value, tableName, $"{description} {value?.GetType()} в [{tableName}]");
     }
 }

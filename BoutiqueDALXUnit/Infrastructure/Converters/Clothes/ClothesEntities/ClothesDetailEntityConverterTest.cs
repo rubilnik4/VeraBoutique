@@ -65,7 +65,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsAssignableFrom<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesEntities
             var clothesAfterConverter = clothesEntityConverter.FromEntity(clothesNull);
 
             Assert.True(clothesAfterConverter.HasErrors);
-            Assert.IsAssignableFrom<IValueNotValidErrorResult>(clothesAfterConverter.Errors.First());
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(clothesAfterConverter.Errors.First());
         }
 
         /// <summary>

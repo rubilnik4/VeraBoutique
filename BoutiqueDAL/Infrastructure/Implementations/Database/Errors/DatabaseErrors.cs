@@ -65,7 +65,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// </summary>
         public static IErrorResult CollectionEmpty<TId>(IEnumerable<TId> ids, string tableName)
             where TId : notnull =>
-            ErrorResultFactory.DatabaseValueNotFoundError(ids, tableName, $"Коллекция типа {ids.GetType().Name} в таблице {tableName} пуста");
+            ErrorResultFactory.DatabaseValueNotValidError(ids, tableName, $"Коллекция типа {ids.GetType().Name} в таблице {tableName} пуста");
 
         /// <summary>
         /// Преобразовать список элементов в строку

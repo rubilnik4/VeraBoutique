@@ -56,7 +56,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var result = await testService.Put(testDomainPut);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>

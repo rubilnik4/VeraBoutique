@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
@@ -15,7 +18,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Преобразовать значения в результирующий ответ с условием. Положительное условие
         /// </summary>
         [Fact]
-        public async Task ToResultValueWhereAsync_Ok()
+        public async Task ToResultValueWhereBindAsync_Ok()
         {
             const int number = 1;
 
@@ -30,7 +33,7 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
         /// Преобразовать значения в результирующий ответ с условием. Негативное условие
         /// </summary>
         [Fact]
-        public async Task ToResultValueWhereAsync_BadError()
+        public async Task ToResultValueWhereBindAsync_BadError()
         {
             const int number = 1;
             var errorInitial = CreateErrorTest();
@@ -40,6 +43,196 @@ namespace FunctionalXUnit.FunctionalExtensions.Async.ResultExtension.ResultValue
 
             Assert.True(result.HasErrors);
             Assert.True(result.Errors.First().Equals(errorInitial));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullBindAsync_Ok()
+        {
+            var testString = StringTest.TestStringTask;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testString.ToResultValueWhereNullBindAsync(_ => true,
+                                                                          _ => errorInitial);
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testString.Result, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullBindAsync_Bad()
+        {
+            var testString = StringTest.TestStringTask;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testString.ToResultValueWhereNullBindAsync(_ => false,
+                                                           _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullBindAsync_Null()
+        {
+            var testString = StringTest.TestStringTaskNull;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testString.ToResultValueWhereNullBindAsync(_ => true,
+                                                           _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullStructBindAsync_Ok()
+        {
+            var testInt = Numbers.NumberTask;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testInt.ToResultValueWhereNullBindAsync(_ => true,
+                                                        _ => errorInitial);
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testInt.Result, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullStructBindAsync_Bad()
+        {
+            var testInt = Numbers.NumberTask;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testInt.ToResultValueWhereNullBindAsync(_ => false,
+                                                        _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием и проверкой на нуль
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullStructBindAsync_Null()
+        {
+            var testInt = Numbers.NumberTaskNull;
+            var errorInitial = CreateErrorTestTask();
+            var result = await testInt.ToResultValueWhereNullBindAsync(_ => true,
+                                                        _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Положительное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadBindAsync_Ok()
+        {
+            var testString = StringTest.TestStringTask;
+
+            var result = await testString.ToResultValueWhereNullOkBadBindAsync(_ => true,
+                                                                           Task.FromResult,
+                                                                           _ => CreateErrorTestTask());
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testString.Result, result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadBindAsync_BadError()
+        {
+            var testString = StringTest.TestStringTask;
+            var errorInitial = CreateErrorTestTask();
+
+            var result = await testString.ToResultValueWhereNullOkBadBindAsync(_ => false,
+                                                            Task.FromResult,
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadBindAsync_Null()
+        {
+            var testString = StringTest.TestStringTaskNull;
+            var errorInitial = CreateErrorTestTask();
+
+            var result = await testString.ToResultValueWhereNullOkBadBindAsync(_ => true,
+                                                            Task.FromResult,
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Положительное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadStructBindAsync_Ok()
+        {
+            var testInt = Numbers.NumberTask;
+
+            var result = await testInt.ToResultValueWhereNullOkBadBindAsync(_ => true,
+                                                            CurryFunctions.IntToStringAsync,
+                                                            _ => CreateErrorTestTask());
+
+            Assert.True(result.OkStatus);
+            Assert.Equal(testInt.Result.ToString(), result.Value);
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadStructBindAsync_BadError()
+        {
+            var testInt = Numbers.NumberTask;
+            var errorInitial = CreateErrorTestTask();
+
+            var result = await testInt.ToResultValueWhereNullOkBadBindAsync(_ => false,
+                                                            CurryFunctions.IntToStringAsync,
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
+        }
+
+        /// <summary>
+        /// Преобразовать значения в результирующий ответ с условием. Негативное условие
+        /// </summary>
+        [Fact]
+        public async Task ToResultValueWhereNullOkBadStructBindAsync_Null()
+        {
+            var testInt = Numbers.NumberTaskNull;
+            var errorInitial = CreateErrorTestTask();
+
+            var result = await testInt.ToResultValueWhereNullOkBadBindAsync(_ => true,
+                                                            CurryFunctions.IntToStringAsync,
+                                                            _ => errorInitial);
+
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.First().Equals(errorInitial.Result));
         }
     }
 }

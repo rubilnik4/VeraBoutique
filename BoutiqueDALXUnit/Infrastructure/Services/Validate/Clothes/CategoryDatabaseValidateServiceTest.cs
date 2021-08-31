@@ -14,6 +14,7 @@ using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using Functional.Models.Enums;
 using Functional.Models.Interfaces.Errors.CommonErrors;
+using Functional.Models.Interfaces.Errors.DatabaseErrors;
 using Moq;
 using Xunit;
 
@@ -54,7 +55,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = ValidateModel(categoryEmptyName);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
 
@@ -69,7 +70,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
 
             var result = ValidateModel(categoryEmptyGenders);
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var result = await ValidateIncludes(categoryNotFound);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(result.Errors.First());
         }
 
         /// <summary>

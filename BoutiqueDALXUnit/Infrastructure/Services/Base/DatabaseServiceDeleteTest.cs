@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
@@ -52,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete();
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsNotType<DatabaseTableErrorResult>(resultEntity.Errors.First());
+            Assert.IsType<DatabaseTableErrorResult>(resultEntity.Errors.First());
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
         {
             var testDelete = TestData.TestDomains.Last();
             var errorInitial = DatabaseErrorData.TableError;
-            var resultDelete = new ResultError(errorInitial);
+            var resultDelete = new ResultValue<TestEntity>(errorInitial);
             var testTableMock = DatabaseTableDeleteMock.GetTestDatabaseTable(resultDelete);
             var testDatabaseMock = DatabaseMock.GetTestDatabase(testTableMock.Object);
             var testConverter = TestEntityConverterMock.TestEntityConverter;
@@ -92,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsNotType<DatabaseTableErrorResult>(resultEntity.Errors.First());
+            Assert.IsType<DatabaseTableErrorResult>(resultEntity.Errors.First());
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsAssignableFrom<IDatabaseValueNotValidErrorResult>(resultEntity.Errors.First());
+            Assert.IsAssignableFrom<IDatabaseValueNotFoundErrorResult>(resultEntity.Errors.First());
         }
     }
 }
