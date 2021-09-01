@@ -18,6 +18,12 @@ namespace Functional.Models.Implementations.Errors
     public static class ErrorResultFactory
     {
         /// <summary>
+        /// Создать ошибку общего типа
+        /// </summary>
+        public static IErrorResult CommonError(CommonErrorType commonErrorType, string description) =>
+            new CommonErrorResult(commonErrorType, description);
+
+        /// <summary>
         /// Создать ошибку авторизации
         /// </summary>
         public static IErrorResult AuthorizeError(AuthorizeErrorType authorizeErrorType, string description) =>

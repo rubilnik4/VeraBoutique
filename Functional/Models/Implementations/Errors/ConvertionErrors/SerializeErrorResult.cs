@@ -4,13 +4,14 @@ using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Implementations.Errors.CommonErrors;
 using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Errors.Base;
+using Functional.Models.Interfaces.Errors.ConvertionErrors;
 
 namespace Functional.Models.Implementations.Errors.ConvertionErrors
 {
     /// <summary>
     /// Ошибка сериализации
     /// </summary>
-    public class SerializeErrorResult<TValue> : ErrorBaseResult<ConvertionErrorType>
+    public class SerializeErrorResult<TValue> : ErrorBaseResult<ConvertionErrorType>, ISerializeErrorResult
        where TValue : notnull
     {
         public SerializeErrorResult(ConvertionErrorType convertionErrorType, TValue value, string description)

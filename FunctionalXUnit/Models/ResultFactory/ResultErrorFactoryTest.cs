@@ -4,39 +4,35 @@ using Functional.Models.Implementations.ResultFactory;
 using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
-using static FunctionalXUnit.Data.Collections;
 
-namespace FunctionalXUnit.Models.ResultFactoryTest
+namespace FunctionalXUnit.Models.ResultsFactory
 {
 
     /// <summary>
-    /// Фабрика для создания результирующего ответа с коллекцией. Тесты
+    /// Фабрика для создания результирующего ответа. Тесты
     /// </summary>
-    public class ResultCollectionFactoryTest
+    public class ResultErrorFactoryTest
     {
         /// <summary>
-        /// Создать асинхронный результирующий ответ со значением
+        /// Создать асинхронный результирующий ответ
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollection_Ok()
+        public async Task CreateTaskResultError_Ok()
         {
-            var initialValue = GetRangeNumber();
-
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollection(initialValue);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError();
 
             Assert.True(resultValue.OkStatus);
-            Assert.True(initialValue.SequenceEqual(resultValue.Value));
         }
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollection_Error()
+        public async Task CreateTaskResultError_Error()
         {
             var initialError = CreateErrorTest();
 
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollectionError<int>(initialError);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.Equals(resultValue.Errors.First()));
@@ -46,39 +42,36 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollection_Errors()
+        public async Task CreateTaskResultError_Errors()
         {
             var initialError = CreateErrorListTwoTest();
 
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollectionError<int>(initialError);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.SequenceEqual(resultValue.Errors));
         }
 
         /// <summary>
-        /// Создать асинхронный результирующий ответ со значением
+        /// Создать асинхронный результирующий ответ
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollectionAsync_Ok()
+        public async Task CreateTaskResultErrorAsync_Ok()
         {
-            var initialValue = GetRangeNumber();
-
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollectionAsync(initialValue);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError();
 
             Assert.True(resultValue.OkStatus);
-            Assert.True(initialValue.SequenceEqual(resultValue.Value));
         }
 
         /// <summary>
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollectionAsync_Error()
+        public async Task CreateTaskResultErrorAsync_Error()
         {
             var initialError = CreateErrorTest();
 
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollectionErrorAsync<int>(initialError);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.Equals(resultValue.Errors.First()));
@@ -88,11 +81,11 @@ namespace FunctionalXUnit.Models.ResultFactoryTest
         /// Создать асинхронный результирующий ответ с ошибкой
         /// </summary>
         [Fact]
-        public async Task CreateTaskResultCollectionAsync_Errors()
+        public async Task CreateTaskResultErrorAsync_Errors()
         {
             var initialError = CreateErrorListTwoTest();
 
-            var resultValue = await ResultCollectionFactory.CreateTaskResultCollectionErrorAsync<int>(initialError);
+            var resultValue = await ResultErrorFactory.CreateTaskResultError(initialError);
 
             Assert.True(resultValue.HasErrors);
             Assert.True(initialError.SequenceEqual(resultValue.Errors));

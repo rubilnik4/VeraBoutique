@@ -4,6 +4,9 @@ using Functional.Models.Interfaces.Errors.Base;
 
 namespace Functional.Models.Implementations.Errors.Base
 {
+    /// <summary>
+    /// Ошибка результирующего ответа
+    /// </summary>
     public class ErrorTypeResult<TError> : ErrorBaseResult<TError>
         where TError : struct
     {

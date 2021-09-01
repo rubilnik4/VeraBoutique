@@ -14,8 +14,4 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Implementations\Errors\ConvertionErrors\" />
-  </ItemGroup>
-
 </Project>

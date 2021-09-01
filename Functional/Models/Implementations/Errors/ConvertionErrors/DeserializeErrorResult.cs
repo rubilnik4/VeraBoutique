@@ -3,13 +3,14 @@ using Functional.Models.Enums;
 using Functional.Models.Implementations.Errors.Base;
 using Functional.Models.Interfaces.Errors;
 using Functional.Models.Interfaces.Errors.Base;
+using Functional.Models.Interfaces.Errors.ConvertionErrors;
 
 namespace Functional.Models.Implementations.Errors.ConvertionErrors
 {
     /// <summary>
     /// Ошибка десериализации
     /// </summary>
-    public class DeserializeErrorResult<TValue> : ErrorBaseResult<ConvertionErrorType>
+    public class DeserializeErrorResult<TValue> : ErrorBaseResult<ConvertionErrorType>, IDeserializeErrorResult
        where TValue : notnull
     {
         public DeserializeErrorResult(ConvertionErrorType convertionErrorType, string value, string description)

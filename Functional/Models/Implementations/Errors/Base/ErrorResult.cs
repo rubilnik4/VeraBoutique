@@ -8,6 +8,9 @@ using Functional.Models.Interfaces.Results;
 
 namespace Functional.Models.Implementations.Errors.Base
 {
+    /// <summary>
+    /// Ошибка результирующего ответа
+    /// </summary>
     public abstract class ErrorResult : IErrorResult
     {
         protected ErrorResult(string description)

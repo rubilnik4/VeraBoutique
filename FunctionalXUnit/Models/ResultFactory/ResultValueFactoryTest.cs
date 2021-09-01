@@ -5,7 +5,7 @@ using FunctionalXUnit.Data;
 using Xunit;
 using static FunctionalXUnit.Data.ErrorData;
 
-namespace FunctionalXUnit.Models.ResultFactoryTest
+namespace FunctionalXUnit.Models.ResultsFactory
 {
 
     /// <summary>
