@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
-using Functional.FunctionalExtensions.Async;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

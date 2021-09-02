@@ -6,15 +6,15 @@ using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Models.Implementations.RestClients
 {

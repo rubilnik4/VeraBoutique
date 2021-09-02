@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate
 {

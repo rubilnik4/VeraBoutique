@@ -3,8 +3,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync

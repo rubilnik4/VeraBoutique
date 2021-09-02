@@ -5,8 +5,8 @@ using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueXamarinCommon.Models.Implementation.Configuration;
 using BoutiqueXamarinCommonXUnit.Data.Transfers.Configuration;
 using BoutiqueXamarinCommonXUnit.Infrastructure.Mocks.Converters;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueXamarinCommonXUnit.Infrastructure.Converters

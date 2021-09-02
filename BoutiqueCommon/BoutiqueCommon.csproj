@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Functional\Functional.csproj" />
+    <Folder Include="Extensions\StringExtensions\" />
+    <Folder Include="Infrastructure\Implementation\Calculate\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\StringExtensions\" />
-    <Folder Include="Infrastructure\Implementation\Calculate\" />
+    <PackageReference Include="ResultFunctional" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

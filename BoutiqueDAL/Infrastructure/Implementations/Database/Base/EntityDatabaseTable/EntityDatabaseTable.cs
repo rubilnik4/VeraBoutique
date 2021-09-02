@@ -8,10 +8,10 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Interfaces.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using Microsoft.EntityFrameworkCore;
 
 

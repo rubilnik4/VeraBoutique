@@ -9,8 +9,8 @@ using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Implementation;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.DatabaseSet;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.DatabaseErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Base

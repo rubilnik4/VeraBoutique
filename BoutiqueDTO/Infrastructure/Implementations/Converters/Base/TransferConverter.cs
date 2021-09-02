@@ -5,10 +5,10 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultCollections;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
 {

@@ -7,13 +7,13 @@ using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Implementations.Errors.Base;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.Base;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 
 namespace BoutiqueMVC.Factories.Identity

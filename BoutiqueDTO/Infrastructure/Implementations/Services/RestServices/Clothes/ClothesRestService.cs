@@ -18,11 +18,11 @@ using BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueDTO.Routes.Clothes;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes
 {

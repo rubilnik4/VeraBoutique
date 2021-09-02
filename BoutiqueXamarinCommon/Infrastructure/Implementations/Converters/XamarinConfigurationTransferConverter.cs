@@ -5,9 +5,9 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
 using BoutiqueXamarinCommon.Models.Implementation.Configuration;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Converters
 {

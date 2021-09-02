@@ -3,7 +3,7 @@ using BoutiqueCommon.Extensions.ReflectionExtensions;
 using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabaseTable
 {

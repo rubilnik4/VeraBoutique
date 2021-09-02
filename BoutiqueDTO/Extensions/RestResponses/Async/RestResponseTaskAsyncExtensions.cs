@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Async;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Async
 {

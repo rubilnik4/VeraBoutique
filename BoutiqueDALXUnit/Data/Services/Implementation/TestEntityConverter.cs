@@ -14,10 +14,10 @@ using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
 {

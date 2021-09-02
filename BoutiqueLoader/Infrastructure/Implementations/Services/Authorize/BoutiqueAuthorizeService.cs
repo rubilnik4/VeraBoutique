@@ -6,12 +6,12 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;
 using BoutiqueLoader.Factories.Services;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorize
 {

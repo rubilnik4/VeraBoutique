@@ -3,9 +3,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.AuthorizeErrors;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize

@@ -8,7 +8,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
 {

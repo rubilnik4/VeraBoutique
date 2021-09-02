@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Enums.Clothes;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Infrastructure.Implementation.Clothes
 {

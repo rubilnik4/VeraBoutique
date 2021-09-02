@@ -6,7 +6,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeE
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
-using Functional.Models.Enums;
+using ResultFunctional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Converters.Clothes.ClothesTypeEntities

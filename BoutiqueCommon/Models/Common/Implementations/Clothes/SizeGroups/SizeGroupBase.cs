@@ -6,7 +6,7 @@ using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups;
 using BoutiqueCommon.Models.Enums.Clothes;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
 {

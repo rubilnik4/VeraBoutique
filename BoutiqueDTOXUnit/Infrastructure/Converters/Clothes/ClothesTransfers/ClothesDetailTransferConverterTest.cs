@@ -3,8 +3,8 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Clothes.ClothesTransfers

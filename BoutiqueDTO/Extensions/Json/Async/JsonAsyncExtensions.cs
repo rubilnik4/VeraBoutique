@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Results;
 using Newtonsoft.Json;
 
 namespace BoutiqueDTO.Extensions.Json.Async

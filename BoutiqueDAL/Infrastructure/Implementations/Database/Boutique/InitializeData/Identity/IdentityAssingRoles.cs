@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.TaskExtensions;
 using BoutiqueDAL.Models.Implementations.Identity;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
+using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

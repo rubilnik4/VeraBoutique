@@ -2,7 +2,7 @@
 using BoutiqueDAL.Factories.Implementations.Database.Connection;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueMVC.Models.Implementations.Environment;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueMVC.Factories.Database
 {

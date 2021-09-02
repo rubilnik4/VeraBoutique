@@ -9,7 +9,7 @@ using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Enums.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

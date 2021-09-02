@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
-    <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
 </Project>

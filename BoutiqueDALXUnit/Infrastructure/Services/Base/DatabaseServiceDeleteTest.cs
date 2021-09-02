@@ -8,10 +8,10 @@ using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Base;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.DatabaseErrors;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Errors.DatabaseErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.DatabaseErrors;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Infrastructure.Services.Base

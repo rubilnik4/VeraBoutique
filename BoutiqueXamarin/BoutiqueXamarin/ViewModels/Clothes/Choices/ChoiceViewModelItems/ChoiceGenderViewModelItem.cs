@@ -9,8 +9,8 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using DynamicData;
 using DynamicData.Binding;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Async;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Extensions.RestResponses.Async
 {

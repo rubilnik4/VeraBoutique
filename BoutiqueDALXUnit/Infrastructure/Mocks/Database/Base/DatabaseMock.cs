@@ -1,6 +1,6 @@
 ﻿using BoutiqueDALXUnit.Data.Database.Interfaces;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Implementations.Results;
 using Moq;
 
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Database.Base

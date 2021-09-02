@@ -5,13 +5,13 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Akavache;
-using Functional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Implementations.Errors.Base;
-using Functional.Models.Interfaces.Errors.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync

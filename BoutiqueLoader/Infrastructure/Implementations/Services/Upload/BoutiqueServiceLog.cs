@@ -3,9 +3,9 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueLoader.Models.Enums;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
 {

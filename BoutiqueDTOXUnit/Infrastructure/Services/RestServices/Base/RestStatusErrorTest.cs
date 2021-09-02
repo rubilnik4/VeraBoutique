@@ -2,8 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base

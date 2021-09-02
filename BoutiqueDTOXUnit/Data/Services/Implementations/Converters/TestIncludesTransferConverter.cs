@@ -3,9 +3,9 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Interfaces.Converters;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTOXUnit.Data.Services.Implementations.Converters
 {

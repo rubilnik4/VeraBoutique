@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueMVC.Models.Implementations.Controller;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Implementations.Errors.CommonErrors;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
-using Functional.Models.Interfaces.Errors.CommonErrors;
-using Functional.Models.Interfaces.Errors.DatabaseErrors;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.CommonErrors;
+using ResultFunctional.Models.Interfaces.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
+using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync

@@ -10,7 +10,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using Prism.Ioc;
 using Prism.Unity;
 using Unity;

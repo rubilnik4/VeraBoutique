@@ -6,8 +6,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
 {

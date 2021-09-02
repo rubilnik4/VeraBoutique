@@ -2,8 +2,8 @@
 using BoutiqueLoader.Models.Implementations.Configuration;
 using BoutiqueLoaderXUnit.Data.Transfers.Configuration;
 using BoutiqueLoaderXUnit.Infrastructure.Mocks.Converters;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueLoaderXUnit.Infrastructure.Converters

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoutiqueMVC.Models.Implementations.Controller

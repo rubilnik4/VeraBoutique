@@ -8,7 +8,7 @@ using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
 using BoutiqueXamarin.Views.ContentViews;
 using BoutiqueXamarin.Views.ContentViews.MenuItems;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ReactiveUI;
 using ReactiveUI.XamForms;
 using Xamarin.CommunityToolkit.UI.Views;

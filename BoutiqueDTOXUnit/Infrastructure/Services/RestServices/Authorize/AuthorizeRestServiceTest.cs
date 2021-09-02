@@ -6,8 +6,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Results;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize

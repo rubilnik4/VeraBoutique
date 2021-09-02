@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
 
 namespace BoutiqueDAL.Models.Implementations.Identity

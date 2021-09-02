@@ -13,10 +13,10 @@ using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.RestErrors;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Clothes

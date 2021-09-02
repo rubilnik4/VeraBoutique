@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDTO.Factory.HttpClients
 {

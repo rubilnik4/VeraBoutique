@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Text;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.Extensions.Configuration;
 
 namespace BoutiqueMVC.Factories.Database

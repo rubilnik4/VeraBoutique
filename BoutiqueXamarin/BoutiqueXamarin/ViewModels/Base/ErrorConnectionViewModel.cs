@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reactive;
 using System.Threading.Tasks;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base

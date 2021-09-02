@@ -7,8 +7,8 @@ using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
 using BoutiqueLoader.Infrastructure.Interfaces.Converters;
 using BoutiqueLoader.Models.Implementations.Configuration;
 using BoutiqueLoader.Models.Interfaces.Configuration;
-using Functional.FunctionalExtensions.Async;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
 {

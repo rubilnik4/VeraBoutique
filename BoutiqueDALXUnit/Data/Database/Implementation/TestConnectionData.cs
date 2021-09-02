@@ -1,8 +1,8 @@
 ﻿using BoutiqueDAL.Models.Implementations.Connection;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors;
-using Functional.Models.Implementations.Errors.Base;
-using Functional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueDALXUnit.Data.Database.Implementation
 {

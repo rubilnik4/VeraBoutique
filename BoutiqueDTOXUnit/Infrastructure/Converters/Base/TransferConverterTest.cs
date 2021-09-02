@@ -5,8 +5,8 @@ using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Services.Implementations;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Converters.Base

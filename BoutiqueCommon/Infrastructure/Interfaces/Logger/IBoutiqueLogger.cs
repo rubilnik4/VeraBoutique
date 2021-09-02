@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueCommon.Infrastructure.Interfaces.Logger
 {

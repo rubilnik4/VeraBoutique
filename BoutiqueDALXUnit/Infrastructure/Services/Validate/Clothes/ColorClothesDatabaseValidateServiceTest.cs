@@ -4,9 +4,9 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using Functional.Models.Enums;
-using Functional.Models.Interfaces.Errors.CommonErrors;
-using Functional.Models.Interfaces.Errors.DatabaseErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
 using Moq;
 using Xunit;
 

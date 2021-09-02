@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Calculate
 {

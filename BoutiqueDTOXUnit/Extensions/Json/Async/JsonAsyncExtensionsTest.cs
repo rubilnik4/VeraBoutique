@@ -6,7 +6,7 @@ using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
-using Functional.Models.Enums;
+using ResultFunctional.Models.Enums;
 using Newtonsoft.Json;
 using Xunit;
 

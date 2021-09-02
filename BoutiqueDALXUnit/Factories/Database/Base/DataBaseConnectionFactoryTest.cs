@@ -4,10 +4,10 @@ using BoutiqueDAL.Factories.Implementations.Database.Connection;
 using BoutiqueDAL.Models.Implementations.Connection;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Database.Implementation;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.DatabaseErrors;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.DatabaseErrors;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
 namespace BoutiqueDALXUnit.Factories.Database.Base

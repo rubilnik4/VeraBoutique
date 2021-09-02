@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using Functional.Models.Interfaces.Errors;
-using Functional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueDALXUnit.Data
 {

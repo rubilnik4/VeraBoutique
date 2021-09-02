@@ -13,11 +13,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoutiqueCommon\BoutiqueCommon.csproj" />
-    <ProjectReference Include="..\Functional\Functional.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="ResultFunctional" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

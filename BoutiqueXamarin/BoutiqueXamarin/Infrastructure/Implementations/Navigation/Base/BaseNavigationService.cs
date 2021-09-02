@@ -2,7 +2,7 @@
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
-using Functional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async;
 using Prism.Navigation;
 using Xamarin.Forms;
 

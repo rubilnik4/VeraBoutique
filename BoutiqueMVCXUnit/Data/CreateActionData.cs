@@ -2,7 +2,7 @@
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueMVC.Models.Implementations.Controller;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueMVCXUnit.Data
 {

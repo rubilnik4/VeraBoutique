@@ -3,9 +3,9 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDALXUnit.Data.Models.Implementation;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
 {

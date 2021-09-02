@@ -4,9 +4,9 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Services.Interfaces;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 using Moq;
 
 namespace BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate.TestValidate

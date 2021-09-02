@@ -9,7 +9,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
-using Functional.Models.Enums;
+using ResultFunctional.Models.Enums;
 using Xunit;
 
 namespace BoutiqueCommonXUnit.Models.Clothes

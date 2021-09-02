@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Configuration
 {

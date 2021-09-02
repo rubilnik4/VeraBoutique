@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using Functional.Models.Interfaces.Errors.Base;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Logger
 {

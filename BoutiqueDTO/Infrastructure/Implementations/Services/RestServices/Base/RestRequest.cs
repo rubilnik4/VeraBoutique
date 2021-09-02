@@ -5,7 +5,7 @@ using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Routes.Clothes;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
 {

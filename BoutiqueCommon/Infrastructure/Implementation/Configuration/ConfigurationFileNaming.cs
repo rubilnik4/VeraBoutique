@@ -1,5 +1,5 @@
 ﻿using System;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Infrastructure.Implementation.Configuration
 {

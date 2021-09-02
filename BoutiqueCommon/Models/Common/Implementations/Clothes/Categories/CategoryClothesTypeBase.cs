@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
 {

@@ -8,7 +8,7 @@ using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Controller;
 using BoutiqueMVCXUnit.Data;
-using Functional.Models.Implementations.ResultFactory;
+using ResultFunctional.Models.Implementations.ResultFactory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;

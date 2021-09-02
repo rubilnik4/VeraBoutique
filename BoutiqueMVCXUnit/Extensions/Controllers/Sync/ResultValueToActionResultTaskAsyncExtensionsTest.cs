@@ -9,7 +9,7 @@ using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Controller;
 using BoutiqueMVCXUnit.Data;
 using BoutiqueMVCXUnit.Properties;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.Models.Implementations.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;

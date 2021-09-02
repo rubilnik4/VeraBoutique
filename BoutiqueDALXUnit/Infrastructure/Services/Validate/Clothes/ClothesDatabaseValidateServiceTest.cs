@@ -18,10 +18,10 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.CommonErrors;
-using Functional.Models.Interfaces.Errors.CommonErrors;
-using Functional.Models.Interfaces.Errors.DatabaseErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.CommonErrors;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
+using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
 using Moq;
 using Xunit;
 

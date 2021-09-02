@@ -6,8 +6,8 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Extensions.RestResponses.Async;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.RestResponses.Async

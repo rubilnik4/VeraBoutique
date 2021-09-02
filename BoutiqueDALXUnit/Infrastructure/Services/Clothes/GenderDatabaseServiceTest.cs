@@ -11,8 +11,8 @@ using BoutiqueDALXUnit.Data;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;
-using Functional.FunctionalExtensions.Sync;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.Models.Implementations.Results;
 using Moq;
 using Xunit;
 

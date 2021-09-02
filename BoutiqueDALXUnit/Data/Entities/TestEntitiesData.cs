@@ -2,8 +2,8 @@
 using System.Linq;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDALXUnit.Data.Models.Implementation;
-using Functional.Models.Implementations.Results;
-using Functional.Models.Interfaces.Results;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDALXUnit.Data.Entities
 {

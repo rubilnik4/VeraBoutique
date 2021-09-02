@@ -7,7 +7,7 @@ using BoutiqueDTOXUnit.Data.Services.Interfaces;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueMVCXUnit.Controllers.Base.Mocks;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.Models.Implementations.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;

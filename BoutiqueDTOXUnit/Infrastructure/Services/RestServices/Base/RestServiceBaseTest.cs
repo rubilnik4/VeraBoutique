@@ -22,11 +22,11 @@ using BoutiqueDTOXUnit.Data.Services.Interfaces.Converters;
 using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
-using Functional.FunctionalExtensions.Sync;
-using Functional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using Functional.Models.Enums;
-using Functional.Models.Implementations.Errors.RestErrors;
-using Functional.Models.Implementations.Results;
+using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Implementations.Results;
 using Moq;
 using Xunit;
 

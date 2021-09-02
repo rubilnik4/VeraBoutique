@@ -3,7 +3,7 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
 using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;
-using Functional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueDALXUnit.Data.Services.Implementation
 {
