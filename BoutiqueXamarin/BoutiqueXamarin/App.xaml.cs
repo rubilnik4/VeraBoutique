@@ -1,32 +1,18 @@
 using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
-using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueCommon.Models.Domain.Implementations.Configuration;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.DependencyInjection;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
-using BoutiqueXamarin.Views;
-using BoutiqueXamarin.Views.Clothes;
-using BoutiqueXamarin.Views.Clothes.Choices;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Containers;
-using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Prism;
 using Prism.Ioc;
-using Prism.Navigation;
 using Prism.Unity;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
-using Xamarin.Forms;
+using XF.Material.Forms.Resources;
 
 namespace BoutiqueXamarin
 {
@@ -37,7 +23,10 @@ namespace BoutiqueXamarin
     {
         public App(IPlatformInitializer initializer)
             : base(initializer)
-        { }
+        {
+            XF.Material.Forms.Material.Init(this);
+            XF.Material.Forms.Material.Use("BoutiqueMaterialConfiguration");
+        }
 
         /// <summary>
         /// Контейнер зависимостей

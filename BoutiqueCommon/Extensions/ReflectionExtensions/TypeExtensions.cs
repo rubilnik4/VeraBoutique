@@ -1,6 +1,5 @@
 ﻿using System;
 using ResultFunctional.FunctionalExtensions.Sync;
-using ResultFunctional.FunctionalExtensions.Sync;
 
 namespace BoutiqueCommon.Extensions.ReflectionExtensions
 {
@@ -16,7 +15,7 @@ namespace BoutiqueCommon.Extensions.ReflectionExtensions
             type.Name.
             Map(typeName => (TypeName: typeName, Index: typeName.IndexOf('`'))).
             WhereContinue(nameIndex => nameIndex.Index > -1,
-                          nameIndex => nameIndex.TypeName.Substring(0, nameIndex.Index),
+                          nameIndex => nameIndex.TypeName[..nameIndex.Index],
                           nameIndex => nameIndex.TypeName);
     }
 }

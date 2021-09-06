@@ -9,7 +9,6 @@ using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 using Moq;
-using ResultResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
 {

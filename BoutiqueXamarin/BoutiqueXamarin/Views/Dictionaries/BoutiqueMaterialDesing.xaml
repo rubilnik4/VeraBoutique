@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:ui="clr-namespace:XF.Material.Forms.Resources;assembly=XF.Material">
+    <ui:MaterialColorConfiguration x:Key="MaterialColor"
+            Background="{StaticResource ColorTransparent}"
+            Error="{StaticResource ColorError}"
+            OnBackground="{StaticResource ColorAccent}"
+            OnError="{StaticResource ColorTransparent}"
+            OnPrimary="{StaticResource ColorTransparent}"
+            OnSecondary="{StaticResource ColorTransparent}"
+            OnSurface="{StaticResource ColorAccent}"
+            Primary="{StaticResource ColorAccent}"
+            PrimaryVariant="{StaticResource ColorAccent}"
+            Secondary="{StaticResource ColorAccent}"
+            SecondaryVariant="{StaticResource ColorAccent}"
+            Surface="{StaticResource ColorTransparent}" />
+
+    <ui:MaterialConfiguration x:Key="BoutiqueMaterialConfiguration"
+                              ColorConfiguration="{StaticResource MaterialColor}" />
+</ResourceDictionary>

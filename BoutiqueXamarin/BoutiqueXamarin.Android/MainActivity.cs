@@ -33,6 +33,7 @@ namespace BoutiqueXamarin.Droid
             base.OnCreate(savedInstanceState);
 
             Forms.Init(this, savedInstanceState);
+            XF.Material.Droid.Material.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
             SharpnadoInitializer.Initialize();

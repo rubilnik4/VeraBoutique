@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              xmlns:authorize="clr-namespace:BoutiqueXamarin.Views.Authorize;assembly=BoutiqueXamarin"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -30,15 +31,20 @@
                      Margin="10, 10, 10, 0">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
                 <StackLayout>
-                    <Entry x:Name="LoginEntry"
+                    <ui:MaterialTextField x:Name="LoginEntry"
+                                          BackgroundColor="{StaticResource ColorTransparent}"
+                                          Placeholder="Адрес почты"
+                                          AlwaysShowUnderline="True"
+                                          ErrorText="Укажите адрес почты"/>
+                    <!--<Entry x:Name="LoginEntry"
                            Placeholder="Адрес почты"/>
                     <Label x:Name="LoginErrorLabel"
                            Style="{StaticResource LabelCommon}"
                            TextColor="Red"
                            IsVisible="False"
-                           Text="Укажите логин"/>
+                           Text="Укажите логин"/>-->
                 </StackLayout>
-               
+
                 <Entry x:Name="PasswordEntry"
                        IsPassword="True"
                        Placeholder="Пароль" />
