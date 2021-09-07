@@ -34,11 +34,12 @@ namespace BoutiqueXamarin.Droid
 
             Forms.Init(this, savedInstanceState);
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+            Plugin.InputKit.Platforms.Droid.Config.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             CachedImageRenderer.InitImageViewHandler();
             SharpnadoInitializer.Initialize();
             Sharpnado.Tabs.Initializer.Initialize(false, false);
-            Sharpnado.Shades.Initializer.Initialize(loggerEnable: false);
+            Sharpnado.Shades.Initializer.Initialize(false);
             Akavache.Registrations.Start(AppInfo.Name);
             LoadApplication(new App(new AndroidInitializer()));
         }

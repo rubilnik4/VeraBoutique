@@ -4,10 +4,19 @@
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              xmlns:authorize="clr-namespace:BoutiqueXamarin.Views.Authorize;assembly=BoutiqueXamarin"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:ik="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
     <Grid>
+        <Grid.Resources>
+            <!--<Style x:Key="EntryError" 
+                   TargetType="{x:Type ui:MaterialTextField}">
+                <Setter Property="AlwaysShowUnderline" Value="True" />
+                <Setter Property="BackgroundColor"  Value="{StaticResource ColorTransparent}" />
+            </Style>-->
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -30,24 +39,36 @@
                      Style="{StaticResource StackLayoutControl}"
                      Margin="10, 10, 10, 0">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                <StackLayout>
-                    <ui:MaterialTextField x:Name="LoginEntry"
-                                          BackgroundColor="{StaticResource ColorTransparent}"
+                <!--<ik:FormView>
+                    <ik:AdvancedEntry x:Name="LoginEntry"
+                                  IsRequired="True"
+                                  Title="Адрес почты"
+                                  Annotation="Email"
+                                  Placeholder="sample@domain.com"
+                                  ValidationMessage="Please type a valid email address"
+                                  TextColor="{StaticResource ColorAccent}"
+                                  BackgroundColor="Transparent"/>
+                </ik:FormView>-->
+                <!--<ui:MaterialTextField x:Name="LoginEntry"
+                                          Style="{StaticResource EntryError}"
                                           Placeholder="Адрес почты"
-                                          AlwaysShowUnderline="True"
-                                          ErrorText="Укажите адрес почты"/>
-                    <!--<Entry x:Name="LoginEntry"
-                           Placeholder="Адрес почты"/>
-                    <Label x:Name="LoginErrorLabel"
+                                          ErrorText="Укажите адрес почты"/>-->
+
+
+
+                <Entry x:Name="LoginEntry"
+                       Placeholder="Адрес почты"/>
+                    <!--<Label x:Name="LoginErrorLabel"
                            Style="{StaticResource LabelCommon}"
                            TextColor="Red"
                            IsVisible="False"
                            Text="Укажите логин"/>-->
-                </StackLayout>
+
 
                 <Entry x:Name="PasswordEntry"
-                       IsPassword="True"
-                       Placeholder="Пароль" />
+                       Placeholder="Пароль"
+                        ReturnType="Default"
+                        />
             </StackLayout>
 
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
