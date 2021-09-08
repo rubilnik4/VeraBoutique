@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              xmlns:authorize="clr-namespace:BoutiqueXamarin.Views.Authorize;assembly=BoutiqueXamarin"
-             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-             xmlns:ik="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
     <Grid>
         <Grid.Resources>
@@ -39,36 +38,15 @@
                      Style="{StaticResource StackLayoutControl}"
                      Margin="10, 10, 10, 0">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                <!--<ik:FormView>
-                    <ik:AdvancedEntry x:Name="LoginEntry"
-                                  IsRequired="True"
-                                  Title="Адрес почты"
-                                  Annotation="Email"
-                                  Placeholder="sample@domain.com"
-                                  ValidationMessage="Please type a valid email address"
-                                  TextColor="{StaticResource ColorAccent}"
-                                  BackgroundColor="Transparent"/>
-                </ik:FormView>-->
-                <!--<ui:MaterialTextField x:Name="LoginEntry"
-                                          Style="{StaticResource EntryError}"
-                                          Placeholder="Адрес почты"
-                                          ErrorText="Укажите адрес почты"/>-->
+                <controlViews:EntryControl x:Name="LoginEntry"
+                                           Style="{StaticResource EntryValidation}"
+                                           PlaceholderText="Адрес почты"
+                                           ErrorMessage="Укажите адрес почты"/>
 
-
-
-                <Entry x:Name="LoginEntry"
-                       Placeholder="Адрес почты"/>
-                    <!--<Label x:Name="LoginErrorLabel"
-                           Style="{StaticResource LabelCommon}"
-                           TextColor="Red"
-                           IsVisible="False"
-                           Text="Укажите логин"/>-->
-
-
-                <Entry x:Name="PasswordEntry"
-                       Placeholder="Пароль"
-                        ReturnType="Default"
-                        />
+                <controlViews:EntryControl x:Name="PasswordEntry"
+                                           PlaceholderText="Пароль"
+                                           ErrorMessage="Укажите пароль"
+                                           IsPassword="True"/>
             </StackLayout>
 
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">

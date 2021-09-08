@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<controls:EntryStackLayout x:Name="EntryStackLayout" 
+                           xmlns="http://xamarin.com/schemas/2014/forms"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                           xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+                           x:Class="BoutiqueXamarin.Views.ControlViews.EntryControl"
+                           Spacing="0"
+                           SelectedColor="Black"
+                           PlaceholderColor="DarkGray"
+                           ErrorColor="DarkRed">
+    <Entry x:Name="MainEntry"
+           Text="{Binding Source={x:Reference EntryStackLayout}, Path=Text, Mode=TwoWay}"
+           Placeholder="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderText}"
+           PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
+           ClearButtonVisibility="WhileEditing"
+           IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"
+           HorizontalOptions="FillAndExpand"
+           VerticalOptions="FillAndExpand" />
+
+    <BoxView x:Name="Underline"
+             Margin="4,-9,4,0"
+             HeightRequest="1"
+             HorizontalOptions="FillAndExpand"
+             VerticalOptions="FillAndExpand"
+             Color="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}" />
+
+    <Label x:Name="ErrorLabel"
+           Style="{StaticResource LabelUnderline}"
+           Margin="10, 0, 0, 0"
+           IsVisible="{Binding Source={x:Reference EntryStackLayout}, Path=HasError}"
+           Text="{Binding Source={x:Reference EntryStackLayout}, Path=ErrorMessage}"
+           TextColor="{Binding Source={x:Reference EntryStackLayout}, Path=ErrorColor}" />
+</controls:EntryStackLayout>

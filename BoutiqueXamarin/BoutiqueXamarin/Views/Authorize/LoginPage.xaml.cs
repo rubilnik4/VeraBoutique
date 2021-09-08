@@ -12,6 +12,7 @@ using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System;
+using System.Collections.Generic;
 
 namespace BoutiqueXamarin.Views.Authorize
 {
@@ -33,14 +34,16 @@ namespace BoutiqueXamarin.Views.Authorize
                 this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, x => x.Authorize).
                      DisposeWith(disposable);
 
-                //this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
-                //     WhereNotNull().
-                //     Where(result => result.HasErrorType<AuthorizeErrorType>()).
-                //     Select(result => result.GetErrorTypes<AuthorizeErrorType>()).
-                //     Select(errors => errors.Select(error => error.ErrorType)).
-                //     Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Username)).
-                //     Subscribe(hasError => LoginEntry.color = hasError ? Color.Red : Color.Default).
-                //     DisposeWith(disposable);
+                var authorizeErrors = GetAuthorizeErrors();
+                authorizeErrors.
+                    Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Username)).
+                    BindTo(this, x => x.LoginEntry.HasError).
+                    DisposeWith(disposable);
+
+                authorizeErrors.
+                  Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Password)).
+                  BindTo(this, x => x.PasswordEntry.HasError).
+                  DisposeWith(disposable);
             });
         }
 
@@ -49,5 +52,14 @@ namespace BoutiqueXamarin.Views.Authorize
         /// </summary>
         protected override BackLeftMenuView BackLeftMenuView =>
             this.BackLeftMenu;
+
+        /// <summary>
+        /// Получить ошибки авторизации
+        /// </summary>
+        private IObservable<IEnumerable<AuthorizeErrorType>> GetAuthorizeErrors() =>
+            this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
+                 WhereNotNull().
+                 Select(result => result.GetErrorTypes<AuthorizeErrorType>().
+                                         Select(error => error.ErrorType));
     }
 }

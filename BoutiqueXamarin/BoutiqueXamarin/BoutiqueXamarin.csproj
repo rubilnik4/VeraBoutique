@@ -118,7 +118,10 @@
     <EmbeddedResource Update="Views\ContentViews\MenuItems\UserRightMenuView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Controls\RadioButtonControl.xaml">
+    <EmbeddedResource Update="Views\ControlViews\EntryControl.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ControlViews\RadioButtonControl.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Dictionaries\BoutiqueColors.xaml">
