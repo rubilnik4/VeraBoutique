@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueColors.xaml" />
-                <ResourceDictionary Source="Views/Dictionaries/BoutiqueMaterialDesing.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueButtonElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueEntryElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueGridElements.xaml" />

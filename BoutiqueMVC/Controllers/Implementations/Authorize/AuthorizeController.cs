@@ -58,7 +58,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> AuthorizeJwt(AuthorizeTransfer login) =>
             await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false).
             MapBindAsync(result => GetAuthorizeAction(result, login.UserName));
@@ -70,8 +70,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
             signInResult switch
             {
                 _ when signInResult.Succeeded => await GetJwtResult(userName),
-                _ when signInResult.IsLockedOut => BadRequest("This account is locked out"),
-                _ => BadRequest("Username or Password is incorrect")
+                _ when signInResult.IsLockedOut => Unauthorized(),
+                _ => Unauthorized()
             };
 
         /// <summary>
@@ -91,13 +91,11 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
         /// Сгенерировать токен
         /// </summary>
         private async Task<string> GenerateJwtToken(IdentityUser user) =>
-             new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                GetClaims(user, await _userManager.GetRolesAsync(user)),
-                expires: DateTime.Now.AddDays(_jwtSettings.Expires),
-                signingCredentials: GetCredentials(_jwtSettings)
-            ).Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));
+             new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
+                                  GetClaims(user, await _userManager.GetRolesAsync(user)),
+                                  expires: DateTime.Now.AddDays(_jwtSettings.Expires),
+                                  signingCredentials: GetCredentials(_jwtSettings)).
+             Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));
 
         /// <summary>
         /// Получить права доступа
@@ -105,9 +103,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
         private static IEnumerable<Claim> GetClaims(IdentityUser user, IEnumerable<string> roles) =>
             new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new (JwtRegisteredClaimNames.Sub, user.UserName),
+                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new (ClaimTypes.NameIdentifier, user.Id),
             }.Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         /// <summary>

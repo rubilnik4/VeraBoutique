@@ -12,7 +12,6 @@ using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
-using XF.Material.Forms.Resources;
 
 namespace BoutiqueXamarin
 {
@@ -23,10 +22,7 @@ namespace BoutiqueXamarin
     {
         public App(IPlatformInitializer initializer)
             : base(initializer)
-        {
-            XF.Material.Forms.Material.Init(this);
-            XF.Material.Forms.Material.Use("BoutiqueMaterialConfiguration");
-        }
+        { }
 
         /// <summary>
         /// Контейнер зависимостей

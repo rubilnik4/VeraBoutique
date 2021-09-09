@@ -36,7 +36,9 @@ namespace BoutiqueXamarin.Views.Authorize
 
                 var authorizeErrors = GetAuthorizeErrors();
                 authorizeErrors.
-                    Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Username)).
+                    Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Username) ||
+                                         errorTypes.Contains(AuthorizeErrorType.Email) ||
+                                         errorTypes.Contains(AuthorizeErrorType.Phone)).
                     BindTo(this, x => x.LoginEntry.HasError).
                     DisposeWith(disposable);
 
@@ -44,6 +46,18 @@ namespace BoutiqueXamarin.Views.Authorize
                   Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Password)).
                   BindTo(this, x => x.PasswordEntry.HasError).
                   DisposeWith(disposable);
+
+                authorizeErrors.
+                  Select(errorTypes => errorTypes.Contains(AuthorizeErrorType.Token)).
+                  BindTo(this, x => x.AuthorizeErrorLabel.IsVisible).
+                  DisposeWith(disposable);
+
+                this.WhenAnyValue(x => x.LoginEntry.Text, x => x.PasswordEntry.Text).
+                     Where(_ => AuthorizeErrorLabel.IsVisible).
+                     Subscribe(_ => AuthorizeErrorLabel.IsVisible = false).
+                     DisposeWith(disposable);
+
+              
             });
         }
 
@@ -56,10 +70,11 @@ namespace BoutiqueXamarin.Views.Authorize
         /// <summary>
         /// Получить ошибки авторизации
         /// </summary>
-        private IObservable<IEnumerable<AuthorizeErrorType>> GetAuthorizeErrors() =>
+        private IObservable<IReadOnlyCollection<AuthorizeErrorType>> GetAuthorizeErrors() =>
             this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
                  WhereNotNull().
                  Select(result => result.GetErrorTypes<AuthorizeErrorType>().
-                                         Select(error => error.ErrorType));
+                                         Select(error => error.ErrorType).
+                                         ToList());
     }
 }

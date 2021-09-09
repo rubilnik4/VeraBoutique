@@ -6,14 +6,6 @@
              xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
     <Grid>
-        <Grid.Resources>
-            <!--<Style x:Key="EntryError" 
-                   TargetType="{x:Type ui:MaterialTextField}">
-                <Setter Property="AlwaysShowUnderline" Value="True" />
-                <Setter Property="BackgroundColor"  Value="{StaticResource ColorTransparent}" />
-            </Style>-->
-        </Grid.Resources>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
@@ -47,6 +39,12 @@
                                            PlaceholderText="Пароль"
                                            ErrorMessage="Укажите пароль"
                                            IsPassword="True"/>
+
+                <Label x:Name="AuthorizeErrorLabel"
+                       Style="{StaticResource LabelError}"
+                       Text="Неверные имя пользователя и пароль"
+                       IsVisible="False"
+                       HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
 
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">

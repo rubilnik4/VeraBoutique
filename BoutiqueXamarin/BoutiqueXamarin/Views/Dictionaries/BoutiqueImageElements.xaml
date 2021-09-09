@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
-                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+                    xmlns:svg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                    xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin">
 
     <Style x:Key="SvgImage"
            TargetType="{x:Type svg:SvgCachedImage}">
@@ -12,32 +12,39 @@
     </Style>
 
     <Style x:Key="SvgImageBack"
-           TargetType="{x:Type svg:SvgCachedImage}"
+           TargetType="{x:Type controls:SvgButton}"
            BasedOn="{StaticResource SvgImage}">
         <Setter Property="Source" Value="arrow_left_solid.svg" />
     </Style>
 
     <Style x:Key="SvgCart"
-           TargetType="{x:Type svg:SvgCachedImage}"
+           TargetType="{x:Type controls:SvgButton}"
            BasedOn="{StaticResource SvgImage}">
         <Setter Property="Source" Value="shopping_cart_solid.svg" />
     </Style>
 
     <Style x:Key="SvgUser"
-           TargetType="{x:Type svg:SvgCachedImage}"
+           TargetType="{x:Type controls:SvgButton}"
            BasedOn="{StaticResource SvgImage}">
         <Setter Property="Source" Value="user_solid.svg" />
     </Style>
 
     <Style x:Key="SvgSort"
-           TargetType="{x:Type svg:SvgCachedImage}"
+           TargetType="{x:Type controls:SvgButton}"
            BasedOn="{StaticResource SvgImage}">
         <Setter Property="Source" Value="sort_amount_up_solid.svg" />
     </Style>
 
     <Style x:Key="SvgFilter"
-           TargetType="{x:Type svg:SvgCachedImage}"
+           TargetType="{x:Type controls:SvgButton}"
            BasedOn="{StaticResource SvgImage}">
         <Setter Property="Source" Value="filter_solid.svg" />
+    </Style>
+
+    <Style x:Key="SvgPasswordEye"
+           TargetType="{x:Type controls:CheckBoxSvgButton}"
+           BasedOn="{StaticResource SvgImage}">
+        <Setter Property="UncheckSource" Value="eye_slash_solid.svg" />
+        <Setter Property="CheckSource" Value="eye_solid.svg" />
     </Style>
 </ResourceDictionary>

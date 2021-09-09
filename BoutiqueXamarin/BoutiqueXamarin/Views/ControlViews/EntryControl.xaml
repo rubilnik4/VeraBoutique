@@ -8,21 +8,27 @@
                            SelectedColor="Black"
                            PlaceholderColor="DarkGray"
                            ErrorColor="DarkRed">
-    <Entry x:Name="MainEntry"
-           Text="{Binding Source={x:Reference EntryStackLayout}, Path=Text, Mode=TwoWay}"
-           Placeholder="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderText}"
-           PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
-           ClearButtonVisibility="WhileEditing"
-           IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"
-           HorizontalOptions="FillAndExpand"
-           VerticalOptions="FillAndExpand" />
-
+    <StackLayout Style="{StaticResource StackLayoutIcon}"
+                 Spacing="0">
+        <Entry x:Name="MainEntry"
+               Text="{Binding Source={x:Reference EntryStackLayout}, Path=Text, Mode=TwoWay}"
+               Placeholder="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderText}"
+               PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
+               ClearButtonVisibility="WhileEditing"
+               IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand" />
+        <controls:CheckBoxSvgButton x:Name="PasswordEyeButton"
+                            Style="{StaticResource SvgPasswordEye}"
+                            IsChecked="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword, Mode=TwoWay}"
+                            IsVisible="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"/>
+    </StackLayout>
     <BoxView x:Name="Underline"
-             Margin="4,-9,4,0"
-             HeightRequest="1"
-             HorizontalOptions="FillAndExpand"
-             VerticalOptions="FillAndExpand"
-             Color="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}" />
+                     Margin="4,-9,4,0"
+                     HeightRequest="1"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     Color="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}" />
 
     <Label x:Name="ErrorLabel"
            Style="{StaticResource LabelUnderline}"

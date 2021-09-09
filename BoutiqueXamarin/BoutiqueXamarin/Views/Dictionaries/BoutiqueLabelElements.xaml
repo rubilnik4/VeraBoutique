@@ -24,9 +24,16 @@
         <Setter Property="TextColor" Value="{StaticResource ColorAccent}"/>
     </Style>
 
+    <Style x:Key="LabelError"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelCommon}">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextColor" Value="{StaticResource ColorError}"/>
+    </Style>
+
     <Style x:Key="LabelUnderline"
            TargetType="{x:Type Label}"
-            BasedOn="{StaticResource LabelCommon}">
+           BasedOn="{StaticResource LabelCommon}">
         <Setter Property="FontSize" Value="12"/>
     </Style>
 

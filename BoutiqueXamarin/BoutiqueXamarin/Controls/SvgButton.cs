@@ -9,7 +9,7 @@ using ReactiveUI;
 namespace BoutiqueXamarin.Controls
 {
     /// <summary>
-    /// 
+    /// Кнопка с картинкой
     /// </summary>
     public class SvgButton : SvgCachedImage
     {
