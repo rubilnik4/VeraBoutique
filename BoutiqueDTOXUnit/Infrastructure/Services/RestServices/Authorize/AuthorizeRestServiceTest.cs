@@ -7,6 +7,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using ResultFunctional.Models.Implementations.Results;
 using Xunit;
 
@@ -52,7 +53,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
 
             Assert.True(resultToken.HasErrors);
-            Assert.True(error.Equals(resultToken.Errors.First()));
+            Assert.IsType<AuthorizeErrorResult>(resultToken.Errors.First());
         }
 
         /// <summary>

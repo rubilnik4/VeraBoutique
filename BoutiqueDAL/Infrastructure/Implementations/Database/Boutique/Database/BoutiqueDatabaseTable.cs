@@ -6,7 +6,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
     /// <summary>
     /// База данных магазина Entity Framework
     /// </summary>
-    public partial class BoutiqueEntityDatabase
+    public partial class BoutiqueDatabase
     {
         /// <summary>
         /// Таблица пола базы данных

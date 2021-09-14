@@ -52,7 +52,7 @@ namespace BoutiqueMVC.DependencyInjection
                     options.SignIn.RequireConfirmedEmail = true;
                     options.User.RequireUniqueEmail = true;
                 }).
-                AddEntityFrameworkStores<BoutiqueEntityDatabase>().
+                AddEntityFrameworkStores<BoutiqueDatabase>().
                 AddDefaultTokenProviders();
 
         /// <summary>

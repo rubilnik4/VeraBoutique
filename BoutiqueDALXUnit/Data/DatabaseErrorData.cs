@@ -21,7 +21,7 @@ namespace BoutiqueDALXUnit.Data
         /// Ошибка ненайденного элемента
         /// </summary>
         public static IErrorResult TableError =>
-            DatabaseErrors.TableAccessError("TestTable");
+            DatabaseErrors.AccessError("TestTable");
 
         /// <summary>
         /// Ошибка дублирующего элемента

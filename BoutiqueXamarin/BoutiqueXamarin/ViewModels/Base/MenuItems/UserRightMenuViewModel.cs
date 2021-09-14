@@ -1,6 +1,6 @@
 ﻿using System.Reactive;
 using System.Threading.Tasks;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using ReactiveUI;
 

@@ -48,12 +48,6 @@ namespace BoutiqueXamarin.Views.Base
                      Where(_ => BackLeftMenuView != null).
                      BindTo(this, x => x.BackLeftMenuView!.ViewModel).
                      DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.ViewModel!.UserRightMenuViewModel).
-                     WhereNotNull().
-                     Where(_ => UserRightMenuView != null).
-                     BindTo(this, x => x.UserRightMenuView!.ViewModel).
-                     DisposeWith(disposable);
             });
         }
 
@@ -75,10 +69,6 @@ namespace BoutiqueXamarin.Views.Base
         protected virtual BackLeftMenuView? BackLeftMenuView =>
             null;
 
-        /// <summary>
-        /// Меню навигации назад
-        /// </summary>
-        protected virtual UserRightMenuView? UserRightMenuView =>
-            null;
+
     }
 }

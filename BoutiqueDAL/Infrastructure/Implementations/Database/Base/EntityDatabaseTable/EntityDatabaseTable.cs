@@ -59,6 +59,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Ошибка доступа к таблице базы данных
         /// </summary>
-        private IErrorResult TableAccessErrorType => DatabaseErrors.TableAccessError(TableName);
+        private IErrorResult TableAccessErrorType => DatabaseErrors.AccessError(TableName);
     }
 }

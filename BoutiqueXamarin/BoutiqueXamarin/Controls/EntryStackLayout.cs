@@ -140,6 +140,21 @@ namespace BoutiqueXamarin.Controls
             BindableProperty.Create(nameof(ErrorMessage), typeof(string), typeof(StackLayout));
 
         /// <summary>
+        /// Только для чтения
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        /// <summary>
+        /// Только для чтения
+        /// </summary>
+        public static readonly BindableProperty IsReadOnlyProperty =
+            BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(StackLayout));
+
+        /// <summary>
         /// Цвет при выборе по умолчанию
         /// </summary>
         private static Color SelectedColorDefault => 

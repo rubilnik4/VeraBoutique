@@ -5,6 +5,7 @@ using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Errors.Base;
+using ResultFunctional.Models.Implementations.Errors.DatabaseErrors;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Errors;
 using ResultFunctional.Models.Interfaces.Errors.Base;
@@ -19,14 +20,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Errors
         /// <summary>
         /// Ошибка сохранения изменений
         /// </summary>
-        public static IErrorResult DatabaseSaveError() =>
-            ErrorResultFactory.DatabaseError(DatabaseErrorType.Save, "Ошибка сохранения базы");
+        public static IErrorResult SaveError() =>
+            ErrorResultFactory.DatabaseSaveError("Ошибка сохранения базы");
 
         /// <summary>
         /// Ошибка доступа
         /// </summary>
-        public static IErrorResult TableAccessError(string tableName) =>
-            ErrorResultFactory.DatabaseTableError(tableName, $"Ошибка доступа к таблице {tableName}");
+        public static IErrorResult AccessError(string tableName) =>
+            ErrorResultFactory.DatabaseAccessError(tableName, $"Ошибка доступа к таблице {tableName}");
 
         /// <summary>
         /// Элемент не найден

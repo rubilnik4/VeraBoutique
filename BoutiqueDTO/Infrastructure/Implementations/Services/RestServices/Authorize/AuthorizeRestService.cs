@@ -12,6 +12,8 @@ using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
@@ -47,6 +49,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
             ToJsonTransfer().
             ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
             ResultValueBindBadTaskAsync(_ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Token, "Введены неверные имя пользователя и пароль").
-                                             ToResultValue<string>());
+                                                                ToResultValue<string>());
     }
 }

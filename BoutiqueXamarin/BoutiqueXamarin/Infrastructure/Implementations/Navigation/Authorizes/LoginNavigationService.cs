@@ -1,13 +1,11 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
-using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
-using BoutiqueXamarin.Views.Authorize;
-using BoutiqueXamarin.Views.Clothes.Choices;
+using BoutiqueXamarin.Views.Authorizes;
 using Prism.Navigation;
 
-namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorize
+namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
 {
     /// <summary>
     /// Сервис навигации к странице авторизации

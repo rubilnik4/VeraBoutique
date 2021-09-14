@@ -14,12 +14,12 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Тестовая ошибка подключения к базе данных
         /// </summary>
         public static IErrorResult ErrorTypeDatabase =>
-            ErrorResultFactory.DatabaseError(DatabaseErrorType.Save, "Тестовая ошибка базы");
+            ErrorResultFactory.DatabaseSaveError("Тестовая ошибка базы");
 
         /// <summary>
         /// Тестовая ошибка подключения к базе данных
         /// </summary>
         public static IErrorResult ErrorTypeDatabaseTable =>
-            ErrorResultFactory.DatabaseTableError("testTable", "Тестовая ошибка таблицы базы");
+            ErrorResultFactory.DatabaseAccessError("testTable", "Тестовая ошибка таблицы базы");
     }
 }

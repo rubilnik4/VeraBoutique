@@ -56,8 +56,8 @@ namespace BoutiqueMVC.DependencyInjection
         {
             if (PostgresConnection.HasErrors) throw new ConfigurationErrorsException(nameof(PostgresConnection));
 
-            services.AddDbContext<BoutiqueEntityDatabase>(GetDatabaseOptions);
-            services.AddTransient<IBoutiqueDatabase, BoutiqueEntityDatabase>();
+            services.AddDbContext<BoutiqueDatabase>(GetDatabaseOptions);
+            services.AddTransient<IBoutiqueDatabase, BoutiqueDatabase>();
         }
 
         /// <summary>

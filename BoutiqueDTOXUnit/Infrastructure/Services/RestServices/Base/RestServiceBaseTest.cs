@@ -28,6 +28,7 @@ using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using ResultFunctional.Models.Implementations.Results;
 using Moq;
+using ResultFunctional.Models.Interfaces.Errors.RestErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
@@ -104,8 +105,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync();
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -160,8 +161,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.GetAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -217,8 +218,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostCollectionAsync(tests);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -274,8 +275,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -331,8 +332,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PostValueAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -387,8 +388,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.PutAsync(test);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -439,8 +440,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync();
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
         /// <summary>
@@ -495,8 +496,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var result = await testRestService.DeleteAsync(test.Id);
 
             Assert.True(result.HasErrors);
-            Assert.IsType<RestErrorResult>(result.Errors.First());
-            Assert.Equal(RestErrorType.ServerNotFound, ((RestErrorResult)result.Errors.First()).ErrorType);
+            Assert.IsAssignableFrom<IRestErrorResult>(result.Errors.First());
+            Assert.Equal(RestErrorType.RequestTimeout, ((IRestErrorResult)result.Errors.First()).ErrorType);
         }
 
 

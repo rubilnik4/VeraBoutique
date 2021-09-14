@@ -53,7 +53,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete();
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsType<DatabaseTableErrorResult>(resultEntity.Errors.First());
+            Assert.IsType<DatabaseAccessErrorResult>(resultEntity.Errors.First());
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.HasErrors);
-            Assert.IsType<DatabaseTableErrorResult>(resultEntity.Errors.First());
+            Assert.IsType<DatabaseAccessErrorResult>(resultEntity.Errors.First());
         }
 
         /// <summary>

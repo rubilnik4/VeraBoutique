@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<authorize:LoginPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+<authorizes:LoginPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
-             xmlns:authorize="clr-namespace:BoutiqueXamarin.Views.Authorize;assembly=BoutiqueXamarin"
              xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
-             x:Class="BoutiqueXamarin.Views.Authorize.LoginPage">
+             xmlns:authorizes="clr-namespace:BoutiqueXamarin.Views.Authorizes;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Authorizes.LoginPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,8 +27,7 @@
         <menuItems:LogoMenuView Grid.Row="1" />
 
         <StackLayout Grid.Row="2"
-                     Style="{StaticResource StackLayoutControl}"
-                     Margin="10, 10, 10, 0">
+                     Style="{StaticResource StackLayoutEntry}">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
                 <controlViews:EntryControl x:Name="LoginEntry"
                                            Style="{StaticResource EntryValidation}"
@@ -61,4 +60,4 @@
                    Text="Забыли пароль?" />
         </StackLayout>
     </Grid>
-</authorize:LoginPageBase>
+</authorizes:LoginPageBase>

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize

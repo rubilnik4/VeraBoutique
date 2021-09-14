@@ -56,7 +56,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
             var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
-            Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
+            Assert.IsType<UnauthorizedResult>(tokenResult.Result);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
             var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
-            Assert.IsType<BadRequestObjectResult>(tokenResult.Result);
+            Assert.IsType<UnauthorizedResult>(tokenResult.Result);
         }
 
         /// <summary>

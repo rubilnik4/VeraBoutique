@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Errors;
 using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Errors.RestErrors;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Models.Implementations.RestClients
@@ -64,7 +67,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultValue<TOut>> GetValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundErrorType).
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), GetRestError).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
@@ -72,21 +75,21 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), ServerNotFoundErrorType).
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), GetRestError).
             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
         /// Получить байтовый массив по идентификатору Api
         /// </summary>
         public async Task<IResultValue<byte[]>> GetByteAsync(string request) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request), ServerNotFoundErrorType);
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request), GetRestError);
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<string>> PostAsync(string request, string jsonContent) =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundErrorType).
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
             ResultValueBindOkBindAsync(response => response.ToRestResultAsync());
 
         /// <summary>
@@ -95,7 +98,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         public async Task<IResultValue<TOut>> PostValueAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundErrorType).
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         public async Task<IResultCollection<TOut>> PostCollectionAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), ServerNotFoundErrorType).
+                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
@@ -112,7 +115,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PutAsync(request, ToStringContent(jsonContent)), ServerNotFoundErrorType).
+                () => _httpClient.PutAsync(request, ToStringContent(jsonContent)), GetRestError).
             ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
 
         /// <summary>
@@ -120,21 +123,33 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultValue<TOut>> DeleteValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), ServerNotFoundErrorType).
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), GetRestError).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
         /// Удалить данные Api
         /// </summary>
         public async Task<IResultError> DeleteCollectionAsync(string request) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), ServerNotFoundErrorType).
+            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), GetRestError).
             ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
+
+        /// <summary>
+        /// Получить ошибку сервера по исключению
+        /// </summary>
+        private IRestErrorResult GetRestError(Exception exception) =>
+            exception switch
+            {
+                TaskCanceledException _ => ErrorResultFactory.RestTimeoutError(BaseAddress.Host, TimeOut, "Вышло время ожидания клиента"),
+                _ => UnknownRestError,
+            };
 
         /// <summary>
         /// Ошибка. Сервер не найден
         /// </summary>
-        private IErrorResult ServerNotFoundErrorType =>
-             ErrorResultFactory.RestError(RestErrorType.ServerNotFound, BaseAddress.Host, $"Сервер не {BaseAddress.Host} найден");
+        private IRestErrorResult UnknownRestError =>
+             ErrorResultFactory.RestHostError(RestErrorType.UnknownRestStatus, BaseAddress.Host,
+                                              $"Сервер {BaseAddress.Host} не найден");
+
 
         /// <summary>
         /// Преобразование в json

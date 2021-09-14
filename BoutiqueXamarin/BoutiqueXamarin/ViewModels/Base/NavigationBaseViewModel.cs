@@ -3,7 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
@@ -24,11 +24,11 @@ namespace BoutiqueXamarin.ViewModels.Base
         where TParameter : BaseNavigationParameters
         where TNavigate : IBaseNavigationService<TParameter>
     {
-        protected NavigationBaseViewModel(TNavigate navigateService, ILoginNavigationService loginNavigationService)
+        protected NavigationBaseViewModel(TNavigate navigateService)
         {
             NavigateService = navigateService;
             BackLeftMenuViewModel = new BackLeftMenuViewModel(navigateService);
-            UserRightMenuViewModel = new UserRightMenuViewModel(loginNavigationService);
+           
         }
 
         /// <summary>
@@ -41,10 +41,7 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// </summary>
         public BackLeftMenuViewModel BackLeftMenuViewModel { get; }
 
-        /// <summary>
-        /// Правое меню пользователя
-        /// </summary>
-        public UserRightMenuViewModel UserRightMenuViewModel { get; }
+      
 
         /// <summary>
         /// Параметры навигации

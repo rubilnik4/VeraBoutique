@@ -10,7 +10,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -34,7 +34,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationBaseViewModel<ClothesNavigationParameters, IClothesNavigationService>
+    public class ClothesViewModel : NavigationLoginViewModel<ClothesNavigationParameters, IClothesNavigationService>
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
                                 IChoiceNavigationService choiceNavigationService,

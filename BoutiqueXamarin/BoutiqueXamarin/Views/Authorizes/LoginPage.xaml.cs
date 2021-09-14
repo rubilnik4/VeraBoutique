@@ -1,20 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
-using System.Reactive;
 using System.Reactive.Linq;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
-using BoutiqueXamarin.Views.ContentViews;
 using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
 using ResultFunctional.Models.Enums;
-using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System;
-using System.Collections.Generic;
 
-namespace BoutiqueXamarin.Views.Authorize
+namespace BoutiqueXamarin.Views.Authorizes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : LoginPageBase
@@ -32,6 +26,9 @@ namespace BoutiqueXamarin.Views.Authorize
                      DisposeWith(disposable);
 
                 this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, x => x.Authorize).
+                     DisposeWith(disposable);
+
+                this.BindCommand(ViewModel, x => x.RegisterNavigateCommand, x => x.RegisterButton).
                      DisposeWith(disposable);
 
                 var authorizeErrors = GetAuthorizeErrors();
@@ -56,8 +53,6 @@ namespace BoutiqueXamarin.Views.Authorize
                      Where(_ => AuthorizeErrorLabel.IsVisible).
                      Subscribe(_ => AuthorizeErrorLabel.IsVisible = false).
                      DisposeWith(disposable);
-
-              
             });
         }
 

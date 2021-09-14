@@ -10,6 +10,6 @@ namespace BoutiqueXamarin.Views.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public abstract class ClothesPageBase : NavigationBaseContentPage<ClothesViewModel, ClothesNavigationParameters, IClothesNavigationService>
+    public abstract class ClothesPageBase : NavigationLoginContentPage<ClothesViewModel, ClothesNavigationParameters, IClothesNavigationService>
     { }
 }

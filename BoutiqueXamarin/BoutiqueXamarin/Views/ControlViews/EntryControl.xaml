@@ -16,6 +16,7 @@
                PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
                ClearButtonVisibility="WhileEditing"
                IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"
+               IsReadOnly="{Binding Source={x:Reference EntryStackLayout}, Path=IsReadOnly}"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand" />
         <controls:CheckBoxSvgButton x:Name="PasswordEyeButton"

@@ -17,9 +17,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
     /// <summary>
     /// База данных магазина Entity Framework
     /// </summary>
-    public partial class BoutiqueEntityDatabase : EntityDatabase, IBoutiqueDatabase
+    public partial class BoutiqueDatabase : EntityDatabase, IBoutiqueDatabase
     {
-        public BoutiqueEntityDatabase(DbContextOptions options)
+        public BoutiqueDatabase(DbContextOptions options)
             : base(options)
         { }
 

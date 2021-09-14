@@ -60,7 +60,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get();
 
             Assert.True(testResult.HasErrors);
-            Assert.IsType<DatabaseTableErrorResult>(testResult.Errors.First());
+            Assert.IsType<DatabaseAccessErrorResult>(testResult.Errors.First());
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testResult = await testService.Get(It.IsAny<TestEnum>());
          
             Assert.True(testResult.HasErrors);
-            Assert.IsType<DatabaseTableErrorResult>(testResult.Errors.First());
+            Assert.IsType<DatabaseAccessErrorResult>(testResult.Errors.First());
         }
 
         /// <summary>

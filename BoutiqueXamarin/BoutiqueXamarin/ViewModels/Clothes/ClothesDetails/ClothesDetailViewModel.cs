@@ -12,7 +12,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -28,7 +28,7 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel : NavigationBaseViewModel<ClothesDetailNavigationParameters, IClothesDetailNavigationService>
+    public class ClothesDetailViewModel : NavigationLoginViewModel<ClothesDetailNavigationParameters, IClothesDetailNavigationService>
     {
         public ClothesDetailViewModel(IClothesRestService clothesRestService,
                                       IClothesDetailNavigationService clothesDetailNavigationService, 

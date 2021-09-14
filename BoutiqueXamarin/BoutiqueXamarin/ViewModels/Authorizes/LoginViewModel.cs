@@ -1,34 +1,31 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using Akavache;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
-using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorize;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
-using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
+using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
-using ResultFunctional.Models.Implementations.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
-using ReactiveUI;
 
-namespace BoutiqueXamarin.ViewModels.Authorize
+namespace BoutiqueXamarin.ViewModels.Authorizes
 {
     /// <summary>
     /// Модель авторизации
     /// </summary>
     public class LoginViewModel : NavigationBaseViewModel<LoginNavigationParameters, ILoginNavigationService>
     {
-        public LoginViewModel(ILoginNavigationService loginNavigationService, IAuthorizeRestService authorizeRestService)
-          : base(loginNavigationService, loginNavigationService)
+        public LoginViewModel(ILoginNavigationService loginNavigationService, IRegisterNavigationService registerNavigationService,
+                              IAuthorizeRestService authorizeRestService)
+          : base(loginNavigationService)
         {
             _authorize = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
                               Select(x => (IAuthorizeDomain)new AuthorizeDomain(x.Login, x.Password)).
@@ -37,6 +34,7 @@ namespace BoutiqueXamarin.ViewModels.Authorize
             AuthorizeCommand = ReactiveCommand.CreateFromTask<IAuthorizeDomain, IResultError>(
                                    authorize => JwtAuthorize(authorize, authorizeRestService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors));
+            RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => registerNavigationService.NavigateTo());
         }
 
         /// <summary>
@@ -93,6 +91,11 @@ namespace BoutiqueXamarin.ViewModels.Authorize
         /// Команда авторизации
         /// </summary>
         public ReactiveCommand<IAuthorizeDomain, IResultError> AuthorizeCommand { get; }
+
+        /// <summary>
+        /// Переход к странице регистрации
+        /// </summary>
+        public ReactiveCommand<Unit, Unit> RegisterNavigateCommand { get; }
 
         /// <summary>
         /// Авторизоваться через токен JWT

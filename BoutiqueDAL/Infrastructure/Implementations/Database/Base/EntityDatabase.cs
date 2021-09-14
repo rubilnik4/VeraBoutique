@@ -37,16 +37,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
         /// Сохранить изменения в базе асинхронно
         /// </summary>
         public async Task<IResultError> SaveChangesAsync() =>
-            await ResultErrorTryAsync(() => base.SaveChangesAsync(), DatabaseErrors.DatabaseSaveError());
+            await ResultErrorTryAsync(() => base.SaveChangesAsync(), DatabaseErrors.SaveError());
 
         /// <summary>
         /// Отслеживаемые сущности
         /// </summary>
         private IEnumerable<EntityEntry> TrackedEntities =>
             ChangeTracker.Entries().
-            Where(e => e.State == EntityState.Added ||
-                       e.State == EntityState.Modified ||
-                       e.State == EntityState.Deleted).
+            Where(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted).
             ToList();
     }
 }
