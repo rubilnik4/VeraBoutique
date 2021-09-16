@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Input;
+using BoutiqueXamarin.Controls.Enums;
+using BoutiqueXamarin.Controls.Extensions;
+using ReactiveUI;
 using Xamarin.Forms;
+using static System.Char;
 
 namespace BoutiqueXamarin.Controls
 {
@@ -10,6 +16,13 @@ namespace BoutiqueXamarin.Controls
     /// </summary>
     public class EntryStackLayout : StackLayout
     {
+        public EntryStackLayout()
+        {
+            _validateCommand = ReactiveCommand.Create<Unit, bool>(_ => EntryValidation.IsValid(ValidationType, Text));
+            _validateCommand.Select(isValid => !isValid).
+                             BindTo(this, x => x.HasError);
+        }
+
         /// <summary>
         /// Текст
         /// </summary>
@@ -153,6 +166,87 @@ namespace BoutiqueXamarin.Controls
         /// </summary>
         public static readonly BindableProperty IsReadOnlyProperty =
             BindableProperty.Create(nameof(IsReadOnly), typeof(bool), typeof(StackLayout));
+
+        /// <summary>
+        /// Тип проверки
+        /// </summary>
+        public EntryValidationType ValidationType
+        {
+            get => (EntryValidationType)GetValue(ValidationTypeProperty);
+            set => SetValue(ValidationTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Тип проверки
+        /// </summary>
+        public static readonly BindableProperty ValidationTypeProperty =
+            BindableProperty.Create(nameof(ValidationType), typeof(EntryValidationType), typeof(StackLayout), EntryValidationType.Default);
+
+        /// <summary>
+        /// Максимальная длина
+        /// </summary>
+        public int MaxLength
+        {
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
+        }
+
+        /// <summary>
+        /// Максимальная длина
+        /// </summary>
+        public static readonly BindableProperty MaxLengthProperty =
+            BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(StackLayout), Int32.MaxValue);
+
+        /// <summary>
+        /// Маска поля
+        /// </summary>
+        public string Mask
+        {
+            get => (string)GetValue(MaskProperty);
+            set => SetValue(MaskProperty, value);
+        }
+
+        /// <summary>
+        /// Маска поля
+        /// </summary>
+        public static readonly BindableProperty MaskProperty =
+            BindableProperty.Create(nameof(Mask), typeof(string), typeof(StackLayout));
+
+        /// <summary>
+        /// Символ маски
+        /// </summary>
+        public char MaskChar
+        {
+            get => (char)GetValue(MaskCharProperty);
+            set => SetValue(MaskCharProperty, value);
+        }
+
+        /// <summary>
+        /// Маска поля
+        /// </summary>
+        public static readonly BindableProperty MaskCharProperty =
+            BindableProperty.Create(nameof(MaskChar), typeof(char), typeof(StackLayout), MinValue);
+
+        /// <summary>
+        /// Команда проверки
+        /// </summary>
+        private ReactiveCommand<Unit, bool> _validateCommand;
+
+        /// <summary>
+        /// Команда проверки
+        /// </summary>
+        public ICommand ValidateCommand => 
+            _validateCommand;
+        //{
+        //    get => (ICommand)GetValue(ValidateCommandProperty);
+        //    private set => SetValue(ValidateCommandProperty, value);
+        //}
+
+        ///// <summary>
+        ///// Команда проверки
+        ///// </summary>
+        //public static readonly BindableProperty ValidateCommandProperty =
+        //    BindableProperty.Create(nameof(ValidateCommand), typeof(ICommand), typeof(StackLayout));
 
         /// <summary>
         /// Цвет при выборе по умолчанию

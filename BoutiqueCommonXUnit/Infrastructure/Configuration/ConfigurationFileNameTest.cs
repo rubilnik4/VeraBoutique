@@ -1,8 +1,7 @@
-﻿using System.Text;
-using BoutiqueCommon.Infrastructure.Implementation.Configuration;
+﻿using BoutiqueCommon.Infrastructure.Implementation.Configuration;
 using Xunit;
 
-namespace BoutiqueCommonXUnit.Infrastructure
+namespace BoutiqueCommonXUnit.Infrastructure.Configuration
 {
     /// <summary>
     /// Имя файла конфигурации. Тесты

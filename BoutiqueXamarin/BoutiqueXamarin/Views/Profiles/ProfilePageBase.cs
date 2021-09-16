@@ -11,6 +11,6 @@ namespace BoutiqueXamarin.Views.Profiles
     /// <summary>
     /// Информация о профиле
     /// </summary>
-    public class ProfilePageBase : NavigationBaseContentPage<ProfileViewModel, ProfileNavigationParameters, IProfileNavigationService>
+    public abstract class ProfilePageBase : NavigationBaseContentPage<ProfileViewModel, ProfileNavigationParameters, IProfileNavigationService>
     { }
 }

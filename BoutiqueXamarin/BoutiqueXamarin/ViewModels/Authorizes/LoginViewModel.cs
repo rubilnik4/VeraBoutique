@@ -54,6 +54,20 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Имя пользователя
         /// </summary>
+        private bool _loginValid;
+
+        /// <summary>
+        /// Имя пользователя
+        /// </summary>
+        public bool LoginValid
+        {
+            get => _loginValid;
+            set => this.RaiseAndSetIfChanged(ref _loginValid, value);
+        }
+
+        /// <summary>
+        /// Имя пользователя
+        /// </summary>
         private string _password = String.Empty;
 
         /// <summary>
@@ -93,6 +107,11 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         public ReactiveCommand<IAuthorizeDomain, IResultError> AuthorizeCommand { get; }
 
         /// <summary>
+        /// Команда авторизации
+        /// </summary>
+        public ReactiveCommand<Unit, bool> LoginValidationCommand { get; set; }
+
+        /// <summary>
         /// Переход к странице регистрации
         /// </summary>
         public ReactiveCommand<Unit, Unit> RegisterNavigateCommand { get; }
@@ -102,23 +121,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(IAuthorizeDomain authorizeDomain, IAuthorizeRestService authorizeRestService) =>
             await authorizeDomain.ToResultValue().
-            ConcatErrors(ValidateByLogin(authorizeDomain.UserName).Errors).
-            ConcatErrors(ValidateByPassword(authorizeDomain.Password).Errors).
             ResultValueBindOkAsync(authorizeRestService.AuthorizeJwt).
             ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
-
-        /// <summary>
-        /// Проверка по имени пользователя
-        /// </summary>
-        private static IResultValue<string> ValidateByLogin(string loginInitial) =>
-            loginInitial.ToResultValueWhere(login => !String.IsNullOrWhiteSpace(login),
-                                          _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Username, "Не указано имя пользователя"));
-
-        /// <summary>
-        /// Проверка по имени пользователя
-        /// </summary>
-        private static IResultValue<string> ValidateByPassword(string passwordInitial) =>
-            passwordInitial.ToResultValueWhere(password => !String.IsNullOrWhiteSpace(password),
-                                          _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Password, "Не указан пароль"));
     }
 }

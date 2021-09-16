@@ -8,6 +8,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -23,52 +24,60 @@
             </Grid>
         </StackLayout>
 
-        <StackLayout Grid.Row="1"
+        <menuItems:LogoMenuView Grid.Row="1" />
+
+        <StackLayout Grid.Row="2"
                      Style="{StaticResource StackLayoutEntry}">
-            <Label Style="{StaticResource LabelTitle}"
-                   Text="Создать Аккаунт"
-                   HorizontalOptions="CenterAndExpand"
-                   Margin="0, 10, 0, 0" />
+            <StackLayout Style="{StaticResource StackLayoutControlIsolate}" >
+                <controlViews:EntryControl x:Name="LoginEntry"
+                                           Style="{StaticResource EntryValidation}"
+                                           ValidationType="Email"
+                                           PlaceholderText="Адрес почты"
+                                           ErrorMessage="Укажите адрес почты" />
 
-            <controlViews:EntryControl x:Name="LoginEntry"
-                                   Style="{StaticResource EntryValidation}"
-                                   PlaceholderText="Адрес почты"
-                                   ErrorMessage="Укажите адрес почты" />
+                <controlViews:EntryControl x:Name="PasswordEntry"
+                                           PlaceholderText="Пароль"
+                                           ValidationType="Password"
+                                           ErrorMessage="Укажите пароль"
+                                           IsPassword="True" />
 
-            <controlViews:EntryControl x:Name="PasswordEntry"
-                                   PlaceholderText="Пароль"
-                                   ErrorMessage="Укажите пароль"
-                                   IsPassword="True" />
+                <controlViews:EntryControl x:Name="PasswordConfirmEntry"
+                                           PlaceholderText="Подтвердите пароль"
+                                           ValidationType="Password"
+                                           ErrorMessage="Пароли не совпадают"
+                                           IsPassword="True" />
 
-            <controlViews:EntryControl x:Name="PasswordConfirmEntry"
-                                   PlaceholderText="Подтвердите пароль"
-                                   ErrorMessage="Пароли не совпадают"
-                                   IsPassword="True" />
+                <controlViews:EntryControl x:Name="NameEntry"
+                                           ValidationType="Text"
+                                           PlaceholderText="Имя"
+                                           ErrorMessage="Укажите имя" />
 
-            <controlViews:EntryControl x:Name="NameEntry"
-                                   PlaceholderText="Имя"
-                                   ErrorMessage="Укажите имя" />
+                <controlViews:EntryControl x:Name="SurnameEntry"
+                                           ValidationType="Text"
+                                           PlaceholderText="Фамилия"
+                                           ErrorMessage="Укажите фамилию" />
 
-            <controlViews:EntryControl x:Name="SurnameEntry"
-                                   PlaceholderText="Фамилия"
-                                   ErrorMessage="Укажите фамилию" />
+                <controlViews:EntryControl x:Name="AddressEntry"
+                                           PlaceholderText="Адрес"
+                                           ErrorMessage="Укажите адрес" />
 
-            <controlViews:EntryControl x:Name="AddressEntry"
-                                   PlaceholderText="Адрес"
-                                   ErrorMessage="Укажите адрес" />
+                <StackLayout Style="{StaticResource StackLayoutIcon}">
+                    <controlViews:EntryControl Text="+7"
+                                               IsReadOnly="True" />
 
-            <StackLayout Style="{StaticResource StackLayoutIcon}">
-                <controlViews:EntryControl Text="+7" 
-                                       IsReadOnly="True"/>
-
-                <controlViews:EntryControl x:Name="PhoneEntry"
-                                       PlaceholderText="Телефон"
-                                       ErrorMessage="Укажите телефон" 
-                                       HorizontalOptions="FillAndExpand"/>
+                    <controlViews:EntryControl x:Name="PhoneEntry"
+                                               ValidationType="Phone"
+                                               Mask="AAA-AAA-AA-AA"
+                                               MaskChar="A"
+                                               PlaceholderText="Телефон"
+                                               ErrorMessage="Укажите телефон"
+                                               HorizontalOptions="FillAndExpand" />
+                </StackLayout>
             </StackLayout>
 
             <Button x:Name="CreateAccountButton"
                 Style="{StaticResource ButtonMain}"
+                Margin="0, 10, 0, 0"
                 Text="Создать профиль"/>
         </StackLayout>
     </Grid>

@@ -31,11 +31,13 @@
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
                 <controlViews:EntryControl x:Name="LoginEntry"
                                            Style="{StaticResource EntryValidation}"
+                                           ValidationType="Email"
                                            PlaceholderText="Адрес почты"
                                            ErrorMessage="Укажите адрес почты"/>
 
                 <controlViews:EntryControl x:Name="PasswordEntry"
                                            PlaceholderText="Пароль"
+                                           ValidationType="Password"
                                            ErrorMessage="Укажите пароль"
                                            IsPassword="True"/>
 

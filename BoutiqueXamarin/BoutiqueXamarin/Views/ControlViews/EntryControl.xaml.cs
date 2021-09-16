@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using BoutiqueCommon.Infrastructure.Implementation.Validation;
 using BoutiqueXamarin.Controls;
+using BoutiqueXamarin.Controls.Enums;
+using BoutiqueXamarin.Controls.Extensions;
 using ReactiveUI;
+using ResultFunctional.FunctionalExtensions.Sync;
+using Xamarin.CommunityToolkit.Behaviors;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,6 +28,15 @@ namespace BoutiqueXamarin.Views.ControlViews
 
             this.WhenAnyValue(x => x.HasError).
                  Subscribe(error => UnderlineChange(MainEntry.IsFocused, error));
+
+            this.WhenAnyValue(x => x.ValidationType).
+                 Select(validationType => validationType.ToInputType()).
+                 BindTo(this, x => x.MainEntry.Keyboard);
+
+            this.MainEntry.Events().Unfocused.
+                 Where(focus => !focus.IsFocused).
+                 Select(_ => !EntryValidation.IsValid(ValidationType, MainEntry.Text)).
+                 BindTo(this, x => x.HasError);
         }
 
         /// <summary>
