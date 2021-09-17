@@ -33,10 +33,9 @@ namespace BoutiqueXamarin.Views.ControlViews
                  Select(validationType => validationType.ToInputType()).
                  BindTo(this, x => x.MainEntry.Keyboard);
 
-            this.MainEntry.Events().Unfocused.
-                 Where(focus => !focus.IsFocused).
-                 Select(_ => !EntryValidation.IsValid(ValidationType, MainEntry.Text)).
-                 BindTo(this, x => x.HasError);
+            this.WhenAnyValue(x => x.MainEntry.Text).
+                 Select(text => EntryValidation.IsValid(ValidationType, text)).
+                 BindTo(this, x => x.IsValid);
         }
 
         /// <summary>

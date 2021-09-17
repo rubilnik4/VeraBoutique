@@ -5,13 +5,14 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueXamarin.ViewModels.Base;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems
 {
     /// <summary>
     /// Детальное описание одежды
     /// </summary>
-    public class ClothesDetailDescriptionViewModel
+    public class ClothesDetailDescriptionViewModel: BaseViewModel
     {
         public ClothesDetailDescriptionViewModel (IClothesDetailDomain clothesDetail, SizeType defaultSizeType)
         {

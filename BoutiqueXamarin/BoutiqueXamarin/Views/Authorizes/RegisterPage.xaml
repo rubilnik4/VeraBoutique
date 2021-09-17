@@ -4,6 +4,7 @@
              xmlns:authorizes="clr-namespace:BoutiqueXamarin.Views.Authorizes;assembly=BoutiqueXamarin"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
+             xmlns:registerViewItems="clr-namespace:BoutiqueXamarin.Views.Authorizes.RegisterViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Authorizes.RegisterPage">
     <Grid>
         <Grid.RowDefinitions>
@@ -29,23 +30,8 @@
         <StackLayout Grid.Row="2"
                      Style="{StaticResource StackLayoutEntry}">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}" >
-                <controlViews:EntryControl x:Name="LoginEntry"
-                                           Style="{StaticResource EntryValidation}"
-                                           ValidationType="Email"
-                                           PlaceholderText="Адрес почты"
-                                           ErrorMessage="Укажите адрес почты" />
 
-                <controlViews:EntryControl x:Name="PasswordEntry"
-                                           PlaceholderText="Пароль"
-                                           ValidationType="Password"
-                                           ErrorMessage="Укажите пароль"
-                                           IsPassword="True" />
-
-                <controlViews:EntryControl x:Name="PasswordConfirmEntry"
-                                           PlaceholderText="Подтвердите пароль"
-                                           ValidationType="Password"
-                                           ErrorMessage="Пароли не совпадают"
-                                           IsPassword="True" />
+                <registerViewItems:RegisterLoginView x:Name="RegisterLoginView"/>
 
                 <controlViews:EntryControl x:Name="NameEntry"
                                            ValidationType="Text"
@@ -62,7 +48,7 @@
                                            ErrorMessage="Укажите адрес" />
 
                 <StackLayout Style="{StaticResource StackLayoutIcon}">
-                    <controlViews:EntryControl Text="+7"
+                    <controlViews:EntryControl x:Name="PhoneCodeEntry" Text="+7"
                                                IsReadOnly="True" />
 
                     <controlViews:EntryControl x:Name="PhoneEntry"
@@ -75,7 +61,7 @@
                 </StackLayout>
             </StackLayout>
 
-            <Button x:Name="CreateAccountButton"
+            <Button x:Name="RegisterButton"
                 Style="{StaticResource ButtonMain}"
                 Margin="0, 10, 0, 0"
                 Text="Создать профиль"/>

@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using BoutiqueXamarin.Views.ContentViews.MenuItems;
+using System.Text;
+using System.Threading.Tasks;
 using ReactiveUI;
 using ResultFunctional.Models.Enums;
-using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BoutiqueXamarin.Views.Authorizes
+namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : LoginPageBase
+    public partial class RegisterLoginView : RegisterLoginBase
     {
-        public LoginPage()
+        public RegisterLoginView()
         {
             InitializeComponent();
 
@@ -25,46 +24,33 @@ namespace BoutiqueXamarin.Views.Authorizes
                 this.Bind(ViewModel, x => x.Login, x => x.LoginEntry.Text).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.LoginEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.LoginValid).
+                this.Bind(ViewModel, x => x.LoginValid, x => x.LoginEntry.IsValid).
                      DisposeWith(disposable);
 
                 this.Bind(ViewModel, x => x.Password, x => x.PasswordEntry.Text).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.PasswordEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.PasswordValid).
+                this.Bind(ViewModel, x => x.PasswordValid, x => x.PasswordEntry.IsValid).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, ViewModel!.AuthorizeValidation).
+                this.Bind(ViewModel, x => x.PasswordConfirm, x => x.PasswordConfirmEntry.Text).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.RegisterNavigateCommand, x => x.RegisterButton).
+                this.Bind(ViewModel, x => x.PasswordConfirmValid, x => x.PasswordConfirmEntry.IsValid).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
+                this.WhenAnyObservable(x => x.ViewModel!.RegisterAuthorizeCommand).
                      WhereNotNull().
                      Select(result => result.HasErrorType(AuthorizeErrorType.Email)).
                      BindTo(this, x => x.LoginEntry.HasError).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
+                this.WhenAnyObservable(x => x.ViewModel!.RegisterAuthorizeCommand).
                      WhereNotNull().
                      Select(result => result.HasErrorType(AuthorizeErrorType.Password)).
                      BindTo(this, x => x.PasswordEntry.HasError).
                      DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.LoginEntry.Text, x => x.PasswordEntry.Text).
-                     Where(_ => AuthorizeErrorLabel.IsVisible).
-                     Subscribe(_ => AuthorizeErrorLabel.IsVisible = false).
-                     DisposeWith(disposable);
             });
         }
-
-        /// <summary>
-        /// Главное окно
-        /// </summary>
-        protected override BackLeftMenuView BackLeftMenuView =>
-            this.BackLeftMenu;
     }
 }

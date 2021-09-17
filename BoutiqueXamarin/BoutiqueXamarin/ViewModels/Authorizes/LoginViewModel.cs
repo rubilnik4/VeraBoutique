@@ -5,15 +5,19 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
+using BoutiqueXamarin.Infrastructure.Implementations.Validation;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
+using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
 using ReactiveUI;
+using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes
@@ -27,13 +31,11 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
                               IAuthorizeRestService authorizeRestService)
           : base(loginNavigationService)
         {
-            _authorize = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
-                              Select(x => (IAuthorizeDomain)new AuthorizeDomain(x.Login, x.Password)).
-                              ToProperty(this, nameof(Authorize));
+            AuthorizeValidation = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
+                                       Select(authorize => new AuthorizeValidation(authorize.Login, LoginValid, authorize.Password, PasswordValid));
 
-            AuthorizeCommand = ReactiveCommand.CreateFromTask<IAuthorizeDomain, IResultError>(
-                                   authorize => JwtAuthorize(authorize, authorizeRestService));
-            _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors));
+            AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, authorizeRestService));
+            _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
             RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => registerNavigationService.NavigateTo());
         }
 
@@ -52,26 +54,17 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         }
 
         /// <summary>
-        /// Имя пользователя
+        /// Корректность имени пользователя
         /// </summary>
-        private bool _loginValid;
+        public bool LoginValid { get; set; }
 
         /// <summary>
-        /// Имя пользователя
-        /// </summary>
-        public bool LoginValid
-        {
-            get => _loginValid;
-            set => this.RaiseAndSetIfChanged(ref _loginValid, value);
-        }
-
-        /// <summary>
-        /// Имя пользователя
+        /// Пароль
         /// </summary>
         private string _password = String.Empty;
 
         /// <summary>
-        /// Имя пользователя
+        /// Пароль
         /// </summary>
         public string Password
         {
@@ -80,15 +73,14 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         }
 
         /// <summary>
-        /// Параметры авторизации
+        /// Корректность пароля
         /// </summary>
-        private readonly ObservableAsPropertyHelper<IAuthorizeDomain> _authorize;
+        public bool PasswordValid { get; set; }
 
         /// <summary>
         /// Параметры авторизации
         /// </summary>
-        public IAuthorizeDomain Authorize =>
-            _authorize.Value;
+        public IObservable<AuthorizeValidation> AuthorizeValidation { get; }
 
         /// <summary>
         /// Ошибки авторизации
@@ -104,12 +96,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Команда авторизации
         /// </summary>
-        public ReactiveCommand<IAuthorizeDomain, IResultError> AuthorizeCommand { get; }
-
-        /// <summary>
-        /// Команда авторизации
-        /// </summary>
-        public ReactiveCommand<Unit, bool> LoginValidationCommand { get; set; }
+        public ReactiveCommand<AuthorizeValidation, IResultError> AuthorizeCommand { get; }
 
         /// <summary>
         /// Переход к странице регистрации
@@ -119,9 +106,13 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Авторизоваться через токен JWT
         /// </summary>
-        private static async Task<IResultError> JwtAuthorize(IAuthorizeDomain authorizeDomain, IAuthorizeRestService authorizeRestService) =>
-            await authorizeDomain.ToResultValue().
-            ResultValueBindOkAsync(authorizeRestService.AuthorizeJwt).
+        private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, IAuthorizeRestService authorizeRestService) =>
+            await authorizeValidation.ToResultValue().
+            ConcatErrors(AuthorizeError.GetEmailError(authorizeValidation.Login, authorizeValidation.LoginValid).Errors).
+            ConcatErrors(AuthorizeError.GetPasswordError(authorizeValidation.Password, authorizeValidation.PasswordValid).Errors).
+            ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).
             ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
+
+     
     }
 }

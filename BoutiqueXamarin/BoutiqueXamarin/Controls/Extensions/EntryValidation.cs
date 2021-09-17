@@ -15,7 +15,8 @@ namespace BoutiqueXamarin.Controls.Extensions
             entryValidationType switch
             {
                 EntryValidationType.Email => EmailValidation.IsValidEmail(text),
-                _ => true,
+                EntryValidationType.Password => EmptyValidation.IsValid(text),
+                _ => EmptyValidation.IsValid(text),
             };
     }
 }

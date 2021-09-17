@@ -20,8 +20,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation
         /// </summary>
         public static bool IsValidEmail(string email) =>
             email.
-            ToResultValueWhere(emailValue => !String.IsNullOrWhiteSpace(emailValue),
-                               GetValidationError).
+            ToResultValueWhere(emailValue => !String.IsNullOrWhiteSpace(emailValue), GetValidationError).
             ResultValueBindOk(DomainValidationTry).
             ResultValueBindOk(IsMatchTry).
             Map(result => result.OkStatus && result.Value);
@@ -63,44 +62,5 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation
         /// </summary>
         private static IErrorResult GetValidationError(string email) =>
             ErrorResultFactory.ValueNotValidError(email, typeof(EmailValidation), String.Empty);
-
-        //{
-        //    if (String.IsNullOrWhiteSpace(email)) return false;
-
-        //    try
-        //    {
-        //        // Normalize the domain
-        //        email = ;
-
-        //        // Examines the domain part of the email and normalizes it.
-        //        string DomainMapper(Match match)
-        //        {
-        //            // Use IdnMapping class to convert Unicode domain names.
-        //            var idn = new IdnMapping();
-
-        //            // Pull out and process domain name (throws ArgumentException on invalid)
-        //            string domainName = idn.GetAscii(match.Groups[2].Value);
-
-        //            return match.Groups[1].Value + domainName;
-        //        }
-        //    }
-        //    catch (RegexMatchTimeoutException)
-        //    {
-        //        return false;
-        //    }
-        //    catch (ArgumentException)
-        //    {
-        //        return false;
-        //    }
-
-        //    try
-        //    {
-        //        return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-        //    }
-        //    catch (RegexMatchTimeoutException)
-        //    {
-        //        return false;
-        //    }
-        //}
     }
 }

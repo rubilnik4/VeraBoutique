@@ -16,13 +16,6 @@ namespace BoutiqueXamarin.Controls
     /// </summary>
     public class EntryStackLayout : StackLayout
     {
-        public EntryStackLayout()
-        {
-            _validateCommand = ReactiveCommand.Create<Unit, bool>(_ => EntryValidation.IsValid(ValidationType, Text));
-            _validateCommand.Select(isValid => !isValid).
-                             BindTo(this, x => x.HasError);
-        }
-
         /// <summary>
         /// Текст
         /// </summary>
@@ -121,6 +114,21 @@ namespace BoutiqueXamarin.Controls
         /// </summary>
         public static readonly BindableProperty HasErrorProperty =
             BindableProperty.Create(nameof(HasError), typeof(bool), typeof(StackLayout));
+
+        /// <summary>
+        /// Корректность поля
+        /// </summary>
+        public bool IsValid
+        {
+            get => (bool)GetValue(IsValidProperty);
+            set => SetValue(IsValidProperty, value);
+        }
+
+        /// <summary>
+        /// Корректность поля
+        /// </summary>
+        public static readonly BindableProperty IsValidProperty =
+            BindableProperty.Create(nameof(IsValid), typeof(bool), typeof(StackLayout));
 
         /// <summary>
         /// Является ли паролем
@@ -226,27 +234,6 @@ namespace BoutiqueXamarin.Controls
         /// </summary>
         public static readonly BindableProperty MaskCharProperty =
             BindableProperty.Create(nameof(MaskChar), typeof(char), typeof(StackLayout), MinValue);
-
-        /// <summary>
-        /// Команда проверки
-        /// </summary>
-        private ReactiveCommand<Unit, bool> _validateCommand;
-
-        /// <summary>
-        /// Команда проверки
-        /// </summary>
-        public ICommand ValidateCommand => 
-            _validateCommand;
-        //{
-        //    get => (ICommand)GetValue(ValidateCommandProperty);
-        //    private set => SetValue(ValidateCommandProperty, value);
-        //}
-
-        ///// <summary>
-        ///// Команда проверки
-        ///// </summary>
-        //public static readonly BindableProperty ValidateCommandProperty =
-        //    BindableProperty.Create(nameof(ValidateCommand), typeof(ICommand), typeof(StackLayout));
 
         /// <summary>
         /// Цвет при выборе по умолчанию
