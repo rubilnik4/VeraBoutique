@@ -24,31 +24,41 @@ namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
                 this.Bind(ViewModel, x => x.Login, x => x.LoginEntry.Text).
                      DisposeWith(disposable);
 
-                this.Bind(ViewModel, x => x.LoginValid, x => x.LoginEntry.IsValid).
+                this.WhenAnyValue(x => x.LoginEntry.IsValid).
+                     BindTo(this, x => x.ViewModel!.LoginValid).
                      DisposeWith(disposable);
 
                 this.Bind(ViewModel, x => x.Password, x => x.PasswordEntry.Text).
                      DisposeWith(disposable);
 
-                this.Bind(ViewModel, x => x.PasswordValid, x => x.PasswordEntry.IsValid).
+                this.WhenAnyValue(x => x.PasswordEntry.IsValid).
+                     BindTo(this, x => x.ViewModel!.PasswordValid).
                      DisposeWith(disposable);
 
                 this.Bind(ViewModel, x => x.PasswordConfirm, x => x.PasswordConfirmEntry.Text).
                      DisposeWith(disposable);
 
-                this.Bind(ViewModel, x => x.PasswordConfirmValid, x => x.PasswordConfirmEntry.IsValid).
+                this.WhenAnyValue(x => x.PasswordConfirmEntry.HasError).
+                     Select(hasError => !hasError).
+                     BindTo(this, x => x.ViewModel!.PasswordConfirmValid).
                      DisposeWith(disposable);
 
-                this.WhenAnyObservable(x => x.ViewModel!.RegisterAuthorizeCommand).
+                this.WhenAnyObservable(x => x.ViewModel!.RegisterLoginCommand).
                      WhereNotNull().
                      Select(result => result.HasErrorType(AuthorizeErrorType.Email)).
                      BindTo(this, x => x.LoginEntry.HasError).
                      DisposeWith(disposable);
 
-                this.WhenAnyObservable(x => x.ViewModel!.RegisterAuthorizeCommand).
+                this.WhenAnyObservable(x => x.ViewModel!.RegisterLoginCommand).
                      WhereNotNull().
                      Select(result => result.HasErrorType(AuthorizeErrorType.Password)).
                      BindTo(this, x => x.PasswordEntry.HasError).
+                     DisposeWith(disposable);
+
+                this.WhenAnyValue(x => x.PasswordEntry.Text, x => x.PasswordConfirmEntry.Text,
+                                  (password, passwordConfirm) => (Password: password, PasswordConfirm: passwordConfirm)).
+                     Select(passwords => passwords.Password != passwords.PasswordConfirm).
+                     BindTo(this, x => x.PasswordConfirmEntry.HasError).
                      DisposeWith(disposable);
             });
         }

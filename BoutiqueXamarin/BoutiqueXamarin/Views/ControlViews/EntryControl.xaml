@@ -15,10 +15,10 @@
                Text="{Binding Source={x:Reference EntryStackLayout}, Path=Text, Mode=TwoWay}"
                Placeholder="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderText}"
                PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
-               ClearButtonVisibility="WhileEditing"
                IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"
                IsReadOnly="{Binding Source={x:Reference EntryStackLayout}, Path=IsReadOnly}"
                MaxLength="{Binding Source={x:Reference EntryStackLayout}, Path=MaxLength}"
+               ClearButtonVisibility="WhileEditing"
                HorizontalOptions="FillAndExpand"
                VerticalOptions="FillAndExpand">
             <Entry.Behaviors>

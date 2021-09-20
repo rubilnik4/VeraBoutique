@@ -14,13 +14,14 @@
         <controlViews:EntryControl x:Name="PasswordEntry"
                                            PlaceholderText="Пароль"
                                            ValidationType="Password"
-                                           ErrorMessage="Укажите пароль"
+                                           ErrorMessage="Пароль должен состоять не менее чем из 8 символов и содержать в себе цифры"
                                            IsPassword="True" />
 
         <controlViews:EntryControl x:Name="PasswordConfirmEntry"
                                            PlaceholderText="Подтвердите пароль"
                                            ValidationType="Password"
                                            ErrorMessage="Пароли не совпадают"
-                                           IsPassword="True" />
+                                           IsPassword="True"
+                                           ErrorClear="False"/>
     </StackLayout>
 </registerViewItems:RegisterLoginBase>

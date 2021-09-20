@@ -28,7 +28,8 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
             : base(registerNavigationService)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
-            RegisterCommand = ReactiveCommand.CreateFromTask<Unit, IResultError>(Register);
+            RegisterPersonalViewModel = new RegisterPersonalViewModel();
+            RegisterCommand = ReactiveCommand.CreateFromTask<RegisterLoginViewModel, IResultError>(Register);
         }
 
         /// <summary>
@@ -37,93 +38,22 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         public RegisterLoginViewModel RegisterLoginViewModel { get; }
 
         /// <summary>
-        /// Имя
+        /// Регистрация. Личная информация
         /// </summary>
-        private string _name = String.Empty;
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name
-        {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
-
-        /// <summary>
-        /// Корректность имени
-        /// </summary>
-        public bool NameValid { get; set; }
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        private string _surname = String.Empty;
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        public string Surname
-        {
-            get => _surname;
-            set => this.RaiseAndSetIfChanged(ref _surname, value);
-        }
-
-        /// <summary>
-        /// Корректность фамилии
-        /// </summary>
-        public bool SurnameValid { get; set; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        private string _address = String.Empty;
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        public string Address
-        {
-            get => _address;
-            set => this.RaiseAndSetIfChanged(ref _address, value);
-        }
-
-        /// <summary>
-        /// Корректность адреса
-        /// </summary>
-        public bool AddressValid { get; set; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        private string _phone = String.Empty;
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        public string Phone
-        {
-            get => _phone;
-            set => this.RaiseAndSetIfChanged(ref _phone, value);
-        }
-
-        /// <summary>
-        /// Корректность адреса
-        /// </summary>
-        public bool PhoneValid { get; set; }
+        public RegisterPersonalViewModel RegisterPersonalViewModel { get; }
 
         /// <summary>
         /// Команда авторизации
         /// </summary>
-        public ReactiveCommand<Unit, IResultError> RegisterCommand { get; }
+        public ReactiveCommand<RegisterLoginViewModel, IResultError> RegisterCommand { get; }
 
         /// <summary>
         /// Зарегистрировать
         /// </summary>
-        private async Task<IResultError> Register(Unit _) =>
+        private static async Task<IResultError> Register(RegisterLoginViewModel registerLoginViewModel) =>
             await new ResultError().
-            MapAsync(result => RegisterLoginViewModel.RegisterAuthorizeCommand.
-                               Execute(RegisterLoginViewModel.AuthorizeValidation).ToTask().
+            MapAsync(result => registerLoginViewModel.RegisterLoginCommand.
+                               Execute(registerLoginViewModel.RegisterLoginValidation).ToTask().
                                MapTaskAsync(errors => result.ConcatErrors(errors.Errors)));
            // ConcatErrors(ValidateByPassword(authorizeValidation.Password, authorizeValidation.PasswordValid).Errors);
            // ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).

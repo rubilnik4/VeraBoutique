@@ -18,7 +18,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation
         /// <summary>
         /// Проверить почту на корректность написания
         /// </summary>
-        public static bool IsValidEmail(string email) =>
+        public static bool IsValid(string email) =>
             email.
             ToResultValueWhere(emailValue => !String.IsNullOrWhiteSpace(emailValue), GetValidationError).
             ResultValueBindOk(DomainValidationTry).

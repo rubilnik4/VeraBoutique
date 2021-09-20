@@ -167,6 +167,10 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\ResultFunctional\ResultFunctional\ResultFunctional.csproj">
+      <Project>{F523DECA-41E0-4257-9FAE-4DAFC4265EF2}</Project>
+      <Name>ResultFunctional</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\BoutiqueCommon\BoutiqueCommon.csproj">
       <Project>{0b7a2ffe-a950-40ce-a2b7-2e6786539139}</Project>
       <Name>BoutiqueCommon</Name>
@@ -223,7 +227,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

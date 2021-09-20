@@ -16,7 +16,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation
         /// </summary>
         public static bool IsValid(string line) =>
             line.
-            ToResultValueWhere(emailValue => !String.IsNullOrWhiteSpace(emailValue), GetValidationError).
+            ToResultValueWhere(text => !String.IsNullOrWhiteSpace(text), GetValidationError).
             Map(result => result.OkStatus);
 
         /// <summary>

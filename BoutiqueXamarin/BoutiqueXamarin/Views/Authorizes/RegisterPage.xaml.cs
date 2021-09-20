@@ -24,7 +24,7 @@ namespace BoutiqueXamarin.Views.Authorizes
                 this.OneWayBind(ViewModel, x => x.RegisterLoginViewModel, x => x.RegisterLoginView.ViewModel).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton).
+                this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton, x => x.RegisterLoginViewModel).
                      DisposeWith(disposable);
 
                 this.WhenAnyValue(x => x.NameEntry.IsValid).

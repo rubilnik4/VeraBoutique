@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
-using BoutiqueXamarin.Infrastructure.Implementations.Validation;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
@@ -18,6 +18,7 @@ using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes
@@ -31,8 +32,8 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
                               IAuthorizeRestService authorizeRestService)
           : base(loginNavigationService)
         {
-            AuthorizeValidation = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
-                                       Select(authorize => new AuthorizeValidation(authorize.Login, LoginValid, authorize.Password, PasswordValid));
+            AuthorizeValidation = this.WhenAnyValue(x => x.LoginValid, x => x.PasswordValid, (loginValid, passwordValid) => (loginValid, passwordValid)).
+                                       Select(authorize => new AuthorizeValidation(Login, authorize.loginValid, Password, authorize.passwordValid));
 
             AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, authorizeRestService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
@@ -42,40 +43,40 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        private string _login = String.Empty;
+        public string Login { get; set; } = String.Empty;
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Login
-        {
-            get => _login;
-            set => this.RaiseAndSetIfChanged(ref _login, value);
-        }
+        private bool _loginValid;
 
         /// <summary>
         /// Корректность имени пользователя
         /// </summary>
-        public bool LoginValid { get; set; }
-
-        /// <summary>
-        /// Пароль
-        /// </summary>
-        private string _password = String.Empty;
-
-        /// <summary>
-        /// Пароль
-        /// </summary>
-        public string Password
+        public bool LoginValid
         {
-            get => _password;
-            set => this.RaiseAndSetIfChanged(ref _password, value);
+            get => _loginValid;
+            set => this.RaiseAndSetIfChanged(ref _loginValid, value);
         }
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        public string Password { get; set; } = String.Empty;
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        private bool _passwordValid;
 
         /// <summary>
         /// Корректность пароля
         /// </summary>
-        public bool PasswordValid { get; set; }
+        public bool PasswordValid
+        {
+            get => _passwordValid;
+            set => this.RaiseAndSetIfChanged(ref _passwordValid, value);
+        }
 
         /// <summary>
         /// Параметры авторизации
@@ -108,11 +109,9 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, IAuthorizeRestService authorizeRestService) =>
             await authorizeValidation.ToResultValue().
-            ConcatErrors(AuthorizeError.GetEmailError(authorizeValidation.Login, authorizeValidation.LoginValid).Errors).
-            ConcatErrors(AuthorizeError.GetPasswordError(authorizeValidation.Password, authorizeValidation.PasswordValid).Errors).
+            ConcatErrors(AuthorizeError.GetResult(authorizeValidation.LoginValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
+            ConcatErrors(AuthorizeError.GetResult(authorizeValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
             ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).
             ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
-
-     
     }
 }

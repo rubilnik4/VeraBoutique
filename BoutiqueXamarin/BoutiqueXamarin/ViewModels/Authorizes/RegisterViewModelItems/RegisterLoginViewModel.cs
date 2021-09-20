@@ -5,6 +5,7 @@ using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
 using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
@@ -16,86 +17,94 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
     {
         public RegisterLoginViewModel()
         {
-            _authorizeValidation = this.WhenAnyValue(x => x.Login, x => x.Password, (login, password) => (Login: login, Password: password)).
-                                        Select(authorize => new AuthorizeValidation(authorize.Login, LoginValid, authorize.Password, PasswordValid)).
-                                        ToProperty(this, nameof(AuthorizeValidation));
-            RegisterAuthorizeCommand = ReactiveCommand.Create<AuthorizeValidation, IResultError>(GetRegisterLoginErrors);
+            _registerLoginValidation = this.WhenAnyValue(x => x.LoginValid, x => x.PasswordValid, x => x.PasswordConfirmValid,
+                                                        (loginValid, passwordValid, passwordConfirmValid) => (loginValid, passwordValid, passwordConfirmValid)).
+                                        Select(registerLogin => new RegisterLoginValidation(Login, registerLogin.loginValid, Password, registerLogin.passwordValid,
+                                                                                            PasswordConfirm, registerLogin.passwordConfirmValid)).
+                                        ToProperty(this, nameof(RegisterLoginValidation));
+            RegisterLoginCommand = ReactiveCommand.Create<RegisterLoginValidation, IResultError>(GetRegisterLoginErrors);
         }
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        private string _login = String.Empty;
+        public string Login { get; set; } = String.Empty;
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Login
-        {
-            get => _login;
-            set => this.RaiseAndSetIfChanged(ref _login, value);
-        }
+        private bool _loginValid;
 
         /// <summary>
         /// Корректность имени пользователя
         /// </summary>
-        public bool LoginValid { get; set; }
-
-        /// <summary>
-        /// Пароль
-        /// </summary>
-        private string _password = String.Empty;
-
-        /// <summary>
-        /// Пароль
-        /// </summary>
-        public string Password
+        public bool LoginValid
         {
-            get => _password;
-            set => this.RaiseAndSetIfChanged(ref _password, value);
+            get => _loginValid;
+            set => this.RaiseAndSetIfChanged(ref _loginValid, value);
         }
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        public string Password { get; set; } = String.Empty;
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        private bool _passwordValid;
 
         /// <summary>
         /// Корректность пароля
         /// </summary>
-        public bool PasswordValid { get; set; }
+        public bool PasswordValid
+        {
+            get => _passwordValid;
+            set => this.RaiseAndSetIfChanged(ref _passwordValid, value);
+        }
 
         /// <summary>
         /// Подтверждение пароля
         /// </summary>
-        public string PasswordConfirm
-        {
-            get => _password;
-            set => this.RaiseAndSetIfChanged(ref _password, value);
-        }
+        public string PasswordConfirm { get; set; } = String.Empty;
 
         /// <summary>
         /// Корректность подтверждения пароля
         /// </summary>
-        public bool PasswordConfirmValid { get; set; }
+        private bool _passwordConfirmValid;
 
         /// <summary>
-        /// Параметры авторизации
+        /// Корректность подтверждения пароля
         /// </summary>
-        private readonly ObservableAsPropertyHelper<AuthorizeValidation> _authorizeValidation;
+        public bool PasswordConfirmValid
+        {
+            get => _passwordConfirmValid;
+            set => this.RaiseAndSetIfChanged(ref _passwordConfirmValid, value);
+        }
 
         /// <summary>
-        /// Параметры авторизации
+        /// Параметры регистрации и их корректность
         /// </summary>
-        public AuthorizeValidation AuthorizeValidation =>
-            _authorizeValidation.Value;
+        private readonly ObservableAsPropertyHelper<RegisterLoginValidation> _registerLoginValidation;
+
+        /// <summary>
+        /// Параметры регистрации и их корректность
+        /// </summary>
+        public RegisterLoginValidation RegisterLoginValidation =>
+            _registerLoginValidation.Value;
 
         /// <summary>
         /// Команда проверки имени пользователя и пароля
         /// </summary>
-        public ReactiveCommand<AuthorizeValidation, IResultError> RegisterAuthorizeCommand { get; }
+        public ReactiveCommand<RegisterLoginValidation, IResultError> RegisterLoginCommand { get; }
 
         /// <summary>
         /// Получить ошибки проверки логина и пароля
         /// </summary>
-        public static IResultError GetRegisterLoginErrors(AuthorizeValidation authorizeValidation) =>
-            authorizeValidation.ToResultValue().
-            ConcatErrors(AuthorizeError.GetEmailError(authorizeValidation.Login, authorizeValidation.LoginValid).Errors).
-            ConcatErrors(AuthorizeError.GetPasswordError(authorizeValidation.Password, authorizeValidation.PasswordValid).Errors);
+        public static IResultError GetRegisterLoginErrors(RegisterLoginValidation registerLoginValidation) =>
+            registerLoginValidation.ToResultValue().
+            ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.LoginValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
+            ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
+            ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.PasswordConfirmValid, AuthorizeErrorType.PasswordConfirm, "Пароли не совпадают"));
     }
 }

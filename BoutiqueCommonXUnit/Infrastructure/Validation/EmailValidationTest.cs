@@ -14,7 +14,7 @@ namespace BoutiqueCommonXUnit.Infrastructure.Validation
         [InlineData("rubilnik4yandex.ru", false)]
         public void EmailValidate(string email, bool validation)
         {
-            bool isValid = EmailValidation.IsValidEmail(email);
+            bool isValid = EmailValidation.IsValid(email);
 
             Assert.Equal(validation, isValid);
         }

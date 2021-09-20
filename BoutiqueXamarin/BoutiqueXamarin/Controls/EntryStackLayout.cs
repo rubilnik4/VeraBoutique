@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using BoutiqueXamarin.Controls.EntryStackLayouts;
 using BoutiqueXamarin.Controls.Enums;
 using BoutiqueXamarin.Controls.Extensions;
 using ReactiveUI;
@@ -29,16 +30,7 @@ namespace BoutiqueXamarin.Controls
         /// Текст
         /// </summary>
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(StackLayout), propertyChanged: OnTextPropertyChanged);
-
-        /// <summary>
-        /// Изменение текста
-        /// </summary>
-        private static void OnTextPropertyChanged(BindableObject bindableObject, object oldValue, object newValue)
-        {
-            var entryStackLayout = (EntryStackLayout) bindableObject;
-            entryStackLayout.HasError = false;
-        }
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(StackLayout));
 
         /// <summary>
         /// Цвет при выборе
@@ -114,6 +106,21 @@ namespace BoutiqueXamarin.Controls
         /// </summary>
         public static readonly BindableProperty HasErrorProperty =
             BindableProperty.Create(nameof(HasError), typeof(bool), typeof(StackLayout));
+
+        /// <summary>
+        /// Очистки ошибка при вводе
+        /// </summary>
+        public bool ErrorClear
+        {
+            get => (bool)GetValue(ErrorClearProperty);
+            set => SetValue(ErrorClearProperty, value);
+        }
+
+        /// <summary>
+        /// Очистки ошибка при вводе
+        /// </summary>
+        public static readonly BindableProperty ErrorClearProperty =
+            BindableProperty.Create(nameof(ErrorClear), typeof(bool), typeof(StackLayout), true);
 
         /// <summary>
         /// Корректность поля
@@ -234,6 +241,22 @@ namespace BoutiqueXamarin.Controls
         /// </summary>
         public static readonly BindableProperty MaskCharProperty =
             BindableProperty.Create(nameof(MaskChar), typeof(char), typeof(StackLayout), MinValue);
+
+        /// <summary>
+        /// Символ маски
+        /// </summary>
+        public EntryStackLayoutSettings Settings
+        {
+            get => (EntryStackLayoutSettings)GetValue(SettingsProperty);
+            set => SetValue(SettingsProperty, value);
+        }
+
+        /// <summary>
+        /// Маска поля
+        /// </summary>
+        public static readonly BindableProperty SettingsProperty =
+            BindableProperty.Create(nameof(Settings), typeof(EntryStackLayoutSettings), typeof(StackLayout), 
+                                    new EntryStackLayoutSettings(8, true));
 
         /// <summary>
         /// Цвет при выборе по умолчанию

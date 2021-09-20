@@ -1,5 +1,10 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Identity;
+﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems
 {

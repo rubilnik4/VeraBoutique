@@ -37,7 +37,6 @@
 
                 <controlViews:EntryControl x:Name="PasswordEntry"
                                            PlaceholderText="Пароль"
-                                           ValidationType="Password"
                                            ErrorMessage="Укажите пароль"
                                            IsPassword="True"/>
 
