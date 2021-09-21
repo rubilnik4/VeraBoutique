@@ -35,7 +35,7 @@
                      Margin="4,-9,4,0"
                      HeightRequest="1"
                      HorizontalOptions="FillAndExpand"
-                     VerticalOptions="FillAndExpand"
+                     VerticalOptions="Center"
                      Color="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}" />
 
     <Label x:Name="ErrorLabel"

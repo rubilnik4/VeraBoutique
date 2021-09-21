@@ -11,7 +11,7 @@ namespace BoutiqueCommonXUnit.Infrastructure.Validation
         [Theory]
         [InlineData("test", true)]
         [InlineData("", false)]
-        public void EmailValidate(string line, bool validation)
+        public void IsValid(string line, bool validation)
         {
             bool isValid = EmptyValidation.IsValid(line);
 

@@ -7,12 +7,12 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identity
     /// <summary>
     /// Имя пользователя и пароль
     /// </summary>
-    public interface IAuthorizeBase : IModel<(string, string)>, IEquatable<IAuthorizeBase>
+    public interface IAuthorizeBase : IModel<string>
     {
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        string UserName { get; }
+        string Login { get; }
 
         /// <summary>
         /// Пароль

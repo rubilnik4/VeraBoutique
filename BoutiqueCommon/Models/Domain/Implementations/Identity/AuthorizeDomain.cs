@@ -10,11 +10,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Identity
     public class AuthorizeDomain : AuthorizeBase, IAuthorizeDomain
     {
         public AuthorizeDomain(IAuthorizeBase authorize)
-            : this(authorize.UserName, authorize.Password)
+            : this(authorize.Login, authorize.Password)
         { }
 
-        public AuthorizeDomain(string userName, string password)
-            :base(userName, password)
+        public AuthorizeDomain(string login, string password)
+            :base(login, password)
         { }
     }
 }

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<registerViewItems:RegisterPersonalBase xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:registerViewItems="clr-namespace:BoutiqueXamarin.Views.Authorizes.RegisterViewItems;assembly=BoutiqueXamarin"
+             xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Authorizes.RegisterViewItems.RegisterPersonalView">
+    <StackLayout Style="{StaticResource StackLayoutControl}">
+        <controlViews:EntryControl x:Name="NameEntry"
+                                           ValidationType="Text"
+                                           PlaceholderText="Имя"
+                                           ErrorMessage="Укажите имя" />
+
+        <controlViews:EntryControl x:Name="SurnameEntry"
+                                           ValidationType="Text"
+                                           PlaceholderText="Фамилия"
+                                           ErrorMessage="Укажите фамилию" />
+
+        <controlViews:EntryControl x:Name="AddressEntry"
+                                           PlaceholderText="Адрес"
+                                           ErrorMessage="Укажите адрес" />
+
+        <StackLayout Style="{StaticResource StackLayoutIcon}">
+            <controlViews:EntryControl x:Name="PhoneCodeEntry"
+                                       Text="+7"
+                                       IsReadOnly="True" />
+
+            <controlViews:EntryControl x:Name="PhoneEntry"
+                                               ValidationType="Phone"
+                                               Mask="AAA-AAA-AA-AA"
+                                               MaskChar="A"
+                                               PlaceholderText="Телефон"
+                                               ErrorMessage="Укажите телефон"
+                                               HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+    </StackLayout>
+</registerViewItems:RegisterPersonalBase>

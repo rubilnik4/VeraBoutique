@@ -4,8 +4,8 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 namespace BoutiqueCommon.Models.Domain.Interfaces.Identity
 {
     /// <summary>
-    /// Имя пользователя и пароль. Доменная модель
+    /// Регистрация. Доменная модель
     /// </summary>
-    public interface IAuthorizeDomain: IAuthorizeBase, IDomainModel<string>
+    public interface IRegisterDomain : IRegisterBase, IDomainModel<string>
     { }
 }

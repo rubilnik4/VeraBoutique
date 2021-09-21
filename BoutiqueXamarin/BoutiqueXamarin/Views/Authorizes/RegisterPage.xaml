@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:authorizes="clr-namespace:BoutiqueXamarin.Views.Authorizes;assembly=BoutiqueXamarin"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
-             xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
              xmlns:registerViewItems="clr-namespace:BoutiqueXamarin.Views.Authorizes.RegisterViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Authorizes.RegisterPage">
     <Grid>
@@ -29,42 +28,16 @@
 
         <StackLayout Grid.Row="2"
                      Style="{StaticResource StackLayoutEntry}">
-            <StackLayout Style="{StaticResource StackLayoutControlIsolate}" >
-
-                <registerViewItems:RegisterLoginView x:Name="RegisterLoginView"/>
-
-                <controlViews:EntryControl x:Name="NameEntry"
-                                           ValidationType="Text"
-                                           PlaceholderText="Имя"
-                                           ErrorMessage="Укажите имя" />
-
-                <controlViews:EntryControl x:Name="SurnameEntry"
-                                           ValidationType="Text"
-                                           PlaceholderText="Фамилия"
-                                           ErrorMessage="Укажите фамилию" />
-
-                <controlViews:EntryControl x:Name="AddressEntry"
-                                           PlaceholderText="Адрес"
-                                           ErrorMessage="Укажите адрес" />
-
-                <StackLayout Style="{StaticResource StackLayoutIcon}">
-                    <controlViews:EntryControl x:Name="PhoneCodeEntry" Text="+7"
-                                               IsReadOnly="True" />
-
-                    <controlViews:EntryControl x:Name="PhoneEntry"
-                                               ValidationType="Phone"
-                                               Mask="AAA-AAA-AA-AA"
-                                               MaskChar="A"
-                                               PlaceholderText="Телефон"
-                                               ErrorMessage="Укажите телефон"
-                                               HorizontalOptions="FillAndExpand" />
+            <ScrollView HorizontalScrollBarVisibility="Never">
+                <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                    <registerViewItems:RegisterLoginView x:Name="RegisterLoginView"/>
+                    <registerViewItems:RegisterPersonalView x:Name="RegisterPersonalView"/>
+                    <Button x:Name="RegisterButton"
+                            Style="{StaticResource ButtonMain}"
+                            Margin="0, 10, 0, 20"
+                            Text="Создать профиль"/>
                 </StackLayout>
-            </StackLayout>
-
-            <Button x:Name="RegisterButton"
-                Style="{StaticResource ButtonMain}"
-                Margin="0, 10, 0, 0"
-                Text="Создать профиль"/>
+            </ScrollView>
         </StackLayout>
     </Grid>
 </authorizes:RegisterPageBase>

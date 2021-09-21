@@ -29,7 +29,8 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();
-            RegisterCommand = ReactiveCommand.CreateFromTask<RegisterLoginViewModel, IResultError>(Register);
+            RegisterValidation = new RegisterValidation(RegisterLoginViewModel, RegisterPersonalViewModel);
+            RegisterCommand = ReactiveCommand.CreateFromTask<RegisterValidation, IResultError>(Register);
         }
 
         /// <summary>
@@ -43,20 +44,23 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         public RegisterPersonalViewModel RegisterPersonalViewModel { get; }
 
         /// <summary>
+        /// Проверка при регистрации
+        /// </summary>
+        public RegisterValidation RegisterValidation { get; }
+
+        /// <summary>
         /// Команда авторизации
         /// </summary>
-        public ReactiveCommand<RegisterLoginViewModel, IResultError> RegisterCommand { get; }
+        public ReactiveCommand<RegisterValidation, IResultError> RegisterCommand { get; }
 
         /// <summary>
         /// Зарегистрировать
         /// </summary>
-        private static async Task<IResultError> Register(RegisterLoginViewModel registerLoginViewModel) =>
-            await new ResultError().
-            MapAsync(result => registerLoginViewModel.RegisterLoginCommand.
-                               Execute(registerLoginViewModel.RegisterLoginValidation).ToTask().
-                               MapTaskAsync(errors => result.ConcatErrors(errors.Errors)));
-           // ConcatErrors(ValidateByPassword(authorizeValidation.Password, authorizeValidation.PasswordValid).Errors);
-           // ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).
-          //  ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
+        private static async Task<IResultError> Register(RegisterValidation registerValidation) =>
+            new ResultError().
+            ConcatResult(await registerValidation.RegisterLoginViewModel.RegisterLoginCommand.
+                         Execute(registerValidation.RegisterLoginViewModel.RegisterLoginValidation).ToTask()).
+            ConcatResult(await registerValidation.RegisterPersonalViewModel.RegisterPersonalCommand.
+                         Execute(registerValidation.RegisterPersonalViewModel.RegisterPersonalValidation).ToTask());
     }
 }

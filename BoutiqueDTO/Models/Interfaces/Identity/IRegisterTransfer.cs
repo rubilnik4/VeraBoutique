@@ -4,8 +4,8 @@ using BoutiqueDTO.Models.Interfaces.Base;
 namespace BoutiqueDTO.Models.Interfaces.Identity
 {
     /// <summary>
-    /// Имя пользователя и пароль. Трансферная модель
+    /// Регистрация. Трансферная модель
     /// </summary>
-    public interface IAuthorizeTransfer: IAuthorizeBase, ITransferModel<string>
+    public interface IRegisterTransfer : IRegisterBase, ITransferModel<string>
     { }
 }

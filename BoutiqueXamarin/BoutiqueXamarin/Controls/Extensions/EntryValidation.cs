@@ -17,6 +17,8 @@ namespace BoutiqueXamarin.Controls.Extensions
             {
                 EntryValidationType.Email => EmailValidation.IsValid(text),
                 EntryValidationType.Password => PasswordValidation.IsValid(text, settings.PasswordMinimumLength, settings.PasswordNeedDigit),
+                EntryValidationType.Text => TextValidation.IsValid(text),
+                EntryValidationType.Phone => PhoneValidation.IsValid(text),
                 _ => EmptyValidation.IsValid(text),
             };
     }

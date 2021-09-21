@@ -12,12 +12,12 @@ namespace BoutiqueDTO.Models.Implementations.Identity
     public class AuthorizeTransfer: AuthorizeBase, IAuthorizeTransfer
     {
         public AuthorizeTransfer(IAuthorizeBase authorize)
-           : this(authorize.UserName, authorize.Password)
+           : this(authorize.Login, authorize.Password)
         { }
 
         [JsonConstructor]
-        public AuthorizeTransfer(string userName, string password)
-            :base(userName, password)
+        public AuthorizeTransfer(string login, string password)
+            :base(login, password)
         { }
     }
 }

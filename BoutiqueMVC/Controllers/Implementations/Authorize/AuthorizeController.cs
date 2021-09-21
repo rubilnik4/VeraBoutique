@@ -60,8 +60,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<string>> AuthorizeJwt(AuthorizeTransfer login) =>
-            await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, false).
-            MapBindAsync(result => GetAuthorizeAction(result, login.UserName));
+            await _signInManager.PasswordSignInAsync(login.Login, login.Password, false, false).
+            MapBindAsync(result => GetAuthorizeAction(result, login.Login));
 
         /// <summary>
         /// Сгенерировать токен или вернуть отказ авторизации

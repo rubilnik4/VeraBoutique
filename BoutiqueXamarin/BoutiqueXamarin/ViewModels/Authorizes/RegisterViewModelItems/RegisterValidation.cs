@@ -7,14 +7,20 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
     /// </summary>
     public class RegisterValidation
     {
-        public RegisterValidation(AuthorizeValidation authorizeValidation)
+        public RegisterValidation(RegisterLoginViewModel registerLoginViewModel, RegisterPersonalViewModel registerPersonalViewModel)
         {
-            AuthorizeValidation = authorizeValidation;
+            RegisterLoginViewModel = registerLoginViewModel;
+            RegisterPersonalViewModel = registerPersonalViewModel;
         }
 
         /// <summary>
-        /// Параметры авторизации и их корректность
+        /// Регистрация. Имя пользователя и пароль
         /// </summary>
-        public AuthorizeValidation AuthorizeValidation { get; }
+        public RegisterLoginViewModel RegisterLoginViewModel { get; }
+
+        /// <summary>
+        /// Регистрация. Личная информация
+        /// </summary>
+        public RegisterPersonalViewModel RegisterPersonalViewModel { get; }
     }
 }

@@ -9,35 +9,25 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
     /// </summary>
     public abstract class AuthorizeBase : IAuthorizeBase
     {
-        protected AuthorizeBase(string userName, string password)
+        protected AuthorizeBase(string login, string password)
         {
-            UserName = userName;
+            Login = login;
             Password = password;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public (string, string) Id => (UserName, Password);
+        public string Id => Login;
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string UserName { get; }
+        public string Login { get; }
 
         /// <summary>
         /// Пароль
         /// </summary>
         public string Password { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) => 
-            obj is IAuthorizeBase authorize && Equals(authorize);
-
-        public bool Equals(IAuthorizeBase? other) =>
-            other?.Id == Id;
-
-        public override int GetHashCode() => HashCode.Combine(UserName, Password);
-        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     public sealed class BoutiqueUser: IdentityUser
     {
         public BoutiqueUser(string identityRoleType, IAuthorizeDomain authorizeDomain, string email, string phone)
-            :this(identityRoleType, authorizeDomain.UserName, authorizeDomain.Password, email, phone)
+            :this(identityRoleType, authorizeDomain.Login, authorizeDomain.Password, email, phone)
         { }
 
         public BoutiqueUser(string identityRoleType, string userName, string password, string email, string phone)

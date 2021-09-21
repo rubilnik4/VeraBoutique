@@ -12,7 +12,7 @@ namespace BoutiqueCommonXUnit.Infrastructure.Validation
         [InlineData("rubilnik4@yandex.ru", true)]
         [InlineData("rubilnik4@yandex", false)]
         [InlineData("rubilnik4yandex.ru", false)]
-        public void EmailValidate(string email, bool validation)
+        public void IsValid(string email, bool validation)
         {
             bool isValid = EmailValidation.IsValid(email);
 

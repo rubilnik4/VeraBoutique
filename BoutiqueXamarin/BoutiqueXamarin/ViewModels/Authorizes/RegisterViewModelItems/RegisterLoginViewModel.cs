@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Linq;
-using BoutiqueXamarin.Infrastructure.Implementations.Validation;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
 using ReactiveUI;

@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Configuration
     /// <summary>
     /// Параметры подключения к серверу
     /// </summary>
-    public interface IHostConfigurationBase: IModel<string>, IEquatable<IHostConfigurationBase>
+    public interface IHostConfigurationBase: IModel<string>
     {
         /// <summary>
         /// Имя сервера

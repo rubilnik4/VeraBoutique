@@ -24,40 +24,10 @@ namespace BoutiqueXamarin.Views.Authorizes
                 this.OneWayBind(ViewModel, x => x.RegisterLoginViewModel, x => x.RegisterLoginView.ViewModel).
                      DisposeWith(disposable);
 
-                this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton, x => x.RegisterLoginViewModel).
+                this.OneWayBind(ViewModel, x => x.RegisterPersonalViewModel, x => x.RegisterPersonalView.ViewModel).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.NameEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.NameValid).
-                     DisposeWith(disposable);
-
-                this.Bind(ViewModel, x => x.NameValid, x => x.NameEntry.IsValid).
-                     DisposeWith(disposable);
-
-                this.Bind(ViewModel, x => x.Surname, x => x.SurnameEntry.Text).
-                     DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.SurnameEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.SurnameValid).
-                     DisposeWith(disposable);
-
-                this.Bind(ViewModel, x => x.Address, x => x.AddressEntry.Text).
-                     DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.AddressEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.AddressValid).
-                     DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.PhoneEntry.Text).
-                     Select(phone => PhoneCodeEntry.Text + phone).
-                     BindTo(this, x => x.ViewModel!.Phone).
-                     DisposeWith(disposable);
-
-                this.Bind(ViewModel, x => x.PhoneValid, x => x.PhoneEntry.IsValid).
-                     DisposeWith(disposable);
-
-                this.WhenAnyValue(x => x.PhoneEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.PhoneValid).
+                this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton, x => x.RegisterValidation).
                      DisposeWith(disposable);
             });
         }
