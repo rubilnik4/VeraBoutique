@@ -37,7 +37,7 @@ namespace BoutiqueMVC
             DatabaseServicesRegistration.RegisterDatabaseServices(services);
             AuthServicesRegistration.AddAuthorization(services);
             AuthServicesRegistration.RegisterJwtServices(services, Configuration);
-            AuthServicesRegistration.RegisterDatabaseIdentities(services);
+            AuthServicesRegistration.RegisterDatabaseIdentities(services, Configuration);
             services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerDocument(SwaggerConfiguration.ConfigSwagger);
         }

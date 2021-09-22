@@ -8,9 +8,9 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
     /// </summary>
     public class RegisterBase: IRegisterBase
     {
-        public RegisterBase(string login, string password, string name, string surname, string address, string phone)
+        public RegisterBase(string email, string password, string name, string surname, string address, string phone)
         {
-            Login = login;
+            Email = email;
             Password = password;
             Name = name;
             Surname = surname;
@@ -26,7 +26,13 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Login { get; }
+        public string Login =>
+            Email;
+
+        /// <summary>
+        /// Почта
+        /// </summary>
+        public string Email { get; }
 
         /// <summary>
         /// Имя пользователя
@@ -52,5 +58,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
         /// Телефон
         /// </summary>
         public string Phone { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) =>
+          obj is IRegisterBase register && Equals(register);
+
+        public bool Equals(IRegisterBase? other) =>
+            other?.Id == Id;
+
+        public override int GetHashCode() =>
+            HashCode.Combine(Email, Password);
+        #endregion
     }
 }

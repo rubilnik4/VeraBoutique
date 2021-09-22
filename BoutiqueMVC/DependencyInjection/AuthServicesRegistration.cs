@@ -7,15 +7,12 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueMVC.Factories.Database;
-using BoutiqueMVC.Models.Enums.Identity;
 using BoutiqueMVC.Models.Implementations.Environment;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using static BoutiqueDAL.Models.Enums.Identity.IdentityRoleTypes;
-using static BoutiqueMVC.Models.Enums.Identity.IdentityPolicyType;
 
 namespace BoutiqueMVC.DependencyInjection
 {
@@ -30,8 +27,10 @@ namespace BoutiqueMVC.DependencyInjection
         public static void AddAuthorization(IServiceCollection services) =>
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(ADMIN_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, ADMIN_ROLE));
-                options.AddPolicy(USER_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, USER_ROLE));
+                options.AddPolicy(IdentityPolicyType.ADMIN_POLICY,
+                                  policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.Admin.ToString()));
+                options.AddPolicy(IdentityPolicyType.USER_POLICY, 
+                                  policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.User.ToString()));
             });
 
         /// <summary>
@@ -45,15 +44,15 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить сервисы авторизации к базе
         /// </summary>
-        public static void RegisterDatabaseIdentities(IServiceCollection services) =>
+        public static void RegisterDatabaseIdentities(IServiceCollection services, IConfiguration configuration) =>
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
-                {
-                    options.Password.RequiredLength = IdentitySettings.PASSWORD_MINLENGTH;
-                    options.SignIn.RequireConfirmedEmail = true;
-                    options.User.RequireUniqueEmail = true;
-                }).
-                AddEntityFrameworkStores<BoutiqueDatabase>().
-                AddDefaultTokenProviders();
+                AuthorizeSettingsFactory.GetAuthorizeSettings(configuration).
+                Void(authSettings => options.Password.RequiredLength = authSettings.PasswordRequiredLength).
+                Void(authSettings => options.Password.RequireDigit = authSettings.PasswordRequireDigit).
+                Void(authSettings => options.SignIn.RequireConfirmedEmail = authSettings.SignInRequireConfirmedEmail).
+                Void(authSettings => options.User.RequireUniqueEmail = authSettings.UserRequireUniqueEmail)).
+            AddEntityFrameworkStores<BoutiqueDatabase>().
+            AddDefaultTokenProviders();
 
         /// <summary>
         /// Добавить авторизацию через JWT токен

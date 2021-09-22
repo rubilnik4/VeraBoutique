@@ -2,7 +2,6 @@
 using BoutiqueCommon.Models.Common.Interfaces.Identity;
 using BoutiqueDTO.Models.Interfaces.Identity;
 using Newtonsoft.Json;
-using static BoutiqueCommon.Models.Common.Implementations.Identity.IdentitySettings;
 
 namespace BoutiqueDTO.Models.Implementations.Identity
 {
@@ -12,12 +11,12 @@ namespace BoutiqueDTO.Models.Implementations.Identity
     public class AuthorizeTransfer: AuthorizeBase, IAuthorizeTransfer
     {
         public AuthorizeTransfer(IAuthorizeBase authorize)
-           : this(authorize.Login, authorize.Password)
+           : this(authorize.Email, authorize.Password)
         { }
 
         [JsonConstructor]
-        public AuthorizeTransfer(string login, string password)
-            :base(login, password)
+        public AuthorizeTransfer(string email, string password)
+            :base(email, password)
         { }
     }
 }

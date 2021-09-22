@@ -9,6 +9,6 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization
     /// <summary>
     /// Конвертер логина и пароля в трансферную модель
     /// </summary>
-    public interface IAuthorizeTransferConverter : ITransferConverter<(string, string), IAuthorizeDomain, AuthorizeTransfer>
+    public interface IAuthorizeTransferConverter : ITransferConverter<string, IAuthorizeDomain, AuthorizeTransfer>
     { }
 }

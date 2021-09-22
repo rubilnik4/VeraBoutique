@@ -1,6 +1,7 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Configuration;
+using BoutiqueCommon.Models.Common.Interfaces.Identity;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Configuration
 {
@@ -35,5 +36,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Configuration
         /// Отключить проверку сертификата
         /// </summary>
         public bool DisableSSL { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) =>
+          obj is IHostConfigurationBase configuration && Equals(configuration);
+
+        public bool Equals(IHostConfigurationBase? other) =>
+            other?.Id == Id;
+
+        public override int GetHashCode() =>
+            HashCode.Combine(Host);
+        #endregion
     }
 }

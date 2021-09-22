@@ -29,8 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
                                                                                 IReadOnlyCollection<BoutiqueUser> defaultUsers) =>
              await userManager.Users.AsNoTracking().ToListAsync().
              MapTaskAsync(users => users.Select(user => user.UserName)).
-             MapTaskAsync(userNames => defaultUsers.Where(defaultUser => userNames.Contains(defaultUser.UserName,
-                                                                                            StringComparer.InvariantCultureIgnoreCase)));
+             MapTaskAsync(userNames => defaultUsers.Where(defaultUser => userNames.Contains(defaultUser.UserName, StringComparer.InvariantCultureIgnoreCase)));
 
         /// <summary>
         /// Присвоить роли в базе данных
@@ -40,7 +39,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
             await users.
             Select(user => userManager.GetRolesAsync(user).
                            MapBindAsync(userRoles => userManager.RemoveFromRolesAsync(user, userRoles)).
-                           MapBindAsync(_ => userManager.AddToRoleAsync(user, user.IdentityRoleType))).
+                           MapBindAsync(_ => userManager.AddToRoleAsync(user, user.IdentityRoleType.ToString()))).
             WaitAll().
             MapTaskAsync(identityResults => (IEnumerable<IdentityResult>)identityResults);
     }

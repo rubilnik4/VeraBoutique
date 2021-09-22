@@ -28,7 +28,7 @@ namespace BoutiqueMVC.Models.Implementations.Identity
         /// <summary>
         /// Срок действия токена
         /// </summary>
-        public int Expires{ get; }
+        public int Expires { get; }
 
         /// <summary>
         /// Ключ
@@ -38,15 +38,16 @@ namespace BoutiqueMVC.Models.Implementations.Identity
         /// <summary>
         /// Параметры токена авторизации
         /// </summary>
-        public TokenValidationParameters TokenValidationParameters => new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = Issuer,
-            ValidAudience = Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Key)
-        };
+        public TokenValidationParameters TokenValidationParameters =>
+            new()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = Issuer,
+                ValidAudience = Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Key)
+            };
     }
 }

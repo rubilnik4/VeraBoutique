@@ -5,7 +5,7 @@
              xmlns:registerViewItems="clr-namespace:BoutiqueXamarin.Views.Authorizes.RegisterViewItems;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Authorizes.RegisterViewItems.RegisterLoginView">
     <StackLayout Style="{StaticResource StackLayoutControl}">
-        <controlViews:EntryControl x:Name="LoginEntry"
+        <controlViews:EntryControl x:Name="EmailEntry"
                                Style="{StaticResource EntryValidation}"
                                ValidationType="Email"
                                PlaceholderText="Адрес почты"

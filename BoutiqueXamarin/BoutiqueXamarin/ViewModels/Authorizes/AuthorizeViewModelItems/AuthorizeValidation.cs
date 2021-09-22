@@ -13,10 +13,10 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems
     /// </summary>
     public class AuthorizeValidation
     {
-        public AuthorizeValidation(string login, bool loginValid, string password, bool passwordValid)
+        public AuthorizeValidation(string email, bool emailValid, string password, bool passwordValid)
         {
-            Login = login;
-            LoginValid = loginValid;
+            Email = email;
+            EmailValid = emailValid;
             Password = password;
             PasswordValid = passwordValid;
         }
@@ -24,12 +24,12 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Login { get; }
+        public string Email { get; }
 
         /// <summary>
         /// Правильность имени пользователя
         /// </summary>
-        public bool LoginValid { get; }
+        public bool EmailValid { get; }
 
         /// <summary>
         /// Имя пользователя
@@ -45,6 +45,6 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems
         /// Имя пользователя и пароль
         /// </summary>
         public IAuthorizeDomain AuthorizeDomain =>
-            new AuthorizeDomain(Login, Password);
+            new AuthorizeDomain(Email, Password);
     }
 }

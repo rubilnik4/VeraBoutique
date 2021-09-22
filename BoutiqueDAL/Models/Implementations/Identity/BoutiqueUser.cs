@@ -12,40 +12,37 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// </summary>
     public sealed class BoutiqueUser: IdentityUser
     {
-        public BoutiqueUser(string identityRoleType, IAuthorizeDomain authorizeDomain, string email, string phone)
-            :this(identityRoleType, authorizeDomain.Login, authorizeDomain.Password, email, phone)
-        { }
-
-        public BoutiqueUser(string identityRoleType, string userName, string password, string email, string phone)
+        public BoutiqueUser(IdentityRoleType identityRoleType, string email, string password,  string phone)
         {
             IdentityRoleType = identityRoleType;
-            UserName = userName;
+            UserName = email;
             Email = email;
             PhoneNumber = phone;
-            EmailConfirmed = true;
-            PhoneNumberConfirmed = true;
             PasswordHash = GetPasswordHash(this, password);
         }
 
         /// <summary>
         /// Тип роли
         /// </summary>
-        public string IdentityRoleType { get; }
+        public IdentityRoleType IdentityRoleType { get; }
 
         /// <summary>
         /// Нормализованное имя пользователя
         /// </summary>
-        public override string NormalizedUserName => UserName.ToUpperInvariant();
+        public override string NormalizedUserName => 
+            UserName.ToUpperInvariant();
 
         /// <summary>
         /// Нормализованная почта
         /// </summary>
-        public override string NormalizedEmail => Email.ToUpperInvariant();
+        public override string NormalizedEmail => 
+            Email.ToUpperInvariant();
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public override string SecurityStamp => Guid.NewGuid().ToString();
+        public override string SecurityStamp => 
+            Guid.NewGuid().ToString();
 
         /// <summary>
         /// Хэшировать пароль

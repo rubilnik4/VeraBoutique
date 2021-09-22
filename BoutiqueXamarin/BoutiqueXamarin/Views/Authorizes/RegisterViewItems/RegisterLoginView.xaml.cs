@@ -21,10 +21,10 @@ namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
 
             this.WhenActivated(disposable =>
             {
-                this.Bind(ViewModel, x => x.Login, x => x.LoginEntry.Text).
+                this.Bind(ViewModel, x => x.Login, x => x.EmailEntry.Text).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.LoginEntry.IsValid).
+                this.WhenAnyValue(x => x.EmailEntry.IsValid).
                      BindTo(this, x => x.ViewModel!.LoginValid).
                      DisposeWith(disposable);
 
@@ -46,7 +46,7 @@ namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
                 this.WhenAnyObservable(x => x.ViewModel!.RegisterLoginCommand).
                      WhereNotNull().
                      Select(result => result.HasErrorType(AuthorizeErrorType.Email)).
-                     BindTo(this, x => x.LoginEntry.HasError).
+                     BindTo(this, x => x.EmailEntry.HasError).
                      DisposeWith(disposable);
 
                 this.WhenAnyObservable(x => x.ViewModel!.RegisterLoginCommand).

@@ -13,7 +13,6 @@ using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Controllers.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using BoutiqueMVC.Models.Enums.Identity;
 using BoutiqueMVC.Models.Implementations.Controller;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
@@ -23,7 +22,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static BoutiqueMVC.Models.Enums.Identity.IdentityPolicyType;
 
 namespace BoutiqueMVC.Controllers.Implementations.Base
 {
@@ -31,7 +29,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     /// Базовый контроллер для Api
     /// </summary>
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = ADMIN_POLICY)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = IdentityPolicyType.ADMIN_POLICY)]
     [ApiController]
     public abstract class ApiController<TId, TDomain, TTransfer> : 
         ControllerBase, IApiController<TId, TTransfer>

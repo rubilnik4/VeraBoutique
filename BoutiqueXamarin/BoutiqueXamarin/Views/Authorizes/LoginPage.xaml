@@ -29,7 +29,7 @@
         <StackLayout Grid.Row="2"
                      Style="{StaticResource StackLayoutEntry}">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                <controlViews:EntryControl x:Name="LoginEntry"
+                <controlViews:EntryControl x:Name="EmailEntry"
                                            Style="{StaticResource EntryValidation}"
                                            ValidationType="Email"
                                            PlaceholderText="Адрес почты"

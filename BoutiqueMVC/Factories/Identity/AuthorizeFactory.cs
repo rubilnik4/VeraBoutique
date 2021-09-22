@@ -52,7 +52,7 @@ namespace BoutiqueMVC.Factories.Identity
         /// Получить пользователя о умолчанию
         /// </summary>
         private static BoutiqueUser GetDefaultUser(IAuthorizeDomain authorizeDomain, string email, string phone) =>
-            new(IdentityRoleTypes.ADMIN_ROLE, authorizeDomain, email, phone);
+            new(IdentityRoleType.Admin, authorizeDomain, email, phone);
 
         /// <summary>
         /// Получить имя пользователя и пароль

@@ -14,7 +14,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
     /// <summary>
     /// Доступ к файлам авторизации консольного приложения
     /// </summary>
-    public class AuthorizeConfigurationManager : ConsoleConfigurationManager<(string, string), IAuthorizeDomain, AuthorizeTransfer>,
+    public class AuthorizeConfigurationManager : ConsoleConfigurationManager<string, IAuthorizeDomain, AuthorizeTransfer>,
                                                  IAuthorizeConfigurationManager
     {
         public AuthorizeConfigurationManager(IAuthorizeTransferConverter authorizeTransferConverter)

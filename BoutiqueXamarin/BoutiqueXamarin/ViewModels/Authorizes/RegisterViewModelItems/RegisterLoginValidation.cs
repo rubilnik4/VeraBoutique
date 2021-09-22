@@ -7,9 +7,9 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
     /// </summary>
     public class RegisterLoginValidation : AuthorizeValidation
     {
-        public RegisterLoginValidation(string login, bool loginValid, string password, bool passwordValid,
+        public RegisterLoginValidation(string email, bool emailValid, string password, bool passwordValid,
                                        string passwordConfirm, bool passwordConfirmValid)
-            :base(login, loginValid, password, passwordValid)
+            :base(email, emailValid, password, passwordValid)
         {
             PasswordConfirm = passwordConfirm;
             PasswordConfirmValid = passwordConfirmValid;

@@ -29,7 +29,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         private static async Task<IEnumerable<IdentityRole>> GetRolesToCreate(RoleStore<IdentityRole> roleStore) =>
             await roleStore.Roles.ToListAsync().
             MapTaskAsync(roles => roles.Select(role => role.Name)).
-            MapTaskAsync(rolesNames => IdentityRoleTypes.Roles.
+            MapTaskAsync(rolesNames => Enum.GetValues<IdentityRoleType>().
+                                       Select(roleType => roleType.ToString()).
                                        Where(roleType => !rolesNames.Contains(roleType, StringComparer.OrdinalIgnoreCase)).
                                        Select(roleType => new IdentityRole(roleType) { NormalizedName = roleType.ToUpperInvariant() }));
 

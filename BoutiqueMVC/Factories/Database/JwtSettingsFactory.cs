@@ -37,29 +37,26 @@ namespace BoutiqueMVC.Factories.Database
         /// Параметры авторизации
         /// </summary>
         public static JwtSettings GetJwtSettings(IConfiguration configuration) =>
-            new JwtSettings(GetIssuerConfiguration(configuration),
-                GetAudienceConfiguration(configuration),
-                GetExpiresConfiguration(configuration),
-                SymmetricKey);
+            new (GetIssuer(configuration), GetAudience(configuration), GetExpires(configuration), SymmetricKey);
 
         /// <summary>
         /// Получить потребителя токена
         /// </summary>
-        private static string GetIssuerConfiguration(IConfiguration configuration) =>
+        private static string GetIssuer(IConfiguration configuration) =>
             configuration[$"{JWT_SECTION}:{ISSUER}"] ??
             throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Получить поставщика токена
         /// </summary>
-        private static string GetAudienceConfiguration(IConfiguration configuration) =>
+        private static string GetAudience(IConfiguration configuration) =>
             configuration[$"{JWT_SECTION}:{AUDIENCE}"] ??
             throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Получить срок действия токена
         /// </summary>
-        private static int GetExpiresConfiguration(IConfiguration configuration) =>
+        private static int GetExpires(IConfiguration configuration) =>
             configuration[$"{JWT_SECTION}:{EXPIRES}"].
             WhereContinue(expires => Int32.TryParse(expires, out _),
                 okFunc: Int32.Parse,

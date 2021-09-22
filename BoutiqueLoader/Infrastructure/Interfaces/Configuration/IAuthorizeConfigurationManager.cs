@@ -9,6 +9,6 @@ namespace BoutiqueLoader.Infrastructure.Interfaces.Configuration
     /// <summary>
     /// Доступ к файлам авторизации консольного приложения
     /// </summary>
-    public interface IAuthorizeConfigurationManager : IConfigurationManager<(string, string), IAuthorizeDomain>
+    public interface IAuthorizeConfigurationManager : IConfigurationManager<string, IAuthorizeDomain>
     { }
 }

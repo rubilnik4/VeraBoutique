@@ -17,7 +17,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization
     /// <summary>
     /// Конвертер логина и пароля в трансферную модель
     /// </summary>
-    public class AuthorizeTransferConverter : TransferConverter<(string, string), IAuthorizeDomain, AuthorizeTransfer>,
+    public class AuthorizeTransferConverter : TransferConverter<string, IAuthorizeDomain, AuthorizeTransfer>,
                                               IAuthorizeTransferConverter
     {
         /// <summary>
@@ -31,6 +31,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization
         /// </summary>
         public override IResultValue<IAuthorizeDomain> FromTransfer(AuthorizeTransfer authorizeTransfer) =>
             new AuthorizeDomain(authorizeTransfer).
-            Map(identityLoginDomain => new ResultValue<IAuthorizeDomain>(identityLoginDomain));
+            Map(authorize => new ResultValue<IAuthorizeDomain>(authorize));
     }
 }

@@ -33,7 +33,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
           : base(loginNavigationService)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.LoginValid, x => x.PasswordValid, (loginValid, passwordValid) => (loginValid, passwordValid)).
-                                       Select(authorize => new AuthorizeValidation(Login, authorize.loginValid, Password, authorize.passwordValid));
+                                       Select(authorize => new AuthorizeValidation(Email, authorize.loginValid, Password, authorize.passwordValid));
 
             AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, authorizeRestService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
@@ -43,20 +43,20 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        public string Login { get; set; } = String.Empty;
+        public string Email { get; set; } = String.Empty;
 
         /// <summary>
         /// Имя пользователя
         /// </summary>
-        private bool _loginValid;
+        private bool _emailValid;
 
         /// <summary>
         /// Корректность имени пользователя
         /// </summary>
         public bool LoginValid
         {
-            get => _loginValid;
-            set => this.RaiseAndSetIfChanged(ref _loginValid, value);
+            get => _emailValid;
+            set => this.RaiseAndSetIfChanged(ref _emailValid, value);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, IAuthorizeRestService authorizeRestService) =>
             await authorizeValidation.ToResultValue().
-            ConcatErrors(AuthorizeError.GetResult(authorizeValidation.LoginValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
+            ConcatErrors(AuthorizeError.GetResult(authorizeValidation.EmailValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
             ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).
             ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);

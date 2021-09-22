@@ -6,12 +6,17 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identity
     /// <summary>
     /// Регистрация
     /// </summary>
-    public interface IRegisterBase : IModel<string>
+    public interface IRegisterBase : IModel<string>, IEquatable<IRegisterBase>
     {
         /// <summary>
         /// Имя пользователя
         /// </summary>
         string Login { get; }
+
+        /// <summary>
+        /// Почта
+        /// </summary>
+        string Email { get; }
 
         /// <summary>
         /// Имя пользователя

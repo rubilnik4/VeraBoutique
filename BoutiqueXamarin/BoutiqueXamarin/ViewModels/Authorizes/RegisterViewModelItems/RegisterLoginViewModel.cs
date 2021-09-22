@@ -102,7 +102,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// </summary>
         public static IResultError GetRegisterLoginErrors(RegisterLoginValidation registerLoginValidation) =>
             registerLoginValidation.ToResultValue().
-            ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.LoginValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
+            ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.EmailValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
             ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
             ConcatErrors(AuthorizeError.GetResult(registerLoginValidation.PasswordConfirmValid, AuthorizeErrorType.PasswordConfirm, "Пароли не совпадают"));
     }

@@ -45,13 +45,14 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, Name);
 
         #region IEquatable
-
-        public override bool Equals(object? obj) => obj is ISizeBase clothesSize && Equals(clothesSize);
+        public override bool Equals(object? obj) =>
+            obj is ISizeBase clothesSize && Equals(clothesSize);
 
         public bool Equals(ISizeBase? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => GetIdHashCode(SizeType, Name);
+        public override int GetHashCode() => 
+            GetIdHashCode(SizeType, Name);
         #endregion
 
         #region IFormattable Support

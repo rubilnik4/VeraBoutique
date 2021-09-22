@@ -1,4 +1,4 @@
-﻿namespace BoutiqueMVC.Models.Enums.Identity
+﻿namespace BoutiqueDAL.Models.Enums.Identity
 {
     /// <summary>
     /// Тип политики авторизации

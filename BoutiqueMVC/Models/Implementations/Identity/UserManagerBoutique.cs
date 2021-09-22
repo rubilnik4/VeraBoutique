@@ -11,15 +11,15 @@ namespace BoutiqueMVC.Models.Implementations.Identity
     /// <summary>
     /// Менеджер авторизации
     /// </summary>
-    public class UserManagerBoutique: UserManager<IdentityUser>, IUserManagerBoutique
+    public class UserManagerBoutique : UserManager<IdentityUser>, IUserManagerBoutique
     {
-        public UserManagerBoutique(IUserStore<IdentityUser> store, IOptions<IdentityOptions> optionAccessor, 
+        public UserManagerBoutique(IUserStore<IdentityUser> store, IOptions<IdentityOptions> optionAccessor,
                                    IPasswordHasher<IdentityUser> passwordHasher,
                                    IEnumerable<IUserValidator<IdentityUser>> userValidators,
-                                   IEnumerable<IPasswordValidator<IdentityUser>> passwordValidators, 
-                                   ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, 
+                                   IEnumerable<IPasswordValidator<IdentityUser>> passwordValidators,
+                                   ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors,
                                    IServiceProvider services, ILogger<UserManager<IdentityUser>> logger)
-            :base(store, optionAccessor, passwordHasher, userValidators, 
+            : base(store, optionAccessor, passwordHasher, userValidators,
                   passwordValidators, keyNormalizer, errors, services, logger)
         { }
     }
