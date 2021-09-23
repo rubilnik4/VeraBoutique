@@ -6,41 +6,18 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identity
     /// <summary>
     /// Регистрация
     /// </summary>
-    public interface IRegisterBase : IModel<string>, IEquatable<IRegisterBase>
+    public interface IRegisterBase<TAuthorize, TPersonal> : IModel<string>, IEquatable<IRegisterBase<TAuthorize, TPersonal>>
+        where TAuthorize: IAuthorizeBase
+        where TPersonal: IPersonalBase 
     {
         /// <summary>
-        /// Имя пользователя
+        /// Имя пользователя и пароль
         /// </summary>
-        string Login { get; }
+        TAuthorize Authorize { get; }
 
         /// <summary>
-        /// Почта
+        /// Личная информация
         /// </summary>
-        string Email { get; }
-
-        /// <summary>
-        /// Имя пользователя
-        /// </summary>
-        string Password { get; }
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        string Surname { get; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        string Address { get; }
-
-        /// <summary>
-        /// Телефон
-        /// </summary>
-        string Phone { get; }
+        TPersonal Personal { get; }
     }
 }

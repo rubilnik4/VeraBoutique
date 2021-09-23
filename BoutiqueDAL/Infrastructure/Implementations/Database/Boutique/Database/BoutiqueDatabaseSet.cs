@@ -13,41 +13,41 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public DbSet<GenderEntity> Genders { get; set; } = null!;
+        public DbSet<GenderEntity> Genders { get; init; }
 
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public DbSet<CategoryEntity> Categories { get; set; } = null!;
+        public DbSet<CategoryEntity> Categories { get; init; }
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ColorEntity> ColorClothes { get; set; } = null!;
+        public DbSet<ColorEntity> ColorClothes { get; init; }
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ClothesImageEntity> ClothesImages { get; set; } = null!;
+        public DbSet<ClothesImageEntity> ClothesImages { get; init; }
 
         /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
-        public DbSet<ClothesTypeEntity> ClothesTypes { get; set; } = null!;
+        public DbSet<ClothesTypeEntity> ClothesTypes { get; init; }
 
         /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
-        public DbSet<SizeEntity> Sizes { get; set; } = null!;
+        public DbSet<SizeEntity> Sizes { get; init; }
 
         /// <summary>
         /// Таблица базы данных группы размеров одежды
         /// </summary>
-        public DbSet<SizeGroupEntity> SizeGroups { get; set; } = null!;
+        public DbSet<SizeGroupEntity> SizeGroups { get; init; }
 
         /// <summary>
         /// Таблица базы данных  одежды
         /// </summary>
-        public DbSet<ClothesEntity> Clothes { get; set; } = null!;
+        public DbSet<ClothesEntity> Clothes { get; init; }
     }
 }

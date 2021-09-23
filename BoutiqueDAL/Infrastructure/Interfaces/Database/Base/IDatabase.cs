@@ -24,6 +24,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers);
+        Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers);
     }
 }

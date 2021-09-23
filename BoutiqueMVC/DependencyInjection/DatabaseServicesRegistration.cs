@@ -14,6 +14,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Factories.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -46,7 +47,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static async Task UpdateSchema(IServiceProvider serviceProvider) =>
             await serviceProvider.GetService<IBoutiqueDatabase>()!.
-            UpdateSchema(serviceProvider.GetService<UserManager<IdentityUser>>()!, AuthorizeFactory.DefaultUsers);
+            UpdateSchema(serviceProvider.GetService<UserManager<BoutiqueUser>>()!, AuthorizeFactory.DefaultUsers);
 
         /// <summary>
         /// Подключить сервисы базы данных

@@ -26,6 +26,8 @@ services:
     image: postgres:latest
     env_file:
       -  postgres.env
+    ports:
+      - "5432:5432"
     environment:
       - ./data/:/var/lib/postgresql/data/
     restart: unless-stopped

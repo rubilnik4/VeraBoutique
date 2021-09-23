@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Присвоить роли пользователям
         /// </summary>
-        public static async Task AssignRoles(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsersResult) =>
+        public static async Task AssignRoles(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsersResult) =>
             await defaultUsersResult.
             ResultCollectionOkAsync(defaultUsers => FindUsersInManager(userManager, defaultUsers)).
             ResultCollectionOkBindAsync(usersToAdd => AddUsersToManager(userManager, usersToAdd));
@@ -25,21 +25,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Найти существующих пользователей в списке
         /// </summary>
-        private static async Task<IEnumerable<BoutiqueUser>> FindUsersInManager(UserManager<IdentityUser> userManager,
-                                                                                IReadOnlyCollection<BoutiqueUser> defaultUsers) =>
+        private static async Task<IEnumerable<BoutiqueRoleUser>> FindUsersInManager(UserManager<BoutiqueUser> userManager,
+                                                                                IReadOnlyCollection<BoutiqueRoleUser> defaultUsers) =>
              await userManager.Users.AsNoTracking().ToListAsync().
              MapTaskAsync(users => users.Select(user => user.UserName)).
-             MapTaskAsync(userNames => defaultUsers.Where(defaultUser => userNames.Contains(defaultUser.UserName, StringComparer.InvariantCultureIgnoreCase)));
+             MapTaskAsync(userNames => defaultUsers.Where(defaultUser => userNames.Contains(defaultUser.BoutiqueUser.UserName, StringComparer.InvariantCultureIgnoreCase)));
 
         /// <summary>
         /// Присвоить роли в базе данных
         /// </summary>
-        private static async Task<IEnumerable<IdentityResult>> AddUsersToManager(UserManager<IdentityUser> userManager,
-                                                                                 IEnumerable<BoutiqueUser> users) =>
+        private static async Task<IEnumerable<IdentityResult>> AddUsersToManager(UserManager<BoutiqueUser> userManager,
+                                                                                 IEnumerable<BoutiqueRoleUser> users) =>
             await users.
-            Select(user => userManager.GetRolesAsync(user).
-                           MapBindAsync(userRoles => userManager.RemoveFromRolesAsync(user, userRoles)).
-                           MapBindAsync(_ => userManager.AddToRoleAsync(user, user.IdentityRoleType.ToString()))).
+            Select(user => userManager.GetRolesAsync(user.BoutiqueUser).
+                           MapBindAsync(userRoles => userManager.RemoveFromRolesAsync(user.BoutiqueUser, userRoles)).
+                           MapBindAsync(_ => userManager.AddToRoleAsync(user.BoutiqueUser, user.IdentityRoleType.ToString()))).
             WaitAll().
             MapTaskAsync(identityResults => (IEnumerable<IdentityResult>)identityResults);
     }

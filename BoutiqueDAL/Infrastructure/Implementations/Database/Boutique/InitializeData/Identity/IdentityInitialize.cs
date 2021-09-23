@@ -15,8 +15,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Добавить роли
         /// </summary>
-        public static async Task Initialize(IdentityDbContext<IdentityUser> dbContext, UserManager<IdentityUser> userManager,
-                                            IResultCollection<BoutiqueUser> defaultUsers) =>
+        public static async Task Initialize(IdentityDbContext<BoutiqueUser> dbContext, UserManager<BoutiqueUser> userManager,
+                                            IResultCollection<BoutiqueRoleUser> defaultUsers) =>
             await dbContext.
             VoidAsync(IdentityRolesInitialize.CreateIdentityRoles).
             VoidBindAsync(_ => IdentityUsersInitialize.CreateIdentityUsers(dbContext, defaultUsers)).

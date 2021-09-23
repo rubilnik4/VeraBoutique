@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers)
+        public async Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers)
         {
             await Database.EnsureCreatedAsync();
             await Database.MigrateAsync();

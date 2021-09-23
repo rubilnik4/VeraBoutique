@@ -10,44 +10,60 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// <summary>
     /// Пользователь
     /// </summary>
-    public sealed class BoutiqueUser: IdentityUser
+    public sealed class BoutiqueUser : IdentityUser
     {
-        public BoutiqueUser(IdentityRoleType identityRoleType, string email, string password,  string phone)
+        public BoutiqueUser(string email, string name, string surname, string address, string phoneNumber)
+            : this(email, null, name, surname, address, phoneNumber)
+        { }
+
+        public BoutiqueUser(string email, string? password, string name, string surname, string address, string phoneNumber)
         {
-            IdentityRoleType = identityRoleType;
+            Name = name;
+            Surname = surname;
+            Address = address;
             UserName = email;
             Email = email;
-            PhoneNumber = phone;
+            PhoneNumber = phoneNumber;
             PasswordHash = GetPasswordHash(this, password);
         }
 
         /// <summary>
-        /// Тип роли
-        /// </summary>
-        public IdentityRoleType IdentityRoleType { get; }
-
-        /// <summary>
         /// Нормализованное имя пользователя
         /// </summary>
-        public override string NormalizedUserName => 
+        public override string NormalizedUserName =>
             UserName.ToUpperInvariant();
 
         /// <summary>
         /// Нормализованная почта
         /// </summary>
-        public override string NormalizedEmail => 
+        public override string NormalizedEmail =>
             Email.ToUpperInvariant();
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public override string SecurityStamp => 
+        public override string SecurityStamp =>
             Guid.NewGuid().ToString();
+
+        /// <summary>
+        /// Имя
+        /// </summary>
+        public string Name { get; init; }
+
+        /// <summary>
+        /// Фамилия
+        /// </summary>
+        public string Surname { get; init; }
+
+        /// <summary>
+        /// Адрес
+        /// </summary>
+        public string Address { get; init; }
 
         /// <summary>
         /// Хэшировать пароль
         /// </summary>
-        private static string GetPasswordHash(IdentityUser user, string password) =>
+        private static string GetPasswordHash(IdentityUser user, string? password) =>
             new PasswordHasher<IdentityUser>().
             Map(passwordHasher => passwordHasher.HashPassword(user, password));
     }

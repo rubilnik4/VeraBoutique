@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Enums.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Проверить и добавить роли
         /// </summary>
-        public static async Task CreateIdentityRoles(IdentityDbContext<IdentityUser> dbContext) =>
+        public static async Task CreateIdentityRoles(IdentityDbContext<BoutiqueUser> dbContext) =>
             await new RoleStore<IdentityRole>(dbContext).
             VoidAsync(roleStore => GetRolesToCreate(roleStore).
                                    VoidBindAsync(roles => CreateRoles(roleStore, roles)));

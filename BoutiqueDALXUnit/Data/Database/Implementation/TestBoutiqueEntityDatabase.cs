@@ -118,7 +118,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManager<IdentityUser> userManager, IResultCollection<BoutiqueUser> defaultUsers) =>
+        public async Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers) =>
             await Task.FromResult(userManager);
 
         /// <summary>

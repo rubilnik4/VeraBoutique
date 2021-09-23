@@ -33,7 +33,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Services\Implementations\Services\RestService\" />
-    <Folder Include="Data\Transfers\Authorize\" />
     <Folder Include="Extensions\Json\Sync\" />
     <Folder Include="Infrastructure\Configuration\" />
     <Folder Include="Infrastructure\Mocks\Converters\Configuration\" />

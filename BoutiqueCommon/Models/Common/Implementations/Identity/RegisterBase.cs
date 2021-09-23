@@ -6,68 +6,41 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
     /// <summary>
     /// Регистрация
     /// </summary>
-    public class RegisterBase: IRegisterBase
+    public abstract class RegisterBase<TAuthorize, TPersonal> : IRegisterBase<TAuthorize, TPersonal>
+        where TAuthorize : IAuthorizeBase
+        where TPersonal : IPersonalBase
     {
-        public RegisterBase(string email, string password, string name, string surname, string address, string phone)
+        protected RegisterBase(TAuthorize authorize, TPersonal personal)
         {
-            Email = email;
-            Password = password;
-            Name = name;
-            Surname = surname;
-            Address = address;
-            Phone = phone;
+            Authorize = authorize;
+            Personal = personal;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => Login;
+        public string Id => Authorize.Id;
 
         /// <summary>
-        /// Имя пользователя
+        /// Имя пользователя и пароль
         /// </summary>
-        public string Login =>
-            Email;
+        public TAuthorize Authorize { get; }
 
         /// <summary>
-        /// Почта
+        /// Личная информация
         /// </summary>
-        public string Email { get; }
-
-        /// <summary>
-        /// Имя пользователя
-        /// </summary>
-        public string Password { get; }
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        public string Surname { get; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        public string Address { get; }
-
-        /// <summary>
-        /// Телефон
-        /// </summary>
-        public string Phone { get; }
+        public TPersonal Personal { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>
-          obj is IRegisterBase register && Equals(register);
+          obj is IRegisterBase<TAuthorize, TPersonal> register && Equals(register);
 
-        public bool Equals(IRegisterBase? other) =>
-            other?.Id == Id;
+        public bool Equals(IRegisterBase<TAuthorize, TPersonal>? other) =>
+            other?.Authorize.Equals(Authorize) == true &&
+            other?.Personal.Equals(Personal) == true;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Email, Password);
+            HashCode.Combine(Authorize.GetHashCode(), Personal.GetHashCode());
         #endregion
     }
 }

@@ -12,7 +12,7 @@ namespace BoutiqueCommonXUnit.Data.Authorize
     public static class AuthorizeData
     {
         /// <summary>
-        /// Получить категории одежды
+        /// Получить имя пользователя и пароль
         /// </summary>
         public static IReadOnlyCollection<IAuthorizeDomain> AuthorizeDomains =>
             new List<IAuthorizeDomain>

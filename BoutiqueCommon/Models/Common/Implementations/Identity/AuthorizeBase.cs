@@ -41,7 +41,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identity
           obj is IAuthorizeBase authorize && Equals(authorize);
 
         public bool Equals(IAuthorizeBase? other) =>
-            other?.Id == Id;
+            other?.Email == Email &&
+            other?.Password == Password;
 
         public override int GetHashCode() =>
             HashCode.Combine(Email, Password);

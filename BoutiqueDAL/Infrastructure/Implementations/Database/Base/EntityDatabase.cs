@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
+using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
     /// <summary>
     /// Базовая база данных Entity Framework
     /// </summary>
-    public abstract class EntityDatabase : IdentityDbContext<IdentityUser>
+    public abstract class EntityDatabase : IdentityDbContext<BoutiqueUser>
     {
         protected EntityDatabase(DbContextOptions options)
           : base(options)
