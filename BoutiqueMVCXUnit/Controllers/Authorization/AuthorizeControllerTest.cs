@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BoutiqueMVC.Controllers.Implementations.Authorize;
+using BoutiqueCommonXUnit.Data.Authorize;
+using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDTOXUnit.Data.Transfers.Authorize;
+using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
@@ -21,7 +24,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
     /// <summary>
     /// Контроллер авторизации. Тесты
     /// </summary>
-    public class LoginControllerTest
+    public class AuthorizeControllerTest
     {
         /// <summary>
         /// Сгенерировать токен
@@ -34,11 +37,11 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
+            var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             var handler = new JwtSecurityTokenHandler();
             var tokenDecode = handler.ReadToken(tokenResult.Value) as JwtSecurityToken;
             var claims = tokenDecode?.Claims.ToList();
-            var claimRole = claims?.First(claim => claim.Type == ClaimTypes.Role && claim.Value == LoginData.Roles.First());
+            var claimRole = claims?.First(claim => claim.Type == ClaimTypes.Role && claim.Value == IdentityData.Roles.First());
 
             Assert.True(!String.IsNullOrWhiteSpace(tokenResult.Value));
             Assert.NotNull(claimRole);
@@ -55,7 +58,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
+            var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             Assert.IsType<UnauthorizedResult>(tokenResult.Result);
         }
 
@@ -70,7 +73,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var jwtSettings = JwtSettings;
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
 
-            var tokenResult = await loginController.AuthorizeJwt(LoginData.Authorize);
+            var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             Assert.IsType<UnauthorizedResult>(tokenResult.Result);
         }
 
@@ -80,9 +83,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         private static Mock<IUserManagerBoutique> GetUserManager() =>
             new Mock<IUserManagerBoutique>().
             Void(userMock => userMock.Setup(userManager => userManager.Users).
-                                      Returns(LoginData.Users.AsQueryable().BuildMock().Object)).
-            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<IdentityUser>())).
-                                      ReturnsAsync(LoginData.Roles));
+                                      Returns(IdentityData.Users.AsQueryable().BuildMock().Object)).
+            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<BoutiqueUser>())).
+                                      ReturnsAsync(IdentityData.Roles));
 
         /// <summary>
         /// Менеджер аутентификации

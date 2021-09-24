@@ -19,6 +19,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTypeT
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
@@ -26,6 +27,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransf
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BoutiqueMVC.DependencyInjection
@@ -40,6 +42,9 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void RegisterTransferConverters(IServiceCollection services)
         {
+            services.AddTransient<IAuthorizeTransferConverter, AuthorizeTransferConverter>();
+            services.AddTransient<IPersonalTransferConverter, PersonalTransferConverter>();
+            services.AddTransient<IRegisterTransferConverter, RegisterTransferConverter>();
             services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
             services.AddTransient<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();

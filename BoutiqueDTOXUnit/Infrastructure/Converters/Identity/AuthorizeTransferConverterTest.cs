@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data.Authorize;
-using BoutiqueCommonXUnit.Data.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Infrastructure.Converters.Authorization
+namespace BoutiqueDTOXUnit.Infrastructure.Converters.Identity
 {
     /// <summary>
     /// Конвертер логина и пароля в трансферную модель. Тесты
@@ -18,7 +18,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Converters.Authorization
         public void ToTransfer_FromTransfer()
         {
             var authorize = AuthorizeData.AuthorizeDomains.First();
-            var authorizeTransferConverter = new AuthorizeTransferConverter();
+            var authorizeTransferConverter = AuthorizeTransferConverterMock.AuthorizeTransferConverter;
 
             var authorizesTransfer = authorizeTransferConverter.ToTransfer(authorize);
             var authorizeAfterConverter = authorizeTransferConverter.FromTransfer(authorizesTransfer);

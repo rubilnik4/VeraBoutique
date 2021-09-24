@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace BoutiqueMVC.Models.Interfaces.Identity
@@ -13,11 +14,16 @@ namespace BoutiqueMVC.Models.Interfaces.Identity
         /// <summary>
         /// Пользователи
         /// </summary>
-        IQueryable<IdentityUser> Users { get; }
+        IQueryable<BoutiqueUser> Users { get; }
+
+        /// <summary>
+        /// Создать пользователя
+        /// </summary>
+        Task<IdentityResult> CreateAsync(BoutiqueUser user);
 
         /// <summary>
         /// Получить роли пользователей
         /// </summary>
-        Task<IList<string>> GetRolesAsync(IdentityUser user);
+        Task<IList<string>> GetRolesAsync(BoutiqueUser user);
     }
 }

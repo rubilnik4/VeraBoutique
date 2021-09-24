@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data.Authorize;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;

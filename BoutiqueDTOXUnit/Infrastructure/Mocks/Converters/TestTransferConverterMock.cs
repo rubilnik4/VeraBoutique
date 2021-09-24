@@ -6,7 +6,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Mocks.Converters
     /// <summary>
     /// Тестовый конвертер трансферных моделей
     /// </summary>
-    public class TestTransferConverterMock
+    public static class TestTransferConverterMock
     {
         /// <summary>
         /// Тестовый конвертер трансферных моделей

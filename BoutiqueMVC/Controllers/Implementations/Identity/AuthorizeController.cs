@@ -5,36 +5,36 @@ using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
-using ResultFunctional.FunctionalExtensions.Async;
-using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Sync;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace BoutiqueMVC.Controllers.Implementations.Authorize
+namespace BoutiqueMVC.Controllers.Implementations.Identity
 {
     /// <summary>
     /// Контроллер авторизации
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-   
     [AllowAnonymous]
     public class AuthorizeController : ControllerBase
     {
-        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager,
-                                   JwtSettings jwtSettings)
+        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings;
+          
         }
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace BoutiqueMVC.Controllers.Implementations.Authorize
         /// <summary>
         /// Найти пользователя по имени
         /// </summary>
-        private async Task<IdentityUser> GetIdentityByUserName(string userName) =>
+        private async Task<BoutiqueUser> GetIdentityByUserName(string userName) =>
             await _userManager.Users.FirstOrDefaultAsync(r => r.UserName == userName);
 
         /// <summary>
         /// Сгенерировать токен
         /// </summary>
-        private async Task<string> GenerateJwtToken(IdentityUser user) =>
+        private async Task<string> GenerateJwtToken(BoutiqueUser user) =>
              new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
                                   GetClaims(user, await _userManager.GetRolesAsync(user)),
                                   expires: DateTime.Now.AddDays(_jwtSettings.Expires),

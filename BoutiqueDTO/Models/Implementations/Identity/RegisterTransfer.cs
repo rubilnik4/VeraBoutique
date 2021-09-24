@@ -8,7 +8,7 @@ namespace BoutiqueDTO.Models.Implementations.Identity
     /// <summary>
     /// Регистрация. Трансферная модель
     /// </summary>
-    public class RegisterTransfer : RegisterBase<IAuthorizeTransfer, IPersonalTransfer>, IRegisterTransfer
+    public class RegisterTransfer : RegisterBase<AuthorizeTransfer, PersonalTransfer>, IRegisterTransfer
     {
         [JsonConstructor]
         public RegisterTransfer(AuthorizeTransfer authorize, PersonalTransfer personal)

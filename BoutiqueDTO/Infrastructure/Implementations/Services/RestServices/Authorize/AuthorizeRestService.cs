@@ -3,7 +3,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Interfaces.RestClients;

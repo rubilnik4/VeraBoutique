@@ -1,7 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
@@ -10,8 +9,8 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransf
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
@@ -20,6 +19,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Converters;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
@@ -38,6 +38,8 @@ namespace BoutiqueXamarin.DependencyInjection
         public static void RegisterTransferConverters(IBoutiqueContainer container)
         {
             container.Register<IAuthorizeTransferConverter, AuthorizeTransferConverter>();
+            container.Register<IPersonalTransferConverter, PersonalTransferConverter>();
+            container.Register<IRegisterTransferConverter, RegisterTransferConverter>();
             container.Register<IGenderTransferConverter, GenderTransferConverter>();
             container.Register<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             container.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();

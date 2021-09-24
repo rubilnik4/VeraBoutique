@@ -7,6 +7,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueMVC.Infrastructure.Implementation;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -37,29 +38,9 @@ namespace BoutiqueMVC.Factories.Identity
         private static IResultValue<BoutiqueRoleUser> DefaultAdminUser =>
             new ResultValue<Func<IdentityRoleType, IAuthorizeDomain, IPersonalDomain, BoutiqueRoleUser>>(GetDefaultUser).
             ResultValueCurryOk(IdentityRoleType).
-            ResultValueCurryOk(Authorize).
-            ResultValueCurryOk(Personal).
+            ResultValueCurryOk(AuthorizeValidation.AuthorizeValidate(new AuthorizeDomain(Email, Password), AuthorizeSettings)).
+            ResultValueCurryOk(PersonalValidation.PersonalValidate(new PersonalDomain(Name, Surname, Address, Phone))).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
-
-        /// <summary>
-        /// Имя пользователя и пароль
-        /// </summary>
-        private static IResultValue<IAuthorizeDomain> Authorize =>
-            new ResultValue<Func<string, string, IAuthorizeDomain>>(GetAuthorize).
-            ResultValueCurryOk(Email).
-            ResultValueCurryOk(Password).
-            ResultValueOk(getAuthorize => getAuthorize.Invoke());
-
-        /// <summary>
-        /// Личные данные
-        /// </summary>
-        private static IResultValue<IPersonalDomain> Personal =>
-            new ResultValue<Func<string, string, string, string, IPersonalDomain>>(GetPersonal).
-            ResultValueCurryOk(Name).
-            ResultValueCurryOk(Surname).
-            ResultValueCurryOk(Address).
-            ResultValueCurryOk(Phone).
-            ResultValueOk(getPersonal => getPersonal.Invoke());
 
         /// <summary>
         /// Получить пользователя о умолчанию
@@ -69,18 +50,6 @@ namespace BoutiqueMVC.Factories.Identity
             new BoutiqueUser(authorize.Email, authorize.Password, personal.Name,
                              personal.Surname, personal.Address, personal.Phone).
             Map(boutiqueUser => new BoutiqueRoleUser(identityRoleType, boutiqueUser));
-
-        /// <summary>
-        /// Получить имя пользователя и пароль
-        /// </summary>
-        private static IAuthorizeDomain GetAuthorize(string email, string password) =>
-            new AuthorizeDomain(email, password);
-
-        /// <summary>
-        /// Получить личные данные
-        /// </summary>
-        private static IPersonalDomain GetPersonal(string name, string surname, string address, string phone) =>
-            new PersonalDomain(name, surname, address, phone);
 
         /// <summary>
         /// Почта
@@ -94,49 +63,49 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Почта
         /// </summary>
-        private static IResultValue<string> Email =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.EMAIL).
-            ToResultValueWhereNull(EmailValidation.IsValid,
-                                   _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Почта умолчанию не найдена"));
+        private static string Email =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.EMAIL)
+            ?? throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Пароль
         /// </summary>
-        private static IResultValue<string> Password =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.PASSWORD).
-            ToResultValueWhereNull(password => PasswordValidation.IsValid(password, 8, true),
-                                   _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Password, "Пароль умолчанию не найден"));
+        private static string Password =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.PASSWORD)
+            ?? throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Имя
         /// </summary>
-        private static IResultValue<string> Name =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.NAME).
-            ToResultValueWhereNull(EmptyValidation.IsValid, 
-                                   _ => ErrorResultFactory.ValueNotFoundError(IdentityUserEnvironment.NAME, typeof(AuthorizeFactory)));
+        private static string Name =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.NAME)
+            ?? throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        private static IResultValue<string> Surname =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.SURNAME).
-            ToResultValueWhereNull(EmptyValidation.IsValid,
-                                   _ => ErrorResultFactory.ValueNotFoundError(IdentityUserEnvironment.SURNAME, typeof(AuthorizeFactory)));
+        private static string Surname =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.SURNAME)
+            ?? throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Адрес
         /// </summary>
-        private static IResultValue<string> Address =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.ADDRESS).
-            ToResultValueWhereNull(EmptyValidation.IsValid,
-                                   _ => ErrorResultFactory.ValueNotFoundError(IdentityUserEnvironment.ADDRESS, typeof(AuthorizeFactory)));
+        private static string Address =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.ADDRESS)
+            ?? throw new ConfigurationErrorsException();
 
         /// <summary>
         /// Телефон
         /// </summary>
-        private static IResultValue<string> Phone =>
-            Environment.GetEnvironmentVariable(IdentityUserEnvironment.PHONE).
-            ToResultValueWhereNull(PhoneValidation.IsValid,
-                                   _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Phone, "Телефон умолчанию не найден"));
+        private static string Phone =>
+            Environment.GetEnvironmentVariable(IdentityUserEnvironment.PHONE)
+            ?? throw new ConfigurationErrorsException();
+
+        /// <summary>
+        /// Параметры авторизации
+        /// </summary>
+        private static AuthorizeSettings AuthorizeSettings =>
+            new (8, true, false, true);
     }
 }

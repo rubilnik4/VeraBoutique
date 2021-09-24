@@ -1,7 +1,7 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Authorization;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Configuration;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueLoader.Infrastructure.Interfaces.Configuration;

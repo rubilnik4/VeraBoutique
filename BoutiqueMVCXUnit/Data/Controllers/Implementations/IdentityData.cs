@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using BoutiqueCommonXUnit.Data.Authorize;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,27 +10,17 @@ namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
     /// <summary>
     /// Тестовые данные для авторизации
     /// </summary>
-    public static class LoginData
+    public static class IdentityData
     {
-        /// <summary>
-        /// Имя пользователя и пароль
-        /// </summary>
-        public static AuthorizeTransfer Authorize =>
-          new AuthorizeTransfer(UserName, "password");
-
         /// <summary>
         /// Тестовые пользователи
         /// </summary>
-        public static IReadOnlyCollection<IdentityUser> Users =>
-            new List<IdentityUser>
+        public static IReadOnlyCollection<BoutiqueUser> Users =>
+            new List<BoutiqueUser>
             {
-                new IdentityUser(UserName)
+                new (AuthorizeData.AuthorizeDomains.First().Email, AuthorizeData.AuthorizeDomains.First().Password, 
+                     "Name", "Surname", "Address", "+79224725787")
             };
-
-        /// <summary>
-        /// Тестовое имя пользователя
-        /// </summary>
-        public static string UserName => "userName";
 
         /// <summary>
         /// Тестовые роли

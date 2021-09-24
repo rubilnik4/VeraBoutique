@@ -2,6 +2,7 @@
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
 {
@@ -13,41 +14,41 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Таблица пола базы данных
         /// </summary>
-        public DbSet<GenderEntity> Genders { get; init; }
+        public DbSet<GenderEntity> Genders { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных категорий одежды
         /// </summary>
-        public DbSet<CategoryEntity> Categories { get; init; }
+        public DbSet<CategoryEntity> Categories { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ColorEntity> ColorClothes { get; init; }
+        public DbSet<ColorEntity> ColorClothes { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных цвета одежды
         /// </summary>
-        public DbSet<ClothesImageEntity> ClothesImages { get; init; }
+        public DbSet<ClothesImageEntity> ClothesImages { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных вида одежды
         /// </summary>
-        public DbSet<ClothesTypeEntity> ClothesTypes { get; init; }
+        public DbSet<ClothesTypeEntity> ClothesTypes { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных размеров одежды
         /// </summary>
-        public DbSet<SizeEntity> Sizes { get; init; }
+        public DbSet<SizeEntity> Sizes { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных группы размеров одежды
         /// </summary>
-        public DbSet<SizeGroupEntity> SizeGroups { get; init; }
+        public DbSet<SizeGroupEntity> SizeGroups { get; init; } = null!;
 
         /// <summary>
         /// Таблица базы данных  одежды
         /// </summary>
-        public DbSet<ClothesEntity> Clothes { get; init; }
+        public DbSet<ClothesEntity> Clothes { get; init; } = null!;
     }
 }

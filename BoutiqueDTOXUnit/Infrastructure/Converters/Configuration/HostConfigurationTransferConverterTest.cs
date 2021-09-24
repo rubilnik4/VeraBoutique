@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Configuration;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Authorization;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
 using BoutiqueDTOXUnit.Data.Transfers.Configuration;
 using Xunit;
