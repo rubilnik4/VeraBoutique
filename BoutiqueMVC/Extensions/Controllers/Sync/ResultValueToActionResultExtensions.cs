@@ -98,13 +98,13 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
         /// <summary>
         /// Получить объект со значением или вернуть ошибку
         /// </summary>
-        private static ActionResult<TValue> GetBadRequestByErrors<TValue>(IReadOnlyCollection<IErrorResult> errors) =>
+        public static ActionResult<TValue> GetBadRequestByErrors<TValue>(this IReadOnlyCollection<IErrorResult> errors) =>
             GetBadRequestByErrors(errors);
 
         /// <summary>
         /// Получить объект со значением или вернуть ошибку
         /// </summary>
-        private static ActionResult GetBadRequestByErrors(IReadOnlyCollection<IErrorResult> errors) =>
+        public static ActionResult GetBadRequestByErrors(this IReadOnlyCollection<IErrorResult> errors) =>
             errors.First() switch
             {
                 IValueNotFoundErrorResult => new NotFoundResult(),

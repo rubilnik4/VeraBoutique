@@ -8,6 +8,8 @@
     <AssemblyName>BoutiqueMVCXUnit</AssemblyName>
 
     <Configurations>Debug;Release;Test</Configurations>
+
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
@@ -34,8 +35,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         {
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInSuccess);
-            var jwtSettings = JwtSettings;
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings, 
+                                                          AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             var handler = new JwtSecurityTokenHandler();
@@ -55,8 +56,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         {
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInLockOut);
-            var jwtSettings = JwtSettings;
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
+                                                          AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             Assert.IsType<UnauthorizedResult>(tokenResult.Result);
@@ -70,8 +71,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         {
             var userManager = GetUserManager();
             var signInManager = GetSignInManager(SignInIncorrectLogin);
-            var jwtSettings = JwtSettings;
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtSettings);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
+                                                          AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
             Assert.IsType<UnauthorizedResult>(tokenResult.Result);

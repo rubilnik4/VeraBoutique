@@ -34,12 +34,19 @@ namespace BoutiqueMVC.DependencyInjection
             });
 
         /// <summary>
-        /// Внедрить зависимости авторизации
+        /// Внедрить зависимости свойств авторизации
         /// </summary>
         public static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration) =>
             JwtSettingsFactory.GetJwtSettings(configuration).
             Map(jwtSettings => services.AddSingleton(jwtSettings).
                                Void(_ => AddJwtAuthentication(services, configuration)));
+
+        /// <summary>
+        /// Внедрить зависимости свойств регистрации
+        /// </summary>
+        public static void RegisterAuthServices(IServiceCollection services, IConfiguration configuration) =>
+            AuthorizeSettingsFactory.GetAuthorizeSettings(configuration).
+            Map(services.AddSingleton);
 
         /// <summary>
         /// Подключить сервисы авторизации к базе

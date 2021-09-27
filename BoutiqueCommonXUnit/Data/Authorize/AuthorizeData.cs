@@ -17,8 +17,8 @@ namespace BoutiqueCommonXUnit.Data.Authorize
         public static IReadOnlyCollection<IAuthorizeDomain> AuthorizeDomains =>
             new List<IAuthorizeDomain>
             {
-                new AuthorizeDomain("firstLogin", "firstPassword"),
-                new AuthorizeDomain("firstLogin", "firstPassword"),
+                new AuthorizeDomain("firstLogin@yandex.ru", "firstPassword07"),
+                new AuthorizeDomain("firstLogin@yandex.ru", "firstPassword07"),
             };
     }
 }

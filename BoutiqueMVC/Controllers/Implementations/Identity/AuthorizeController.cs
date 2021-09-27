@@ -6,7 +6,9 @@ using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -16,7 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace BoutiqueMVC.Controllers.Implementations.Identity
@@ -29,12 +33,13 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     [AllowAnonymous]
     public class AuthorizeController : ControllerBase
     {
-        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings)
+        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings,
+                                   IAuthorizeTransferConverter authorizeTransferConverter)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings;
-          
+            _authorizeTransferConverter = authorizeTransferConverter;
         }
 
         /// <summary>
@@ -53,15 +58,25 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         private readonly JwtSettings _jwtSettings;
 
         /// <summary>
+        /// Конвертер логина и пароля в трансферную модель
+        /// </summary>
+        private readonly IAuthorizeTransferConverter _authorizeTransferConverter;
+
+        /// <summary>
         /// Авторизоваться через JWT токен
         /// </summary>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<string>> AuthorizeJwt(AuthorizeTransfer login) =>
-            await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false).
-            MapBindAsync(result => GetAuthorizeAction(result, login.Email));
+            await _authorizeTransferConverter.FromTransfer(login).
+            ResultValueOkAsync(loginDomain => _signInManager.PasswordSignInAsync(loginDomain.Email, loginDomain.Password, false, false)).
+            WhereContinueBindAsync(result => result.OkStatus,
+                                   result => GetAuthorizeAction(result.Value, login.Email),
+                                   result => result.Errors.GetBadRequestByErrors<string>().
+                                             MapAsync(Task.FromResult));
 
         /// <summary>
         /// Сгенерировать токен или вернуть отказ авторизации
@@ -69,8 +84,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         private async Task<ActionResult<string>> GetAuthorizeAction(SignInResult signInResult, string userName) =>
             signInResult switch
             {
-                _ when signInResult.Succeeded => await GetJwtResult(userName),
-                _ when signInResult.IsLockedOut => Unauthorized(),
+                { Succeeded: true } => await GetJwtResult(userName),
+                { IsLockedOut: true } => Unauthorized(),
                 _ => Unauthorized()
             };
 

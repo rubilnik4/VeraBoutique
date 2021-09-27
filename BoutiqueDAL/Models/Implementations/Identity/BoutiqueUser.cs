@@ -66,5 +66,12 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         private static string GetPasswordHash(IdentityUser user, string? password) =>
             new PasswordHasher<IdentityUser>().
             Map(passwordHasher => passwordHasher.HashPassword(user, password));
+
+        /// <summary>
+        /// Получить пользователя
+        /// </summary>
+        public static BoutiqueUser GetBoutiqueUser(IRegisterDomain register) =>
+            new(register.Authorize.Email, register.Authorize.Password, register.Personal.Name,
+                register.Personal.Surname, register.Personal.Address, register.Personal.Phone);
     }
 }
