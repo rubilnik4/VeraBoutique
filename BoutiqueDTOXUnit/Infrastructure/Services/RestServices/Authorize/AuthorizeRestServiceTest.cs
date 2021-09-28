@@ -8,6 +8,7 @@ using BoutiqueDTOXUnit.Data;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using ResultFunctional.Models.Implementations.Results;
 using Xunit;
 
@@ -54,6 +55,25 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
 
             Assert.True(resultToken.HasErrors);
             Assert.IsType<AuthorizeErrorResult>(resultToken.Errors.First());
+        }
+
+        /// <summary>
+        /// Авторизироваться в сервисе. Ошибка
+        /// </summary>
+        [Fact]
+        public async Task AuthorizeJwt_InternalError()
+        {
+            var error = ErrorTransferData.ErrorTypeInternalError;
+            var jwtTokenResult = new ResultValue<string>(error);
+            var authorize = AuthorizeData.AuthorizeDomains.First();
+            var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);
+            var authorizeTransferConverter = AuthorizeTransferConverter;
+            var authorizeRestService = new AuthorizeRestService(restHttpClient.Object, authorizeTransferConverter);
+
+            var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
+
+            Assert.True(resultToken.HasErrors);
+            Assert.IsType<RestMessageErrorResult>(resultToken.Errors.First());
         }
 
         /// <summary>

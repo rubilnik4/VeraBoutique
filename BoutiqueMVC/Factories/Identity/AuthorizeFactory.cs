@@ -56,9 +56,9 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static IResultValue<IdentityRoleType> IdentityRoleType =>
             Environment.GetEnvironmentVariable(IdentityUserEnvironment.IDENTITY_ROLE_TYPE).
-            ToResultValueWhereNull(roleType => Enum.TryParse(roleType, out IdentityRoleType _),
+            ToResultValueWhereNull(roleType => Enum.TryParse(roleType, true, out IdentityRoleType _),
                                _ => ErrorResultFactory.ValueNotFoundError(IdentityUserEnvironment.IDENTITY_ROLE_TYPE, typeof(AuthorizeFactory))).
-            ResultValueOk(Enum.Parse<IdentityRoleType>);
+            ResultValueOk(roleType => Enum.Parse<IdentityRoleType>(roleType, true));
 
         /// <summary>
         /// Почта

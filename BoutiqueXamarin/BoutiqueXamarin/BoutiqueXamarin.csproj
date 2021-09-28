@@ -16,6 +16,7 @@
     <PackageReference Include="ReactiveUI" Version="13.3.2" />
     <PackageReference Include="ReactiveUI.Events.XamForms" Version="13.3.2" />
     <PackageReference Include="ReactiveUI.XamForms" Version="13.3.2" />
+    <PackageReference Include="ResultFunctional" Version="1.0.13" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.2.0-pre2" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />

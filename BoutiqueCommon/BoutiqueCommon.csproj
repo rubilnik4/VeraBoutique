@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ResultFunctional\ResultFunctional\ResultFunctional.csproj" />
+    <PackageReference Include="ResultFunctional" Version="1.0.13" />
   </ItemGroup>
 
 </Project>

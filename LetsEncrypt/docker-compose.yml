@@ -43,6 +43,6 @@ services:
     image: postgres:13.2
     env_file:
       - postgres.env
-    environment:
-      - ./data/:/var/lib/postgresql/data/
+    volumes:
+      - ./data:/var/lib/postgresql/data
     restart: unless-stopped

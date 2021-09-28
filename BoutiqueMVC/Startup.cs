@@ -18,22 +18,23 @@ namespace BoutiqueMVC
 {
     public class Startup
     {
-        /// <summary>
-        /// Параметры конфигурации
-        /// </summary>
-        public IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         /// <summary>
+        /// Параметры конфигурации
+        /// </summary>
+        public IConfiguration Configuration { get; }
+
+        /// <summary>
         /// Регистрация зависимостей
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            ControllerServicesRegistration.RegistrationControllerServices(services);
+            ConverterServicesRegistration.RegisterTransferConverters(services);
+            IdentityServicesRegistration.RegistrationIdentityServices(services);
             DatabaseServicesRegistration.RegisterDatabaseServices(services);
             AuthServicesRegistration.AddAuthorization(services);
             AuthServicesRegistration.RegisterJwtServices(services, Configuration);

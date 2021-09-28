@@ -20,5 +20,13 @@ namespace BoutiqueDTOXUnit.Data
             new HttpResponseMessage(HttpStatusCode.BadRequest).
             Map(response => response.ToRestResultError()).
             Errors.First();
+
+        /// <summary>
+        /// Тестовый экземпляр ошибки ответа сервера
+        /// </summary>
+        public static IErrorResult ErrorTypeInternalError =>
+            new HttpResponseMessage(HttpStatusCode.InternalServerError).
+            Map(response => response.ToRestResultError()).
+            Errors.First();
     }
 }

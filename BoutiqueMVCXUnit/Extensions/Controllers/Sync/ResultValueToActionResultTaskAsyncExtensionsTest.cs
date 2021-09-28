@@ -313,7 +313,7 @@ namespace BoutiqueMVCXUnit.Extensions.Controllers.Sync
 
             Assert.Equal(StatusCodes.Status201Created, createdAtActionResult.StatusCode);
             Assert.True(createdActionCollection.Values.SequenceEqual((IEnumerable<ITestTransfer>)createdAtActionResult.Value));
-            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>)createdAtActionResult.RouteValues.Values.First()
+            Assert.True(createdActionCollection.Ids.SequenceEqual((IEnumerable<TestEnum>?)createdAtActionResult.RouteValues.Values.First()
                                                                   ?? Enumerable.Empty<TestEnum>()));
         }
 

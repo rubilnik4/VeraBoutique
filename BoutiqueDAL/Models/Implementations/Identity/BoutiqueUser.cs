@@ -12,6 +12,9 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// </summary>
     public sealed class BoutiqueUser : IdentityUser
     {
+        public BoutiqueUser()
+        { }
+
         public BoutiqueUser(string email, string name, string surname, string address, string phoneNumber)
             : this(email, null, name, surname, address, phoneNumber)
         { }
@@ -48,17 +51,17 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; init; }
+        public string Name { get; init; } = String.Empty;
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string Surname { get; init; }
+        public string Surname { get; init; } = String.Empty;
 
         /// <summary>
         /// Адрес
         /// </summary>
-        public string Address { get; init; }
+        public string Address { get; init; } = String.Empty;
 
         /// <summary>
         /// Хэшировать пароль

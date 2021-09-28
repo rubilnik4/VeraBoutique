@@ -33,6 +33,6 @@ services:
     image: postgres:latest
     env_file:
       - postgres.env
-    environment:
-      - ./data/:/var/lib/postgresql/data/
+    volumes:
+      - ./data:/var/lib/postgresql/data
     restart: unless-stopped

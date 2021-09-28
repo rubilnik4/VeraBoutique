@@ -1,4 +1,5 @@
-﻿using BoutiqueMVC.Models.Interfaces.Identity;
+﻿using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,12 +8,12 @@ using Microsoft.Extensions.Options;
 
 namespace BoutiqueMVC.Models.Implementations.Identity
 {
-    public class SignInManagerBoutique : SignInManager<IdentityUser>, ISignInManagerBoutique
+    public class SignInManagerBoutique : SignInManager<BoutiqueUser>, ISignInManagerBoutique
     {
-        public SignInManagerBoutique(UserManager<IdentityUser> userManager, IHttpContextAccessor contextAccessor,
-                                      IUserClaimsPrincipalFactory<IdentityUser> claimsFactory,
-                                      IOptions<IdentityOptions> optionAccessor, ILogger<SignInManager<IdentityUser>> logger,
-                                      IAuthenticationSchemeProvider schemes, IUserConfirmation<IdentityUser> conformation)
+        public SignInManagerBoutique(UserManagerBoutique userManager, IHttpContextAccessor contextAccessor,
+                                      IUserClaimsPrincipalFactory<BoutiqueUser> claimsFactory,
+                                      IOptions<IdentityOptions> optionAccessor, ILogger<SignInManager<BoutiqueUser>> logger,
+                                      IAuthenticationSchemeProvider schemes, IUserConfirmation<BoutiqueUser> conformation)
             : base(userManager, contextAccessor, claimsFactory,
                   optionAccessor, logger, schemes, conformation)
         { }

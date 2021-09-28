@@ -33,7 +33,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation
         /// Проверка текста на символы
         /// </summary>
         private static bool OnlyLetters(string text) =>
-            Regex.IsMatch(text, @"^[a-zA-Z]+$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            Regex.IsMatch(text, @"^[a-zA-Zа-яА-Я]+$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
 
         /// <summary>
         /// Получить ошибку проверки

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
@@ -14,6 +16,7 @@ using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
@@ -48,7 +51,17 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
             await _authorizeTransferConverter.ToTransfer(authorizeDomain).
             ToJsonTransfer().
             ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
-            ResultValueBindBadTaskAsync(_ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Token, "Введены неверные имя пользователя и пароль").
-                                                                ToResultValue<string>());
+            ResultValueBindBadTaskAsync(errors => ToTokenError(errors).ToResultValue<string>());
+
+        /// <summary>
+        /// Преобразовать в ошибку токена
+        /// </summary>
+        private static IErrorResult ToTokenError(IEnumerable<IErrorResult> errors) =>
+            errors.FirstOrDefault() switch
+            {
+                RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } =>
+                    ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Token, "Введены неверные имя пользователя и пароль"),
+                { } error => error,
+            };
     }
 }

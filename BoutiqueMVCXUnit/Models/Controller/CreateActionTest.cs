@@ -48,7 +48,7 @@ namespace BoutiqueMVCXUnit.Models.Controller
             Assert.Equal(actionName, createdActionResult.ActionName);
             Assert.Equal(controllerName, createdActionResult.ControllerName);
             Assert.True(values.SequenceEqual((IEnumerable<int>)createdActionResult.Value));
-            Assert.True(ids.SequenceEqual((IEnumerable<int>)createdActionResult.RouteValues.First().Value));
+            Assert.True(ids.SequenceEqual((IEnumerable<int>?)createdActionResult.RouteValues.First().Value ?? Enumerable.Empty<int>()));
         }
     }
 }

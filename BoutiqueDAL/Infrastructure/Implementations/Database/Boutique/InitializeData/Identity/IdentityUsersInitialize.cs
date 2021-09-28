@@ -21,14 +21,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// Проверить и добавить пользователей
         /// </summary>
         public static async Task CreateIdentityUsers(IdentityDbContext<BoutiqueUser> dbContext, IResultCollection<BoutiqueRoleUser> defaultUsers) =>
-            await new UserStore<IdentityUser>(dbContext).
+            await new UserStore<BoutiqueUser>(dbContext).
             VoidAsync(userStore => GetUsersToCreate(userStore, defaultUsers).
                                    VoidBindAsync(users => CreateUsers(userStore, users)));
 
         /// <summary>
         /// Получить роли для добавления в базу
         /// </summary>
-        private static async Task<IEnumerable<BoutiqueRoleUser>> GetUsersToCreate(UserStore<IdentityUser> userStore,
+        private static async Task<IEnumerable<BoutiqueRoleUser>> GetUsersToCreate(UserStore<BoutiqueUser> userStore,
                                                                               IResultCollection<BoutiqueRoleUser> defaultUsersResult) =>
             await defaultUsersResult.WhereContinue(defaultUsers => defaultUsers.OkStatus,
                 okFunc: defaultUsers => userStore.Users.ToListAsync().
@@ -46,11 +46,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Добавить пользователей в базу
         /// </summary>
-        private static async Task CreateUsers(UserStore<IdentityUser> userStore, IEnumerable<BoutiqueRoleUser> users)
+        private static async Task CreateUsers(UserStore<BoutiqueUser> userStore, IEnumerable<BoutiqueRoleUser> users)
         {
             foreach (var user in users)
             {
-                await userStore.CreateAsync(user.BoutiqueUser);
+               await userStore.CreateAsync(user.BoutiqueUser);
             }
         }
     }

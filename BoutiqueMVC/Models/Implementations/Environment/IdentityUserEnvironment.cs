@@ -23,12 +23,12 @@
         /// <summary>
         /// Имя
         /// </summary>
-        public const string NAME = "NAME";
+        public const string NAME = "PERSONAL_NAME";
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        public const string SURNAME = "SURNAME";
+        public const string SURNAME = "PERSONAL_SURNAME";
 
         /// <summary>
         /// Адрес

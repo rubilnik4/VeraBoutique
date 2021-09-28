@@ -18,7 +18,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// </summary>
         public static async Task<IResultError> UploadAuthorizeData(IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueAuthorizeService.AuthorizeJwt(boutiqueLogger).
-            ResultValueBindOkBindAsync(token => BoutiqueRestServiceFactory.GetBoutiqueRestClient(token,boutiqueLogger)).
+            ResultValueBindOkBindAsync(token => BoutiqueRestServiceFactory.GetBoutiqueRestClient(token, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => BoutiqueDelete.DeleteData(restClient, boutiqueLogger)).
             ResultValueBindErrorsOkBindAsync(restClient => BoutiquePost.PostData(restClient, boutiqueLogger));
     }

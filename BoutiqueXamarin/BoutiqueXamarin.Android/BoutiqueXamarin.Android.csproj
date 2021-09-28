@@ -99,6 +99,9 @@
     <PackageReference Include="Prism.Unity.Forms">
       <Version>8.0.0.1909</Version>
     </PackageReference>
+    <PackageReference Include="ResultFunctional">
+      <Version>1.0.13</Version>
+    </PackageReference>
     <PackageReference Include="Sharpnado.Forms.HorizontalListView">
       <Version>1.8.2</Version>
     </PackageReference>
@@ -167,10 +170,6 @@
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ResultFunctional\ResultFunctional\ResultFunctional.csproj">
-      <Project>{F523DECA-41E0-4257-9FAE-4DAFC4265EF2}</Project>
-      <Name>ResultFunctional</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\BoutiqueCommon\BoutiqueCommon.csproj">
       <Project>{0b7a2ffe-a950-40ce-a2b7-2e6786539139}</Project>
       <Name>BoutiqueCommon</Name>
@@ -227,7 +226,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
