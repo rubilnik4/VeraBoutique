@@ -24,6 +24,14 @@ namespace BoutiqueDTOXUnit.Data
         /// <summary>
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
+        public static IErrorResult ErrorTypeAuthorizeError =>
+            new HttpResponseMessage(HttpStatusCode.Unauthorized).
+            Map(response => response.ToRestResultError()).
+            Errors.First();
+
+        /// <summary>
+        /// Тестовый экземпляр ошибки ответа сервера
+        /// </summary>
         public static IErrorResult ErrorTypeInternalError =>
             new HttpResponseMessage(HttpStatusCode.InternalServerError).
             Map(response => response.ToRestResultError()).

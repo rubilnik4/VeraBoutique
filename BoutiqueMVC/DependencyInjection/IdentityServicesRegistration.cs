@@ -1,8 +1,8 @@
 ﻿using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Models.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

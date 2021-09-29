@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +25,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers);
+        Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
+                          IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames);
     }
 }

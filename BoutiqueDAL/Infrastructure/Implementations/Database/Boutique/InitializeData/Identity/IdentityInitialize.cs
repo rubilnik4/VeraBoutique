@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.Models.Interfaces.Results;
@@ -15,11 +19,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Добавить роли
         /// </summary>
-        public static async Task Initialize(IdentityDbContext<BoutiqueUser> dbContext, UserManager<BoutiqueUser> userManager,
-                                            IResultCollection<BoutiqueRoleUser> defaultUsers) =>
-            await dbContext.
-            VoidAsync(IdentityRolesInitialize.CreateIdentityRoles).
-            VoidBindAsync(_ => IdentityUsersInitialize.CreateIdentityUsers(dbContext, defaultUsers)).
-            VoidBindAsync(_ => IdentityAssignRoles.AssignRoles(userManager, defaultUsers));
+        public static async Task Initialize(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
+                                            IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, 
+                                            IReadOnlyCollection<string> defaultRoles) =>
+            await defaultRoles.
+            MapAsync(_ => IdentityRolesInitialize.CreateIdentityRoles(roleStore, defaultRoles)).
+            MapBindAsync(identitiesResults => IdentityUsersInitialize.CreateIdentityUsers(userManager, defaultUsers).
+                                              MapTaskAsync(identitiesResults.Concat)).
+            WhereOkTaskAsync(identitiesResults => identitiesResults.Any(identityResult => !identityResult.Succeeded),
+                              _ => throw new ArgumentException("Пользователи по умолчанию не инициализированы"));
     }
 }

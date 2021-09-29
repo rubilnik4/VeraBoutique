@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
@@ -26,11 +27,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers)
+        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
+                                       IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames)
         {
+          //  await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
             await Database.MigrateAsync();
-            await IdentityInitialize.Initialize(this, userManager, defaultUsers);
+            await IdentityInitialize.Initialize(userManager, roleStore, defaultUsers, roleNames);
         }
 
         /// <summary>

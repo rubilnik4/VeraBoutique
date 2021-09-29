@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
@@ -118,7 +119,8 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManager<BoutiqueUser> userManager, IResultCollection<BoutiqueRoleUser> defaultUsers) =>
+        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
+                                       IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames) =>
             await Task.FromResult(userManager);
 
         /// <summary>

@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using BoutiqueDAL.Models.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Implementation;
 using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

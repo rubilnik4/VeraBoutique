@@ -44,7 +44,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
         [Fact]
         public async Task AuthorizeJwt_Error()
         {
-            var error = ErrorTransferData.ErrorTypeBadRequest;
+            var error = ErrorTransferData.ErrorTypeAuthorizeError;
             var jwtTokenResult = new ResultValue<string>(error);
             var authorize = AuthorizeData.AuthorizeDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);

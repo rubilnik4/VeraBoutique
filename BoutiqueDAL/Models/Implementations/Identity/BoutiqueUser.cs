@@ -31,18 +31,6 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         }
 
         /// <summary>
-        /// Нормализованное имя пользователя
-        /// </summary>
-        public override string NormalizedUserName =>
-            UserName.ToUpperInvariant();
-
-        /// <summary>
-        /// Нормализованная почта
-        /// </summary>
-        public override string NormalizedEmail =>
-            Email.ToUpperInvariant();
-
-        /// <summary>
         /// Идентификатор
         /// </summary>
         public override string SecurityStamp =>

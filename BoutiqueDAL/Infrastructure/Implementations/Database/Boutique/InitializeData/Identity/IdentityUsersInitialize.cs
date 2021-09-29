@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Extensions.TaskExtensions;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -20,38 +21,45 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Проверить и добавить пользователей
         /// </summary>
-        public static async Task CreateIdentityUsers(IdentityDbContext<BoutiqueUser> dbContext, IResultCollection<BoutiqueRoleUser> defaultUsers) =>
-            await new UserStore<BoutiqueUser>(dbContext).
-            VoidAsync(userStore => GetUsersToCreate(userStore, defaultUsers).
-                                   VoidBindAsync(users => CreateUsers(userStore, users)));
+        public static async Task<IEnumerable<IdentityResult>> CreateIdentityUsers(UserManagerBoutique userManager, 
+                                                                                          IReadOnlyCollection<BoutiqueRoleUser> defaultUsers) =>
+            await GetUsers(userManager, defaultUsers).
+            MapBindAsync(users => CreateUsers(userManager, users));
 
         /// <summary>
         /// Получить роли для добавления в базу
         /// </summary>
-        private static async Task<IEnumerable<BoutiqueRoleUser>> GetUsersToCreate(UserStore<BoutiqueUser> userStore,
-                                                                              IResultCollection<BoutiqueRoleUser> defaultUsersResult) =>
-            await defaultUsersResult.WhereContinue(defaultUsers => defaultUsers.OkStatus,
-                okFunc: defaultUsers => userStore.Users.ToListAsync().
-                                        MapTaskAsync(users => users.Select(user => user.UserName)).
-                                        MapTaskAsync(userNames => GetNewDefaultUsers(defaultUsers.Value, userNames)),
-                badFunc: _ => Task.FromResult(Enumerable.Empty<BoutiqueRoleUser>()));
+        public static async Task<IEnumerable<BoutiqueRoleUser>> GetUsers(UserManagerBoutique userManager,
+                                                                         IReadOnlyCollection<BoutiqueRoleUser> defaultUsers) =>
+            await defaultUsers.
+            Select(user => userManager.FindByEmail(user.BoutiqueUser.Email)).
+            WaitAllInLine().
+            MapTaskAsync(findUsers => GetUsers(findUsers, defaultUsers));
 
         /// <summary>
-        /// Найти новых пользователей
+        /// Выбрать ненайденные роли
         /// </summary>
-        private static IEnumerable<BoutiqueRoleUser> GetNewDefaultUsers(IEnumerable<BoutiqueRoleUser> defaultUsers,
-                                                                        IEnumerable<string> userNames) =>
-            defaultUsers.Where(defaultUser => !userNames.Contains(defaultUser.BoutiqueUser.UserName, StringComparer.InvariantCultureIgnoreCase));
-        
+        private static IEnumerable<BoutiqueRoleUser> GetUsers(IEnumerable<BoutiqueUser?> findUsers,
+                                                              IEnumerable<BoutiqueRoleUser> defaultUsers) =>
+             findUsers.
+             Zip(defaultUsers, (findUser, defaultUser) => (findUser, defaultUser)).
+             Where(x => x.findUser is null).
+             Select(x => x.defaultUser);
+
         /// <summary>
         /// Добавить пользователей в базу
         /// </summary>
-        private static async Task CreateUsers(UserStore<BoutiqueUser> userStore, IEnumerable<BoutiqueRoleUser> users)
+        private static async Task<IEnumerable<IdentityResult>> CreateUsers(UserManagerBoutique userManager,
+                                                                           IEnumerable<BoutiqueRoleUser> users)
         {
+            var identityResults = new List<IdentityResult>();
             foreach (var user in users)
             {
-               await userStore.CreateAsync(user.BoutiqueUser);
+                var userResult = await userManager.CreateAsync(user.BoutiqueUser);
+                var roleResult = await userManager.AddToRoleAsync(user.BoutiqueUser, user.IdentityRoleType.ToString());
+                identityResults.AddRange(new List<IdentityResult> { userResult , roleResult });
             }
+            return identityResults;
         }
     }
 }

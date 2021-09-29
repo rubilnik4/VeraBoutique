@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace BoutiqueMVC.Models.Interfaces.Identity
+namespace BoutiqueDAL.Models.Interfaces.Identity
 {
     /// <summary>
     /// Менеджер авторизации

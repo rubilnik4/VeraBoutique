@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Validation;
 using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
@@ -29,8 +30,18 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Пользователи по умолчанию
         /// </summary>
-        public static IResultCollection<BoutiqueRoleUser> DefaultUsers =>
-            DefaultAdminUser.ResultValueOkToCollection(adminUser => new List<BoutiqueRoleUser> { adminUser });
+        public static IReadOnlyCollection<BoutiqueRoleUser> DefaultUsers =>
+            DefaultAdminUser.OkStatus 
+                ? new List<BoutiqueRoleUser> { DefaultAdminUser.Value }
+                : throw new ArgumentNullException(nameof(DefaultUsers));
+
+        /// <summary>
+        /// Роли
+        /// </summary>
+        public static IReadOnlyCollection<string> RoleNames =>
+            Enum.GetValues<IdentityRoleType>().
+            Select(roleType => roleType.ToString()).
+            ToList();
 
         /// <summary>
         /// Пользователь администратор по умолчанию

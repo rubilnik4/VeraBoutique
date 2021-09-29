@@ -17,6 +17,20 @@ namespace BoutiqueCommon.Extensions.TaskExtensions
             await Task.WhenAll(@this);
 
         /// <summary>
+        /// Выполнить все асинхронные функции и дождаться последней
+        /// </summary>
+        public static async Task<IList<TValue>> WaitAllInLine<TValue>(this IEnumerable<Task<TValue>> @this)
+        {
+            var listItems = new List<TValue>();
+            foreach (var item in @this)
+            {
+               var awaitedItem = await item;
+                listItems.Add(awaitedItem);
+            }
+            return listItems;
+        }
+
+        /// <summary>
         /// Выполнить все асинхронные действия и дождаться последней
         /// </summary>
         public static async Task WaitAll(this IEnumerable<Task> @this) =>
