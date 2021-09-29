@@ -111,7 +111,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
             await clothesRestService.GetImage(clothesId).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    result => result.Value,
-                                   _ => new byte[0]).
+                                   _ => Array.Empty<byte>()).
             MapTaskAsync(ImageConverter.ToImageSource);
     }
 }
