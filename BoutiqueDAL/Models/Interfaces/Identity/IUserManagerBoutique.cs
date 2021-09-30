@@ -20,12 +20,22 @@ namespace BoutiqueDAL.Models.Interfaces.Identity
         /// <summary>
         /// Создать пользователя
         /// </summary>
+        Task<IdentityResult> CreateAsync(BoutiqueUser user);
+
+        /// <summary>
+        /// Создать пользователя
+        /// </summary>
         Task<IdentityResult> Register(IRegisterDomain register);
 
         /// <summary>
         /// Получить роли пользователей
         /// </summary>
         Task<IList<string>> GetRolesAsync(BoutiqueUser user);
+
+        /// <summary>
+        /// Создать пользователя
+        /// </summary>
+        Task<IdentityResult> AddToRoleAsync(BoutiqueUser user, string roleName);
 
         /// <summary>
         /// Найти пользователя по почте

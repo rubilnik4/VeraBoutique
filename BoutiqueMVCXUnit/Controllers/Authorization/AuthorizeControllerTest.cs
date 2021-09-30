@@ -11,6 +11,7 @@ using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
+using BoutiqueMVC.Models.Interfaces.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;

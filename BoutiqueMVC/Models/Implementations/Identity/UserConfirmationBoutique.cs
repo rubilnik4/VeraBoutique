@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BoutiqueDAL.Models.Implementations.Identity;
+using Microsoft.AspNetCore.Identity;
 
-namespace BoutiqueDAL.Models.Implementations.Identity
+namespace BoutiqueMVC.Models.Implementations.Identity
 {
     /// <summary>
     /// Проверка пользователя

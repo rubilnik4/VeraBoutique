@@ -1,7 +1,8 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace BoutiqueDAL.Models.Implementations.Identity
+namespace BoutiqueMVC.Models.Implementations.Identity
 {
     /// <summary>
     /// Хранилище пользователей

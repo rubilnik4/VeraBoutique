@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace BoutiqueDAL.Models.Interfaces.Identity
+namespace BoutiqueMVC.Models.Interfaces.Identity
 {
     /// <summary>
     /// Менеджер аутентификации
