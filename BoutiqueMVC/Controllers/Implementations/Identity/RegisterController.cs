@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Sync;
@@ -60,16 +62,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// </summary>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Register(RegisterTransfer register) =>
+        public async Task<ActionResult<string>> Register(RegisterTransfer register) =>
             await _registerTransferConverter.FromTransfer(register).
             ResultValueBindOk(registerDomain => RegisterValidation.RegisterValidate(registerDomain, _authorizeSettings)).
             ResultValueBindErrorsOkAsync(registerDomain => CheckByEmail(registerDomain.Authorize.Email)).
             ResultValueOkBindAsync(registerDomain => _userManager.Register(registerDomain, IdentityRoleType.User)).
             ResultValueBindErrorsOkTaskAsync(GetRegisterErrors).
+            ResultValueOkBindAsync(_ => _userManager.FindByEmail(register.Authorize.Email)).
             WhereContinueTaskAsync(result => result.OkStatus,
-                                   _ => new NoContentResult(),
+                                   result => GetUserId(result.Value),
                                    result => result.Errors.GetBadRequestByErrors());
 
         /// <summary>
@@ -82,6 +85,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
                                     _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate,
                                                                            $"Пользователь {email} уже присутствует в системе").
                                          ToResult());
+
+        /// <summary>
+        /// Получить идентификатор
+        /// </summary>
+        private static ActionResult<string> GetUserId(BoutiqueUser? user) =>
+            user?.Id ?? String.Empty;
 
         /// <summary>
         /// Получить ошибки при регистрации

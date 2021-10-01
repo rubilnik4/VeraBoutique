@@ -27,8 +27,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     public class AuthorizeRestService : RestService<string, IAuthorizeDomain, AuthorizeTransfer>,
                                         IAuthorizeRestService
     {
-        public AuthorizeRestService(IRestHttpClient restHttpClient,
-                                    IAuthorizeTransferConverter authorizeTransferConverter)
+        public AuthorizeRestService(IRestHttpClient restHttpClient, IAuthorizeTransferConverter authorizeTransferConverter)
         {
             _restHttpClient = restHttpClient;
             _authorizeTransferConverter = authorizeTransferConverter;

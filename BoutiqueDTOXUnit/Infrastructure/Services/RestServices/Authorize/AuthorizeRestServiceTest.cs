@@ -5,6 +5,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTOXUnit.Data;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Services;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
@@ -29,7 +30,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var jwtTokenResult = jwtToken.ToResultValue();
             var authorize = AuthorizeData.AuthorizeDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);
-            var authorizeTransferConverter = AuthorizeTransferConverter;
+            var authorizeTransferConverter = AuthorizeTransferConverterMock.AuthorizeTransferConverter;
             var authorizeRestService = new AuthorizeRestService(restHttpClient.Object, authorizeTransferConverter);
 
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
@@ -48,7 +49,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var jwtTokenResult = new ResultValue<string>(error);
             var authorize = AuthorizeData.AuthorizeDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);
-            var authorizeTransferConverter = AuthorizeTransferConverter;
+            var authorizeTransferConverter = AuthorizeTransferConverterMock.AuthorizeTransferConverter;
             var authorizeRestService = new AuthorizeRestService(restHttpClient.Object, authorizeTransferConverter);
 
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
@@ -67,7 +68,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var jwtTokenResult = new ResultValue<string>(error);
             var authorize = AuthorizeData.AuthorizeDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(jwtTokenResult);
-            var authorizeTransferConverter = AuthorizeTransferConverter;
+            var authorizeTransferConverter = AuthorizeTransferConverterMock.AuthorizeTransferConverter;
             var authorizeRestService = new AuthorizeRestService(restHttpClient.Object, authorizeTransferConverter);
 
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
@@ -75,11 +76,5 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             Assert.True(resultToken.HasErrors);
             Assert.IsType<RestMessageErrorResult>(resultToken.Errors.First());
         }
-
-        /// <summary>
-        /// Конвертер логина и пароля в трансферную модель
-        /// </summary>
-        private static IAuthorizeTransferConverter AuthorizeTransferConverter =>
-            new AuthorizeTransferConverter();
     }
 }

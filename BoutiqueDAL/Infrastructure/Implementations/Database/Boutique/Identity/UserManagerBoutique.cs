@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
