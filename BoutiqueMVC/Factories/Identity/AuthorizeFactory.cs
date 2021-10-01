@@ -9,6 +9,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Infrastructure.Implementation;
+using BoutiqueMVC.Infrastructure.Implementation.Validation;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;

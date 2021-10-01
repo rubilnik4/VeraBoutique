@@ -1,18 +1,12 @@
 ﻿using System;
-using BoutiqueCommon.Infrastructure.Implementation.Validation;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
-using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
-using Microsoft.Net.Http.Headers;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
-using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueMVC.Infrastructure.Implementation
+namespace BoutiqueMVC.Infrastructure.Implementation.Validation
 {
     /// <summary>
     /// Проверка регистрации

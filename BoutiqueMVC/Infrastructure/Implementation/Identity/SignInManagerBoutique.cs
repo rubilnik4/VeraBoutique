@@ -1,5 +1,5 @@
-﻿using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueDAL.Models.Interfaces.Identity;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace BoutiqueMVC.Models.Implementations.Identity
+namespace BoutiqueMVC.Infrastructure.Implementation.Identity
 {
     public class SignInManagerBoutique : SignInManager<BoutiqueUser>, ISignInManagerBoutique
     {

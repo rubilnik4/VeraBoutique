@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.Models.Interfaces.Results;

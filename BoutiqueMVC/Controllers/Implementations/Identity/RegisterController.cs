@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using BoutiqueDAL.Models.Interfaces.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Implementation;
+using BoutiqueMVC.Infrastructure.Implementation.Validation;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -64,7 +66,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
             await _registerTransferConverter.FromTransfer(register).
             ResultValueBindOk(registerDomain => RegisterValidation.RegisterValidate(registerDomain, _authorizeSettings)).
             ResultValueBindErrorsOkAsync(registerDomain => CheckByEmail(registerDomain.Authorize.Email)).
-            ResultValueOkBindAsync(registerDomain => _userManager.Register(registerDomain)).
+            ResultValueOkBindAsync(registerDomain => _userManager.Register(registerDomain, IdentityRoleType.User)).
             ResultValueBindErrorsOkTaskAsync(GetRegisterErrors).
             WhereContinueTaskAsync(result => result.OkStatus,
                                    _ => new NoContentResult(),

@@ -1,12 +1,14 @@
-﻿using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueDAL.Models.Interfaces.Identity;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
+using BoutiqueMVC.Infrastructure.Implementation.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using SignInManagerBoutique = BoutiqueMVC.Models.Implementations.Identity.SignInManagerBoutique;
+using SignInManagerBoutique = BoutiqueMVC.Infrastructure.Implementation.Identity.SignInManagerBoutique;
 
 namespace BoutiqueMVC.DependencyInjection
 {

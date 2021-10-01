@@ -2,7 +2,7 @@
 using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace BoutiqueMVC.Models.Implementations.Identity
+namespace BoutiqueMVC.Infrastructure.Implementation.Identity
 {
     /// <summary>
     /// Хранилище пользователей

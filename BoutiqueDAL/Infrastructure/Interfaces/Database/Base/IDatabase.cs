@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;

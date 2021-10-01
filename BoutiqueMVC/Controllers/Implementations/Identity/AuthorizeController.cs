@@ -5,8 +5,8 @@ using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueDAL.Models.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Sync;
@@ -22,6 +22,7 @@ using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Errors;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace BoutiqueMVC.Controllers.Implementations.Identity
@@ -82,10 +83,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Сгенерировать токен или вернуть отказ авторизации
         /// </summary>
-        private async Task<ActionResult<string>> GetAuthorizeAction(SignInResult signInResult, string userName) =>
+        private async Task<ActionResult<string>> GetAuthorizeAction(SignInResult signInResult, string email) =>
             signInResult switch
             {
-                { Succeeded: true } => await GetJwtResult(userName),
+                { Succeeded: true } => await GetJwtResult(email),
                 { IsLockedOut: true } => Unauthorized(),
                 _ => Unauthorized()
             };
@@ -93,20 +94,18 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Получить ответ сервера с токеном
         /// </summary>
-        private async Task<ActionResult<string>> GetJwtResult(string userName) =>
-            await GetIdentityByUserName(userName).
-            MapBindAsync(GenerateJwtToken);
-
-        /// <summary>
-        /// Найти пользователя по имени
-        /// </summary>
-        private async Task<BoutiqueUser> GetIdentityByUserName(string userName) =>
-            await _userManager.Users.FirstOrDefaultAsync(r => r.UserName == userName);
+        private async Task<ActionResult<string>> GetJwtResult(string email) =>
+            await _userManager.FindByEmail(email).
+            ToResultValueNullCheckTaskAsync(ErrorResultFactory.ValueNotFoundError(email, GetType())).
+            WhereContinueBindAsync(result => result.OkStatus, 
+                                   result => GenerateJwtToken(result.Value),
+                                   result => result.Errors.GetBadRequestByErrors<string>().
+                                             MapAsync(Task.FromResult));
 
         /// <summary>
         /// Сгенерировать токен
         /// </summary>
-        private async Task<string> GenerateJwtToken(BoutiqueUser user) =>
+        private async Task<ActionResult<string>> GenerateJwtToken(BoutiqueUser user) =>
              new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
                                   GetClaims(user, await _userManager.GetRolesAsync(user)),
                                   expires: DateTime.Now.AddDays(_jwtSettings.Expires),
@@ -116,7 +115,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Получить права доступа
         /// </summary>
-        private static IEnumerable<Claim> GetClaims(IdentityUser user, IEnumerable<string> roles) =>
+        private static IEnumerable<Claim> GetClaims(BoutiqueUser user, IEnumerable<string> roles) =>
             new List<Claim>
             {
                 new (JwtRegisteredClaimNames.Sub, user.UserName),

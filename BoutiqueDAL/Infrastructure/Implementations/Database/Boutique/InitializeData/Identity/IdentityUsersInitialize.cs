@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.TaskExtensions;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueDAL.Models.Interfaces.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Interfaces.Results;
@@ -51,16 +51,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// Добавить пользователей в базу
         /// </summary>
         private static async Task<IEnumerable<IdentityResult>> CreateUsers(IUserManagerBoutique userManager,
-                                                                           IEnumerable<BoutiqueRoleUser> users)
-        {
-            var identityResults = new List<IdentityResult>();
-            foreach (var user in users)
-            {
-                var userResult = await userManager.CreateAsync(user.BoutiqueUser);
-                var roleResult = await userManager.AddToRoleAsync(user.BoutiqueUser, user.IdentityRoleType.ToString());
-                identityResults.AddRange(new List<IdentityResult> { userResult , roleResult });
-            }
-            return identityResults;
-        }
+                                                                           IEnumerable<BoutiqueRoleUser> users) =>
+            await users.
+            Select(user => userManager.Register(user.BoutiqueUser, user.IdentityRoleType)).
+            WaitAllInLine();
     }
 }

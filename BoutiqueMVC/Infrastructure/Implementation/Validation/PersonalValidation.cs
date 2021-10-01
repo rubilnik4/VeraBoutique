@@ -7,7 +7,7 @@ using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueMVC.Infrastructure.Implementation
+namespace BoutiqueMVC.Infrastructure.Implementation.Validation
 {
     /// <summary>
     /// Проверка личных данных

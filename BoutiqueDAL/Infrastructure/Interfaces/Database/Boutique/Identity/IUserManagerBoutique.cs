@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace BoutiqueDAL.Models.Interfaces.Identity
+namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity
 {
     /// <summary>
     /// Менеджер авторизации
@@ -13,29 +13,19 @@ namespace BoutiqueDAL.Models.Interfaces.Identity
     public interface IUserManagerBoutique
     {
         /// <summary>
-        /// Пользователи
+        /// Создать пользователя
         /// </summary>
-        IQueryable<BoutiqueUser> Users { get; }
+        Task<IdentityResult> Register(IRegisterDomain register, IdentityRoleType roleType);
 
         /// <summary>
         /// Создать пользователя
         /// </summary>
-        Task<IdentityResult> CreateAsync(BoutiqueUser user);
-
-        /// <summary>
-        /// Создать пользователя
-        /// </summary>
-        Task<IdentityResult> Register(IRegisterDomain register);
+        Task<IdentityResult> Register(BoutiqueUser user, IdentityRoleType roleType);
 
         /// <summary>
         /// Получить роли пользователей
         /// </summary>
         Task<IList<string>> GetRolesAsync(BoutiqueUser user);
-
-        /// <summary>
-        /// Создать пользователя
-        /// </summary>
-        Task<IdentityResult> AddToRoleAsync(BoutiqueUser user, string roleName);
 
         /// <summary>
         /// Найти пользователя по почте

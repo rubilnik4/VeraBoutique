@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
@@ -31,9 +32,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
                                        IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames)
         {
+            await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
             await Database.MigrateAsync();
-            await IdentityInitialize.Initialize(userManager, roleStore, defaultUsers, roleNames);
+          //  await IdentityInitialize.Initialize(userManager, roleStore, defaultUsers, roleNames);
         }
 
         /// <summary>

@@ -6,8 +6,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueDAL.Models.Interfaces.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Interfaces.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
@@ -123,7 +124,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// </summary>
         private static Mock<IUserManagerBoutique> GetUserManager(IdentityResult identityResult, BoutiqueUser? boutiqueUser) =>
             new Mock<IUserManagerBoutique>().
-            Void(userMock => userMock.Setup(userManager => userManager.Register(It.IsAny<IRegisterDomain>())).
+            Void(userMock => userMock.Setup(userManager => userManager.Register(It.IsAny<IRegisterDomain>(), It.IsAny<IdentityRoleType>())).
                                       ReturnsAsync(identityResult)).
             Void(userMock => userMock.Setup(userManager => userManager.FindByEmail(It.IsAny<string>())).
                                       ReturnsAsync(boutiqueUser));

@@ -1,8 +1,9 @@
-﻿using BoutiqueDAL.Models.Implementations.Identity;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace BoutiqueMVC.Models.Implementations.Identity
+namespace BoutiqueMVC.Infrastructure.Implementation.Identity
 {
     /// <summary>
     /// Права пользователя
