@@ -7,7 +7,7 @@ namespace BoutiqueMVC.Infrastructure.Implementation.Identity
     /// <summary>
     /// Хранилище пользователей
     /// </summary>
-    public class UserStoreBoutique: UserStore<BoutiqueUser>
+    public class UserStoreBoutique: UserStore<BoutiqueIdentityUser>
     {
         public UserStoreBoutique(BoutiqueDatabase dbContext)
             :base(dbContext)

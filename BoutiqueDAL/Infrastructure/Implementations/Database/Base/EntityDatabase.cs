@@ -17,7 +17,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base
     /// <summary>
     /// Базовая база данных Entity Framework
     /// </summary>
-    public abstract class EntityDatabase : IdentityDbContext<BoutiqueUser>
+    public abstract class EntityDatabase : IdentityDbContext<BoutiqueIdentityUser>
     {
         protected EntityDatabase(DbContextOptions options)
           : base(options)

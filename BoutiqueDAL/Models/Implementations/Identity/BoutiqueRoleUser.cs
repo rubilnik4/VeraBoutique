@@ -1,4 +1,7 @@
-﻿using BoutiqueDAL.Models.Enums.Identity;
+﻿using BoutiqueCommon.Models.Common.Implementations.Identity;
+using BoutiqueCommon.Models.Common.Interfaces.Identity;
+using BoutiqueCommon.Models.Enums.Identity;
+using BoutiqueDAL.Models.Enums.Identity;
 
 namespace BoutiqueDAL.Models.Implementations.Identity
 {
@@ -7,10 +10,10 @@ namespace BoutiqueDAL.Models.Implementations.Identity
     /// </summary>
     public class BoutiqueRoleUser
     {
-        public BoutiqueRoleUser(IdentityRoleType identityRoleType, BoutiqueUser boutiqueUser)
+        public BoutiqueRoleUser(IdentityRoleType identityRoleType, BoutiqueIdentityUser boutiqueIdentityUser)
         {
             IdentityRoleType = identityRoleType;
-            BoutiqueUser = boutiqueUser;
+            BoutiqueIdentityUser = boutiqueIdentityUser;
         }
 
         /// <summary>
@@ -21,6 +24,14 @@ namespace BoutiqueDAL.Models.Implementations.Identity
         /// <summary>
         /// Пользователь
         /// </summary>
-        public BoutiqueUser BoutiqueUser { get; }
+        public BoutiqueIdentityUser BoutiqueIdentityUser { get; }
+
+        /// <summary>
+        /// Преобразовать в пользователя
+        /// </summary>
+        public IBoutiqueUser ToBoutiqueUser() =>
+            new BoutiqueUser(BoutiqueIdentityUser.UserName, BoutiqueIdentityUser.Email, IdentityRoleType,
+                             BoutiqueIdentityUser.Name, BoutiqueIdentityUser.Surname, BoutiqueIdentityUser.Address,
+                             BoutiqueIdentityUser.PhoneNumber);
     }
 }

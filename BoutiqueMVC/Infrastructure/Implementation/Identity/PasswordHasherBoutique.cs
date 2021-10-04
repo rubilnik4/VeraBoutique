@@ -6,6 +6,6 @@ namespace BoutiqueMVC.Infrastructure.Implementation.Identity
     /// <summary>
     /// Хранилище паролей
     /// </summary>
-    public class PasswordHasherBoutique : PasswordHasher<BoutiqueUser>
+    public class PasswordHasherBoutique : PasswordHasher<BoutiqueIdentityUser>
     { }
 }

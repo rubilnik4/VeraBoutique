@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
@@ -89,7 +90,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Получить идентификатор
         /// </summary>
-        private static ActionResult<string> GetUserId(BoutiqueUser? user) =>
+        private static ActionResult<string> GetUserId(BoutiqueIdentityUser? user) =>
             user?.Id ?? String.Empty;
 
         /// <summary>

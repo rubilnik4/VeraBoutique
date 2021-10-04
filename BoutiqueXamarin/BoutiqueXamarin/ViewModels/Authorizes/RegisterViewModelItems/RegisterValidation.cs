@@ -1,4 +1,6 @@
-﻿using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
 {
@@ -22,5 +24,24 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// Регистрация. Личная информация
         /// </summary>
         public RegisterPersonalViewModel RegisterPersonalViewModel { get; }
+
+        /// <summary>
+        /// Модель регистрации
+        /// </summary>
+        public IRegisterDomain Register =>
+           new RegisterDomain(Authorize, Personal);
+
+        /// <summary>
+        /// Модель авторизации
+        /// </summary>
+        public IAuthorizeDomain Authorize =>
+            new AuthorizeDomain(RegisterLoginViewModel.Login, RegisterLoginViewModel.Password);
+
+        /// <summary>
+        /// Модель личных данных
+        /// </summary>
+        public IPersonalDomain Personal =>
+            new PersonalDomain(RegisterPersonalViewModel.Name, RegisterPersonalViewModel.Surname,
+                               RegisterPersonalViewModel.Address, RegisterPersonalViewModel.Phone);
     }
 }

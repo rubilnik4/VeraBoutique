@@ -33,14 +33,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         public static async Task<IEnumerable<BoutiqueRoleUser>> GetUsers(IUserManagerBoutique userManager,
                                                                          IReadOnlyCollection<BoutiqueRoleUser> defaultUsers) =>
             await defaultUsers.
-            Select(user => userManager.FindByEmail(user.BoutiqueUser.Email)).
+            Select(user => userManager.FindByEmail(user.BoutiqueIdentityUser.Email)).
             WaitAllInLine().
             MapTaskAsync(findUsers => GetUsers(findUsers, defaultUsers));
 
         /// <summary>
         /// Выбрать ненайденные роли
         /// </summary>
-        private static IEnumerable<BoutiqueRoleUser> GetUsers(IEnumerable<BoutiqueUser?> findUsers,
+        private static IEnumerable<BoutiqueRoleUser> GetUsers(IEnumerable<BoutiqueIdentityUser?> findUsers,
                                                               IEnumerable<BoutiqueRoleUser> defaultUsers) =>
              findUsers.
              Zip(defaultUsers, (findUser, defaultUser) => (findUser, defaultUser)).
@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         private static async Task<IEnumerable<IdentityResult>> CreateUsers(IUserManagerBoutique userManager,
                                                                            IEnumerable<BoutiqueRoleUser> users) =>
             await users.
-            Select(user => userManager.Register(user.BoutiqueUser, user.IdentityRoleType)).
+            Select(user => userManager.Register(user.BoutiqueIdentityUser, user.IdentityRoleType)).
             WaitAllInLine();
     }
 }

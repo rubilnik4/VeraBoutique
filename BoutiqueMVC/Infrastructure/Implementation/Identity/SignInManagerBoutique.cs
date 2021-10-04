@@ -9,12 +9,12 @@ using Microsoft.Extensions.Options;
 
 namespace BoutiqueMVC.Infrastructure.Implementation.Identity
 {
-    public class SignInManagerBoutique : SignInManager<BoutiqueUser>, ISignInManagerBoutique
+    public class SignInManagerBoutique : SignInManager<BoutiqueIdentityUser>, ISignInManagerBoutique
     {
         public SignInManagerBoutique(UserManagerBoutique userManager, IHttpContextAccessor contextAccessor,
-                                     IUserClaimsPrincipalFactory<BoutiqueUser> claimsFactory,
-                                     IOptions<IdentityOptions> optionAccessor, ILogger<SignInManager<BoutiqueUser>> logger,
-                                     IAuthenticationSchemeProvider schemes, IUserConfirmation<BoutiqueUser> userConfirmation)
+                                     IUserClaimsPrincipalFactory<BoutiqueIdentityUser> claimsFactory,
+                                     IOptions<IdentityOptions> optionAccessor, ILogger<SignInManager<BoutiqueIdentityUser>> logger,
+                                     IAuthenticationSchemeProvider schemes, IUserConfirmation<BoutiqueIdentityUser> userConfirmation)
             : base(userManager, contextAccessor, claimsFactory, optionAccessor, logger, schemes, userConfirmation)
         { }
     }

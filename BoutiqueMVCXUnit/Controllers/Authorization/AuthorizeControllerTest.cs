@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
@@ -39,7 +40,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         public async Task Login_GenerateToken()
         {
             var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueUser.GetBoutiqueUser(register));
+            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
             var userManager = GetUserManager(user);
             var signInManager = GetSignInManager(SignInSuccess);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings, 
@@ -80,7 +81,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         public async Task Login_LockOut()
         {
             var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueUser.GetBoutiqueUser(register));
+            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
             var userManager = GetUserManager(user);
             var signInManager = GetSignInManager(SignInLockOut);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
@@ -97,7 +98,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         public async Task Login_IncorrectLogin()
         {
             var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueUser.GetBoutiqueUser(register));
+            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
             var userManager = GetUserManager(user);
             var signInManager = GetSignInManager(SignInIncorrectLogin);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
@@ -113,8 +114,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         private static Mock<IUserManagerBoutique> GetUserManager(BoutiqueRoleUser? user) =>
             new Mock<IUserManagerBoutique>().
             Void(userMock => userMock.Setup(userManager => userManager.FindByEmail(It.IsAny<string>())).
-                                      ReturnsAsync(user?.BoutiqueUser)).
-            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<BoutiqueUser>())).
+                                      ReturnsAsync(user?.BoutiqueIdentityUser)).
+            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<BoutiqueIdentityUser>())).
                                       ReturnsAsync(new List<string> { user?.IdentityRoleType.ToString() ?? IdentityRoleType.User.ToString() }));
 
         /// <summary>

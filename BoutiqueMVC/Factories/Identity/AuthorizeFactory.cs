@@ -6,6 +6,7 @@ using BoutiqueCommon.Infrastructure.Implementation.Validation;
 using BoutiqueCommon.Models.Common.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Infrastructure.Implementation;
@@ -59,7 +60,7 @@ namespace BoutiqueMVC.Factories.Identity
         /// </summary>
         private static BoutiqueRoleUser GetDefaultUser(IdentityRoleType identityRoleType, IAuthorizeDomain authorize,
                                                        IPersonalDomain personal) =>
-            new BoutiqueUser(authorize.Email, authorize.Password, personal.Name,
+            new BoutiqueIdentityUser(authorize.Email, authorize.Password, personal.Name,
                              personal.Surname, personal.Address, personal.Phone).
             Map(boutiqueUser => new BoutiqueRoleUser(identityRoleType, boutiqueUser));
 

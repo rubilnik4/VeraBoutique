@@ -1,5 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Identity
 {

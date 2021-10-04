@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
@@ -100,7 +101,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         {
             var register = RegisterTransferData.RegisterTransfers.First();
             var registerDomain = RegisterData.RegisterDomains.First();
-            var userManager = GetUserManager(IdentityResult.Success, BoutiqueUser.GetBoutiqueUser(registerDomain));
+            var userManager = GetUserManager(IdentityResult.Success, BoutiqueIdentityUser.GetBoutiqueUser(registerDomain));
             var registerController = new RegisterController(userManager.Object, AuthorizeSettings,
                                                             RegisterTransferConverterMock.RegisterTransferConverter);
 
@@ -122,7 +123,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerBoutique> GetUserManager(IdentityResult identityResult, BoutiqueUser? boutiqueUser) =>
+        private static Mock<IUserManagerBoutique> GetUserManager(IdentityResult identityResult, BoutiqueIdentityUser? boutiqueUser) =>
             new Mock<IUserManagerBoutique>().
             Void(userMock => userMock.Setup(userManager => userManager.Register(It.IsAny<IRegisterDomain>(), It.IsAny<IdentityRoleType>())).
                                       ReturnsAsync(identityResult)).

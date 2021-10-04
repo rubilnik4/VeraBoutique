@@ -6,6 +6,6 @@ namespace BoutiqueMVC.Infrastructure.Implementation.Identity
     /// <summary>
     /// Проверка пользователя
     /// </summary>
-    public class UserConfirmationBoutique: DefaultUserConfirmation<BoutiqueUser>
+    public class UserConfirmationBoutique: DefaultUserConfirmation<BoutiqueIdentityUser>
     { }
 }

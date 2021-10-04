@@ -25,10 +25,10 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<UserManagerBoutique>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
-            services.AddTransient<IUserStore<BoutiqueUser>, UserStoreBoutique>();
-            services.AddTransient<IPasswordHasher<BoutiqueUser>, PasswordHasherBoutique>();
-            services.AddTransient<IUserClaimsPrincipalFactory<BoutiqueUser>, UserClaimsPrincipalBoutique>();
-            services.AddTransient<IUserConfirmation<BoutiqueUser>, UserConfirmationBoutique>();
+            services.AddTransient<IUserStore<BoutiqueIdentityUser>, UserStoreBoutique>();
+            services.AddTransient<IPasswordHasher<BoutiqueIdentityUser>, PasswordHasherBoutique>();
+            services.AddTransient<IUserClaimsPrincipalFactory<BoutiqueIdentityUser>, UserClaimsPrincipalBoutique>();
+            services.AddTransient<IUserConfirmation<BoutiqueIdentityUser>, UserConfirmationBoutique>();
         }
     }
 }

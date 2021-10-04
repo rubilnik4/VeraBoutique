@@ -8,7 +8,7 @@ namespace BoutiqueMVC.Infrastructure.Implementation.Identity
     /// <summary>
     /// Права пользователя
     /// </summary>
-    public class UserClaimsPrincipalBoutique: UserClaimsPrincipalFactory<BoutiqueUser>
+    public class UserClaimsPrincipalBoutique: UserClaimsPrincipalFactory<BoutiqueIdentityUser>
     {
         public UserClaimsPrincipalBoutique(UserManagerBoutique userManager, IOptions<IdentityOptions> optionAccessor)
             :base(userManager, optionAccessor)
