@@ -5,12 +5,13 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
@@ -52,7 +53,7 @@ namespace BoutiqueMVC.DependencyInjection
         public static async Task UpdateSchema(IServiceProvider serviceProvider) =>
             await serviceProvider.GetService<IBoutiqueDatabase>()!.
             UpdateSchema(serviceProvider.GetService<UserManagerBoutique>()!,
-                         serviceProvider.GetService<IRoleStore<IdentityRole>>()!,
+                         serviceProvider.GetService<IRoleStoreBoutique>()!,
                          AuthorizeFactory.DefaultUsers, AuthorizeFactory.RoleNames);
 
         /// <summary>

@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueCommon.Models.Enums.Identity;
-using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity
+namespace BoutiqueDAL.Infrastructure.Interfaces.Identity
 {
     /// <summary>
     /// Менеджер авторизации
@@ -25,14 +24,19 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity
         Task<IReadOnlyCollection<BoutiqueRoleUser>> GetRoleUsers();
 
         /// <summary>
+        /// Найти пользователя по почте
+        /// </summary>
+        Task<IResultValue<BoutiqueIdentityUser>> FindUserByEmail(string email);
+
+        /// <summary>
+        /// Найти пользователя с ролью по почте
+        /// </summary>
+        Task<IResultValue<BoutiqueRoleUser>> FindRoleUserByEmail(string email);
+
+        /// <summary>
         /// Получить роли для пользователя
         /// </summary>
         Task<BoutiqueRoleUser> GetRoleUser(BoutiqueIdentityUser user);
-
-        /// <summary>
-        /// Получить роли пользователей
-        /// </summary>
-        Task<IList<string>> GetRoles(BoutiqueIdentityUser user);
 
         /// <summary>
         /// Удалить пользователя
@@ -40,18 +44,13 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity
         Task<IResultValue<string>> DeleteRoleUser(BoutiqueIdentityUser user);
 
         /// <summary>
-        /// Найти пользователя по почте
+        /// Создать пользователя
         /// </summary>
-        Task<IResultValue<BoutiqueIdentityUser>> FindByEmail(string email);
+        Task<IResultValue<string>> CreateRoleUser(IRegisterDomain register, IdentityRoleType roleType);
 
         /// <summary>
         /// Создать пользователя
         /// </summary>
-        Task<IResultValue<string>> Register(IRegisterDomain register, IdentityRoleType roleType);
-
-        /// <summary>
-        /// Создать пользователя
-        /// </summary>
-        Task<IResultValue<string>> Register(BoutiqueIdentityUser user, IdentityRoleType roleType);
+        Task<IResultValue<string>> CreateRoleUser(BoutiqueIdentityUser user, IdentityRoleType roleType);
     }
 }

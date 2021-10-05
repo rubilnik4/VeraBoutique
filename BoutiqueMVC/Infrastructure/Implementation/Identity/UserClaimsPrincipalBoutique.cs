@@ -1,4 +1,4 @@
-﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;

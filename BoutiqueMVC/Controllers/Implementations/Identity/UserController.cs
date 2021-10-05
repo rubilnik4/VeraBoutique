@@ -3,12 +3,11 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Implementations.Identity;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ using ResultFunctional.Models.Implementations.Errors;
 namespace BoutiqueMVC.Controllers.Implementations.Identity
 {
     /// <summary>
-    /// Контроллер авторизации
+    /// Контроллер пользователей
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -55,7 +54,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> DeleteRoleUser(string email) =>
-            await _userManager.FindByEmail(email).
+            await _userManager.FindUserByEmail(email).
             ResultValueBindOkBindAsync(user => _userManager.DeleteRoleUser(user)).
             ToActionResultValueTaskAsync();
     }

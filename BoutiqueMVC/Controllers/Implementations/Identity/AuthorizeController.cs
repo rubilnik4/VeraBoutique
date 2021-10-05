@@ -5,13 +5,13 @@ using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueMVC.Extensions.Controllers.Sync;
+using BoutiqueMVC.Infrastructure.Interfaces.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -95,19 +95,17 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// Получить ответ сервера с токеном
         /// </summary>
         private async Task<ActionResult<string>> GetJwtResult(string email) =>
-            await _userManager.FindByEmail(email).
-            ToResultValueNullCheckTaskAsync(ErrorResultFactory.ValueNotFoundError(email, GetType())).
-            WhereContinueBindAsync(result => result.OkStatus, 
+            await _userManager.FindRoleUserByEmail(email).
+            WhereContinueTaskAsync(result => result.OkStatus, 
                                    result => GenerateJwtToken(result.Value),
-                                   result => result.Errors.GetBadRequestByErrors<string>().
-                                             MapAsync(Task.FromResult));
+                                   result => result.Errors.GetBadRequestByErrors<string>());
 
         /// <summary>
         /// Сгенерировать токен
         /// </summary>
-        private async Task<ActionResult<string>> GenerateJwtToken(BoutiqueIdentityUser identityUser) =>
+        private ActionResult<string> GenerateJwtToken(BoutiqueRoleUser user) =>
              new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
-                                  GetClaims(identityUser, await _userManager.GetRoles(identityUser)),
+                                  GetClaims(user.BoutiqueIdentityUser, new List<string> { user.IdentityRoleType.ToString() }),
                                   expires: DateTime.Now.AddDays(_jwtSettings.Expires),
                                   signingCredentials: GetCredentials(_jwtSettings)).
              Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));

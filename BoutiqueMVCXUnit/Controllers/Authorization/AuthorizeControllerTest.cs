@@ -7,22 +7,26 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
-using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Implementations.Identity;
+using BoutiqueMVC.Infrastructure.Interfaces.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
+using BoutiqueMVCXUnit.Data.Identity;
 using Microsoft.AspNetCore.Http;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MockQueryable.Moq;
 using Moq;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -39,9 +43,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_GenerateToken()
         {
-            var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
-            var userManager = GetUserManager(user);
+            var user = IdentityData.BoutiqueRoleUser;
+            var userResult = user.ToResultValue();
+            var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings, 
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
@@ -62,7 +66,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_UserNotFound()
         {
-            var userManager = GetUserManager(null!);
+            var user = IdentityData.BoutiqueRoleUser;
+            var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
+            var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
@@ -80,9 +86,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_LockOut()
         {
-            var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
-            var userManager = GetUserManager(user);
+            var user = IdentityData.BoutiqueRoleUser;
+            var userResult = user.ToResultValue();
+            var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInLockOut);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
@@ -97,9 +103,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_IncorrectLogin()
         {
-            var register = RegisterData.RegisterDomains.First();
-            var user = new BoutiqueRoleUser(IdentityRoleType.User, BoutiqueIdentityUser.GetBoutiqueUser(register));
-            var userManager = GetUserManager(user);
+            var user = IdentityData.BoutiqueRoleUser;
+            var userResult = user.ToResultValue();
+            var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInIncorrectLogin);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
@@ -111,12 +117,10 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerBoutique> GetUserManager(BoutiqueRoleUser? user) =>
+        private static Mock<IUserManagerBoutique> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
             new Mock<IUserManagerBoutique>().
-            Void(userMock => userMock.Setup(userManager => userManager.FindByEmail(It.IsAny<string>())).
-                                      ReturnsAsync(user?.BoutiqueIdentityUser)).
-            Void(userMock => userMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<BoutiqueIdentityUser>())).
-                                      ReturnsAsync(new List<string> { user?.IdentityRoleType.ToString() ?? IdentityRoleType.User.ToString() }));
+            Void(userMock => userMock.Setup(userManager => userManager.FindRoleUserByEmail(It.IsAny<string>())).
+                                      ReturnsAsync(userResult));
 
         /// <summary>
         /// Менеджер аутентификации

@@ -1,6 +1,6 @@
-﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Identity;
 using BoutiqueDAL.Models.Implementations.Identity;
-using BoutiqueMVC.Models.Interfaces.Identity;
+using BoutiqueMVC.Infrastructure.Interfaces.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

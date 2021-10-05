@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -22,7 +24,7 @@ using Npgsql;
 
 namespace BoutiqueDALXUnit.Data.Database.Implementation
 {
-    public class TestBoutiqueEntityDatabase: EntityDatabase, IBoutiqueDatabase
+    public class TestBoutiqueEntityDatabase : EntityDatabase, IBoutiqueDatabase
     {
         public TestBoutiqueEntityDatabase(DbContextOptions options)
          : base(options)
@@ -120,8 +122,8 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
-                                       IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames) =>
+        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStoreBoutique roleStore,
+                                       IEnumerable<BoutiqueRoleUser> defaultUsers, IEnumerable<IdentityRoleType> roleNames) =>
             await Task.FromResult(userManager);
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
             DatabaseConfiguration.ApplyConfiguration(modelBuilder);
         }
     }

@@ -2,6 +2,7 @@
 using System.Linq;
 using BoutiqueDAL.Extensions.Sync.Identity;
 using Microsoft.AspNetCore.Identity;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;
 
@@ -33,14 +34,28 @@ namespace BoutiqueDALXUnit.Extensions.Sync.Identity
         [Fact]
         public void ToResultValue_Error()
         {
-            var identityError = new IdentityError { Description = "Error"};
+            var identityError = new IdentityError {Code = "Error", Description = "Error"};
             var identity = IdentityResult.Failed(identityError);
 
             var result = identity.ToIdentityResultValue(String.Empty);
 
             Assert.True(result.HasErrors);
             Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
-            Assert.Equal(identityError.Description, result.Errors.First().Description);
+        }
+
+        /// <summary>
+        /// Преобразование с ошибкой
+        /// </summary>
+        [Fact]
+        public void ToResultValue_Duplicate()
+        {
+            var identityError = new IdentityError { Code = "DuplicateUserName", Description = "DuplicateUserName" };
+            var identity = IdentityResult.Failed(identityError);
+
+            var result = identity.ToIdentityResultValue(String.Empty);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
         }
     }
 }

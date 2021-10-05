@@ -33,5 +33,14 @@ namespace BoutiqueDAL.Models.Implementations.Identity
             new BoutiqueUser(BoutiqueIdentityUser.UserName, BoutiqueIdentityUser.Email, IdentityRoleType,
                              BoutiqueIdentityUser.Name, BoutiqueIdentityUser.Surname, BoutiqueIdentityUser.Address,
                              BoutiqueIdentityUser.PhoneNumber);
+
+        /// <summary>
+        /// Сравнение с пользователем
+        /// </summary>
+        public bool EqualToBoutiqueUser(IBoutiqueUser user) =>
+            user.UserName == BoutiqueIdentityUser.UserName && user.Email == BoutiqueIdentityUser.Email &&
+            user.IdentityRoleType == IdentityRoleType && user.Name == BoutiqueIdentityUser.Name &&
+            user.Surname == BoutiqueIdentityUser.Surname && user.Address == BoutiqueIdentityUser.Address &&
+            user.PhoneNumber == BoutiqueIdentityUser.PhoneNumber;
     }
 }

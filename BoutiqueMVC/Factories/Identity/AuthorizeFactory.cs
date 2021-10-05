@@ -40,9 +40,9 @@ namespace BoutiqueMVC.Factories.Identity
         /// <summary>
         /// Роли
         /// </summary>
-        public static IReadOnlyCollection<string> RoleNames =>
+        public static IReadOnlyCollection<IdentityRoleType> RoleNames =>
             Enum.GetValues<IdentityRoleType>().
-            Select(roleType => roleType.ToString()).
+            Select(roleType => roleType).
             ToList();
 
         /// <summary>

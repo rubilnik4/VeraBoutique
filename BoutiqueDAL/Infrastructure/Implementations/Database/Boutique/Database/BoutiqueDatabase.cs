@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Identity;
 using ResultFunctional.Models.Interfaces.Results;
@@ -29,8 +31,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStore<IdentityRole> roleStore,
-                                       IReadOnlyCollection<BoutiqueRoleUser> defaultUsers, IReadOnlyCollection<string> roleNames)
+        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStoreBoutique roleStore,
+                                       IEnumerable<BoutiqueRoleUser> defaultUsers, IEnumerable<IdentityRoleType> roleNames)
         {
             await Database.EnsureCreatedAsync();
             await Database.MigrateAsync();
