@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 
 namespace BoutiqueCommonXUnit.Data.Authorize
 {

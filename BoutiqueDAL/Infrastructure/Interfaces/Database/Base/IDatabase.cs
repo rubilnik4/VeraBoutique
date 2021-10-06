@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Enums.Identity;
-using BoutiqueDAL.Infrastructure.Implementations.Identity;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueDAL.Infrastructure.Implementations.Identities;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -28,7 +29,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        Task UpdateSchema(UserManagerBoutique userManager, IRoleStoreBoutique roleStore,
+        Task UpdateSchema(IUserManagerService userManager, IRoleStoreService roleStore,
                           IEnumerable<BoutiqueRoleUser> defaultUsers, IEnumerable<IdentityRoleType> roleNames);
     }
 }

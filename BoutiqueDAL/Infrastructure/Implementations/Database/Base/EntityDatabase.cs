@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

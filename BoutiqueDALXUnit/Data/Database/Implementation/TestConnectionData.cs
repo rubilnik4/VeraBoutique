@@ -12,24 +12,27 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
     public static class TestConnectionData
     {
         /// <summary>
-        /// Корректные параметры подключения
+        /// Параметры подключения к базе данных
         /// </summary>
-        public static HostConnection HostConnectionOk => new("localhost", 5432);
+        public static DatabaseConnection DatabaseConnection =>
+            new(HostConnection, Database, Authorization);
 
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static Authorization AuthorizationOk => new("username", "password");
+        public static HostConnection HostConnection =>
+            new("localhost", 5432);
 
         /// <summary>
         /// Корректные параметры подключения
         /// </summary>
-        public static string DatabaseOk => "database";
+        public static Authorization Authorization =>
+            new("username", "password");
 
         /// <summary>
-        /// Ошибка подключения к базе
+        /// Корректные параметры подключения
         /// </summary>
-        public static IErrorResult ErrorTypeConnection =>
-            ErrorResultFactory.DatabaseConnectionError("host", "ErrorConnection");
+        public static string Database =>
+            "database";
     }
 }

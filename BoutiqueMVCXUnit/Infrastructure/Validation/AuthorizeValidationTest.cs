@@ -1,5 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Identities;
+using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueMVC.Infrastructure.Implementation.Validation;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Xunit;

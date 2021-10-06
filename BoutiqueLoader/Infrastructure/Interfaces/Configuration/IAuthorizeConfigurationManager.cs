@@ -1,6 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueLoader.Models.Interfaces.Configuration;
 

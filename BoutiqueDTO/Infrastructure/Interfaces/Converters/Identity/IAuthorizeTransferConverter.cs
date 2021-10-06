@@ -1,6 +1,6 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity
 {

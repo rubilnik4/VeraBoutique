@@ -1,6 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;

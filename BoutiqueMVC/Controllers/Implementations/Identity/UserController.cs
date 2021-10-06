@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Common.Implementations.Identity;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +24,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     [ApiController]
     public class UserController : ControllerBase
     {
-        public UserController(IUserManagerBoutique userManager)
+        public UserController(IUserManagerService userManager)
         {
             _userManager = userManager;
         }
@@ -33,7 +32,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private readonly IUserManagerBoutique _userManager;
+        private readonly IUserManagerService _userManager;
 
         /// <summary>
         /// Получить пользователей с ролями

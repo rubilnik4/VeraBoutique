@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueLoader.Infrastructure.Implementations.Configuration;

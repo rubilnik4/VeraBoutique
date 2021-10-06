@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using Newtonsoft.Json;
 using Xunit;

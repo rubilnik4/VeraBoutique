@@ -2,12 +2,11 @@
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Enums.Identity;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
+using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Implementation;
@@ -36,7 +35,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     [AllowAnonymous]
     public class RegisterController : ControllerBase
     {
-        public RegisterController(IUserManagerBoutique userManager, AuthorizeSettings authorizeSettings,
+        public RegisterController(IUserManagerService userManager, AuthorizeSettings authorizeSettings,
                                   IRegisterTransferConverter registerTransferConverter)
         {
             _userManager = userManager;
@@ -47,7 +46,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private readonly IUserManagerBoutique _userManager;
+        private readonly IUserManagerService _userManager;
 
         /// <summary>
         /// Параметры авторизации
@@ -78,8 +77,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// </summary>
         private async Task<IResultError> CheckByEmail(string email) =>
              await _userManager.FindUserByEmail(email).
-             ResultValueBindOkTaskAsync(user => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate,
-                                                                                  $"Пользователь {user.Email} уже присутствует в системе").
-                                                ToResultValue<BoutiqueIdentityUser>());
+             WhereContinueTaskAsync(result => result.OkStatus,
+                                    _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, $"Пользователь {email} уже присутствует в системе").
+                                                            ToResult(),
+                                    _ => new ResultError());
     }
 }

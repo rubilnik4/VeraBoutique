@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Newtonsoft.Json;

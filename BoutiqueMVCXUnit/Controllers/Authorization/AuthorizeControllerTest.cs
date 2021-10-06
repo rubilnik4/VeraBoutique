@@ -5,15 +5,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Enums.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Implementations.Identity;
-using BoutiqueMVC.Infrastructure.Interfaces.Identity;
+using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using BoutiqueMVCXUnit.Data.Identity;
@@ -117,8 +116,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerBoutique> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
-            new Mock<IUserManagerBoutique>().
+        private static Mock<IUserManagerService> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
+            new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.FindRoleUserByEmail(It.IsAny<string>())).
                                       ReturnsAsync(userResult));
 

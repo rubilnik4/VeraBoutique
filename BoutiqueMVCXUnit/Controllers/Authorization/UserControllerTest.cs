@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVCXUnit.Data.Identity;
 using Microsoft.AspNetCore.Http;
@@ -95,16 +95,16 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerBoutique> GetUserManager(IReadOnlyCollection<BoutiqueRoleUser> users) =>
-            new Mock<IUserManagerBoutique>().
+        private static Mock<IUserManagerService> GetUserManager(IReadOnlyCollection<BoutiqueRoleUser> users) =>
+            new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.GetRoleUsers()).
                                       ReturnsAsync(users));
 
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerBoutique> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
-            new Mock<IUserManagerBoutique>().
+        private static Mock<IUserManagerService> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
+            new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.FindUserByEmail(It.IsAny<string>())).
                                       ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueIdentityUser))).
             Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUser(It.IsAny<BoutiqueIdentityUser>())).

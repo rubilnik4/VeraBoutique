@@ -1,7 +1,6 @@
 ﻿using System;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Configuration;
-using BoutiqueCommon.Models.Common.Interfaces.Identity;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Configuration
 {

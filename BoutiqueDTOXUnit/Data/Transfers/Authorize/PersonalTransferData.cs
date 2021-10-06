@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommonXUnit.Data.Authorize;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 
 namespace BoutiqueDTOXUnit.Data.Transfers.Authorize
 {

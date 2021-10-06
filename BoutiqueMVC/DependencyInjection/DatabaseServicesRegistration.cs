@@ -5,20 +5,20 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
-using BoutiqueDAL.Infrastructure.Implementations.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Identity;
 using BoutiqueMVC.Factories.Database;
-using BoutiqueMVC.Factories.Identity;
+using BoutiqueMVC.Factories.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -52,8 +52,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static async Task UpdateSchema(IServiceProvider serviceProvider) =>
             await serviceProvider.GetService<IBoutiqueDatabase>()!.
-            UpdateSchema(serviceProvider.GetService<UserManagerBoutique>()!,
-                         serviceProvider.GetService<IRoleStoreBoutique>()!,
+            UpdateSchema(serviceProvider.GetService<IUserManagerService>()!,
+                         serviceProvider.GetService<IRoleStoreService>()!,
                          AuthorizeFactory.DefaultUsers, AuthorizeFactory.RoleNames);
 
         /// <summary>
@@ -61,8 +61,6 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static void RegisterDatabase(IServiceCollection services)
         {
-            if (PostgresConnection.HasErrors) throw new ConfigurationErrorsException(nameof(PostgresConnection));
-
             services.AddDbContext<BoutiqueDatabase>(GetDatabaseOptions);
             services.AddTransient<IBoutiqueDatabase, BoutiqueDatabase>();
         }
@@ -101,7 +99,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static void GetDatabaseOptions(DbContextOptionsBuilder options) =>
             options.
-            UseNpgsql(PostgresConnection.Value.ConnectionString).
+            UseNpgsql(PostgresConnection.ConnectionString).
             EnableSensitiveDataLogging();
     }
 }

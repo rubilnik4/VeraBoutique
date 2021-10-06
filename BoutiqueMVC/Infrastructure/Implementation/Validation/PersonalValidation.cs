@@ -1,7 +1,8 @@
 ﻿using System;
 using BoutiqueCommon.Infrastructure.Implementation.Validation;
+using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Results;

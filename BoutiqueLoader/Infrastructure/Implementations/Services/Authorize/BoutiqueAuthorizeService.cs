@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.Configuration;

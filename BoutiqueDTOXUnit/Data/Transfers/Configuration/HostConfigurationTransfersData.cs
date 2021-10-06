@@ -3,7 +3,6 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Configuration;
 using BoutiqueDTO.Models.Implementations.Configuration;
-using BoutiqueDTO.Models.Implementations.Identity;
 
 namespace BoutiqueDTOXUnit.Data.Transfers.Configuration
 {

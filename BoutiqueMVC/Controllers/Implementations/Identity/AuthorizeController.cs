@@ -5,12 +5,12 @@ using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Sync;
-using BoutiqueMVC.Infrastructure.Interfaces.Identity;
+using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +35,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     [AllowAnonymous]
     public class AuthorizeController : ControllerBase
     {
-        public AuthorizeController(IUserManagerBoutique userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings,
+        public AuthorizeController(IUserManagerService userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings,
                                    IAuthorizeTransferConverter authorizeTransferConverter)
         {
             _userManager = userManager;
@@ -47,7 +47,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private readonly IUserManagerBoutique _userManager;
+        private readonly IUserManagerService _userManager;
 
         /// <summary>
         /// Менеджер аутентификации

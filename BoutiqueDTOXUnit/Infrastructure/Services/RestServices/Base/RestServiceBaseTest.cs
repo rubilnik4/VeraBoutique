@@ -9,7 +9,6 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Models.Implementations;
-using BoutiqueDTO.Models.Implementations.Identity;
 using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueDTOXUnit.Data;

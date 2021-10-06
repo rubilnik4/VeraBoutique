@@ -3,7 +3,7 @@ using System.Linq;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 
 namespace BoutiqueDTOXUnit.Data.Transfers.Authorize
 {

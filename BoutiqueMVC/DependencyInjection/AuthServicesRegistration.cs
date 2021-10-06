@@ -2,12 +2,11 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using BoutiqueCommon.Models.Common.Implementations.Identity;
-using BoutiqueCommon.Models.Enums.Identity;
+using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Implementations.Environment;
 using ResultFunctional.FunctionalExtensions.Sync;

@@ -1,5 +1,6 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+﻿using BoutiqueCommon.Models.Domain.Implementations.Identities;
+using BoutiqueCommon.Models.Domain.Implementations.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems

@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Enums.Identity;
+using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
-using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Identity;
+using BoutiqueDAL.Infrastructure.Implementations.Identities;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Identity;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
-using BoutiqueDAL.Models.Implementations.Identity;
+using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// <summary>
         /// Обновить схемы базы данных
         /// </summary>
-        public async Task UpdateSchema(UserManagerBoutique userManager, IRoleStoreBoutique roleStore,
+        public async Task UpdateSchema(IUserManagerService userManager, IRoleStoreService roleStore,
                                        IEnumerable<BoutiqueRoleUser> defaultUsers, IEnumerable<IdentityRoleType> roleNames)
         {
             await Database.EnsureCreatedAsync();

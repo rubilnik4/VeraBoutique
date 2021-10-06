@@ -122,15 +122,14 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_Ok()
         {
-            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(TestConnectionData.HostConnection.Host,
+                                                                                     TestConnectionData.HostConnection.Port.ToString(),
+                                                                                     TestConnectionData.Database,
+                                                                                     TestConnectionData.Authorization.Username,
+                                                                                     TestConnectionData.Authorization.Password);
 
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
-
-            var databaseConnectionAssert = new DatabaseConnection(hostConnection.Value, database.Value, authorization.Value);
             Assert.True(databaseConnection.OkStatus);
-            Assert.True(databaseConnectionAssert.Equals(databaseConnection.Value));
+            Assert.True(TestConnectionData.DatabaseConnection.Equals(databaseConnection.Value));
         }
 
         /// <summary>
@@ -139,11 +138,11 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadHost()
         {
-            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.ErrorTypeConnection);
-            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
-
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(String.Empty,
+                                                                                     TestConnectionData.HostConnection.Port.ToString(),
+                                                                                     TestConnectionData.Database,
+                                                                                     TestConnectionData.Authorization.Username,
+                                                                                     TestConnectionData.Authorization.Password);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());
@@ -155,11 +154,11 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadAuthorization()
         {
-            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(TestConnectionData.ErrorTypeConnection);
-            var database = new ResultValue<string>(TestConnectionData.DatabaseOk);
-
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(TestConnectionData.HostConnection.Host,
+                                                                                     TestConnectionData.HostConnection.Port.ToString(),
+                                                                                     String.Empty, 
+                                                                                     TestConnectionData.Authorization.Username,
+                                                                                     TestConnectionData.Authorization.Password);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());
@@ -171,11 +170,11 @@ namespace BoutiqueDALXUnit.Factories.Database.Base
         [Fact]
         public void GetDatabaseConfiguration_BadDatabase()
         {
-            var hostConnection = new ResultValue<HostConnection>(TestConnectionData.HostConnectionOk);
-            var authorization = new ResultValue<Authorization>(TestConnectionData.AuthorizationOk);
-            var database = new ResultValue<string>(TestConnectionData.ErrorTypeConnection);
-
-            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(hostConnection, database, authorization);
+            var databaseConnection = DatabaseConnectionFactory.GetDatabaseConnection(TestConnectionData.HostConnection.Host,
+                                                                                     TestConnectionData.HostConnection.Port.ToString(),
+                                                                                     TestConnectionData.Database,
+                                                                                     String.Empty, 
+                                                                                     TestConnectionData.Authorization.Password);
 
             Assert.True(databaseConnection.HasErrors);
             Assert.IsType<DatabaseConnectionErrorResult>(databaseConnection.Errors.First());

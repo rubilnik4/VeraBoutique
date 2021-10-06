@@ -17,9 +17,9 @@ namespace BoutiqueDALXUnit.Models.Connection
         [Fact]
         public void Equal_Ok()
         {
-            var hostConnection = TestConnectionData.HostConnectionOk;
-            var authorization = TestConnectionData.AuthorizationOk;
-            string database = TestConnectionData.DatabaseOk;
+            var hostConnection = TestConnectionData.HostConnection;
+            var authorization = TestConnectionData.Authorization;
+            string database = TestConnectionData.Database;
 
             var databaseConnection = new DatabaseConnection(hostConnection, database, authorization);
 

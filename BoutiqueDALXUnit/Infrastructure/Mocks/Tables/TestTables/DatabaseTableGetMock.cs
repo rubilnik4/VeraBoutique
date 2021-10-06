@@ -47,7 +47,6 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
                                                             Func<IEnumerable<TestEnum>, IResultCollection<TestEntity>> findFunc) =>
             GetTestDatabaseTable(testEntities, FindIdOkFunc(testEntities), findFunc);
 
-
         /// <summary>
         /// Функция получения по идентификатору
         /// </summary>

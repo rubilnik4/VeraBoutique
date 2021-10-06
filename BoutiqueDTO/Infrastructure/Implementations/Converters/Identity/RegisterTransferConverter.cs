@@ -1,9 +1,9 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Identity;
+using BoutiqueDTO.Models.Implementations.Identities;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;

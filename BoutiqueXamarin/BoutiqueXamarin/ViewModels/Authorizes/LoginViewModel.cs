@@ -4,7 +4,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
-using BoutiqueCommon.Models.Domain.Interfaces.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
