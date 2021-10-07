@@ -56,6 +56,7 @@
   <ItemGroup>
     <Folder Include="Extensions\Async\Identity\" />
     <Folder Include="Extensions\Sync\Identity\" />
+    <Folder Include="Infrastructure\Mocks\Identities\" />
     <Folder Include="Infrastructure\Services\Identities\" />
   </ItemGroup>
 

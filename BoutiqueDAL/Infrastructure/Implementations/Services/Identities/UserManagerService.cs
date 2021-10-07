@@ -78,16 +78,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             ToResultValueNullCheckTaskAsync(ErrorResultFactory.ValueNotFoundError(email, GetType()));
 
         /// <summary>
-        /// Удалить пользователя
-        /// </summary>
-        public async Task<IResultValue<string>> DeleteRoleUser(BoutiqueIdentityUser user) =>
-            await GetRoleUser(user).
-            MapBindAsync(roleUser => _userManager.RemoveFromRoleAsync(roleUser.BoutiqueIdentityUser, roleUser.IdentityRoleType.ToString())).
-            WhereOkBindAsync(identityResult => identityResult.Succeeded,
-                             _ => _userManager.DeleteAsync(user)).
-            ToIdentityResultValueTaskAsync(user.Email);
-
-        /// <summary>
         /// Зарегистрироваться
         /// </summary>
         public async Task<IResultValue<string>> CreateRoleUser(IRegisterDomain register, IdentityRoleType roleType) =>
@@ -105,9 +95,32 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
                                        ToIdentityResultValueTaskAsync(user.Email));
 
         /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        public async Task<IResultValue<string>> DeleteRoleUser(string email) =>
+            await FindRoleUserByEmail(email).
+            ResultValueBindOkBindAsync(DeleteRoleUser);
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        public async Task<IResultValue<string>> DeleteRoleUser(BoutiqueIdentityUser user) =>
+            await GetRoleUser(user).
+            MapBindAsync(DeleteRoleUser);
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        public async Task<IResultValue<string>> DeleteRoleUser(BoutiqueRoleUser roleUser) =>
+            await  _userManager.RemoveFromRoleAsync(roleUser.BoutiqueIdentityUser, roleUser.IdentityRoleType.ToString()).
+            WhereOkBindAsync(identityResult => identityResult.Succeeded,
+                             _ => _userManager.DeleteAsync(roleUser.BoutiqueIdentityUser)).
+            ToIdentityResultValueTaskAsync(roleUser.BoutiqueIdentityUser.Email);
+
+        /// <summary>
         /// Проверить пользователя на дублирование
         /// </summary>
-        public async Task<IResultValue<BoutiqueIdentityUser>> CheckDuplicateUser(BoutiqueIdentityUser boutiqueUser) =>
+        private async Task<IResultValue<BoutiqueIdentityUser>> CheckDuplicateUser(BoutiqueIdentityUser boutiqueUser) =>
             await _userManager.FindByEmailAsync(boutiqueUser.Email).
             WhereContinueTaskAsync(user => user is null!,
                                    _ => boutiqueUser.ToResultValue(),

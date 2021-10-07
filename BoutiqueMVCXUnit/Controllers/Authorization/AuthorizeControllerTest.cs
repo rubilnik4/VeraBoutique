@@ -9,13 +9,13 @@ using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identities;
+using BoutiqueDALXUnit.Data.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;
-using BoutiqueMVCXUnit.Data.Identity;
 using Microsoft.AspNetCore.Http;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -42,7 +42,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_GenerateToken()
         {
-            var user = IdentityData.BoutiqueRoleUser;
+            var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
@@ -65,7 +65,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_UserNotFound()
         {
-            var user = IdentityData.BoutiqueRoleUser;
+            var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
@@ -85,7 +85,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_LockOut()
         {
-            var user = IdentityData.BoutiqueRoleUser;
+            var user = IdentityData.BoutiqueRoleUsers.First(); 
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInLockOut);
@@ -102,7 +102,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_IncorrectLogin()
         {
-            var user = IdentityData.BoutiqueRoleUser;
+            var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInIncorrectLogin);

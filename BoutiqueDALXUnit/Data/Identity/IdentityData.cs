@@ -44,5 +44,18 @@ namespace BoutiqueDALXUnit.Data.Identity
             Roles.
             Select(role => role.ToString()).
             ToList();
+
+        /// <summary>
+        /// Дублирование роли
+        /// </summary>
+        public static string DuplicateRoleName =>
+             "DuplicateRoleName";
+
+        /// <summary>
+        /// Дублирование пользователя
+        /// </summary>
+        public static string DuplicateUserName =>
+             "DuplicateUserName";
+
     }
 }

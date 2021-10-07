@@ -51,6 +51,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         /// <summary>
         /// Удалить пользователя
         /// </summary>
+        Task<IResultValue<string>> DeleteRoleUser(string email);
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
         Task<IResultValue<string>> DeleteRoleUser(BoutiqueIdentityUser user);
     }
 }

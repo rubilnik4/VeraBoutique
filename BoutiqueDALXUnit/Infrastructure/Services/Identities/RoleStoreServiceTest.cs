@@ -4,6 +4,7 @@ using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
+using BoutiqueDALXUnit.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -43,7 +44,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         public async Task CreateRole_Fail()
         {
             const IdentityRoleType identityRoleType = IdentityRoleType.User;
-            var identityError = new IdentityError { Code = "DuplicateRoleName" };
+            var identityError = new IdentityError { Code =  IdentityData.DuplicateRoleName };
             var identityResult = IdentityResult.Failed(identityError);
             var roleStore = GetRoleStore(identityResult, null);
             var roleStoreService = new RoleStoreService(roleStore.Object);
