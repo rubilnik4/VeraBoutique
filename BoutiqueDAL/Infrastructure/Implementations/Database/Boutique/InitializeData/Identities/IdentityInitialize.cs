@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
@@ -23,7 +24,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// Добавить роли
         /// </summary>
         public static async Task Initialize(IUserManagerService userManager, IRoleStoreService roleStore,
-                                            IEnumerable<BoutiqueRoleUser> defaultUsers,
+                                            IEnumerable<IRegisterRoleDomain> defaultUsers,
                                             IEnumerable<IdentityRoleType> defaultRoles) =>
             await CreateRoles(roleStore, defaultRoles).
             ResultErrorBindOkBindAsync(() => CreateUsers(userManager, defaultUsers)).
@@ -41,7 +42,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Добавить пользователей и обработать ошибки
         /// </summary>
-        private static async Task<IResultError> CreateUsers(IUserManagerService userManager, IEnumerable<BoutiqueRoleUser> defaultUsers) =>
+        private static async Task<IResultError> CreateUsers(IUserManagerService userManager, IEnumerable<IRegisterRoleDomain> defaultUsers) =>
              await IdentityUsersInitialize.CreateIdentityUsers(userManager, defaultUsers).
              MapTaskAsync(result => result.Errors.
                                     Where(error => error is not AuthorizeErrorResult { ErrorType: AuthorizeErrorType.Duplicate }).

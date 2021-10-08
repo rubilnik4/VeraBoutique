@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.Extensions.Configuration;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -39,7 +40,7 @@ namespace BoutiqueMVC.Factories.Database
         /// <summary>
         /// Параметры авторизации
         /// </summary>
-        public static AuthorizeSettings GetAuthorizeSettings(IConfiguration configuration) =>
+        public static IdentitySettings GetAuthorizeSettings(IConfiguration configuration) =>
             new(GetPasswordRequiredLength(configuration), GetPasswordRequireDigit(configuration),
                 GetRequireConfirmedEmail(configuration), GetRequireUniqueEmail(configuration));
 

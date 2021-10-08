@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identities
     public abstract class BoutiqueUserBase : IBoutiqueUserBase
     {
         protected BoutiqueUserBase(string userName, string email, IdentityRoleType identityRoleType,
-                            string name, string surname, string address, string phoneNumber)
+                                   string name, string surname, string address, string phoneNumber)
         {
             UserName = userName;
             Email = email;

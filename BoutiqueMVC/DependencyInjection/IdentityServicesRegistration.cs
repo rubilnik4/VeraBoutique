@@ -2,6 +2,7 @@
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
@@ -29,10 +30,10 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IUserManagerService, UserManagerService>();
             services.AddTransient<IRoleStoreService, RoleStoreService>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
-            services.AddTransient<IUserStore<BoutiqueIdentityUser>, UserStoreBoutique>();
-            services.AddTransient<IPasswordHasher<BoutiqueIdentityUser>, PasswordHasherBoutique>();
-            services.AddTransient<IUserClaimsPrincipalFactory<BoutiqueIdentityUser>, UserClaimsPrincipalBoutique>();
-            services.AddTransient<IUserConfirmation<BoutiqueIdentityUser>, UserConfirmationBoutique>();
+            services.AddTransient<IUserStore<BoutiqueUserEntity>, UserStoreBoutique>();
+            services.AddTransient<IPasswordHasher<BoutiqueUserEntity>, PasswordHasherBoutique>();
+            services.AddTransient<IUserClaimsPrincipalFactory<BoutiqueUserEntity>, UserClaimsPrincipalBoutique>();
+            services.AddTransient<IUserConfirmation<BoutiqueUserEntity>, UserConfirmationBoutique>();
         }
     }
 }

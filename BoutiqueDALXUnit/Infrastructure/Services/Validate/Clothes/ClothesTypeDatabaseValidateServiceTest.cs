@@ -11,7 +11,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;

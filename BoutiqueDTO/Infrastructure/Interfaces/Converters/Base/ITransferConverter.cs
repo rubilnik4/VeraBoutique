@@ -36,7 +36,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Converters.Base
         /// <summary>
         /// Преобразовать доменные модели в трансферную модели
         /// </summary>
-        IEnumerable<TTransfer> ToTransfers(IEnumerable<TDomain> domains);
+        IReadOnlyCollection<TTransfer> ToTransfers(IEnumerable<TDomain> domains);
 
         /// <summary>
         /// Преобразовать тип пола одежды в доменную модель

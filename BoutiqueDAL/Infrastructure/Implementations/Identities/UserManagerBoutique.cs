@@ -8,6 +8,7 @@ using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Extensions.Async.Identity;
 using BoutiqueDAL.Extensions.Sync.Identity;
 using BoutiqueDAL.Infrastructure.Interfaces.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,14 +26,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Identities
     /// <summary>
     /// Менеджер авторизации
     /// </summary>
-    public class UserManagerBoutique : UserManager<BoutiqueIdentityUser>, IUserManagerBoutique
+    public class UserManagerBoutique : UserManager<BoutiqueUserEntity>, IUserManagerBoutique
     {
-        public UserManagerBoutique(IUserStore<BoutiqueIdentityUser> store, IOptions<IdentityOptions> optionAccessor,
-                                   IPasswordHasher<BoutiqueIdentityUser> passwordHasher,
-                                   IEnumerable<IUserValidator<BoutiqueIdentityUser>> userValidators,
-                                   IEnumerable<IPasswordValidator<BoutiqueIdentityUser>> passwordValidators,
+        public UserManagerBoutique(IUserStore<BoutiqueUserEntity> store, IOptions<IdentityOptions> optionAccessor,
+                                   IPasswordHasher<BoutiqueUserEntity> passwordHasher,
+                                   IEnumerable<IUserValidator<BoutiqueUserEntity>> userValidators,
+                                   IEnumerable<IPasswordValidator<BoutiqueUserEntity>> passwordValidators,
                                    ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors,
-                                   IServiceProvider services, ILogger<UserManager<BoutiqueIdentityUser>> logger)
+                                   IServiceProvider services, ILogger<UserManager<BoutiqueUserEntity>> logger)
             : base(store, optionAccessor, passwordHasher, userValidators,
                    passwordValidators, keyNormalizer, errors, services, logger)
         { }

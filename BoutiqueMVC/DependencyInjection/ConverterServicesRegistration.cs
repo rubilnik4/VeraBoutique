@@ -45,6 +45,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IAuthorizeTransferConverter, AuthorizeTransferConverter>();
             services.AddTransient<IPersonalTransferConverter, PersonalTransferConverter>();
             services.AddTransient<IRegisterTransferConverter, RegisterTransferConverter>();
+            services.AddTransient<IBoutiqueUserTransferConverter, BoutiqueUserTransferConverter>();
             services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
             services.AddTransient<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();

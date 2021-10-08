@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,36 +16,36 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Identities
         /// <summary>
         /// Пользователи
         /// </summary>
-        IQueryable<BoutiqueIdentityUser> Users { get; }
+        IQueryable<BoutiqueUserEntity> Users { get; }
 
         /// <summary>
         /// Найти пользователя по почте
         /// </summary>
-        Task<BoutiqueIdentityUser> FindByEmailAsync(string email);
+        Task<BoutiqueUserEntity> FindByEmailAsync(string email);
 
         /// <summary>
         /// Создать пользователя
         /// </summary>
-        Task<IdentityResult> CreateAsync(BoutiqueIdentityUser user);
+        Task<IdentityResult> CreateAsync(BoutiqueUserEntity userEntity);
 
         /// <summary>
         /// Удалить пользователя
         /// </summary>
-        Task<IdentityResult> DeleteAsync(BoutiqueIdentityUser user);
+        Task<IdentityResult> DeleteAsync(BoutiqueUserEntity userEntity);
 
         /// <summary>
         /// Получить роли пользователя
         /// </summary>
-        Task<IList<string>> GetRolesAsync(BoutiqueIdentityUser user);
+        Task<IList<string>> GetRolesAsync(BoutiqueUserEntity userEntity);
 
         /// <summary>
         /// Создать роль у пользователя
         /// </summary>
-        Task<IdentityResult> AddToRoleAsync(BoutiqueIdentityUser user, string role);
+        Task<IdentityResult> AddToRoleAsync(BoutiqueUserEntity userEntity, string role);
 
         /// <summary>
         /// Удалить роль у пользователя
         /// </summary>
-        Task<IdentityResult> RemoveFromRoleAsync(BoutiqueIdentityUser user, string role);
+        Task<IdentityResult> RemoveFromRoleAsync(BoutiqueUserEntity userEntity, string role);
     }
 }

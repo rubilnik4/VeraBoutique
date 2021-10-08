@@ -16,13 +16,13 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Identity
     public class AuthorizeTransferConverter : TransferConverter<string, IAuthorizeDomain, AuthorizeTransfer>, IAuthorizeTransferConverter
     {
         /// <summary>
-        /// Преобразовать категории одежды в трансферную модель
+        /// Преобразовать логин и пароль в трансферную модель
         /// </summary>
         public override AuthorizeTransfer ToTransfer(IAuthorizeDomain authorizeDomain) =>
             new AuthorizeTransfer(authorizeDomain);
 
         /// <summary>
-        /// Преобразовать категории одежды из трансферной модели
+        /// Преобразовать логин и пароль из трансферной модели
         /// </summary>
         public override IResultValue<IAuthorizeDomain> FromTransfer(AuthorizeTransfer authorizeTransfer) =>
             new AuthorizeDomain(authorizeTransfer).

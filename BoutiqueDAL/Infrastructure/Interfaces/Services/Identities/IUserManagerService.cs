@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.Models.Interfaces.Results;
 
@@ -13,40 +14,19 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
     public interface IUserManagerService
     {
         /// <summary>
-        /// Получить пользователей
-        /// </summary>
-        Task<IReadOnlyCollection<BoutiqueIdentityUser>> GetUsers();
-
-        /// <summary>
         /// Получить пользователей с ролями
         /// </summary>
-        Task<IReadOnlyCollection<BoutiqueRoleUser>> GetRoleUsers();
-
-        /// <summary>
-        /// Найти пользователя по почте
-        /// </summary>
-        Task<IResultValue<BoutiqueIdentityUser>> FindUserByEmail(string email);
+        Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetRoleUsers();
 
         /// <summary>
         /// Найти пользователя с ролью по почте
         /// </summary>
-        Task<IResultValue<BoutiqueRoleUser>> FindRoleUserByEmail(string email);
-
-        /// <summary>
-        /// Получить пользователя с ролью
-        /// </summary>
-        Task<BoutiqueRoleUser> GetRoleUser(BoutiqueIdentityUser user);
+        Task<IResultValue<IBoutiqueUserDomain>> FindRoleUserByEmail(string email);
 
         /// <summary>
         /// Создать пользователя
         /// </summary>
-        Task<IResultValue<string>> CreateRoleUser(IRegisterDomain register, IdentityRoleType roleType);
-
-
-        /// <summary>
-        /// Создать пользователя
-        /// </summary>
-        Task<IResultValue<string>> CreateRoleUser(BoutiqueIdentityUser user, IdentityRoleType roleType);
+        Task<IResultValue<string>> CreateRoleUser(IRegisterRoleDomain registerRole);
 
         /// <summary>
         /// Удалить пользователя
@@ -56,6 +36,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         /// <summary>
         /// Удалить пользователя
         /// </summary>
-        Task<IResultValue<string>> DeleteRoleUser(BoutiqueIdentityUser user);
+        Task<IResultValue<string>> DeleteRoleUser(IBoutiqueUserDomain user);
     }
 }

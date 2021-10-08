@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
@@ -42,7 +43,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_GenerateToken()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityData.BoutiqueUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
@@ -65,8 +66,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_UserNotFound()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
-            var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
+            var user = IdentityData.BoutiqueUsers.First();
+            var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<IBoutiqueUserDomain>();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInSuccess);
             var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
@@ -85,7 +86,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_LockOut()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First(); 
+            var user = IdentityData.BoutiqueUsers.First(); 
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInLockOut);
@@ -102,7 +103,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_IncorrectLogin()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityData.BoutiqueUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var signInManager = GetSignInManager(SignInIncorrectLogin);
@@ -116,7 +117,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerService> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
+        private static Mock<IUserManagerService> GetUserManager(IResultValue<IBoutiqueUserDomain> userResult) =>
             new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.FindRoleUserByEmail(It.IsAny<string>())).
                                       ReturnsAsync(userResult));

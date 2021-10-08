@@ -5,10 +5,14 @@ using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Common.Interfaces.Identities;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
+using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
@@ -96,16 +100,15 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// </summary>
         private async Task<ActionResult<string>> GetJwtResult(string email) =>
             await _userManager.FindRoleUserByEmail(email).
-            WhereContinueTaskAsync(result => result.OkStatus, 
-                                   result => GenerateJwtToken(result.Value),
-                                   result => result.Errors.GetBadRequestByErrors<string>());
+            ResultValueOkTaskAsync(GenerateJwtToken).
+            ToActionResultValueTaskAsync();
 
         /// <summary>
         /// Сгенерировать токен
         /// </summary>
-        private ActionResult<string> GenerateJwtToken(BoutiqueRoleUser user) =>
+        private string GenerateJwtToken(IBoutiqueUserDomain user) =>
              new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
-                                  GetClaims(user.BoutiqueIdentityUser, new List<string> { user.IdentityRoleType.ToString() }),
+                                  GetClaims(user, new List<string> { user.IdentityRoleType.ToString() }),
                                   expires: DateTime.Now.AddDays(_jwtSettings.Expires),
                                   signingCredentials: GetCredentials(_jwtSettings)).
              Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));
@@ -113,13 +116,14 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// <summary>
         /// Получить права доступа
         /// </summary>
-        private static IEnumerable<Claim> GetClaims(BoutiqueIdentityUser identityUser, IEnumerable<string> roles) =>
+        private static IEnumerable<Claim> GetClaims(IBoutiqueUserDomain user, IEnumerable<string> roles) =>
             new List<Claim>
             {
-                new (JwtRegisteredClaimNames.Sub, identityUser.UserName),
+                new (JwtRegisteredClaimNames.Sub, user.UserName),
                 new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new (ClaimTypes.NameIdentifier, identityUser.Id),
-            }.Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+                new (ClaimTypes.NameIdentifier, user.Id),
+            }.
+            Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         /// <summary>
         /// Получить ключ для доступа

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
@@ -28,7 +29,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         {
             const IdentityRoleType identityRoleType = IdentityRoleType.User;
             var identityResult = IdentityResult.Success;
-            var roleStore = GetRoleStore(identityResult, null);
+            var roleStore = GetRoleStore(identityResult, null!);
             var roleStoreService = new RoleStoreService(roleStore.Object);
 
             var roleResult = await roleStoreService.CreateRole(identityRoleType);
@@ -46,7 +47,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             const IdentityRoleType identityRoleType = IdentityRoleType.User;
             var identityError = new IdentityError { Code =  IdentityData.DuplicateRoleName };
             var identityResult = IdentityResult.Failed(identityError);
-            var roleStore = GetRoleStore(identityResult, null);
+            var roleStore = GetRoleStore(identityResult, null!);
             var roleStoreService = new RoleStoreService(roleStore.Object);
 
             var roleResult = await roleStoreService.CreateRole(identityRoleType);
@@ -65,7 +66,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             const IdentityRoleType identityRoleType = IdentityRoleType.User;
             var identityRole = RoleStoreService.GetIdentityRole(identityRoleType);
             var identityResult = IdentityResult.Success;
-            var roleStore = GetRoleStore(identityResult, identityRole.Id);
+            var roleStore = GetRoleStore(identityResult, identityRole);
             var roleStoreService = new RoleStoreService(roleStore.Object);
 
             var roleResult = await roleStoreService.CreateRole(identityRoleType);
@@ -78,11 +79,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         /// <summary>
         /// Менеджер ролей
         /// </summary>
-        private static Mock<IRoleStore<IdentityRole>> GetRoleStore(IdentityResult identityResult, string? roleId) =>
+        private static Mock<IRoleStore<IdentityRole>> GetRoleStore(IdentityResult identityResult, IdentityRole role) =>
             new Mock<IRoleStore<IdentityRole>>().
             Void(roleStoreMock => roleStoreMock.Setup(roleStore => roleStore.CreateAsync(It.IsAny<IdentityRole>(), default)).
                                                 ReturnsAsync(identityResult)).
-            Void(roleStoreMock => roleStoreMock.Setup(roleStore => roleStore.GetRoleIdAsync(It.IsAny<IdentityRole>(), default)).
-                                                ReturnsAsync(roleId));
+            Void(roleStoreMock => roleStoreMock.Setup(roleStore => roleStore.FindByNameAsync(It.IsAny<string>(), default)).
+                                                ReturnsAsync(role));
     }
 }

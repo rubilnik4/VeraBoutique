@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Tables;

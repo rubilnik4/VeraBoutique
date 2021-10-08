@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Common.Interfaces.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 
 namespace BoutiqueDAL.Models.Implementations.Identities
 {
@@ -11,10 +12,10 @@ namespace BoutiqueDAL.Models.Implementations.Identities
     /// </summary>
     public class BoutiqueRoleUser
     {
-        public BoutiqueRoleUser(IdentityRoleType identityRoleType, BoutiqueIdentityUser boutiqueIdentityUser)
+        public BoutiqueRoleUser(IdentityRoleType identityRoleType, BoutiqueUserEntity boutiqueUserEntity)
         {
             IdentityRoleType = identityRoleType;
-            BoutiqueIdentityUser = boutiqueIdentityUser;
+            BoutiqueUserEntity = boutiqueUserEntity;
         }
 
         /// <summary>
@@ -25,23 +26,18 @@ namespace BoutiqueDAL.Models.Implementations.Identities
         /// <summary>
         /// Пользователь
         /// </summary>
-        public BoutiqueIdentityUser BoutiqueIdentityUser { get; }
+        public BoutiqueUserEntity BoutiqueUserEntity { get; }
 
         /// <summary>
-        /// Преобразовать в пользователя
+        /// Получить пользователя
         /// </summary>
         public IBoutiqueUserDomain ToBoutiqueUser() =>
-            new BoutiqueUserDomain(BoutiqueIdentityUser.UserName, BoutiqueIdentityUser.Email, IdentityRoleType,
-                             BoutiqueIdentityUser.Name, BoutiqueIdentityUser.Surname, BoutiqueIdentityUser.Address,
-                             BoutiqueIdentityUser.PhoneNumber);
+            BoutiqueUserEntity.ToBoutiqueUser(IdentityRoleType);
 
         /// <summary>
-        /// Сравнение с пользователем
+        /// Получить пользователя
         /// </summary>
-        public bool EqualToBoutiqueUser(IBoutiqueUserBase userBase) =>
-            userBase.UserName == BoutiqueIdentityUser.UserName && userBase.Email == BoutiqueIdentityUser.Email &&
-            userBase.IdentityRoleType == IdentityRoleType && userBase.Name == BoutiqueIdentityUser.Name &&
-            userBase.Surname == BoutiqueIdentityUser.Surname && userBase.Address == BoutiqueIdentityUser.Address &&
-            userBase.PhoneNumber == BoutiqueIdentityUser.PhoneNumber;
+        public static BoutiqueRoleUser GetBoutiqueUser(IBoutiqueUserDomain user) =>
+            new(user.IdentityRoleType, BoutiqueUserEntity.GetBoutiqueUser(user));
     }
 }

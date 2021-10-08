@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
-using BoutiqueMVC.Infrastructure.Implementation.Validation;
 using BoutiqueMVC.Models.Implementations.Environment;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -26,9 +27,9 @@ namespace BoutiqueMVC.Factories.Identities
         /// <summary>
         /// Пользователи по умолчанию
         /// </summary>
-        public static IReadOnlyCollection<BoutiqueRoleUser> DefaultUsers =>
+        public static IReadOnlyCollection<IRegisterRoleDomain> DefaultUsers =>
             DefaultAdminUser.OkStatus 
-                ? new List<BoutiqueRoleUser> { DefaultAdminUser.Value }
+                ? new List<IRegisterRoleDomain> { DefaultAdminUser.Value }
                 : throw new ArgumentNullException(nameof(DefaultUsers));
 
         /// <summary>
@@ -42,21 +43,20 @@ namespace BoutiqueMVC.Factories.Identities
         /// <summary>
         /// Пользователь администратор по умолчанию
         /// </summary>
-        private static IResultValue<BoutiqueRoleUser> DefaultAdminUser =>
-            new ResultValue<Func<IdentityRoleType, IAuthorizeDomain, IPersonalDomain, BoutiqueRoleUser>>(GetDefaultUser).
-            ResultValueCurryOk(GetIdentityRoleType()).
-            ResultValueCurryOk(AuthorizeValidation.AuthorizeValidate(new AuthorizeDomain(Email, Password), AuthorizeSettings)).
+        private static IResultValue<IRegisterRoleDomain> DefaultAdminUser =>
+            new ResultValue<Func<IAuthorizeDomain, IPersonalDomain, IdentityRoleType, IRegisterRoleDomain>>(GetDefaultUser).          
+            ResultValueCurryOk(AuthorizeValidation.AuthorizeValidate(new AuthorizeDomain(Email, Password), 
+                                                                     IdentitySettings.ToPasswordSettings())).
             ResultValueCurryOk(PersonalValidation.PersonalValidate(new PersonalDomain(Name, Surname, Address, Phone))).
+              ResultValueCurryOk(GetIdentityRoleType()).
             ResultValueOk(getDefaultUser => getDefaultUser.Invoke());
 
         /// <summary>
         /// Получить пользователя о умолчанию
         /// </summary>
-        private static BoutiqueRoleUser GetDefaultUser(IdentityRoleType identityRoleType, IAuthorizeDomain authorize,
-                                                       IPersonalDomain personal) =>
-            new BoutiqueIdentityUser(authorize.Email, authorize.Password, personal.Name,
-                                     personal.Surname, personal.Address, personal.Phone).
-            Map(boutiqueUser => new BoutiqueRoleUser(identityRoleType, boutiqueUser));
+        private static IRegisterRoleDomain GetDefaultUser(IAuthorizeDomain authorize, IPersonalDomain personal,
+                                                          IdentityRoleType identityRoleType) =>
+            new RegisterRoleDomain(authorize, personal, identityRoleType);
 
         /// <summary>
         /// Почта
@@ -112,7 +112,7 @@ namespace BoutiqueMVC.Factories.Identities
         /// <summary>
         /// Параметры авторизации
         /// </summary>
-        private static AuthorizeSettings AuthorizeSettings =>
+        private static IdentitySettings IdentitySettings =>
             new (8, true, false, true);
     }
 }

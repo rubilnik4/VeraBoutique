@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// Проверить роль на дублирование
         /// </summary>
         private async Task<IResultValue<IdentityRole>> CheckDuplicateRole(IdentityRole identityRole) =>
-            await _roleStore.GetRoleIdAsync(identityRole, default).
+            await _roleStore.FindByNameAsync(identityRole.NormalizedName, default).
             WhereContinueTaskAsync(roleId => roleId is null,
                                    _ => identityRole.ToResultValue(),
                                    _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, $"Дублирование роли {identityRole.Name}").

@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Infrastructure.Implementation.Validation;
+using BoutiqueCommon.Infrastructure.Implementation.Validation.Common;
 using BoutiqueXamarin.Controls.EntryStackLayouts;
 using BoutiqueXamarin.Controls.Enums;
 

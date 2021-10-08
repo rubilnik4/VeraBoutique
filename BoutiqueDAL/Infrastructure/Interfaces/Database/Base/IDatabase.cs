@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
@@ -30,6 +31,6 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base
         /// Обновить схемы базы данных
         /// </summary>
         Task UpdateSchema(IUserManagerService userManager, IRoleStoreService roleStore,
-                          IEnumerable<BoutiqueRoleUser> defaultUsers, IEnumerable<IdentityRoleType> roleNames);
+                          IEnumerable<IRegisterRoleDomain> defaultUsers, IEnumerable<IdentityRoleType> roleNames);
     }
 }

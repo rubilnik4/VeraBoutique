@@ -34,15 +34,15 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task GetRoleUsers()
         {
-            var users = IdentityData.BoutiqueRoleUsers;
+            var users = IdentityData.BoutiqueUsers;
             var userManager = GetUserManager(users);
-            var userController = new UserController(userManager.Object, AuthorizeSettings, 
-                                                    RegisterTransferConverterMock.RegisterTransferConverter);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter, 
+                                                    BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
 
             var usersResult = await userController.GetRoleUsers();
+            var usersZip = usersResult.Value.Zip(users);
 
-            Assert.True(usersResult.Value.Zip(users).
-                                    All(user => user.Second.EqualToBoutiqueUser(user.First)));
+            Assert.True(usersZip.All(user => user.Second.Email == user.First.Email));
         }
 
         /// <summary>
@@ -54,7 +54,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
-            var registerController = new UserController(userManager.Object, AuthorizeSettings, RegisterTransferConverterMock.RegisterTransferConverter);
+            var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
             var register = RegisterTransferData.RegisterTransfers.First();
 
             var actionResult = await registerController.CreateRoleUser(register);
@@ -71,8 +72,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotValidError(user, GetType(), "ValueNotValid").ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
-            var registerController = new UserController(userManager.Object, AuthorizeSettings,
-                                                            RegisterTransferConverterMock.RegisterTransferConverter);
+            var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
             var register = RegisterTransferData.RegisterTransfers.First();
 
             var actionResult = await registerController.CreateRoleUser(register);
@@ -85,29 +86,6 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         }
 
         /// <summary>
-        /// Зарегистрировать. Ошибка при проверке
-        /// </summary>
-        [Fact]
-        public async Task Register_ValidateError()
-        {
-            var user = IdentityData.BoutiqueRoleUsers.First();
-            var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
-            var userManager = GetUserManager(userResult);
-            var registerController = new UserController(userManager.Object, AuthorizeSettings,
-                                                            RegisterTransferConverterMock.RegisterTransferConverter);
-            var authorize = new AuthorizeTransfer("", "testTest07071");
-            var register = new RegisterTransfer(authorize, PersonalTransferData.PersonalTransfers.First());
-
-            var actionResult = await registerController.CreateRoleUser(register);
-
-            Assert.IsType<BadRequestObjectResult>(actionResult.Result);
-            var badRequest = (BadRequestObjectResult)actionResult.Result;
-            var errors = (SerializableError)badRequest.Value;
-            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(AuthorizeErrorType.Email.ToString(), errors.Keys.First());
-        }
-
-        /// <summary>
         /// Удалить пользователя
         /// </summary>
         [Fact]
@@ -116,12 +94,12 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
-            var userController = new UserController(userManager.Object, AuthorizeSettings,
-                                                    RegisterTransferConverterMock.RegisterTransferConverter);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
 
-            var actionResult = await userController.DeleteRoleUser(user.BoutiqueIdentityUser.Email);
+            var actionResult = await userController.DeleteRoleUser(user.BoutiqueUserEntity.Email);
 
-            Assert.Equal(user.BoutiqueIdentityUser.Email, actionResult.Value);
+            Assert.Equal(user.BoutiqueUserEntity.Email, actionResult.Value);
         }
 
         /// <summary>
@@ -133,10 +111,10 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
-            var userController = new UserController(userManager.Object, AuthorizeSettings,
-                                                    RegisterTransferConverterMock.RegisterTransferConverter);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                    BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
 
-            var actionResult = await userController.DeleteRoleUser(user.BoutiqueIdentityUser.Email);
+            var actionResult = await userController.DeleteRoleUser(user.BoutiqueUserEntity.Email);
 
             Assert.IsType<NotFoundResult>(actionResult.Result);
             var notFoundResult = (NotFoundResult)actionResult.Result;
@@ -152,10 +130,10 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotValidError(user, GetType(), "ValueNotValid").ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
-            var userController = new UserController(userManager.Object, AuthorizeSettings,
-                                                    RegisterTransferConverterMock.RegisterTransferConverter);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
 
-            var actionResult = await userController.DeleteRoleUser(user.BoutiqueIdentityUser.Email);
+            var actionResult = await userController.DeleteRoleUser(user.BoutiqueUserEntity.Email);
 
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
             var badRequest = (BadRequestObjectResult)actionResult.Result;
@@ -167,7 +145,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// <summary>
         /// Менеджер авторизации
         /// </summary>
-        private static Mock<IUserManagerService> GetUserManager(IReadOnlyCollection<BoutiqueRoleUser> users) =>
+        private static Mock<IUserManagerService> GetUserManager(IReadOnlyCollection<IBoutiqueUserDomain> users) =>
             new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.GetRoleUsers()).
                                       ReturnsAsync(users));
@@ -177,15 +155,9 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         /// </summary>
         private static Mock<IUserManagerService> GetUserManager(IResultValue<BoutiqueRoleUser> userResult) =>
             new Mock<IUserManagerService>().
-            Void(userMock => userMock.Setup(userManager => userManager.CreateRoleUser(It.IsAny<IRegisterDomain>(), It.IsAny<IdentityRoleType>())).
-                                          ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueIdentityUser.Email))).
+            Void(userMock => userMock.Setup(userManager => userManager.CreateRoleUser(It.IsAny<IRegisterRoleDomain>())).
+                                          ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email))).
             Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUser(It.IsAny<string>())).
-                                      ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueIdentityUser.Email)));
-
-        /// <summary>
-        /// Параметры авторизации
-        /// </summary>
-        private static AuthorizeSettings AuthorizeSettings =>
-            new(8, true, false, true);
+                                      ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email)));
     }
 }

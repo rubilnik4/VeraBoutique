@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Models.Enums.Identity;
+using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Models.Implementations.Environment;
@@ -54,7 +55,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// Подключить сервисы авторизации к базе
         /// </summary>
         public static void RegisterDatabaseIdentities(IServiceCollection services, IConfiguration configuration) =>
-            services.AddIdentity<BoutiqueIdentityUser, IdentityRole>(options =>
+            services.AddIdentity<BoutiqueUserEntity, IdentityRole>(options =>
                 AuthorizeSettingsFactory.GetAuthorizeSettings(configuration).
                 Void(authSettings => options.Password.RequiredLength = authSettings.PasswordRequiredLength).
                 Void(authSettings => options.Password.RequireDigit = authSettings.PasswordRequireDigit).

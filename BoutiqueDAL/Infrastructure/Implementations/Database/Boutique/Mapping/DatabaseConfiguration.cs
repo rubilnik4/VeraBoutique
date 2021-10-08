@@ -2,7 +2,6 @@
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
-using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using Microsoft.EntityFrameworkCore;

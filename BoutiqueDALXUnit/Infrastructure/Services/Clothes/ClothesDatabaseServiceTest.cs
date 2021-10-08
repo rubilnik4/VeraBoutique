@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;

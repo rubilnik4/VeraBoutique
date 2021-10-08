@@ -39,8 +39,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Base
         /// <summary>
         /// Преобразовать доменные модели в модели базы данных
         /// </summary>
-        public IEnumerable<TTransfer> ToTransfers(IEnumerable<TDomain> domains) =>
-            domains.Select(ToTransfer);
+        public IReadOnlyCollection<TTransfer> ToTransfers(IEnumerable<TDomain> domains) =>
+            domains.Select(ToTransfer).ToList();
 
         /// <summary>
         /// Преобразовать в доменную модель

@@ -8,7 +8,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Infrastructure.Implementations.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Implementations.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
@@ -52,8 +52,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static async Task UpdateSchema(IServiceProvider serviceProvider) =>
             await serviceProvider.GetService<IBoutiqueDatabase>()!.
-            UpdateSchema(serviceProvider.GetService<IUserManagerService>()!,
-                         serviceProvider.GetService<IRoleStoreService>()!,
+            UpdateSchema(serviceProvider.GetService<IUserManagerService>()!, serviceProvider.GetService<IRoleStoreService>()!,
                          AuthorizeFactory.DefaultUsers, AuthorizeFactory.RoleNames);
 
         /// <summary>

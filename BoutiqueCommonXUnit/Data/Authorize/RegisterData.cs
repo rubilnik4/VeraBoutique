@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
+using BoutiqueCommon.Models.Enums.Identities;
 
 namespace BoutiqueCommonXUnit.Data.Authorize
 {
@@ -13,11 +15,18 @@ namespace BoutiqueCommonXUnit.Data.Authorize
         /// <summary>
         /// Получить регистрацию
         /// </summary>
-        public static IReadOnlyCollection<IRegisterDomain> RegisterDomains =>
-            new List<IRegisterDomain>
+        public static IReadOnlyCollection<IRegisterRoleDomain> RegisterRoleDomains =>
+            new List<IRegisterRoleDomain>
             {
-                new RegisterDomain(AuthorizeData.AuthorizeDomains.First(), PersonalData.PersonalDomains.First()),
-                new RegisterDomain(AuthorizeData.AuthorizeDomains.Last(), PersonalData.PersonalDomains.Last()),
+                new RegisterRoleDomain(AuthorizeData.AuthorizeDomains.First(), PersonalData.PersonalDomains.First(), IdentityRoleType.User),
+                new RegisterRoleDomain(AuthorizeData.AuthorizeDomains.Last(), PersonalData.PersonalDomains.Last(), IdentityRoleType.Admin),
             };
+
+        /// <summary>
+        /// Получить регистрацию
+        /// </summary>
+        public static IReadOnlyCollection<IRegisterDomain> RegisterDomains =>
+            RegisterRoleDomains;
+
     }
 }
