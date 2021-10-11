@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Identities;
 using Microsoft.AspNetCore.Identity;
 using ResultFunctional.Models.Interfaces.Results;
@@ -10,6 +11,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
     /// </summary>
     public interface IRoleStoreService
     {
+        /// <summary>
+        /// Получить роли
+        /// </summary>
+        Task<IReadOnlyCollection<string>> GetRoles();
+
         /// <summary>
         /// Создать роль
         /// </summary>

@@ -37,5 +37,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Identities
             : base(store, optionAccessor, passwordHasher, userValidators,
                    passwordValidators, keyNormalizer, errors, services, logger)
         { }
+
+        /// <summary>
+        /// Получить пользователей
+        /// </summary>
+        public async Task<IReadOnlyCollection<BoutiqueUserEntity>> GetUsers() =>
+            await Users.ToListAsync();
     }
 }

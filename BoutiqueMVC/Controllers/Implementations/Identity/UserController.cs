@@ -6,11 +6,13 @@ using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +29,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     /// Контроллер пользователей
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = IdentityPolicyType.ADMIN_POLICY)]
     [ApiController]
-    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         public UserController(IUserManagerService userManager, IRegisterTransferConverter registerTransferConverter,
@@ -71,6 +73,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> CreateRoleUser(RegisterTransfer registerTransfer) =>
             await _registerTransferConverter.FromTransfer(registerTransfer).
             ResultValueOk(register => new RegisterRoleDomain(register, IdentityRoleType.User)).

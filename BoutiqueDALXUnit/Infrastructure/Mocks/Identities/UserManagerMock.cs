@@ -25,7 +25,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Identities
         /// Менеджер ролей
         /// </summary>
         public static Mock<IUserManagerBoutique> GetUserManagerRoleUsers(IEnumerable<BoutiqueUserEntity> users,
-                                                                        IEnumerable<string> roles) =>
+                                                                         IEnumerable<string> roles) =>
             GetUserManager(roles, users, null!, null!, null!, null!, null!);
 
         /// <summary>
@@ -68,8 +68,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Identities
                                                                  IdentityResult resultCreate, IdentityResult resultCreateRole,
                                                                  IdentityResult resultDelete, IdentityResult resultDeleteRole) =>
             new Mock<IUserManagerBoutique>().
-            Void(userManagerMock => userManagerMock.Setup(userManager => userManager.Users).
-                                                    Returns(users.AsQueryable().BuildMock().Object)).
+            Void(userManagerMock => userManagerMock.Setup(userManager => userManager.GetUsers()).
+                                                    ReturnsAsync(users.ToList)).
             Void(userManagerMock => userManagerMock.Setup(userManager => userManager.GetRolesAsync(It.IsAny<BoutiqueUserEntity>())).
                                                     ReturnsAsync(roles.ToList)).
             Void(userManagerMock => userManagerMock.Setup(userManager => userManager.FindByEmailAsync(It.IsAny<string>())).

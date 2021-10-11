@@ -53,7 +53,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// Получить пользователей с ролями
         /// </summary>
         public async Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetRoleUsers() =>
-            await _userManager.Users.ToListAsync().
+            await _userManager.GetUsers().
             MapBindAsync(users => users.Select(GetRoleUser).WaitAllInLine()).
             MapTaskAsync(users => (IReadOnlyCollection<IBoutiqueUserDomain>)users);
 

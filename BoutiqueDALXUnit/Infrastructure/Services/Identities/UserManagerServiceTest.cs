@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Implementations.Identities;
+using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Implementations.Identities;
@@ -147,6 +149,28 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
 
             Assert.True(result.OkStatus);
             Assert.Equal(registerRole.Id, result.Value);
+        }
+
+        /// <summary>
+        /// Добавить пользователя
+        /// </summary>
+        [Fact]
+        public async Task CreateRoleUser_ValidateFail()
+        {
+            var authorize = new AuthorizeDomain("rubilnik4", "password1988");
+            var register = new RegisterDomain(authorize, PersonalData.PersonalDomains.First());
+            var registerRole = new RegisterRoleDomain(register, IdentityRoleType.User);
+            var identityError = new IdentityError { Code = IdentityData.DuplicateRoleName };
+            var resultCreate = IdentityResult.Failed(identityError);
+            var resultRole = IdentityResult.Success;
+            var userManager = UserManagerMock.GetUserManagerCreate(resultCreate, resultRole);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityData.IdentitySettings);
+
+            var result = await userManagerService.CreateRoleUser(registerRole);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.Equal(AuthorizeErrorType.Email.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
+using Microsoft.AspNetCore.Identity;
 
 namespace BoutiqueDALXUnit.Data.Identity
 {
@@ -54,6 +55,14 @@ namespace BoutiqueDALXUnit.Data.Identity
         public static IReadOnlyCollection<string> RoleNames =>
             Roles.
             Select(role => role.ToString()).
+            ToList();
+
+        /// <summary>
+        /// Роли
+        /// </summary>
+        public static IReadOnlyCollection<IdentityRole> IdentityRoles =>
+            RoleNames.
+            Select(roleName => new IdentityRole(roleName) { NormalizedName = roleName.ToUpperInvariant() }).
             ToList();
 
         /// <summary>

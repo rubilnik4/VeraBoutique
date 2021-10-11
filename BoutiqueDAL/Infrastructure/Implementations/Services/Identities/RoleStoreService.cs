@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Extensions.Sync.Identity;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
+using BoutiqueDAL.Infrastructure.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -20,7 +23,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
     /// </summary>
     public class RoleStoreService : IRoleStoreService
     {
-        public RoleStoreService(IRoleStore<IdentityRole> roleStore)
+        public RoleStoreService(IRoleStoreBoutique roleStore)
         {
             _roleStore = roleStore;
         }
@@ -28,7 +31,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// <summary>
         /// Хранилище ролей
         /// </summary>
-        private readonly IRoleStore<IdentityRole> _roleStore;
+        private readonly IRoleStoreBoutique _roleStore;
+
+        /// <summary>
+        /// Получить роли
+        /// </summary>
+        public async Task<IReadOnlyCollection<string>> GetRoles() =>
+            await _roleStore.GetRoles().
+            MapTaskAsync(roles => roles.Select(role => role.Name).ToList());
 
         /// <summary>
         /// Создать роль
@@ -37,7 +47,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             await identityRoleType.
             Map(GetIdentityRole).
             MapAsync(CheckDuplicateRole).
-            ResultValueOkBindAsync(identityRole => _roleStore.CreateAsync(identityRole, default)).
+            ResultValueOkBindAsync(identityRole => _roleStore.CreateAsync(identityRole)).
             ResultValueBindOkTaskAsync(identityResult => identityResult.ToIdentityResultValue(identityRoleType));
 
         /// <summary>
@@ -53,7 +63,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// Проверить роль на дублирование
         /// </summary>
         private async Task<IResultValue<IdentityRole>> CheckDuplicateRole(IdentityRole identityRole) =>
-            await _roleStore.FindByNameAsync(identityRole.NormalizedName, default).
+            await _roleStore.FindByNameAsync(identityRole.NormalizedName).
             WhereContinueTaskAsync(roleId => roleId is null,
                                    _ => identityRole.ToResultValue(),
                                    _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, $"Дублирование роли {identityRole.Name}").

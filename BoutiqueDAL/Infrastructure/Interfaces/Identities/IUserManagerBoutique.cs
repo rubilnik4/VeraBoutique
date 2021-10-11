@@ -14,9 +14,9 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Identities
     public interface IUserManagerBoutique
     {
         /// <summary>
-        /// Пользователи
+        /// Получить пользователей
         /// </summary>
-        IQueryable<BoutiqueUserEntity> Users { get; }
+        Task<IReadOnlyCollection<BoutiqueUserEntity>> GetUsers();
 
         /// <summary>
         /// Найти пользователя по почте

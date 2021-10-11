@@ -28,6 +28,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<UserManagerBoutique>();
             services.AddTransient<IUserManagerBoutique, UserManagerBoutique>();
             services.AddTransient<IUserManagerService, UserManagerService>();
+            services.AddTransient<IRoleStoreBoutique, RoleStoreBoutique>();
             services.AddTransient<IRoleStoreService, RoleStoreService>();
             services.AddTransient<ISignInManagerBoutique, SignInManagerBoutique>();
             services.AddTransient<IUserStore<BoutiqueUserEntity>, UserStoreBoutique>();
