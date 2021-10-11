@@ -34,7 +34,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Clothes
         public ClothesController(IClothesDatabaseService clothesDatabaseService,
                                  IClothesMainTransferConverter clothesMainTransferConverter,
                                  IClothesDetailTransferConverter clothesDetailTransferConverter,
-                                 IClothesTransferConverter clothesTransferConverter, 
+                                 IClothesTransferConverter clothesTransferConverter,
                                  IClothesImageTransferConverter clothesImageTransferConverter)
            : base(clothesDatabaseService, clothesMainTransferConverter)
         {

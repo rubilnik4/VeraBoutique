@@ -55,11 +55,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         private readonly ITransferConverter<TId, TDomain, TTransfer> _transferConverter;
 
         /// <summary>
-        /// Допустимый размер передачи файлов
-        /// </summary>
-        private const long POST_MAXIMUM_SIZE = 15_000_000;
-
-        /// <summary>
         /// Базовый метод получения данных
         /// </summary>
         [HttpGet]
@@ -103,7 +98,6 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [RequestSizeLimit(POST_MAXIMUM_SIZE)]
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).
             ResultCollectionBindOkAsync(domains => _databaseDatabaseService.Post(domains)).

@@ -32,6 +32,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
             RegisterValidation = new RegisterValidation(RegisterLoginViewModel, RegisterPersonalViewModel);
             RegisterCommand = ReactiveCommand.CreateFromTask<RegisterValidation, IResultError>(
                                 async registerValidation => await Register(registerValidation, registerRestService));
+            _registerErrors = RegisterCommand.ToProperty(this, nameof(RegisterErrors), scheduler: RxApp.MainThreadScheduler);
         }
 
         /// <summary>
@@ -53,6 +54,17 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// Команда авторизации
         /// </summary>
         public ReactiveCommand<RegisterValidation, IResultError> RegisterCommand { get; }
+
+        /// <summary>
+        /// Ошибки авторизации
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IResultError> _registerErrors;
+
+        /// <summary>
+        /// Ошибки авторизации
+        /// </summary>
+        public IResultError RegisterErrors =>
+            _registerErrors.Value;
 
         /// <summary>
         /// Зарегистрировать

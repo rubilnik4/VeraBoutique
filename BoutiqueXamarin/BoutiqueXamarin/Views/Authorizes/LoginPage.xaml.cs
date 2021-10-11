@@ -54,6 +54,13 @@ namespace BoutiqueXamarin.Views.Authorizes
                      BindTo(this, x => x.PasswordEntry.HasError).
                      DisposeWith(disposable);
 
+                this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
+                     WhereNotNull().
+                     Select(result => result.HasErrors && !result.HasErrorType(AuthorizeErrorType.Email) 
+                                                       && !result.HasErrorType(AuthorizeErrorType.Password)).
+                     BindTo(this, x => x.AuthorizeErrorLabel.IsVisible).
+                     DisposeWith(disposable);
+
                 this.WhenAnyValue(x => x.EmailEntry.Text, x => x.PasswordEntry.Text).
                      Where(_ => AuthorizeErrorLabel.IsVisible).
                      Subscribe(_ => AuthorizeErrorLabel.IsVisible = false).

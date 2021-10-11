@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
+using ResultFunctional.Models.Enums;
+using ResultFunctional.Models.Implementations.Errors.RestErrors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,6 +30,19 @@ namespace BoutiqueXamarin.Views.Authorizes
                      DisposeWith(disposable);
 
                 this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton, x => x.RegisterValidation).
+                     DisposeWith(disposable);
+
+                this.WhenAnyValue(x => x.ViewModel!.RegisterErrors).
+                     WhereNotNull().
+                     Select(result => result.HasError<RestMessageErrorResult>() 
+                                      || result.HasError<RestHostErrorResult>()
+                                      || result.HasError<RestHostErrorResult>()).
+                     BindTo(this, x => x.RegisterErrorLabel.IsVisible).
+                     DisposeWith(disposable);
+
+                this.WhenAnyObservable(x => x.RegisterLoginView.RegisterLoginObservable, 
+                                       x => x.RegisterPersonalView.RegisterLoginObservable).
+                     Subscribe(_ => RegisterErrorLabel.IsVisible = false).
                      DisposeWith(disposable);
             });
         }

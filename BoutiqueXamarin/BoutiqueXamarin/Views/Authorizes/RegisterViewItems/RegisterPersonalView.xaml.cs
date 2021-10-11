@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
@@ -79,5 +80,13 @@ namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
                      DisposeWith(disposable);
             });
         }
+
+        /// <summary>
+        /// Изменение модели личных данных
+        /// </summary>
+        public IObservable<Unit> RegisterLoginObservable =>
+            this.WhenAnyValue(x => x.NameEntry.Text, x => x.SurnameEntry.Text,
+                              x => x.AddressEntry.Text, x => x.PhoneEntry.Text).
+                 Select(_ => Unit.Default);
     }
 }
