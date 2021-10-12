@@ -28,7 +28,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var register = RegisterData.RegisterDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(userId.ToResultValue());
             var registerTransferConverter = RegisterTransferConverterMock.RegisterTransferConverter;
-            var registerRestService = new RegisterRestService(restHttpClient.Object, registerTransferConverter);
+            var registerRestService = new UserRestService(restHttpClient.Object, registerTransferConverter);
 
             var resultId = await registerRestService.Register(register);
 
@@ -47,7 +47,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var register = RegisterData.RegisterDomains.First();
             var restHttpClient = RestClientMock.PostRestClient(userIdResult);
             var registerTransferConverter = RegisterTransferConverterMock.RegisterTransferConverter;
-            var registerRestService = new RegisterRestService(restHttpClient.Object, registerTransferConverter);
+            var registerRestService = new UserRestService(restHttpClient.Object, registerTransferConverter);
 
             var resultId = await registerRestService.Register(register);
 

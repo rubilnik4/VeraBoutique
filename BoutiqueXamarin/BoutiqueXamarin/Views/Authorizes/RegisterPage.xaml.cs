@@ -32,13 +32,21 @@ namespace BoutiqueXamarin.Views.Authorizes
                 this.BindCommand(ViewModel, x => x.RegisterCommand, x => x.RegisterButton, x => x.RegisterValidation).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.ViewModel!.RegisterErrors).
+                var restErrors = this.WhenAnyValue(x => x.ViewModel!.RegisterErrors).
                      WhereNotNull().
-                     Select(result => result.HasError<RestMessageErrorResult>() 
-                                      || result.HasError<RestHostErrorResult>()
-                                      || result.HasError<RestHostErrorResult>()).
+                     Where(result => result.HasError<RestMessageErrorResult>()
+                                     || result.HasError<RestTimeoutErrorResult>()
+
+                                     || result.HasError<RestHostErrorResult>());
+                restErrors.
+                     Select(result => result.HasErrors).
                      BindTo(this, x => x.RegisterErrorLabel.IsVisible).
                      DisposeWith(disposable);
+
+                restErrors.
+                    Select(result=> result.Errors.FirstOrDefault()?.Description ?? "Неверные данные регистрации").
+                    BindTo(this, x => x.RegisterErrorLabel.Text).
+                    DisposeWith(disposable);
 
                 this.WhenAnyObservable(x => x.RegisterLoginView.RegisterLoginObservable, 
                                        x => x.RegisterPersonalView.RegisterLoginObservable).

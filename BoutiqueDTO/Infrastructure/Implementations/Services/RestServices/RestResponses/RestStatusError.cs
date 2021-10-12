@@ -1,10 +1,19 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using BoutiqueDTO.Extensions.Json.Sync;
+using Newtonsoft.Json;
+using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Errors.Base;
 using ResultFunctional.Models.Interfaces.Errors;
 using ResultFunctional.Models.Interfaces.Errors.Base;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses
 {
@@ -16,7 +25,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
         /// <summary>
         /// Преобразовать статус в результирующую ошибку
         /// </summary>
-        public static IErrorResult RestStatusToErrorResult(HttpResponseMessage httpResponse) =>
+        public static async Task<IErrorResult> RestStatusToErrorResult(HttpResponseMessage httpResponse) =>
             httpResponse.StatusCode switch
             {
                 0 =>
@@ -24,12 +33,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
                 HttpStatusCode.BadGateway =>
                     ErrorResultFactory.RestError(RestErrorType.BadGateway, httpResponse, $"Маршрут {httpResponse.RequestMessage.RequestUri} не найден"),
                 HttpStatusCode.BadRequest =>
-                    ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse, $"Некорректный запрос. {httpResponse.ReasonPhrase}"),
-                HttpStatusCode.GatewayTimeout => 
+                    await GetBadRequestError(httpResponse),
+                HttpStatusCode.GatewayTimeout =>
                     ErrorResultFactory.RestError(RestErrorType.GatewayTimeout, httpResponse, "Время ожидания истекло"),
-                HttpStatusCode.InternalServerError => 
+                HttpStatusCode.InternalServerError =>
                     ErrorResultFactory.RestError(RestErrorType.InternalServerError, httpResponse, $"Ошибка сервера. {httpResponse.ReasonPhrase}"),
-                HttpStatusCode.NotFound => 
+                HttpStatusCode.NotFound =>
                     ErrorResultFactory.RestError(RestErrorType.ValueNotFound, httpResponse, $"Элемент не найден. {httpResponse.ReasonPhrase}"),
                 HttpStatusCode.RequestTimeout =>
                     ErrorResultFactory.RestError(RestErrorType.RequestTimeout, httpResponse, "Время ожидания ответа истекло"),
@@ -42,5 +51,23 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
                 _ =>
                     ErrorResultFactory.RestError(RestErrorType.UnknownRestStatus, httpResponse, "Неизвестный статус ответа сервера"),
             };
+
+        /// <summary>
+        /// Получить ошибку запроса
+        /// </summary>
+        private static async Task<IErrorResult> GetBadRequestError(HttpResponseMessage httpResponse) =>
+            await httpResponse.Content.ReadAsStringAsync().
+            MapTaskAsync(content => content.ToTransferValueJson<IDictionary<string, string[]>>()).
+            WhereContinueTaskAsync(result => result.OkStatus,
+                                   result => ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse,
+                                                                          GetBadRequestMessage(result.Value)),
+                                   result => result.Errors.First());
+
+        /// <summary>
+        /// Получить сообщение об ошибке
+        /// </summary>
+        private static string GetBadRequestMessage(IDictionary<string, string[]> errorDictionary) =>
+            errorDictionary.Values.FirstOrDefault()?.FirstOrDefault() ?? String.Empty;
+
     }
 }

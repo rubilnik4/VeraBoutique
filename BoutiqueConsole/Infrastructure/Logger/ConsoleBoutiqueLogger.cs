@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using ResultFunctional.Models.Interfaces.Errors;
 using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Logger
+namespace BoutiqueConsole.Infrastructure.Logger
 {
     /// <summary>
     /// Отображение в консоли
@@ -29,10 +28,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Logger
         /// </summary>
         public void ShowErrors(IEnumerable<IErrorResult> errors)
         {
-            foreach (var error in errors)
-            {
-                Console.WriteLine($@"Ошибка [{error}]. {error.Description}");
-            }
+            foreach (var error in errors) Console.WriteLine($@"Ошибка [{error}]. {error.Description}");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
         public static async Task<IResultValue<string>> ToRestResultAsync(this HttpResponseMessage @this) =>
             @this.IsSuccessStatusCode
                 ? (await @this.Content.ReadAsStringAsync()).Trim('"').ToResultValue()
-                : RestStatusError.RestStatusToErrorResult(@this).ToResultValue<string>();
+                : (await RestStatusError.RestStatusToErrorResult(@this)).ToResultValue<string>();
 
         /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ со значением
@@ -29,7 +29,7 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
             where TValue : notnull =>
             @this.IsSuccessStatusCode
                 ? await @this.Content.ReadAsStringAsync().ToTransferValueJsonAsync<TValue>()
-                : RestStatusError.RestStatusToErrorResult(@this).ToResultValue<TValue>();
+                : (await RestStatusError.RestStatusToErrorResult(@this)).ToResultValue<TValue>();
 
         /// <summary>
         /// Преобразовать ответ сервера в результирующий ответ с коллекцией
@@ -38,6 +38,6 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
             where TValue : notnull =>
               @this.IsSuccessStatusCode
                 ? await @this.Content.ReadAsStringAsync().ToTransferCollectionJsonAsync<TValue>()
-                : RestStatusError.RestStatusToErrorResult(@this).ToResultCollection<TValue>();
+                : (await RestStatusError.RestStatusToErrorResult(@this)).ToResultCollection<TValue>();
     }
 }

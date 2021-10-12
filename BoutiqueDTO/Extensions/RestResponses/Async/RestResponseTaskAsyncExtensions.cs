@@ -41,6 +41,6 @@ namespace BoutiqueDTO.Extensions.RestResponses.Async
         /// </summary>
         public static async Task<IResultError> ToRestResultErrorTaskAsync(this Task<HttpResponseMessage> @this) =>
             await @this.
-            MapTaskAsync(restResponse => restResponse.ToRestResultError());
+            MapBindAsync(restResponse => restResponse.ToRestResultError());
     }
 }

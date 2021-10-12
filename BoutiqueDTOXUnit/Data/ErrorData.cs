@@ -17,24 +17,21 @@ namespace BoutiqueDTOXUnit.Data
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
         public static IErrorResult ErrorTypeBadRequest =>
-            new HttpResponseMessage(HttpStatusCode.BadRequest).
-            Map(response => response.ToRestResultError()).
-            Errors.First();
+            ErrorResultFactory.RestError(RestErrorType.BadRequest, new HttpResponseMessage(HttpStatusCode.BadRequest),
+                                         RestErrorType.BadRequest.ToString());
 
         /// <summary>
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
         public static IErrorResult ErrorTypeAuthorizeError =>
-            new HttpResponseMessage(HttpStatusCode.Unauthorized).
-            Map(response => response.ToRestResultError()).
-            Errors.First();
+            ErrorResultFactory.RestError(RestErrorType.Unauthorized, new HttpResponseMessage(HttpStatusCode.Unauthorized),
+                                         RestErrorType.Unauthorized.ToString());
 
         /// <summary>
         /// Тестовый экземпляр ошибки ответа сервера
         /// </summary>
         public static IErrorResult ErrorTypeInternalError =>
-            new HttpResponseMessage(HttpStatusCode.InternalServerError).
-            Map(response => response.ToRestResultError()).
-            Errors.First();
+             ErrorResultFactory.RestError(RestErrorType.InternalServerError, new HttpResponseMessage(HttpStatusCode.InternalServerError),
+                                         RestErrorType.InternalServerError.ToString());
     }
 }

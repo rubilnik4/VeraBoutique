@@ -116,7 +116,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(
                 () => _httpClient.PutAsync(request, ToStringContent(jsonContent)), GetRestError).
-            ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
+            ResultValueBindErrorsOkBindAsync(response => response.ToRestResultError());
 
         /// <summary>
         /// Удалить данные по идентификатору Api
@@ -131,7 +131,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultError> DeleteCollectionAsync(string request) =>
             await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), GetRestError).
-            ResultValueBindErrorsOkTaskAsync(response => response.ToRestResultError());
+            ResultValueBindErrorsOkBindAsync(response => response.ToRestResultError());
 
         /// <summary>
         /// Получить ошибку сервера по исключению

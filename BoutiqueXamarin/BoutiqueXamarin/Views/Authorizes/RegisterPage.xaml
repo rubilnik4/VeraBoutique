@@ -36,7 +36,6 @@
 
                     <Label x:Name="RegisterErrorLabel"
                            Style="{StaticResource LabelError}"
-                           Text="Неверные данные регистрации"
                            IsVisible="False"
                            HorizontalOptions="CenterAndExpand" />
                     <Button x:Name="RegisterButton"

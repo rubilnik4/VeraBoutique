@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.HttpClients;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers;
@@ -16,13 +15,10 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Interfaces.RestClients;
-using BoutiqueLoader.Factories.Configuration;
-using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
-using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Factories.Services
+namespace BoutiqueConsole.Factories.Services
 {
     /// <summary>
     /// Фабрика создания сервисов для получения и загрузки данных Api
@@ -32,16 +28,14 @@ namespace BoutiqueLoader.Factories.Services
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static async Task<IResultValue<IRestHttpClient>> GetBoutiqueRestClient(IBoutiqueLogger boutiqueLogger) =>
-            await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
-            ResultValueOkTaskAsync(config => HttpClientFactory.GetRestClient(config.HostConfiguration));
+        public static IRestHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration) =>
+            HttpClientFactory.GetRestClient(hostConfiguration);
 
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static async Task<IResultValue<IRestHttpClient>> GetBoutiqueRestClient(string jwtToken, IBoutiqueLogger boutiqueLogger) =>
-            await LoaderConfigurationFactory.GetConfiguration(boutiqueLogger).
-            ResultValueOkTaskAsync(config => HttpClientFactory.GetRestClient(config.HostConfiguration, jwtToken));
+        public static IRestHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration, string jwtToken) =>
+            HttpClientFactory.GetRestClient(hostConfiguration, jwtToken);
 
         /// <summary>
         ///  Получить сервис авторизации

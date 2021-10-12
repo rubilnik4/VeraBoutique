@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Extensions\StringExtensions\" />
     <Folder Include="Infrastructure\Implementation\Calculate\" />
+    <Folder Include="Infrastructure\Implementation\Logger\" />
   </ItemGroup>
 
   <ItemGroup>

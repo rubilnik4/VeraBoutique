@@ -43,7 +43,7 @@ namespace BoutiqueXamarin.DependencyInjection
         private static void RegisterRestServices(IBoutiqueContainer container)
         {
             container.Register<IAuthorizeRestService, AuthorizeRestService>();
-            container.Register<IRegisterRestService, RegisterRestService>();
+            container.Register<IUserRestService, UserRestService>();
             container.Register<IGenderRestService, GenderRestService>();
             container.Register<ICategoryRestService, CategoryRestService>();
             container.Register<IClothesTypeRestService, ClothesTypeRestService>();

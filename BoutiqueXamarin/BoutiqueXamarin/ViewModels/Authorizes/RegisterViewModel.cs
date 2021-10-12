@@ -24,14 +24,14 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// </summary>
     public class RegisterViewModel : NavigationBaseViewModel<RegisterNavigationParameters, IRegisterNavigationService>
     {
-        public RegisterViewModel(IRegisterNavigationService registerNavigationService, IRegisterRestService registerRestService)
+        public RegisterViewModel(IRegisterNavigationService registerNavigationService, IUserRestService userRestService)
             : base(registerNavigationService)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();
             RegisterValidation = new RegisterValidation(RegisterLoginViewModel, RegisterPersonalViewModel);
             RegisterCommand = ReactiveCommand.CreateFromTask<RegisterValidation, IResultError>(
-                                async registerValidation => await Register(registerValidation, registerRestService));
+                                async registerValidation => await Register(registerValidation, userRestService));
             _registerErrors = RegisterCommand.ToProperty(this, nameof(RegisterErrors), scheduler: RxApp.MainThreadScheduler);
         }
 
@@ -69,12 +69,12 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Зарегистрировать
         /// </summary>
-        private static async Task<IResultValue<string>> Register(RegisterValidation registerValidation, IRegisterRestService registerRestService) =>
+        private static async Task<IResultValue<string>> Register(RegisterValidation registerValidation, IUserRestService userRestService) =>
             await registerValidation.ToResultValue().
             ConcatResult(await registerValidation.RegisterLoginViewModel.RegisterLoginCommand.
                          Execute(registerValidation.RegisterLoginViewModel.RegisterLoginValidation).ToTask()).
             ConcatResult(await registerValidation.RegisterPersonalViewModel.RegisterPersonalCommand.
                          Execute(registerValidation.RegisterPersonalViewModel.RegisterPersonalValidation).ToTask()).
-            ResultValueBindOkAsync(register => registerRestService.Register(register.Register));
+            ResultValueBindOkAsync(register => userRestService.Register(register.Register));
     }
 }

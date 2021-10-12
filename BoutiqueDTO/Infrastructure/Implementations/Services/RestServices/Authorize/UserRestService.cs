@@ -15,9 +15,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     /// <summary>
     /// Сервис регистрации
     /// </summary>
-    public class RegisterRestService: RestService<string, IRegisterDomain, RegisterTransfer>, IRegisterRestService
+    public class UserRestService: RestService<string, IRegisterDomain, RegisterTransfer>, IUserRestService
     {
-        public RegisterRestService(IRestHttpClient restHttpClient, IRegisterTransferConverter registerTransferConverter)
+        public UserRestService(IRestHttpClient restHttpClient, IRegisterTransferConverter registerTransferConverter)
         {
             _restHttpClient = restHttpClient;
             _registerTransferConverter = registerTransferConverter;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
+using BoutiqueConsole.Factories.Services;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
-using BoutiqueLoader.Factories.Configuration;
-using BoutiqueLoader.Factories.Services;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -13,7 +13,7 @@ using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorize
+namespace BoutiqueConsole.Infrastructure.Services.Authorize
 {
     /// <summary>
     /// Авторизация в сервисе одежды
@@ -23,27 +23,23 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Authorize
         /// <summary>
         /// Получить логин и токен
         /// </summary>
-        public static async Task<IResultValue<string>> AuthorizeJwt(IBoutiqueLogger boutiqueLogger) =>
-            await BoutiqueAuthorizeFunc(boutiqueLogger).
-            ResultValueCurryOkAsync(BoutiqueRestServiceFactory.GetBoutiqueRestClient(boutiqueLogger)).
-            ResultValueCurryOkBindAsync(AuthorizeConfigurationFactory.GetConfiguration(boutiqueLogger)).
-            ResultValueBindOkBindAsync(func => func());
-
-        /// <summary>
-        /// Функция авторизации
-        /// </summary>
-        private static IResultValue<Func<IRestHttpClient, IAuthorizeDomain, Task<IResultValue<string>>>> BoutiqueAuthorizeFunc(IBoutiqueLogger boutiqueLogger) =>
-            new ResultValue<Func<IRestHttpClient, IAuthorizeDomain, Task<IResultValue<string>>>>((restClient, authorizeDomain) =>
-                Authorize(restClient, authorizeDomain, boutiqueLogger));
+        public static async Task<IResultValue<IRestHttpClient>> AuthorizeJwt(IBoutiqueLogger boutiqueLogger,
+                                                                             IHostConfigurationDomain hostConfiguration,
+                                                                             IAuthorizeDomain authorize) =>
+            await BoutiqueRestServiceFactory.GetBoutiqueRestClient(hostConfiguration).
+            MapAsync(restClient => Authorize(restClient, hostConfiguration, authorize, boutiqueLogger));
 
         /// <summary>
         /// Авторизироваться с помощью токена
         /// </summary>
-        private static async Task<IResultValue<string>> Authorize(IRestHttpClient restClient, IAuthorizeDomain authorizeDomain,
-                                                                  IBoutiqueLogger boutiqueLogger) =>
+        private static async Task<IResultValue<IRestHttpClient>> Authorize(IRestHttpClient restClient, IHostConfigurationDomain hostConfiguration,
+                                                                           IAuthorizeDomain authorizeDomain, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetAuthorizeRestService(restClient).ToResultValue().
             ResultValueBindOkAsync(service => service.AuthorizeJwt(authorizeDomain).
-                                              VoidTaskAsync(token => LogAuthorize(token, service, boutiqueLogger)));
+                                              VoidTaskAsync(token => LogAuthorize(token, service, boutiqueLogger))).
+            ResultValueOkTaskAsync(token => BoutiqueRestServiceFactory.GetBoutiqueRestClient(hostConfiguration, token));
+
+       
 
         /// <summary>
         /// Логгирование авторизации

@@ -7,7 +7,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize
     /// <summary>
     /// Сервис регистрации
     /// </summary>
-    public interface IRegisterRestService
+    public interface IUserRestService
     {
         /// <summary>
         /// Зарегистрироваться в сервисе

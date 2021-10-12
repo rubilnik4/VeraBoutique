@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
@@ -18,14 +19,14 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         /// Преобразование в результирующий ответ
         /// </summary>
         [Fact]
-        public void ToRestResultError()
+        public async Task ToRestResultError()
         {
             var restResult = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.NoContent,
             };
 
-            var resultCollection = restResult.ToRestResultError();
+            var resultCollection = await restResult.ToRestResultError();
 
             Assert.True(resultCollection.OkStatus);
         }
@@ -34,14 +35,14 @@ namespace BoutiqueDTOXUnit.Extensions.RestResponses.Sync
         /// Преобразование в результирующий ответ. Ошибка
         /// </summary>
         [Fact]
-        public void ToRestResultError_Error()
+        public async Task ToRestResultError_Error()
         {
             var restResult = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.InternalServerError,
             };
 
-            var resultCollection = restResult.ToRestResultError();
+            var resultCollection = await restResult.ToRestResultError();
 
             Assert.True(resultCollection.HasErrors);
             Assert.IsType<RestMessageErrorResult>(resultCollection.Errors.First());
