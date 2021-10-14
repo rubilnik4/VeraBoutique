@@ -116,7 +116,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Удалить модель из базы по идентификатору
         /// </summary>
-        public async Task<IResultValue<TDomain>> Delete(TId id) =>
+        public async Task<IResultValue<TId>> Delete(TId id) =>
             await _dataTable.FindExpressionAsync(entities => entities.FirstOrDefaultAsync(_dataTable.IdPredicate(id)).
                                                              MapTaskAsync(entity => (TEntity?)entity),
                                                  id).
@@ -147,9 +147,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
-        private async Task<IResultValue<TDomain>> DeleteWithSaving(TEntity entity) =>
+        private async Task<IResultValue<TId>> DeleteWithSaving(TEntity entity) =>
             await _dataTable.Remove(entity).
-            ResultValueBindOk(_mainEntityConverter.FromEntity).
+            ResultValueOk(_ => entity.Id).
             ResultValueBindErrorsOkAsync(_ => DatabaseSaveChanges());
 
         /// <summary>

@@ -448,15 +448,16 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task DeleteByIdAsync_Ok()
         {
             var test = TestTransferData.TestTransfers.First();
-            var resultTest = new ResultValue<TestTransfer>(test);
-            var restClient = RestClientMock.DeleteRestClient(resultTest);
+            var testId = test.Id;
+            var resultTestId = new ResultValue<TestEnum>(testId);
+            var restClient = RestClientMock.DeleteRestClient(resultTestId);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);
 
             var result = await testRestService.DeleteAsync(test.Id);
 
             Assert.True(result.OkStatus);
-            Assert.True(result.Value.Equals(test));
+            Assert.True(result.Value.Equals(testId));
         }
 
         /// <summary>
@@ -467,7 +468,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         {
             var test = TestTransferData.TestTransfers.First();
             var error = ErrorTransferData.ErrorTypeBadRequest;
-            var resultTest = new ResultValue<TestTransfer>(error);
+            var resultTest = new ResultValue<TestEnum>(error);
             var restClient = RestClientMock.DeleteRestClient(resultTest);
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient.Object, testTransferConverter);

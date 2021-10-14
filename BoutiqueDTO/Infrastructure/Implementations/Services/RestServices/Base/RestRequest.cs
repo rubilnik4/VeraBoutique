@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Extensions.StringExtensions;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
-using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Routes.Clothes;
 using ResultFunctional.FunctionalExtensions.Sync;
 
-namespace BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base
+namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
 {
     /// <summary>
     /// Запросы к серверу

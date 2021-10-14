@@ -23,9 +23,8 @@ namespace BoutiqueConsole.Infrastructure.Services.Authorize
         /// <summary>
         /// Получить логин и токен
         /// </summary>
-        public static async Task<IResultValue<IRestHttpClient>> AuthorizeJwt(IBoutiqueLogger boutiqueLogger,
-                                                                             IHostConfigurationDomain hostConfiguration,
-                                                                             IAuthorizeDomain authorize) =>
+        public static async Task<IResultValue<IRestHttpClient>> AuthorizeJwt(IHostConfigurationDomain hostConfiguration,
+                                                                             IAuthorizeDomain authorize, IBoutiqueLogger boutiqueLogger) =>
             await BoutiqueRestServiceFactory.GetBoutiqueRestClient(hostConfiguration).
             MapAsync(restClient => Authorize(restClient, hostConfiguration, authorize, boutiqueLogger));
 

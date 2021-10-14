@@ -27,7 +27,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<TestEnum, IResultValue<ITestDomain>> deleteFunc) =>
+                                                                      Func<TestEnum, IResultValue<TestEnum>> deleteFunc) =>
             GetTestDatabaseTable(testDomains, deleteFunc, DeleteAllOk);
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<TestEnum, IResultValue<ITestDomain>> deleteFunc,
+                                                                      Func<TestEnum, IResultValue<TestEnum>> deleteFunc,
                                                                       IResultError deleteAllResult) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Get()).ReturnsAsync(testDomains)).
@@ -57,14 +57,14 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// <summary>
         /// Функция удаления по идентификатору
         /// </summary>
-        public static Func<TestEnum, IResultValue<ITestDomain>> DeleteOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            id => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, id));
+        public static Func<TestEnum, IResultValue<TestEnum>> DeleteOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            id => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, id).Id);
 
         /// <summary>
         /// Функция удаления по идентификатору.Элемент не найден
         /// </summary>
-        public static Func<TestEnum, IResultValue<ITestDomain>> DeleteNotFoundFunc() =>
-            _ => ErrorData.ErrorNotFound.ToResultValue<ITestDomain>();
+        public static Func<TestEnum, IResultValue<TestEnum>> DeleteNotFoundFunc() =>
+            _ => ErrorData.ErrorNotFound.ToResultValue<TestEnum>();
 
     }
 }

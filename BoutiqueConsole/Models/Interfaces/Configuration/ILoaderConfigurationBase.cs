@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Common.Interfaces.Base;
 using BoutiqueCommon.Models.Common.Interfaces.Configuration;
 
-namespace BoutiqueLoader.Models.Interfaces.Configuration
+namespace BoutiqueConsole.Models.Interfaces.Configuration
 {
     /// <summary>
     /// Конфигурация консольного загрузчика 

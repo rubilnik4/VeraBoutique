@@ -65,6 +65,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             ResultValueOkBindAsync(GetRoleUser);
 
         /// <summary>
+        /// Получить пользователей по роли
+        /// </summary>
+        public async Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetUsersByRole(IdentityRoleType identityRoleType) =>
+            await _userManager.GetUsersInRoleAsync(RoleStoreService.NormalizeRoleName(identityRoleType)).
+            MapTaskAsync(users => users.Select(user => user.ToBoutiqueUser(identityRoleType))).
+            MapTaskAsync(users => (IReadOnlyCollection<IBoutiqueUserDomain>)users);
+
+        /// <summary>
         /// Зарегистрироваться
         /// </summary>
         public async Task<IResultValue<string>> CreateRoleUser(IRegisterRoleDomain registerRole) =>
@@ -85,6 +93,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         public async Task<IResultValue<string>> DeleteRoleUser(IBoutiqueUserDomain user) =>
             await BoutiqueRoleUser.GetBoutiqueUser(user).
             MapAsync(DeleteRoleUser);
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        public async Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users) =>
+            await users.
+            Select(DeleteRoleUser).
+            WaitAllInLine().
+            ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Получить роли для пользователя

@@ -65,8 +65,6 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
     <Folder Include="Factories\Services\" />
-    <Folder Include="Infrastructure\Implementations\Logger\" />
-    <Folder Include="Infrastructure\Implementations\Services\Authorize\" />
     <Folder Include="Models\Enums\" />
   </ItemGroup>
 

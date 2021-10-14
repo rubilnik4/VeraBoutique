@@ -7,7 +7,6 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Extensions.RestResponses.Async;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;

@@ -6,7 +6,6 @@ using BoutiqueCommon.Extensions.StringExtensions;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Extensions.Json.Sync;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
@@ -107,8 +106,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         /// <summary>
         /// Удалить данные по идентификатору асинхронно
         /// </summary>
-        public async Task<IResultValue<TDomain>> DeleteAsync(TId id) =>
-            await RestHttpClient.DeleteValueAsync<TTransfer>(RestRequest.GetRequest(id, ControllerName)).
-            ResultValueBindOkTaskAsync(transfer => _transferConverter.FromTransfer(transfer));
+        public async Task<IResultValue<TId>> DeleteAsync(TId id) =>
+            await RestHttpClient.DeleteValueAsync<TId>(RestRequest.GetRequest(id, ControllerName));
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BoutiqueCommon.Infrastructure.Implementation.Logger;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueConsole.Infrastructure.Logger;
 using BoutiqueUserManagement.Infrastructure.Implementations.Services;
 
 namespace BoutiqueUserManagement
@@ -12,6 +12,6 @@ namespace BoutiqueUserManagement
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await BoutiqueUserService.DeleteUsers(new ConsoleBoutiqueLogger());
+           await BoutiqueUserService.DeleteUsersAuthorize(new ConsoleBoutiqueLogger());
     }
 }

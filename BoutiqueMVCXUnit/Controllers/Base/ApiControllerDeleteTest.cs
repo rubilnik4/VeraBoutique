@@ -73,9 +73,8 @@ namespace BoutiqueMVCXUnit.Controllers.Base
             var testController = new TestController(testService.Object, testTransferConverter);
 
             var actionResult = await testController.Delete(testDeleteId);
-            var testsAfter = testTransferConverter.FromTransfer(actionResult.Value);
 
-            Assert.True(testsAfter.Value.Equals(testDelete));
+            Assert.Equal(testDeleteId, actionResult.Value);
         }
 
         /// <summary>

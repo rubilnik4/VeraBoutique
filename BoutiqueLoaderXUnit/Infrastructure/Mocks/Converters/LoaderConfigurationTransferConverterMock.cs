@@ -1,6 +1,6 @@
-﻿using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Configuration;
-using BoutiqueLoader.Infrastructure.Implementations.Converters;
-using BoutiqueLoader.Infrastructure.Interfaces.Converters;
+﻿using BoutiqueConsole.Infrastructure.Implementations.Converters;
+using BoutiqueConsole.Infrastructure.Interfaces.Converters;
+using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Configuration;
 
 namespace BoutiqueLoaderXUnit.Infrastructure.Mocks.Converters
 {

@@ -2,7 +2,7 @@
 using BoutiqueDTO.Models.Implementations.Configuration;
 using BoutiqueDTO.Models.Interfaces.Base;
 
-namespace BoutiqueLoader.Models.Interfaces.Configuration
+namespace BoutiqueConsole.Models.Interfaces.Configuration
 {
     /// <summary>
     /// Конфигурация консольного загрузчика. Трансферная модель

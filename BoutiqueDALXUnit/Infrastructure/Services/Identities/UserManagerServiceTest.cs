@@ -331,5 +331,65 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             Assert.True(result.HasErrors);
             Assert.IsAssignableFrom<IValueNotFoundErrorResult>(result.Errors.First());
         }
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsers()
+        {
+            var users = IdentityData.BoutiqueUsers;
+            var resultDelete = IdentityResult.Success;
+            var resultRole = IdentityResult.Success;
+            var roleNames = IdentityData.RoleNames;
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityData.IdentitySettings);
+
+            var result = await userManagerService.DeleteRoleUsers(users);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsers_DeleteFail()
+        {
+            var users = IdentityData.BoutiqueUsers;
+            var identityError = new IdentityError { Code = IdentityData.DuplicateRoleName };
+            var resultDelete = IdentityResult.Failed(identityError);
+            var resultRole = IdentityResult.Success;
+            var roleNames = IdentityData.RoleNames;
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityData.IdentitySettings);
+
+            var result = await userManagerService.DeleteRoleUsers(users);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+        }
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsers_RoleFail()
+        {
+            var users = IdentityData.BoutiqueUsers;
+            var identityError = new IdentityError { Code = IdentityData.DuplicateRoleName };
+            var resultDelete = IdentityResult.Success;
+            var resultRole = IdentityResult.Failed(identityError);
+            var roleNames = IdentityData.RoleNames;
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityData.IdentitySettings);
+
+            var result = await userManagerService.DeleteRoleUsers(users);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+        }
     }
 }

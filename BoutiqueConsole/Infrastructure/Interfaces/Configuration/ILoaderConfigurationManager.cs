@@ -1,8 +1,8 @@
 ﻿using System;
+using BoutiqueConsole.Models.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
 
-namespace BoutiqueLoader.Infrastructure.Interfaces.Configuration
+namespace BoutiqueConsole.Infrastructure.Interfaces.Configuration
 {
     /// <summary>
     /// Доступ к файлам конфигурации консольного приложения

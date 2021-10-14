@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Extensions.Json.Sync;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
@@ -40,5 +40,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
             await _registerTransferConverter.ToTransfer(registerDomain).
             ToJsonTransfer().
             ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        public async Task<IResultError> DeleteUsers() =>
+             await _restHttpClient.DeleteCollectionAsync(RestRequest.PostRequest(ControllerName));
+
     }
 }

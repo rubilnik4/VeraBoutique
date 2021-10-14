@@ -1,15 +1,9 @@
-﻿using System;
-using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
-using BoutiqueCommon.Models.Domain.Interfaces.Identities;
+﻿using BoutiqueCommon.Models.Domain.Interfaces.Identities;
+using BoutiqueConsole.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Configuration;
 using BoutiqueDTO.Models.Implementations.Identities;
-using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
-using BoutiqueLoader.Infrastructure.Interfaces.Converters;
-using BoutiqueLoader.Models.Implementations.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
+namespace BoutiqueConsole.Infrastructure.Implementations.Configuration
 {
     /// <summary>
     /// Доступ к файлам авторизации консольного приложения

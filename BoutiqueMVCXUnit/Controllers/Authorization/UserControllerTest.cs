@@ -18,6 +18,7 @@ using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
+using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 
@@ -143,6 +144,49 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         }
 
         /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsers()
+        {
+            var deleteResult = new ResultError();
+            var users = IdentityData.BoutiqueUsers;
+            var userManager = GetUserManager(deleteResult, users);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                    BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
+
+            var actionResult = await userController.DeleteRoleUsers();
+
+            Assert.IsType<NoContentResult>(actionResult);
+            var noContentResult = (NoContentResult)actionResult;
+            Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsers_Error()
+        {
+            var initialError = ErrorResultFactory.DatabaseAccessError("TestTable", "TestTable");
+            var deleteResult = initialError.ToResult();
+            var users = IdentityData.BoutiqueUsers;
+            var userManager = GetUserManager(deleteResult, users);
+            var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                    BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
+
+            var actionResult = await userController.DeleteRoleUsers();
+
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(initialError.Id, errors.Keys.First());
+        }
+
+
+        /// <summary>
         /// Менеджер авторизации
         /// </summary>
         private static Mock<IUserManagerService> GetUserManager(IReadOnlyCollection<IBoutiqueUserDomain> users) =>
@@ -159,5 +203,15 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
                                           ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email))).
             Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUser(It.IsAny<string>())).
                                       ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email)));
+
+        /// <summary>
+        /// Менеджер авторизации
+        /// </summary>
+        private static Mock<IUserManagerService> GetUserManager(IResultError deleteResult, IReadOnlyCollection<IBoutiqueUserDomain> users) =>
+            new Mock<IUserManagerService>().
+            Void(userMock => userMock.Setup(userManager => userManager.GetUsersByRole(It.IsAny<IdentityRoleType>())).
+                                            ReturnsAsync(users)).
+            Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUsers(It.IsAny<IEnumerable<IBoutiqueUserDomain>>())).
+                                      ReturnsAsync(deleteResult));
     }
 }

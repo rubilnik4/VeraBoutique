@@ -72,7 +72,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// <summary>
         /// Нормализовать имя роли
         /// </summary>
-        private static string NormalizeRoleName(string roleName) =>
+        public static string NormalizeRoleName(IdentityRoleType identityRoleType) =>
+            NormalizeRoleName(identityRoleType.ToString());
+
+        /// <summary>
+        /// Нормализовать имя роли
+        /// </summary>
+        public static string NormalizeRoleName(string roleName) =>
             roleName.ToUpperInvariant();
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BoutiqueLoader.Models.Implementations.Configuration;
+using BoutiqueConsole.Models.Implementations.Configuration;
 using BoutiqueLoaderXUnit.Data.Transfers.Configuration;
 using BoutiqueLoaderXUnit.Infrastructure.Mocks.Converters;
 using ResultFunctional.Models.Enums;

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Extensions.Json.Sync;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;

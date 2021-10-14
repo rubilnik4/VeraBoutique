@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 
-namespace BoutiqueLoader.Models.Interfaces.Configuration
+namespace BoutiqueConsole.Models.Interfaces.Configuration
 {
     /// <summary>
     /// Конфигурация консольного загрузчика. Доменная модель

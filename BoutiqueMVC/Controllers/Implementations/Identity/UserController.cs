@@ -81,14 +81,26 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
             ToActionResultValueTaskAsync();
 
         /// <summary>
-        /// Удалить пользователя
+        /// Удалить пользователей
         /// </summary>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteRoleUsers() =>
+            await _userManager.GetUsersByRole(IdentityRoleType.User).
+            MapBindAsync(users => _userManager.DeleteRoleUsers(users)).
+            ToNoContentActionResultTaskAsync();
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        [HttpDelete("{email}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> DeleteRoleUser(string email) =>
-            await  _userManager.DeleteRoleUser(email).
+            await _userManager.DeleteRoleUser(email).
             ToActionResultValueTaskAsync();
     }
 }

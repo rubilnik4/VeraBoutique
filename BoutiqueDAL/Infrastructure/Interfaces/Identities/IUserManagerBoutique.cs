@@ -24,6 +24,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Identities
         Task<BoutiqueUserEntity> FindByEmailAsync(string email);
 
         /// <summary>
+        /// получить пользователей по роли
+        /// </summary>
+        Task<IList<BoutiqueUserEntity>> GetUsersInRoleAsync(string roleName);
+
+        /// <summary>
         /// Создать пользователя
         /// </summary>
         Task<IdentityResult> CreateAsync(BoutiqueUserEntity userEntity);

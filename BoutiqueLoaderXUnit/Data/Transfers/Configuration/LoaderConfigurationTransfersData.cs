@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BoutiqueConsole.Models.Implementations.Configuration;
 using BoutiqueDTO.Models.Implementations.Configuration;
-using BoutiqueLoader.Models.Implementations.Configuration;
 
 namespace BoutiqueLoaderXUnit.Data.Transfers.Configuration
 {

@@ -1,17 +1,14 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
-using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
+using BoutiqueConsole.Infrastructure.Implementations.Configuration;
+using BoutiqueConsole.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
-using BoutiqueLoader.Infrastructure.Implementations.Configuration;
-using BoutiqueLoader.Infrastructure.Implementations.Converters;
-using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Factories.Configuration
+namespace BoutiqueConsole.Factories.Configuration
 {
     /// <summary>
     /// Фабрика для создания доступа к файлам авторизации консольного приложения

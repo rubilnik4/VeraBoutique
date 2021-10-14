@@ -3,13 +3,12 @@ using System.IO;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Configuration;
-using BoutiqueDTO.Infrastructure.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Sync;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
+namespace BoutiqueConsole.Infrastructure.Implementations.Configuration
 {
     public abstract class ConsoleConfigurationManager<TId, TDomain, TTransfer> : ConfigurationManager<TId, TDomain, TTransfer>
         where TDomain : IDomainModel<TId>

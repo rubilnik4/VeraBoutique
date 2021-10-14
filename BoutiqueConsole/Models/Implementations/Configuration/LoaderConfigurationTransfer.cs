@@ -1,8 +1,8 @@
-﻿using BoutiqueDTO.Models.Implementations.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
+﻿using BoutiqueConsole.Models.Interfaces.Configuration;
+using BoutiqueDTO.Models.Implementations.Configuration;
 using Newtonsoft.Json;
 
-namespace BoutiqueLoader.Models.Implementations.Configuration
+namespace BoutiqueConsole.Models.Implementations.Configuration
 {
     /// <summary>
     /// Конфигурация консольного загрузчика . Трансферная модель

@@ -72,7 +72,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var resultEntity = await testService.Delete(testDelete.Id);
 
             Assert.True(resultEntity.OkStatus);
-            Assert.True(testDelete.Equals(resultEntity.Value));
+            Assert.Equal(testDelete.Id, resultEntity.Value);
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
+using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Routes.Clothes;
 using Xunit;
 

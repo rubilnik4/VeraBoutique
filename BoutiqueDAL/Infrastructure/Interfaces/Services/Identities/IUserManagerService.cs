@@ -24,9 +24,14 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         Task<IResultValue<IBoutiqueUserDomain>> FindRoleUserByEmail(string email);
 
         /// <summary>
+        /// Получить пользователей по роли
+        /// </summary>
+        Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetUsersByRole(IdentityRoleType identityRoleType);
+
+        /// <summary>
         /// Создать пользователя
         /// </summary>
-        Task<IResultValue<string>> CreateRoleUser(IRegisterRoleDomain registerRole);
+        Task <IResultValue<string>> CreateRoleUser(IRegisterRoleDomain registerRole);
 
         /// <summary>
         /// Удалить пользователя
@@ -37,5 +42,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         /// Удалить пользователя
         /// </summary>
         Task<IResultValue<string>> DeleteRoleUser(IBoutiqueUserDomain user);
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users);
     }
 }

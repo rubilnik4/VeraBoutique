@@ -3,7 +3,6 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
 using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueDTO.Infrastructure.Implementations.Services.Api.Base;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;

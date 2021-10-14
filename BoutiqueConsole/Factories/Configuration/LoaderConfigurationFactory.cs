@@ -1,17 +1,15 @@
 ﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueConsole.Infrastructure.Implementations.Configuration;
+using BoutiqueConsole.Infrastructure.Implementations.Converters;
+using BoutiqueConsole.Infrastructure.Interfaces.Configuration;
+using BoutiqueConsole.Models.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
-using BoutiqueLoader.Infrastructure.Implementations.Configuration;
-using BoutiqueLoader.Infrastructure.Implementations.Converters;
-using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
-using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Factories.Configuration
+namespace BoutiqueConsole.Factories.Configuration
 {
     /// <summary>
     /// Фабрика для создания доступа к файлам конфигурации консольного приложения

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.IO;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using BoutiqueDTO.Infrastructure.Implementations.Configuration;
-using BoutiqueLoader.Infrastructure.Interfaces.Configuration;
-using BoutiqueLoader.Infrastructure.Interfaces.Converters;
-using BoutiqueLoader.Models.Implementations.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
-using ResultFunctional.FunctionalExtensions.Async;
-using ResultFunctional.FunctionalExtensions.Sync;
+using BoutiqueConsole.Infrastructure.Interfaces.Configuration;
+using BoutiqueConsole.Infrastructure.Interfaces.Converters;
+using BoutiqueConsole.Models.Implementations.Configuration;
+using BoutiqueConsole.Models.Interfaces.Configuration;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Configuration
+namespace BoutiqueConsole.Infrastructure.Implementations.Configuration
 {
     /// <summary>
     /// Доступ к файлам конфигурации консольного приложения

@@ -56,6 +56,13 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Identities
         /// <summary>
         /// Менеджер ролей
         /// </summary>
+        public static Mock<IUserManagerBoutique> GetUserManagerDeletes(IdentityResult resultDelete, IdentityResult resultRole,
+                                                                      IEnumerable<string> roles) =>
+            GetUserManager(roles, Enumerable.Empty<BoutiqueUserEntity>(), null!, null!, null!, resultDelete, resultRole);
+
+        /// <summary>
+        /// Менеджер ролей
+        /// </summary>
         public static Mock<IUserManagerBoutique> GetUserManagerDelete(IdentityResult resultDelete, IdentityResult resultRole,
                                                                       IEnumerable<string> roles, BoutiqueUserEntity userEntity) =>
             GetUserManager(roles, Enumerable.Empty<BoutiqueUserEntity>(), userEntity, null!, null!, resultDelete, resultRole);

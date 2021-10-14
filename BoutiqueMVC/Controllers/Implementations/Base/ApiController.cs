@@ -11,7 +11,6 @@ using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Base;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Routes.Clothes;
-using BoutiqueMVC.Controllers.Interfaces.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Controller;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -31,8 +30,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = IdentityPolicyType.ADMIN_POLICY)]
     [ApiController]
-    public abstract class ApiController<TId, TDomain, TTransfer> : 
-        ControllerBase, IApiController<TId, TTransfer>
+    public abstract class ApiController<TId, TDomain, TTransfer> : ControllerBase
         where TDomain : IDomainModel<TId>
         where TTransfer : class, ITransferModel<TId>
         where TId : notnull
@@ -134,9 +132,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TTransfer>> Delete(TId id) =>
+        public async Task<ActionResult<TId>> Delete(TId id) =>
             await _databaseDatabaseService.Delete(id).
-            ResultValueOkTaskAsync(_transferConverter.ToTransfer).
-            ToActionResultValueTaskAsync<TId, TTransfer>();
+            ToActionResultValueTaskAsync();
     }
 }

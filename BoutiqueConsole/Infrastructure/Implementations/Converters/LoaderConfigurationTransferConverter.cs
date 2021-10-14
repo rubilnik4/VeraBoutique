@@ -1,15 +1,15 @@
 ﻿using System;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
+using BoutiqueConsole.Infrastructure.Interfaces.Converters;
+using BoutiqueConsole.Models.Implementations.Configuration;
+using BoutiqueConsole.Models.Interfaces.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
-using BoutiqueLoader.Infrastructure.Interfaces.Converters;
-using BoutiqueLoader.Models.Implementations.Configuration;
-using BoutiqueLoader.Models.Interfaces.Configuration;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Converters
+namespace BoutiqueConsole.Infrastructure.Implementations.Converters
 {
     /// <summary>
     /// Конвертер конфигурации консольного загрузчика в трансферную модель
