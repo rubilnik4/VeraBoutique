@@ -16,7 +16,7 @@ namespace BoutiqueConsole.Factories.Services
         /// </summary>
         public static IUserRestService GetUserRestService(IRestHttpClient restHttpClient) =>
              new UserRestService(restHttpClient, new RegisterTransferConverter(new AuthorizeTransferConverter(),
-                                                                               new PersonalTransferConverter()));
-
+                                                                               new PersonalTransferConverter()),
+                                 new BoutiqueUserTransferConverter());
     }
 }

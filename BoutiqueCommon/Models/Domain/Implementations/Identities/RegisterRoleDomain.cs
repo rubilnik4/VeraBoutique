@@ -16,5 +16,12 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Identities
         public RegisterRoleDomain(IAuthorizeDomain authorize, IPersonalDomain personal, IdentityRoleType identityRoleType)
             : base(authorize, personal, identityRoleType)
         { }
+
+        /// <summary>
+        /// Преобразовать в пользователя
+        /// </summary>
+        public IBoutiqueUserDomain ToBoutiqueUser() =>
+            new BoutiqueUserDomain(Authorize.Email, Authorize.Email, IdentityRoleType,
+                                   Personal.Name, Personal.Surname, Personal.Address, Personal.Phone);
     }
 }

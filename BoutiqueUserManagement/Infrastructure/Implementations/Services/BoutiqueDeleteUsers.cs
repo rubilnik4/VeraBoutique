@@ -18,7 +18,7 @@ namespace BoutiqueUserManagement.Infrastructure.Implementations.Services
         /// <summary>
         /// Удалить пользователей
         /// </summary>
-        public static async Task<IResultError> DeleteData(IRestHttpClient httpClient, IBoutiqueLogger boutiqueLogger) =>
+        public static async Task<IResultError> DeleteUsers(IRestHttpClient httpClient, IBoutiqueLogger boutiqueLogger) =>
             await httpClient.ToResultValue().
             Void(_ => boutiqueLogger.ShowMessage("Удаление пользователей")).
             ResultValueOk(UserRestServiceFactory.GetUserRestService).

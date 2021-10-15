@@ -4,9 +4,12 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.GenderTransfers;
+using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
+using Microsoft.AspNetCore.Mvc;
 using ResultFunctional.Models.Enums;
 using Newtonsoft.Json;
+using ResultFunctional.Models.Implementations.Errors.ConversionErrors;
 using Xunit;
 
 namespace BoutiqueDTOXUnit.Extensions.Json.Sync
@@ -48,6 +51,50 @@ namespace BoutiqueDTOXUnit.Extensions.Json.Sync
             Assert.True(genderTransferAfter.OkStatus);
             Assert.True(genderTransferAfter.Value.SequenceEqual(genderTransfer));
             Assert.True(genderJsonAfter.Value.Equals(genderJson));
+        }
+
+        /// <summary>
+        /// Проверка схемы
+        /// </summary>
+        [Fact]
+        public void JsonScheme()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var json = test.ToJsonTransfer();
+            const string jsonScheme =
+            @"{
+              'type': 'object',
+              'properties': {
+                  'TestEnum': {'type':'integer'},
+                  'Name': {'type': 'string'},
+              }
+            }";
+
+            var resultValid = json.Value.IsJsonSchemeValid(jsonScheme);
+
+            Assert.True(resultValid);
+        }
+
+        /// <summary>
+        /// Проверка схемы
+        /// </summary>
+        [Fact]
+        public void JsonScheme_Error()
+        {
+            var test = TestTransferData.TestTransfers.First();
+            var json = test.ToJsonTransfer();
+            const string jsonScheme =
+            @"{
+              'type': 'object',
+              'properties': {
+                  'TestEnum': {'type':'string'},
+                  'Name': {'type': 'string'},
+              }
+            }";
+
+            var resultValid = json.Value.IsJsonSchemeValid(jsonScheme);
+
+            Assert.False(resultValid);
         }
     }
 }

@@ -5,9 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
+using BoutiqueDTO.Infrastructure.Implementations.Scheme;
 using Newtonsoft.Json;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Errors.Base;
@@ -57,11 +59,18 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
         /// </summary>
         private static async Task<IErrorResult> GetBadRequestError(HttpResponseMessage httpResponse) =>
             await httpResponse.Content.ReadAsStringAsync().
-            MapTaskAsync(content => content.ToTransferValueJson<IDictionary<string, string[]>>()).
-            WhereContinueTaskAsync(result => result.OkStatus,
-                                   result => ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse,
-                                                                          GetBadRequestMessage(result.Value)),
-                                   result => result.Errors.First());
+            WhereContinueTaskAsync(content => content.IsJsonSchemeValid(JsonSchemes.BadRequestJsonScheme),
+                                   content => ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse, $"Некорректный запрос. {httpResponse.ReasonPhrase}"),
+                                   content => GetBadRequestError(content, httpResponse));
+
+        /// <summary>
+        /// Получить ошибку запроса
+        /// </summary>
+        private static IErrorResult GetBadRequestError(string content, HttpResponseMessage httpResponse) =>
+            content.ToTransferValueJson<IDictionary<string, string[]>>().
+            WhereContinue(result => result.OkStatus,
+                                    result => ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse, GetBadRequestMessage(result.Value)),
+                                    result => result.Errors.First());
 
         /// <summary>
         /// Получить сообщение об ошибке

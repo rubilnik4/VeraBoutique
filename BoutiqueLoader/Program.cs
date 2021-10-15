@@ -20,6 +20,6 @@ namespace BoutiqueLoader
         /// Стартовый метод
         /// </summary>
         public static async Task Main() =>
-           await BoutiqueUpload.UploadAuthorizeData(new ConsoleBoutiqueLogger());
+           await BoutiqueUpload.Upload(new ConsoleBoutiqueLogger());
     }
 }

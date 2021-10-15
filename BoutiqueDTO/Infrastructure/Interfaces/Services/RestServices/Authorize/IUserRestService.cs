@@ -11,6 +11,11 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize
     public interface IUserRestService
     {
         /// <summary>
+        /// Получить пользователей
+        /// </summary>
+        Task<IResultCollection<IBoutiqueUserDomain>> GetUsers();
+
+        /// <summary>
         /// Зарегистрироваться в сервисе
         /// </summary>
         Task<IResultValue<string>> Register(IRegisterDomain registerDomain);

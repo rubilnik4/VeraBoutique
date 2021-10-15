@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Linq;
 using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Models.Implementations.Entities.Identities;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -53,7 +54,6 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
             var restResponse = GetRestResponse(HttpStatusCode.BadRequest, HttpStatusCode.BadRequest.ToString(), httpMessage);
             restResponse.Content = new StringContent(actionResult.Value.ToJsonTransfer().Value);
-
             var errorResult = await RestStatusError.RestStatusToErrorResult(restResponse);
 
             Assert.IsType<RestMessageErrorResult>(errorResult);
@@ -86,6 +86,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
 
             Assert.Equal(RestErrorType.InternalServerError, ((RestMessageErrorResult)errorResult).ErrorType);
         }
+
 
         /// <summary>
         /// Создать ответ сервера

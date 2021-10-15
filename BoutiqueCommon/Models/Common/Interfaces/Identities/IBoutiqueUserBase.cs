@@ -1,4 +1,6 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Base;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Base;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 
 namespace BoutiqueCommon.Models.Common.Interfaces.Identities
@@ -6,7 +8,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identities
     /// <summary>
     /// Пользователь
     /// </summary>
-    public interface IBoutiqueUserBase : IModel<string>
+    public interface IBoutiqueUserBase : IModel<string>, IEquatable<IBoutiqueUserBase>
     {
         /// <summary>
         /// Имя пользователя

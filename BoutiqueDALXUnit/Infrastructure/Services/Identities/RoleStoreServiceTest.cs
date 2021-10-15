@@ -29,7 +29,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         [Fact]
         public async Task GetRoles()
         {
-            var roles = IdentityData.IdentityRoles;
+            var roles = IdentityEntitiesData.IdentityRoles;
             var roleStore = GetRoleStore(roles);
             var roleStoreService = new RoleStoreService(roleStore.Object);
 
@@ -62,7 +62,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         public async Task CreateRole_Fail()
         {
             const IdentityRoleType identityRoleType = IdentityRoleType.User;
-            var identityError = new IdentityError { Code = IdentityData.DuplicateRoleName };
+            var identityError = new IdentityError { Code = IdentityEntitiesData.DuplicateRoleName };
             var identityResult = IdentityResult.Failed(identityError);
             var roleStore = GetRoleStore(identityResult, null!);
             var roleStoreService = new RoleStoreService(roleStore.Object);

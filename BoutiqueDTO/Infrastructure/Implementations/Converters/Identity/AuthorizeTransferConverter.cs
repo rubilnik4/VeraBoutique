@@ -1,5 +1,4 @@
 ﻿using BoutiqueCommon.Models.Domain.Implementations.Identities;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;

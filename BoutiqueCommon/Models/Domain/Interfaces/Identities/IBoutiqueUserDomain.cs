@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Identities;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Identities;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 
 namespace BoutiqueCommon.Models.Domain.Interfaces.Identities

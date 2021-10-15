@@ -100,7 +100,7 @@
       <Version>8.0.0.1909</Version>
     </PackageReference>
     <PackageReference Include="ResultFunctional">
-      <Version>1.0.16</Version>
+      <Version>1.0.18</Version>
     </PackageReference>
     <PackageReference Include="Sharpnado.Forms.HorizontalListView">
       <Version>1.8.2</Version>
@@ -226,7 +226,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarBoutiqueXamarinAndroidHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -28,6 +28,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes
         /// Преобразовать размер одежды в модель базы данных
         /// </summary>
         public override SizeEntity ToEntity(ISizeDomain sizeDomain) =>
-            new SizeEntity(sizeDomain);
+            new(sizeDomain);
     }
 }

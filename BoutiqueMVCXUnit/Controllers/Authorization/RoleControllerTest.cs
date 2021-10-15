@@ -26,7 +26,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task GetRoles()
         {
-            var roles = IdentityData.RoleNames;
+            var roles = IdentityEntitiesData.RoleNames;
             var roleStore = GetRoleStore(roles);
             var roleController = new RoleController(roleStore.Object);
 

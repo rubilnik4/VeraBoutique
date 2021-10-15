@@ -14,7 +14,7 @@ namespace BoutiqueDALXUnit.Data.Identity
     /// <summary>
     /// Данные пользователей
     /// </summary>
-    public static class IdentityData
+    public static class IdentityEntitiesData
     {
         /// <summary>
         /// Пользователи с ролью
@@ -23,14 +23,6 @@ namespace BoutiqueDALXUnit.Data.Identity
             RegisterData.RegisterDomains.
             Select(BoutiqueUserEntity.GetBoutiqueUser).
             Select(user => new BoutiqueRoleUser(IdentityRoleType.User, user)).
-            ToList();
-
-        /// <summary>
-        /// Пользователи с ролью
-        /// </summary>
-        public static IReadOnlyCollection<IBoutiqueUserDomain> BoutiqueUsers =>
-            BoutiqueRoleUsers.
-            Select(roleUser => roleUser.ToBoutiqueUser()).
             ToList();
 
         /// <summary>

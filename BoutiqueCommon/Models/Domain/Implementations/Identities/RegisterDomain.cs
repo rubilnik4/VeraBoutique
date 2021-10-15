@@ -2,7 +2,7 @@
 using BoutiqueCommon.Models.Common.Interfaces.Identities;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 
-namespace BoutiqueCommon.Models.Domain.Implementations.Identity
+namespace BoutiqueCommon.Models.Domain.Implementations.Identities
 {
     /// <summary>
     /// Регистрация. Доменная модель

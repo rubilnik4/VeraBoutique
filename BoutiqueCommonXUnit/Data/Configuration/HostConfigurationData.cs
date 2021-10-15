@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BoutiqueCommon.Models.Domain.Implementations.Configuration;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 
 namespace BoutiqueCommonXUnit.Data.Configuration

@@ -7,6 +7,9 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Identities
     /// </summary>
     public interface IRegisterRoleDomain: IRegisterRoleBase<IAuthorizeDomain, IPersonalDomain>, IRegisterDomain
     {
-        
+        /// <summary>
+        /// Преобразовать в пользователя
+        /// </summary>
+        IBoutiqueUserDomain ToBoutiqueUser();
     }
 }

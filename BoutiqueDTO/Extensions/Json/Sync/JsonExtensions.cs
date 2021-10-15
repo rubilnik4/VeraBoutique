@@ -10,6 +10,9 @@ using ResultFunctional.Models.Interfaces.Errors;
 using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Interfaces.Errors.conversionErrors;
 using ResultFunctional.Models.Interfaces.Errors.ConversionErrors;
 
@@ -52,31 +55,39 @@ namespace BoutiqueDTO.Extensions.Json.Sync
                                                     GetJsonListError(transfers));
 
         /// <summary>
+        /// Проверка схемы
+        /// </summary>
+        public static bool IsJsonSchemeValid(this string json, string jsonScheme) =>
+            (JObject: JObject.Parse(json), JSchema: JSchema.Parse(jsonScheme)).
+            Map(jsonObject => jsonObject.JObject.IsValid(jsonObject.JSchema)).
+            Map(tt => tt);
+
+        /// <summary>
         /// Ошибка конвертации из Json
         /// </summary>
         private static IDeserializeErrorResult GetJsonError<TValue>(string json)
             where TValue : notnull =>
-            ErrorResultFactory.DeserializeError<TValue>(ConversionErrorType.JsonConversion, json, $"Ошибка десериализации Json типа [{typeof(TValue).Name}]");
+            ErrorResultFactory.DeserializeError<TValue>(json, $"Ошибка десериализации Json типа [{typeof(TValue).Name}]");
 
         /// <summary>
         /// Ошибка конвертации из Json коллекции
         /// </summary>
         private static IDeserializeErrorResult GetJsonListError<TValue>(string json)
             where TValue : notnull =>
-            ErrorResultFactory.DeserializeError<TValue>(ConversionErrorType.JsonConversion, json, $"Ошибка десериализации Json коллекции типа [{typeof(List<TValue>).Name}]");
+            ErrorResultFactory.DeserializeError<TValue>(json, $"Ошибка десериализации Json коллекции типа [{typeof(List<TValue>).Name}]");
 
         /// <summary>
         /// Ошибка конвертации в Json
         /// </summary>
         private static ISerializeErrorResult GetJsonError<TValue>(TValue value)
             where TValue : notnull =>
-            ErrorResultFactory.SerializeError(ConversionErrorType.JsonConversion, value, $"Ошибка сериализации Json типа [{typeof(TValue).Name}]");
+            ErrorResultFactory.SerializeError(value, $"Ошибка сериализации Json типа [{typeof(TValue).Name}]");
 
         /// <summary>
         /// Ошибка конвертации в Json коллекции
         /// </summary>
         private static ISerializeErrorResult GetJsonListError<TValue>(IEnumerable<TValue> values)
             where TValue : notnull =>
-            ErrorResultFactory.SerializeError(ConversionErrorType.JsonConversion, values, $"Ошибка сериализации Json коллекцию типа [{typeof(List<TValue>).Name}]");
+            ErrorResultFactory.SerializeError(values, $"Ошибка сериализации Json коллекцию типа [{typeof(List<TValue>).Name}]");
     }
 }

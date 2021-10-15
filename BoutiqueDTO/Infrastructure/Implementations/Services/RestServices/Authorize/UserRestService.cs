@@ -6,7 +6,9 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Models.Implementations.Identities;
+using BoutiqueDTO.Models.Interfaces.Identities;
 using BoutiqueDTO.Models.Interfaces.RestClients;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.Models.Interfaces.Results;
 
@@ -17,10 +19,12 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     /// </summary>
     public class UserRestService: RestService<string, IRegisterDomain, RegisterTransfer>, IUserRestService
     {
-        public UserRestService(IRestHttpClient restHttpClient, IRegisterTransferConverter registerTransferConverter)
+        public UserRestService(IRestHttpClient restHttpClient, IRegisterTransferConverter registerTransferConverter, 
+                               IBoutiqueUserTransferConverter boutiqueUserTransferConverter)
         {
             _restHttpClient = restHttpClient;
             _registerTransferConverter = registerTransferConverter;
+            _boutiqueUserTransferConverter = boutiqueUserTransferConverter;
         }
 
         /// <summary>
@@ -34,6 +38,18 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         private readonly IRegisterTransferConverter _registerTransferConverter;
 
         /// <summary>
+        /// Конвертер пользователей в трансферную модель
+        /// </summary>
+        private readonly IBoutiqueUserTransferConverter _boutiqueUserTransferConverter;
+
+        /// <summary>
+        /// Получить пользователей
+        /// </summary>
+        public async Task<IResultCollection<IBoutiqueUserDomain>> GetUsers() =>
+            await _restHttpClient.GetCollectionAsync<BoutiqueUserTransfer>(RestRequest.GetRequest(ControllerName)).
+            ResultCollectionBindOkTaskAsync(users => _boutiqueUserTransferConverter.FromTransfers(users));
+
+        /// <summary>
         /// Зарегистрироваться в сервисе
         /// </summary>
         public async Task<IResultValue<string>> Register(IRegisterDomain registerDomain) =>
@@ -45,7 +61,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         /// Удалить пользователей
         /// </summary>
         public async Task<IResultError> DeleteUsers() =>
-             await _restHttpClient.DeleteCollectionAsync(RestRequest.PostRequest(ControllerName));
+             await _restHttpClient.DeleteCollectionAsync(RestRequest.GetRequest(ControllerName));
 
     }
 }

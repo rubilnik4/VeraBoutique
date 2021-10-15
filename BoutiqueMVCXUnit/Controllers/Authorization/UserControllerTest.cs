@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
+using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDALXUnit.Data.Identity;
@@ -52,7 +53,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Register_Ok()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
@@ -70,7 +71,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Register_RegisterError()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotValidError(user, GetType(), "ValueNotValid").ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
             var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
@@ -92,7 +93,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task DeleteRoleUser()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
             var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
@@ -109,7 +110,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task DeleteRoleUser_NotFound()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
             var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
@@ -128,7 +129,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task DeleteRoleUser_Error()
         {
-            var user = IdentityData.BoutiqueRoleUsers.First();
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
             var userResult = ErrorResultFactory.ValueNotValidError(user, GetType(), "ValueNotValid").ToResultValue<BoutiqueRoleUser>();
             var userManager = GetUserManager(userResult);
             var userController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,

@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Identities;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Identities
@@ -60,5 +61,16 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identities
         /// Телефон
         /// </summary>
         public string PhoneNumber { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) =>
+            obj is IBoutiqueUserBase user && Equals(user);
+
+        public bool Equals(IBoutiqueUserBase? other) =>
+            other?.Email == Email;
+
+        public override int GetHashCode() =>
+            HashCode.Combine(Email);
+        #endregion
     }
 }

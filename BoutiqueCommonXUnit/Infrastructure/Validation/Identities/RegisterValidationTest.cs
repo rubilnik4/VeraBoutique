@@ -1,7 +1,6 @@
 ﻿using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Common.Implementations.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
-using BoutiqueCommon.Models.Domain.Implementations.Identity;
 using BoutiqueCommonXUnit.Data.Authorize;
 using Xunit;
 

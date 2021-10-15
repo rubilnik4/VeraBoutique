@@ -24,7 +24,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
         /// <summary>
         /// Авторизироваться и загрузить данные в базу с предварительной очисткой
         /// </summary>
-        public static async Task<IResultError> UploadAuthorizeData(IBoutiqueLogger boutiqueLogger) =>
+        public static async Task<IResultError> Upload(IBoutiqueLogger boutiqueLogger) =>
             await AuthorizeBaseService.ToAuthorizeService(UploadFunc(boutiqueLogger), boutiqueLogger);
         ///// <summary>
         ///// Функция загрузки
