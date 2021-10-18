@@ -4,7 +4,6 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueConsole.Factories.Configuration;
-using BoutiqueConsole.Infrastructure.Services.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.Models.Implementations.Results;

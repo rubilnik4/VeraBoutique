@@ -6,7 +6,6 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueConsole.Factories.Configuration;
 using BoutiqueConsole.Factories.Services;
 using BoutiqueConsole.Infrastructure.Implementations.Services;
-using BoutiqueConsole.Infrastructure.Services.Authorize;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;

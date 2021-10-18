@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueConsole.Infrastructure.Logger;
+using BoutiqueConsole.Infrastructure.Implementations.Logger;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
 using BoutiqueLoader.Infrastructure.Implementations;

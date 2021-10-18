@@ -47,5 +47,10 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         /// Удалить пользователей
         /// </summary>
         Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users);
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        Task<IResultError> DeleteRoleUsersByRole(IdentityRoleType identityRoleType);
     }
 }

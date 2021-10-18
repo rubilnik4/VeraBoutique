@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
@@ -10,10 +9,9 @@ using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueConsole.Infrastructure.Services.Authorize
+namespace BoutiqueConsole.Infrastructure.Implementations.Services
 {
     /// <summary>
     /// Авторизация в сервисе одежды

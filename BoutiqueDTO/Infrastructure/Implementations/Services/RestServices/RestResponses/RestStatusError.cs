@@ -59,7 +59,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestR
         /// </summary>
         private static async Task<IErrorResult> GetBadRequestError(HttpResponseMessage httpResponse) =>
             await httpResponse.Content.ReadAsStringAsync().
-            WhereContinueTaskAsync(content => content.IsJsonSchemeValid(JsonSchemes.BadRequestJsonScheme),
+            WhereContinueTaskAsync(content => content.IsJsonSchemeValid(JsonSchemas.BadRequestJsonSchema),
                                    content => ErrorResultFactory.RestError(RestErrorType.BadRequest, httpResponse, $"Некорректный запрос. {httpResponse.ReasonPhrase}"),
                                    content => GetBadRequestError(content, httpResponse));
 

@@ -25,7 +25,7 @@ namespace BoutiqueConsole.Infrastructure.Implementations.Configuration
         /// Параметры для дополнительных конфигураций
         /// </summary>
         private static string ConfigurationAdditional =>
-#if DEVELOPMENT
+#if DEBUG
             ".Development";
 #elif TEST
             ".Test";

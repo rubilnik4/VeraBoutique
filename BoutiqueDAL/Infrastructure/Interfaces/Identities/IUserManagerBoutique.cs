@@ -24,6 +24,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Identities
         Task<BoutiqueUserEntity> FindByEmailAsync(string email);
 
         /// <summary>
+        /// Есть ли роль у пользователя
+        /// </summary>
+        Task<bool> IsInRoleAsync(BoutiqueUserEntity user, string role);
+
+        /// <summary>
         /// получить пользователей по роли
         /// </summary>
         Task<IList<BoutiqueUserEntity>> GetUsersInRoleAsync(string roleName);

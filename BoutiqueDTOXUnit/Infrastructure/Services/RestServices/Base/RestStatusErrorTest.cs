@@ -5,8 +5,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.Json.Sync;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.RestResponses;
+using BoutiqueDTOXUnit.Models.Implementations.RestResponses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
@@ -59,6 +62,26 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
             Assert.IsType<RestMessageErrorResult>(errorResult);
             Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)errorResult).ErrorType);
             Assert.Equal(description, errorResult.Description);
+        }
+
+        /// <summary>
+        /// Статус ошибки ответа
+        /// </summary>
+        [Fact]
+        public async Task HttpStatusCodeStatusBadRequestError()
+        {
+            var badRequest = new BadRequestResponse("Trace", 400, "Title", "Type");
+            var contractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };
+            var settings = new JsonSerializerSettings() {ContractResolver = contractResolver };
+            var badRequestContent = badRequest.ToJsonTransfer(settings);
+            var httpMessage = new HttpRequestMessage(HttpMethod.Get, "localhost");
+            var restResponse = GetRestResponse(HttpStatusCode.BadRequest, HttpStatusCode.BadRequest.ToString(), httpMessage);
+            restResponse.Content = new StringContent(badRequestContent.Value);
+            var errorResult = await RestStatusError.RestStatusToErrorResult(restResponse);
+
+            Assert.IsType<RestMessageErrorResult>(errorResult);
+            Assert.Equal(RestErrorType.BadRequest, ((RestMessageErrorResult)errorResult).ErrorType);
+            Assert.True(errorResult.Description.Contains("Некорректный запрос", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [Fact]

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using BoutiqueCommon.Models.Enums.Identities;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueCommon.Extensions.TaskExtensions
 {
@@ -17,17 +21,19 @@ namespace BoutiqueCommon.Extensions.TaskExtensions
             await Task.WhenAll(@this);
 
         /// <summary>
-        /// Выполнить все асинхронные функции и дождаться последней
+        /// Обработать список задач в асинхронной последовательности
         /// </summary>
-        public static async Task<IList<TValue>> WaitAllInLine<TValue>(this IEnumerable<Task<TValue>> @this)
+        public static async Task<IReadOnlyCollection<TValueOut>> SelectAsync<TValueIn, TValueOut>(this IEnumerable<TValueIn> @this,
+                                                                                                  Func<TValueIn, Task<TValueOut>> func)
         {
-            var listItems = new List<TValue>();
-            foreach (var item in @this)
+            var awaitedItems = new List<TValueOut>();
+            var collection = @this.ToList();
+            foreach (var item in collection)
             {
-               var awaitedItem = await item;
-                listItems.Add(awaitedItem);
+                var awaitedItem = await func(item);
+                awaitedItems.Add(awaitedItem);
             }
-            return listItems;
+            return awaitedItems;
         }
 
         /// <summary>

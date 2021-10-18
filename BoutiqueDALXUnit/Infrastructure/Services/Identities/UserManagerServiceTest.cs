@@ -83,6 +83,22 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         }
 
         /// <summary>
+        /// Получить пользователей по роли
+        /// </summary>
+        [Fact]
+        public async Task GetUsersByRole()
+        {
+            var roleUsers = IdentityEntitiesData.BoutiqueRoleUsers;
+            var users = IdentityEntitiesData.BoutiqueIdentityUsers;
+            var userManager = UserManagerMock.GetUserManagerUsersByRole(users);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var usersFound = await userManagerService.GetUsersByRole(roleUsers.First().IdentityRoleType);
+
+            Assert.True(usersFound.SequenceEqual(roleUsers.Select(user => user.ToBoutiqueUser())));
+        }
+
+        /// <summary>
         /// Добавить пользователя
         /// </summary>
         [Fact]
@@ -288,10 +304,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         public async Task DeleteRoleUsers()
         {
             var users = IdentityData.BoutiqueUsers;
+            var userEntity = IdentityEntitiesData.BoutiqueIdentityUsers.First();
             var resultDelete = IdentityResult.Success;
             var resultRole = IdentityResult.Success;
             var roleNames = IdentityEntitiesData.RoleNames;
-            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames, userEntity);
             var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
 
             var result = await userManagerService.DeleteRoleUsers(users);
@@ -306,11 +323,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         public async Task DeleteRoleUsers_DeleteFail()
         {
             var users = IdentityData.BoutiqueUsers;
+            var userEntity = IdentityEntitiesData.BoutiqueIdentityUsers.First();
             var identityError = new IdentityError { Code = IdentityEntitiesData.DuplicateRoleName };
             var resultDelete = IdentityResult.Failed(identityError);
             var resultRole = IdentityResult.Success;
             var roleNames = IdentityEntitiesData.RoleNames;
-            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames, userEntity);
             var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
 
             var result = await userManagerService.DeleteRoleUsers(users);
@@ -327,11 +345,12 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         public async Task DeleteRoleUsers_RoleFail()
         {
             var users = IdentityData.BoutiqueUsers;
+            var userEntity = IdentityEntitiesData.BoutiqueIdentityUsers.First();
             var identityError = new IdentityError { Code = IdentityEntitiesData.DuplicateRoleName };
             var resultDelete = IdentityResult.Success;
             var resultRole = IdentityResult.Failed(identityError);
             var roleNames = IdentityEntitiesData.RoleNames;
-            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames);
+            var userManager = UserManagerMock.GetUserManagerDeletes(resultDelete, resultRole, roleNames, userEntity);
             var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
 
             var result = await userManagerService.DeleteRoleUsers(users);
@@ -339,6 +358,24 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             Assert.True(result.HasErrors);
             Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
             Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+        }
+
+        /// <summary>
+        /// Удалить пользователей
+        /// </summary>
+        [Fact]
+        public async Task DeleteRoleUsersByRole()
+        {
+            var roleUsers = IdentityEntitiesData.BoutiqueRoleUsers;
+            var users = IdentityEntitiesData.BoutiqueIdentityUsers;
+            var resultDelete = IdentityResult.Success;
+            var resultRole = IdentityResult.Success;
+            var userManager = UserManagerMock.GetUserManagerDelete(resultDelete, resultRole, users);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var result = await userManagerService.DeleteRoleUsersByRole(roleUsers.First().IdentityRoleType);
+
+            Assert.True(result.OkStatus);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace BoutiqueMVC.Factories.Identities
         /// Пользователи по умолчанию
         /// </summary>
         public static IReadOnlyCollection<IRegisterRoleDomain> DefaultUsers =>
-            DefaultAdminUser.OkStatus 
+            DefaultAdminUser.OkStatus
                 ? new List<IRegisterRoleDomain> { DefaultAdminUser.Value }
                 : throw new ArgumentNullException(nameof(DefaultUsers));
 
@@ -43,8 +43,8 @@ namespace BoutiqueMVC.Factories.Identities
         /// Пользователь администратор по умолчанию
         /// </summary>
         private static IResultValue<IRegisterRoleDomain> DefaultAdminUser =>
-            new ResultValue<Func<IAuthorizeDomain, IPersonalDomain, IdentityRoleType, IRegisterRoleDomain>>(GetDefaultUser).          
-            ResultValueCurryOk(AuthorizeValidation.AuthorizeValidate(new AuthorizeDomain(Email, Password), 
+            new ResultValue<Func<IAuthorizeDomain, IPersonalDomain, IdentityRoleType, IRegisterRoleDomain>>(GetDefaultUser).
+            ResultValueCurryOk(AuthorizeValidation.AuthorizeValidate(new AuthorizeDomain(Email, Password),
                                                                      IdentitySettings.ToPasswordSettings())).
             ResultValueCurryOk(PersonalValidation.PersonalValidate(new PersonalDomain(Name, Surname, Address, Phone))).
               ResultValueCurryOk(GetIdentityRoleType()).
@@ -112,6 +112,6 @@ namespace BoutiqueMVC.Factories.Identities
         /// Параметры авторизации
         /// </summary>
         private static IdentitySettings IdentitySettings =>
-            new (8, true, false, true);
+            new(8, true, false, true);
     }
 }

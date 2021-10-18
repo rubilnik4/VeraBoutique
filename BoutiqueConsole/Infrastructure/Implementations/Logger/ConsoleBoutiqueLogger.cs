@@ -4,7 +4,7 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueConsole.Infrastructure.Logger
+namespace BoutiqueConsole.Infrastructure.Implementations.Logger
 {
     /// <summary>
     /// Отображение в консоли

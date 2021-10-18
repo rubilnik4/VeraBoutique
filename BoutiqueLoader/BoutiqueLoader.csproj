@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEVELOPMENT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Test|AnyCPU'">
@@ -65,7 +65,7 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
     <Folder Include="Factories\Services\" />
-    <Folder Include="Models\Enums\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>

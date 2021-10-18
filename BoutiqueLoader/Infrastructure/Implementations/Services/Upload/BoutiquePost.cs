@@ -7,10 +7,11 @@ using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueConsole.Factories.Services;
+using BoutiqueConsole.Infrastructure.Implementations.Services;
+using BoutiqueConsole.Models.Enums;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueLoader.Factories.DatabaseInitialize.Boutique;
-using BoutiqueLoader.Models.Enums;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -108,7 +109,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
             where TDomain : IDomainModel<TId>
             where TId : notnull =>
             await restService.PostCollectionAsync(domains).
-            VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post));
+            VoidTaskAsync(result => BoutiqueServiceLogging.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post));
 
         /// <summary>
         /// Логгирование загрузки
@@ -119,7 +120,7 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
             where TDomain : IDomainModel<TId>
             where TId : notnull =>
             await restService.PostCollectionAsync(domains).
-            VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post,
+            VoidTaskAsync(result => BoutiqueServiceLogging.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Post,
                                                                                       index, indexMax));
     }
 }

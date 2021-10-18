@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
-using BoutiqueConsole.Infrastructure.Logger;
+using BoutiqueConsole.Infrastructure.Implementations.Logger;
 using BoutiqueUserManagement.Infrastructure.Implementations.Services;
 using BoutiqueUserManagement.Infrastructure.Implementations.UserOperations;
 using BoutiqueUserManagement.Models.Enums;

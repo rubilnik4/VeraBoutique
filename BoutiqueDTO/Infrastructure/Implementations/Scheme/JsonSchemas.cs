@@ -3,12 +3,12 @@
     /// <summary>
     /// Схемы ответа сервера
     /// </summary>
-    public static class JsonSchemes
+    public static class JsonSchemas
     {
         /// <summary>
         /// Схема. Некорректный запрос
         /// </summary>
-        public static string BadRequestJsonScheme =>
+        public static string BadRequestJsonSchema =>
           @"{
               'type': 'object',
               'properties': {
@@ -16,7 +16,6 @@
                   'status': {'type': 'integer', 'required': true},
                   'title': {'type': 'string', 'required': true},
                   'type': {'type': 'string', 'required': true},
-                  'errors': {'type': 'array', 'required': true},
               }
             }";
     }

@@ -6,6 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identities
@@ -18,11 +19,10 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         /// <summary>
         /// Проверить и добавить пользователей
         /// </summary>
-        public static async Task<IResultCollection<string>> CreateIdentityUsers(IUserManagerService userManager, 
+        public static async Task<IResultCollection<string>> CreateIdentityUsers(IUserManagerService userManager,
                                                                                 IEnumerable<IRegisterRoleDomain> defaultUsers) =>
             await defaultUsers.
-            Select(userManager.CreateRoleUser).
-            WaitAllInLine().
+            SelectAsync(userManager.CreateRoleUser).
             ToResultCollectionTaskAsync();
     }
 }

@@ -54,8 +54,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// </summary>
         public async Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetRoleUsers() =>
             await _userManager.GetUsers().
-            MapBindAsync(users => users.Select(GetRoleUser).WaitAllInLine()).
-            MapTaskAsync(users => (IReadOnlyCollection<IBoutiqueUserDomain>)users);
+            MapBindAsync(users => users.SelectAsync(GetRoleUser));
 
         /// <summary>
         /// Найти пользователя с ролью по почте
@@ -69,8 +68,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// </summary>
         public async Task<IReadOnlyCollection<IBoutiqueUserDomain>> GetUsersByRole(IdentityRoleType identityRoleType) =>
             await _userManager.GetUsersInRoleAsync(RoleStoreService.NormalizeRoleName(identityRoleType)).
-            MapTaskAsync(users => users.Select(user => user.ToBoutiqueUser(identityRoleType))).
-            MapTaskAsync(users => (IReadOnlyCollection<IBoutiqueUserDomain>)users);
+            MapTaskAsync(users => users.Select(user => user.ToBoutiqueUser(identityRoleType)).ToList());
 
         /// <summary>
         /// Зарегистрироваться
@@ -81,35 +79,56 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             ResultValueBindOkAsync(user => CreateRoleUser(user, registerRole.IdentityRoleType));
 
         /// <summary>
-        /// Удалить пользователя
+        /// Удалить пользователей
         /// </summary>
-        public async Task<IResultValue<string>> DeleteRoleUser(string email) =>
-            await FindRoleUserByEmail(email).
-            ResultValueBindOkBindAsync(DeleteRoleUser);
+        public async Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users) =>
+            await users.
+            SelectAsync(DeleteRoleUser).
+            ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Удалить пользователя
         /// </summary>
         public async Task<IResultValue<string>> DeleteRoleUser(IBoutiqueUserDomain user) =>
-            await BoutiqueRoleUser.GetBoutiqueUser(user).
-            MapAsync(DeleteRoleUser);
+            await DeleteRoleUser(user.Email);
+
+        /// <summary>
+        /// Удалить пользователя
+        /// </summary>
+        public async Task<IResultValue<string>> DeleteRoleUser(string email) =>
+            await FindRoleUserEntityByEmail(email).
+            ResultValueBindOkBindAsync(DeleteRoleUser);
 
         /// <summary>
         /// Удалить пользователей
         /// </summary>
-        public async Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users) =>
-            await users.
-            Select(DeleteRoleUser).
-            WaitAllInLine().
+        public async Task<IResultError> DeleteRoleUsersByRole(IdentityRoleType identityRoleType) =>
+            await _userManager.GetUsersInRoleAsync(RoleStoreService.NormalizeRoleName(identityRoleType)).
+            MapBindAsync(users => users.Select(user => new BoutiqueRoleUser(identityRoleType, user)).
+                                        SelectAsync(DeleteRoleUser)).
             ToResultCollectionTaskAsync();
 
         /// <summary>
         /// Получить роли для пользователя
         /// </summary>
         private async Task<IBoutiqueUserDomain> GetRoleUser(BoutiqueUserEntity userEntity) =>
+             await GetRoleUserEntity(userEntity).
+             MapTaskAsync(roleUser => roleUser.ToBoutiqueUser());
+
+        /// <summary>
+        /// Найти пользователя с ролью по почте
+        /// </summary>
+        public async Task<IResultValue<BoutiqueRoleUser>> FindRoleUserEntityByEmail(string email) =>
+            await FindUserByEmail(email).
+            ResultValueOkBindAsync(GetRoleUserEntity);
+
+        /// <summary>
+        /// Получить роли для пользователя
+        /// </summary>
+        private async Task<BoutiqueRoleUser> GetRoleUserEntity(BoutiqueUserEntity userEntity) =>
              await _userManager.GetRolesAsync(userEntity).
              MapTaskAsync(roles => roles.Select(Enum.Parse<IdentityRoleType>).FirstOrDefault()).
-             MapTaskAsync(userEntity.ToBoutiqueUser);
+             MapTaskAsync(identityRoleType => new BoutiqueRoleUser(identityRoleType, userEntity));
 
         /// <summary>
         /// Найти пользователя по почте
@@ -132,11 +151,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// <summary>
         /// Удалить пользователя
         /// </summary>
-        private async Task<IResultValue<string>> DeleteRoleUser(BoutiqueRoleUser roleUser) =>
-            await _userManager.RemoveFromRoleAsync(roleUser.BoutiqueUserEntity, roleUser.IdentityRoleType.ToString()).
-            WhereOkBindAsync(identityResult => identityResult.Succeeded,
+        private async Task<IResultValue<string>> DeleteRoleUser(BoutiqueRoleUser roleUser) =>            
+             await _userManager.RemoveFromRoleAsync(roleUser.BoutiqueUserEntity, RoleStoreService.NormalizeRoleName(roleUser.IdentityRoleType)).
+             WhereOkBindAsync(identityResult => identityResult.Succeeded,
                              _ => _userManager.DeleteAsync(roleUser.BoutiqueUserEntity)).
-            ToIdentityResultValueTaskAsync(roleUser.BoutiqueUserEntity.Email);
+             ToIdentityResultValueTaskAsync(roleUser.BoutiqueUserEntity.Email);
 
         /// <summary>
         /// Проверить пользователя на дублирование

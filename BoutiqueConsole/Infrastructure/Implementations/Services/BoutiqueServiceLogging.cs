@@ -1,18 +1,17 @@
 ﻿using System;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
-using BoutiqueDTO.Models.Interfaces.Base;
-using BoutiqueLoader.Models.Enums;
+using BoutiqueConsole.Models.Enums;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using ResultFunctional.Models.Interfaces.Results;
 
-namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
+namespace BoutiqueConsole.Infrastructure.Implementations.Services
 {
     /// <summary>
     /// Логгирование обращений к сервису
     /// </summary>
-    public static class BoutiqueServiceLog
+    public static class BoutiqueServiceLogging
     {
         /// <summary>
         /// Логгирование действия с базой

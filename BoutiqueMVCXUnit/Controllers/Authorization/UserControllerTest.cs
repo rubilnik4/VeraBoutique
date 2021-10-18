@@ -212,7 +212,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.GetUsersByRole(It.IsAny<IdentityRoleType>())).
                                             ReturnsAsync(users)).
-            Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUsers(It.IsAny<IEnumerable<IBoutiqueUserDomain>>())).
+            Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUsersByRole(It.IsAny<IdentityRoleType>())).
                                       ReturnsAsync(deleteResult));
     }
 }

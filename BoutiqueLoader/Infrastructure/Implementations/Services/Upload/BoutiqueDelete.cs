@@ -8,9 +8,10 @@ using BoutiqueCommon.Models.Domain.Interfaces.Base;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueConsole.Factories.Services;
+using BoutiqueConsole.Infrastructure.Implementations.Services;
+using BoutiqueConsole.Models.Enums;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Base;
 using BoutiqueDTO.Models.Interfaces.RestClients;
-using BoutiqueLoader.Models.Enums;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -95,6 +96,6 @@ namespace BoutiqueLoader.Infrastructure.Implementations.Services.Upload
              where TDomain : IDomainModel<TId>
              where TId : notnull =>
             await restService.DeleteAsync().
-            VoidTaskAsync(result => BoutiqueServiceLog.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Delete));
+            VoidTaskAsync(result => BoutiqueServiceLogging.LogServiceAction<TId, TDomain>(result, boutiqueLogger, ServiceActionType.Delete));
     }
 }

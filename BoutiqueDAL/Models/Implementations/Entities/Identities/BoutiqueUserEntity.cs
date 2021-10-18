@@ -32,12 +32,6 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Identities
         }
 
         /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public override string SecurityStamp =>
-            Guid.NewGuid().ToString();
-
-        /// <summary>
         /// Имя
         /// </summary>
         public string Name { get; init; } = String.Empty;

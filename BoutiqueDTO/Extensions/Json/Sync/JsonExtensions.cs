@@ -44,7 +44,14 @@ namespace BoutiqueDTO.Extensions.Json.Sync
         /// </summary>
         public static IResultValue<string> ToJsonTransfer<TValue>(this TValue transfer)
             where TValue : notnull =>
-            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.SerializeObject(transfer), GetJsonError(transfer));
+            transfer.ToJsonTransfer(new JsonSerializerSettings());
+
+        /// <summary>
+        /// Преобразовать json в трансферную модель
+        /// </summary>
+        public static IResultValue<string> ToJsonTransfer<TValue>(this TValue transfer, JsonSerializerSettings settings)
+            where TValue : notnull =>
+            ResultValueTryExtensions.ResultValueTry(() => JsonConvert.SerializeObject(transfer, settings), GetJsonError(transfer));
 
         /// <summary>
         /// Преобразовать json в трансферные модели
@@ -59,8 +66,7 @@ namespace BoutiqueDTO.Extensions.Json.Sync
         /// </summary>
         public static bool IsJsonSchemeValid(this string json, string jsonScheme) =>
             (JObject: JObject.Parse(json), JSchema: JSchema.Parse(jsonScheme)).
-            Map(jsonObject => jsonObject.JObject.IsValid(jsonObject.JSchema)).
-            Map(tt => tt);
+            Map(jsonObject => jsonObject.JObject.IsValid(jsonObject.JSchema));
 
         /// <summary>
         /// Ошибка конвертации из Json

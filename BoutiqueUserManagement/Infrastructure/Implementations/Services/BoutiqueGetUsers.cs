@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueConsole.Factories.Services;
+using BoutiqueConsole.Infrastructure.Implementations.Services;
+using BoutiqueConsole.Models.Enums;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
@@ -27,6 +29,7 @@ namespace BoutiqueUserManagement.Infrastructure.Implementations.Services
             ResultValueOk(UserRestServiceFactory.GetUserRestService).
             ResultValueBindOkToCollectionAsync(restService => restService.GetUsers()).
             ResultCollectionVoidOkTaskAsync(users => PrintUserName(users, boutiqueLogger)).
+            VoidTaskAsync(result => BoutiqueServiceLogging.LogServiceAction<string, IBoutiqueUserDomain>(result, boutiqueLogger, ServiceActionType.Get)).
             VoidTaskAsync(_ => boutiqueLogger.ShowMessage("Получение данных завершено"));
 
         /// <summary>
