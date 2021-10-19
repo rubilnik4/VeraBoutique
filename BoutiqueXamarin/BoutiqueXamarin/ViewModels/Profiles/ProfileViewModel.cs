@@ -12,7 +12,7 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     public class ProfileViewModel : NavigationBaseViewModel<ProfileNavigationParameters, IProfileNavigationService>
     {
         public ProfileViewModel(IProfileNavigationService profileNavigationService)
-         : base(profileNavigationService)
+            : base(profileNavigationService)
         { }
     }
 }

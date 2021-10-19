@@ -14,6 +14,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems;
@@ -32,8 +33,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
     {
         public ClothesDetailViewModel(IClothesRestService clothesRestService,
                                       IClothesDetailNavigationService clothesDetailNavigationService, 
-                                      ILoginNavigationService loginNavigationService)
-            : base(clothesDetailNavigationService, loginNavigationService)
+                                      IProfileNavigationService profileNavigationService)
+            : base(clothesDetailNavigationService, profileNavigationService)
         {
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
             _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);

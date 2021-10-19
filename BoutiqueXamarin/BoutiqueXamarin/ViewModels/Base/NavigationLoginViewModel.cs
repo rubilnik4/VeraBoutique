@@ -1,5 +1,6 @@
 ﻿using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
 
@@ -12,10 +13,10 @@ namespace BoutiqueXamarin.ViewModels.Base
         where TParameter : BaseNavigationParameters
         where TNavigate : IBaseNavigationService<TParameter>
     {
-        protected NavigationLoginViewModel(TNavigate navigateService, ILoginNavigationService loginNavigationService)
+        protected NavigationLoginViewModel(TNavigate navigateService, IProfileNavigationService profileNavigationService)
             : base(navigateService)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(loginNavigationService);
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
         }
 
         /// <summary>

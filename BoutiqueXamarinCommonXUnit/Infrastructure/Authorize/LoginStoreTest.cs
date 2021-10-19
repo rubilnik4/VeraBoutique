@@ -22,9 +22,10 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
         public async Task SaveAndGetToken()
         {
             const string token = "token";
-            var saveResult = await LoginStore.SaveToken(token);
-            var getResult = await LoginStore.GetToken();
-            await LoginStore.ClearToken();
+            var loginStore = new LoginStore();
+            var saveResult = await loginStore.SaveToken(token);
+            var getResult = await loginStore.GetToken();
+            await loginStore.ClearToken();
 
             Assert.True(saveResult.OkStatus);
             Assert.True(getResult.OkStatus);
@@ -39,10 +40,11 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
         {
             const string tokenFirst = "tokenFirst";
             const string tokenSecond = "tokenFirst";
-            var saveResultFirst = await LoginStore.SaveToken(tokenFirst);
-            var saveResultSecond = await LoginStore.SaveToken(tokenSecond);
-            var getResult = await LoginStore.GetToken();
-            await LoginStore.ClearToken();
+            var loginStore = new LoginStore();
+            var saveResultFirst = await loginStore.SaveToken(tokenFirst);
+            var saveResultSecond = await loginStore.SaveToken(tokenSecond);
+            var getResult = await loginStore.GetToken();
+            await loginStore.ClearToken();
 
             Assert.True(saveResultFirst.OkStatus);
             Assert.True(saveResultSecond.OkStatus);
@@ -57,8 +59,9 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
         [InlineData("")]
         public async Task SaveToken_Error(string token)
         {
-            var saveResult = await LoginStore.SaveToken(token);
-            await LoginStore.ClearToken();
+            var loginStore = new LoginStore();
+            var saveResult = await loginStore.SaveToken(token);
+            await loginStore.ClearToken();
 
             Assert.True(saveResult.HasErrors);
             Assert.IsAssignableFrom<AuthorizeErrorResult>(saveResult.Errors.First());
@@ -70,9 +73,10 @@ namespace BoutiqueXamarinCommonXUnit.Infrastructure.Authorize
         [Fact]
         public async Task GetToken_Error()
         {
-            await LoginStore.ClearToken();
+            var loginStore = new LoginStore();
+            await loginStore.ClearToken();
 
-            var getResult = await LoginStore.GetToken();
+            var getResult = await loginStore.GetToken();
 
             Assert.True(getResult.HasErrors);
             Assert.IsAssignableFrom<AuthorizeErrorResult>(getResult.Errors.First());

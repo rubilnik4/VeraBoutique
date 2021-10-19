@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Akavache;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
@@ -18,7 +19,7 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
     /// <summary>
     /// Хранение и загрузка данных аутентификации
     /// </summary>
-    public static class LoginStore
+    public class LoginStore: ILoginStore
     {
         /// <summary>
         /// 
@@ -28,15 +29,15 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// <summary>
         /// Сохранить токен
         /// </summary>
-        public static async Task<IResultError> SaveToken(string tokenInit) =>
-             await tokenInit.ToResultValueWhere(token => !String.IsNullOrWhiteSpace(token),
-                                                _ => TokenErrorType).
-             ResultValueOkAsync(async token => await BlobCache.Secure.InsertObject(TOKEN_KEY, token));
+        public async Task<IResultError> SaveToken(string token) =>
+             await token.ToResultValueWhere(_ => !String.IsNullOrWhiteSpace(token),
+                                            _ => TokenErrorType).
+             ResultValueOkAsync(_ => BlobCache.Secure.InsertObject(TOKEN_KEY, token).ToTask());
 
         /// <summary>
         /// Получить токен
         /// </summary>
-        public static async Task<IResultValue<string>> GetToken() =>
+        public async Task<IResultValue<string>> GetToken() =>
             await BlobCache.Secure.GetAllKeys().
             ToTask().
             ToResultValueWhereTaskAsync(keys => keys.Contains(TOKEN_KEY),
@@ -49,7 +50,7 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// <summary>
         /// Очистить токен
         /// </summary>
-        public static async Task ClearToken() =>
+        public async Task ClearToken() =>
              await BlobCache.Secure.Invalidate(TOKEN_KEY);
 
         /// <summary>

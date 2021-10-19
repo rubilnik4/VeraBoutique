@@ -12,6 +12,7 @@ using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -34,8 +35,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     public class ChoiceViewModel : NavigationLoginViewModel<ChoiceNavigationParameters, IChoiceNavigationService>
     {
         public ChoiceViewModel(IGenderRestService genderRestService, IChoiceNavigationService choiceNavigationService,
-                               IClothesNavigationService clothesNavigationService, ILoginNavigationService loginNavigationService)
-            : base(choiceNavigationService, loginNavigationService)
+                               IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService)
+            : base(choiceNavigationService, profileNavigationService)
         {
             Initialize(genderRestService, clothesNavigationService);
             _choiceGenderViewModelItems = GetChoiceViewModelsObservable(ChoiceGendersObservable);

@@ -2,8 +2,12 @@
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using ResultFunctional.FunctionalExtensions.Async;
 using Prism.Navigation;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
+using ResultFunctional.Models.Implementations.Results;
+using ResultFunctional.Models.Interfaces.Results;
 using Xamarin.Forms;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
@@ -41,7 +45,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo(TParameter parameter) =>
+        public virtual async Task NavigateTo(TParameter parameter) =>
              await new NavigationParameters
              {{ NavigationParameterName, parameter }}.
              MapAsync(navigationParameters => _navigationService.NavigateAsync(PageName, navigationParameters));

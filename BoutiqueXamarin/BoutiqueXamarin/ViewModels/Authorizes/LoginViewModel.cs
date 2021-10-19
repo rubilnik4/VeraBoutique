@@ -9,6 +9,7 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -27,13 +28,13 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     public class LoginViewModel : NavigationBaseViewModel<LoginNavigationParameters, ILoginNavigationService>
     {
         public LoginViewModel(ILoginNavigationService loginNavigationService, IRegisterNavigationService registerNavigationService,
-                              IAuthorizeRestService authorizeRestService)
+                              ILoginService loginService)
           : base(loginNavigationService)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.LoginValid, x => x.PasswordValid, (loginValid, passwordValid) => (loginValid, passwordValid)).
                                        Select(authorize => new AuthorizeValidation(Email, authorize.loginValid, Password, authorize.passwordValid));
 
-            AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, authorizeRestService));
+            AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, loginService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
             RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => registerNavigationService.NavigateTo());
         }
@@ -105,11 +106,10 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Авторизоваться через токен JWT
         /// </summary>
-        private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, IAuthorizeRestService authorizeRestService) =>
+        private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, ILoginService loginService) =>
             await authorizeValidation.ToResultValue().
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.EmailValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
-            ResultValueBindOkAsync(authorize => authorizeRestService.AuthorizeJwt(authorize.AuthorizeDomain)).
-            ResultValueBindErrorsOkBindAsync(LoginStore.SaveToken);
+            ResultValueBindErrorsOkAsync(authorize => loginService.Login(authorize.AuthorizeDomain));
     }
 }

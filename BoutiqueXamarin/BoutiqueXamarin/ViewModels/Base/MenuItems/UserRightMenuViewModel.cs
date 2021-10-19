@@ -1,6 +1,7 @@
 ﻿using System.Reactive;
 using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using ReactiveUI;
 
@@ -11,9 +12,9 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
     /// </summary>
     public class UserRightMenuViewModel : BaseViewModel
     {
-        public UserRightMenuViewModel(ILoginNavigationService loginNavigationService)
+        public UserRightMenuViewModel(IProfileNavigationService profileNavigationService)
         {
-            UserNavigateCommand = ReactiveCommand.CreateFromTask(_ => loginNavigationService.NavigateTo());
+            UserNavigateCommand = ReactiveCommand.CreateFromTask(_ => profileNavigationService.NavigateTo());
             CartCommand = ReactiveCommand.Create<Unit, Unit>(_ => Unit.Default);
         }
 
