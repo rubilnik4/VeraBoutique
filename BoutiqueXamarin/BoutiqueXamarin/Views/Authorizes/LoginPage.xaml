@@ -30,19 +30,18 @@
                      Style="{StaticResource StackLayoutEntry}">
             <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
                 <controlViews:EntryControl x:Name="EmailEntry"
-                                           Style="{StaticResource EntryValidation}"
                                            ValidationType="Email"
                                            PlaceholderText="Адрес почты"
                                            ErrorMessage="Укажите адрес почты"/>
 
                 <controlViews:EntryControl x:Name="PasswordEntry"
+                                           IsPassword="True"
                                            PlaceholderText="Пароль"
-                                           ErrorMessage="Укажите пароль"
-                                           IsPassword="True"/>
+                                           ErrorMessage="Укажите пароль"/>
 
                 <Label x:Name="AuthorizeErrorLabel"
                        Style="{StaticResource LabelError}"
-                       Text="Неверные имя пользователя и пароль"
+                       Text="Неверные почта или пароль"
                        IsVisible="False"
                        HorizontalOptions="CenterAndExpand"/>
             </StackLayout>

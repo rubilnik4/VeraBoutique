@@ -45,7 +45,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public virtual async Task NavigateTo(TParameter parameter) =>
+        public virtual async Task<INavigationResult> NavigateTo(TParameter parameter) =>
              await new NavigationParameters
              {{ NavigationParameterName, parameter }}.
              MapAsync(navigationParameters => _navigationService.NavigateAsync(PageName, navigationParameters));

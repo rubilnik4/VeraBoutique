@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
+using Prism.Navigation;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base.MenuItems
@@ -21,7 +22,7 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
         /// <summary>
         /// Команда информации о пользователе
         /// </summary>
-        public ReactiveCommand<Unit, Unit> UserNavigateCommand { get; }
+        public ReactiveCommand<Unit, INavigationResult> UserNavigateCommand { get; }
 
         /// <summary>
         /// Команда информации о корзине

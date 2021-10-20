@@ -22,7 +22,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain) =>
+        public async Task<INavigationResult> NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain) =>
             await NavigateTo(new ClothesNavigationParameters(genderType, clothesTypeDomain));
     }
 }

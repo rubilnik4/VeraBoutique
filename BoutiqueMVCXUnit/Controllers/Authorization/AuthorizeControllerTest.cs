@@ -43,21 +43,18 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_GenerateToken()
         {
+            const string token = "Token";
             var user = IdentityData.BoutiqueUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
-            var signInManager = GetSignInManager(SignInSuccess);
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings, 
+            var signInManager = GetSignInManager(SignInResult.Success);
+            var jwtTokenService = GetJwtTokenService(token);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtTokenService.Object, 
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
-            var handler = new JwtSecurityTokenHandler();
-            var tokenDecode = handler.ReadToken(tokenResult.Value) as JwtSecurityToken;
-            var claims = tokenDecode?.Claims.ToList();
-            var claimRole = claims?.First(claim => claim.Type == ClaimTypes.Role && claim.Value == user.IdentityRoleType.ToString());
 
-            Assert.True(!String.IsNullOrWhiteSpace(tokenResult.Value));
-            Assert.NotNull(claimRole);
+            Assert.Equal(token, tokenResult.Value);
         }
 
         /// <summary>
@@ -66,11 +63,13 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_UserNotFound()
         {
+            const string token = "Token";
             var user = IdentityData.BoutiqueUsers.First();
             var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<IBoutiqueUserDomain>();
             var userManager = GetUserManager(userResult);
-            var signInManager = GetSignInManager(SignInSuccess);
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
+            var signInManager = GetSignInManager(SignInResult.Success);
+            var jwtTokenService = GetJwtTokenService(token);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtTokenService.Object,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var actionResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
@@ -86,11 +85,13 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_LockOut()
         {
+            const string token = "Token";
             var user = IdentityData.BoutiqueUsers.First(); 
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
-            var signInManager = GetSignInManager(SignInLockOut);
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
+            var signInManager = GetSignInManager(SignInResult.LockedOut);
+            var jwtTokenService = GetJwtTokenService(token);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtTokenService.Object,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
@@ -103,11 +104,13 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         [Fact]
         public async Task Login_IncorrectLogin()
         {
+            const string token = "Token";
             var user = IdentityData.BoutiqueUsers.First();
             var userResult = user.ToResultValue();
             var userManager = GetUserManager(userResult);
-            var signInManager = GetSignInManager(SignInIncorrectLogin);
-            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, JwtSettings,
+            var signInManager = GetSignInManager(SignInResult.Failed);
+            var jwtTokenService = GetJwtTokenService(token);
+            var loginController = new AuthorizeController(userManager.Object, signInManager.Object, jwtTokenService.Object,
                                                           AuthorizeTransferConverterMock.AuthorizeTransferConverter);
 
             var tokenResult = await loginController.AuthorizeJwt(AuthorizeTransfersData.AuthorizeTransfers.First());
@@ -132,26 +135,11 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
                                       ReturnsAsync(signInResult));
 
         /// <summary>
-        /// Ответ сервера авторизации
+        /// Сервис токенов
         /// </summary>
-        private static SignInResult SignInSuccess => SignInResult.Success;
-
-        /// <summary>
-        /// Аккаунт блокирован
-        /// </summary>
-        private static SignInResult SignInLockOut => SignInResult.LockedOut;
-
-        /// <summary>
-        /// Неправильное имя пользователя и пароль
-        /// </summary>
-        private static SignInResult SignInIncorrectLogin => SignInResult.Failed;
-
-        /// <summary>
-        /// Параметры JWT токена
-        /// </summary>
-        private static JwtSettings JwtSettings =>
-            new byte[100].
-            Void(key => RandomNumberGenerator.Create().GetBytes(key)).
-            Map(key => new JwtSettings("Test", "Test", 1, key));
+        private static Mock<IJwtTokenService> GetJwtTokenService(string token) =>
+            new Mock<IJwtTokenService>().
+            Void(singMock => singMock.Setup(signInManager => signInManager.GenerateJwtToken(It.IsAny<IBoutiqueUserDomain>())).
+                                      Returns(token));
     }
 }

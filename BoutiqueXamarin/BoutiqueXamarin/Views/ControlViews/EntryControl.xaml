@@ -12,7 +12,6 @@
     <StackLayout Style="{StaticResource StackLayoutIcon}"
                  Spacing="0">
         <Entry x:Name="MainEntry"
-               Text="{Binding Source={x:Reference EntryStackLayout}, Path=Text, Mode=TwoWay}"
                Placeholder="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderText}"
                PlaceholderColor="{Binding Source={x:Reference EntryStackLayout}, Path=PlaceholderColor}"
                IsPassword="{Binding Source={x:Reference EntryStackLayout}, Path=IsPassword}"

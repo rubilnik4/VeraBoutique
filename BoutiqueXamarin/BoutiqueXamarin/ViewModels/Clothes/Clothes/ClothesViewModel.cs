@@ -142,7 +142,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// <summary>
         /// Команда навигации к странице выбора
         /// </summary>
-        public ReactiveCommand<Unit, Unit> ChoiceNavigateCommand { get; }
+        public ReactiveCommand<Unit, INavigationResult> ChoiceNavigateCommand { get; }
 
         /// <summary>
         /// Получить модели одежды

@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
+using Prism.Navigation;
 
 namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes
 {
@@ -14,6 +15,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        Task NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain);
+        Task<INavigationResult> NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain);
     }
 }

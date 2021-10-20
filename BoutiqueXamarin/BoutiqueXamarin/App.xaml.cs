@@ -51,6 +51,7 @@ namespace BoutiqueXamarin
             PagesRegistration.RegisterPages(containerRegistry);
             ConverterServicesRegistration.RegisterTransferConverters(BoutiqueContainer);
             CommonServicesRegistration.RegisterCommonServices(BoutiqueContainer);
+            AuthorizeServicesRegistration.RegisterAuthorizeServices(BoutiqueContainer);
             NavigationServicesRegistration.RegisterNavigationServices(BoutiqueContainer);
         }
     }

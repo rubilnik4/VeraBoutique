@@ -19,7 +19,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo() =>
+        public async Task<INavigationResult> NavigateTo() =>
             await NavigateTo(new RegisterNavigationParameters());
     }
 }

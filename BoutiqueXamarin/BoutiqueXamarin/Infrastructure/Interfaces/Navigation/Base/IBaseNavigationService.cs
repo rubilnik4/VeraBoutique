@@ -23,6 +23,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        Task NavigateTo(TParameter parameter);
+        Task<INavigationResult> NavigateTo(TParameter parameter);
     }
 }

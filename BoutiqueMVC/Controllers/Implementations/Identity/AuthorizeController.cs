@@ -26,6 +26,7 @@ using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -39,12 +40,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     [AllowAnonymous]
     public class AuthorizeController : ControllerBase
     {
-        public AuthorizeController(IUserManagerService userManager, ISignInManagerBoutique signInManager, JwtSettings jwtSettings,
-                                   IAuthorizeTransferConverter authorizeTransferConverter)
+        public AuthorizeController(IUserManagerService userManager, ISignInManagerBoutique signInManager,
+                                   IJwtTokenService jwtTokenService, IAuthorizeTransferConverter authorizeTransferConverter)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _jwtSettings = jwtSettings;
+            _jwtTokenService = jwtTokenService;
             _authorizeTransferConverter = authorizeTransferConverter;
         }
 
@@ -59,14 +60,22 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         private readonly ISignInManagerBoutique _signInManager;
 
         /// <summary>
-        /// Параметры JWT токена
+        /// Сервис управления токенами
         /// </summary>
-        private readonly JwtSettings _jwtSettings;
+        private readonly IJwtTokenService _jwtTokenService;
 
         /// <summary>
         /// Конвертер логина и пароля в трансферную модель
         /// </summary>
         private readonly IAuthorizeTransferConverter _authorizeTransferConverter;
+
+        /// <summary>
+        /// Сервис управления токенами
+        /// </summary>
+        [HttpGet("{token}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public bool IsTokenValid(string token) =>
+           _jwtTokenService.IsTokenValid(token);
 
         /// <summary>
         /// Авторизоваться через JWT токен
@@ -100,36 +109,9 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         /// </summary>
         private async Task<ActionResult<string>> GetJwtResult(string email) =>
             await _userManager.FindRoleUserByEmail(email).
-            ResultValueOkTaskAsync(GenerateJwtToken).
+            ResultValueOkTaskAsync(_jwtTokenService.GenerateJwtToken).
             ToActionResultValueTaskAsync();
 
-        /// <summary>
-        /// Сгенерировать токен
-        /// </summary>
-        private string GenerateJwtToken(IBoutiqueUserDomain user) =>
-             new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience,
-                                  GetClaims(user, new List<string> { user.IdentityRoleType.ToString() }),
-                                  expires: DateTime.Now.AddDays(_jwtSettings.Expires),
-                                  signingCredentials: GetCredentials(_jwtSettings)).
-             Map(jwtToken => new JwtSecurityTokenHandler().WriteToken(jwtToken));
 
-        /// <summary>
-        /// Получить права доступа
-        /// </summary>
-        private static IEnumerable<Claim> GetClaims(IBoutiqueUserDomain user, IEnumerable<string> roles) =>
-            new List<Claim>
-            {
-                new (JwtRegisteredClaimNames.Sub, user.UserName),
-                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new (ClaimTypes.NameIdentifier, user.Id),
-            }.
-            Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-        /// <summary>
-        /// Получить ключ для доступа
-        /// </summary>
-        private static SigningCredentials GetCredentials(JwtSettings jwtSettings) =>
-            new SymmetricSecurityKey(jwtSettings.Key).
-            Map(key => new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
     }
 }

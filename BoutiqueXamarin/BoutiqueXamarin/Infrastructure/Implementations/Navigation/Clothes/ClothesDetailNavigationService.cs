@@ -20,7 +20,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo(IClothesDetailDomain clothesDetail, SizeType defaultSizeType) =>
+        public async Task<INavigationResult> NavigateTo(IClothesDetailDomain clothesDetail, SizeType defaultSizeType) =>
             await NavigateTo(new ClothesDetailNavigationParameters(clothesDetail, defaultSizeType));
     }
 }

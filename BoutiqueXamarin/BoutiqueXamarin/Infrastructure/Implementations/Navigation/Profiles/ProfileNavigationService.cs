@@ -14,23 +14,17 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Profiles
     /// <summary>
     /// Сервис навигации к странице информации о пользователе
     /// </summary>
-    public class ProfileNavigationService : BaseNavigationService<ProfileNavigationParameters, ProfilePage>, IProfileNavigationService
+    public class ProfileNavigationService : AuthorizeBaseNavigationService<ProfileNavigationParameters, ProfilePage>, IProfileNavigationService
     {
-        public ProfileNavigationService(INavigationService navigationService, ILoginStore loginStore)
-            : base(navigationService, loginStore)
+        public ProfileNavigationService(INavigationService navigationService, ILoginStore loginStore,
+                                        ILoginNavigationService loginNavigationService)
+            : base(navigationService, loginStore, loginNavigationService)
         { }
-
-
-        /// <summary>
-        /// Необходимость авторизации
-        /// </summary>
-        public override bool Authorize =>
-            true;
 
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task NavigateTo() =>
+        public async Task<INavigationResult> NavigateTo() =>
             await NavigateTo(new ProfileNavigationParameters());
     }
 }

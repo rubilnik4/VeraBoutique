@@ -25,15 +25,13 @@ namespace BoutiqueXamarin.Views.Authorizes
                 this.Bind(ViewModel, x => x.Email, x => x.EmailEntry.Text).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.EmailEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.LoginValid).
+                this.Bind(ViewModel, x=> x.EmailValid, x => x.EmailEntry.IsValid).
                      DisposeWith(disposable);
 
                 this.Bind(ViewModel, x => x.Password, x => x.PasswordEntry.Text).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.PasswordEntry.IsValid).
-                     BindTo(this, x => x.ViewModel!.PasswordValid).
+                this.Bind(ViewModel, x => x.PasswordValid, x => x.PasswordEntry.IsValid).
                      DisposeWith(disposable);
 
                 this.BindCommand(ViewModel, x => x.AuthorizeCommand, x => x.LoginButton, ViewModel!.AuthorizeValidation).
@@ -56,7 +54,7 @@ namespace BoutiqueXamarin.Views.Authorizes
 
                 this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
                      WhereNotNull().
-                     Select(result => result.HasErrors && !result.HasErrorType(AuthorizeErrorType.Email) 
+                     Select(result => result.HasErrors && !result.HasErrorType(AuthorizeErrorType.Email)
                                                        && !result.HasErrorType(AuthorizeErrorType.Password)).
                      BindTo(this, x => x.AuthorizeErrorLabel.IsVisible).
                      DisposeWith(disposable);
