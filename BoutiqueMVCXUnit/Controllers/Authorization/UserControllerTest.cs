@@ -84,7 +84,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(CommonErrorType.ValueNotValid.ToString(), errors.Keys.First());
+            Assert.Equal(userResult.Errors.First().Id, errors.Keys.First());
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var badRequest = (BadRequestObjectResult)actionResult.Result;
             var errors = (SerializableError)badRequest.Value;
             Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(CommonErrorType.ValueNotValid.ToString(), errors.Keys.First());
+            Assert.Equal(userResult.Errors.First().ToString(), errors.Keys.First());
         }
 
         /// <summary>

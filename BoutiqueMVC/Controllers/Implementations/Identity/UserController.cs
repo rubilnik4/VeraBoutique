@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
@@ -10,6 +12,7 @@ using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
+using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

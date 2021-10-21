@@ -29,7 +29,7 @@ using ResultFunctional.Models.Interfaces.Results;
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
 {
     /// <summary>
-    /// Менеджер авторизации
+    /// Менеджер пользователей
     /// </summary>
     public class UserManagerService : IUserManagerService
     {

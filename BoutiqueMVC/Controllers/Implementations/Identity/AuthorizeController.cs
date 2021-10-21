@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Common.Interfaces.Identities;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
@@ -16,6 +17,7 @@ using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -36,8 +38,8 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
     /// Контроллер авторизации
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    [AllowAnonymous]
     public class AuthorizeController : ControllerBase
     {
         public AuthorizeController(IUserManagerService userManager, ISignInManagerBoutique signInManager,
@@ -70,12 +72,12 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         private readonly IAuthorizeTransferConverter _authorizeTransferConverter;
 
         /// <summary>
-        /// Сервис управления токенами
+        /// Проверка токена
         /// </summary>
-        [HttpGet("{token}")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public bool IsTokenValid(string token) =>
-           _jwtTokenService.IsTokenValid(token);
+        public bool IsTokenValid() =>
+            true;
 
         /// <summary>
         /// Авторизоваться через JWT токен
@@ -85,6 +87,7 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> AuthorizeJwt(AuthorizeTransfer login) =>
             await _authorizeTransferConverter.FromTransfer(login).
             ResultValueOkAsync(loginDomain => _signInManager.PasswordSignInAsync(loginDomain.Email, loginDomain.Password, false, false)).
@@ -112,6 +115,10 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
             ResultValueOkTaskAsync(_jwtTokenService.GenerateJwtToken).
             ToActionResultValueTaskAsync();
 
-
+        /// <summary>
+        /// Получить адрес почты из токена
+        /// </summary>
+        public static string? GetEmail(ClaimsPrincipal user) =>
+            user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     }
 }

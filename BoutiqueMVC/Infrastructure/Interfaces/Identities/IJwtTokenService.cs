@@ -12,11 +12,6 @@ namespace BoutiqueMVC.Infrastructure.Interfaces.Identities
     public interface IJwtTokenService
     {
         /// <summary>
-        /// Проверка токена
-        /// </summary>
-        bool IsTokenValid(string token);
-
-        /// <summary>
         /// Сгенерировать токен
         /// </summary>
         string GenerateJwtToken(IBoutiqueUserDomain user);

@@ -31,14 +31,12 @@ namespace BoutiqueMVCXUnit.Infrastructure.Identities
             var jwtTokenService = new JwtTokenService(JwtSettings);
 
             var token = jwtTokenService.GenerateJwtToken(user);
-            var isValid = jwtTokenService.IsTokenValid(token);
             var handler = new JwtSecurityTokenHandler();
             var tokenDecode = handler.ReadToken(token) as JwtSecurityToken;
             var claims = tokenDecode?.Claims.ToList();
             var claimRole = claims?.First(claim => claim.Type == ClaimTypes.Role && claim.Value == user.IdentityRoleType.ToString());
 
             Assert.True(!String.IsNullOrWhiteSpace(token));
-            Assert.True(isValid);
             Assert.NotNull(claimRole);
         }
 

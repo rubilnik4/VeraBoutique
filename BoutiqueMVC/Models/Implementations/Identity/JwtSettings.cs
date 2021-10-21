@@ -47,6 +47,7 @@ namespace BoutiqueMVC.Models.Implementations.Identity
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = Issuer,
                 ValidAudience = Audience,
+                RequireExpirationTime = false,
                 IssuerSigningKey = new SymmetricSecurityKey(Key)
             };
     }

@@ -9,10 +9,12 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueDTO.Models.Interfaces.RestClients;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Prism.Ioc;
 using Prism.Unity;
+using ResultFunctional.FunctionalExtensions.Async;
 using Unity;
 
 namespace BoutiqueXamarin.DependencyInjection
@@ -34,8 +36,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// Регистрация сервисов обмена данными
         /// </summary>
         private static void RegisterRestClient(IBoutiqueContainer container, IXamarinConfigurationDomain configuration) =>
-            configuration.HostConfiguration.
-            Void(hostConfig => container.Register(service => HttpClientFactory.GetRestClient(hostConfig)));
+           container.Register(service => HttpClientFactory.GetRestClient(configuration.HostConfiguration));
 
         /// <summary>
         /// Регистрация сервисов обмена данными

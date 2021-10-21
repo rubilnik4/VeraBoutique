@@ -66,8 +66,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultValue<string>> PostAsync(TDomain domain) =>
             await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json =>
-                RestHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
+            ResultValueBindOkAsync(json => RestHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
 
         /// <summary>
         /// Отправить данные асинхронно
@@ -75,8 +74,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultValue<TId>> PostValueAsync(TDomain domain) =>
             await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json =>
-                RestHttpClient.PostValueAsync<TId>(RestRequest.PostRequest(ControllerName), json));
+            ResultValueBindOkAsync(json => RestHttpClient.PostValueAsync<TId>(RestRequest.PostRequest(ControllerName), json));
 
 
         /// <summary>
@@ -85,8 +83,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultCollection<TId>> PostCollectionAsync(IEnumerable<TDomain> domains) =>
             await _transferConverter.ToTransfers(domains).
             ToJsonTransfer().
-            ResultValueBindOkToCollectionAsync(json => 
-                RestHttpClient.PostCollectionAsync<TId>(RestRequest.PostRequestCollection(ControllerName), json));
+            ResultValueBindOkToCollectionAsync(json => RestHttpClient.PostCollectionAsync<TId>(RestRequest.PostRequestCollection(ControllerName), json));
 
         /// <summary>
         /// Обновить данные асинхронно
@@ -94,8 +91,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Base
         public async Task<IResultError> PutAsync(TDomain domain) =>
             await _transferConverter.ToTransfer(domain).
             ToJsonTransfer().
-            ResultValueBindErrorsOkAsync(json =>
-                RestHttpClient.PutValueAsync(RestRequest.PostRequestCollection(ControllerName), json));
+            ResultValueBindErrorsOkAsync(json => RestHttpClient.PutValueAsync(RestRequest.PostRequestCollection(ControllerName), json));
 
         /// <summary>
         /// Удалить все данные асинхронно

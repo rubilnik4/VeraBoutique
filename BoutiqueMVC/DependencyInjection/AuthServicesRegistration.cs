@@ -9,6 +9,8 @@ using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDAL.Models.Implementations.Entities.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueMVC.Factories.Database;
+using BoutiqueMVC.Infrastructure.Implementation.Identities;
+using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Environment;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,17 +33,19 @@ namespace BoutiqueMVC.DependencyInjection
             {
                 options.AddPolicy(IdentityPolicyType.ADMIN_POLICY,
                                   policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.Admin.ToString()));
-                options.AddPolicy(IdentityPolicyType.USER_POLICY, 
+                options.AddPolicy(IdentityPolicyType.USER_POLICY,
                                   policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.User.ToString()));
             });
 
         /// <summary>
         /// Внедрить зависимости свойств авторизации
         /// </summary>
-        public static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration) =>
-            JwtSettingsFactory.GetJwtSettings(configuration).
-            Map(jwtSettings => services.AddSingleton(jwtSettings).
-                               Void(_ => AddJwtAuthentication(services, configuration)));
+        public static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSingleton(JwtSettingsFactory.GetJwtSettings(configuration));
+            services.AddTransient<IJwtTokenService, JwtTokenService>();
+            AddJwtAuthentication(services, configuration);
+        }
 
         /// <summary>
         /// Внедрить зависимости свойств регистрации
