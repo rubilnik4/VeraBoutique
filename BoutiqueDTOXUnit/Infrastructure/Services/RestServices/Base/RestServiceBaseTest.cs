@@ -95,7 +95,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         [Fact]
         public async Task GetAsync_ErrorException()
         {
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -151,7 +151,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task GetByIdAsync_ErrorException()
         {
             var test = TestTransferData.TestTransfers.First();
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -208,7 +208,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostCollectionAsync_ErrorException()
         {
             var tests = TestData.TestDomains;
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -265,7 +265,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostAsync_ErrorException()
         {
             var test = TestData.TestDomains.First();
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -322,7 +322,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PostValueAsync_ErrorException()
         {
             var test = TestData.TestDomains.First();
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -378,7 +378,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task PutAsync_ErrorException()
         {
             var test = TestData.TestDomains.First();
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -430,7 +430,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         [Fact]
         public async Task DeleteAsync_ErrorException()
         {
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -487,7 +487,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         public async Task DeleteByIdAsync_ErrorException()
         {
             var test = TestTransferData.TestTransfers.First();
-            var restClient = NotFoundRestHttpClient;
+            var restClient = NotFoundRestBaseHttpClient;
             var testTransferConverter = TestTransferConverter;
             var testRestService = new TestRestService(restClient, testTransferConverter);
 
@@ -508,12 +508,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// <summary>
         /// Подключение к несуществующему серверу
         /// </summary>
-        private static IRestHttpClient NotFoundRestHttpClient =>
-             new HttpClient
-             {
-                 BaseAddress = new Uri("https://ServerNotFound"),
-                 Timeout = TimeSpan.FromMilliseconds(10)
-             }.
-             Map(httpClient => new RestHttpClient(httpClient));
+        private static IRestHttpClient NotFoundRestBaseHttpClient =>
+             new RestHttpClient(new Uri("https://ServerNotFound"), TimeSpan.FromMilliseconds(10));
     }
 }

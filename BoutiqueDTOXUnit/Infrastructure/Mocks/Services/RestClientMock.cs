@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
+using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.Base;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Sync;

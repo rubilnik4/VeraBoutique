@@ -13,8 +13,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class SizeRestService : RestServiceBase<int, ISizeDomain, SizeTransfer>, ISizeRestService
     {
-        public SizeRestService(IRestHttpClient restHttpClient,
-                               ISizeTransferConverter sizeTransferConverter)
+        public SizeRestService(IRestHttpClient restHttpClient, ISizeTransferConverter sizeTransferConverter)
             : base(restHttpClient, sizeTransferConverter)
         { }
     }

@@ -10,7 +10,7 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize
     public interface IProfileRestService
     {
         /// <summary>
-        /// Авторизироваться в сервисе
+        /// Получить личные данные пользователя
         /// </summary>
         Task<IResultValue<IBoutiqueUserDomain>> GetProfile();
     }

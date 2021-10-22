@@ -25,8 +25,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class GenderRestService : RestServiceBase<GenderType, IGenderDomain, GenderTransfer>, IGenderRestService
     {
-        public GenderRestService(IRestHttpClient restHttpClient,
-                                 IGenderTransferConverter genderTransferConverter,
+        public GenderRestService(IRestHttpClient restHttpClient, IGenderTransferConverter genderTransferConverter,
                                  IGenderCategoryTransferConverter genderCategoryTransferConverter)
             : base(restHttpClient, genderTransferConverter)
         {

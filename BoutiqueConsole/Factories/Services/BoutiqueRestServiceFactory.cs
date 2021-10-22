@@ -14,6 +14,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Interfaces.Results;
@@ -29,13 +30,13 @@ namespace BoutiqueConsole.Factories.Services
         /// Клиент для подключения к сервису одежды
         /// </summary>
         public static IRestHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration) =>
-            HttpClientFactory.GetRestClient(hostConfiguration);
+            new RestHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut);
 
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
-        public static IRestHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration, string jwtToken) =>
-            HttpClientFactory.GetRestClient(hostConfiguration, jwtToken);
+        public static IRestJwtHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration, string jwtToken) =>
+            new RestJwtHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut, () => Task.FromResult((string?)jwtToken));
 
         /// <summary>
         ///  Получить сервис авторизации

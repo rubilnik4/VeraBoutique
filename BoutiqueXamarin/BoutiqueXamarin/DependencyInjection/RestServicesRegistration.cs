@@ -3,11 +3,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.HttpClients;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
+using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
@@ -29,14 +31,20 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         public static void RegisterServices(IBoutiqueContainer container, IXamarinConfigurationDomain configuration) =>
             container.
-            Void(_ => RegisterRestClient(container, configuration)).
+            Void(_ => RegisterRestClient(container, configuration.HostConfiguration)).
             Void(_ => RegisterRestServices(container));
 
         /// <summary>
         /// Регистрация сервисов обмена данными
         /// </summary>
-        private static void RegisterRestClient(IBoutiqueContainer container, IXamarinConfigurationDomain configuration) =>
-           container.Register(service => HttpClientFactory.GetRestClient(configuration.HostConfiguration));
+        private static void RegisterRestClient(IBoutiqueContainer container, IHostConfigurationDomain hostConfiguration) =>
+            container.Register(service => GetRestJwtHttpClient(hostConfiguration, service.Resolve<ILoginStore>()));
+
+        /// <summary>
+        /// Получить http клиент с авторизацией
+        /// </summary>
+        private static IRestHttpClient GetRestJwtHttpClient(IHostConfigurationDomain hostConfiguration, ILoginStore loginStore) =>
+            new RestJwtHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut, loginStore.GetTokenValue);
 
         /// <summary>
         /// Регистрация сервисов обмена данными
@@ -45,6 +53,7 @@ namespace BoutiqueXamarin.DependencyInjection
         {
             container.Register<IAuthorizeRestService, AuthorizeRestService>();
             container.Register<IUserRestService, UserRestService>();
+            container.Register<IProfileRestService, ProfileRestService>();
             container.Register<IGenderRestService, GenderRestService>();
             container.Register<ICategoryRestService, CategoryRestService>();
             container.Register<IClothesTypeRestService, ClothesTypeRestService>();

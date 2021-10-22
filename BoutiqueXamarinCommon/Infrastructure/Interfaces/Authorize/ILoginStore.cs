@@ -26,6 +26,11 @@ namespace BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize
         Task<IResultValue<string>> GetToken();
 
         /// <summary>
+        /// Получить токен
+        /// </summary>
+        Task<string?> GetTokenValue();
+
+        /// <summary>
         /// Очистить токен
         /// </summary>
         Task ClearToken();

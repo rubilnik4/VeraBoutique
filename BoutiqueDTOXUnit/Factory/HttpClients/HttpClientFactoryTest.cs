@@ -19,11 +19,10 @@ namespace BoutiqueDTOXUnit.Factory.HttpClients
         public void GetRestClient_Ok()
         {
             var hostConnection = HostConnection;
-            var restClient = HttpClientFactory.GetRestClient(hostConnection);
+            var restClient = HttpClientFactory.GetRestClient(hostConnection.Host, hostConnection.TimeOut);
             
             Assert.Equal(hostConnection.Host, restClient.BaseAddress);
-            Assert.Equal(hostConnection.TimeOut, restClient.TimeOut);
-            Assert.Equal(AuthorizationType.None, restClient.AuthorizationType);
+            Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
         }
 
         /// <summary>
@@ -35,12 +34,12 @@ namespace BoutiqueDTOXUnit.Factory.HttpClients
             var hostConnection = HostConnection;
             const string jwtToken = "jwtToken";
 
-            var restClient = HttpClientFactory.GetRestClient(hostConnection, jwtToken);
+            var restClient = HttpClientFactory.GetRestClient(hostConnection.Host, hostConnection.TimeOut, jwtToken);
 
             Assert.Equal(hostConnection.Host, restClient.BaseAddress);
-            Assert.Equal(hostConnection.TimeOut, restClient.TimeOut);
-            Assert.Equal(AuthorizationType.Bearer, restClient.AuthorizationType);
-            Assert.Equal(jwtToken, restClient.JwtToken);
+            Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
+            Assert.Equal(HttpClientSchemaType.Bearer.ToString(), restClient.DefaultRequestHeaders.Authorization?.Scheme);
+            Assert.Equal(jwtToken, restClient.DefaultRequestHeaders.Authorization?.Parameter);
         }
 
         /// <summary>

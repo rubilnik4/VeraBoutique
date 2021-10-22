@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
+using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Implementations.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Sync;
@@ -15,33 +16,28 @@ namespace BoutiqueDTO.Factory.HttpClients
     public static class HttpClientFactory
     {
         /// <summary>
-        /// Схема работы авторизации jwt
-        /// </summary>
-        public const string JWT_SCHEME = "Bearer";
-
-        /// <summary>
         /// Создать api клиент
         /// </summary>
-        public static IRestHttpClient GetRestClient(IHostConfigurationDomain hostConfiguration) =>
-            GetRestClient(hostConfiguration, String.Empty);
+        public static HttpClient GetRestClient(Uri baseAddress, TimeSpan timeOut) =>
+            GetRestClient(baseAddress, timeOut, null);
 
         /// <summary>
         /// Создать api клиент c jwt токеном
         /// </summary>
-        public static IRestHttpClient GetRestClient(IHostConfigurationDomain hostConfiguration, string? jwtToken) =>
+        public static HttpClient GetRestClient(Uri baseAddress, TimeSpan timeOut, string? jwtToken) =>
             new HttpClientHandler().
-            VoidOk(handler => hostConfiguration.DisableSSL,
-                   handler => handler.ClientCertificateOptions = ClientCertificateOption.Manual).
-            VoidOk(handler => hostConfiguration.DisableSSL,
-                   handler => handler.ServerCertificateCustomValidationCallback =
-                       (httpRequestMessage, cert, cetChain, policyErrors) => true).
+#if DEBUG
+            Void(handler => handler.ClientCertificateOptions = ClientCertificateOption.Manual).
+            Void(handler => handler.ServerCertificateCustomValidationCallback =
+                     (httpRequestMessage, cert, cetChain, policyErrors) => true).
+#endif
             Map(handler => new HttpClient(handler)
             {
-                BaseAddress = hostConfiguration.Host,
-                Timeout = hostConfiguration.TimeOut,
+                BaseAddress = baseAddress,
+                Timeout = timeOut,
             }).
             VoidOk(_ => !String.IsNullOrWhiteSpace(jwtToken),
-                   httpClient => httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JWT_SCHEME, jwtToken)).
-            Map(httpClient => new RestHttpClient(httpClient));
+                   httpClient => httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(HttpClientSchemaType.Bearer.ToString(), 
+                                                                                                                jwtToken));
     }
 }

@@ -6,6 +6,7 @@ using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Akavache;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
+using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
@@ -41,11 +42,18 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
             await BlobCache.Secure.GetAllKeys().
             ToTask().
             ToResultValueWhereTaskAsync(keys => keys.Contains(TOKEN_KEY),
-                                    _ => TokenErrorType).
+                                        _ => TokenErrorType).
             ResultValueOkBindAsync(_ => BlobCache.Secure.GetObject<string>(TOKEN_KEY).ToTask()).
             ResultValueBindOkTaskAsync(token => token.ToResultValueNullCheck(TokenErrorType)).
             ResultValueBindOkTaskAsync(token => token.ToResultValueWhere(_ => !String.IsNullOrWhiteSpace(token),
                                                                          _ => TokenErrorType));
+
+        /// <summary>
+        /// Получить токен
+        /// </summary>
+        public async Task<string?> GetTokenValue() =>
+            await GetToken().
+            MapTaskAsync(result => result.Value);
 
         /// <summary>
         /// Очистить токен

@@ -12,7 +12,7 @@ using ResultFunctional.Models.Interfaces.Results;
 namespace BoutiqueDTO.Models.Interfaces.RestClients
 {
     /// <summary>
-    /// Клиент для http запросов
+    /// Базовый клиент для http запросов
     /// </summary>
     public interface IRestHttpClient
     {
@@ -24,17 +24,12 @@ namespace BoutiqueDTO.Models.Interfaces.RestClients
         /// <summary>
         /// Время ожидания ответа
         /// </summary>
-        TimeSpan TimeOut { get; }
+        TimeSpan Timeout { get; }
 
         /// <summary>
         /// Тип авторизации
         /// </summary>
-        AuthorizationType AuthorizationType { get; }
-
-        /// <summary>
-        /// Токен авторизации
-        /// </summary>
-        string? JwtToken { get; }
+        Task<AuthorizationType> GetAuthorizationType();
 
         /// <summary>
         /// Получить данные по идентификатору Api

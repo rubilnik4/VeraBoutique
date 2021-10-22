@@ -30,10 +30,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class ClothesRestService : RestServiceBase<int, IClothesMainDomain, ClothesMainTransfer>, IClothesRestService
     {
-        public ClothesRestService(IRestHttpClient restHttpClient,
-                                  IClothesTransferConverter clothesTransferConverter,
-                                  IClothesDetailTransferConverter clothesDetailTransferConverter,
-                                  IClothesMainTransferConverter clothesMainTransferConverter,
+        public ClothesRestService(IRestHttpClient restHttpClient, IClothesTransferConverter clothesTransferConverter,
+                                  IClothesDetailTransferConverter clothesDetailTransferConverter, IClothesMainTransferConverter clothesMainTransferConverter,
                                   IClothesImageTransferConverter clothesImageTransferConverter)
             : base(restHttpClient, clothesMainTransferConverter)
         {

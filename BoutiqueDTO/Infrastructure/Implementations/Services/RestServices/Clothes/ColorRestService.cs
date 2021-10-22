@@ -13,8 +13,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Cloth
     /// </summary>
     public class ColorRestService : RestServiceBase<string, IColorDomain, ColorTransfer>, IColorRestService
     {
-        public ColorRestService(IRestHttpClient restHttpClient,
-                                IColorTransferConverter colorTransferConverter)
+        public ColorRestService(IRestHttpClient restHttpClient, IColorTransferConverter colorTransferConverter)
             : base(restHttpClient, colorTransferConverter)
         { }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BoutiqueDTO.Extensions.RestResponses.Async;
 using BoutiqueDTO.Extensions.RestResponses.Sync;
+using BoutiqueDTO.Factory.HttpClients;
 using BoutiqueDTO.Models.Enums.RestClients;
 using BoutiqueDTO.Models.Interfaces.RestClients;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -22,52 +23,49 @@ using ResultFunctional.Models.Interfaces.Results;
 namespace BoutiqueDTO.Models.Implementations.RestClients
 {
     /// <summary>
-    /// Клиент для http запросов
+    /// Базовый клиент для http запросов
     /// </summary>
     public class RestHttpClient : IRestHttpClient
     {
-        public RestHttpClient(HttpClient httpClient)
+        public RestHttpClient(Uri baseAddress, TimeSpan timeout)
         {
-            _httpClient = httpClient;
+            BaseAddress = baseAddress;
+            Timeout = timeout;
         }
-
-        /// <summary>
-        /// Клиент для http запросов
-        /// </summary>
-        private readonly HttpClient _httpClient;
 
         /// <summary>
         /// Адрес сервера
         /// </summary>
-        public Uri BaseAddress =>
-            _httpClient.BaseAddress;
+        public Uri BaseAddress { get; }
 
         /// <summary>
         /// Время ожидания ответа
         /// </summary>
-        public TimeSpan TimeOut =>
-            _httpClient.Timeout;
+        public TimeSpan Timeout { get; }
+
+        /// <summary>
+        /// Клиент для http запросов
+        /// </summary>
+        protected virtual Task<HttpClient> GetHttpClient() =>
+            Task.FromResult(HttpClientFactory.GetRestClient(BaseAddress, Timeout));
 
         /// <summary>
         /// Тип авторизации
         /// </summary>
-        public AuthorizationType AuthorizationType =>
-            Enum.TryParse(_httpClient.DefaultRequestHeaders.Authorization?.Scheme, true, out AuthorizationType authorizationType)
-                ? authorizationType
-                : AuthorizationType.None;
-
-        /// <summary>
-        /// Токен авторизации
-        /// </summary>
-        public string? JwtToken =>
-             _httpClient.DefaultRequestHeaders.Authorization?.Parameter;
+        public async Task<AuthorizationType> GetAuthorizationType() =>
+            await GetHttpClient().
+            MapTaskAsync(httpClient => Enum.TryParse(httpClient.DefaultRequestHeaders.Authorization?.Scheme, true, 
+                                                     out AuthorizationType authorizationType)
+                             ? authorizationType
+                             : AuthorizationType.None);
 
         /// <summary>
         /// Получить данные по идентификатору Api
         /// </summary>
         public async Task<IResultValue<TOut>> GetValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(() => httpClient.GetAsync(request), GetRestError)).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
@@ -75,30 +73,34 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultCollection<TOut>> GetCollectionAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetAsync(request), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(() => httpClient.GetAsync(request), GetRestError)).
             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
         /// Получить байтовый массив по идентификатору Api
         /// </summary>
         public async Task<IResultValue<byte[]>> GetByteAsync(string request) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.GetByteArrayAsync(request), GetRestError);
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(() => httpClient.GetByteArrayAsync(request), GetRestError));
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<string>> PostAsync(string request, string jsonContent) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
-            ResultValueBindOkBindAsync(response => response.ToRestResultAsync());
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
+            ResultValueBindOkBindAsync(response => response.ToRestResultAsync()));
 
         /// <summary>
         /// Добавить данные Api
         /// </summary>
         public async Task<IResultValue<TOut>> PostValueAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError)).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
@@ -106,16 +108,18 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultCollection<TOut>> PostCollectionAsync<TOut>(string request, string jsonContent)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => httpClient.PostAsync(request, ToStringContent(jsonContent)), GetRestError)).
             ResultValueBindOkToCollectionBindAsync(response => response.ToRestResultCollectionAsync<TOut>());
 
         /// <summary>
         /// Обновить данные Api по идентификатору
         /// </summary>
         public async Task<IResultError> PutValueAsync(string request, string jsonContent) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(
-                () => _httpClient.PutAsync(request, ToStringContent(jsonContent)), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(
+                () => httpClient.PutAsync(request, ToStringContent(jsonContent)), GetRestError)).
             ResultValueBindErrorsOkBindAsync(response => response.ToRestResultError());
 
         /// <summary>
@@ -123,14 +127,16 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         public async Task<IResultValue<TOut>> DeleteValueAsync<TOut>(string request)
             where TOut : notnull =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), GetRestError).
+            await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(() => httpClient.DeleteAsync(request), GetRestError)).
             ResultValueBindOkBindAsync(response => response.ToRestResultValueAsync<TOut>());
 
         /// <summary>
         /// Удалить данные Api
         /// </summary>
         public async Task<IResultError> DeleteCollectionAsync(string request) =>
-            await ResultValueTryAsyncExtensions.ResultValueTryAsync(() => _httpClient.DeleteAsync(request), GetRestError).
+             await GetHttpClient().
+            MapBindAsync(httpClient => ResultValueTryAsyncExtensions.ResultValueTryAsync(() => httpClient.DeleteAsync(request), GetRestError)).
             ResultValueBindErrorsOkBindAsync(response => response.ToRestResultError());
 
         /// <summary>
@@ -139,7 +145,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         private IRestErrorResult GetRestError(Exception exception) =>
             exception switch
             {
-                TaskCanceledException _ => ErrorResultFactory.RestTimeoutError(BaseAddress.Host, TimeOut, "Вышло время ожидания клиента"),
+                TaskCanceledException _ => ErrorResultFactory.RestTimeoutError(BaseAddress.Host, Timeout, "Вышло время ожидания клиента"),
                 _ => UnknownRestError,
             };
 
@@ -147,8 +153,7 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// Ошибка. Сервер не найден
         /// </summary>
         private IRestErrorResult UnknownRestError =>
-             ErrorResultFactory.RestHostError(RestErrorType.UnknownRestStatus, BaseAddress.Host,
-                                              $"Сервер {BaseAddress.Host} не найден");
+             ErrorResultFactory.RestHostError(RestErrorType.UnknownRestStatus, BaseAddress.Host, $"Сервер {BaseAddress.Host} не найден");
 
 
         /// <summary>

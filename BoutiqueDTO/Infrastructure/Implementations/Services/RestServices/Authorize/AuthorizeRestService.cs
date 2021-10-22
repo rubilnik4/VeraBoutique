@@ -23,19 +23,18 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
     /// <summary>
     /// Сервис авторизации
     /// </summary>
-    public class AuthorizeRestService : RestService<string, IAuthorizeDomain, AuthorizeTransfer>,
-                                        IAuthorizeRestService
+    public class AuthorizeRestService : RestService<string, IAuthorizeDomain, AuthorizeTransfer>, IAuthorizeRestService
     {
-        public AuthorizeRestService(IRestHttpClient restHttpClient, IAuthorizeTransferConverter authorizeTransferConverter)
+        public AuthorizeRestService(IRestHttpClient restBaseHttpClient, IAuthorizeTransferConverter authorizeTransferConverter)
         {
-            _restHttpClient = restHttpClient;
+            _restBaseHttpClient = restBaseHttpClient;
             _authorizeTransferConverter = authorizeTransferConverter;
         }
 
         /// <summary>
         /// Клиент для http запросов
         /// </summary>
-        private readonly IRestHttpClient _restHttpClient;
+        private readonly IRestHttpClient _restBaseHttpClient;
 
         /// <summary>
         /// Конвертер из доменной модели в трансферную модель
@@ -48,7 +47,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await _authorizeTransferConverter.ToTransfer(authorizeDomain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
+            ResultValueBindOkAsync(json => _restBaseHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
             ResultValueBindBadTaskAsync(errors => ToTokenError(errors).ToResultValue<string>());
 
         /// <summary>
