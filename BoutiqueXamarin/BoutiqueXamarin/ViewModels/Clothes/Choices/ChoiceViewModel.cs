@@ -38,7 +38,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
                                IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService)
             : base(choiceNavigationService, profileNavigationService)
         {
-            Initialize(genderRestService, clothesNavigationService);
+             Initialize(genderRestService, clothesNavigationService);
             _choiceGenderViewModelItems = GetChoiceViewModelsObservable(ChoiceGendersObservable);
             ErrorViewModelObservable = GetErrorViewModel(ChoiceGendersObservable, genderRestService, clothesNavigationService);
         }
@@ -112,8 +112,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// </summary>
         private static IObservable<IResultCollection<ChoiceGenderViewModelItem>> GetChoiceViewModelsObservable(IGenderRestService genderRestService,
                                                                                                                IClothesNavigationService clothesNavigationService) =>
-             Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService),
-                                  RxApp.MainThreadScheduler);
+             Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService), RxApp.MainThreadScheduler);
 
         /// <summary>
         /// Получить модели типа пола одежды

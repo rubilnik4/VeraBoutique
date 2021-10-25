@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:profiles="clr-namespace:BoutiqueXamarin.Views.Profiles;assembly=BoutiqueXamarin"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
+             xmlns:contentViews="clr-namespace:BoutiqueXamarin.Views.ContentViews;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Profiles.ProfilePage">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,23 +26,32 @@
 
         <menuItems:LogoMenuView Grid.Row="1" />
 
-        <StackLayout Grid.Row="2"
-                     Style="{StaticResource StackLayoutControl}"
-                     Margin="10, 10, 10, 0">
-            <Label x:Name="LoginLabel"
-                   Style="{StaticResource LabelTitle}"
-                   Text="Логин"/>
-            <StackLayout>
-                <Button x:Name="PersonalButton"
-                        Style="{StaticResource ButtonTransparent}"
-                        Text="Личная информация"/>
-                <Button x:Name="SettingsButton"
-                        Style="{StaticResource ButtonTransparent}"
-                        Text="Настройки"/>
-                <Button x:Name="LogoutButton"
-                        Style="{StaticResource ButtonTransparent}"
-                        Text="Выйти"/>
+        <ContentView x:Name="MainView"
+                     Grid.Row="2">
+            <StackLayout Style="{StaticResource StackLayoutEntry}">
+
+                <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                    <Label x:Name="LoginLabel"
+                       Style="{StaticResource LabelTitle}" />
+                </StackLayout>
+
+                <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                    <Button x:Name="OrderButton"
+                        Style="{StaticResource ButtonList}"
+                        Text="Заказы" />
+                    <Button x:Name="PersonalButton"
+                        Style="{StaticResource ButtonList}"
+                        Text="Личная информация" />
+                    <Button x:Name="SettingsButton"
+                        Style="{StaticResource ButtonList}"
+                        Text="Настройки" />
+                    <Button x:Name="LogoutButton"
+                        Style="{StaticResource ButtonList}"
+                        Text="Выйти" />
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ContentView>
+        <contentViews:ErrorConnectionView x:Name="ErrorView"
+                                          Grid.Row="2"/>
     </Grid>
 </profiles:ProfilePageBase>

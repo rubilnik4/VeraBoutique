@@ -11,6 +11,9 @@ using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Authorize
 {
+    /// <summary>
+    /// Сервис личной информации
+    /// </summary>
     public class ProfileRestService : RestService<string, IBoutiqueUserDomain, BoutiqueUserTransfer>, IProfileRestService
     {
         public ProfileRestService(IRestHttpClient restHttpClient, IBoutiqueUserTransferConverter boutiqueUserTransferConverter)

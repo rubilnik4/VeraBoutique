@@ -41,8 +41,6 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// </summary>
         public BackLeftMenuViewModel BackLeftMenuViewModel { get; }
 
-      
-
         /// <summary>
         /// Параметры навигации
         /// </summary>
