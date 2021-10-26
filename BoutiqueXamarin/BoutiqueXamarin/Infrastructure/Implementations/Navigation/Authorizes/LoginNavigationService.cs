@@ -10,7 +10,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
     /// <summary>
     /// Сервис навигации к странице авторизации
     /// </summary>
-    public class LoginNavigationService : BaseNavigationService<LoginNavigationParameters, LoginPage>, ILoginNavigationService
+    public class LoginNavigationService : BaseNavigationService<LoginNavigationOptions, LoginPage>, ILoginNavigationService
     {
         public LoginNavigationService(INavigationService navigationService)
             : base(navigationService)
@@ -20,6 +20,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
         /// Перейти к странице
         /// </summary>
         public async Task<INavigationResult> NavigateTo() =>
-            await NavigateTo(new LoginNavigationParameters());
+            await NavigateTo(new LoginNavigationOptions());
     }
 }

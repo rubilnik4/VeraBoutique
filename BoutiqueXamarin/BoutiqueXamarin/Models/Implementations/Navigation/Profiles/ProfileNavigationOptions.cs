@@ -5,6 +5,6 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Profiles
     /// <summary>
     /// Параметры навигации к странице информации о пользователе
     /// </summary>
-    public class ProfileNavigationParameters : BaseNavigationParameters
+    public class ProfileNavigationOptions : BaseNavigationOptions
     { }
 }

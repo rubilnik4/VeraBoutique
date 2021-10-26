@@ -7,6 +7,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes
     /// <summary>
     /// Сервис навигации к странице выбора одежды
     /// </summary>
-    public interface IChoiceNavigationService : IBaseNavigationService<ChoiceNavigationParameters>
+    public interface IChoiceNavigationService : IBaseNavigationService<ChoiceNavigationOptions>
     { }
 }

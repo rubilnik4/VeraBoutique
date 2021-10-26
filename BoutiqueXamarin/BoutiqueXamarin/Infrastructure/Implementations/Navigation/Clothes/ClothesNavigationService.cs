@@ -12,8 +12,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
     /// <summary>
     /// Сервис навигации к странице одежды
     /// </summary>
-    public class ClothesNavigationService : BaseNavigationService<ClothesNavigationParameters, ClothesPage>,
-                                            IClothesNavigationService
+    public class ClothesNavigationService : BaseNavigationService<ClothesNavigationOptions, ClothesPage>, IClothesNavigationService
     {
         public ClothesNavigationService(INavigationService navigationService)
             : base(navigationService)
@@ -23,6 +22,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
         /// Перейти к странице
         /// </summary>
         public async Task<INavigationResult> NavigateTo(GenderType genderType, IClothesTypeDomain clothesTypeDomain) =>
-            await NavigateTo(new ClothesNavigationParameters(genderType, clothesTypeDomain));
+            await NavigateTo(new ClothesNavigationOptions(genderType, clothesTypeDomain));
     }
 }

@@ -10,7 +10,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
     /// <summary>
     /// Сервис навигации к странице выбора одежды
     /// </summary>
-    public class ChoiceNavigationService : BaseNavigationService<ChoiceNavigationParameters, ChoicePage>,
+    public class ChoiceNavigationService : BaseNavigationService<ChoiceNavigationOptions, ChoicePage>,
                                            IChoiceNavigationService
     {
         public ChoiceNavigationService(INavigationService navigationService)

@@ -5,6 +5,6 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// <summary>
     /// Параметры навигации к странице выбора одежды
     /// </summary>
-    public class ChoiceNavigationParameters : BaseNavigationParameters
+    public class ChoiceNavigationOptions : BaseNavigationOptions
     { }
 }

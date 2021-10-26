@@ -16,32 +16,32 @@ namespace BoutiqueXamarin.Views.Base
     /// </summary>
     public abstract class NavigationBaseContentPage<TViewModel, TParameter, TNavigate> : ReactiveContentPage<TViewModel>
         where TViewModel : NavigationBaseViewModel<TParameter, TNavigate>
-        where TParameter : BaseNavigationParameters
+        where TParameter : BaseNavigationOptions
         where TNavigate : IBaseNavigationService<TParameter>
     {
         protected NavigationBaseContentPage()
         {
             this.WhenActivated(disposable =>
             {
-                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                     WhereNotNull().
-                     Where(_ => ErrorContentView != null).
-                     BindTo(this, x => x.ErrorContentView!.ViewModel).
-                     DisposeWith(disposable);
+                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
+                //     WhereNotNull().
+                //     Where(_ => ErrorContentView != null).
+                //     BindTo(this, x => x.ErrorContentView!.ViewModel).
+                //     DisposeWith(disposable);
 
-                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                    WhereNotNull().
-                     Select(x => x.ResultError.HasErrors).
-                     Where(_ => ErrorContentView != null).
-                     BindTo(this, x => x.ErrorContentView!.IsVisible).
-                     DisposeWith(disposable);
+                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
+                //    WhereNotNull().
+                //     Select(x => x.ResultError.HasErrors).
+                //     Where(_ => ErrorContentView != null).
+                //     BindTo(this, x => x.ErrorContentView!.IsVisible).
+                //     DisposeWith(disposable);
 
-                this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                     WhereNotNull().
-                     Select(x => x.ResultError.OkStatus).
-                     Where(_ => MainContentView != null).
-                     BindTo(this, x => x.MainContentView!.IsVisible).
-                     DisposeWith(disposable);
+                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
+                //     WhereNotNull().
+                //     Select(x => x.ResultError.OkStatus).
+                //     Where(_ => MainContentView != null).
+                //     BindTo(this, x => x.MainContentView!.IsVisible).
+                //     DisposeWith(disposable);
 
                 this.WhenAnyValue(x => x.ViewModel!.BackLeftMenuViewModel).
                      WhereNotNull().
@@ -50,18 +50,6 @@ namespace BoutiqueXamarin.Views.Base
                      DisposeWith(disposable);
             });
         }
-
-        /// <summary>
-        /// Главное окно
-        /// </summary>
-        protected virtual ContentView? MainContentView =>
-            null;
-
-        /// <summary>
-        /// Окно ошибок
-        /// </summary>
-        protected virtual ErrorConnectionView? ErrorContentView =>
-            null;
 
         /// <summary>
         /// Меню навигации назад

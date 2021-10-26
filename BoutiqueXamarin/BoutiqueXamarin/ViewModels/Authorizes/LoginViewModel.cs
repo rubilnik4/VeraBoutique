@@ -27,7 +27,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// <summary>
     /// Модель авторизации
     /// </summary>
-    public class LoginViewModel : NavigationBaseViewModel<LoginNavigationParameters, ILoginNavigationService>
+    public class LoginViewModel : NavigationBaseViewModel<LoginNavigationOptions, ILoginNavigationService>
     {
         public LoginViewModel(ILoginNavigationService loginNavigationService, ILoginService loginService,
                               IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService)

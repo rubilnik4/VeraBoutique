@@ -10,7 +10,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes
     /// <summary>
     /// Сервис навигации к странице детализации одежды
     /// </summary>
-    public interface IClothesDetailNavigationService : IBaseNavigationService<ClothesDetailNavigationParameters>
+    public interface IClothesDetailNavigationService : IBaseNavigationService<ClothesDetailNavigationOptions>
     {
         /// <summary>
         /// Перейти к странице

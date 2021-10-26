@@ -23,7 +23,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// <summary>
     /// Модель регистрации
     /// </summary>
-    public class RegisterViewModel : NavigationBaseViewModel<RegisterNavigationParameters, IRegisterNavigationService>
+    public class RegisterViewModel : NavigationBaseViewModel<RegisterNavigationOptions, IRegisterNavigationService>
     {
         public RegisterViewModel(IRegisterNavigationService registerNavigationService, IUserRestService userRestService,
                                  ILoginService loginService)

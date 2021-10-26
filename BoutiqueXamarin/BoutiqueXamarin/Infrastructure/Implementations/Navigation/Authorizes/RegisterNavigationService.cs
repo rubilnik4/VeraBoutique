@@ -10,7 +10,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
     /// <summary>
     /// Сервис навигации к странице регистрации
     /// </summary>
-    public class RegisterNavigationService : BaseNavigationService<RegisterNavigationParameters, RegisterPage>, IRegisterNavigationService
+    public class RegisterNavigationService : BaseNavigationService<RegisterNavigationOptions, RegisterPage>, IRegisterNavigationService
     {
         public RegisterNavigationService(INavigationService navigationService)
             : base(navigationService)
@@ -20,6 +20,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes
         /// Перейти к странице
         /// </summary>
         public async Task<INavigationResult> NavigateTo() =>
-            await NavigateTo(new RegisterNavigationParameters());
+            await NavigateTo(new RegisterNavigationOptions());
     }
 }

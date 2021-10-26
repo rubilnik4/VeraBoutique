@@ -8,7 +8,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes
     /// <summary>
     /// Сервис навигации к странице авторизации
     /// </summary>
-    public interface ILoginNavigationService : IBaseNavigationService<LoginNavigationParameters>
+    public interface ILoginNavigationService : IBaseNavigationService<LoginNavigationOptions>
     {
         /// <summary>
         /// Перейти к странице

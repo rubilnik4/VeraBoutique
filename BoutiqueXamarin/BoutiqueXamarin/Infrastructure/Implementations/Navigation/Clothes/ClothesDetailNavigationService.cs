@@ -10,7 +10,7 @@ using Prism.Navigation;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
 {
-    public class ClothesDetailNavigationService : BaseNavigationService<ClothesDetailNavigationParameters, ClothesDetailPage>,
+    public class ClothesDetailNavigationService : BaseNavigationService<ClothesDetailNavigationOptions, ClothesDetailPage>,
                                                   IClothesDetailNavigationService
     {
         public ClothesDetailNavigationService(INavigationService navigationService)
@@ -21,6 +21,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes
         /// Перейти к странице
         /// </summary>
         public async Task<INavigationResult> NavigateTo(IClothesDetailDomain clothesDetail, SizeType defaultSizeType) =>
-            await NavigateTo(new ClothesDetailNavigationParameters(clothesDetail, defaultSizeType));
+            await NavigateTo(new ClothesDetailNavigationOptions(clothesDetail, defaultSizeType));
     }
 }

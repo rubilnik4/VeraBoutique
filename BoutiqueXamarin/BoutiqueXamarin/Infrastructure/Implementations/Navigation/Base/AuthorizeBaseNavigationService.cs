@@ -16,7 +16,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
     /// Базовый сервис навигации с авторизацией
     /// </summary>
     public abstract class AuthorizeBaseNavigationService<TParameter, TPage> : BaseNavigationService<TParameter, TPage>
-        where TParameter : BaseNavigationParameters
+        where TParameter : BaseNavigationOptions
         where TPage : Page
     {
         protected AuthorizeBaseNavigationService(INavigationService navigationService, ILoginStore loginStore, 

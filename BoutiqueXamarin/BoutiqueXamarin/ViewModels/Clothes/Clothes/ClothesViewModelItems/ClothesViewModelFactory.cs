@@ -25,7 +25,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary> 
         /// Получить модели одежды
         /// </summary>
-        public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationParameters? clothesParameters,
+        public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationOptions? clothesParameters,
                                                                                      IClothesRestService clothesRestService,
                                                                                      IClothesDetailNavigationService clothesDetailNavigationService) =>
             await clothesParameters.

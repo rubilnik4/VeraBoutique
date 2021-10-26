@@ -5,6 +5,6 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Authorize
     /// <summary>
     /// Параметры навигации к странице авторизации
     /// </summary>
-    public class LoginNavigationParameters: BaseNavigationParameters
+    public class LoginNavigationOptions: BaseNavigationOptions
     { }
 }

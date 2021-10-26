@@ -7,9 +7,9 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// <summary>
     /// Параметры перехода к списку одежды
     /// </summary>
-    public class ClothesNavigationParameters : BaseNavigationParameters
+    public class ClothesNavigationOptions : BaseNavigationOptions
     {
-        public ClothesNavigationParameters(GenderType genderType, IClothesTypeDomain clothesTypeDomain)
+        public ClothesNavigationOptions(GenderType genderType, IClothesTypeDomain clothesTypeDomain)
         {
             GenderType = genderType;
             ClothesTypeDomain = clothesTypeDomain;

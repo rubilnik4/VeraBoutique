@@ -39,7 +39,7 @@ namespace BoutiqueXamarin
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
             Void(_ => InitializeComponent()).
             ResultValueVoidOkBadAsync(
-                actionOk: _ => BoutiqueContainer.Resolve<IChoiceNavigationService>().NavigateTo(new ChoiceNavigationParameters()),
+                actionOk: _ => BoutiqueContainer.Resolve<IChoiceNavigationService>().NavigateTo(new ChoiceNavigationOptions()),
                 actionBad: errors => throw new NotImplementedException());
 
         /// <summary>

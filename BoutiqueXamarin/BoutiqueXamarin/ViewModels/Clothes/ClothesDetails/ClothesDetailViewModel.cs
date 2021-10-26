@@ -29,7 +29,7 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel : NavigationLoginViewModel<ClothesDetailNavigationParameters, IClothesDetailNavigationService>
+    public class ClothesDetailViewModel : NavigationLoginViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>
     {
         public ClothesDetailViewModel(IClothesRestService clothesRestService,
                                       IClothesDetailNavigationService clothesDetailNavigationService, 

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Prism.Navigation;
 
 namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
 {
@@ -10,6 +11,6 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
         /// <summary>
         /// Перейти назад
         /// </summary>
-        Task NavigateBack();
+        Task<INavigationResult> NavigateBack();
     }
 }

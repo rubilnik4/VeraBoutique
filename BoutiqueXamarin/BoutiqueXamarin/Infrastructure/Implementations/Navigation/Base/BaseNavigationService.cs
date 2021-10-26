@@ -15,26 +15,26 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
     /// <summary>
     /// Базовый сервис навигации
     /// </summary>
-    public abstract class BaseNavigationService<TParameter, TPage> : BackNavigationService, IBaseNavigationService<TParameter>
-        where TParameter : BaseNavigationParameters
+    public abstract class BaseNavigationService<TParameter, TPage> : IBaseNavigationService<TParameter>
+        where TParameter : BaseNavigationOptions
         where TPage : Page
     {
         protected BaseNavigationService(INavigationService navigationService)
-            : base(navigationService)
         {
             _navigationService = navigationService;
         }
 
         /// <summary>
-        /// Сервис навигации Prism
+        /// Сервис навигации
         /// </summary>
         private readonly INavigationService _navigationService;
+
 
         /// <summary>
         /// Имя параметра навигации
         /// </summary>
         public string NavigationParameterName =>
-            NavigationParametersInfo.GetNavigationParameterName<TParameter>();
+            NavigationOptionsInfo.GetNavigationParameterName<TParameter>();
 
         /// <summary>
         /// Имя страницы для навигации
@@ -49,5 +49,11 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base
              await new NavigationParameters
              {{ NavigationParameterName, parameter }}.
              MapAsync(navigationParameters => _navigationService.NavigateAsync(PageName, navigationParameters));
+
+        /// <summary>
+        /// Перейти назад
+        /// </summary>
+        public Task<INavigationResult> NavigateBack() =>
+            _navigationService.GoBackAsync();
     }
 }

@@ -8,7 +8,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes
     /// <summary>
     /// Сервис навигации к странице регистрации
     /// </summary>
-    public interface IRegisterNavigationService : IBaseNavigationService<RegisterNavigationParameters>
+    public interface IRegisterNavigationService : IBaseNavigationService<RegisterNavigationOptions>
     {
         /// <summary>
         /// Перейти к странице

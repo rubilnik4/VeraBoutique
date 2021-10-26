@@ -1,6 +1,7 @@
 ﻿using System.Reactive;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
+using Prism.Navigation;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base.MenuItems
@@ -18,6 +19,6 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
         /// <summary>
         /// Команда. Вернуться назад
         /// </summary>
-        public ReactiveCommand<Unit, Unit> BackNavigateCommand { get; }
+        public ReactiveCommand<Unit, INavigationResult> BackNavigateCommand { get; }
     }
 }

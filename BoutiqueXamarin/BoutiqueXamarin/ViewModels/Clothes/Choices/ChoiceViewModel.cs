@@ -32,35 +32,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// <summary>
     /// Выбор типа одежды
     /// </summary>
-    public class ChoiceViewModel : NavigationLoginViewModel<ChoiceNavigationParameters, IChoiceNavigationService>
+    public class ChoiceViewModel : NavigationLoginViewModel<ChoiceNavigationOptions, IChoiceNavigationService>
     {
         public ChoiceViewModel(IGenderRestService genderRestService, IChoiceNavigationService choiceNavigationService,
                                IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService)
             : base(choiceNavigationService, profileNavigationService)
         {
-             Initialize(genderRestService, clothesNavigationService);
-            _choiceGenderViewModelItems = GetChoiceViewModelsObservable(ChoiceGendersObservable);
-            ErrorViewModelObservable = GetErrorViewModel(ChoiceGendersObservable, genderRestService, clothesNavigationService);
+            var choiceViewModels = GetChoiceViewModelsObservable(genderRestService, clothesNavigationService);
+            _choiceGenderViewModelItems = GetChoiceViewModels(choiceViewModels);
+            ToErrorPage(choiceViewModels);
         }
-
-        /// <summary>
-        /// Инициализация
-        /// </summary>
-        private Unit Initialize(IGenderRestService genderRestService, IClothesNavigationService clothesNavigationService) =>
-            GetChoiceViewModelsObservable(genderRestService, clothesNavigationService).
-            Void(choiceGenderObservable => ChoiceGendersObservable = choiceGenderObservable).
-            Map(_ => Unit.Default);
-
-        /// <summary>
-        /// Ошибки при инициализации
-        /// </summary>
-        public override IObservable<ErrorConnectionViewModel> ErrorViewModelObservable { get; }
-
-        /// <summary>
-        /// Модели типа пола одежды. Подписка
-        /// </summary>
-        private IObservable<IResultCollection<ChoiceGenderViewModelItem>>? ChoiceGendersObservable { get; set; }
-
+        
         /// <summary>
         /// Модели типа пола одежды
         /// </summary>
@@ -89,23 +71,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// <summary>
         /// Получить модели выбора одежды
         /// </summary>
-        private ObservableAsPropertyHelper<IList<ChoiceGenderViewModelItem>> GetChoiceViewModelsObservable(IObservable<IResultCollection<ChoiceGenderViewModelItem>>? choiceGendersObservable) =>
+        private ObservableAsPropertyHelper<IList<ChoiceGenderViewModelItem>> GetChoiceViewModels(IObservable<IResultCollection<ChoiceGenderViewModelItem>>? choiceGendersObservable) =>
             choiceGendersObservable!.
             WhereNotNull().
             Where(choiceGendersResult => choiceGendersResult.OkStatus).
             Select(choiceGendersResult => (IList<ChoiceGenderViewModelItem>)choiceGendersResult.Value).
             ToProperty(this, nameof(ChoiceGenderViewModelItems));
-
-        /// <summary>
-        /// Получить модель ошибок
-        /// </summary>
-        private IObservable<ErrorConnectionViewModel> GetErrorViewModel(IObservable<IResultCollection<ChoiceGenderViewModelItem>>? choiceGendersObservable,
-                                                                        IGenderRestService genderRestService,
-                                                                        IClothesNavigationService clothesNavigationService) =>
-            choiceGendersObservable!.
-            WhereNotNull().
-            Select(choiceGendersResult => new ErrorConnectionViewModel(choiceGendersResult,
-                                                                       () => Initialize(genderRestService, clothesNavigationService)));
 
         /// <summary>
         /// Получить модели выбора одежды

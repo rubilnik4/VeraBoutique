@@ -14,7 +14,7 @@ namespace BoutiqueXamarin.Views.Base
     /// </summary>
     public class NavigationLoginContentPage<TViewModel, TParameter, TNavigate> : NavigationBaseContentPage<TViewModel, TParameter, TNavigate>
         where TViewModel : NavigationLoginViewModel<TParameter, TNavigate>
-        where TParameter : BaseNavigationParameters
+        where TParameter : BaseNavigationOptions
         where TNavigate : IBaseNavigationService<TParameter>
     {
         protected NavigationLoginContentPage()

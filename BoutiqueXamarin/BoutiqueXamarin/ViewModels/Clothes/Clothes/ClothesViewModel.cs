@@ -35,7 +35,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationLoginViewModel<ClothesNavigationParameters, IClothesNavigationService>
+    public class ClothesViewModel : NavigationLoginViewModel<ClothesNavigationOptions, IClothesNavigationService>
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
                                 IChoiceNavigationService choiceNavigationService,
@@ -59,7 +59,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             _clothesViewModelColumnItems = GetClothesColumnsObservable();
 
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(GetImageObservable);
-            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationParameters()));
+            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationOptions()));
         }
 
         /// <summary>
