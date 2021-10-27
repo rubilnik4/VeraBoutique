@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
@@ -9,6 +10,7 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Errors;
 using BoutiqueXamarin.Views.Clothes.Clothes;
 using BoutiqueXamarin.Views.Errors;
 using Prism.Navigation;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Errors
@@ -25,7 +27,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Errors
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        public async Task<INavigationResult> NavigateTo(IResultError resultError) =>
-            await NavigateTo(new ErrorNavigationOptions(resultError));
+        public async Task<INavigationResult> NavigateTo(IReadOnlyCollection<IErrorResult> errors) =>
+            await NavigateTo(new ErrorNavigationOptions(errors));
     }
 }

@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
@@ -30,8 +31,9 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     public class LoginViewModel : NavigationBaseViewModel<LoginNavigationOptions, ILoginNavigationService>
     {
         public LoginViewModel(ILoginNavigationService loginNavigationService, ILoginService loginService,
-                              IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService)
-          : base(loginNavigationService)
+                              IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService,
+                              IErrorNavigationService errorNavigationService)
+          : base(loginNavigationService, errorNavigationService)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.Email, x => x.Password).
                                        Select(_ => new AuthorizeValidation(Email, EmailValid, Password, PasswordValid));

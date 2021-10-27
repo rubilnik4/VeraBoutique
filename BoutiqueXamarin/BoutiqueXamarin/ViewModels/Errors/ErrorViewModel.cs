@@ -13,10 +13,13 @@ using Xamarin.Essentials;
 
 namespace BoutiqueXamarin.ViewModels.Errors
 {
+    /// <summary>
+    /// Ошибки
+    /// </summary>
     public class ErrorViewModel : NavigationBaseViewModel<ErrorNavigationOptions, IErrorNavigationService>
     {
         public ErrorViewModel(IErrorNavigationService errorNavigationService)
-         : base(errorNavigationService)
+         : base(errorNavigationService, errorNavigationService)
         { }
     }
 }

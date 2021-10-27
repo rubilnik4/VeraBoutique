@@ -26,32 +26,27 @@
 
         <menuItems:LogoMenuView Grid.Row="1" />
 
-        <ContentView x:Name="MainView"
-                     Grid.Row="2">
-            <StackLayout Style="{StaticResource StackLayoutEntry}">
-
-                <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                    <Label x:Name="LoginLabel"
+        <StackLayout Grid.Row="2"
+                     Style="{StaticResource StackLayoutEntry}">
+            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                <Label x:Name="LoginLabel"
                        Style="{StaticResource LabelTitle}" />
-                </StackLayout>
+            </StackLayout>
 
-                <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                    <Button x:Name="OrderButton"
+            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+                <Button x:Name="OrderButton"
                         Style="{StaticResource ButtonList}"
                         Text="Заказы" />
-                    <Button x:Name="PersonalButton"
+                <Button x:Name="PersonalButton"
                         Style="{StaticResource ButtonList}"
                         Text="Личная информация" />
-                    <Button x:Name="SettingsButton"
+                <Button x:Name="SettingsButton"
                         Style="{StaticResource ButtonList}"
                         Text="Настройки" />
-                    <Button x:Name="LogoutButton"
+                <Button x:Name="LogoutButton"
                         Style="{StaticResource ButtonList}"
                         Text="Выйти" />
-                </StackLayout>
             </StackLayout>
-        </ContentView>
-        <contentViews:ErrorConnectionView x:Name="ErrorView"
-                                          Grid.Row="2"/>
+        </StackLayout>
     </Grid>
 </profiles:ProfilePageBase>

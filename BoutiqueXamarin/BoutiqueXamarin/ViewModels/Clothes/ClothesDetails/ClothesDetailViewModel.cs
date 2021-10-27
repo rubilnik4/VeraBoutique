@@ -14,6 +14,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -29,12 +30,11 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel : NavigationLoginViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>
+    public class ClothesDetailViewModel : NavigationProfileViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService,
-                                      IClothesDetailNavigationService clothesDetailNavigationService, 
-                                      IProfileNavigationService profileNavigationService)
-            : base(clothesDetailNavigationService, profileNavigationService)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService, 
+                                      IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService)
+            : base(clothesDetailNavigationService, profileNavigationService, errorNavigationService)
         {
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
             _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);

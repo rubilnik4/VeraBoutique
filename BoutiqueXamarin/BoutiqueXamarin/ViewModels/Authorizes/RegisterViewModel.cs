@@ -5,6 +5,7 @@ using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems;
@@ -25,9 +26,9 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// </summary>
     public class RegisterViewModel : NavigationBaseViewModel<RegisterNavigationOptions, IRegisterNavigationService>
     {
-        public RegisterViewModel(IRegisterNavigationService registerNavigationService, IUserRestService userRestService,
-                                 ILoginService loginService)
-            : base(registerNavigationService)
+        public RegisterViewModel(IRegisterNavigationService registerNavigationService, IErrorNavigationService errorNavigationService,
+                                 IUserRestService userRestService, ILoginService loginService)
+            : base(registerNavigationService, errorNavigationService)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();

@@ -7,6 +7,6 @@ namespace BoutiqueXamarin.Views.ContentViews
     /// <summary>
     /// Базовый класс ошибки соединения
     /// </summary>
-    public class ErrorConnectionBase : ReactiveContentView<ErrorConnectionViewModel>
+    public class ErrorConnectionBase : ReactiveContentView<BaseViewModel>
     { }
 }

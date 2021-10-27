@@ -43,18 +43,6 @@ namespace BoutiqueXamarin.Views.Clothes.ClothesDetails
         /// <summary>
         /// Главное окно
         /// </summary>
-        protected override ContentView MainContentView =>
-            this.MainView;
-
-        /// <summary>
-        /// Окно ошибок
-        /// </summary>
-        protected override ErrorConnectionView ErrorContentView =>
-            this.ErrorView;
-
-        /// <summary>
-        /// Главное окно
-        /// </summary>
         protected override BackLeftMenuView BackLeftMenuView =>
             this.BackLeftMenu;
 

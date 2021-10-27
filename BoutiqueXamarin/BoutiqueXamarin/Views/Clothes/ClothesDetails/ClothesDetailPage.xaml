@@ -30,34 +30,30 @@
             <BoxView Style="{StaticResource SeparatorBox}" />
         </StackLayout>
 
-        <ContentView x:Name="MainView"
-                     Grid.Row="1">
-            <ScrollView x:Name="ScrollClothes">
-                <StackLayout Style="{StaticResource StackLayoutControl}">
-                    <StackLayout Style="{StaticResource StackLayoutCarousel}">
-                        <CarouselView x:Name="CarouselImages"
+        <ScrollView x:Name="ScrollClothes" 
+                    Grid.Row="1">
+            <StackLayout Style="{StaticResource StackLayoutControl}">
+                <StackLayout Style="{StaticResource StackLayoutCarousel}">
+                    <CarouselView x:Name="CarouselImages"
                                   Loop="False"
                                   IndicatorView="CarouselIndicatorView">
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate x:DataType="{x:Type clothesDetailsItems:ClothesDetailImageViewModelItem}">
-                                    <clothesDetailsViewItems:ClothesDetailImageView />
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Type clothesDetailsItems:ClothesDetailImageViewModelItem}">
+                                <clothesDetailsViewItems:ClothesDetailImageView />
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
 
-                        <IndicatorView x:Name="CarouselIndicatorView"
+                    <IndicatorView x:Name="CarouselIndicatorView"
                                IndicatorColor="LightGray"
                                SelectedIndicatorColor="Black"
                                HorizontalOptions="CenterAndExpand " />
-                    </StackLayout>
-
-                    <clothesDetailsViewItems:ClothesDetailDescriptionView x:Name ="ClothesDetailDescriptionView"
-                                                                          Margin="10, 0, 5, 0" />
                 </StackLayout>
-            </ScrollView>
-        </ContentView>
-        <contentViews:ErrorConnectionView x:Name="ErrorView"
-                                          Grid.Row="1"/>
+
+                <clothesDetailsViewItems:ClothesDetailDescriptionView x:Name ="ClothesDetailDescriptionView"
+                                                                          Margin="10, 0, 5, 0" />
+            </StackLayout>
+        </ScrollView>
 
         <StackLayout Grid.Row="2">
             <BoxView Style="{StaticResource SeparatorBox}" />

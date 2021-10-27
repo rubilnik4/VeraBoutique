@@ -1,4 +1,6 @@
-﻿using BoutiqueXamarin.Models.Implementations.Navigation.Base;
+﻿using System.Collections.Generic;
+using BoutiqueXamarin.Models.Implementations.Navigation.Base;
+using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.Models.Implementations.Navigation.Errors
@@ -8,14 +10,14 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Errors
     /// </summary>
     public class ErrorNavigationOptions : BaseNavigationOptions
     {
-        public ErrorNavigationOptions(IResultError resultError)
+        public ErrorNavigationOptions(IReadOnlyCollection<IErrorResult> errors)
         {
-            ResultError = resultError;
+            Errors = errors;
         }
 
         /// <summary>
         /// Ошибки
         /// </summary>
-        public IResultError ResultError { get; }
+        public IReadOnlyCollection<IErrorResult> Errors { get; }
     }
 }

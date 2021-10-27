@@ -33,17 +33,5 @@ namespace BoutiqueXamarin.Views.Profiles
         /// </summary>
         protected override BackLeftMenuView BackLeftMenuView =>
             this.BackLeftMenu;
-
-        /// <summary>
-        /// Главное окно
-        /// </summary>
-        protected override ContentView MainContentView =>
-            this.MainView;
-
-        /// <summary>
-        /// Окно ошибок
-        /// </summary>
-        protected override ErrorConnectionView ErrorContentView =>
-            this.ErrorView;
     }
 }

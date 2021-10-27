@@ -6,6 +6,6 @@ namespace BoutiqueXamarin.Views.ControlViews
     /// <summary>
     /// Текстовое поле
     /// </summary>
-    public class EntryControlBase: ReactiveContentView<ErrorBaseViewModel>
+    public class EntryControlBase: ReactiveContentView<BaseViewModel>
     { }
 }
