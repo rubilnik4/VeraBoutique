@@ -1,8 +1,11 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Interfaces.Base;
+using BoutiqueXamarin.ViewModels.Profiles;
 using BoutiqueXamarin.Views.ContentViews;
 using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
@@ -15,7 +18,7 @@ namespace BoutiqueXamarin.Views.Base
     /// Базовый класс страницы с навигацией
     /// </summary>
     public abstract class NavigationBaseContentPage<TViewModel, TParameter, TNavigate> : ReactiveContentPage<TViewModel>
-        where TViewModel : NavigationBaseViewModel<TParameter, TNavigate>
+        where TViewModel : NavigationViewModel<TParameter, TNavigate>
         where TParameter : BaseNavigationOptions
         where TNavigate : IBaseNavigationService<TParameter>
     {
@@ -23,30 +26,19 @@ namespace BoutiqueXamarin.Views.Base
         {
             this.WhenActivated(disposable =>
             {
-                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                //     WhereNotNull().
-                //     Where(_ => ErrorContentView != null).
-                //     BindTo(this, x => x.ErrorContentView!.ViewModel).
-                //     DisposeWith(disposable);
-
-                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                //    WhereNotNull().
-                //     Select(x => x.ResultError.HasErrors).
-                //     Where(_ => ErrorContentView != null).
-                //     BindTo(this, x => x.ErrorContentView!.IsVisible).
-                //     DisposeWith(disposable);
-
-                //this.WhenAnyObservable(x => x.ViewModel!.ErrorViewModelObservable).
-                //     WhereNotNull().
-                //     Select(x => x.ResultError.OkStatus).
-                //     Where(_ => MainContentView != null).
-                //     BindTo(this, x => x.MainContentView!.IsVisible).
-                //     DisposeWith(disposable);
-
                 this.WhenAnyValue(x => x.ViewModel!.BackLeftMenuViewModel).
                      WhereNotNull().
                      Where(_ => BackLeftMenuView != null).
                      BindTo(this, x => x.BackLeftMenuView!.ViewModel).
+                     DisposeWith(disposable);
+
+                this.WhenAnyValue(x => x.ViewModel).
+                     WhereNotNull().
+                     Where(viewModel => viewModel is INavigationProfileViewModel).
+                     Select(viewModel => (INavigationProfileViewModel)viewModel).
+                     Select(viewModel => viewModel.UserRightMenuViewModel).
+                     Where(_ => this.UserRightMenuView != null).
+                     BindTo(this, x => x.UserRightMenuView!.ViewModel).
                      DisposeWith(disposable);
             });
         }
@@ -57,6 +49,10 @@ namespace BoutiqueXamarin.Views.Base
         protected virtual BackLeftMenuView? BackLeftMenuView =>
             null;
 
-
+        /// <summary>
+        /// Меню профиля
+        /// </summary>
+        protected virtual UserRightMenuView? UserRightMenuView =>
+            null;
     }
 }

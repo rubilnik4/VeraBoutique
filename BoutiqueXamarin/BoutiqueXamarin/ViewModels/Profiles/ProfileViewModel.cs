@@ -24,15 +24,14 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// <summary>
     /// Модель информации о пользователе
     /// </summary>
-    public class ProfileViewModel : NavigationBaseViewModel<ProfileNavigationOptions, IProfileNavigationService>
+    public class ProfileViewModel : NavigationErrorViewModel<ProfileNavigationOptions, IProfileNavigationService>
     {
         public ProfileViewModel(IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService,
                                 IProfileRestService profileRestService)
             : base(profileNavigationService, errorNavigationService)
         {
             var profileObservable = GetProfileObservable(profileRestService);
-            _profile = GetProfile(profileObservable);
-            ToErrorPage(profileObservable);
+            _profile = ValidateErrorPage(profileObservable).Select(profile => profile.Email).ToProperty(this, nameof(Profile));
         }
 
 
@@ -46,16 +45,6 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// </summary>
         public string Profile =>
             _profile.Value;
-
-        /// <summary>
-        /// Получить модели выбора одежды
-        /// </summary>
-        private ObservableAsPropertyHelper<string> GetProfile(IObservable<IResultValue<IBoutiqueUserDomain>> profileObservable) =>
-            profileObservable!.
-            WhereNotNull().
-            Where(profileResult => profileResult.OkStatus).
-            Select(profileResult => profileResult.Value.Email).
-            ToProperty(this, nameof(Profile));
 
         /// <summary>
         /// Получить модель личных данных

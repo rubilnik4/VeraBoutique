@@ -28,12 +28,11 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// <summary>
     /// Модель авторизации
     /// </summary>
-    public class LoginViewModel : NavigationBaseViewModel<LoginNavigationOptions, ILoginNavigationService>
+    public class LoginViewModel : NavigationViewModel<LoginNavigationOptions, ILoginNavigationService>
     {
         public LoginViewModel(ILoginNavigationService loginNavigationService, ILoginService loginService,
-                              IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService,
-                              IErrorNavigationService errorNavigationService)
-          : base(loginNavigationService, errorNavigationService)
+                              IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService)
+          : base(loginNavigationService)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.Email, x => x.Password).
                                        Select(_ => new AuthorizeValidation(Email, EmailValid, Password, PasswordValid));

@@ -25,20 +25,14 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// <summary>
     /// Базовая модель с навигацией
     /// </summary>
-    public abstract class NavigationBaseViewModel<TParameter, TNavigate> : BaseViewModel
+    public abstract class NavigationViewModel<TParameter, TNavigate> : BaseViewModel
         where TParameter : BaseNavigationOptions
         where TNavigate : IBaseNavigationService<TParameter>
     {
-        protected NavigationBaseViewModel(TNavigate navigateService, IErrorNavigationService errorNavigationService)
+        protected NavigationViewModel(TNavigate navigateService)
         {
-            _errorNavigationService = errorNavigationService;
             BackLeftMenuViewModel = new BackLeftMenuViewModel(navigateService);
         }
-
-        /// <summary>
-        /// Сервис навигации к странице ошибок
-        /// </summary>
-        private readonly IErrorNavigationService _errorNavigationService;
 
         /// <summary>
         /// Меню навигации назад
@@ -58,16 +52,6 @@ namespace BoutiqueXamarin.ViewModels.Base
             get => _navigationParameters;
             set => this.RaiseAndSetIfChanged(ref _navigationParameters, value);
         }
-
-        /// <summary>
-        /// Перейти на страницу с ошибками
-        /// </summary>
-        protected void ToErrorPage(IObservable<IResultError> resultError) =>
-            resultError.
-            WhereNotNull().
-            Where(result => result.HasErrors).
-            Select(result => result.Errors).
-            Subscribe(errors => _errorNavigationService.NavigateTo(errors));
 
         /// <summary>
         /// Параметры инициализации формы с изменением состояния

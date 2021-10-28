@@ -17,7 +17,9 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
+using BoutiqueXamarin.ViewModels.Interfaces.Base;
 using BoutiqueXamarinCommon.Models.Implementation;
 using BoutiqueXamarinCommon.Models.Interfaces;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -33,18 +35,25 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// <summary>
     /// Выбор типа одежды
     /// </summary>
-    public class ChoiceViewModel : NavigationProfileViewModel<ChoiceNavigationOptions, IChoiceNavigationService>
+    public class ChoiceViewModel : NavigationErrorViewModel<ChoiceNavigationOptions, IChoiceNavigationService>, INavigationProfileViewModel
     {
         public ChoiceViewModel(IGenderRestService genderRestService, IChoiceNavigationService choiceNavigationService,
                                IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService,
                                IErrorNavigationService errorNavigationService)
-            : base(choiceNavigationService, profileNavigationService, errorNavigationService)
+            : base(choiceNavigationService, errorNavigationService)
         {
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
             var choiceViewModels = GetChoiceViewModelsObservable(genderRestService, clothesNavigationService);
-            _choiceGenderViewModelItems = GetChoiceViewModels(choiceViewModels);
-            ToErrorPage(choiceViewModels);
+            _choiceGenderViewModelItems = ValidateErrorPage(choiceViewModels).
+                                          Select(collection => (IList<ChoiceGenderViewModelItem>)collection.ToList()).
+                                          ToProperty(this, nameof(ChoiceGenderViewModelItems));
         }
-        
+
+        /// <summary>
+        /// Правое меню пользователя
+        /// </summary>
+        public UserRightMenuViewModel UserRightMenuViewModel { get; }
+
         /// <summary>
         /// Модели типа пола одежды
         /// </summary>
@@ -69,16 +78,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
             get => _selectedGenderViewModelItem;
             set => this.RaiseAndSetIfChanged(ref _selectedGenderViewModelItem, value);
         }
-
-        /// <summary>
-        /// Получить модели выбора одежды
-        /// </summary>
-        private ObservableAsPropertyHelper<IList<ChoiceGenderViewModelItem>> GetChoiceViewModels(IObservable<IResultCollection<ChoiceGenderViewModelItem>>? choiceGendersObservable) =>
-            choiceGendersObservable!.
-            WhereNotNull().
-            Where(choiceGendersResult => choiceGendersResult.OkStatus).
-            Select(choiceGendersResult => (IList<ChoiceGenderViewModelItem>)choiceGendersResult.Value).
-            ToProperty(this, nameof(ChoiceGenderViewModelItems));
 
         /// <summary>
         /// Получить модели выбора одежды

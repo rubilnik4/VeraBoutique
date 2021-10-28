@@ -14,6 +14,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
     /// <summary>
     /// Базовый класс страницы выбора
     /// </summary>
-    public abstract class ChoicePageBase : NavigationLoginContentPage<ChoiceViewModel, ChoiceNavigationOptions, IChoiceNavigationService>
+    public abstract class ChoicePageBase : NavigationBaseContentPage<ChoiceViewModel, ChoiceNavigationOptions, IChoiceNavigationService>
     { }
 }

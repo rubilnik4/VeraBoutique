@@ -18,7 +18,9 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems;
+using BoutiqueXamarin.ViewModels.Interfaces.Base;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -30,15 +32,22 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel : NavigationProfileViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>
+    public class ClothesDetailViewModel: NavigationViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>,
+                                         INavigationProfileViewModel
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService, 
-                                      IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService)
-            : base(clothesDetailNavigationService, profileNavigationService, errorNavigationService)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService,
+                                      IProfileNavigationService profileNavigationService)
+            : base(clothesDetailNavigationService)
         {
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
             _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);
         }
+
+        /// <summary>
+        /// Правое меню пользователя
+        /// </summary>
+        public UserRightMenuViewModel UserRightMenuViewModel { get; }
 
         /// <summary>
         /// Детальное описание одежды

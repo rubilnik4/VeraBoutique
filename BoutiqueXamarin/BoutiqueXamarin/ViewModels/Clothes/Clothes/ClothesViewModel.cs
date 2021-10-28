@@ -16,9 +16,11 @@ using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesFiltersViewModelItems;
 using BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems.ClothesSortingViewModelItems;
+using BoutiqueXamarin.ViewModels.Interfaces.Base;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -36,17 +38,18 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationProfileViewModel<ClothesNavigationOptions, IClothesNavigationService>
+    public class ClothesViewModel : NavigationErrorViewModel<ClothesNavigationOptions, IClothesNavigationService>, INavigationProfileViewModel
     {
         public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
                                 IChoiceNavigationService choiceNavigationService,
                                 IClothesDetailNavigationService clothesDetailNavigationService,
                                 IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService)
-            : base(clothesNavigationService, profileNavigationService, errorNavigationService)
+            : base(clothesNavigationService, errorNavigationService)
         {
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
+
             var clothesObservable = GetClothesObservable(clothesRestService, clothesDetailNavigationService);
-            _clothes = GetClothesViewModels(clothesObservable);
-            ToErrorPage(clothesObservable);
+            _clothes = ValidateErrorPage(clothesObservable).ToProperty(this,nameof(Clothes));
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(_ => GetClothesViewModelItems());
             SortingViewModel = new SortingViewModel(ClothesFilterCommand);
@@ -59,6 +62,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(GetImageObservable);
             ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationOptions()));
         }
+
+        /// <summary>
+        /// Правое меню пользователя
+        /// </summary>
+        public UserRightMenuViewModel UserRightMenuViewModel { get; }
 
         /// <summary>
         /// Одежда
@@ -135,15 +143,6 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
                  SelectMany(parameters => Observable.FromAsync(() => ClothesViewModelFactory.GetClothes(parameters, clothesRestService,
                                                                                                         clothesDetailNavigationService),
                                                                 RxApp.MainThreadScheduler));
-        /// <summary>
-        /// Получить модели одежды
-        /// </summary>
-        private ObservableAsPropertyHelper<IReadOnlyCollection<ClothesViewModelItem>> GetClothesViewModels(IObservable<IResultCollection<ClothesViewModelItem>>? clothesObservable) =>
-            clothesObservable!.
-            WhereNotNull().
-            Where(clothesResult => clothesResult.OkStatus).
-            Select(clothesResult => clothesResult.Value).
-            ToProperty(this, nameof(Clothes));
 
         /// <summary>
         /// Получить модель фильтрации
