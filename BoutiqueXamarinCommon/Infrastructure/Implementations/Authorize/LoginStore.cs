@@ -45,7 +45,7 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
                                         _ => TokenErrorType).
             ResultValueOkBindAsync(_ => BlobCache.Secure.GetObject<string>(TOKEN_KEY).ToTask()).
             ResultValueBindOkTaskAsync(token => token.ToResultValueNullCheck(TokenErrorType)).
-            ResultValueBindOkTaskAsync(token => token.ToResultValueWhere(_ => !String.IsNullOrWhiteSpace(token),
+            ResultValueBindOkTaskAsync(token => token.ToResultValueWhere(_ => TokenValidate.IsTokenValid(token),
                                                                          _ => TokenErrorType));
 
         /// <summary>

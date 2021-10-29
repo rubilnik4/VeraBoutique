@@ -8,23 +8,29 @@ using BoutiqueXamarin.Views.Authorizes;
 using BoutiqueXamarin.Views.Profiles;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using Prism.Navigation;
+using ResultFunctional.FunctionalExtensions.Async;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation.Profiles
 {
     /// <summary>
     /// Сервис навигации к странице информации о пользователе
     /// </summary>
-    public class ProfileNavigationService : AuthorizeBaseNavigationService<ProfileNavigationOptions, ProfilePage>, IProfileNavigationService
+    public class ProfileNavigationService : BaseNavigationService<ProfileNavigationOptions, ProfilePage>, IProfileNavigationService
     {
-        public ProfileNavigationService(INavigationService navigationService, ILoginStore loginStore,
-                                        ILoginNavigationService loginNavigationService)
-            : base(navigationService, loginStore, loginNavigationService)
-        { }
+        private readonly ILoginStore _loginStore;
+
+        public ProfileNavigationService(INavigationService navigationService, ILoginStore loginStore)
+            : base(navigationService)
+        {
+            _loginStore = loginStore;
+        }
 
         /// <summary>
         /// Перейти к странице
         /// </summary>
         public async Task<INavigationResult> NavigateTo() =>
-            await NavigateTo(new ProfileNavigationOptions());
+            await _loginStore.GetTokenValue().
+            MapTaskAsync(token => new ProfileNavigationOptions(token)).
+            MapBindAsync(NavigateTo);
     }
 }
