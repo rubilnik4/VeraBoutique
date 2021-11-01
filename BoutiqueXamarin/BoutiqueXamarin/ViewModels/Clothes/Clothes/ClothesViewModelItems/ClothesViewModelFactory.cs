@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Extensions.CollectionExtensions;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -27,14 +27,14 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// </summary>
         public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationOptions? clothesParameters,
                                                                                      IClothesRestService clothesRestService,
-                                                                                     IClothesDetailNavigationService clothesDetailNavigationService) =>
+                                                                                     INavigationServiceFactory navigationServiceFactory) =>
             await clothesParameters.
             ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesParameters, typeof(ClothesViewModelFactory))).
             ResultValueBindOkToCollectionAsync(parameters =>
                 clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
                 ResultCollectionOkTaskAsync(clothes =>
                     clothes.Select(clotheItem => new ClothesViewModelItem(clotheItem, parameters.ClothesTypeDomain,
-                                                                          clothesRestService, clothesDetailNavigationService))));
+                                                                          clothesRestService, navigationServiceFactory))));
 
         /// <summary>
         /// Преобразовать в модели одежды

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Prism.Navigation;
 
-namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base
+namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
 {
     /// <summary>
     /// Сервис навигации назад

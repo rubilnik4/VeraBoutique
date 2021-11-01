@@ -3,10 +3,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
-using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Base;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
+using BoutiqueXamarin.Infrastructure.Implementations.Navigation;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
@@ -27,20 +25,13 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// <summary>
     /// Базовая модель с навигацией
     /// </summary>
-    public abstract class NavigationViewModel<TOptions, TNavigate> : BaseViewModel
+    public abstract class NavigationViewModel<TOptions> : BaseViewModel
         where TOptions : BaseNavigationOptions
-        where TNavigate : IBaseNavigationService<TOptions>
     {
-        protected NavigationViewModel(TNavigate navigateService)
+        protected NavigationViewModel(IBackNavigationService backNavigationService)
         {
-            BackLeftMenuViewModel = new BackLeftMenuViewModel(navigateService);
+            BackLeftMenuViewModel = new BackLeftMenuViewModel(backNavigationService);
         }
-
-        /// <summary>
-        /// Необходимость авторизации
-        /// </summary>
-        protected virtual bool Authorize => 
-            false;
 
         /// <summary>
         /// Меню навигации назад
@@ -68,24 +59,9 @@ namespace BoutiqueXamarin.ViewModels.Base
             NavigationParameters = GetNavigationOptions(parameters);
 
         /// <summary>
-        /// Проверка авторизации
-        /// </summary>
-        private TOptions ValidateAuthorize(TOptions navigateOptions) =>
-            navigateOptions.
-            VoidOk(options => Authorize && !ValidateAuthorizeOption(navigateOptions),
-                   options => options.ToString());
-
-        /// <summary>
-        /// Проверка авторизации параметров
-        /// </summary>
-        private static bool ValidateAuthorizeOption(TOptions navigateOptions) =>
-            navigateOptions is AuthorizeBaseNavigationOptions authorizeOptions &&
-            TokenValidate.IsTokenValid(authorizeOptions.Token);
-
-        /// <summary>
         /// Преобразовать параметры навигации
         /// </summary>
         private static TOptions GetNavigationOptions(INavigationParameters parameters) =>
-            parameters.GetValue<TOptions>(NavigationOptionsInfo.GetNavigationParameterName<TOptions>());
+            parameters.GetValue<TOptions>(NavigationServiceFactory.GetOptionsName<TOptions>());
     }
 }

@@ -157,9 +157,6 @@
   <ItemGroup>
     <Folder Include="Controls\Enums\" />
     <Folder Include="Controls\EntryStackLayouts\" />
-    <Folder Include="Infrastructure\Implementations\Navigation\Profiles\" />
-    <Folder Include="Infrastructure\Interfaces\Navigation\Errors\" />
-    <Folder Include="Infrastructure\Interfaces\Navigation\Profiles\" />
     <Folder Include="ViewModels\Implementations\" />
     <Folder Include="ViewModels\Profiles\" />
   </ItemGroup>

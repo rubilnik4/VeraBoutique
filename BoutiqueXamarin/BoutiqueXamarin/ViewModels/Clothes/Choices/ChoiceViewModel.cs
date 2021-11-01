@@ -10,10 +10,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.GenderDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
@@ -35,15 +32,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// <summary>
     /// Выбор типа одежды
     /// </summary>
-    public class ChoiceViewModel : NavigationErrorViewModel<ChoiceNavigationOptions, IChoiceNavigationService>, INavigationProfileViewModel
+    public class ChoiceViewModel : NavigationErrorViewModel<ChoiceNavigationOptions>, INavigationProfileViewModel
     {
-        public ChoiceViewModel(IGenderRestService genderRestService, IChoiceNavigationService choiceNavigationService,
-                               IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService,
-                               IErrorNavigationService errorNavigationService)
-            : base(choiceNavigationService, errorNavigationService)
+        public ChoiceViewModel(IGenderRestService genderRestService, INavigationServiceFactory navigationServiceFactory)
+            : base(navigationServiceFactory)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
-            var choiceViewModels = GetChoiceViewModelsObservable(genderRestService, clothesNavigationService);
+            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
+            var choiceViewModels = GetChoiceViewModelsObservable(genderRestService, navigationServiceFactory);
             _choiceGenderViewModelItems = ValidateErrorPage(choiceViewModels).
                                           Select(collection => (IList<ChoiceGenderViewModelItem>)collection.ToList()).
                                           ToProperty(this, nameof(ChoiceGenderViewModelItems));
@@ -83,17 +78,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// Получить модели выбора одежды
         /// </summary>
         private static IObservable<IResultCollection<ChoiceGenderViewModelItem>> GetChoiceViewModelsObservable(IGenderRestService genderRestService,
-                                                                                                               IClothesNavigationService clothesNavigationService) =>
-             Observable.FromAsync(() => GetChoiceGenderItems(clothesNavigationService, genderRestService), RxApp.MainThreadScheduler);
+                                                                                                               INavigationServiceFactory navigationServiceFactory) =>
+             Observable.FromAsync(() => GetChoiceGenderItems(navigationServiceFactory, genderRestService), RxApp.MainThreadScheduler);
 
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
-        private static async Task<IResultCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(IClothesNavigationService clothesNavigationService,
+        private static async Task<IResultCollection<ChoiceGenderViewModelItem>> GetChoiceGenderItems(INavigationServiceFactory navigationServiceFactory,
                                                                                                      IGenderRestService genderRestService) =>
             await genderRestService.GetGenderCategories().
             ResultCollectionOkTaskAsync(genderCategories =>
-                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)));
+                genderCategories.Select(genderCategory => new ChoiceGenderViewModelItem(navigationServiceFactory, genderCategory)));
 
     }
 }

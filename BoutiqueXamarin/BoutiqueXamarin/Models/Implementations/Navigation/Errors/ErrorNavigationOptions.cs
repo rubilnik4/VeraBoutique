@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using ResultFunctional.Models.Interfaces.Errors.Base;
 using ResultFunctional.Models.Interfaces.Results;
@@ -10,9 +11,9 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Errors
     /// </summary>
     public class ErrorNavigationOptions : BaseNavigationOptions
     {
-        public ErrorNavigationOptions(IReadOnlyCollection<IErrorResult> errors)
+        public ErrorNavigationOptions(IEnumerable<IErrorResult> errors)
         {
-            Errors = errors;
+            Errors = errors.ToList();
         }
 
         /// <summary>

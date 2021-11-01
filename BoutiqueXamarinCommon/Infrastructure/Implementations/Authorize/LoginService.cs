@@ -35,5 +35,11 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         public async Task<IResultError> Login(IAuthorizeDomain authorize) =>
             await _authorizeRestService.AuthorizeJwt(authorize).
             ResultValueBindErrorsOkBindAsync(_loginStore.SaveToken);
+
+        /// <summary>
+        /// Выйти из профиля
+        /// </summary>
+        public async Task Logout() =>
+            await _loginStore.ClearToken();
     }
 }

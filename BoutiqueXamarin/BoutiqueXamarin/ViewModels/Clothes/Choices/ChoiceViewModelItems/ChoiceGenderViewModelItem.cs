@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Genders;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.ViewModels.Base;
 using DynamicData;
 using DynamicData.Binding;
@@ -20,9 +20,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
     /// </summary>
     public class ChoiceGenderViewModelItem : BaseViewModel
     {
-        public ChoiceGenderViewModelItem(IClothesNavigationService clothesNavigationService, IGenderCategoryDomain genderCategory)
+        public ChoiceGenderViewModelItem(INavigationServiceFactory navigationServiceFactory, IGenderCategoryDomain genderCategory)
         {
-            _clothesNavigationService = clothesNavigationService;
+            _navigationServiceFactory = navigationServiceFactory;
             _genderCategory = genderCategory;
 
             var choiceCategoryViewModelItems = new ObservableCollection<ChoiceCategoryViewModelItem>(ToChoiceCategoryItems(_genderCategory));
@@ -39,7 +39,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
         /// <summary>
         /// Сервис навигации к странице одежды
         /// </summary>
-        private readonly IClothesNavigationService _clothesNavigationService;
+        private readonly INavigationServiceFactory _navigationServiceFactory;
 
         /// <summary>
         /// Пол
@@ -97,9 +97,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
                    choiceCategory.
                    Void(_ => choiceCategory.ClothesTypesVisibleChange()),
                 ChoiceClothesTypeViewModelItem choiceClothesType =>
-                    await choiceClothesType.
-                    VoidAsync(_ => _clothesNavigationService.NavigateTo(_genderCategory.GenderType, choiceClothesType.ClothesType)),
-                _ => throw new ArgumentException(nameof(choiceBaseViewModelItem)),
+                   await choiceClothesType.
+                   VoidAsync(_ => _navigationServiceFactory.ToClothesPage(_genderCategory.GenderType, choiceClothesType.ClothesType)),
+                _ => throw new ArgumentException(nameof(ChoiceBaseViewModelItem)),
             };
     }
 }

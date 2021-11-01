@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices;
@@ -14,6 +13,6 @@ namespace BoutiqueXamarin.Views.Clothes.Choices
     /// <summary>
     /// Базовый класс страницы выбора
     /// </summary>
-    public abstract class ChoicePageBase : NavigationBaseContentPage<ChoiceViewModel, ChoiceNavigationOptions, IChoiceNavigationService>
+    public abstract class ChoicePageBase : NavigationBaseContentPage<ChoiceViewModel, ChoiceNavigationOptions>
     { }
 }

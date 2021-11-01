@@ -25,6 +25,9 @@ namespace BoutiqueXamarin.Views.Profiles
             {
                 this.OneWayBind(ViewModel, x => x.Profile, x => x.LoginLabel.Text).
                      DisposeWith(disposable);
+
+                this.BindCommand(ViewModel, x => x.LogoutCommand, x => x.LogoutButton).
+                     DisposeWith(disposable);
             });
         }
 

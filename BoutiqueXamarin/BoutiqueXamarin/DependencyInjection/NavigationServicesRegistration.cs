@@ -13,14 +13,8 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeTransf
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.GenderTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Configuration;
-using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Implementations.Navigation.Profiles;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Implementations.Navigation;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Converters;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
 
@@ -36,13 +30,7 @@ namespace BoutiqueXamarin.DependencyInjection
         /// </summary>
         public static void RegisterNavigationServices(IBoutiqueContainer container)
         {
-            container.Register<IErrorNavigationService, ErrorNavigationService>();
-            container.Register<IChoiceNavigationService, ChoiceNavigationService>();
-            container.Register<IClothesNavigationService, ClothesNavigationService>();
-            container.Register<IClothesDetailNavigationService, ClothesDetailNavigationService>();
-            container.Register<ILoginNavigationService, LoginNavigationService>();
-            container.Register<IRegisterNavigationService, RegisterNavigationService>();
-            container.Register<IProfileNavigationService, ProfileNavigationService>();
+            container.Register<INavigationServiceFactory, NavigationServiceFactory>();
         }
     }
 }

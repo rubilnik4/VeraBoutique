@@ -13,5 +13,10 @@ namespace BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize
         /// Авторизоваться через токен JWT
         /// </summary>
         Task<IResultError> Login(IAuthorizeDomain authorize);
+
+        /// <summary>
+        /// Выйти из профиля
+        /// </summary>
+        Task Logout();
     }
 }

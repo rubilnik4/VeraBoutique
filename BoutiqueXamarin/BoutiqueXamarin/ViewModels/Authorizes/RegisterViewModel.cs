@@ -4,14 +4,14 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
+using Prism.Navigation;
 using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -24,17 +24,17 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// <summary>
     /// Модель регистрации
     /// </summary>
-    public class RegisterViewModel : NavigationViewModel<RegisterNavigationOptions, IRegisterNavigationService>
+    public class RegisterViewModel : NavigationViewModel<RegisterNavigationOptions>
     {
-        public RegisterViewModel(IRegisterNavigationService registerNavigationService,
+        public RegisterViewModel(INavigationServiceFactory navigationServiceFactory,
                                  IUserRestService userRestService, ILoginService loginService)
-            : base(registerNavigationService)
+            : base(navigationServiceFactory)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();
             RegisterValidation = new RegisterValidation(RegisterLoginViewModel, RegisterPersonalViewModel);
             RegisterCommand = ReactiveCommand.CreateFromTask<RegisterValidation, IResultError>(
-                                async registerValidation => await Register(registerValidation, userRestService, loginService));
+                                async registerValidation => await Register(registerValidation, userRestService, loginService, navigationServiceFactory));
             _registerErrors = RegisterCommand.ToProperty(this, nameof(RegisterErrors), scheduler: RxApp.MainThreadScheduler);
         }
 
@@ -72,14 +72,15 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// <summary>
         /// Зарегистрировать
         /// </summary>
-        private static async Task<IResultValue<string>> Register(RegisterValidation registerValidation, IUserRestService userRestService,
-                                                                 ILoginService loginService) =>
+        private static async Task<IResultError> Register(RegisterValidation registerValidation, IUserRestService userRestService,
+                                                                 ILoginService loginService, INavigationServiceFactory navigationServiceFactory) =>
             await registerValidation.ToResultValue().
             ConcatResult(await registerValidation.RegisterLoginViewModel.RegisterLoginCommand.
                          Execute(registerValidation.RegisterLoginViewModel.RegisterLoginValidation).ToTask()).
             ConcatResult(await registerValidation.RegisterPersonalViewModel.RegisterPersonalCommand.
                          Execute(registerValidation.RegisterPersonalViewModel.RegisterPersonalValidation).ToTask()).
             ResultValueBindOkAsync(register => userRestService.Register(register.Register).
-                                               ResultValueBindErrorsOkBindAsync(_ => loginService.Login(register.Authorize)));
+                                               ResultValueBindErrorsOkBindAsync(_ => loginService.Login(register.Authorize))).
+            ResultValueOkBindAsync(_ => navigationServiceFactory.ToProfilePage());
     }
 }

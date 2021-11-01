@@ -2,7 +2,7 @@
 {
     public abstract class AuthorizeBaseNavigationOptions: BaseNavigationOptions
     {
-        protected AuthorizeBaseNavigationOptions(string? token)
+        protected AuthorizeBaseNavigationOptions(string token)
         {
             Token = token;
         }
@@ -10,6 +10,6 @@
         /// <summary>
         /// Токен
         /// </summary>
-        public string? Token { get; }
+        public string Token { get; }
     }
 }

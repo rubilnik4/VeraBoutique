@@ -10,10 +10,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
@@ -38,17 +35,14 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationErrorViewModel<ClothesNavigationOptions, IClothesNavigationService>, INavigationProfileViewModel
+    public class ClothesViewModel : NavigationErrorViewModel<ClothesNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
-                                IChoiceNavigationService choiceNavigationService,
-                                IClothesDetailNavigationService clothesDetailNavigationService,
-                                IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService)
-            : base(clothesNavigationService, errorNavigationService)
+        public ClothesViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory)
+            : base(navigationServiceFactory)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
+            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
 
-            var clothesObservable = GetClothesObservable(clothesRestService, clothesDetailNavigationService);
+            var clothesObservable = GetClothesObservable(clothesRestService, navigationServiceFactory);
             _clothes = ValidateErrorPage(clothesObservable).ToProperty(this,nameof(Clothes));
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(_ => GetClothesViewModelItems());
@@ -60,7 +54,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             _clothesViewModelColumnItems = GetClothesColumns();
 
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(GetImageObservable);
-            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => choiceNavigationService.NavigateTo(new ChoiceNavigationOptions()));
+            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToChoicePage());
         }
 
         /// <summary>
@@ -136,12 +130,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// Получить модели одежды
         /// </summary>
         private IObservable<IResultCollection<ClothesViewModelItem>> GetClothesObservable(IClothesRestService clothesRestService,
-                                                                                          IClothesDetailNavigationService clothesDetailNavigationService) =>
+                                                                                          INavigationServiceFactory navigationServiceFactory) =>
 
             this.WhenAnyValue(x => x.NavigationParameters).
                  WhereNotNull().
                  SelectMany(parameters => Observable.FromAsync(() => ClothesViewModelFactory.GetClothes(parameters, clothesRestService,
-                                                                                                        clothesDetailNavigationService),
+                                                                                                        navigationServiceFactory),
                                                                 RxApp.MainThreadScheduler));
 
         /// <summary>

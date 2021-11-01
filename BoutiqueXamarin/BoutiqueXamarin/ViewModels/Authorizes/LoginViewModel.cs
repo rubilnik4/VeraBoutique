@@ -4,9 +4,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.ViewModels.Authorizes.AuthorizeViewModelItems;
 using BoutiqueXamarin.ViewModels.Base;
@@ -28,18 +26,18 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// <summary>
     /// Модель авторизации
     /// </summary>
-    public class LoginViewModel : NavigationViewModel<LoginNavigationOptions, ILoginNavigationService>
+    public class LoginViewModel : NavigationViewModel<LoginNavigationOptions>
     {
-        public LoginViewModel(ILoginNavigationService loginNavigationService, ILoginService loginService,
-                              IRegisterNavigationService registerNavigationService, IProfileNavigationService profileNavigationService)
-          : base(loginNavigationService)
+        public LoginViewModel(ILoginService loginService, INavigationServiceFactory navigationServiceFactory)
+          : base(navigationServiceFactory)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.Email, x => x.Password).
                                        Select(_ => new AuthorizeValidation(Email, EmailValid, Password, PasswordValid));
 
-            AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(authorize => JwtAuthorize(authorize, loginService, profileNavigationService));
+            AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(
+                                    authorize => JwtAuthorize(authorize, loginService, navigationServiceFactory));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
-            RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => registerNavigationService.NavigateTo());
+            RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToRegisterPage());
         }
 
         private string _email = String.Empty;
@@ -107,11 +105,11 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// Авторизоваться через токен JWT
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, ILoginService loginService,
-                                                             IProfileNavigationService profileNavigationService) =>
+                                                             INavigationServiceFactory navigationServiceFactory) =>
             await authorizeValidation.ToResultValue().
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.EmailValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
             ResultValueBindErrorsOkAsync(authorize => loginService.Login(authorize.AuthorizeDomain)).
-            ResultValueOkBindAsync(_ => profileNavigationService.NavigateTo());
+            ResultValueOkBindAsync(_ => navigationServiceFactory.ToProfilePage());
     }
 }

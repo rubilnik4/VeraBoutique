@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.Models.Implementations.Navigation.Profiles;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
+using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
+using Prism.Navigation;
 using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Async;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueXamarin.ViewModels.Profiles
@@ -24,14 +26,15 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// <summary>
     /// Модель информации о пользователе
     /// </summary>
-    public class ProfileViewModel : NavigationErrorViewModel<ProfileNavigationOptions, IProfileNavigationService>
+    public class ProfileViewModel : NavigationErrorViewModel<ProfileNavigationOptions>
     {
-        public ProfileViewModel(IProfileNavigationService profileNavigationService, IErrorNavigationService errorNavigationService,
-                                IProfileRestService profileRestService)
-            : base(profileNavigationService, errorNavigationService)
+        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, IProfileRestService profileRestService,
+                                ILoginService loginService)
+            : base(navigationServiceFactory)
         {
             var profileObservable = GetProfileObservable(profileRestService);
             _profile = ValidateErrorPage(profileObservable).Select(profile => profile.Email).ToProperty(this, nameof(Profile));
+            LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory, loginService));
         }
 
 
@@ -47,6 +50,11 @@ namespace BoutiqueXamarin.ViewModels.Profiles
             _profile.Value;
 
         /// <summary>
+        /// Команда выхода из профиля
+        /// </summary>
+        public ReactiveCommand<Unit, INavigationResult> LogoutCommand { get; }
+
+        /// <summary>
         /// Получить модель личных данных
         /// </summary>
         private static IObservable<IResultValue<IBoutiqueUserDomain>> GetProfileObservable(IProfileRestService profileRestService) =>
@@ -57,5 +65,14 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// </summary>
         private static async Task<IResultValue<IBoutiqueUserDomain>> GetProfile(IProfileRestService profileRestService) =>
             await profileRestService.GetProfile();
+
+        /// <summary>
+        /// Выйти из профиля
+        /// </summary>
+        private static async Task<INavigationResult> Logout(INavigationServiceFactory navigationServiceFactory,
+                                                            ILoginService loginService) =>
+            await navigationServiceFactory.
+            VoidAsync(_ => loginService.Logout()).
+            MapBindAsync(_ => navigationServiceFactory.ToLoginPage());
     }
 }

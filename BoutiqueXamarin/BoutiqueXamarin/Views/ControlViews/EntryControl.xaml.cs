@@ -34,11 +34,17 @@ namespace BoutiqueXamarin.Views.ControlViews
                  BindTo(this, x => x.MainEntry.Keyboard);
 
             this.WhenAnyValue(x => x.MainEntry.Text).
+                 WhereNotNull().
                  Subscribe(text =>
                     {
                         IsValid = EntryValidation.IsValid(ValidationType, text, Settings);
                         Text = text;
                     });
+
+            this.WhenAnyValue(x => x.Text).
+                 WhereNotNull().
+                 Where(text => this.MainEntry.Text != text).
+                 Subscribe(text => this.MainEntry.Text = text);
 
             this.WhenAnyValue(x => x.MainEntry.Text).
                  Where(_ => ErrorClear).

@@ -1,7 +1,5 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Base;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Interfaces.Base;
@@ -17,10 +15,9 @@ namespace BoutiqueXamarin.Views.Base
     /// <summary>
     /// Базовый класс страницы с навигацией
     /// </summary>
-    public abstract class NavigationBaseContentPage<TViewModel, TParameter, TNavigate> : ReactiveContentPage<TViewModel>
-        where TViewModel : NavigationViewModel<TParameter, TNavigate>
-        where TParameter : BaseNavigationOptions
-        where TNavigate : IBaseNavigationService<TParameter>
+    public abstract class NavigationBaseContentPage<TViewModel, TOption> : ReactiveContentPage<TViewModel>
+        where TViewModel : NavigationViewModel<TOption>
+        where TOption : BaseNavigationOptions
     {
         protected NavigationBaseContentPage()
         {

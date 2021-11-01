@@ -7,7 +7,7 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Profiles
     /// </summary>
     public class ProfileNavigationOptions : AuthorizeBaseNavigationOptions
     {
-        public ProfileNavigationOptions(string? token)
+        public ProfileNavigationOptions(string token)
             : base(token)
         { }
     }

@@ -33,7 +33,7 @@
                        Style="{StaticResource LabelTitle}" />
             </StackLayout>
 
-            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
+            <StackLayout Style="{StaticResource StackLayoutEntry}">
                 <Button x:Name="OrderButton"
                         Style="{StaticResource ButtonList}"
                         Text="Заказы" />

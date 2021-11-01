@@ -12,10 +12,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Authorizes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Errors;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Profiles;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Base.MenuItems;
@@ -32,14 +29,12 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
-    public class ClothesDetailViewModel: NavigationViewModel<ClothesDetailNavigationOptions, IClothesDetailNavigationService>,
-                                         INavigationProfileViewModel
+    public class ClothesDetailViewModel: NavigationViewModel<ClothesDetailNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService, IClothesDetailNavigationService clothesDetailNavigationService,
-                                      IProfileNavigationService profileNavigationService)
-            : base(clothesDetailNavigationService)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory)
+            : base(navigationServiceFactory)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
+            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
             _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);
         }

@@ -1,7 +1,7 @@
 using System;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueXamarin.DependencyInjection;
-using BoutiqueXamarin.Infrastructure.Interfaces.Navigation.Clothes;
+using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarinCommon.Infrastructure.Implementations.Containers;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
@@ -37,10 +37,10 @@ namespace BoutiqueXamarin
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultValueVoidOk(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            Void(_ => InitializeComponent()).
+            Void(_ => InitializeComponent()).           
             ResultValueVoidOkBadAsync(
-                actionOk: _ => BoutiqueContainer.Resolve<IChoiceNavigationService>().NavigateTo(new ChoiceNavigationOptions()),
-                actionBad: errors => throw new NotImplementedException());
+                _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToChoicePage(),
+                errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToErrorPage(errors));
 
         /// <summary>
         /// Регистрация типов
