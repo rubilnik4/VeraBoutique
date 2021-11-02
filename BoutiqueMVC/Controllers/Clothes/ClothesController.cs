@@ -1,30 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ImagesConverters;
-using BoutiqueDTO.Models.Implementations.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes.ClothesTransfers;
 using BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers;
 using BoutiqueDTO.Routes.Clothes;
-using BoutiqueMVC.Controllers.Implementations.Base;
+using BoutiqueMVC.Controllers.Base;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using ResultFunctional.FunctionalExtensions.Async;
-using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
-using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
+using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultCollections;
 
-namespace BoutiqueMVC.Controllers.Implementations.Clothes
+namespace BoutiqueMVC.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи информации об одежде

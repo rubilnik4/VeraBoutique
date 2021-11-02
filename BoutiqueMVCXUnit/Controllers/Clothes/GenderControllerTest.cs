@@ -7,7 +7,7 @@ using BoutiqueCommonXUnit.Data;
 using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Clothes;
-using BoutiqueMVC.Controllers.Implementations.Clothes;
+using BoutiqueMVC.Controllers.Clothes;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;

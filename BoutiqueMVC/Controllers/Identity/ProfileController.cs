@@ -1,12 +1,9 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
-using BoutiqueDAL.Models.Enums.Identity;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
-using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
+using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 
-namespace BoutiqueMVC.Controllers.Implementations.Identity
+namespace BoutiqueMVC.Controllers.Identity
 {
     /// <summary>
     /// Личные данные. Контроллер
@@ -48,10 +46,13 @@ namespace BoutiqueMVC.Controllers.Implementations.Identity
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<BoutiqueUserTransfer>> GetProfile() =>
             await AuthorizeController.GetEmail(User).
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(ClaimTypes.NameIdentifier, GetType())).
+            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден")).
             ResultValueBindOkAsync(email => _userManager.FindRoleUserByEmail(email)).
+            ResultValueBindBadTaskAsync(_ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден").
+                                                                ToResultValue<IBoutiqueUserDomain>()).
             ResultValueOkTaskAsync(user => _boutiqueUserTransferConverter.ToTransfer(user)).
             ToActionResultValueTaskAsync();
     }

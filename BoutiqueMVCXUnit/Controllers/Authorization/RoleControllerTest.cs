@@ -6,7 +6,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDALXUnit.Data.Identity;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
-using BoutiqueMVC.Controllers.Implementations.Identity;
+using BoutiqueMVC.Controllers.Identity;
 using Moq;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;

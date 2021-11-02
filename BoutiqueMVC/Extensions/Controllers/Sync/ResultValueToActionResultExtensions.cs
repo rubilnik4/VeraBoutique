@@ -13,6 +13,7 @@ using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using ResultFunctional.Models.Interfaces.Errors.DatabaseErrors;
 using ResultFunctional.Models.Interfaces.Results;
 using Microsoft.AspNetCore.Mvc;
+using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 
 namespace BoutiqueMVC.Extensions.Controllers.Sync
 {
@@ -109,6 +110,7 @@ namespace BoutiqueMVC.Extensions.Controllers.Sync
             {
                 IValueNotFoundErrorResult => new NotFoundResult(),
                 IDatabaseValueNotValidErrorResult => new NotFoundResult(),
+                AuthorizeErrorResult => new UnauthorizedResult(),
                 _ => new BadRequestObjectResult(errors.ToModelState()),
             };
     }

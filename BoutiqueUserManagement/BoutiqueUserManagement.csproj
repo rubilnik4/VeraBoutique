@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ResultFunctional" Version="1.0.18" />
+    <PackageReference Include="ResultFunctional" Version="1.0.19" />
   </ItemGroup>
 
 </Project>

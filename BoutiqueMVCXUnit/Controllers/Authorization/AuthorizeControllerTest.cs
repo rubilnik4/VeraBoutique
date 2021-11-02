@@ -13,7 +13,7 @@ using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDALXUnit.Data.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
-using BoutiqueMVC.Controllers.Implementations.Identity;
+using BoutiqueMVC.Controllers.Identity;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using BoutiqueMVCXUnit.Data.Controllers.Implementations;

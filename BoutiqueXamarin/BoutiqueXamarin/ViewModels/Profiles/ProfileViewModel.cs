@@ -11,6 +11,7 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.Models.Implementations.Navigation.Profiles;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems;
+using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails.ClothesDetailViewModelItems;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using Prism.Navigation;
 using ReactiveUI;
@@ -26,14 +27,12 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// <summary>
     /// Модель информации о пользователе
     /// </summary>
-    public class ProfileViewModel : NavigationErrorViewModel<ProfileNavigationOptions>
+    public class ProfileViewModel : NavigationViewModel<ProfileNavigationOptions>
     {
-        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, IProfileRestService profileRestService,
-                                ILoginService loginService)
+        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, ILoginService loginService)
             : base(navigationServiceFactory)
         {
-            var profileObservable = GetProfileObservable(profileRestService);
-            _profile = ValidateErrorPage(profileObservable).Select(profile => profile.Email).ToProperty(this, nameof(Profile));
+            _profile = GetProfile();
             LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory, loginService));
         }
 
@@ -55,22 +54,18 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         public ReactiveCommand<Unit, INavigationResult> LogoutCommand { get; }
 
         /// <summary>
-        /// Получить модель личных данных
-        /// </summary>
-        private static IObservable<IResultValue<IBoutiqueUserDomain>> GetProfileObservable(IProfileRestService profileRestService) =>
-             Observable.FromAsync(() => GetProfile(profileRestService), RxApp.MainThreadScheduler);
-
-        /// <summary>
         /// Получить личные данные
         /// </summary>
-        private static async Task<IResultValue<IBoutiqueUserDomain>> GetProfile(IProfileRestService profileRestService) =>
-            await profileRestService.GetProfile();
+        private ObservableAsPropertyHelper<string> GetProfile() =>
+            this.WhenAnyValue(x => x.NavigationParameters).
+                 WhereNotNull().
+                 Select(options => options.User.Email).
+                 ToProperty(this, nameof(Profile));
 
         /// <summary>
         /// Выйти из профиля
         /// </summary>
-        private static async Task<INavigationResult> Logout(INavigationServiceFactory navigationServiceFactory,
-                                                            ILoginService loginService) =>
+        private static async Task<INavigationResult> Logout(INavigationServiceFactory navigationServiceFactory, ILoginService loginService) =>
             await navigationServiceFactory.
             VoidAsync(_ => loginService.Logout()).
             MapBindAsync(_ => navigationServiceFactory.ToLoginPage());

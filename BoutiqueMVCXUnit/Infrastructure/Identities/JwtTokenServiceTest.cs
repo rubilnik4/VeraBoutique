@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
-using BoutiqueMVC.Controllers.Implementations.Identity;
 using BoutiqueMVC.Infrastructure.Implementation.Identities;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;

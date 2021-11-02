@@ -2,15 +2,13 @@
 using System.Threading.Tasks;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
-using BoutiqueDTO.Models.Implementations.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ResultFunctional.FunctionalExtensions.Async;
 
-namespace BoutiqueMVC.Controllers.Implementations.Identity
+namespace BoutiqueMVC.Controllers.Identity
 {
     /// <summary>
     /// Контроллер ролей

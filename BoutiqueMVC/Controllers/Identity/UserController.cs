@@ -1,32 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Mime;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using BoutiqueCommon.Infrastructure.Implementation.Validation.Identities;
 using BoutiqueCommon.Models.Domain.Implementations.Identities;
 using BoutiqueCommon.Models.Enums.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
-using BoutiqueDTO.Routes.Clothes;
 using BoutiqueMVC.Extensions.Controllers.Async;
-using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
-using ResultFunctional.Models.Implementations.Errors;
 
-namespace BoutiqueMVC.Controllers.Implementations.Identity
+namespace BoutiqueMVC.Controllers.Identity
 {
     /// <summary>
     /// Контроллер пользователей

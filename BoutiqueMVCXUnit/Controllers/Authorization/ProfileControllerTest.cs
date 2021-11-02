@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
-using BoutiqueMVC.Controllers.Implementations.Identity;
+using BoutiqueMVC.Controllers.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -19,8 +19,14 @@ using Xunit;
 
 namespace BoutiqueMVCXUnit.Controllers.Authorization
 {
+    /// <summary>
+    /// Контроллер профиля. Тесты
+    /// </summary>
     public class ProfileControllerTest
     {
+        /// <summary>
+        /// Получить профиль
+        /// </summary>
         [Fact]
         public async Task GetProfile()
         {
@@ -39,8 +45,11 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             Assert.True(profileResult.Value.Equals(user));
         }
 
+        /// <summary>
+        /// Получить профиль
+        /// </summary>
         [Fact]
-        public async Task GetProfile_NotFound()
+        public async Task GetProfile_Unauthorized()
         {
             var user = IdentityData.BoutiqueUsers.First();
             var resultUser = user.ToResultValue();
@@ -53,11 +62,12 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
 
             var profileResult = await profileController.GetProfile();
 
-            Assert.IsType<NotFoundResult>(profileResult.Result);
-            var notFoundResult = (NotFoundResult)profileResult.Result;
-            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+            Assert.IsType<UnauthorizedResult>(profileResult.Result);
         }
 
+        /// <summary>
+        /// Получить профиль
+        /// </summary>
         [Fact]
         public async Task GetProfile_BadRequest()
         {
@@ -73,11 +83,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
 
             var profileResult = await profileController.GetProfile();
 
-            Assert.IsType<BadRequestObjectResult>(profileResult.Result);
-            var badRequest = (BadRequestObjectResult)profileResult.Result;
-            var errors = (SerializableError)badRequest.Value;
-            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
-            Assert.Equal(resultUser.Errors.First().Id, errors.Keys.First());
+            Assert.IsType<UnauthorizedResult>(profileResult.Result);
         }
 
         /// <summary>

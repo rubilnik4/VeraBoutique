@@ -10,7 +10,7 @@ using BoutiqueDALXUnit.Data.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
-using BoutiqueMVC.Controllers.Implementations.Identity;
+using BoutiqueMVC.Controllers.Identity;
 using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

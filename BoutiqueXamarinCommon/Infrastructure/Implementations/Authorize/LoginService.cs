@@ -3,6 +3,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Results;
 
@@ -33,7 +34,9 @@ namespace BoutiqueXamarinCommon.Infrastructure.Implementations.Authorize
         /// Авторизоваться через токен JWT
         /// </summary>
         public async Task<IResultError> Login(IAuthorizeDomain authorize) =>
-            await _authorizeRestService.AuthorizeJwt(authorize).
+            await authorize.ToResultValue().
+            ResultValueVoidOkAsync(_ => Logout()).
+            ResultValueBindOkBindAsync(_ => _authorizeRestService.AuthorizeJwt(authorize)).
             ResultValueBindErrorsOkBindAsync(_loginStore.SaveToken);
 
         /// <summary>

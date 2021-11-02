@@ -38,32 +38,21 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// </summary>
         Task<INavigationResult> ToRegisterPage();
 
-        /// <summary>
-        /// Перейти к странице выбора одежды
-        /// </summary>
-        Task <INavigationResult> ToChoicePage();
+        ///// <summary>
+        ///// Перейти к странице выбора одежды
+        ///// </summary>
+        //Task <INavigationResult> ToChoicePage();
 
-        /// <summary>
-        /// Перейти к странице одежды
-        /// </summary>
-        Task<INavigationResult> ToClothesPage(GenderType genderType, IClothesTypeDomain clothesTypeDomain);
+        ///// <summary>
+        ///// Перейти к странице одежды
+        ///// </summary>
+        //Task<INavigationResult> ToClothesPage(GenderType genderType, IClothesTypeDomain clothesTypeDomain);
 
-        /// <summary>
-        /// Перейти к странице информации об одежде
-        /// </summary>
-        Task<INavigationResult> ToClothesDetailPage(IClothesDetailDomain clothesDetail, SizeType defaultSizeType);
+        ///// <summary>
+        ///// Перейти к странице информации об одежде
+        ///// </summary>
+        //Task<INavigationResult> ToClothesDetailPage(IClothesDetailDomain clothesDetail, SizeType defaultSizeType);
 
-        /// <summary>
-        /// Перейти к странице личной информации
-        /// </summary>
-        Task<INavigationResult> ToProfilePage();
-
-        /// <summary>
-        /// Перейти к странице
-        /// </summary>
-        Task<INavigationResult> NavigateTo<TPage, TViewModel, TOption>(TOption options)
-            where TPage : ReactiveContentPage<TViewModel>
-            where TViewModel : NavigationViewModel<TOption>
-            where TOption : BaseNavigationOptions;
+       
     }
 }

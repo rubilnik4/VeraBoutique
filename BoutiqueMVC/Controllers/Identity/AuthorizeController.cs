@@ -1,38 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Mime;
+﻿using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BoutiqueCommon.Models.Common.Interfaces.Identities;
-using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
-using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Entities.Identities;
-using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
 using BoutiqueMVC.Extensions.Controllers.Sync;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
-using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
-using ResultFunctional.FunctionalExtensions.Sync;
-using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
-using ResultFunctional.Models.Implementations.Errors;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace BoutiqueMVC.Controllers.Implementations.Identity
+namespace BoutiqueMVC.Controllers.Identity
 {
     /// <summary>
     /// Контроллер авторизации

@@ -2,9 +2,9 @@
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Models.Implementations.Clothes;
-using BoutiqueMVC.Controllers.Implementations.Base;
+using BoutiqueMVC.Controllers.Base;
 
-namespace BoutiqueMVC.Controllers.Implementations.Clothes
+namespace BoutiqueMVC.Controllers.Clothes
 {
     /// <summary>
     /// Контроллер для получения и записи цвета одежды

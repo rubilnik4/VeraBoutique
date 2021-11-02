@@ -26,16 +26,12 @@ namespace BoutiqueXamarin.ViewModels.Base
             : base(navigationServiceFactory)
         {
             _navigationServiceFactory = navigationServiceFactory;
-            this.WhenAnyObservable(Result)
         }
 
         /// <summary>
         /// Сервис навигации к странице ошибок
         /// </summary>
         private readonly INavigationServiceFactory _navigationServiceFactory;
-
-        protected virtual IObservable<IResultError> Result =>
-            Observable.Return(new ResultError());
 
         /// <summary>
         /// Проверить стартовые ошибки

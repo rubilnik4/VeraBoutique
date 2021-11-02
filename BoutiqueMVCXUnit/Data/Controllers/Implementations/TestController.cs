@@ -4,7 +4,7 @@ using BoutiqueDTOXUnit.Data.Models.Implementations;
 using BoutiqueDTOXUnit.Data.Models.Interfaces;
 using BoutiqueDTOXUnit.Data.Services.Interfaces;
 using BoutiqueDTOXUnit.Data.Services.Interfaces.Converters;
-using BoutiqueMVC.Controllers.Implementations.Base;
+using BoutiqueMVC.Controllers.Base;
 using BoutiqueMVCXUnit.Data.Database.Interfaces;
 
 namespace BoutiqueMVCXUnit.Data.Controllers.Implementations
