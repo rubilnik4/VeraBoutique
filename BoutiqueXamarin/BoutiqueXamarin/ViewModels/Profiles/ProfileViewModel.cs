@@ -29,11 +29,11 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// </summary>
     public class ProfileViewModel : NavigationViewModel<ProfileNavigationOptions>
     {
-        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, ILoginService loginService)
+        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory)
             : base(navigationServiceFactory)
         {
             _profile = GetProfile();
-            LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory, loginService));
+            LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory));
         }
 
 
@@ -65,9 +65,8 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// <summary>
         /// Выйти из профиля
         /// </summary>
-        private static async Task<INavigationResult> Logout(INavigationServiceFactory navigationServiceFactory, ILoginService loginService) =>
+        private static async Task<INavigationResult> Logout(INavigationServiceFactory navigationServiceFactory) =>
             await navigationServiceFactory.
-            VoidAsync(_ => loginService.Logout()).
-            MapBindAsync(_ => navigationServiceFactory.ToLoginPage());
+            MapAsync(_ => navigationServiceFactory.ToLoginPage());
     }
 }

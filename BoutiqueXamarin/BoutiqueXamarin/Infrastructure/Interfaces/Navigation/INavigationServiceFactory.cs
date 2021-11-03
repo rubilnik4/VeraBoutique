@@ -38,10 +38,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// </summary>
         Task<INavigationResult> ToRegisterPage();
 
-        ///// <summary>
-        ///// Перейти к странице выбора одежды
-        ///// </summary>
-        //Task <INavigationResult> ToChoicePage();
+      
 
         ///// <summary>
         ///// Перейти к странице одежды

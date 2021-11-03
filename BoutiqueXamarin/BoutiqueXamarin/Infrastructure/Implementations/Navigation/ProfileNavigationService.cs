@@ -12,11 +12,14 @@ using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
 {
-    public class ProfileNavigationService: NavigationServiceFactory, IProfileNavigationService
+    /// <summary>
+    /// Навигация к странице пользовательской информации
+    /// </summary>
+    public class ProfileNavigationService : NavigationServiceFactory, IProfileNavigationService
     {
-        public ProfileNavigationService(INavigationService navigationService, ILoginService loginService, 
+        public ProfileNavigationService(INavigationService navigationService, ILoginService loginService,
                                         IProfileRestService profileRestService)
-            :base(navigationService, loginService)
+            : base(navigationService, loginService)
         {
             _profileRestService = profileRestService;
         }
