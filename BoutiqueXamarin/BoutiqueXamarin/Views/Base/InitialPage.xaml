@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base:InitialPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:BoutiqueXamarin.Views.Base;assembly=BoutiqueXamarin"
+             xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
+             x:Class="BoutiqueXamarin.Views.Base.InitialPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <menuItems:LogoMenuView Grid.Row="0"/>
+
+        <StackLayout Grid.Row="1">
+            <ProgressBar  />
+        </StackLayout>
+    </Grid>
+</base:InitialPageBase>

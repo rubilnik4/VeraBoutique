@@ -29,6 +29,11 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors);
 
         /// <summary>
+        /// К стартовой странице
+        /// </summary>
+        Task<INavigationResult> ToInitialPage();
+
+        /// <summary>
         /// Перейти к странице авторизации
         /// </summary>
         Task<INavigationResult> ToLoginPage();
@@ -37,19 +42,5 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// Перейти к странице регистрации
         /// </summary>
         Task<INavigationResult> ToRegisterPage();
-
-      
-
-        ///// <summary>
-        ///// Перейти к странице одежды
-        ///// </summary>
-        //Task<INavigationResult> ToClothesPage(GenderType genderType, IClothesTypeDomain clothesTypeDomain);
-
-        ///// <summary>
-        ///// Перейти к странице информации об одежде
-        ///// </summary>
-        //Task<INavigationResult> ToClothesDetailPage(IClothesDetailDomain clothesDetail, SizeType defaultSizeType);
-
-       
     }
 }

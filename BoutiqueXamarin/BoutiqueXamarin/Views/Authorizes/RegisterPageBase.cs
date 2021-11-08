@@ -7,6 +7,6 @@ namespace BoutiqueXamarin.Views.Authorizes
     /// <summary>
     /// Страница регистрации
     /// </summary>
-    public abstract class RegisterPageBase : NavigationBaseContentPage<RegisterViewModel, RegisterNavigationOptions>
+    public abstract class RegisterPageBase : NavigationBasePage<RegisterViewModel, RegisterNavigationOptions>
     { }
 }

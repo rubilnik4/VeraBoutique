@@ -20,9 +20,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
     /// </summary>
     public class ChoiceGenderViewModelItem : BaseViewModel
     {
-        public ChoiceGenderViewModelItem(INavigationServiceFactory navigationServiceFactory, IGenderCategoryDomain genderCategory)
+        public ChoiceGenderViewModelItem(IClothesNavigationService clothesNavigationService, IGenderCategoryDomain genderCategory)
         {
-            _navigationServiceFactory = navigationServiceFactory;
+            _clothesNavigationService = clothesNavigationService;
             _genderCategory = genderCategory;
 
             var choiceCategoryViewModelItems = new ObservableCollection<ChoiceCategoryViewModelItem>(ToChoiceCategoryItems(_genderCategory));
@@ -37,9 +37,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
         }
 
         /// <summary>
-        /// Сервис навигации к странице одежды
+        /// Навигация к странице одежды
         /// </summary>
-        private readonly INavigationServiceFactory _navigationServiceFactory;
+        private readonly IClothesNavigationService _clothesNavigationService;
 
         /// <summary>
         /// Пол
@@ -98,7 +98,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices.ChoiceViewModelItems
                    Void(_ => choiceCategory.ClothesTypesVisibleChange()),
                 ChoiceClothesTypeViewModelItem choiceClothesType =>
                    await choiceClothesType.
-                   VoidAsync(_ => _navigationServiceFactory.ToClothesPage(_genderCategory.GenderType, choiceClothesType.ClothesType)),
+                   VoidAsync(_ => _clothesNavigationService.ToClothesPage(_genderCategory.GenderType, choiceClothesType.ClothesType)),
                 _ => throw new ArgumentException(nameof(ChoiceBaseViewModelItem)),
             };
     }

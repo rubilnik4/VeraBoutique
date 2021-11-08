@@ -47,7 +47,7 @@ namespace BoutiqueXamarin.ViewModels.Errors
         /// Получить модели детальной одежды
         /// </summary>
         private ObservableAsPropertyHelper<IErrorResult> GetError() =>
-            this.WhenAnyValue(x => x.NavigationParameters).
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
                  Select(result => result.Errors.FirstOrDefault() ?? ErrorResultFactory.SimpleErrorType("Неизвестная ошибка")).
                  ToProperty(this, nameof(Error));

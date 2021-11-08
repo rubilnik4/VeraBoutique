@@ -35,15 +35,17 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// <summary>
     /// Списки одежды
     /// </summary>
-    public class ClothesViewModel : NavigationErrorViewModel<ClothesNavigationOptions>, INavigationProfileViewModel
+    public class ClothesViewModel : NavigationViewModel<ClothesNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory)
+        public ClothesViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory,
+                                IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService)
             : base(navigationServiceFactory)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
+            _clothesRestService = clothesRestService;
+            _clothesNavigationService = clothesNavigationService;
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
 
-            var clothesObservable = GetClothesObservable(clothesRestService, navigationServiceFactory);
-            _clothes = ValidateErrorPage(clothesObservable).ToProperty(this,nameof(Clothes));
+            _clothes = GetClothesObservable();
 
             ClothesFilterCommand = ReactiveCommand.Create<Unit, IReadOnlyList<ClothesViewModelItem>>(_ => GetClothesViewModelItems());
             SortingViewModel = new SortingViewModel(ClothesFilterCommand);
@@ -54,8 +56,18 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
             _clothesViewModelColumnItems = GetClothesColumns();
 
             ImagesCommand = ReactiveCommand.CreateFromObservable<int, ImageSource>(GetImageObservable);
-            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToChoicePage());
+            ChoiceNavigateCommand = ReactiveCommand.CreateFromTask(_ => clothesNavigationService.ToChoicePage());
         }
+
+        /// <summary>
+        /// Сервис одежды
+        /// </summary>
+        private readonly IClothesRestService _clothesRestService;
+
+        /// <summary>
+        /// Навигация к странице информации об одежде
+        /// </summary>
+        private readonly IClothesNavigationService _clothesNavigationService;
 
         /// <summary>
         /// Правое меню пользователя
@@ -129,22 +141,19 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
         /// <summary>
         /// Получить модели одежды
         /// </summary>
-        private IObservable<IResultCollection<ClothesViewModelItem>> GetClothesObservable(IClothesRestService clothesRestService,
-                                                                                          INavigationServiceFactory navigationServiceFactory) =>
-
-            this.WhenAnyValue(x => x.NavigationParameters).
+        private ObservableAsPropertyHelper<IReadOnlyCollection<ClothesViewModelItem>> GetClothesObservable() =>
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
-                 SelectMany(parameters => Observable.FromAsync(() => ClothesViewModelFactory.GetClothes(parameters, clothesRestService,
-                                                                                                        navigationServiceFactory),
-                                                                RxApp.MainThreadScheduler));
+                 Select(options =>ClothesViewModelFactory.GetClothes(options, _clothesRestService, _clothesNavigationService)).
+                 ToProperty(this, nameof(Clothes));
 
         /// <summary>
         /// Получить модель фильтрации
         /// </summary>
         private ObservableAsPropertyHelper<FilterViewModel> GetFilterViewModel() =>
-            this.WhenAnyValue(x => x.Clothes, x => x.NavigationParameters, (clothes, parameters) => (clothes, parameters)).
-                 Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.parameters != null).
-                 Select(clothesNavigation => new FilterViewModel(clothesNavigation.parameters!, clothesNavigation.clothes, ClothesFilterCommand)).
+            this.WhenAnyValue(x => x.Clothes, x => x.NavigationOptions, (clothes, options) => (clothes, options)).
+                 Where(clothesNavigation => clothesNavigation.clothes != null && clothesNavigation.options != null).
+                 Select(clothesNavigation => new FilterViewModel(clothesNavigation.options!, clothesNavigation.clothes, ClothesFilterCommand)).
                  ToProperty(this, nameof(FilterViewModel));
 
         /// <summary>

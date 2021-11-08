@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueXamarin.DependencyInjection;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
@@ -10,6 +11,7 @@ using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using ResultFunctional.FunctionalExtensions.Async;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 
@@ -37,9 +39,9 @@ namespace BoutiqueXamarin
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultValueVoidOk(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            Void(_ => InitializeComponent()).           
+            Void(_ => InitializeComponent()).
             ResultValueVoidOkBadAsync(
-                _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToChoicePage(),
+                _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToInitialPage(),
                 errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToErrorPage(errors));
 
         /// <summary>

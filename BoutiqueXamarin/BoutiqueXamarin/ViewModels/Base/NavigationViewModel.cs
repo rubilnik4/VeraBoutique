@@ -41,22 +41,22 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// <summary>
         /// Параметры навигации
         /// </summary>
-        private TOptions? _navigationParameters;
+        private TOptions? _navigationOptions;
 
         /// <summary>
         /// Параметры навигации
         /// </summary>
-        protected TOptions? NavigationParameters
+        protected TOptions? NavigationOptions
         {
-            get => _navigationParameters;
-            set => this.RaiseAndSetIfChanged(ref _navigationParameters, value);
+            get => _navigationOptions;
+            set => this.RaiseAndSetIfChanged(ref _navigationOptions, value);
         }
 
         /// <summary>
         /// Параметры инициализации формы с изменением состояния
         /// </summary>
         public override void Initialize(INavigationParameters parameters) =>
-            NavigationParameters = GetNavigationOptions(parameters);
+            NavigationOptions = GetNavigationOptions(parameters);
 
         /// <summary>
         /// Преобразовать параметры навигации

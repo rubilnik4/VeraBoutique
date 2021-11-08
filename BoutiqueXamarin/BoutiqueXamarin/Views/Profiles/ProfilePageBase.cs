@@ -9,6 +9,6 @@ namespace BoutiqueXamarin.Views.Profiles
     /// <summary>
     /// Информация о профиле
     /// </summary>
-    public abstract class ProfilePageBase : NavigationBaseContentPage<ProfileViewModel, ProfileNavigationOptions>
+    public abstract class ProfilePageBase : NavigationBasePage<ProfileViewModel, ProfileNavigationOptions>
     { }
 }

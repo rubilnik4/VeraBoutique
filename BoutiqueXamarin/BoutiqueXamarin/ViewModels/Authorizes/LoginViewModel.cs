@@ -28,14 +28,15 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// </summary>
     public class LoginViewModel : NavigationViewModel<LoginNavigationOptions>
     {
-        public LoginViewModel(ILoginService loginService, INavigationServiceFactory navigationServiceFactory)
+        public LoginViewModel(ILoginService loginService, INavigationServiceFactory navigationServiceFactory,
+                              IProfileNavigationService profileNavigationService)
           : base(navigationServiceFactory)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.Email, x => x.Password).
                                        Select(_ => new AuthorizeValidation(Email, EmailValid, Password, PasswordValid));
 
             AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(
-                                    authorize => JwtAuthorize(authorize, loginService, navigationServiceFactory));
+                                    authorize => JwtAuthorize(authorize, loginService, profileNavigationService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
             RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToRegisterPage());
         }
@@ -105,11 +106,11 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// Авторизоваться через токен JWT
         /// </summary>
         private static async Task<IResultError> JwtAuthorize(AuthorizeValidation authorizeValidation, ILoginService loginService,
-                                                             INavigationServiceFactory navigationServiceFactory) =>
+                                                             IProfileNavigationService profileNavigationService) =>
             await authorizeValidation.ToResultValue().
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.EmailValid, AuthorizeErrorType.Email, "Почта указана некорректно")).
             ConcatErrors(AuthorizeError.GetResult(authorizeValidation.PasswordValid, AuthorizeErrorType.Password, "Пароль указан некорректно")).
             ResultValueBindErrorsOkAsync(authorize => loginService.Login(authorize.AuthorizeDomain)).
-            ResultValueOkBindAsync(_ => navigationServiceFactory.ToProfilePage());
+            ResultValueOkBindAsync(_ => profileNavigationService.ToProfilePage());
     }
 }

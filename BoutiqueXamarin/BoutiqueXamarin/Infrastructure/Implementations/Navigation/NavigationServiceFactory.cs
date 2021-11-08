@@ -21,6 +21,7 @@ using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails;
 using BoutiqueXamarin.ViewModels.Errors;
 using BoutiqueXamarin.ViewModels.Profiles;
 using BoutiqueXamarin.Views.Authorizes;
+using BoutiqueXamarin.Views.Base;
 using BoutiqueXamarin.Views.Clothes.Choices;
 using BoutiqueXamarin.Views.Clothes.Clothes;
 using BoutiqueXamarin.Views.Clothes.ClothesDetails;
@@ -64,6 +65,13 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             await new ErrorNavigationOptions(errors).
             MapAsync(NavigateTo<ErrorPage, ErrorViewModel, ErrorNavigationOptions>);
 
+
+        /// <summary>
+        /// К стартовой странице
+        /// </summary>
+        public async Task<INavigationResult> ToInitialPage() =>
+            await _navigationService.NavigateAsync(nameof(InitialPage));
+
         /// <summary>
         /// Перейти к странице авторизации
         /// </summary>
@@ -89,27 +97,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
                 RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } _ => await ToLoginPage(),
                 var error => await ToErrorPage(error),
             };
-
-        ///// <summary>
-        ///// Перейти к странице выбора одежды
-        ///// </summary>
-        //public async Task<INavigationResult> ToChoicePage() =>
-        //    await new ChoiceNavigationOptions().
-        //    MapAsync(NavigateTo<ChoicePage, ChoiceViewModel, ChoiceNavigationOptions>);
-
-        ///// <summary>
-        ///// Перейти к странице одежды
-        ///// </summary>
-        //public async Task<INavigationResult> ToClothesPage(GenderType genderType, IClothesTypeDomain clothesTypeDomain) =>
-        //    await new ClothesNavigationOptions(genderType, clothesTypeDomain).
-        //    MapAsync(NavigateTo<ClothesPage, ClothesViewModel, ClothesNavigationOptions>);
-
-        ///// <summary>
-        ///// Перейти к странице информации об одежде
-        ///// </summary>
-        //public async Task<INavigationResult> ToClothesDetailPage(IClothesDetailDomain clothesDetail, SizeType defaultSizeType) =>
-        //    await new ClothesDetailNavigationOptions(clothesDetail, defaultSizeType).
-        //    MapAsync(NavigateTo<ClothesDetailPage, ClothesDetailViewModel, ClothesDetailNavigationOptions>);
 
         /// <summary>
         /// Перейти к странице

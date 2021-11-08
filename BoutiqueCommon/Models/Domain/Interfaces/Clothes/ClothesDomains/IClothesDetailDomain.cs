@@ -8,7 +8,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains
     /// <summary>
     /// Одежда. Уточненная информация. Доменная модель
     /// </summary>
-    public interface IClothesDetailDomain: IClothesDetailBase<IColorDomain, ISizeGroupMainDomain, ISizeDomain>,
-        IClothesDomain
+    public interface IClothesDetailDomain: IClothesDetailBase<IColorDomain, ISizeGroupMainDomain, ISizeDomain>, IClothesDomain
     { }
 }

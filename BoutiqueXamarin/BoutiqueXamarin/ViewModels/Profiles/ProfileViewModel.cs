@@ -57,7 +57,7 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// Получить личные данные
         /// </summary>
         private ObservableAsPropertyHelper<string> GetProfile() =>
-            this.WhenAnyValue(x => x.NavigationParameters).
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
                  Select(options => options.User.Email).
                  ToProperty(this, nameof(Profile));

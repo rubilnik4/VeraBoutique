@@ -1,4 +1,6 @@
-﻿using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+﻿using System.Collections.Generic;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
+using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 
@@ -9,20 +11,20 @@ namespace BoutiqueXamarin.Models.Implementations.Navigation.Clothes
     /// </summary>
     public class ClothesNavigationOptions : BaseNavigationOptions
     {
-        public ClothesNavigationOptions(GenderType genderType, IClothesTypeDomain clothesTypeDomain)
+        public ClothesNavigationOptions(IReadOnlyCollection<IClothesDetailDomain> clothesDetails, SizeType sizeTypeDefault)
         {
-            GenderType = genderType;
-            ClothesTypeDomain = clothesTypeDomain;
+            ClothesDetails = clothesDetails;
+            SizeTypeDefault = sizeTypeDefault;
         }
 
         /// <summary>
-        /// Тип пола
+        /// Информация об одежде
         /// </summary>
-        public GenderType GenderType { get; }
+        public IReadOnlyCollection<IClothesDetailDomain> ClothesDetails { get; }
 
         /// <summary>
-        /// Тип пола
+        /// Тип размера по умолчанию
         /// </summary>
-        public IClothesTypeDomain ClothesTypeDomain { get; }
+        public SizeType SizeTypeDefault { get; }
     }
 }

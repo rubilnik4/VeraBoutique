@@ -6,6 +6,6 @@ using BoutiqueXamarin.Views.Base;
 
 namespace BoutiqueXamarin.Views.Errors
 {
-    public class ErrorPageBase : NavigationBaseContentPage<ErrorViewModel, ErrorNavigationOptions>
+    public class ErrorPageBase : NavigationBasePage<ErrorViewModel, ErrorNavigationOptions>
     { }
 }

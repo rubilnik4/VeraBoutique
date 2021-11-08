@@ -31,10 +31,11 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
     public class ClothesDetailViewModel: NavigationViewModel<ClothesDetailNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory, 
+                                      IProfileNavigationService profileNavigationService)
             : base(navigationServiceFactory)
         {
-            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();
             _clothesDetailImageViewModelItems = GetClothesDetailImageViewModelsObservable(clothesRestService);
         }
@@ -70,7 +71,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// Получить модели детальной одежды
         /// </summary>
         private ObservableAsPropertyHelper<ClothesDetailDescriptionViewModel> GetClothesDetailDescriptionViewModelObservable() =>
-            this.WhenAnyValue(x => x.NavigationParameters).
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
                  Select(parameters => new ClothesDetailDescriptionViewModel(parameters.ClothesDetail, parameters.DefaultSizeType)).
                  ToProperty(this, nameof(ClothesDetailDescriptionViewModel));
@@ -79,7 +80,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
         /// Получить модели детальной одежды
         /// </summary>
         private ObservableAsPropertyHelper<IReadOnlyCollection<ClothesDetailImageViewModelItem>> GetClothesDetailImageViewModelsObservable(IClothesRestService clothesRestService) =>
-            this.WhenAnyValue(x => x.NavigationParameters).
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
                  SelectMany(parameters => Observable.FromAsync(() => GetClothesImages(clothesRestService, parameters.ClothesDetail.Id))).
                  ToProperty(this, nameof(ClothesDetailImageViewModelItems), scheduler: RxApp.MainThreadScheduler);

@@ -25,16 +25,13 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary> 
         /// Получить модели одежды
         /// </summary>
-        public static async Task<IResultCollection<ClothesViewModelItem>> GetClothes(ClothesNavigationOptions? clothesParameters,
-                                                                                     IClothesRestService clothesRestService,
-                                                                                     INavigationServiceFactory navigationServiceFactory) =>
-            await clothesParameters.
-            ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(clothesParameters, typeof(ClothesViewModelFactory))).
-            ResultValueBindOkToCollectionAsync(parameters =>
-                clothesRestService.GetClothesDetails(parameters.GenderType, parameters.ClothesTypeDomain.Name).
-                ResultCollectionOkTaskAsync(clothes =>
-                    clothes.Select(clotheItem => new ClothesViewModelItem(clotheItem, parameters.ClothesTypeDomain,
-                                                                          clothesRestService, navigationServiceFactory))));
+        public static IReadOnlyCollection<ClothesViewModelItem> GetClothes(ClothesNavigationOptions clothesOptions,
+                                                                         IClothesRestService clothesRestService,
+                                                                         IClothesNavigationService clothesNavigationService) =>
+            clothesOptions.ClothesDetails.
+            Select(clothesDetail => new ClothesViewModelItem(clothesDetail, clothesOptions.SizeTypeDefault,
+                                                             clothesRestService, clothesNavigationService)).
+            ToList();
 
         /// <summary>
         /// Преобразовать в модели одежды

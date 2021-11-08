@@ -11,6 +11,9 @@ using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes
 {
+    /// <summary>
+    /// Сервис одежды
+    /// </summary>
     public interface IClothesRestService : IRestServiceBase<int, IClothesMainDomain>
     {
         /// <summary>

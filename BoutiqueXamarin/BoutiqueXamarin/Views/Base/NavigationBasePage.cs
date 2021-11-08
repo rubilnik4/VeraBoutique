@@ -15,11 +15,11 @@ namespace BoutiqueXamarin.Views.Base
     /// <summary>
     /// Базовый класс страницы с навигацией
     /// </summary>
-    public abstract class NavigationBaseContentPage<TViewModel, TOption> : ReactiveContentPage<TViewModel>
+    public abstract class NavigationBasePage<TViewModel, TOption> : ReactiveContentPage<TViewModel>
         where TViewModel : NavigationViewModel<TOption>
         where TOption : BaseNavigationOptions
     {
-        protected NavigationBaseContentPage()
+        protected NavigationBasePage()
         {
             this.WhenActivated(disposable =>
             {

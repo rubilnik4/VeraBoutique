@@ -7,6 +7,6 @@ namespace BoutiqueXamarin.Views.Authorizes
     /// <summary>
     /// Авторизация
     /// </summary>
-    public abstract class LoginPageBase : NavigationBaseContentPage<LoginViewModel, LoginNavigationOptions>
+    public abstract class LoginPageBase : NavigationBasePage<LoginViewModel, LoginNavigationOptions>
     { }
 }

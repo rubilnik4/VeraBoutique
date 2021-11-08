@@ -35,20 +35,21 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// <summary>
     /// Выбор типа одежды
     /// </summary>
-    public class ChoiceViewModel : NavigationErrorViewModel<ChoiceNavigationOptions>, INavigationProfileViewModel
+    public class ChoiceViewModel : NavigationViewModel<ChoiceNavigationOptions>, INavigationProfileViewModel
     {
-        public ChoiceViewModel(INavigationServiceFactory navigationServiceFactory)
+        public ChoiceViewModel(INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService,
+                               IClothesNavigationService clothesNavigationService)
             : base(navigationServiceFactory)
         {
-            _navigationServiceFactory = navigationServiceFactory;
-            UserRightMenuViewModel = new UserRightMenuViewModel(navigationServiceFactory);
+            _clothesNavigationService = clothesNavigationService;
+            UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
             _choiceGenderViewModelItems = GetChoiceViewModels();
         }
 
         /// <summary>
-        /// Сервис навигации
+        /// Навигация к странице одежды
         /// </summary>
-        private readonly INavigationServiceFactory _navigationServiceFactory;
+        private readonly IClothesNavigationService _clothesNavigationService;
 
         /// <summary>
         /// Правое меню пользователя
@@ -84,19 +85,19 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
         /// Получить личные данные
         /// </summary>
         private ObservableAsPropertyHelper<IList<ChoiceGenderViewModelItem>> GetChoiceViewModels() =>
-            this.WhenAnyValue(x => x.NavigationParameters).
+            this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
                  Select(options => options.GenderCategories).
-                 Select(genderCategories => GetChoiceGenderItems(genderCategories, _navigationServiceFactory)).
+                 Select(genderCategories => GetChoiceGenderItems(genderCategories, _clothesNavigationService)).
                  ToProperty(this, nameof(ChoiceGenderViewModelItems));
 
         /// <summary>
         /// Получить модели типа пола одежды
         /// </summary>
         private static IList<ChoiceGenderViewModelItem> GetChoiceGenderItems(IEnumerable<IGenderCategoryDomain> genderCategories,
-                                                                             INavigationServiceFactory navigationServiceFactory) =>
+                                                                             IClothesNavigationService clothesNavigationService) =>
             genderCategories.
-            Select(genderCategory => new ChoiceGenderViewModelItem(navigationServiceFactory, genderCategory)).
+            Select(genderCategory => new ChoiceGenderViewModelItem(clothesNavigationService, genderCategory)).
             ToList();
 
     }

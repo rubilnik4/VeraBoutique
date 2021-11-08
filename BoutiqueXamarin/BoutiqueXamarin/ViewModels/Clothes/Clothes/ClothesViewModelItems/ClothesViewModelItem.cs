@@ -8,6 +8,7 @@ using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
+using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Clothes;
 using BoutiqueXamarin.Infrastructure.Implementations.Images;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
@@ -26,12 +27,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
     /// </summary>
     public class ClothesViewModelItem: BaseViewModel
     {
-        public ClothesViewModelItem(IClothesDetailDomain clothesDetail, IClothesTypeDomain clothesType, 
-                                    IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory)
+        public ClothesViewModelItem(IClothesDetailDomain clothesDetail, SizeType sizeTypeDefault, 
+                                    IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService)
         {
             ClothesDetail = clothesDetail;
-            _clothesType = clothesType;
-            _navigationServiceFactory = navigationServiceFactory;
+            _sizeTypeDefault = sizeTypeDefault;
+            _clothesNavigationService = clothesNavigationService;
             _image = Observable.Return(ImageSource.FromFile("empty_image.png")).
                                 ToProperty(this, nameof(Image));
             ImageCommand = ReactiveCommand.CreateFromTask(() => GetImageSource(clothesRestService, ClothesDetail.Id));
@@ -51,12 +52,12 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// <summary>
         /// Вид одежды
         /// </summary>
-        private readonly IClothesTypeDomain _clothesType;
+        private readonly SizeType _sizeTypeDefault;
 
         /// <summary>
-        /// Сервис навигации к странице детализации одежды
+        /// Навигация к странице одежды
         /// </summary>
-        private readonly INavigationServiceFactory _navigationServiceFactory;
+        private readonly IClothesNavigationService _clothesNavigationService;
 
         /// <summary>
         /// Наименование
@@ -100,7 +101,7 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// Переход на страницу детализации одежды
         /// </summary>
         private async Task ToClothesDetail() =>
-            await _navigationServiceFactory.ToClothesDetailPage(ClothesDetail, _clothesType.SizeTypeDefault);
+            await _clothesNavigationService.ToClothesDetailPage(ClothesDetail, _sizeTypeDefault);
 
         /// <summary>
         /// Преобразовать изображение в поток

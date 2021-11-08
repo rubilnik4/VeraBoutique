@@ -26,15 +26,15 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// </summary>
     public class RegisterViewModel : NavigationViewModel<RegisterNavigationOptions>
     {
-        public RegisterViewModel(INavigationServiceFactory navigationServiceFactory,
-                                 IUserRestService userRestService, ILoginService loginService)
+        public RegisterViewModel(IUserRestService userRestService, ILoginService loginService, 
+                                 INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService)
             : base(navigationServiceFactory)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();
             RegisterValidation = new RegisterValidation(RegisterLoginViewModel, RegisterPersonalViewModel);
             RegisterCommand = ReactiveCommand.CreateFromTask<RegisterValidation, IResultError>(
-                                async registerValidation => await Register(registerValidation, userRestService, loginService, navigationServiceFactory));
+                                async registerValidation => await Register(registerValidation, userRestService, loginService, profileNavigationService));
             _registerErrors = RegisterCommand.ToProperty(this, nameof(RegisterErrors), scheduler: RxApp.MainThreadScheduler);
         }
 
@@ -73,7 +73,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
         /// Зарегистрировать
         /// </summary>
         private static async Task<IResultError> Register(RegisterValidation registerValidation, IUserRestService userRestService,
-                                                                 ILoginService loginService, INavigationServiceFactory navigationServiceFactory) =>
+                                                                 ILoginService loginService, IProfileNavigationService profileNavigationService) =>
             await registerValidation.ToResultValue().
             ConcatResult(await registerValidation.RegisterLoginViewModel.RegisterLoginCommand.
                          Execute(registerValidation.RegisterLoginViewModel.RegisterLoginValidation).ToTask()).
@@ -81,6 +81,6 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
                          Execute(registerValidation.RegisterPersonalViewModel.RegisterPersonalValidation).ToTask()).
             ResultValueBindOkAsync(register => userRestService.Register(register.Register).
                                                ResultValueBindErrorsOkBindAsync(_ => loginService.Login(register.Authorize))).
-            ResultValueOkBindAsync(_ => navigationServiceFactory.ToProfilePage());
+            ResultValueOkBindAsync(_ => profileNavigationService.ToProfilePage());
     }
 }

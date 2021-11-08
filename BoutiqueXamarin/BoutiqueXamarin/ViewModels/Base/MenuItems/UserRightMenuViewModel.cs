@@ -12,9 +12,9 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
     /// </summary>
     public class UserRightMenuViewModel : BaseViewModel
     {
-        public UserRightMenuViewModel(INavigationServiceFactory navigationServiceFactory)
+        public UserRightMenuViewModel(IProfileNavigationService profileNavigationService)
         {
-            UserNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToProfilePage());
+            UserNavigateCommand = ReactiveCommand.CreateFromTask(_ => profileNavigationService.ToProfilePage());
             CartCommand = ReactiveCommand.Create<Unit, Unit>(_ => Unit.Default);
         }
 
