@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive.Linq;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
+using Prism.Navigation;
+using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Base
 {
@@ -11,8 +13,13 @@ namespace BoutiqueXamarin.ViewModels.Base
     {
         public InitialViewModel(IClothesNavigationService clothesNavigationService)
         {
-            Observable.FromAsync(clothesNavigationService.ToChoicePage).
-                       Subscribe();
+            _navigate = Observable.FromAsync(clothesNavigationService.ToChoicePage, scheduler: RxApp.MainThreadScheduler).
+                                   ToProperty(this, nameof(Navigate));
         }
+
+        private readonly ObservableAsPropertyHelper<INavigationResult> _navigate;
+
+        public INavigationResult Navigate =>
+            _navigate.Value;
     }
 }
