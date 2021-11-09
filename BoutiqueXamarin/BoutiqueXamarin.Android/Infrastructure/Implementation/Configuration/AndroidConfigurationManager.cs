@@ -37,7 +37,7 @@ namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration
 #elif TEST
             ".Test";
 #else
-            String.Empty;
+             String.Empty;
 #endif
 
         /// <summary>

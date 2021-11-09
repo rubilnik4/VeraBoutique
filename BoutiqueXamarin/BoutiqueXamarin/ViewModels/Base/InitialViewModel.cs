@@ -13,13 +13,8 @@ namespace BoutiqueXamarin.ViewModels.Base
     {
         public InitialViewModel(IClothesNavigationService clothesNavigationService)
         {
-            _navigate = Observable.FromAsync(clothesNavigationService.ToChoicePage, scheduler: RxApp.MainThreadScheduler).
-                                   ToProperty(this, nameof(Navigate));
+           Observable.FromAsync(clothesNavigationService.ToChoicePage).
+                      Subscribe();
         }
-
-        private readonly ObservableAsPropertyHelper<INavigationResult> _navigate;
-
-        public INavigationResult Navigate =>
-            _navigate.Value;
     }
 }
