@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Views/Dictionaries/BoutiqueMaterial.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueColors.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueButtonElements.xaml" />
                 <ResourceDictionary Source="Views/Dictionaries/BoutiqueEntryElements.xaml" />

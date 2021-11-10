@@ -24,16 +24,7 @@ namespace BoutiqueXamarin
     {
         public App(IPlatformInitializer initializer)
             : base(initializer)
-        {
-         
-        }
-
-        private void Init()
-        {
-            XF.Material.Forms.Material.Init(this);
-            InitializeComponent();
-            XF.Material.Forms.Material.Use("Material.Style");
-        }
+        { }
 
         /// <summary>
         /// Контейнер зависимостей
@@ -48,7 +39,7 @@ namespace BoutiqueXamarin
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultValueVoidOk(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            Void(_ => Init()).
+            Void(_ => InitializeComponent()).
             ResultValueVoidOkBadAsync(
                 _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToInitialPage(),
                 errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToErrorPage(errors));

@@ -50,9 +50,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueXamarinCommon", "Bo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueXamarinCommonXUnit", "BoutiqueXamarinCommonXUnit\BoutiqueXamarinCommonXUnit.csproj", "{792F18A8-AE8C-41D8-9750-E3894BBBB0A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoutiqueUserManagement", "BoutiqueUserManagement\BoutiqueUserManagement.csproj", "{5C6FE4C1-57A6-4710-A34C-45114F9C1976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueUserManagement", "BoutiqueUserManagement\BoutiqueUserManagement.csproj", "{5C6FE4C1-57A6-4710-A34C-45114F9C1976}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoutiqueConsole", "BoutiqueConsole\BoutiqueConsole.csproj", "{B7874DCC-C141-44D4-A64C-D93E5EA37E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoutiqueConsole", "BoutiqueConsole\BoutiqueConsole.csproj", "{B7874DCC-C141-44D4-A64C-D93E5EA37E00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
