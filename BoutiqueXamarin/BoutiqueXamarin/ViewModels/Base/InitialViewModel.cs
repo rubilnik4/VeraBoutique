@@ -9,7 +9,7 @@ namespace BoutiqueXamarin.ViewModels.Base
     /// <summary>
     /// Стартовая страница
     /// </summary>
-    public class InitialViewModel: BaseViewModel
+    public class InitialViewModel : BaseViewModel
     {
         public InitialViewModel(IClothesNavigationService clothesNavigationService)
         {

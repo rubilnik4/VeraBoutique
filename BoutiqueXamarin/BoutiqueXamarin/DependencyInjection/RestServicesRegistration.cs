@@ -38,13 +38,15 @@ namespace BoutiqueXamarin.DependencyInjection
         /// Регистрация сервисов обмена данными
         /// </summary>
         private static void RegisterRestClient(IBoutiqueContainer container, IHostConfigurationDomain hostConfiguration) =>
-            container.Register(service => GetRestJwtHttpClient(hostConfiguration, service.Resolve<ILoginStore>()));
+            container.Register(service => GetRestJwtHttpClient(service.Resolve<HttpClientHandler>(), hostConfiguration, 
+                                                               service.Resolve<ILoginStore>()));
 
         /// <summary>
         /// Получить http клиент с авторизацией
         /// </summary>
-        private static IRestHttpClient GetRestJwtHttpClient(IHostConfigurationDomain hostConfiguration, ILoginStore loginStore) =>
-            new RestJwtHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut, loginStore.GetTokenValue);
+        private static IRestHttpClient GetRestJwtHttpClient(HttpClientHandler httpClientHandler, IHostConfigurationDomain hostConfiguration,
+                                                            ILoginStore loginStore) =>
+            new RestJwtHttpClient(httpClientHandler, hostConfiguration.Host, hostConfiguration.TimeOut, loginStore.GetTokenValue);
 
         /// <summary>
         /// Регистрация сервисов обмена данными

@@ -9,11 +9,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Configuration
     /// </summary>
     public abstract class HostConfigurationBase: IHostConfigurationBase
     {
-        protected HostConfigurationBase(Uri host, TimeSpan timeOut, bool disableSSL)
+        protected HostConfigurationBase(Uri host, TimeSpan timeOut)
         {
             Host = host;
             TimeOut = timeOut;
-            DisableSSL = disableSSL;
         }
 
         /// <summary>
@@ -30,11 +29,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Configuration
         /// Время ожидания
         /// </summary>
         public TimeSpan TimeOut { get; }
-
-        /// <summary>
-        /// Отключить проверку сертификата
-        /// </summary>
-        public bool DisableSSL { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>

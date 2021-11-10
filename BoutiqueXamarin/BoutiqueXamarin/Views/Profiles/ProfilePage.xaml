@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:profiles="clr-namespace:BoutiqueXamarin.Views.Profiles;assembly=BoutiqueXamarin"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
-             xmlns:contentViews="clr-namespace:BoutiqueXamarin.Views.ContentViews;assembly=BoutiqueXamarin"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Profiles.ProfilePage">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,28 +24,28 @@
             </Grid>
         </StackLayout>
 
-        <menuItems:LogoMenuView Grid.Row="1" />
+        <menuItems:LogoMenuView Grid.Row="1" 
+                                Margin="10, 10, 0, 0"/>
 
         <StackLayout Grid.Row="2"
                      Style="{StaticResource StackLayoutEntry}">
-            <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                <Label x:Name="LoginLabel"
-                       Style="{StaticResource LabelTitle}" />
-            </StackLayout>
 
-            <StackLayout Style="{StaticResource StackLayoutEntry}">
-                <Button x:Name="OrderButton"
-                        Style="{StaticResource ButtonList}"
-                        Text="Заказы" />
-                <Button x:Name="PersonalButton"
-                        Style="{StaticResource ButtonList}"
-                        Text="Личная информация" />
-                <Button x:Name="SettingsButton"
-                        Style="{StaticResource ButtonList}"
-                        Text="Настройки" />
-                <Button x:Name="LogoutButton"
-                        Style="{StaticResource ButtonList}"
-                        Text="Выйти" />
+            <Label x:Name="LoginLabel"
+                   Style="{StaticResource LabelTitle}" />
+
+            <StackLayout  Style="{StaticResource StackLayoutEntry}">
+                <controls:LabelButton x:Name="OrderButton"
+                                      Style="{StaticResource LabelTitle}"
+                                      Text="Заказы" />
+                <controls:LabelButton x:Name="PersonalButton"
+                                      Style="{StaticResource LabelTitle}"
+                                      Text="Личная информация" />
+                <controls:LabelButton x:Name="SettingsButton"
+                                      Style="{StaticResource LabelTitle}"
+                                      Text="Настройки" />
+                <controls:LabelButton x:Name="LogoutButton"
+                                      Style="{StaticResource LabelTitle}"
+                                      Text="Выйти" />
             </StackLayout>
         </StackLayout>
     </Grid>

@@ -9,13 +9,6 @@
         <Setter Property="FontSize" Value="18" />
     </Style>
 
-    <Style x:Key="ButtonList" 
-           BasedOn="{StaticResource ButtonTransparent}"
-           TargetType="{x:Type Button}">
-        <Setter Property="HorizontalOptions" Value="StartAndExpand" />
-        <Setter Property="Margin" Value="5, 0, 5, 0" />
-    </Style>
-
     <Style x:Key="ButtonMain" 
            BasedOn="{StaticResource ButtonTransparent}"
            TargetType="{x:Type Button}">

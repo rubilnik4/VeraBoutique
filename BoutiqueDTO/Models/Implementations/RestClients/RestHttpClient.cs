@@ -27,11 +27,17 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
     /// </summary>
     public class RestHttpClient : IRestHttpClient
     {
-        public RestHttpClient(Uri baseAddress, TimeSpan timeout)
+        public RestHttpClient(HttpClientHandler httpClientHandler, Uri baseAddress, TimeSpan timeout)
         {
+            HttpClientHandler = httpClientHandler;
             BaseAddress = baseAddress;
             Timeout = timeout;
         }
+
+        /// <summary>
+        /// Обработчик запросов
+        /// </summary>
+        protected HttpClientHandler HttpClientHandler { get; }
 
         /// <summary>
         /// Адрес сервера
@@ -47,14 +53,14 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// Клиент для http запросов
         /// </summary>
         protected virtual Task<HttpClient> GetHttpClient() =>
-            Task.FromResult(HttpClientFactory.GetRestClient(BaseAddress, Timeout));
+            Task.FromResult(HttpClientFactory.GetRestClient(HttpClientHandler, BaseAddress, Timeout));
 
         /// <summary>
         /// Тип авторизации
         /// </summary>
         public async Task<AuthorizationType> GetAuthorizationType() =>
             await GetHttpClient().
-            MapTaskAsync(httpClient => Enum.TryParse(httpClient.DefaultRequestHeaders.Authorization?.Scheme, true, 
+            MapTaskAsync(httpClient => Enum.TryParse(httpClient.DefaultRequestHeaders.Authorization?.Scheme, true,
                                                      out AuthorizationType authorizationType)
                              ? authorizationType
                              : AuthorizationType.None);

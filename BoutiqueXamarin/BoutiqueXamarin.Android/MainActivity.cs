@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -61,6 +62,7 @@ namespace BoutiqueXamarin.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IXamarinConfigurationManager, AndroidConfigurationManager>();
+            containerRegistry.Register<HttpClientHandler>(container => AndroidClientHandlerFactory.GetAndroidHttpHandler());
         }
     }
 }

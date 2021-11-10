@@ -12,8 +12,8 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
     /// </summary>
     public class RestJwtHttpClient : RestHttpClient, IRestJwtHttpClient
     {
-        public RestJwtHttpClient(Uri baseAddress, TimeSpan timeOut, Func<Task<string?>> tokenFunc)
-            : base(baseAddress, timeOut)
+        public RestJwtHttpClient(HttpClientHandler httpClientHandler, Uri baseAddress, TimeSpan timeOut, Func<Task<string?>> tokenFunc)
+            : base(httpClientHandler, baseAddress, timeOut)
         {
             _tokenFunc = tokenFunc;
         }
@@ -28,6 +28,6 @@ namespace BoutiqueDTO.Models.Implementations.RestClients
         /// </summary>
         protected override async Task<HttpClient> GetHttpClient() =>
             await _tokenFunc().
-            MapTaskAsync(token => HttpClientFactory.GetRestClient(BaseAddress, Timeout, token));
+            MapTaskAsync(token => HttpClientFactory.GetRestClient(HttpClientHandler, BaseAddress, Timeout, token));
     }
 }

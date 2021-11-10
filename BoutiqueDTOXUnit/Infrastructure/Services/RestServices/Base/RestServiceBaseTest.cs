@@ -509,6 +509,6 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Base
         /// Подключение к несуществующему серверу
         /// </summary>
         private static IRestHttpClient NotFoundRestBaseHttpClient =>
-             new RestHttpClient(new Uri("https://ServerNotFound"), TimeSpan.FromMilliseconds(10));
+             new RestHttpClient(new HttpClientHandler(), new Uri("https://ServerNotFound"), TimeSpan.FromMilliseconds(10));
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.HttpClients;
@@ -30,18 +31,24 @@ namespace BoutiqueConsole.Factories.Services
         /// Клиент для подключения к сервису одежды
         /// </summary>
         public static IRestHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration) =>
-            new RestHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut);
+            new RestHttpClient(HttpClientHandler, hostConfiguration.Host, hostConfiguration.TimeOut);
 
         /// <summary>
         /// Клиент для подключения к сервису одежды
         /// </summary>
         public static IRestJwtHttpClient GetBoutiqueRestClient(IHostConfigurationDomain hostConfiguration, string jwtToken) =>
-            new RestJwtHttpClient(hostConfiguration.Host, hostConfiguration.TimeOut, () => Task.FromResult((string?)jwtToken));
+            new RestJwtHttpClient(HttpClientHandler, hostConfiguration.Host, hostConfiguration.TimeOut, () => Task.FromResult((string?)jwtToken));
 
         /// <summary>
         ///  Получить сервис авторизации
         /// </summary>
         public static IAuthorizeRestService GetAuthorizeRestService(IRestHttpClient restHttpClient) =>
              new AuthorizeRestService(restHttpClient, new AuthorizeTransferConverter());
+
+        /// <summary>
+        /// Обработчик запросов
+        /// </summary>
+        private static HttpClientHandler HttpClientHandler =>
+            new();
     }
 }

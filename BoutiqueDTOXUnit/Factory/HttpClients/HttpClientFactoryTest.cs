@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using BoutiqueCommon.Models.Domain.Implementations.Configuration;
 using BoutiqueCommon.Models.Domain.Interfaces.Configuration;
 using BoutiqueDTO.Factory.HttpClients;
@@ -19,7 +20,7 @@ namespace BoutiqueDTOXUnit.Factory.HttpClients
         public void GetRestClient_Ok()
         {
             var hostConnection = HostConnection;
-            var restClient = HttpClientFactory.GetRestClient(hostConnection.Host, hostConnection.TimeOut);
+            var restClient = HttpClientFactory.GetRestClient(HttpClientHandler, hostConnection.Host, hostConnection.TimeOut);
             
             Assert.Equal(hostConnection.Host, restClient.BaseAddress);
             Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
@@ -34,7 +35,7 @@ namespace BoutiqueDTOXUnit.Factory.HttpClients
             var hostConnection = HostConnection;
             const string jwtToken = "jwtToken";
 
-            var restClient = HttpClientFactory.GetRestClient(hostConnection.Host, hostConnection.TimeOut, jwtToken);
+            var restClient = HttpClientFactory.GetRestClient(HttpClientHandler, hostConnection.Host, hostConnection.TimeOut, jwtToken);
 
             Assert.Equal(hostConnection.Host, restClient.BaseAddress);
             Assert.Equal(hostConnection.TimeOut, restClient.Timeout);
@@ -46,6 +47,12 @@ namespace BoutiqueDTOXUnit.Factory.HttpClients
         /// Параметры подключения
         /// </summary>
         private static IHostConfigurationDomain HostConnection =>
-            new HostConfigurationDomain(new Uri("https://localhost:5001/"), TimeSpan.FromSeconds(5), false);
+            new HostConfigurationDomain(new Uri("https://localhost:5001/"), TimeSpan.FromSeconds(5));
+
+        /// <summary>
+        /// Обработчик запросов
+        /// </summary>
+        private static HttpClientHandler HttpClientHandler =>
+            new();
     }
 }

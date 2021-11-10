@@ -31,7 +31,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
         /// Преобразовать категории одежды из трансферной модели
         /// </summary>
         public override IResultValue<IHostConfigurationDomain> FromTransfer(HostConfigurationTransfer hostConfigurationTransfer) =>
-            GetHostConfigurationFunc(hostConfigurationTransfer).
+            GetHostConfigurationFunc().
             ResultValueCurryOk(hostConfigurationTransfer.Host.
                                ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(hostConfigurationTransfer.Host, GetType()))).
             ResultValueCurryOk(hostConfigurationTransfer.TimeOut.
@@ -43,8 +43,8 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration
         /// <summary>
         /// Функция получения конфигурации
         /// </summary>
-        private static IResultValue<Func<Uri, TimeSpan, IHostConfigurationDomain>> GetHostConfigurationFunc(IHostConfigurationBase hostConfiguration) =>
+        private static IResultValue<Func<Uri, TimeSpan, IHostConfigurationDomain>> GetHostConfigurationFunc() =>
             new ResultValue<Func<Uri, TimeSpan, IHostConfigurationDomain>>(
-                (host, timeOut) => new HostConfigurationDomain(host, timeOut, hostConfiguration.DisableSSL));
+                (host, timeOut) => new HostConfigurationDomain(host, timeOut));
     }
 }

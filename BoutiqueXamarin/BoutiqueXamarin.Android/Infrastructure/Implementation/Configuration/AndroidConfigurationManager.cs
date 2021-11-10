@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -9,6 +10,7 @@ using BoutiqueXamarinCommon.Infrastructure.Interfaces.Converters;
 using BoutiqueXamarinCommon.Models.Implementation.Configuration;
 using BoutiqueXamarinCommon.Models.Interfaces.Configuration;
 using Newtonsoft.Json;
+using Xamarin.Android.Net;
 using Xamarin.Forms.Platform.Android;
 
 namespace BoutiqueXamarin.Droid.Infrastructure.Implementation.Configuration

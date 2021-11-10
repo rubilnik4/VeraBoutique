@@ -16,8 +16,8 @@ namespace BoutiqueCommonXUnit.Data.Configuration
         public static IReadOnlyCollection<IHostConfigurationDomain> HostConfigurationDomains =>
             new List<IHostConfigurationDomain>
             {
-                new HostConfigurationDomain(new Uri("https://localhost:5001"), TimeSpan.FromSeconds(5), false),
-                new HostConfigurationDomain(new Uri("https://localhost:443"), TimeSpan.FromSeconds(2), true),
+                new HostConfigurationDomain(new Uri("https://localhost:5001"), TimeSpan.FromSeconds(5)),
+                new HostConfigurationDomain(new Uri("https://localhost:443"), TimeSpan.FromSeconds(2)),
             };
     }
 }

@@ -18,24 +18,18 @@ namespace BoutiqueDTO.Factory.HttpClients
         /// <summary>
         /// Создать api клиент
         /// </summary>
-        public static HttpClient GetRestClient(Uri baseAddress, TimeSpan timeOut) =>
-            GetRestClient(baseAddress, timeOut, null);
+        public static HttpClient GetRestClient(HttpClientHandler httpClientHandler, Uri baseAddress, TimeSpan timeOut) =>
+            GetRestClient(httpClientHandler, baseAddress, timeOut, null);
 
         /// <summary>
         /// Создать api клиент c jwt токеном
         /// </summary>
-        public static HttpClient GetRestClient(Uri baseAddress, TimeSpan timeOut, string? jwtToken) =>
-            new HttpClientHandler().
-#if DEBUG
-            Void(handler => handler.ClientCertificateOptions = ClientCertificateOption.Manual).
-            Void(handler => handler.ServerCertificateCustomValidationCallback =
-                     (httpRequestMessage, cert, cetChain, policyErrors) => true).
-#endif
-            Map(handler => new HttpClient(handler)
+        public static HttpClient GetRestClient(HttpClientHandler httpClientHandler, Uri baseAddress, TimeSpan timeOut, string? jwtToken) =>
+            new HttpClient(httpClientHandler)
             {
                 BaseAddress = baseAddress,
                 Timeout = timeOut,
-            }).
+            }.
             VoidOk(_ => !String.IsNullOrWhiteSpace(jwtToken),
                    httpClient => httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(HttpClientSchemaType.Bearer.ToString(), 
                                                                                                                 jwtToken));

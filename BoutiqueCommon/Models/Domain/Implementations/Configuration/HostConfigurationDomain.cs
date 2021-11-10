@@ -11,11 +11,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Configuration
     public class HostConfigurationDomain: HostConfigurationBase, IHostConfigurationDomain
     {
         public HostConfigurationDomain(IHostConfigurationBase hostConfiguration)
-          : this(hostConfiguration.Host, hostConfiguration.TimeOut, hostConfiguration.DisableSSL)
+          : this(hostConfiguration.Host, hostConfiguration.TimeOut)
         { }
 
-        public HostConfigurationDomain(Uri host, TimeSpan timeOut, bool disableSsl)
-            : base(host, timeOut, disableSsl)
+        public HostConfigurationDomain(Uri host, TimeSpan timeOut)
+            : base(host, timeOut)
         { }
     }
 }
