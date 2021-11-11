@@ -20,5 +20,15 @@ namespace BoutiqueCommonXUnit.Infrastructure.Validation.Common
 
             Assert.Equal(validation, isValid);
         }
+
+        [Theory]
+        [InlineData("+79224725787", "9224725787")]
+        [InlineData("89224725787", "9224725787")]
+        public void GetPhoneWithoutCountry(string phone, string phoneValid)
+        {
+            string newPhone = PhoneValidation.GetPhoneWithoutCountry(phone);
+
+            Assert.Equal(newPhone, phoneValid);
+        }
     }
 }

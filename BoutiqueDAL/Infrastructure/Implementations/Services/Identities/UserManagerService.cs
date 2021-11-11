@@ -162,7 +162,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// </summary>
         private async Task<IResultValue<BoutiqueUserEntity>> CheckDuplicateUser(BoutiqueUserEntity boutiqueUserEntity) =>
             await _userManager.FindByEmailAsync(boutiqueUserEntity.Email).
-            WhereContinueTaskAsync(user => user is null!,
+            WhereContinueTaskAsync(user => user is null,
                                    _ => boutiqueUserEntity.ToResultValue(),
                                    _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Пользователь уже присутствует в системе").
                                         ToResultValue<BoutiqueUserEntity>());

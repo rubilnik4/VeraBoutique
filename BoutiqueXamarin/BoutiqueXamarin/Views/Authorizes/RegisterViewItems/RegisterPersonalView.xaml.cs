@@ -6,6 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BoutiqueCommon.Infrastructure.Implementation.Validation.Common;
 using ReactiveUI;
 using ResultFunctional.Models.Enums;
 using Xamarin.Forms;
@@ -43,9 +44,9 @@ namespace BoutiqueXamarin.Views.Authorizes.RegisterViewItems
                      BindTo(this, x => x.ViewModel!.AddressValid).
                      DisposeWith(disposable);
 
-                this.WhenAnyValue(x => x.PhoneEntry.Text).
-                     Select(phone => PhoneCodeEntry.Text + phone).
-                     BindTo(this, x => x.ViewModel!.Phone).
+                this.Bind(ViewModel, x => x.Phone, x => x.PhoneEntry.Text, 
+                          PhoneValidation.GetPhoneWithoutCountry, 
+                          phone => PhoneCodeEntry.Text + phone).
                      DisposeWith(disposable);
 
                 this.Bind(ViewModel, x => x.PhoneValid, x => x.PhoneEntry.IsValid).

@@ -62,6 +62,9 @@
     <Compile Update="Views\ContentViews\MenuItems\UserRightMenuView.xaml.cs">
       <DependentUpon>UserRightMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Profiles\PersonalPage.xaml.cs">
+      <DependentUpon>PersonalPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -140,6 +143,9 @@
     <EmbeddedResource Update="Views\Errors\ErrorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Profiles\PersonalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Profiles\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -161,7 +167,6 @@
     <Folder Include="Controls\Enums\" />
     <Folder Include="Controls\EntryStackLayouts\" />
     <Folder Include="ViewModels\Implementations\" />
-    <Folder Include="ViewModels\Profiles\" />
   </ItemGroup>
 
 </Project>

@@ -29,24 +29,29 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// </summary>
     public class ProfileViewModel : NavigationViewModel<ProfileNavigationOptions>
     {
-        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory)
+        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService)
             : base(navigationServiceFactory)
         {
             _profile = GetProfile();
+            PersonalCommand = ReactiveCommand.CreateFromTask<IBoutiqueUserDomain, INavigationResult>(profileNavigationService.ToPersonalPage);
             LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory));
         }
 
+        /// <summary>
+        /// Модель личных данных
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IBoutiqueUserDomain> _profile;
 
         /// <summary>
         /// Модель личных данных
         /// </summary>
-        private readonly ObservableAsPropertyHelper<string> _profile;
-
-        /// <summary>
-        /// Модель личных данных
-        /// </summary>
-        public string Profile =>
+        public IBoutiqueUserDomain Profile =>
             _profile.Value;
+
+        /// <summary>
+        /// Команда перехода к личной информации
+        /// </summary>
+        public ReactiveCommand<IBoutiqueUserDomain, INavigationResult> PersonalCommand { get; }
 
         /// <summary>
         /// Команда выхода из профиля
@@ -56,10 +61,10 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// <summary>
         /// Получить личные данные
         /// </summary>
-        private ObservableAsPropertyHelper<string> GetProfile() =>
+        private ObservableAsPropertyHelper<IBoutiqueUserDomain> GetProfile() =>
             this.WhenAnyValue(x => x.NavigationOptions).
                  WhereNotNull().
-                 Select(options => options.User.Email).
+                 Select(options => options.User).
                  ToProperty(this, nameof(Profile));
 
         /// <summary>

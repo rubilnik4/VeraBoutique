@@ -21,6 +21,11 @@ namespace BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize
         Task<IResultValue<string>> Register(IRegisterDomain registerDomain);
 
         /// <summary>
+        /// Обновить личную информацию
+        /// </summary>
+        Task<IResultError> UpdateUser(IBoutiqueUserDomain user);
+
+        /// <summary>
         /// Удалить пользователей
         /// </summary>
         Task<IResultError> DeleteUsers();

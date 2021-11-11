@@ -29,6 +29,12 @@
         <Setter Property="TextColor" Value="{StaticResource ColorError}"/>
     </Style>
 
+    <Style x:Key="LabelButton"
+           TargetType="{x:Type Label}"
+           BasedOn="{StaticResource LabelTitle}">
+        <Setter Property="Margin" Value="0, 5, 0, 5"/>
+    </Style>
+
     <Style x:Key="LabelUnderline"
            TargetType="{x:Type Label}"
            BasedOn="{StaticResource LabelCommon}">

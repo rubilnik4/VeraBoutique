@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using Prism.Navigation;
 
 namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
@@ -12,5 +13,10 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// Перейти к странице личной информации
         /// </summary>
         Task<INavigationResult> ToProfilePage();
+
+        /// <summary>
+        /// Перейти к странице личных данных
+        /// </summary>
+        Task<INavigationResult> ToPersonalPage(IBoutiqueUserDomain user);
     }
 }

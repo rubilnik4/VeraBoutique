@@ -1,4 +1,6 @@
 ﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Identities;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using ReactiveUI;
 
 namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems

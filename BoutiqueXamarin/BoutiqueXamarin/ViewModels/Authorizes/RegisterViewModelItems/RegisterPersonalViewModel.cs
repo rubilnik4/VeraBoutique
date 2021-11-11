@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
+using BoutiqueCommon.Infrastructure.Implementation.Validation.Common;
+using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueXamarin.ViewModels.Base;
 using ReactiveUI;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
@@ -13,7 +15,16 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
     public class RegisterPersonalViewModel : BaseViewModel
     {
         public RegisterPersonalViewModel()
+            :this (String.Empty, String.Empty, String.Empty, String.Empty)
+        { }
+
+        public RegisterPersonalViewModel(string name, string surname, string address, string phone)
         {
+            Name = name;
+            Surname = surname;
+            Address = address;
+            Phone = phone;
+
             _registerPersonalValidation = this.WhenAnyValue(x => x.NameValid, x => x.SurnameValid, x => x.AddressValid, x => x.PhoneValid,
                                                             (nameValid, surnameValid, addressValid, phoneValid) => (nameValid, surnameValid, addressValid, phoneValid)).
                                           Select(personal => new RegisterPersonalValidation(Name, personal.nameValid, Surname, personal.surnameValid,
@@ -25,7 +36,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; }
 
         /// <summary>
         /// Корректность имени
@@ -44,7 +55,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string Surname { get; set; } = String.Empty;
+        public string Surname { get; set; }
 
         /// <summary>
         /// Корректность фамилии
@@ -63,7 +74,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// <summary>
         /// Адрес
         /// </summary>
-        public string Address { get; set; } = String.Empty;
+        public string Address { get; set; } 
 
         /// <summary>
         /// Корректность адреса
@@ -82,7 +93,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes.RegisterViewModelItems
         /// <summary>
         /// Телефон
         /// </summary>
-        public string Phone { get; set; } = String.Empty;
+        public string Phone { get; set; } 
 
         /// <summary>
         /// Корректность телефона

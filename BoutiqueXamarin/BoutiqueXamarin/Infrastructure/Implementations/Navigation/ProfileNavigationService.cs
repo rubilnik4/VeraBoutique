@@ -38,6 +38,13 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
                                              OnErrorNavigate);
 
         /// <summary>
+        /// Перейти к странице личных данных
+        /// </summary>
+        public async Task<INavigationResult> ToPersonalPage(IBoutiqueUserDomain user) =>
+            await new PersonalNavigationOptions(user).
+            MapAsync(NavigateTo<PersonalPage, PersonalViewModel, PersonalNavigationOptions>);
+
+        /// <summary>
         /// Перейти к странице личной информации
         /// </summary>
         private async Task<INavigationResult> ToProfilePage(IBoutiqueUserDomain user) =>

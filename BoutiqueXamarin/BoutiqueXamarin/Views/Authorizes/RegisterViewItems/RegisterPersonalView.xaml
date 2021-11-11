@@ -6,18 +6,18 @@
              x:Class="BoutiqueXamarin.Views.Authorizes.RegisterViewItems.RegisterPersonalView">
     <StackLayout Style="{StaticResource StackLayoutControl}">
         <controlViews:EntryControl x:Name="NameEntry"
-                                           ValidationType="Text"
-                                           PlaceholderText="Имя"
-                                           ErrorMessage="Укажите имя" />
+                                   ValidationType="Text"
+                                   PlaceholderText="Имя"
+                                   ErrorMessage="Укажите имя" />
 
         <controlViews:EntryControl x:Name="SurnameEntry"
-                                           ValidationType="Text"
-                                           PlaceholderText="Фамилия"
-                                           ErrorMessage="Укажите фамилию" />
+                                   ValidationType="Text"
+                                   PlaceholderText="Фамилия"
+                                   ErrorMessage="Укажите фамилию" />
 
         <controlViews:EntryControl x:Name="AddressEntry"
-                                           PlaceholderText="Адрес"
-                                           ErrorMessage="Укажите адрес" />
+                                   PlaceholderText="Адрес"
+                                   ErrorMessage="Укажите адрес" />
 
         <StackLayout Style="{StaticResource StackLayoutIcon}">
             <controlViews:EntryControl x:Name="PhoneCodeEntry"
@@ -25,12 +25,12 @@
                                        IsReadOnly="True" />
 
             <controlViews:EntryControl x:Name="PhoneEntry"
-                                               ValidationType="Phone"
-                                               Mask="AAA-AAA-AA-AA"
-                                               MaskChar="A"
-                                               PlaceholderText="Телефон"
-                                               ErrorMessage="Укажите телефон"
-                                               HorizontalOptions="FillAndExpand" />
+                                       ValidationType="Phone"
+                                       Mask="AAA-AAA-AA-AA"
+                                       MaskChar="A"
+                                       PlaceholderText="Телефон"
+                                       ErrorMessage="Укажите телефон"
+                                       HorizontalOptions="FillAndExpand" />
         </StackLayout>
     </StackLayout>
 </registerViewItems:RegisterPersonalBase>

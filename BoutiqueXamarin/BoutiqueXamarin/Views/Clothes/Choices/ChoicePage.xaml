@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <menuItems:LogoMenuView Grid.Row="0"
-                                Margin="0, 10, 0 , 10"/>
+                                Margin="0, 10, 0, 0"/>
 
         <StackLayout Grid.Row="1">
             <xct:TabView x:Name="GenderTab"

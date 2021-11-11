@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<authorizes:RegisterPageBase xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<profiles:PersonalPageBase xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:authorizes="clr-namespace:BoutiqueXamarin.Views.Authorizes;assembly=BoutiqueXamarin"
+             xmlns:profiles="clr-namespace:BoutiqueXamarin.Views.Profiles;assembly=BoutiqueXamarin"
              xmlns:menuItems="clr-namespace:BoutiqueXamarin.Views.ContentViews.MenuItems;assembly=BoutiqueXamarin"
              xmlns:registerViewItems="clr-namespace:BoutiqueXamarin.Views.Authorizes.RegisterViewItems;assembly=BoutiqueXamarin"
-             x:Class="BoutiqueXamarin.Views.Authorizes.RegisterPage">
+             x:Class="BoutiqueXamarin.Views.Profiles.PersonalPage">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -30,21 +30,19 @@
                      Style="{StaticResource StackLayoutEntry}">
             <ScrollView HorizontalScrollBarVisibility="Never">
                 <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                    <registerViewItems:RegisterLoginView x:Name="RegisterLoginView"/>
-
                     <registerViewItems:RegisterPersonalView x:Name="RegisterPersonalView"/>
 
                     <StackLayout Style="{StaticResource StackLayoutControlIsolate}">
-                        <Label x:Name="RegisterErrorLabel"
+                        <Label x:Name="PersonalErrorLabel"
                                Style="{StaticResource LabelError}"
                                IsVisible="False"
                                HorizontalOptions="CenterAndExpand" />
-                        <Button x:Name="RegisterButton"
+                        <Button x:Name="UpdateButton"
                                 Style="{StaticResource ButtonMain}"
-                                Text="Создать профиль" />
+                                Text="Сохранить" />
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
         </StackLayout>
     </Grid>
-</authorizes:RegisterPageBase>
+</profiles:PersonalPageBase>
