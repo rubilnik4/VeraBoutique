@@ -199,6 +199,79 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
         }
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateRoleUser()
+        {
+            var userRole = IdentityData.BoutiqueUsers.First();
+            var user = IdentityEntitiesData.BoutiqueIdentityUsers.First();
+            var resultUpdate = IdentityResult.Success;
+            var userManager = UserManagerMock.GetUserManagerUpdate(resultUpdate, user);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var result = await userManagerService.UpdateRoleUser(userRole);
+
+            Assert.True(result.OkStatus);
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateRoleUser_ValidateFail()
+        {
+            var personal = new PersonalDomain("", "Surname", "Address", "89224725788");
+            var userRole = IdentityData.BoutiqueUsers.First().UpdatePersonal(personal);
+            var user = IdentityEntitiesData.BoutiqueIdentityUsers.First();
+            var resultUpdate = IdentityResult.Success;
+            var userManager = UserManagerMock.GetUserManagerUpdate(resultUpdate, user);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var result = await userManagerService.UpdateRoleUser(userRole);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<IValueNotValidErrorResult>(result.Errors.First());
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateRoleUser_NotFound()
+        {
+            var userRole = IdentityData.BoutiqueUsers.First();
+            var resultUpdate = IdentityResult.Success;
+            var userManager = UserManagerMock.GetUserManagerUpdate(resultUpdate, null!);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var result = await userManagerService.UpdateRoleUser(userRole);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<IValueNotFoundErrorResult>(result.Errors.First());
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateRoleUser_CreateFail()
+        {
+            var userRole = IdentityData.BoutiqueUsers.First();
+            var user = IdentityEntitiesData.BoutiqueIdentityUsers.First();
+            var identityError = new IdentityError { Code = IdentityEntitiesData.DuplicateRoleName };
+            var resultUpdate = IdentityResult.Failed(identityError);
+            var userManager = UserManagerMock.GetUserManagerUpdate(resultUpdate, user);
+            var userManagerService = new UserManagerService(userManager.Object, IdentityEntitiesData.IdentitySettings);
+
+            var result = await userManagerService.UpdateRoleUser(userRole);
+
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+        }
+
+        /// <summary>
         /// Удалить пользователя
         /// </summary>
         [Fact]

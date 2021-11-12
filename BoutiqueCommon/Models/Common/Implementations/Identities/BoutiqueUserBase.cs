@@ -7,24 +7,21 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identities
     /// <summary>
     /// Пользователь
     /// </summary>
-    public abstract class BoutiqueUserBase : IBoutiqueUserBase
+    public abstract class BoutiqueUserBase : PersonalBase, IBoutiqueUserBase
     {
         protected BoutiqueUserBase(string userName, string email, IdentityRoleType identityRoleType,
-                                   string name, string surname, string address, string phoneNumber)
+                                   string name, string surname, string address, string phone)
+            :base(name, surname, address, phone)
         {
             UserName = userName;
             Email = email;
             IdentityRoleType = identityRoleType;
-            Name = name;
-            Surname = surname;
-            Address = address;
-            PhoneNumber = phoneNumber;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id =>
+        public override string Id =>
             UserName;
 
         /// <summary>
@@ -41,26 +38,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identities
         /// Роль
         /// </summary>
         public IdentityRoleType IdentityRoleType { get; }
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        public string Surname { get; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        public string Address { get; }
-
-        /// <summary>
-        /// Телефон
-        /// </summary>
-        public string PhoneNumber { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>

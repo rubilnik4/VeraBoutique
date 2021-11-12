@@ -58,6 +58,14 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
             ResultValueBindOkAsync(json => _restHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
 
         /// <summary>
+        /// Обновить личную информацию
+        /// </summary>
+        public async Task<IResultError> UpdateUser(IBoutiqueUserDomain user) =>
+            await _boutiqueUserTransferConverter.ToTransfer(user).
+            ToJsonTransfer().
+            ResultValueBindErrorsOkAsync(json => _restHttpClient.PutValueAsync(RestRequest.GetRequest(ControllerName), json));
+
+        /// <summary>
         /// Удалить пользователей
         /// </summary>
         public async Task<IResultError> DeleteUsers() =>

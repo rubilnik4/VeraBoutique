@@ -38,7 +38,7 @@ namespace BoutiqueCommon.Infrastructure.Implementation.Validation.Common
         /// Проверка текста на символы
         /// </summary>
         private static bool PhoneMatch(string phone) =>
-            Regex.IsMatch(phone, @" ^ (\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            Regex.IsMatch(phone, @"^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
 
         /// <summary>
         /// Получить ошибку проверки

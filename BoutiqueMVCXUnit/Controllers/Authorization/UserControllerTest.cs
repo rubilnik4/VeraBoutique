@@ -88,6 +88,68 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
         }
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateUser_Ok()
+        {
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
+            var userResult = user.ToResultValue();
+            var userManager = GetUserManager(userResult);
+            var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
+            var userUpdate = IdentityTransfersData.BoutiqueUserTransfers.Last();
+
+            var actionResult = await registerController.UpdateRoleUser(userUpdate);
+
+            Assert.IsType<NoContentResult>(actionResult);
+            var noContentResult = (NoContentResult)actionResult;
+            Assert.Equal(StatusCodes.Status204NoContent, noContentResult.StatusCode);
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateUser_BadRequest()
+        {
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
+            var userResult = ErrorResultFactory.ValueNotValidError(user, GetType(), "ValueNotValid").ToResultValue<BoutiqueRoleUser>();
+            var userManager = GetUserManager(userResult);
+            var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
+            var userUpdate = IdentityTransfersData.BoutiqueUserTransfers.Last();
+
+            var actionResult = await registerController.UpdateRoleUser(userUpdate);
+
+            Assert.IsType<BadRequestObjectResult>(actionResult);
+            var badRequest = (BadRequestObjectResult)actionResult;
+            var errors = (SerializableError)badRequest.Value;
+            Assert.Equal(StatusCodes.Status400BadRequest, badRequest.StatusCode);
+            Assert.Equal(userResult.Errors.First().Id, errors.Keys.First());
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateUser_NotFound()
+        {
+            var user = IdentityEntitiesData.BoutiqueRoleUsers.First();
+            var userResult = ErrorResultFactory.ValueNotFoundError(user, GetType()).ToResultValue<BoutiqueRoleUser>();
+            var userManager = GetUserManager(userResult);
+            var registerController = new UserController(userManager.Object, RegisterTransferConverterMock.RegisterTransferConverter,
+                                                        BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter);
+            var userUpdate = IdentityTransfersData.BoutiqueUserTransfers.Last();
+
+            var actionResult = await registerController.UpdateRoleUser(userUpdate);
+
+            Assert.IsType<NotFoundResult>(actionResult);
+            var notFoundResult = (NotFoundResult)actionResult;
+            Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
+        }
+
+        /// <summary>
         /// Удалить пользователя
         /// </summary>
         [Fact]
@@ -202,6 +264,8 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             new Mock<IUserManagerService>().
             Void(userMock => userMock.Setup(userManager => userManager.CreateRoleUser(It.IsAny<IRegisterRoleDomain>())).
                                           ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email))).
+            Void(userMock => userMock.Setup(userManager => userManager.UpdateRoleUser(It.IsAny<IBoutiqueUserDomain>())).
+                                      ReturnsAsync(userResult)).
             Void(userMock => userMock.Setup(userManager => userManager.DeleteRoleUser(It.IsAny<string>())).
                                       ReturnsAsync(userResult.ResultValueOk(user => user.BoutiqueUserEntity.Email)));
 

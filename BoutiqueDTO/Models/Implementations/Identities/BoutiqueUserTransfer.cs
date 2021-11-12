@@ -13,13 +13,13 @@ namespace BoutiqueDTO.Models.Implementations.Identities
     {
         public BoutiqueUserTransfer(IBoutiqueUserBase boutiqueUserBase)
             :base(boutiqueUserBase.UserName, boutiqueUserBase.Email, boutiqueUserBase.IdentityRoleType,
-                  boutiqueUserBase.Name, boutiqueUserBase.Surname, boutiqueUserBase.Address, boutiqueUserBase.PhoneNumber)
+                  boutiqueUserBase.Name, boutiqueUserBase.Surname, boutiqueUserBase.Address, boutiqueUserBase.Phone)
         { }
 
         [JsonConstructor]
         public BoutiqueUserTransfer(string userName, string email, IdentityRoleType identityRoleType,
-                                    string name, string surname, string address, string phoneNumber)
-                :base(userName,  email,  identityRoleType, name,  surname,  address,  phoneNumber)
+                                    string name, string surname, string address, string phone)
+                :base(userName,  email,  identityRoleType, name,  surname,  address,  phone)
         { }
     }
 }

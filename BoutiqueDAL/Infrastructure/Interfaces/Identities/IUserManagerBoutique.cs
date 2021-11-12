@@ -39,6 +39,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Identities
         Task<IdentityResult> CreateAsync(BoutiqueUserEntity userEntity);
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        Task<IdentityResult> UpdateAsync(BoutiqueUserEntity userEntity);
+
+        /// <summary>
         /// Удалить пользователя
         /// </summary>
         Task<IdentityResult> DeleteAsync(BoutiqueUserEntity userEntity);

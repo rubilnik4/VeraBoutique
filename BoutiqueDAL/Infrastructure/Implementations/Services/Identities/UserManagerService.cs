@@ -79,6 +79,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             ResultValueBindOkAsync(user => CreateRoleUser(user, registerRole.IdentityRoleType));
 
         /// <summary>
+        /// Создать пользователя
+        /// </summary>
+        public async Task<IResultError> UpdateRoleUser(IBoutiqueUserDomain userRole) =>
+            await PersonalValidation.PersonalValidate(userRole).
+            ResultValueBindOkAsync(_ => FindRoleUserEntityByEmail(userRole.Email)).
+            ResultValueOkTaskAsync(user => user.UpdatePersonal(userRole)).
+            ResultValueBindErrorsOkBindAsync(user => UpdateUser(user.BoutiqueUserEntity));
+
+        /// <summary>
         /// Удалить пользователей
         /// </summary>
         public async Task<IResultError> DeleteRoleUsers(IEnumerable<IBoutiqueUserDomain> users) =>
@@ -149,6 +158,13 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
                                        ToIdentityResultValueTaskAsync(userEntity.Email));
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        private async Task<IResultError> UpdateUser(BoutiqueUserEntity userEntity) =>
+            await _userManager.UpdateAsync(userEntity).
+            MapTaskAsync(identityResult => identityResult.ToIdentityResultValue(userEntity.Email));
+
+        /// <summary>
         /// Удалить пользователя
         /// </summary>
         private async Task<IResultValue<string>> DeleteRoleUser(BoutiqueRoleUser roleUser) =>            
@@ -162,7 +178,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
         /// </summary>
         private async Task<IResultValue<BoutiqueUserEntity>> CheckDuplicateUser(BoutiqueUserEntity boutiqueUserEntity) =>
             await _userManager.FindByEmailAsync(boutiqueUserEntity.Email).
-            WhereContinueTaskAsync(user => user is null,
+            WhereContinueTaskAsync(user => user is null!,
                                    _ => boutiqueUserEntity.ToResultValue(),
                                    _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Пользователь уже присутствует в системе").
                                         ToResultValue<BoutiqueUserEntity>());

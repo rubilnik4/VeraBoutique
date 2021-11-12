@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Data.Authorize
             new List<IPersonalDomain>
             {
                 new PersonalDomain("Name", "Surname", "Address", "+79224725787"),
-                new PersonalDomain("Name", "Surname", "Address", "+79224725787"),
+                new PersonalDomain("NameName", "SurnameSurname", "AddressAddress", "+792247257871"),
             };
     }
 }

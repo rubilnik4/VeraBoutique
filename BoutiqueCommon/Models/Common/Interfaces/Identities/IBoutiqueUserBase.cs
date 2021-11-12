@@ -8,7 +8,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identities
     /// <summary>
     /// Пользователь
     /// </summary>
-    public interface IBoutiqueUserBase : IModel<string>, IEquatable<IBoutiqueUserBase>
+    public interface IBoutiqueUserBase : IPersonalBase, IEquatable<IBoutiqueUserBase>
     {
         /// <summary>
         /// Имя пользователя
@@ -24,25 +24,5 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Identities
         /// Роль
         /// </summary>
         IdentityRoleType IdentityRoleType { get; }
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// Фамилия
-        /// </summary>
-        string Surname { get; }
-
-        /// <summary>
-        /// Адрес
-        /// </summary>
-        string Address { get; }
-
-        /// <summary>
-        /// Телефон
-        /// </summary>
-        string PhoneNumber { get; }
     }
 }

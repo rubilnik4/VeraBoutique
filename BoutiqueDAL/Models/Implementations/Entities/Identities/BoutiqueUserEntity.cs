@@ -53,6 +53,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Identities
             new BoutiqueUserDomain(UserName, Email, identityRoleType, Name, Surname, Address, PhoneNumber);
 
         /// <summary>
+        /// Обновить личные данные
+        /// </summary>
+        public BoutiqueUserEntity UpdatePersonal(IPersonalDomain personal) =>
+            new(Email, personal.Name, personal.Surname, personal.Address, personal.Phone)
+            {
+                PasswordHash = PasswordHash
+            };
+
+        /// <summary>
         /// Хэшировать пароль
         /// </summary>
         private static string? GetPasswordHash(IdentityUser user, string? password) =>
@@ -70,6 +79,6 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Identities
         /// Получить пользователя
         /// </summary>
         public static BoutiqueUserEntity GetBoutiqueUser(IBoutiqueUserDomain user) =>
-           new(user.Email, user.Name, user.Surname, user.Address, user.PhoneNumber);
+           new(user.Email, user.Name, user.Surname, user.Address, user.Phone);
     }
 }

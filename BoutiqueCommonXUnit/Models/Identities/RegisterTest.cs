@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Models.Identities
         public void Authorize_Equal_Authorize()
         {
             var first = RegisterData.RegisterDomains.First();
-            var second = RegisterData.RegisterDomains.Last();
+            var second = RegisterData.RegisterDomains.First();
 
             Assert.True(first.Equals(second));
         }

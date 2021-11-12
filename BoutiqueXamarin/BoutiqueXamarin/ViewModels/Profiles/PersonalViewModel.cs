@@ -74,7 +74,7 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         private ObservableAsPropertyHelper<RegisterPersonalViewModel> GetRegisterPersonal() =>
             this.WhenAnyValue(x => x.Profile).
                  WhereNotNull().
-                 Select(user => new RegisterPersonalViewModel(user.Name, user.Surname, user.Address, user.PhoneNumber)).
+                 Select(user => new RegisterPersonalViewModel(user.Name, user.Surname, user.Address, user.Phone)).
                  ToProperty(this, nameof(RegisterPersonalViewModel));
 
         /// <summary>

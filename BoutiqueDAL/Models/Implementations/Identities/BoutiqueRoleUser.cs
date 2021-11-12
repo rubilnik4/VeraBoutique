@@ -35,6 +35,12 @@ namespace BoutiqueDAL.Models.Implementations.Identities
             BoutiqueUserEntity.ToBoutiqueUser(IdentityRoleType);
 
         /// <summary>
+        /// Обновить личные данные
+        /// </summary>
+        public BoutiqueRoleUser UpdatePersonal(IPersonalDomain personal) =>
+            new(IdentityRoleType, BoutiqueUserEntity.UpdatePersonal(personal));
+
+        /// <summary>
         /// Получить пользователя
         /// </summary>
         public static BoutiqueRoleUser GetBoutiqueUser(IBoutiqueUserDomain user) =>

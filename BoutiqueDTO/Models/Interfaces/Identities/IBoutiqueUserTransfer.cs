@@ -6,6 +6,6 @@ namespace BoutiqueDTO.Models.Interfaces.Identities
     /// <summary>
     /// Пользователь. Трансферная модель
     /// </summary>
-    public interface IBoutiqueUserTransfer : IBoutiqueUserBase, ITransferModel<string>
+    public interface IBoutiqueUserTransfer : IBoutiqueUserBase, IPersonalTransfer
     { }
 }

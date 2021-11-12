@@ -74,6 +74,20 @@ namespace BoutiqueMVC.Controllers.Identity
             ToActionResultValueTaskAsync();
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [HttpPut]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateRoleUser(BoutiqueUserTransfer userTransfer) =>
+            await _boutiqueUserTransferConverter.FromTransfer(userTransfer).
+            ResultValueBindErrorsOkAsync(userRole => _userManager.UpdateRoleUser(userRole)).
+            ToResultErrorTaskAsync().
+            ToNoContentActionResultTaskAsync();
+
+        /// <summary>
         /// Удалить пользователей
         /// </summary>
         [HttpDelete]

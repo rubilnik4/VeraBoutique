@@ -7,8 +7,13 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Identities
     /// <summary>
     /// Пользователь. Доменная модель
     /// </summary>
-    public interface IBoutiqueUserDomain : IBoutiqueUserBase, IDomainModel<string>
+    public interface IBoutiqueUserDomain : IBoutiqueUserBase, IPersonalDomain
     {
+        /// <summary>
+        /// Обновить личную информацию
+        /// </summary>
+        IBoutiqueUserDomain UpdatePersonal(IPersonalDomain personal);
+
         /// <summary>
         /// Обновить личную информацию
         /// </summary>

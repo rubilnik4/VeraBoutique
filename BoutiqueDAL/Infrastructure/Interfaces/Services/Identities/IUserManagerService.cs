@@ -32,6 +32,11 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Identities
         /// Создать пользователя
         /// </summary>
         Task <IResultValue<string>> CreateRoleUser(IRegisterRoleDomain registerRole);
+        
+        /// <summary>
+        /// Создать пользователя
+        /// </summary>
+        Task<IResultError> UpdateRoleUser(IBoutiqueUserDomain user);
 
         /// <summary>
         /// Удалить пользователя

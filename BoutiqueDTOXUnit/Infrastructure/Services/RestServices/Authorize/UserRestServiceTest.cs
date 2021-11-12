@@ -62,6 +62,44 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
         }
 
         /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateUser_Ok()
+        {
+            var result = new ResultError();
+            var user = IdentityData.BoutiqueUsers.First();
+            var restHttpClient = RestClientMock.PutRestClient(result);
+            var registerTransferConverter = RegisterTransferConverterMock.RegisterTransferConverter;
+            var userTransferConverter = BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter;
+            var registerRestService = new UserRestService(restHttpClient.Object, registerTransferConverter, userTransferConverter);
+
+            var resultUpdate = await registerRestService.UpdateUser(user);
+
+            Assert.True(resultUpdate.OkStatus);
+        }
+
+        /// <summary>
+        /// Обновить пользователя
+        /// </summary>
+        [Fact]
+        public async Task UpdateUser_Error()
+        {
+            var error = ErrorTransferData.ErrorTypeAuthorizeError;
+            var result = error.ToResult();
+            var user = IdentityData.BoutiqueUsers.First();
+            var restHttpClient = RestClientMock.PutRestClient(result);
+            var registerTransferConverter = RegisterTransferConverterMock.RegisterTransferConverter;
+            var userTransferConverter = BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter;
+            var registerRestService = new UserRestService(restHttpClient.Object, registerTransferConverter, userTransferConverter);
+
+            var resultUpdate = await registerRestService.UpdateUser(user);
+
+            Assert.True(resultUpdate.HasErrors);
+            Assert.IsType<RestMessageErrorResult>(resultUpdate.Errors.First());
+        }
+
+        /// <summary>
         /// Получить пользователей
         /// </summary>
         [Fact]

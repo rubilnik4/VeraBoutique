@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Models.Identities
         public void Authorize_Equal_Authorize()
         {
             var first = PersonalData.PersonalDomains.First();
-            var second = PersonalData.PersonalDomains.Last();
+            var second = PersonalData.PersonalDomains.First();
 
             Assert.True(first.Equals(second));
         }

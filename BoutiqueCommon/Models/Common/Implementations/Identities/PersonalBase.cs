@@ -19,7 +19,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Identities
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => $"{Name} {Surname}";
+        public virtual string Id => $"{Name} {Surname}";
 
         /// <summary>
         /// Имя
