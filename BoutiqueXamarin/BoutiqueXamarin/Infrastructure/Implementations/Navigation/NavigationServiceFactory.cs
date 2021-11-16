@@ -61,8 +61,8 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         /// <summary>
         /// Перейти к странице ошибок
         /// </summary>
-        public async Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors) =>
-            await new ErrorNavigationOptions(errors).
+        public async Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
+            await new ErrorNavigationOptions(errors, reloadFunc).
             MapAsync(NavigateTo<ErrorPage, ErrorViewModel, ErrorNavigationOptions>);
 
 
@@ -90,12 +90,12 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         /// <summary>
         /// Навигация при ошибке
         /// </summary>
-        protected async Task<INavigationResult> OnErrorNavigate(IEnumerable<IErrorResult> errors) =>
+        protected async Task<INavigationResult> OnErrorNavigate(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
             errors.First() switch
             {
                 AuthorizeErrorResult _ => await ToLoginPage(),
                 RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } _ => await ToLoginPage(),
-                var error => await ToErrorPage(error),
+                var error => await ToErrorPage(error, reloadFunc),
             };
 
         /// <summary>

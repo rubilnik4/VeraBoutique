@@ -9,6 +9,7 @@ using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
+using ResultFunctional.Models.Interfaces.Errors.RestErrors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -34,10 +35,8 @@ namespace BoutiqueXamarin.Views.Authorizes
 
                 var restErrors = this.WhenAnyValue(x => x.ViewModel!.RegisterErrors).
                      WhereNotNull().
-                     Where(result => result.HasError<RestMessageErrorResult>()
-                                     || result.HasError<RestTimeoutErrorResult>()
+                     Where(result => result.HasError<IRestErrorResult>());
 
-                                     || result.HasError<RestHostErrorResult>());
                 restErrors.
                      Select(result => result.HasErrors).
                      BindTo(this, x => x.RegisterErrorLabel.IsVisible).

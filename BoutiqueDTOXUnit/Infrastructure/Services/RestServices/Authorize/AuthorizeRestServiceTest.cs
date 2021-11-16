@@ -55,7 +55,8 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
             var resultToken = await authorizeRestService.AuthorizeJwt(authorize);
 
             Assert.True(resultToken.HasErrors);
-            Assert.IsType<AuthorizeErrorResult>(resultToken.Errors.First());
+            Assert.IsType<RestMessageErrorResult>(resultToken.Errors.First());
+            Assert.Equal(resultToken.Errors.First().Id, error.Id);
         }
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace BoutiqueDTOXUnit.Infrastructure.Services.RestServices.Authorize
 
             Assert.True(resultToken.HasErrors);
             Assert.IsType<RestMessageErrorResult>(resultToken.Errors.First());
+            Assert.Equal(resultToken.Errors.First().Id, error.Id);
         }
     }
 }

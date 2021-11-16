@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
@@ -26,9 +27,9 @@ namespace BoutiqueDAL.Extensions.Sync.Identity
         private static IErrorResult GetIdentityError(string codeType) =>
             codeType switch
             {
-                "DuplicateUserName" => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Дублирование имени пользователя"),
-                "DuplicateEmail" => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Дублирование почты пользователя"),
-                "DuplicateRoleName" => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Дублирование роли"),
+                "DuplicateUserName" => ErrorResultFactory.ValueDuplicatedError(codeType, typeof(IdentityToResultValue), "Дублирование имени пользователя"),
+                "DuplicateEmail" => ErrorResultFactory.ValueDuplicatedError(codeType, typeof(IdentityToResultValue), "Дублирование почты пользователя"),
+                "DuplicateRoleName" => ErrorResultFactory.ValueDuplicatedError(codeType, typeof(IdentityToResultValue), "Дублирование роли"),
                 _ => ErrorResultFactory.ValueNotValidError(codeType, typeof(IdentityToResultValue), "Ошибка идентификации"),
             };
     }

@@ -13,6 +13,7 @@ using Moq;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 
@@ -67,11 +68,11 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var roleStore = GetRoleStore(identityResult, null!);
             var roleStoreService = new RoleStoreService(roleStore.Object);
 
-            var roleResult = await roleStoreService.CreateRole(identityRoleType);
+            var result = await roleStoreService.CreateRole(identityRoleType);
 
-            Assert.True(roleResult.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(roleResult.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), roleResult.Errors.First().Id);
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>

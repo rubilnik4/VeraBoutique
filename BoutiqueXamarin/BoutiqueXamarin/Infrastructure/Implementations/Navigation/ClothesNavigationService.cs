@@ -61,7 +61,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             await _clothesRestService.GetClothesDetails(genderType, clothesTypeDomain.Name).
             ToResultValueTaskAsync().
             ResultValueToValueOkBadBindAsync(clothesDetails => ToClothesPage(clothesDetails, clothesTypeDomain.SizeTypeDefault),
-                                             OnErrorNavigate);
+                                             errors => OnErrorNavigate(errors, () => ToClothesPage(genderType, clothesTypeDomain)));
 
         /// <summary>
         /// Перейти к странице информации одежды
@@ -77,7 +77,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             await _genderRestService.GetGenderCategories().
             ToResultValueTaskAsync().
             ResultValueToValueOkBadBindAsync(ToChoicePage,
-                                             OnErrorNavigate);
+                                             errors => OnErrorNavigate(errors, ToChoicePage));
 
         /// <summary>
         /// Перейти к странице одежды

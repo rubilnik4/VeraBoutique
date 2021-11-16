@@ -42,6 +42,7 @@
     <Style x:Key="StackLayoutError" 
            TargetType="{x:Type StackLayout}">
         <Setter Property="Spacing" Value="20" />
+        <Setter Property="Margin" Value="10, 5, 10, 5" />
         <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
         <Setter Property="VerticalOptions" Value="CenterAndExpand" />
     </Style>

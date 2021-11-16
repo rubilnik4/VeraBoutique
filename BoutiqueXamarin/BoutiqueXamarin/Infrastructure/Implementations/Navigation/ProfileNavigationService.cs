@@ -35,7 +35,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         public async Task<INavigationResult> ToProfilePage() =>
             await _profileRestService.GetProfile().
             ResultValueToValueOkBadBindAsync(ToProfilePage,
-                                             OnErrorNavigate);
+                                             errors => OnErrorNavigate(errors, ToProfilePage));
 
         /// <summary>
         /// Перейти к странице личных данных

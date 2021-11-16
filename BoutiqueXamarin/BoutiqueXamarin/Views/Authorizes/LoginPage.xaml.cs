@@ -8,6 +8,7 @@ using BoutiqueXamarin.Views.ContentViews.MenuItems;
 using ReactiveUI;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Interfaces.Errors.RestErrors;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -54,8 +55,8 @@ namespace BoutiqueXamarin.Views.Authorizes
 
                 this.WhenAnyValue(x => x.ViewModel!.AuthorizeErrors).
                      WhereNotNull().
-                     Select(result => result.HasErrors && !result.HasErrorType(AuthorizeErrorType.Email)
-                                                       && !result.HasErrorType(AuthorizeErrorType.Password)).
+                     Where(result => result.HasError<IRestErrorResult>()).
+                     Select(result => result.HasErrors).
                      BindTo(this, x => x.AuthorizeErrorLabel.IsVisible).
                      DisposeWith(disposable);
 

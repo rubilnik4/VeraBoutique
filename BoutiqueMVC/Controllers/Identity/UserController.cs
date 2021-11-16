@@ -81,6 +81,7 @@ namespace BoutiqueMVC.Controllers.Identity
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = IdentityPolicyType.USER_POLICY)]
         public async Task<IActionResult> UpdateRoleUser(BoutiqueUserTransfer userTransfer) =>
             await _boutiqueUserTransferConverter.FromTransfer(userTransfer).
             ResultValueBindErrorsOkAsync(userRole => _userManager.UpdateRoleUser(userRole)).

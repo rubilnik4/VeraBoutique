@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
@@ -26,7 +27,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// <summary>
         /// Перейти к странице
         /// </summary>
-        Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors);
+        Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc);
 
         /// <summary>
         /// К стартовой странице

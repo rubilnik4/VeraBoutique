@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,7 +35,8 @@ namespace BoutiqueMVC.DependencyInjection
                 options.AddPolicy(IdentityPolicyType.ADMIN_POLICY,
                                   policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.Admin.ToString()));
                 options.AddPolicy(IdentityPolicyType.USER_POLICY,
-                                  policy => policy.RequireClaim(ClaimTypes.Role, IdentityRoleType.User.ToString()));
+                                  policy => policy.RequireClaim(ClaimTypes.Role, new List<string>
+                                    { IdentityRoleType.User.ToString(), IdentityRoleType.Admin.ToString() } ));
             });
 
         /// <summary>

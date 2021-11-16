@@ -57,7 +57,7 @@ namespace BoutiqueDALXUnit.Extensions.Async.Identity
             var result = await identity.ToIdentityResultValueTaskAsync(String.Empty);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
         }
     }
 }

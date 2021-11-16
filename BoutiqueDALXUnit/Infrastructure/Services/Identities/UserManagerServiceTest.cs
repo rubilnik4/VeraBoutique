@@ -154,8 +154,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.CreateRoleUser(registerRole);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -174,8 +174,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.CreateRoleUser(registerRole);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.CreateRoleUser(registerRole);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -267,8 +267,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.UpdateRoleUser(userRole);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -307,8 +307,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.DeleteRoleUser(user.Email);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -328,8 +328,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.DeleteRoleUser(user.Email);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -407,8 +407,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.DeleteRoleUsers(users);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>
@@ -429,8 +429,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var result = await userManagerService.DeleteRoleUsers(users);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), result.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), result.Errors.First().Id);
         }
 
         /// <summary>

@@ -34,17 +34,17 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Identities
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; init; } = String.Empty;
+        public string Name { get; private set; } = String.Empty;
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string Surname { get; init; } = String.Empty;
+        public string Surname { get; private set; } = String.Empty;
 
         /// <summary>
         /// Адрес
         /// </summary>
-        public string Address { get; init; } = String.Empty;
+        public string Address { get; private set; } = String.Empty;
 
         /// <summary>
         /// Получить пользователя
@@ -55,11 +55,14 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Identities
         /// <summary>
         /// Обновить личные данные
         /// </summary>
-        public BoutiqueUserEntity UpdatePersonal(IPersonalDomain personal) =>
-            new(Email, personal.Name, personal.Surname, personal.Address, personal.Phone)
-            {
-                PasswordHash = PasswordHash
-            };
+        public BoutiqueUserEntity UpdatePersonal(IPersonalDomain personal)
+        {
+            Name = personal.Name;
+            Surname = personal.Surname;
+            Address = personal.Address;
+            PhoneNumber = personal.Phone;
+            return this;
+        }
 
         /// <summary>
         /// Хэшировать пароль

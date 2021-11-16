@@ -25,11 +25,15 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// </summary>
     public class PersonalViewModel : NavigationViewModel<PersonalNavigationOptions>
     {
-        public PersonalViewModel(INavigationServiceFactory navigationServiceFactory)
+        public PersonalViewModel(INavigationServiceFactory navigationServiceFactory, IUserRestService userRestService,
+                                 IProfileNavigationService profileNavigationService)
           : base(navigationServiceFactory)
         {
             _profile = GetProfile();
             _registerPersonalViewModel = GetRegisterPersonal();
+            UpdateCommand = ReactiveCommand.CreateFromTask<RegisterPersonalViewModel, IResultError>(
+                                registerPersonal => UpdatePersonal(Profile, registerPersonal, userRestService, profileNavigationService));
+            _personalErrors = UpdateCommand.ToProperty(this, nameof(PersonalErrors), scheduler: RxApp.MainThreadScheduler);
         }
 
         /// <summary>
@@ -53,6 +57,17 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// </summary>
         public RegisterPersonalViewModel RegisterPersonalViewModel =>
             _registerPersonalViewModel.Value;
+
+        /// <summary>
+        /// Ошибки авторизации
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<IResultError> _personalErrors;
+
+        /// <summary>
+        /// Ошибки авторизации
+        /// </summary>
+        public IResultError PersonalErrors =>
+            _personalErrors.Value;
 
         /// <summary>
         /// Команда обновления личных данных
@@ -81,12 +96,13 @@ namespace BoutiqueXamarin.ViewModels.Profiles
         /// Обновить личные данные
         /// </summary>
         private static async Task<IResultError> UpdatePersonal(IBoutiqueUserDomain profile, RegisterPersonalViewModel registerPersonalViewModel,
-                                                               IUserRestService userRestService) =>
+                                                               IUserRestService userRestService, IProfileNavigationService profileNavigationService) =>
             await registerPersonalViewModel.RegisterPersonalCommand.
             Execute(registerPersonalViewModel.RegisterPersonalValidation).ToTask().
             ToResultValueTaskAsync(profile).
             ResultValueOkTaskAsync(user => user.UpdatePersonal(registerPersonalViewModel.Name, registerPersonalViewModel.Surname,
                                                                registerPersonalViewModel.Address, registerPersonalViewModel.Phone)).
-            ResultValueBindErrorsOkBindAsync(userRestService.UpdateUser);
+            ResultValueBindErrorsOkBindAsync(userRestService.UpdateUser).
+            ResultValueOkBindAsync(_ => profileNavigationService.ToProfilePage());
     }
 }

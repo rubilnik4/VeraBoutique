@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Authorize;
 using BoutiqueXamarin.Models.Implementations.Navigation.Errors;
@@ -27,7 +29,8 @@ namespace BoutiqueXamarin.ViewModels.Errors
          : base(navigationServiceFactory)
         {
             _error = GetError();
-            ReloadCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => navigationServiceFactory.NavigateBack());
+            _reloadFunc = GetReloadFunc();
+            ReloadCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => ReloadFunc());
         }
 
         /// <summary>
@@ -41,6 +44,20 @@ namespace BoutiqueXamarin.ViewModels.Errors
         public IErrorResult Error =>
             _error.Value;
 
+        /// <summary>
+        /// Функция перезагрузки
+        /// </summary>
+        private readonly ObservableAsPropertyHelper<Func<Task<INavigationResult>>> _reloadFunc;
+
+        /// <summary>
+        /// Функция перезагрузки
+        /// </summary>
+        public Func<Task<INavigationResult>> ReloadFunc =>
+            _reloadFunc.Value;
+
+        /// <summary>
+        /// Команда перезагрузки
+        /// </summary>
         public ReactiveCommand<Unit, INavigationResult> ReloadCommand { get; }
 
         /// <summary>
@@ -51,5 +68,14 @@ namespace BoutiqueXamarin.ViewModels.Errors
                  WhereNotNull().
                  Select(result => result.Errors.FirstOrDefault() ?? ErrorResultFactory.SimpleErrorType("Неизвестная ошибка")).
                  ToProperty(this, nameof(Error));
+
+        /// <summary>
+        /// Получить функцию перезагрузки
+        /// </summary>
+        private ObservableAsPropertyHelper<Func<Task<INavigationResult>>> GetReloadFunc() =>
+            this.WhenAnyValue(x => x.NavigationOptions).
+                 WhereNotNull().
+                 Select(result => result.ReloadFunc).
+                 ToProperty(this, nameof(ReloadFunc));
     }
 }

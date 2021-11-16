@@ -66,7 +66,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             await _roleStore.FindByNameAsync(identityRole.NormalizedName).
             WhereContinueTaskAsync(roleId => roleId is null,
                                    _ => identityRole.ToResultValue(),
-                                   _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, $"Дублирование роли {identityRole.Name}").
+                                   _ => ErrorResultFactory.ValueDuplicatedError(identityRole.Name, GetType(), $"Дублирование роли {identityRole.Name}").
                                         ToResultValue<IdentityRole>());
 
         /// <summary>

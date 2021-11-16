@@ -10,6 +10,7 @@ using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
 using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Unity;
 using ResultFunctional.FunctionalExtensions.Async;
 using Xamarin.Essentials.Implementation;
@@ -42,7 +43,8 @@ namespace BoutiqueXamarin
             Void(_ => InitializeComponent()).
             ResultValueVoidOkBadAsync(
                 _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToInitialPage(),
-                errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToErrorPage(errors));
+                errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().
+                                            ToErrorPage(errors, () => Task.FromResult((INavigationResult)new NavigationResult())));
 
         /// <summary>
         /// Регистрация типов

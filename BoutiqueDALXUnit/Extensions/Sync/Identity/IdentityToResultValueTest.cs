@@ -55,7 +55,7 @@ namespace BoutiqueDALXUnit.Extensions.Sync.Identity
             var result = identity.ToIdentityResultValue(String.Empty);
 
             Assert.True(result.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(result.Errors.First());
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(result.Errors.First());
         }
     }
 }

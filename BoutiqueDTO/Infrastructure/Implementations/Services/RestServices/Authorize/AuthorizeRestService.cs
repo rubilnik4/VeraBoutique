@@ -47,18 +47,6 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Autho
         public async Task<IResultValue<string>> AuthorizeJwt(IAuthorizeDomain authorizeDomain) =>
             await _authorizeTransferConverter.ToTransfer(authorizeDomain).
             ToJsonTransfer().
-            ResultValueBindOkAsync(json => _restBaseHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json)).
-            ResultValueBindBadTaskAsync(errors => ToTokenError(errors).ToResultValue<string>());
-
-        /// <summary>
-        /// Преобразовать в ошибку токена
-        /// </summary>
-        private static IErrorResult ToTokenError(IEnumerable<IErrorResult> errors) =>
-            errors.FirstOrDefault() switch
-            {
-                RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } =>
-                    ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Token, "Введены неверные имя пользователя и пароль"),
-                { } error => error,
-            };
+            ResultValueBindOkAsync(json => _restBaseHttpClient.PostAsync(RestRequest.PostRequest(ControllerName), json));
     }
 }

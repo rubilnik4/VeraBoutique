@@ -11,6 +11,7 @@ using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultErrors;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
+using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.InitializeData.Identities
@@ -36,7 +37,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         private static async Task<IResultError> CreateRoles(IRoleStoreService roleStore, IEnumerable<IdentityRoleType> defaultRoles) =>
              await IdentityRolesInitialize.CreateIdentityRoles(roleStore, defaultRoles).
              MapTaskAsync(result => result.Errors.
-                                    Where(error => error is not AuthorizeErrorResult { ErrorType: AuthorizeErrorType.Duplicate }).
+                                    Where(error => error is not IValueDuplicatedErrorResult).
                                     ToResultError());
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Initializ
         private static async Task<IResultError> CreateUsers(IUserManagerService userManager, IEnumerable<IRegisterRoleDomain> defaultUsers) =>
              await IdentityUsersInitialize.CreateIdentityUsers(userManager, defaultUsers).
              MapTaskAsync(result => result.Errors.
-                                    Where(error => error is not AuthorizeErrorResult { ErrorType: AuthorizeErrorType.Duplicate }).
+                                    Where(error => error is not IValueDuplicatedErrorResult).
                                     ToResultError());
     }
 }

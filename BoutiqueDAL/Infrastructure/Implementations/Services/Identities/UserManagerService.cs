@@ -180,7 +180,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Identities
             await _userManager.FindByEmailAsync(boutiqueUserEntity.Email).
             WhereContinueTaskAsync(user => user is null!,
                                    _ => boutiqueUserEntity.ToResultValue(),
-                                   _ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Duplicate, "Пользователь уже присутствует в системе").
-                                        ToResultValue<BoutiqueUserEntity>());
+                                   user => ErrorResultFactory.ValueDuplicatedError(user.Email, GetType(), "Пользователь уже присутствует в системе").
+                                           ToResultValue<BoutiqueUserEntity>());
     }
 }

@@ -5,6 +5,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Identity;
 using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
+using BoutiqueMVC.Infrastructure.Implementation.Identities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +49,7 @@ namespace BoutiqueMVC.Controllers.Identity
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<BoutiqueUserTransfer>> GetProfile() =>
-            await AuthorizeController.GetEmail(User).
+            await ClaimsInformation.GetEmail(User).
             ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден")).
             ResultValueBindOkAsync(email => _userManager.FindRoleUserByEmail(email)).
             ResultValueBindBadTaskAsync(_ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден").

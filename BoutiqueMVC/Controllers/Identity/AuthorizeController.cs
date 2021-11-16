@@ -97,11 +97,5 @@ namespace BoutiqueMVC.Controllers.Identity
             await _userManager.FindRoleUserByEmail(email).
             ResultValueOkTaskAsync(_jwtTokenService.GenerateJwtToken).
             ToActionResultValueTaskAsync();
-
-        /// <summary>
-        /// Получить адрес почты из токена
-        /// </summary>
-        public static string? GetEmail(ClaimsPrincipal user) =>
-            user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     }
 }
