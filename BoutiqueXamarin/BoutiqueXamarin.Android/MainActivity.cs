@@ -39,6 +39,7 @@ namespace BoutiqueXamarin.Droid
             Sharpnado.Tabs.Initializer.Initialize(false, false);
             Sharpnado.Shades.Initializer.Initialize(false);
             Akavache.Registrations.Start(AppInfo.Name);
+            XF.Material.Droid.Material.Init(this, savedInstanceState);
             Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }

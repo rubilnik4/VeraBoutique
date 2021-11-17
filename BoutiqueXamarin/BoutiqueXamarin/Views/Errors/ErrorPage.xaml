@@ -2,15 +2,17 @@
 <errors:ErrorPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:errors="clr-namespace:BoutiqueXamarin.Views.Errors;assembly=BoutiqueXamarin"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:controlViews="clr-namespace:BoutiqueXamarin.Views.ControlViews;assembly=BoutiqueXamarin"
              x:Class="BoutiqueXamarin.Views.Errors.ErrorPage">
     <StackLayout Style="{StaticResource StackLayoutError}">
         <Label x:Name="ErrorLabel"
                Style="{StaticResource LabelCommon}"
                HorizontalTextAlignment="Center"
                Text="Ошибка подключения" />
-
-        <Button x:Name="ReloadButton"
-                Style="{StaticResource ButtonAccent}"
-                Text="Попробовать снова" />
+       
+        <controlViews:ButtonProgressControl x:Name="ReloadButton"
+                                            ButtonStyle="{StaticResource ButtonAccent}"
+                                            ButtonText="Попробовать снова"/>
     </StackLayout>
 </errors:ErrorPageBase>

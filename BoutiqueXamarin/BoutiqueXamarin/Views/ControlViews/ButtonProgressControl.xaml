@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<controls:StackLayoutButton x:Name="StackLayoutButton" 
+             xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BoutiqueXamarin.Controls;assembly=BoutiqueXamarin"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             x:Class="BoutiqueXamarin.Views.ControlViews.ButtonProgressControl">
+    <Grid>
+        <Button x:Name="ButtonMain"
+                Style="{Binding Source={x:Reference StackLayoutButton}, Path=ButtonStyle}"
+                Command="{Binding Source={x:Reference StackLayoutButton}, Path=Command}"
+                CommandParameter="{Binding Source={x:Reference StackLayoutButton}, Path=CommandParameter}"
+                Text="{Binding Source={x:Reference StackLayoutButton}, Path=ButtonText}"/>
+
+        <StackLayout x:Name="StackProgress"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     BackgroundColor="{Binding Source={x:Reference ButtonMain}, Path=BackgroundColor}">
+            <ui:MaterialCircularLoadingView WidthRequest="{Binding Source={x:Reference ButtonMain}, Path=Height}"
+                                        HeightRequest="{Binding Source={x:Reference ButtonMain}, Path=Height}"
+                                        TintColor="{Binding Source={x:Reference ButtonMain}, Path=TextColor}" />
+        </StackLayout>
+
+    </Grid>
+</controls:StackLayoutButton>

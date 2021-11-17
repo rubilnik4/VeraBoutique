@@ -28,6 +28,15 @@ namespace BoutiqueXamarin
         { }
 
         /// <summary>
+        /// Инициализация
+        /// </summary>
+        private void InitializeApp()
+        {
+            this.InitializeComponent();
+            XF.Material.Forms.Material.Init(this);
+        }
+
+        /// <summary>
         /// Контейнер зависимостей
         /// </summary>
         private IBoutiqueContainer BoutiqueContainer =>
@@ -40,7 +49,7 @@ namespace BoutiqueXamarin
             await ConfigurationRegistration.RegisterConfiguration(BoutiqueContainer).
             ResultValueVoidOk(configuration => RestServicesRegistration.RegisterServices(BoutiqueContainer, configuration)).
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
-            Void(_ => InitializeComponent()).
+            Void(_ => InitializeApp()).
             ResultValueVoidOkBadAsync(
                 _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToInitialPage(),
                 errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().
