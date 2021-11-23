@@ -25,9 +25,8 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// </summary>
     public class PersonalViewModel : NavigationViewModel<PersonalNavigationOptions>
     {
-        public PersonalViewModel(INavigationServiceFactory navigationServiceFactory, IUserRestService userRestService,
-                                 IProfileNavigationService profileNavigationService)
-          : base(navigationServiceFactory)
+        public PersonalViewModel(IUserRestService userRestService, IProfileNavigationService profileNavigationService)
+          : base(profileNavigationService)
         {
             _profile = GetProfile();
             _registerPersonalViewModel = GetRegisterPersonal();

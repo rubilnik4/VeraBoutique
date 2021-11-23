@@ -30,7 +30,7 @@ namespace BoutiqueXamarin.ViewModels.Base
     {
         protected NavigationViewModel(IBackNavigationService backNavigationService)
         {
-            BackLeftMenuViewModel = new BackLeftMenuViewModel(backNavigationService);
+            BackLeftMenuViewModel = new BackLeftMenuViewModel(() => backNavigationService.NavigateBack(this));
         }
 
         /// <summary>

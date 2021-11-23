@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueDTO.Infrastructure.Interfaces.Services.RestServices.Authorize;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
+using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Profiles;
+using BoutiqueXamarin.ViewModels.Base;
+using BoutiqueXamarin.ViewModels.Clothes.Choices;
 using BoutiqueXamarin.ViewModels.Profiles;
+using BoutiqueXamarin.Views.Clothes.Choices;
 using BoutiqueXamarin.Views.Profiles;
 using BoutiqueXamarinCommon.Infrastructure.Interfaces.Authorize;
 using Prism.Navigation;
@@ -17,12 +22,18 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
     /// </summary>
     public class ProfileNavigationService : NavigationServiceFactory, IProfileNavigationService
     {
-        public ProfileNavigationService(INavigationService navigationService, ILoginService loginService,
-                                        IProfileRestService profileRestService)
-            : base(navigationService, loginService)
+        public ProfileNavigationService(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
+                                        ILoginService loginService, IProfileRestService profileRestService)
+            : base(navigationService, navigationHistoryService, loginService)
         {
+            _navigationService = navigationService;
             _profileRestService = profileRestService;
         }
+
+        /// <summary>
+        /// Сервис навигации
+        /// </summary>
+        private readonly INavigationService _navigationService;
 
         /// <summary>
         /// Сервис личной информации

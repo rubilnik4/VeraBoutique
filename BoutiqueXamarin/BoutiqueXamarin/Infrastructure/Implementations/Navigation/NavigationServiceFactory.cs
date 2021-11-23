@@ -32,6 +32,7 @@ using Prism.Navigation;
 using ReactiveUI.XamForms;
 using ResultFunctional.FunctionalExtensions.Async;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultValues;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.AuthorizeErrors;
 using ResultFunctional.Models.Implementations.Errors.RestErrors;
@@ -40,11 +41,13 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
 {
-    public class NavigationServiceFactory: INavigationServiceFactory
+    public class NavigationServiceFactory : INavigationServiceFactory
     {
-        public NavigationServiceFactory(INavigationService navigationService, ILoginService loginService)
+        public NavigationServiceFactory(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
+                                        ILoginService loginService)
         {
             _navigationService = navigationService;
+            _navigationHistoryService = navigationHistoryService;
             _loginService = loginService;
         }
 
@@ -52,6 +55,11 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         /// 
         /// </summary>
         private readonly INavigationService _navigationService;
+
+        /// <summary>
+        /// История навигации
+        /// </summary>
+        private readonly INavigationHistoryService _navigationHistoryService;
 
         /// <summary>
         /// Сервис авторизации и сохранения логина
@@ -64,7 +72,6 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         public async Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
             await new ErrorNavigationOptions(errors, reloadFunc).
             MapAsync(NavigateTo<ErrorPage, ErrorViewModel, ErrorNavigationOptions>);
-
 
         /// <summary>
         /// К стартовой странице
@@ -94,7 +101,7 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             errors.First() switch
             {
                 AuthorizeErrorResult _ => await ToLoginPage(),
-                RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } _ => await ToLoginPage(),
+                RestMessageErrorResult { ErrorType: RestErrorType.Unauthorized } => await ToLoginPage(),
                 var error => await ToErrorPage(error, reloadFunc),
             };
 
@@ -105,14 +112,38 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             where TPage : ReactiveContentPage<TViewModel>
             where TViewModel : NavigationViewModel<TOption>
             where TOption : BaseNavigationOptions =>
-            await new NavigationParameters {{GetOptionsName<TOption>(), options}}.
-            MapAsync(navigationParameters => _navigationService.NavigateAsync(GetPageName<TPage>(), navigationParameters));
+            await ToNavigationParameters(options).
+            MapAsync(navigationParameters => _navigationService.NavigateAsync(GetPageName<TPage>(), navigationParameters)).
+            VoidOkTaskAsync(navigateResult => navigateResult.Success,
+                            _ => ToNavigateHistory(options));
 
         /// <summary>
         /// Перейти назад
         /// </summary>
-        public Task<INavigationResult> NavigateBack() =>
-            _navigationService.GoBackAsync();
+        public virtual async Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
+            where TViewModel : BaseViewModel =>
+            viewModel switch
+            {
+                PersonalViewModel _ => await _navigationService.NavigateAsync(nameof(ProfilePage), 
+                                                                              _navigationHistoryService.DequeueHistory<ProfileNavigationOptions>().
+                                                                                                        Map(ToNavigationParameters)),
+                ProfileViewModel _ => await _navigationService.NavigateAsync(nameof(ChoicePage)),
+                _ => await _navigationService.GoBackAsync(),
+            };
+
+        /// <summary>
+        /// Записать в историю
+        /// </summary>
+        private void ToNavigateHistory<TOption>(TOption navigateOptions)
+            where TOption : BaseNavigationOptions =>
+            _navigationHistoryService.EnqueueHistory(navigateOptions);
+
+        /// <summary>
+        /// Получить параметры навигации
+        /// </summary>
+        private static NavigationParameters ToNavigationParameters<TOption>(TOption options)
+            where TOption : BaseNavigationOptions =>
+            new NavigationParameters { { GetOptionsName<TOption>(), options } };
 
         /// <summary>
         /// Имя параметра навигации

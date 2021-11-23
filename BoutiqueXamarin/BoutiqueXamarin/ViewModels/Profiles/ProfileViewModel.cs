@@ -29,12 +29,12 @@ namespace BoutiqueXamarin.ViewModels.Profiles
     /// </summary>
     public class ProfileViewModel : NavigationViewModel<ProfileNavigationOptions>
     {
-        public ProfileViewModel(INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService)
-            : base(navigationServiceFactory)
+        public ProfileViewModel(IProfileNavigationService profileNavigationService)
+            : base(profileNavigationService)
         {
             _profile = GetProfile();
             PersonalCommand = ReactiveCommand.CreateFromTask<IBoutiqueUserDomain, INavigationResult>(profileNavigationService.ToPersonalPage);
-            LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(navigationServiceFactory));
+            LogoutCommand = ReactiveCommand.CreateFromTask<Unit, INavigationResult>(_ => Logout(profileNavigationService));
         }
 
         /// <summary>

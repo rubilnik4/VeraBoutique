@@ -1,4 +1,6 @@
-﻿using System.Reactive;
+﻿using System;
+using System.Reactive;
+using System.Threading.Tasks;
 using BoutiqueXamarin.Infrastructure.Interfaces.Navigation;
 using BoutiqueXamarin.Models.Implementations.Navigation.Base;
 using Prism.Navigation;
@@ -11,9 +13,9 @@ namespace BoutiqueXamarin.ViewModels.Base.MenuItems
     /// </summary>
     public class BackLeftMenuViewModel : BaseViewModel
     {
-        public BackLeftMenuViewModel(IBackNavigationService backNavigationService)
+        public BackLeftMenuViewModel(Func<Task<INavigationResult>> navigateBackFunc)
         {
-            BackNavigateCommand = ReactiveCommand.CreateFromTask(_ => backNavigationService.NavigateBack());
+            BackNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigateBackFunc());
         }
 
         /// <summary>
