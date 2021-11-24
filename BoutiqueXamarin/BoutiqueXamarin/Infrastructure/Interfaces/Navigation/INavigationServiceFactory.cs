@@ -22,12 +22,18 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
     /// <summary>
     /// Сервис навигации
     /// </summary>
-    public interface INavigationServiceFactory: IBackNavigationService
+    public interface INavigationServiceFactory
     {
         /// <summary>
         /// Перейти к странице
         /// </summary>
         Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc);
+
+        /// <summary>
+        /// Перейти назад
+        /// </summary>
+        Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
+            where TViewModel : BaseViewModel;
 
         /// <summary>
         /// К стартовой странице

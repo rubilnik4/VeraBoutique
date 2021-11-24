@@ -23,7 +23,7 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
         /// <summary>
         /// Изъять из очереди переходов
         /// </summary>
-        TOption? DequeueHistory<TOption>()
+        TOption DequeueHistory<TOption>()
             where TOption : BaseNavigationOptions;
     }
 }

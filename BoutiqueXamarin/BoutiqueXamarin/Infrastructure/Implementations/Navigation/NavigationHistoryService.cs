@@ -32,24 +32,20 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         /// <summary>
         /// Изъять из очереди переходов
         /// </summary>
-        public TOption? DequeueHistory<TOption>()
+        public TOption DequeueHistory<TOption>()
             where TOption : BaseNavigationOptions =>
-            NavigationHistory.
-            Except(GetHistoryTail<TOption>(NavigationHistory)).
-            ToList().
-            Map(GetHistoryOptions<TOption>).
-            Void(historyOptions => NavigationHistory = historyOptions.History).
-            Map(historyOptions => (TOption?)historyOptions.Options);
+            GetHistoryOptions<TOption>(NavigationHistory).
+            Void(history => NavigationHistory = history).
+            Map(history => (TOption)history.Last());
 
         /// <summary>
         /// Получить остаток и параметр
         /// </summary>
-        private static (IReadOnlyCollection<BaseNavigationOptions> History, BaseNavigationOptions Options) GetHistoryOptions<TOption>(IReadOnlyCollection<BaseNavigationOptions> navigationHistory)
+        private static IReadOnlyCollection<BaseNavigationOptions> GetHistoryOptions<TOption>(IReadOnlyCollection<BaseNavigationOptions> navigationHistory)
             where TOption : BaseNavigationOptions =>
             navigationHistory.
             Except(GetHistoryTail<TOption>(navigationHistory)).
-            ToList().
-            Map(history => (history.SkipLast(1).ToList(), history.LastOrDefault()));
+            ToList();
 
         /// <summary>
         /// Получить остаток истории до текущего

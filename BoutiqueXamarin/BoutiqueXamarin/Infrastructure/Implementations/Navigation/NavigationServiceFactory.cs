@@ -44,15 +44,16 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
     public class NavigationServiceFactory : INavigationServiceFactory
     {
         public NavigationServiceFactory(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
-                                        ILoginService loginService)
+                                        IBackNavigationService backNavigationService, ILoginService loginService)
         {
             _navigationService = navigationService;
             _navigationHistoryService = navigationHistoryService;
+            _backNavigationService = backNavigationService;
             _loginService = loginService;
         }
 
         /// <summary>
-        /// 
+        /// Сервис навигации
         /// </summary>
         private readonly INavigationService _navigationService;
 
@@ -62,16 +63,14 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         private readonly INavigationHistoryService _navigationHistoryService;
 
         /// <summary>
+        /// Сервис навигации назад
+        /// </summary>
+        private readonly IBackNavigationService _backNavigationService;
+
+        /// <summary>
         /// Сервис авторизации и сохранения логина
         /// </summary>
         private readonly ILoginService _loginService;
-
-        /// <summary>
-        /// Перейти к странице ошибок
-        /// </summary>
-        public async Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
-            await new ErrorNavigationOptions(errors, reloadFunc).
-            MapAsync(NavigateTo<ErrorPage, ErrorViewModel, ErrorNavigationOptions>);
 
         /// <summary>
         /// К стартовой странице
@@ -95,6 +94,20 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             MapAsync(NavigateTo<RegisterPage, RegisterViewModel, RegisterNavigationOptions>);
 
         /// <summary>
+        /// Перейти к странице ошибок
+        /// </summary>
+        public async Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
+            await new ErrorNavigationOptions(errors, reloadFunc).
+            MapAsync(NavigateTo<ErrorPage, ErrorViewModel, ErrorNavigationOptions>);
+
+        /// <summary>
+        /// Перейти назад
+        /// </summary>
+        public Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
+            where TViewModel : BaseViewModel =>
+            _backNavigationService.NavigateBack(viewModel);
+
+        /// <summary>
         /// Навигация при ошибке
         /// </summary>
         protected async Task<INavigationResult> OnErrorNavigate(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc) =>
@@ -112,51 +125,9 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             where TPage : ReactiveContentPage<TViewModel>
             where TViewModel : NavigationViewModel<TOption>
             where TOption : BaseNavigationOptions =>
-            await ToNavigationParameters(options).
-            MapAsync(navigationParameters => _navigationService.NavigateAsync(GetPageName<TPage>(), navigationParameters)).
+            await NavigateFunctions.ToNavigationParameters(options).
+            MapAsync(navigationParameters => _navigationService.NavigateAsync(NavigateFunctions.GetPageName<TPage>(), navigationParameters)).
             VoidOkTaskAsync(navigateResult => navigateResult.Success,
-                            _ => ToNavigateHistory(options));
-
-        /// <summary>
-        /// Перейти назад
-        /// </summary>
-        public virtual async Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
-            where TViewModel : BaseViewModel =>
-            viewModel switch
-            {
-                PersonalViewModel _ => await _navigationService.NavigateAsync(nameof(ProfilePage), 
-                                                                              _navigationHistoryService.DequeueHistory<ProfileNavigationOptions>().
-                                                                                                        Map(ToNavigationParameters)),
-                ProfileViewModel _ => await _navigationService.NavigateAsync(nameof(ChoicePage)),
-                _ => await _navigationService.GoBackAsync(),
-            };
-
-        /// <summary>
-        /// Записать в историю
-        /// </summary>
-        private void ToNavigateHistory<TOption>(TOption navigateOptions)
-            where TOption : BaseNavigationOptions =>
-            _navigationHistoryService.EnqueueHistory(navigateOptions);
-
-        /// <summary>
-        /// Получить параметры навигации
-        /// </summary>
-        private static NavigationParameters ToNavigationParameters<TOption>(TOption options)
-            where TOption : BaseNavigationOptions =>
-            new NavigationParameters { { GetOptionsName<TOption>(), options } };
-
-        /// <summary>
-        /// Имя параметра навигации
-        /// </summary>
-        public static string GetOptionsName<TOption>()
-            where TOption : BaseNavigationOptions =>
-            typeof(TOption).Name;
-
-        /// <summary>
-        /// Имя страницы для навигации
-        /// </summary>
-        public static string GetPageName<TPage>()
-            where TPage : Page =>
-            typeof(TPage).Name;
+                            _ => _navigationHistoryService.EnqueueHistory(options));
     }
 }
