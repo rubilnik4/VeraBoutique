@@ -31,9 +31,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.ClothesDetails
 {
     public class ClothesDetailViewModel: NavigationViewModel<ClothesDetailNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesDetailViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory, 
-                                      IProfileNavigationService profileNavigationService)
-            : base(navigationServiceFactory)
+        public ClothesDetailViewModel(IClothesRestService clothesRestService, IProfileNavigationService profileNavigationService)
+            : base(profileNavigationService)
         {
             UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);
             _clothesDetailDescriptionViewModel = GetClothesDetailDescriptionViewModelObservable();

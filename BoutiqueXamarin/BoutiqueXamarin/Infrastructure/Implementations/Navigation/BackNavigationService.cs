@@ -5,9 +5,12 @@ using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
 using BoutiqueXamarin.Models.Implementations.Navigation.Profiles;
 using BoutiqueXamarin.ViewModels.Base;
 using BoutiqueXamarin.ViewModels.Clothes.Choices;
+using BoutiqueXamarin.ViewModels.Clothes.Clothes;
+using BoutiqueXamarin.ViewModels.Clothes.ClothesDetails;
 using BoutiqueXamarin.ViewModels.Profiles;
 using BoutiqueXamarin.Views.Base;
 using BoutiqueXamarin.Views.Clothes.Choices;
+using BoutiqueXamarin.Views.Clothes.Clothes;
 using BoutiqueXamarin.Views.Profiles;
 using Prism.Navigation;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -45,6 +48,8 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
             {
                 PersonalViewModel _ => await NavigateBack<ProfilePage, ProfileViewModel, ProfileNavigationOptions>(),
                 ProfileViewModel _ => await NavigateBack<ChoicePage, ChoiceViewModel, ChoiceNavigationOptions>(),
+                ClothesViewModel _ => await NavigateBack<ChoicePage, ChoiceViewModel, ChoiceNavigationOptions>(),
+                ClothesDetailViewModel _ => await NavigateBack<ClothesPage, ClothesViewModel, ClothesNavigationOptions>(),
                 _ => await _navigationService.GoBackAsync(),
             };
 

@@ -108,9 +108,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes.ClothesViewModelItems
         /// </summary>
         private static async Task<ImageSource> GetImageSource(IClothesRestService clothesRestService, int clothesId) =>
             await clothesRestService.GetImage(clothesId).
-            WhereContinueTaskAsync(result => result.OkStatus,
-                                   result => result.Value,
-                                   _ => Array.Empty<byte>()).
+            ResultValueToValueOkBadTaskAsync(bytes => bytes,
+                                             _ => Array.Empty<byte>()).
             MapTaskAsync(ImageConverter.ToImageSource);
     }
 }

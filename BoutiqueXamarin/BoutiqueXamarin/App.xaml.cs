@@ -51,8 +51,8 @@ namespace BoutiqueXamarin
             ResultValueBindErrorsOk(_ => ProjectRegistration.RegisterProject(BoutiqueContainer)).
             Void(_ => InitializeApp()).
             ResultValueVoidOkBadAsync(
-                _ => BoutiqueContainer.Resolve<INavigationServiceFactory>().ToInitialPage(),
-                errors => BoutiqueContainer.Resolve<INavigationServiceFactory>().
+                _ => BoutiqueContainer.Resolve<IDefaultNavigationService>().ToInitialPage(),
+                errors => BoutiqueContainer.Resolve<IDefaultNavigationService>().
                                             ToErrorPage(errors, () => Task.FromResult((INavigationResult)new NavigationResult())));
 
         /// <summary>

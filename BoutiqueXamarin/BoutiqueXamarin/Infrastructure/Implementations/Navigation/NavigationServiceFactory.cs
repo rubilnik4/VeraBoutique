@@ -41,10 +41,13 @@ using Xamarin.Forms;
 
 namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
 {
-    public class NavigationServiceFactory : INavigationServiceFactory
+    /// <summary>
+    /// Сервис навигации
+    /// </summary>
+    public abstract class NavigationServiceFactory: INavigationServiceFactory
     {
-        public NavigationServiceFactory(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
-                                        IBackNavigationService backNavigationService, ILoginService loginService)
+        protected NavigationServiceFactory(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
+                                           IBackNavigationService backNavigationService, ILoginService loginService)
         {
             _navigationService = navigationService;
             _navigationHistoryService = navigationHistoryService;
@@ -73,25 +76,12 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         private readonly ILoginService _loginService;
 
         /// <summary>
-        /// К стартовой странице
-        /// </summary>
-        public async Task<INavigationResult> ToInitialPage() =>
-            await _navigationService.NavigateAsync(nameof(InitialPage));
-
-        /// <summary>
         /// Перейти к странице авторизации
         /// </summary>
         public async Task<INavigationResult> ToLoginPage() =>
             await new LoginNavigationOptions().
             VoidAsync(_ => _loginService.Logout()).
             MapBindAsync(NavigateTo<LoginPage, LoginViewModel, LoginNavigationOptions>);
-
-        /// <summary>
-        /// Перейти к странице регистрации
-        /// </summary>
-        public async Task<INavigationResult> ToRegisterPage() =>
-            await new RegisterNavigationOptions().
-            MapAsync(NavigateTo<RegisterPage, RegisterViewModel, RegisterNavigationOptions>);
 
         /// <summary>
         /// Перейти к странице ошибок
@@ -103,9 +93,9 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
         /// <summary>
         /// Перейти назад
         /// </summary>
-        public Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
+        public async Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
             where TViewModel : BaseViewModel =>
-            _backNavigationService.NavigateBack(viewModel);
+            await _backNavigationService.NavigateBack(viewModel);
 
         /// <summary>
         /// Навигация при ошибке

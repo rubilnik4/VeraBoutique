@@ -28,9 +28,8 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     /// </summary>
     public class LoginViewModel : NavigationViewModel<LoginNavigationOptions>
     {
-        public LoginViewModel(ILoginService loginService, INavigationServiceFactory navigationServiceFactory,
-                              IProfileNavigationService profileNavigationService)
-          : base(navigationServiceFactory)
+        public LoginViewModel(ILoginService loginService, IProfileNavigationService profileNavigationService)
+            : base(profileNavigationService)
         {
             AuthorizeValidation = this.WhenAnyValue(x => x.Email, x => x.Password).
                                        Select(_ => new AuthorizeValidation(Email, EmailValid, Password, PasswordValid));
@@ -38,7 +37,7 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
             AuthorizeCommand = ReactiveCommand.CreateFromTask<AuthorizeValidation, IResultError>(
                                     authorize => JwtAuthorize(authorize, loginService, profileNavigationService));
             _authorizeErrors = AuthorizeCommand.ToProperty(this, nameof(AuthorizeErrors), scheduler: RxApp.MainThreadScheduler);
-            RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => navigationServiceFactory.ToRegisterPage());
+            RegisterNavigateCommand = ReactiveCommand.CreateFromTask(_ => profileNavigationService.ToRegisterPage());
         }
 
         private string _email = String.Empty;

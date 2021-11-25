@@ -37,9 +37,9 @@ namespace BoutiqueXamarin.Infrastructure.Implementations.Navigation
     public class ClothesNavigationService : NavigationServiceFactory, IClothesNavigationService
     {
         public ClothesNavigationService(INavigationService navigationService, INavigationHistoryService navigationHistoryService,
-                                        ILoginService loginService,
+                                        IBackNavigationService backNavigationService, ILoginService loginService,
                                         IClothesRestService clothesRestService, IGenderRestService genderRestService)
-            : base(navigationService, navigationHistoryService, loginService)
+            : base(navigationService, navigationHistoryService, backNavigationService, loginService)
         {
             _clothesRestService = clothesRestService;
             _genderRestService = genderRestService;

@@ -1,21 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
-using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesTypeDomains;
-using BoutiqueCommon.Models.Enums.Clothes;
-using BoutiqueXamarin.Models.Implementations.Navigation.Base;
-using BoutiqueXamarin.Models.Implementations.Navigation.Clothes;
-using BoutiqueXamarin.Models.Implementations.Navigation.Profiles;
+﻿using System.Threading.Tasks;
 using BoutiqueXamarin.ViewModels.Base;
-using BoutiqueXamarin.ViewModels.Clothes.Choices;
-using BoutiqueXamarin.ViewModels.Profiles;
-using BoutiqueXamarin.Views.Clothes.Choices;
-using BoutiqueXamarin.Views.Profiles;
 using Prism.Navigation;
-using ReactiveUI.XamForms;
-using ResultFunctional.FunctionalExtensions.Async;
-using ResultFunctional.Models.Interfaces.Errors.Base;
 
 namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
 {
@@ -25,29 +10,9 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
     public interface INavigationServiceFactory
     {
         /// <summary>
-        /// Перейти к странице
-        /// </summary>
-        Task<INavigationResult> ToErrorPage(IEnumerable<IErrorResult> errors, Func<Task<INavigationResult>> reloadFunc);
-
-        /// <summary>
         /// Перейти назад
         /// </summary>
         Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
             where TViewModel : BaseViewModel;
-
-        /// <summary>
-        /// К стартовой странице
-        /// </summary>
-        Task<INavigationResult> ToInitialPage();
-
-        /// <summary>
-        /// Перейти к странице авторизации
-        /// </summary>
-        Task<INavigationResult> ToLoginPage();
-
-        /// <summary>
-        /// Перейти к странице регистрации
-        /// </summary>
-        Task<INavigationResult> ToRegisterPage();
     }
 }

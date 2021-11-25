@@ -27,8 +27,8 @@ namespace BoutiqueXamarin.ViewModels.Authorizes
     public class RegisterViewModel : NavigationViewModel<RegisterNavigationOptions>
     {
         public RegisterViewModel(IUserRestService userRestService, ILoginService loginService, 
-                                 INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService)
-            : base(navigationServiceFactory)
+                                 IProfileNavigationService profileNavigationService)
+            : base(profileNavigationService)
         {
             RegisterLoginViewModel = new RegisterLoginViewModel();
             RegisterPersonalViewModel = new RegisterPersonalViewModel();

@@ -25,8 +25,8 @@ namespace BoutiqueXamarin.ViewModels.Errors
     /// </summary>
     public class ErrorViewModel : NavigationViewModel<ErrorNavigationOptions>
     {
-        public ErrorViewModel(INavigationServiceFactory navigationServiceFactory)
-         : base(navigationServiceFactory)
+        public ErrorViewModel(IDefaultNavigationService defaultNavigationService)
+         : base(defaultNavigationService)
         {
             _error = GetError();
             _reloadFunc = GetReloadFunc();

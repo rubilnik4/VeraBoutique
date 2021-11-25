@@ -37,9 +37,9 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Clothes
     /// </summary>
     public class ClothesViewModel : NavigationViewModel<ClothesNavigationOptions>, INavigationProfileViewModel
     {
-        public ClothesViewModel(IClothesRestService clothesRestService, INavigationServiceFactory navigationServiceFactory,
-                                IClothesNavigationService clothesNavigationService, IProfileNavigationService profileNavigationService)
-            : base(navigationServiceFactory)
+        public ClothesViewModel(IClothesRestService clothesRestService, IClothesNavigationService clothesNavigationService,
+                                IProfileNavigationService profileNavigationService)
+            : base(clothesNavigationService)
         {
             _clothesRestService = clothesRestService;
             _clothesNavigationService = clothesNavigationService;

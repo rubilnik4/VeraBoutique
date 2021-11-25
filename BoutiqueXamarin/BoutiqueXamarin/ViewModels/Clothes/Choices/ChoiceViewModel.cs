@@ -37,9 +37,8 @@ namespace BoutiqueXamarin.ViewModels.Clothes.Choices
     /// </summary>
     public class ChoiceViewModel : NavigationViewModel<ChoiceNavigationOptions>, INavigationProfileViewModel
     {
-        public ChoiceViewModel(INavigationServiceFactory navigationServiceFactory, IProfileNavigationService profileNavigationService,
-                               IClothesNavigationService clothesNavigationService)
-            : base(navigationServiceFactory)
+        public ChoiceViewModel(IProfileNavigationService profileNavigationService, IClothesNavigationService clothesNavigationService)
+            : base(profileNavigationService)
         {
             _clothesNavigationService = clothesNavigationService;
             UserRightMenuViewModel = new UserRightMenuViewModel(profileNavigationService);

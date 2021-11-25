@@ -28,9 +28,9 @@ namespace BoutiqueXamarin.ViewModels.Base
     public abstract class NavigationViewModel<TOptions> : BaseViewModel
         where TOptions : BaseNavigationOptions
     {
-        protected NavigationViewModel(IBackNavigationService backNavigationService)
+        protected NavigationViewModel(INavigationServiceFactory navigationServiceFactory)
         {
-            BackLeftMenuViewModel = new BackLeftMenuViewModel(() => backNavigationService.NavigateBack(this));
+            BackLeftMenuViewModel = new BackLeftMenuViewModel(() => navigationServiceFactory.NavigateBack(this));
         }
 
         /// <summary>
@@ -62,6 +62,6 @@ namespace BoutiqueXamarin.ViewModels.Base
         /// Преобразовать параметры навигации
         /// </summary>
         private static TOptions GetNavigationOptions(INavigationParameters parameters) =>
-            parameters.GetValue<TOptions>(NavigationServiceFactory.GetOptionsName<TOptions>());
+            parameters.GetValue<TOptions>(NavigateFunctions.GetOptionsName<TOptions>());
     }
 }

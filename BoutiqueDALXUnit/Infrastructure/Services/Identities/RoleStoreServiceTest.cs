@@ -90,8 +90,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Identities
             var roleResult = await roleStoreService.CreateRole(identityRoleType);
 
             Assert.True(roleResult.HasErrors);
-            Assert.IsAssignableFrom<AuthorizeErrorResult>(roleResult.Errors.First());
-            Assert.Equal(AuthorizeErrorType.Duplicate.ToString(), roleResult.Errors.First().Id);
+            Assert.IsAssignableFrom<IValueDuplicatedErrorResult>(roleResult.Errors.First());
+            Assert.Equal(CommonErrorType.ValueDuplicated.ToString(), roleResult.Errors.First().Id);
         }
 
         /// <summary>

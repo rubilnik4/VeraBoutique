@@ -32,7 +32,7 @@ namespace BoutiqueXamarin.DependencyInjection
         {
             container.RegisterSingleton<INavigationHistoryService, NavigationHistoryService>();
             container.Register<IBackNavigationService, BackNavigationService>();
-            container.Register<INavigationServiceFactory, NavigationServiceFactory>();
+            container.Register<IDefaultNavigationService, DefaultNavigationService>();
             container.Register<IClothesNavigationService, ClothesNavigationService>();
             container.Register<IProfileNavigationService, ProfileNavigationService>();
         }

@@ -10,6 +10,9 @@ namespace BoutiqueXamarin.Infrastructure.Interfaces.Navigation
     /// </summary>
     public interface IBackNavigationService
     {
+        /// <summary>
+        /// Перейти назад
+        /// </summary>
         Task<INavigationResult> NavigateBack<TViewModel>(TViewModel viewModel)
            where TViewModel : BaseViewModel;
     }
