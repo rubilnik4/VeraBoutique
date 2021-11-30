@@ -1,6 +1,6 @@
 ﻿using BoutiqueCommon.Models.Common.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Images;
-using BoutiqueDAL.Models.Interfaces.Entities.Clothes.Owns;
+using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
 {

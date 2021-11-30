@@ -7,14 +7,17 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 
 namespace BoutiqueCommon.Models.Domain.Implementations.Carts
 {
+    /// <summary>
+    /// Позиция в корзине. Доменная модель
+    /// </summary>
     public class CartItemDomain : CartItemBase, ICartItemDomain
     {
         public CartItemDomain(ICartItemBase cartItem)
-          : this(cartItem.Name, cartItem.Price)
+          : this(cartItem.Id, cartItem.Name, cartItem.Price)
         { }
 
-        public CartItemDomain(string name, decimal price)
-            : base(name, price)
+        public CartItemDomain(string id, string name, decimal price, string cartId)
+            : base(id, name, price, cartId)
         { }
     }
 }

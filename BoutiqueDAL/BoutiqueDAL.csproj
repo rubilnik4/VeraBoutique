@@ -39,4 +39,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\Implementations\Database\Boutique\Configuration\Carts\" />
+  </ItemGroup>
+
 </Project>

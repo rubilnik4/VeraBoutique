@@ -2,7 +2,7 @@
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Base;
 
-namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes.Owns
+namespace BoutiqueDAL.Models.Interfaces.Entities.Clothes
 {
     /// <summary>
     /// Сущность изображения

@@ -7,6 +7,6 @@ namespace BoutiqueCommon.Models.Domain.Interfaces.Carts
     /// <summary>
     /// Корзина. Доменная модель
     /// </summary>
-    public interface ICartDomain : ICartBase, IDomainModel<string>
+    public interface ICartMainDomain : ICartMainBase<ICartItemDomain>, ICartDomain
     { }
 }

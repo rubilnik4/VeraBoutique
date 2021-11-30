@@ -1,4 +1,6 @@
-﻿using BoutiqueCommon.Models.Common.Interfaces.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Common.Interfaces.Carts;
+using BoutiqueCommon.Models.Common.Interfaces.Clothes;
 
 namespace BoutiqueCommon.Models.Common.Implementations.Carts
 {
@@ -7,16 +9,18 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
     /// </summary>
     public abstract class CartItemBase: ICartItemBase
     {
-        protected CartItemBase(string name, decimal price)
+        protected CartItemBase(string id, string name, decimal price, string cartId)
         {
+            Id = id;
             Name = name;
             Price = price;
+            CartId = cartId;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public abstract string Id { get; }
+        public string Id { get; }
 
         /// <summary>
         /// Наименование
@@ -27,5 +31,21 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
         /// Цена
         /// </summary>
         public decimal Price { get; }
+
+        /// <summary>
+        /// Корзина
+        /// </summary>
+        public string CartId { get; }
+
+        #region IEquatable
+        public override bool Equals(object? obj) =>
+            obj is ICartItemBase cartItem && Equals(cartItem);
+
+        public bool Equals(ICartItemBase? other) =>
+            other?.Id == Id;
+
+        public override int GetHashCode() =>
+            HashCode.Combine(Id);
+        #endregion
     }
 }

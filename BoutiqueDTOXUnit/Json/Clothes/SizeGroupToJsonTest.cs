@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using BoutiqueDTO.Models.Implementations.Clothes.SizeGroupTransfers;
-using BoutiqueDTOXUnit.Data.Transfers;
 using BoutiqueDTOXUnit.Data.Transfers.Clothes;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace BoutiqueDTOXUnit.Json.Clothes.SizeGroups
+namespace BoutiqueDTOXUnit.Json.Clothes
 {
     /// <summary>
     /// Группа размеров одежды. Конвертация в Json

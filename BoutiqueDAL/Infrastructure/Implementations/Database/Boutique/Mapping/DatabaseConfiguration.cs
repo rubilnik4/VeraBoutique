@@ -1,4 +1,5 @@
 ﻿using BoutiqueCommon.Models.Enums.Clothes;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Carts;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configuration.Clothes.Composite;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.Sequences;
@@ -44,6 +45,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
             modelBuilder.ApplyConfiguration(new SizeConfiguration());
             modelBuilder.ApplyConfiguration(new SizeGroupConfiguration());
             modelBuilder.ApplyConfiguration(new SizeGroupCompositeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
 
             modelBuilder.HasPostgresEnum<GenderType>();
             modelBuilder.HasPostgresEnum<SizeType>();

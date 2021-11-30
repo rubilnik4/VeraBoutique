@@ -8,14 +8,14 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Carts
     /// <summary>
     /// Корзина. Доменная модель
     /// </summary>
-    public class CartDomain : CartBase, ICartDomain
+    public class CartMainDomain : CartMainBase<ICartItemDomain>, ICartMainDomain
     {
-        public CartDomain(ICartBase cart)
-         : base(cart.Id)
+        public CartMainDomain(ICartBase cart, IEnumerable<ICartItemDomain> cartItems)
+          : base(cart.Id, cartItems)
         { }
 
-        public CartDomain(string id)
-            : base(id)
+        public CartMainDomain(string id, IEnumerable<ICartItemDomain> cartItems)
+            : base(id, cartItems)
         { }
     }
 }

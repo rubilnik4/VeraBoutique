@@ -24,7 +24,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes
             string json = JsonConvert.SerializeObject(categoryTransfer);
             var categoryAfterJson = JsonConvert.DeserializeObject<CategoryMainTransfer>(json);
 
-            Assert.True(categoryAfterJson?.Equals(categoryAfterJson));
+            Assert.True(categoryAfterJson?.Equals(categoryTransfer));
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes
             string json = JsonConvert.SerializeObject(categoryTransfer);
             var categoryAfterJson = JsonConvert.DeserializeObject<CategoryClothesTypeTransfer>(json);
 
-            Assert.True(categoryAfterJson?.Equals(categoryAfterJson));
+            Assert.True(categoryAfterJson?.Equals(categoryTransfer));
         }
 
 
@@ -53,7 +53,7 @@ namespace BoutiqueDTOXUnit.Json.Clothes
             string json = JsonConvert.SerializeObject(categoryTransfer);
             var categoryAfterJson = JsonConvert.DeserializeObject<CategoryTransfer>(json);
 
-            Assert.True(categoryAfterJson?.Equals(categoryAfterJson));
+            Assert.True(categoryAfterJson?.Equals(categoryTransfer));
         }
     }
 }

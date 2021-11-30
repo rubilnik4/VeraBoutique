@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 
@@ -7,29 +8,27 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
     /// <summary>
     /// Корзина
     /// </summary>
-    public abstract class CartBase<TCartItem> : ICartBase<TCartItem>
-        where TCartItem : ICartItemBase
+    public abstract class CartBase: ICartBase
     {
-        protected CartBase(IEnumerable<TCartItem> cartItems)
+        protected CartBase(string id)
         {
-            CartItems = cartItems.ToList();
+            Id = id;
         }
 
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public abstract string Id { get; }
+        public string Id { get; }
 
-        /// <summary>
-        /// Позиции в корзине
-        /// </summary>
-        public IReadOnlyCollection<TCartItem> CartItems { get; }
+        #region IEquatable
+        public override bool Equals(object? obj) =>
+            obj is ICartBase cart && Equals(cart);
 
-        /// <summary>
-        /// Сумма
-        /// </summary>
-        public decimal Total =>
-            CartItems.
-            Sum(cartItem => cartItem.Price);
+        public bool Equals(ICartBase? other) =>
+            other?.Id == Id;
+
+        public override int GetHashCode() =>
+            HashCode.Combine(Id);
+        #endregion
     }
 }

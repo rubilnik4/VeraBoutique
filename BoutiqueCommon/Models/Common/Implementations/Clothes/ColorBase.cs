@@ -28,7 +28,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IColorBase color && Equals(color);
+        public override bool Equals(object? obj) => 
+            obj is IColorBase color && Equals(color);
 
         public bool Equals(IColorBase? other) =>
             other?.Id == Id;

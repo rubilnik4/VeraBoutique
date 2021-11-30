@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\StringExtensions\" />
+    <Folder Include="Models\Carts\" />
     <Folder Include="Models\StringCollection\" />
   </ItemGroup>
 
