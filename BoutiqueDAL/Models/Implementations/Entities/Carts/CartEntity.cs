@@ -9,7 +9,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
     public class CartEntity : CartBase, ICartEntity
     {
         public CartEntity(ICartBase cart)
-            : this(cart.Id, null)
+            : this(cart, null)
+        { }
+
+        public CartEntity(ICartBase cart, IEnumerable<CartItemEntity>? cartItems)
+           : this(cart.Id, cartItems)
         { }
 
         public CartEntity(string id, IEnumerable<CartItemEntity>? cartItems)

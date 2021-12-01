@@ -1,4 +1,7 @@
-﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
+﻿using System.Runtime.CompilerServices;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Carts;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Carts;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
@@ -55,5 +58,17 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         /// </summary>
         public IClothesTable ClothesTable => 
             new ClothesTable(Clothes);
+
+        /// <summary>
+        /// Таблица базы данных корзины
+        /// </summary>
+        public ICartTable CartTable =>
+            new CartTable(Carts);
+
+        /// <summary>
+        /// Таблица базы данных позиций корзины
+        /// </summary>
+        public ICartItemTable CartItemTable =>
+            new CartItemTable(CartItems);
     }
 }

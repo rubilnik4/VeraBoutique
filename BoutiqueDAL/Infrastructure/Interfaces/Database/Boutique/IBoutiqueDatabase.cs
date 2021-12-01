@@ -2,6 +2,7 @@
 using BoutiqueCommon.Models.Enums.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Carts;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 
@@ -51,5 +52,15 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique
         /// Таблица базы данных одежды
         /// </summary>
         IClothesTable ClothesTable { get; }
+
+        /// <summary>
+        /// Таблица базы данных корзины
+        /// </summary>
+        ICartTable CartTable { get; }
+
+        /// <summary>
+        /// Таблица базы данных позиций корзины
+        /// </summary>
+        ICartItemTable CartItemTable { get; }
     }
 }

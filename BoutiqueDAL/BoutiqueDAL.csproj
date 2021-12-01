@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Implementations\Database\Boutique\Configuration\Carts\" />
+    <Folder Include="Infrastructure\Interfaces\Services\ClothesValidate\" />
   </ItemGroup>
 
 </Project>

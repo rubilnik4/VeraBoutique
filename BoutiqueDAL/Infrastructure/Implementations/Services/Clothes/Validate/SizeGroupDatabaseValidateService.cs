@@ -6,7 +6,7 @@ using BoutiqueCommon.Models.Domain.Interfaces.Clothes.SizeGroupDomain;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes.Validate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using ResultFunctional.FunctionalExtensions.Async.ResultExtension.ResultErrors;
 using ResultFunctional.FunctionalExtensions.Sync;

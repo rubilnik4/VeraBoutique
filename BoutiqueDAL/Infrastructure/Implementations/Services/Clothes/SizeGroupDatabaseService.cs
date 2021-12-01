@@ -15,7 +15,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes.Validate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 using ResultFunctional.FunctionalExtensions.Async;

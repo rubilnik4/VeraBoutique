@@ -10,7 +10,6 @@ using BoutiqueCommonXUnit.Data.Models.Interfaces;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Database.Interfaces;
 using BoutiqueDALXUnit.Data.Models.Implementation;

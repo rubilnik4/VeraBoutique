@@ -13,7 +13,6 @@ using BoutiqueCommonXUnit.Data.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;

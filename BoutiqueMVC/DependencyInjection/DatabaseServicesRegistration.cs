@@ -14,7 +14,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
-using BoutiqueDAL.Infrastructure.Interfaces.Services.ClothesValidate;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueMVC.Factories.Database;

@@ -1,5 +1,6 @@
 ﻿using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
+using BoutiqueDAL.Models.Implementations.Entities.Carts;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -47,8 +48,18 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         public DbSet<SizeGroupEntity> SizeGroups { get; init; } = null!;
 
         /// <summary>
-        /// Таблица базы данных  одежды
+        /// Таблица базы данных одежды
         /// </summary>
         public DbSet<ClothesEntity> Clothes { get; init; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных корзин
+        /// </summary>
+        public DbSet<CartEntity> Carts { get; init; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных позиций корзин
+        /// </summary>
+        public DbSet<CartItemEntity> CartItems { get; init; } = null!;
     }
 }
