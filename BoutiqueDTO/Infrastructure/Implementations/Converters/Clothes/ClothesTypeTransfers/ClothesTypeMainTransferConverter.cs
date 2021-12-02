@@ -45,9 +45,9 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesT
             new ClothesTypeMainTransfer(clothesTypeMainDomain,
                                         _categoryTransferConverter.ToTransfer(clothesTypeMainDomain.Category));
 
-        ///// <summary>
-        ///// Преобразовать тип одежды из трансферной модели
-        ///// </summary>
+        /// <summary>
+        /// Преобразовать тип одежды из трансферной модели
+        /// </summary>
         public override IResultValue<IClothesTypeMainDomain> FromTransfer(ClothesTypeMainTransfer clothesTypeMainTransfer) =>
             GetClothesTypeFunc(clothesTypeMainTransfer).
             ResultValueCurryOk(_categoryTransferConverter.GetDomain(clothesTypeMainTransfer.Category)).

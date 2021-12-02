@@ -35,12 +35,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         protected DatabaseService(IDatabase database,
                                   IDatabaseTable<TId, TDomain, TEntity> dataTable,
                                   IDatabaseValidateService<TId, TDomain> databaseValidateService,
-                                  IEntityConverter<TId, TDomain, TEntity> mainEntityConverter)
+                                  IEntityConverter<TId, TDomain, TEntity> mainMainEntityConverter)
         {
             _database = database;
             _dataTable = dataTable;
             _databaseValidateService = databaseValidateService;
-            _mainEntityConverter = mainEntityConverter;
+            _mainMainEntityConverter = mainMainEntityConverter;
         }
 
         /// <summary>
@@ -61,21 +61,21 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Конвертер из доменной модели в модель базы данных
         /// </summary>
-        private readonly IEntityConverter<TId, TDomain, TEntity> _mainEntityConverter;
+        private readonly IEntityConverter<TId, TDomain, TEntity> _mainMainEntityConverter;
 
         /// <summary>
         /// Получить полные модели из базы
         /// </summary>
         public async Task<IResultCollection<TDomain>> Get() =>
             await _dataTable.ToListMainAsync().
-            ResultCollectionBindOkTaskAsync(entities => _mainEntityConverter.FromEntities(entities));
+            ResultCollectionBindOkTaskAsync(entities => _mainMainEntityConverter.FromEntities(entities));
 
         /// <summary>
         /// Получить  полную модель из базы по идентификатору
         /// </summary>
         public async Task<IResultValue<TDomain>> Get(TId id) =>
             await _dataTable.FindMainByIdAsync(id).
-            ResultValueBindOkTaskAsync(entity => _mainEntityConverter.FromEntity(entity));
+            ResultValueBindOkTaskAsync(entity => _mainMainEntityConverter.FromEntity(entity));
 
         /// <summary>
         /// Загрузить модель в базу
@@ -126,7 +126,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// Добавить модель в базу и сохранить
         /// </summary>
         private async Task<IResultValue<TId>> AddWithSaving(TDomain model) =>
-            await _dataTable.AddAsync(_mainEntityConverter.ToEntity(model)).
+            await _dataTable.AddAsync(_mainMainEntityConverter.ToEntity(model)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
@@ -134,14 +134,14 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// </summary>
         private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntity> dataTable,
                                                                       IEnumerable<TDomain> models) =>
-            await dataTable.AddRangeAsync(_mainEntityConverter.ToEntities(models)).
+            await dataTable.AddRangeAsync(_mainMainEntityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
         private async Task<IResultError> UpdateWithSaving(TDomain domain) =>
-            await _dataTable.Update(_mainEntityConverter.ToEntity(domain)).
+            await _dataTable.Update(_mainMainEntityConverter.ToEntity(domain)).
             ResultErrorBindOkAsync(DatabaseSaveChanges);
 
         /// <summary>

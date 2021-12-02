@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Extensions\Json\Async\" />
+    <Folder Include="Infrastructure\Implementations\Converters\Carts\" />
+    <Folder Include="Infrastructure\Interfaces\Converters\Carts\" />
     <Folder Include="Models\Enums\Errors\" />
     <Folder Include="Models\Implementations\Clothes\ImageTransfers\" />
     <Folder Include="Routes\Clothes\" />

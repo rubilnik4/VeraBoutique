@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BoutiqueDTO.Models.Implementations.Carts;
 using BoutiqueDTO.Models.Implementations.Identities;
+using BoutiqueMVC.Infrastructure.Interfaces.Carts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -17,18 +18,24 @@ namespace BoutiqueMVC.Controllers.Carts
     [ApiController]
     public class CartController: ControllerBase
     {
-        public CartController()
+        public CartController(ICartService cartService)
         {
-
+            _cartService = cartService;
         }
+
+        /// <summary>
+        /// Сервис корзины
+        /// </summary>
+        private readonly ICartService _cartService;
 
         /// <summary>
         /// Получить пользователей с ролями
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<CartTransfer> CreateCart() =>
-            await _userManager.GetRoleUsers().
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CartMainTransfer>> CreateCart() =>
+            await _cartService.CreateCart().
             MapTaskAsync(users => _boutiqueUserTransferConverter.ToTransfers(users)).
             MapTaskAsync(transfers => new ActionResult<IReadOnlyCollection<BoutiqueUserTransfer>>(transfers));
     }

@@ -20,8 +20,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Carts
     {
         public CartDatabaseService(IBoutiqueDatabase boutiqueDatabase,
                                    ICartDatabaseValidateService cartDatabaseValidateService,
-                                   ICartEntityConverter cartEntityConverter)
-            : base(boutiqueDatabase, boutiqueDatabase.CartTable, cartDatabaseValidateService, cartEntityConverter)
+                                   ICartMainEntityConverter cartMainEntityConverter)
+            : base(boutiqueDatabase, boutiqueDatabase.CartTable, cartDatabaseValidateService, cartMainEntityConverter)
         { }
     }
 }

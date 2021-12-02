@@ -27,9 +27,9 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Преобразования модели корзины в модель базы данных
     /// </summary>
-    public class CartEntityConverter : EntityConverter<string, ICartMainDomain, CartEntity>, ICartEntityConverter
+    public class CartMainEntityConverter : EntityConverter<string, ICartMainDomain, CartEntity>, ICartMainEntityConverter
     {
-        public CartEntityConverter(ICartItemEntityConverter cartItemEntityConverter)
+        public CartMainEntityConverter(ICartItemEntityConverter cartItemEntityConverter)
         {
             _cartItemEntityConverter = cartItemEntityConverter;
         }

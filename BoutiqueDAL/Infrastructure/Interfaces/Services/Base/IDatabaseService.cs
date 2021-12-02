@@ -26,7 +26,7 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Загрузить модель в базу
         /// </summary>
-        Task<IResultValue<TId>> Post(TDomain model);
+        Task<IResultValue<TId>> Post(TDomain cart);
 
         /// <summary>
         /// Загрузить модели в базу
