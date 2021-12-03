@@ -1,6 +1,7 @@
 ﻿using System;
 using BoutiqueCommon.Infrastructure.Interfaces.Container;
 using BoutiqueCommon.Infrastructure.Interfaces.Logger;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Carts;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
@@ -11,6 +12,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTra
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Configuration;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
 using BoutiqueDTO.Infrastructure.Implementations.Services.RestServices.Clothes;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Carts;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
@@ -42,6 +44,7 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<IPersonalTransferConverter, PersonalTransferConverter>();
             container.Register<IBoutiqueUserTransferConverter, BoutiqueUserTransferConverter>();
             container.Register<IRegisterTransferConverter, RegisterTransferConverter>();
+
             container.Register<IGenderTransferConverter, GenderTransferConverter>();
             container.Register<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             container.Register<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
@@ -56,6 +59,10 @@ namespace BoutiqueXamarin.DependencyInjection
             container.Register<IClothesDetailTransferConverter, ClothesDetailTransferConverter>();
             container.Register<IClothesImageTransferConverter, ClothesImageTransferConverter>();
             container.Register<IClothesMainTransferConverter, ClothesMainTransferConverter>();
+
+            container.Register<ICartItemTransferConverter, CartItemTransferConverter>();
+            container.Register<ICartTransferConverter, CartTransferConverter>();
+            container.Register<ICartMainTransferConverter, CartMainTransferConverter>();
 
             container.Register<IHostConfigurationTransferConverter, HostConfigurationTransferConverter>();
             container.Register<IXamarinConfigurationTransferConverter, XamarinConfigurationTransferConverter>();

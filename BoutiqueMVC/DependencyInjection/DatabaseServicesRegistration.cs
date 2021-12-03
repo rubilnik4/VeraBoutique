@@ -7,18 +7,24 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database;
 using BoutiqueDAL.Infrastructure.Implementations.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Base;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Carts;
+using BoutiqueDAL.Infrastructure.Implementations.Services.Carts.Validate;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Base;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Carts;
+using BoutiqueDAL.Infrastructure.Interfaces.Services.Carts.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueMVC.Factories.Database;
 using BoutiqueMVC.Factories.Identities;
+using BoutiqueMVC.Infrastructure.Implementation.Carts;
+using BoutiqueMVC.Infrastructure.Interfaces.Carts;
 using BoutiqueMVC.Models.Implementations.Identity;
 using ResultFunctional.FunctionalExtensions.Sync;
 using Microsoft.AspNetCore.Identity;
@@ -39,10 +45,8 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         public static void RegisterDatabaseServices(IServiceCollection services)
         {
-            ConverterServicesRegistration.RegisterEntityConverters(services);
             DatabaseTablesRegistration.RegisterDatabaseTables(services);
-
-            RegisterCommonServices(services);
+            RegisterMainDatabaseServices(services);
             RegisterValidateServices(services);
             RegisterDatabase(services);
         }
@@ -67,7 +71,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить общие сервисы базы данных
         /// </summary>
-        private static void RegisterCommonServices(IServiceCollection services)
+        private static void RegisterMainDatabaseServices(IServiceCollection services)
         {
             services.AddTransient<IGenderDatabaseService, GenderDatabaseService>();
             services.AddTransient<ICategoryDatabaseService, CategoryDatabaseService>();
@@ -76,6 +80,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<ISizeGroupDatabaseService, SizeGroupDatabaseService>();
             services.AddTransient<IColorDatabaseService, ColorDatabaseService>();
             services.AddTransient<IClothesDatabaseService, ClothesDatabaseService>();
+            services.AddTransient<ICartDatabaseService, CartDatabaseService>();
         }
 
         /// <summary>
@@ -91,6 +96,7 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IColorClothesDatabaseValidateService, ColorClothesDatabaseValidateService>();
             services.AddTransient<IClothesDatabaseValidateService, ClothesDatabaseValidateService>();
             services.AddTransient<IClothesImageDatabaseValidateService, ClothesImageDatabaseValidateService>();
+            services.AddTransient<ICartDatabaseValidateService, CartDatabaseValidateService>();
         }
 
         /// <summary>

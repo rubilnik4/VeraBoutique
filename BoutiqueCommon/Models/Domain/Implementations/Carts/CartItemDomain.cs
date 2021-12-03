@@ -13,10 +13,10 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Carts
     public class CartItemDomain : CartItemBase, ICartItemDomain
     {
         public CartItemDomain(ICartItemBase cartItem)
-          : this(cartItem.Id, cartItem.Name, cartItem.Price)
+            : this(cartItem.Id, cartItem.Name, cartItem.Price, cartItem.CartId)
         { }
 
-        public CartItemDomain(string id, string name, decimal price, string cartId)
+        public CartItemDomain(string id, string name, decimal price, string cartId) 
             : base(id, name, price, cartId)
         { }
     }

@@ -8,4 +8,5 @@ namespace BoutiqueDTO.Models.Interfaces.Carts
     /// Корзина. Трансферная модель
     /// </summary>
     public interface ICartMainTransfer : ICartMainBase<CartItemTransfer>, ICartTransfer
+    { }
 }

@@ -36,6 +36,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Database
         public async Task UpdateSchema(IUserManagerService userManager, IRoleStoreService roleStore,
                                        IEnumerable<IRegisterRoleDomain> defaultUsers, IEnumerable<IdentityRoleType> roleNames)
         {
+            await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
             await Database.MigrateAsync();
             await IdentityInitialize.Initialize(userManager, roleStore, defaultUsers, roleNames);

@@ -1,10 +1,12 @@
-﻿using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
+﻿using BoutiqueDAL.Infrastructure.Implementations.Converters.Carts;
+using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ClothesTypeEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEntities;
+using BoutiqueDAL.Infrastructure.Interfaces.Converters.Carts;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.CategoryEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesEntities;
@@ -12,6 +14,7 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntiti
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.GenderEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ImageEntities;
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
+using BoutiqueDTO.Infrastructure.Implementations.Converters.Carts;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ClothesTransfers;
@@ -20,6 +23,7 @@ using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.GenderTransf
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageConverters;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.SizeGroupTransfers;
 using BoutiqueDTO.Infrastructure.Implementations.Converters.Identity;
+using BoutiqueDTO.Infrastructure.Interfaces.Converters.Carts;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.CategoryTransfers;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Clothes.ClothesTransfers;
@@ -37,15 +41,22 @@ namespace BoutiqueMVC.DependencyInjection
     /// </summary>
     public static class ConverterServicesRegistration
     {
+        public static void RegisterConverters(IServiceCollection services)
+        {
+            RegisterTransferConverters(services);
+            RegisterEntityConverters(services);
+        }
+
         /// <summary>
         ///  Внедрить зависимости трансферных конвертеров
         /// </summary>
-        public static void RegisterTransferConverters(IServiceCollection services)
+        private static void RegisterTransferConverters(IServiceCollection services)
         {
             services.AddTransient<IAuthorizeTransferConverter, AuthorizeTransferConverter>();
             services.AddTransient<IPersonalTransferConverter, PersonalTransferConverter>();
             services.AddTransient<IRegisterTransferConverter, RegisterTransferConverter>();
             services.AddTransient<IBoutiqueUserTransferConverter, BoutiqueUserTransferConverter>();
+
             services.AddTransient<IGenderTransferConverter, GenderTransferConverter>();
             services.AddTransient<IGenderCategoryTransferConverter, GenderCategoryTransferConverter>();
             services.AddTransient<IClothesTypeTransferConverter, ClothesTypeTransferConverter>();
@@ -61,12 +72,16 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IClothesTransferConverter, ClothesTransferConverter>();
             services.AddTransient<IClothesDetailTransferConverter, ClothesDetailTransferConverter>();
             services.AddTransient<IClothesMainTransferConverter, ClothesMainTransferConverter>();
+
+            services.AddTransient<ICartItemTransferConverter, CartItemTransferConverter>();
+            services.AddTransient<ICartTransferConverter, CartTransferConverter>();
+            services.AddTransient<ICartMainTransferConverter, CartMainTransferConverter>();
         }
 
         /// <summary>
         ///  Внедрить зависимости конвертеров сущностей базы данных
         /// </summary>
-        public static void RegisterEntityConverters(IServiceCollection services)
+        private static void RegisterEntityConverters(IServiceCollection services)
         {
             services.AddTransient<IGenderEntityConverter, GenderEntityConverter>();
             services.AddTransient<IGenderCategoryEntityConverter, GenderCategoryEntityConverter>();
@@ -83,6 +98,9 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient<IClothesEntityConverter, ClothesEntityConverter>();
             services.AddTransient<IClothesDetailEntityConverter, ClothesDetailEntityConverter>();
             services.AddTransient<IClothesMainEntityConverter, ClothesMainEntityConverter>();
+
+            services.AddTransient<ICartItemEntityConverter, CartItemEntityConverter>();
+            services.AddTransient<ICartMainEntityConverter, CartMainEntityConverter>();
         }
     }
 }

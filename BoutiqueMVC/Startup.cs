@@ -33,13 +33,11 @@ namespace BoutiqueMVC
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
-            ConverterServicesRegistration.RegisterTransferConverters(services);
+            ConverterServicesRegistration.RegisterConverters(services);
+            ServicesRegistration.RegisterServices(services);
             IdentityServicesRegistration.RegistrationIdentityServices(services);
             DatabaseServicesRegistration.RegisterDatabaseServices(services);
-            AuthServicesRegistration.AddAuthorization(services);
-            AuthServicesRegistration.RegisterJwtServices(services, Configuration);
-            AuthServicesRegistration.RegisterAuthServices(services, Configuration);
-            AuthServicesRegistration.RegisterDatabaseIdentities(services, Configuration);
+            AuthorizeServicesRegistration.RegisterAuthorizeServices(services, Configuration);
             services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerDocument(SwaggerConfiguration.ConfigSwagger);
         }

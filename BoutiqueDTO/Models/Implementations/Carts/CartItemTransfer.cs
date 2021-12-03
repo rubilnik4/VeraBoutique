@@ -13,12 +13,12 @@ namespace BoutiqueDTO.Models.Implementations.Carts
     public class CartItemTransfer : CartItemBase, ICartItemTransfer
     {
         public CartItemTransfer(ICartItemBase cartItem)
-         : this(cartItem.Id, cartItem.Name, cartItem.Price)
+         : this(cartItem.Id, cartItem.Name, cartItem.Price, cartItem.CartId)
         { }
 
         [JsonConstructor]
-        public CartItemTransfer(string id, string name, decimal price)
-            : base(id, name, price)
+        public CartItemTransfer(string id, string name, decimal price, string cartId)
+            : base(id, name, price, cartId)
         { }
     }
 }

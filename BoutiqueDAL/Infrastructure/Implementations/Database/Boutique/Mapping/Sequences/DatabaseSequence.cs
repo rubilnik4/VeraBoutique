@@ -33,7 +33,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.S
         /// Sql команда
         /// </summary>
         public string SqlSequenceCommand =>
-            $"nextval('\"{DatabaseSequence.ClothesImageSequence.Id}\"')";
+            $"nextval('\"{Id}\"')";
 
         /// <summary>
         /// Применить идентификатор к базе
@@ -45,12 +45,12 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.S
         /// Генератор чисел для одежды
         /// </summary>
         public static DatabaseSequence ClothesSequence =>
-            new DatabaseSequence("ClothesSequence", 10000, 1);
+            new ("ClothesSequence", 10000, 1);
 
         /// <summary>
         /// Генератор чисел для изображений
         /// </summary>
         public static DatabaseSequence ClothesImageSequence =>
-            new DatabaseSequence("ClothesImageSequence", 10000, 1);
+            new ("ClothesImageSequence", 10000, 1);
     }
 }

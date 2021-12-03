@@ -24,12 +24,23 @@ namespace BoutiqueMVC.DependencyInjection
     /// <summary>
     /// Подключение зависимостей для авторизации
     /// </summary>
-    public static class AuthServicesRegistration
+    public static class AuthorizeServicesRegistration
     {
+        /// <summary>
+        /// Регистрация сервисов авторизации
+        /// </summary>
+        public static void RegisterAuthorizeServices(IServiceCollection services, IConfiguration configuration)
+        {
+            AddAuthorization(services);
+            RegisterJwtServices(services, configuration);
+            RegisterAuthServices(services, configuration);
+            RegisterDatabaseIdentities(services, configuration);
+        }
+
         /// <summary>
         /// Добавить политики авторизации
         /// </summary>
-        public static void AddAuthorization(IServiceCollection services) =>
+        private static void AddAuthorization(IServiceCollection services) =>
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IdentityPolicyType.ADMIN_POLICY,
@@ -42,7 +53,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Внедрить зависимости свойств авторизации
         /// </summary>
-        public static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration)
+        private static void RegisterJwtServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton(JwtSettingsFactory.GetJwtSettings(configuration));
             services.AddTransient<IJwtTokenService, JwtTokenService>();
@@ -52,7 +63,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Внедрить зависимости свойств регистрации
         /// </summary>
-        public static void RegisterAuthServices(IServiceCollection services, IConfiguration configuration) =>
+        private static void RegisterAuthServices(IServiceCollection services, IConfiguration configuration) =>
             AuthorizeSettingsFactory.GetAuthorizeSettings(configuration).
             Map(services.AddSingleton);
 
@@ -60,7 +71,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// <summary>
         /// Подключить сервисы авторизации к базе
         /// </summary>
-        public static void RegisterDatabaseIdentities(IServiceCollection services, IConfiguration configuration) =>
+        private static void RegisterDatabaseIdentities(IServiceCollection services, IConfiguration configuration) =>
             services.AddIdentity<BoutiqueUserEntity, IdentityRole>(options =>
                 AuthorizeSettingsFactory.GetAuthorizeSettings(configuration).
                 Void(authSettings => options.Password.RequiredLength = authSettings.PasswordRequiredLength).

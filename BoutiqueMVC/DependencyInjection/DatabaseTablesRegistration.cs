@@ -24,6 +24,9 @@ namespace BoutiqueMVC.DependencyInjection
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.GendersTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.SizeTable);
             services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.SizeGroupTable);
+
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.CartTable);
+            services.AddTransient(service => service.GetService<IBoutiqueDatabase>()!.CartItemTable);
         }
     }
 }

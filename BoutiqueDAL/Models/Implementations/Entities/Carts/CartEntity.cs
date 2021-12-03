@@ -6,6 +6,9 @@ using BoutiqueDAL.Models.Interfaces.Entities.Carts;
 
 namespace BoutiqueDAL.Models.Implementations.Entities.Carts
 {
+    /// <summary>
+    /// Корзина. Сущность базы данных
+    /// </summary>
     public class CartEntity : CartBase, ICartEntity
     {
         public CartEntity(ICartBase cart)
@@ -14,6 +17,10 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
 
         public CartEntity(ICartBase cart, IEnumerable<CartItemEntity>? cartItems)
            : this(cart.Id, cartItems)
+        { }
+
+        public CartEntity(string id)
+          : this(id, null)
         { }
 
         public CartEntity(string id, IEnumerable<CartItemEntity>? cartItems)

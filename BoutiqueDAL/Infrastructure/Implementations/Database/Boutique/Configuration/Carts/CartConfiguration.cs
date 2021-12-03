@@ -12,7 +12,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         public void Configure(EntityTypeBuilder<CartEntity> builder)
         {
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Id).HasDefaultValueSql("NEWID()").IsRequired();
+          //  builder.Property(t => t.Id).HasDefaultValueSql("NEWID()").IsRequired();
         }
     }
 }
