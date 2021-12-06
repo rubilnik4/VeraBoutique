@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories;
 using BoutiqueDAL.Models.Implementations.Entities.Carts;
@@ -10,7 +11,7 @@ namespace BoutiqueDAL.Models.Interfaces.Entities.Carts
     /// <summary>
     /// Позиция в корзине. Сущность базы данных
     /// </summary>
-    public interface ICartItemEntity : ICartItemBase, IEntityModel<string>
+    public interface ICartItemEntity : ICartItemBase, IEntityModel<Guid>
     {
         /// <summary>
         /// Корзина

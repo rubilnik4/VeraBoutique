@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Clothes.Images;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Images;
 using BoutiqueDAL.Models.Interfaces.Entities.Clothes;
 
@@ -17,11 +18,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
            : this(clothesImage.Id, clothesImage.Image, clothesImage.IsMain, clothesImage.ClothesId, clothes)
         { }
 
-        public ClothesImageEntity(int id, byte[] image, bool isMain, int clothesId)
+        public ClothesImageEntity(Guid id, byte[] image, bool isMain, int clothesId)
           : this(id, image, isMain, clothesId, null)
         { }
 
-        public ClothesImageEntity(int id, byte[] image, bool isMain, int clothesId, ClothesEntity? clothes)
+        public ClothesImageEntity(Guid id, byte[] image, bool isMain, int clothesId, ClothesEntity? clothes)
             : base(id, image, isMain, clothesId)
         {
             Clothes = clothes;

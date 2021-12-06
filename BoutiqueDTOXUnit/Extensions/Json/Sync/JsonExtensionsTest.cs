@@ -40,6 +40,20 @@ namespace BoutiqueDTOXUnit.Extensions.Json.Sync
         /// Корректное преобразование
         /// </summary>
         [Fact]
+        public void ToTransferStringValueJson_Ok()
+        {
+            const string? test = "test";
+            string testJson = JsonConvert.SerializeObject(test);
+
+            var testTransferAfter = testJson.ToTransferValueJson<string>();
+
+            Assert.True(testTransferAfter.Value.Equals(test));
+        }
+
+        /// <summary>
+        /// Корректное преобразование
+        /// </summary>
+        [Fact]
         public void ToTransferCollectionJson_Ok()
         {
             var genderTransfer = GenderTransfersData.GenderTransfers;

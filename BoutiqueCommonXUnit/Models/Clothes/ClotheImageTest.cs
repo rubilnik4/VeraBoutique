@@ -15,11 +15,11 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         [Fact]
         public void ClothesImage_Equal_Ok()
         {
-            const int id = 1;
-            var image = new byte[0];
+            var id = Guid.NewGuid();
+            var image = Array.Empty<byte>();
             const bool isMain = false;
 
-            var clothesImageDomain = new ClothesImageDomain(id, image, isMain,0);
+            var clothesImageDomain = new ClothesImageDomain(id, image, isMain, 0);
 
             int clothesImageHash = HashCode.Combine(id);
             Assert.Equal(clothesImageHash, clothesImageDomain.GetHashCode());

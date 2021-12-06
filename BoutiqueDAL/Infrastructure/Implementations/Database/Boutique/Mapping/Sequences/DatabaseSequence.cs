@@ -46,11 +46,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping.S
         /// </summary>
         public static DatabaseSequence ClothesSequence =>
             new ("ClothesSequence", 10000, 1);
-
-        /// <summary>
-        /// Генератор чисел для изображений
-        /// </summary>
-        public static DatabaseSequence ClothesImageSequence =>
-            new ("ClothesImageSequence", 10000, 1);
     }
 }

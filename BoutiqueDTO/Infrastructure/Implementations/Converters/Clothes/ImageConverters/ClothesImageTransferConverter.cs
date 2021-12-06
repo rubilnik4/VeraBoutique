@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
@@ -16,7 +17,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Clothes.ImageCon
     /// <summary>
     /// Конвертер изображений в трансферную модель
     /// </summary>
-    public class ClothesImageTransferConverter : TransferConverter<int, IClothesImageDomain, ClothesImageTransfer>,
+    public class ClothesImageTransferConverter : TransferConverter<Guid, IClothesImageDomain, ClothesImageTransfer>,
                                                  IClothesImageTransferConverter
     {
         /// <summary>

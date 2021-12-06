@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 using BoutiqueCommon.Models.Domain.Interfaces.Carts;
@@ -14,7 +15,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Carts
          : base(cart.Id)
         { }
 
-        public CartDomain(string id)
+        public CartDomain(Guid id)
             : base(id)
         { }
     }

@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Images
     /// <summary>
     /// Изображение. Трансферная модель
     /// </summary>
-    public interface IClothesImageBase : IModel<int>, IEquatable<IClothesImageBase>
+    public interface IClothesImageBase : IModel<Guid>, IEquatable<IClothesImageBase>
     {
         /// <summary>
         /// Изображение

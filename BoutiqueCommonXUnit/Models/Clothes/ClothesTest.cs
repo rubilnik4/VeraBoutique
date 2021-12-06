@@ -74,7 +74,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string name = "Полушубок";
             const string description = "Полушубок красивый";
             const decimal price = (decimal)0.55;
-            var images = new List<IClothesImageDomain> { new ClothesImageDomain(1, Resources.TestImage, true, 0) };
+            var images = new List<IClothesImageDomain> { new ClothesImageDomain(Guid.NewGuid(), Resources.TestImage, true, 0) };
             var gender = new GenderDomain(GenderType.Male, "Мужик");
             var clothesType = new ClothesTypeDomain("Тряпье нательное", SizeType.American, "Тряпье");
             var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
@@ -147,7 +147,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         public void ClothesMain_Equal_Color()
         {
             var first = ClothesData.ClothesDomains.First();
-            var images = new List<IClothesImageDomain> { new ClothesImageDomain(1, Resources.TestImage, true, 0) };
+            var images = new List<IClothesImageDomain> { new ClothesImageDomain(Guid.NewGuid(), Resources.TestImage, true, 0) };
             var second = new ClothesMainDomain(first, images, GenderData.GenderCategoryDomains.First(),
                                               ClothesTypeData.ClothesTypeMainDomains.First(),
                                               ColorData.ColorDomains, SizeGroupData.SizeGroupMainDomains);

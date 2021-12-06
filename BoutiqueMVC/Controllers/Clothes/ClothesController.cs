@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Enums.Clothes;
@@ -101,6 +102,6 @@ namespace BoutiqueMVC.Controllers.Clothes
         public async Task<ActionResult<IReadOnlyCollection<ClothesImageTransfer>>> GetImages(int id) =>
             await _clothesDatabaseService.GetImages(id).
             ResultCollectionOkTaskAsync(images => _clothesImageTransferConverter.ToTransfers(images)).
-            ToActionResultCollectionTaskAsync<int, ClothesImageTransfer>();
+            ToActionResultCollectionTaskAsync<Guid, ClothesImageTransfer>();
     }
 }

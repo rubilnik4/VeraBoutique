@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 using BoutiqueDTO.Models.Interfaces.Carts;
@@ -17,7 +18,7 @@ namespace BoutiqueDTO.Models.Implementations.Carts
         { }
 
         [JsonConstructor]
-        public CartItemTransfer(string id, string name, decimal price, string cartId)
+        public CartItemTransfer(Guid id, string name, decimal price, Guid cartId)
             : base(id, name, price, cartId)
         { }
     }

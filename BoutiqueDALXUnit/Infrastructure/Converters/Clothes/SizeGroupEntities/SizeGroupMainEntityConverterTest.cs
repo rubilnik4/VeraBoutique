@@ -6,7 +6,9 @@ using BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.SizeGroupEnt
 using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.SizeGroupEntities;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters.Clothes;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;

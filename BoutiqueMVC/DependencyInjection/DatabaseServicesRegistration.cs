@@ -31,7 +31,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using static BoutiqueMVC.Factories.Database.PostgresConnectionFactory;
 
 namespace BoutiqueMVC.DependencyInjection
 {
@@ -104,7 +103,7 @@ namespace BoutiqueMVC.DependencyInjection
         /// </summary>
         private static void GetDatabaseOptions(DbContextOptionsBuilder options) =>
             options.
-            UseNpgsql(PostgresConnection.ConnectionString).
+            UseNpgsql(PostgresConnectionFactory.PostgresConnection.ConnectionString).
             EnableSensitiveDataLogging();
     }
 }

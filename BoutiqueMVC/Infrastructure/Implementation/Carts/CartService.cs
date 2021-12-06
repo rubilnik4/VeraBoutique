@@ -32,7 +32,7 @@ namespace BoutiqueMVC.Infrastructure.Implementation.Carts
         /// Создать корзину
         /// </summary>
         public async Task<IResultValue<ICartDomain>> CreateCart() =>
-            await new CartMainDomain(String.Empty, Enumerable.Empty<ICartItemDomain>()).
+            await new CartMainDomain(Guid.Empty, Enumerable.Empty<ICartItemDomain>()).
             MapAsync(cart => _cartDatabaseService.Post(cart)).
             ResultValueBindOkBindAsync(id => _cartDatabaseService.Get(id));
     }

@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Carts
     /// <summary>
     /// Позиция в корзине
     /// </summary>
-    public interface ICartItemBase : IModel<string>, IEquatable<ICartItemBase>
+    public interface ICartItemBase : IModel<Guid>, IEquatable<ICartItemBase>
     {
         /// <summary>
         /// Наименование
@@ -22,6 +22,6 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Carts
         /// <summary>
         /// Корзина
         /// </summary>
-        string CartId { get; }
+        Guid CartId { get; }
     }
 }

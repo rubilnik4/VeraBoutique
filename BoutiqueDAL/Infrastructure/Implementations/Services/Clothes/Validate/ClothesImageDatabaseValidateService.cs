@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Errors;
@@ -13,7 +14,7 @@ using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate
 {
-    public class ClothesImageDatabaseValidateService : DatabaseValidateService<int, IClothesImageDomain, ClothesImageEntity>,
+    public class ClothesImageDatabaseValidateService : DatabaseValidateService<Guid, IClothesImageDomain, ClothesImageEntity>,
                                                        IClothesImageDatabaseValidateService
     {
         public ClothesImageDatabaseValidateService(IClothesImageTable clothesImageTable)

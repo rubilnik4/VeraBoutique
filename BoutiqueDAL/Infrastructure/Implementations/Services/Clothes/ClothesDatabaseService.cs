@@ -99,12 +99,11 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         public async Task<IResultValue<byte[]>> GetImage(int id) =>
              await _clothesTable.
-             FindExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
+             FindExpressionValueAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
                                                     Include(clothesEntity => clothesEntity.ClothesImages).
                                                     SelectMany(imageEntity => imageEntity.ClothesImages!).
-                                                    FirstOrDefaultAsync(imageEntity => imageEntity.IsMain).
-                                                    MapTaskAsync(entity => (ClothesImageEntity?)entity),
-                                 id).
+                                                    FirstOrDefaultAsync(imageEntity => imageEntity.IsMain), 
+                                      id).
              ResultValueOkTaskAsync(imageEntity => imageEntity.Image);
 
         /// <summary>
@@ -112,7 +111,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Clothes
         /// </summary>
         public async Task<IResultCollection<IClothesImageDomain>> GetImages(int id) =>
              await _clothesTable.
-             FindsExpressionAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
+             FindsExpressionValueAsync(clothes => clothes.Where(clothesEntity => clothesEntity.Id == id).
                                                      Include(clothesEntity => clothesEntity.ClothesImages).
                                                      SelectMany(imageEntity => imageEntity.ClothesImages!)).
              ResultCollectionBindOkTaskAsync(imageEntities => _clothesImageEntityConverter.FromEntities(imageEntities));

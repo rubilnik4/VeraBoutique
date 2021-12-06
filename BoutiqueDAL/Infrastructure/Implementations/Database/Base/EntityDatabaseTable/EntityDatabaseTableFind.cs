@@ -68,15 +68,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        public async Task<IResultValue<TEntityOut>> FindExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, Task<TEntityOut?>> queryFunc, TId id)
-            where TEntityOut : class, IEntityModel<TId> =>
-            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).
-                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
-                                          TableAccessErrorType);
-
-        /// <summary>
-        /// Выполнить запрос в таблице и выгрузить сущности
-        /// </summary>
         public async Task<IResultCollection<TOut>> FindsExpressionValueAsync<TOut>(Func<IQueryable<TEntity>, IQueryable<TOut>> queryFunc)
              where TOut : notnull =>
             await ResultCollectionTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync(), TableAccessErrorType);
@@ -84,8 +75,16 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Выполнить запрос в таблице и выгрузить сущности
         /// </summary>
-        public async Task<IResultCollection<TEntityOut>> FindsExpressionAsync<TEntityOut>(Func<IQueryable<TEntity>, IQueryable<TEntityOut>> queryFunc)
-            where TEntityOut : class, IEntityModel<TId> =>
+        public async Task<IResultValue<TEntity>> FindExpressionAsync(Func<IQueryable<TEntity>, Task<TEntity?>> queryFunc, TId id) =>
+            await ResultValueBindTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).
+                                                ToResultValueNullCheckTaskAsync(DatabaseErrors.ValueNotFoundError(id.ToString()!, TableName)),
+                                          TableAccessErrorType);
+
+
+        /// <summary>
+        /// Выполнить запрос в таблице и выгрузить сущности
+        /// </summary>
+        public async Task<IResultCollection<TEntity>> FindsExpressionAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryFunc) =>
             await ResultCollectionTryAsync(() => queryFunc(_databaseSet.AsNoTracking()).ToListAsync(), TableAccessErrorType);
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Carts;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Carts;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
@@ -15,7 +16,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Конвертер позиций корзины в трансферную модель
     /// </summary>
-    public class CartItemTransferConverter : TransferConverter<string, ICartItemDomain, CartItemTransfer>,
+    public class CartItemTransferConverter : TransferConverter<Guid, ICartItemDomain, CartItemTransfer>,
                                              ICartItemTransferConverter
     {
         /// <summary>

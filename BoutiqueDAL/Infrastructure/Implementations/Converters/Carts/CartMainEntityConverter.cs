@@ -27,7 +27,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Преобразования модели корзины в модель базы данных
     /// </summary>
-    public class CartMainEntityConverter : EntityConverter<string, ICartMainDomain, CartEntity>, ICartMainEntityConverter
+    public class CartMainEntityConverter : EntityConverter<Guid, ICartMainDomain, CartEntity>, ICartMainEntityConverter
     {
         public CartMainEntityConverter(ICartItemEntityConverter cartItemEntityConverter)
         {
@@ -60,16 +60,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Carts
             new ResultValue<Func<IEnumerable<ICartItemDomain>, ICartMainDomain>>(
                 cartItems => new CartMainDomain(cart, cartItems));
 
-        ///// <summary>
-        ///// Преобразовать связующую сущность в тип пола
-        ///// </summary>
-        //private IResultCollection<IGenderDomain> GenderDomainsFromComposite(IReadOnlyCollection<GenderCategoryCompositeEntity>? genderCategoryCompositeEntity) =>
-        //    genderCategoryCompositeEntity.
-        //    ToResultValueNullCheck(
-        //        ErrorResultFactory.ValueNotFoundError(genderCategoryCompositeEntity, GetType())).
-        //    ResultValueBindOkToCollection(GetGenders).
-        //    ResultCollectionBindOk(genderEntities => _genderEntityConverter.FromEntities(genderEntities));
-
         /// <summary>
         /// Получить сущности типа пола одежды
         /// </summary>
@@ -78,13 +68,5 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Carts
             ToResultValueNullCheck(ErrorResultFactory.ValueNotFoundError(cartItemEntities, GetType())).
             ToResultCollection().
             ResultCollectionBindOk(cartItems => _cartItemEntityConverter.FromEntities(cartItems));
-
-        ///// <summary>
-        ///// Преобразовать типы пола в связующую сущность
-        ///// </summary>
-        //private IEnumerable<GenderCategoryCompositeEntity> CategoryToCompositeEntities(IEnumerable<IGenderDomain> genders,
-        //                                                                               ICategoryBase category) =>
-        //    _genderEntityConverter.ToEntities(genders).
-        //    Select(gender => new GenderCategoryCompositeEntity(gender.GenderType, category.Name));
     }
 }

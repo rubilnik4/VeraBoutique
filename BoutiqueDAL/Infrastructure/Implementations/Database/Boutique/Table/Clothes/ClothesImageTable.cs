@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes
 {
-    public class ClothesImageTable : EntityDatabaseTable<int, IClothesImageDomain, ClothesImageEntity>, IClothesImageTable
+    public class ClothesImageTable : EntityDatabaseTable<Guid, IClothesImageDomain, ClothesImageEntity>, IClothesImageTable
     {
         public ClothesImageTable(DbSet<ClothesImageEntity> clothesImageSet)
             : base(clothesImageSet)
@@ -20,19 +20,19 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clo
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<ClothesImageEntity, int>> IdSelect() =>
+        public override Expression<Func<ClothesImageEntity, Guid>> IdSelect() =>
             entity => entity.Id;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public override Expression<Func<ClothesImageEntity, bool>> IdPredicate(int id) =>
+        public override Expression<Func<ClothesImageEntity, bool>> IdPredicate(Guid id) =>
             entity => id == entity.Id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<ClothesImageEntity, bool>> IdsPredicate(IEnumerable<int> ids) =>
+        public override Expression<Func<ClothesImageEntity, bool>> IdsPredicate(IEnumerable<Guid> ids) =>
             entity => ids.Contains(entity.Id);
     }
 }

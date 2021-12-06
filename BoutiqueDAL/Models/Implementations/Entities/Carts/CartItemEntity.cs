@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 using BoutiqueDAL.Models.Interfaces.Entities.Carts;
 
@@ -13,7 +14,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
             : this(cartItem.Id, cartItem.Name, cartItem.Price, cartItem.CartId)
         { }
 
-        public CartItemEntity(string id, string name, decimal price, string cartId)
+        public CartItemEntity(Guid id, string name, decimal price, Guid cartId)
             : this(id, name, price, cartId, null)
         { }
 
@@ -21,7 +22,7 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
             : this(cartItem.Id, cartItem.Name, cartItem.Price, cartItem.CartId, cartEntity)
         { }
 
-        public CartItemEntity(string id, string name, decimal price, string cartId, CartEntity? cartEntity)
+        public CartItemEntity(Guid id, string name, decimal price, Guid cartId, CartEntity? cartEntity)
           : base(id, name, price, cartId)
         {
             CartEntity = cartEntity;

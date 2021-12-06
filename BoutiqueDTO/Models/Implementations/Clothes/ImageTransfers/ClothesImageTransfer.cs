@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Clothes.Images;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes.Images;
 using BoutiqueDTO.Models.Interfaces.Clothes.ImageTransfers;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace BoutiqueDTO.Models.Implementations.Clothes.ImageTransfers
         { }
 
         [JsonConstructor]
-        public ClothesImageTransfer(int id, byte[] image, bool isMain, int clothesId)
+        public ClothesImageTransfer(Guid id, byte[] image, bool isMain, int clothesId)
             : base(id, image, isMain, clothesId)
         { }
     }

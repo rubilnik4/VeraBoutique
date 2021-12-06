@@ -16,8 +16,8 @@ namespace BoutiqueCommonXUnit.Data.Carts
         public static IReadOnlyCollection<ICartItemDomain> CartItems =>
             new List<ICartItemDomain>
             {
-                new CartItemDomain(Guid.NewGuid().ToString(), "Товар1", 1000, "Cart1"),
-                new CartItemDomain(Guid.NewGuid().ToString(), "Товар2", 2000, "Cart1"),
+                new CartItemDomain(Guid.NewGuid(), "Товар1", 1000, Guid.NewGuid()),
+                new CartItemDomain(Guid.NewGuid(), "Товар2", 2000, Guid.NewGuid()),
             };
     }
 }

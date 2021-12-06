@@ -10,7 +10,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
     /// </summary>
     public abstract class CartBase: ICartBase
     {
-        protected CartBase(string id)
+        protected CartBase(Guid id)
         {
             Id = id;
         }
@@ -18,7 +18,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id { get; }
+        public Guid Id { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>

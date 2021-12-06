@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.ClothesDomains;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
@@ -18,8 +19,8 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         public static IReadOnlyCollection<IClothesImageDomain> ClothesImageDomains =>
             new List<IClothesImageDomain>
             {
-                new ClothesImageDomain(1, Properties.Resources.TestImage, true, 0),
-                new ClothesImageDomain(2, Properties.Resources.TestImage, false, 0),
+                new ClothesImageDomain(Guid.NewGuid(), Properties.Resources.TestImage, true, 0),
+                new ClothesImageDomain(Guid.NewGuid(), Properties.Resources.TestImage, false, 0),
             };
 
         /// <summary>

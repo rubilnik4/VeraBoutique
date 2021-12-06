@@ -8,6 +8,6 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Carts
     /// <summary>
     /// Корзина
     /// </summary>
-    public interface ICartBase: IModel<string>, IEquatable<ICartBase>
+    public interface ICartBase: IModel<Guid>, IEquatable<ICartBase>
     { }
 }

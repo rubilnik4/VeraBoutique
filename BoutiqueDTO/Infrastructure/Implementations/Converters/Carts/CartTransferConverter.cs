@@ -15,7 +15,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Конвертер корзины в трансферную модель
     /// </summary>
-    public class CartTransferConverter : TransferConverter<string, ICartDomain, CartTransfer>, ICartTransferConverter
+    public class CartTransferConverter : TransferConverter<Guid, ICartDomain, CartTransfer>, ICartTransferConverter
     {
         /// <summary>
         /// Преобразовать тип одежды в трансферную модель

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
@@ -19,11 +20,11 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
            : this(cart.Id, cartItems)
         { }
 
-        public CartEntity(string id)
+        public CartEntity(Guid id)
           : this(id, null)
         { }
 
-        public CartEntity(string id, IEnumerable<CartItemEntity>? cartItems)
+        public CartEntity(Guid id, IEnumerable<CartItemEntity>? cartItems)
             : base(id)
         {
             CartItems = cartItems?.ToList();

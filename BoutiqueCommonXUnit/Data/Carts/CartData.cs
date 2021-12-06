@@ -23,8 +23,8 @@ namespace BoutiqueCommonXUnit.Data.Carts
         public static IReadOnlyCollection<ICartMainDomain> CartMainDomains =>
             new List<ICartMainDomain>
             {
-                new CartMainDomain(Guid.NewGuid().ToString(), CartItemData.CartItems.Take(1)),
-                new CartMainDomain(Guid.NewGuid().ToString(), CartItemData.CartItems.Skip(1)),
+                new CartMainDomain(Guid.NewGuid(), CartItemData.CartItems.Take(1)),
+                new CartMainDomain(Guid.NewGuid(), CartItemData.CartItems.Skip(1)),
             };
     }
 }

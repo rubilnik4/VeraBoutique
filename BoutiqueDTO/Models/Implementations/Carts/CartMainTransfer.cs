@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
@@ -18,7 +19,7 @@ namespace BoutiqueDTO.Models.Implementations.Carts
         { }
 
         [JsonConstructor]
-        public CartMainTransfer(string id, IReadOnlyCollection<CartItemTransfer> cartItems)
+        public CartMainTransfer(Guid id, IReadOnlyCollection<CartItemTransfer> cartItems)
            : base(id, cartItems)
         { }
     }

@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Clothes;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Clothes;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.Images;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.Images;
@@ -11,7 +12,7 @@ using ResultFunctional.Models.Interfaces.Results;
 
 namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ImageEntities
 {
-    public class ClothesImageEntityConverter : EntityConverter<int, IClothesImageDomain, ClothesImageEntity>,
+    public class ClothesImageEntityConverter : EntityConverter<Guid, IClothesImageDomain, ClothesImageEntity>,
                                                IClothesImageEntityConverter
     {
         /// <summary>
@@ -25,6 +26,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Clothes.ImageEnt
         /// Преобразовать категорию одежды в модель базы данных
         /// </summary>
         public override ClothesImageEntity ToEntity(IClothesImageDomain clothesImageDomain) =>
-            new ClothesImageEntity(clothesImageDomain);
+            new (clothesImageDomain);
     }
 }

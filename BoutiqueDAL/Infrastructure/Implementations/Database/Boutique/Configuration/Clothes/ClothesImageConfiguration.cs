@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         public void Configure(EntityTypeBuilder<ClothesImageEntity> builder)
         {
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Id).HasDefaultValueSql(DatabaseSequence.ClothesImageSequence.SqlSequenceCommand).IsRequired();
+            builder.Property(t => t.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(t => t.Image).IsRequired();
             builder.Property(t => t.IsMain).IsRequired();
 

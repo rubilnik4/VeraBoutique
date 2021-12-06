@@ -17,7 +17,7 @@ namespace BoutiqueCommonXUnit.Models.Carts
         [Fact]
         public void Cart_Equal_Ok()
         {
-            const string id = "id";
+            var id = Guid.NewGuid();
             var cartDomain = new CartDomain(id);
 
             int cartHash = HashCode.Combine(id);

@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Domain.Implementations.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Domain.Implementations.Carts;
 using BoutiqueCommon.Models.Domain.Implementations.Clothes.CategoryDomains;
 using BoutiqueCommon.Models.Domain.Interfaces.Carts;
 using BoutiqueCommon.Models.Domain.Interfaces.Clothes.CategoryDomains;
@@ -15,7 +16,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Преобразования модели позиции в корзине в модель базы данных
     /// </summary>
-    public class CartItemEntityConverter : EntityConverter<string, ICartItemDomain, CartItemEntity>, ICartItemEntityConverter
+    public class CartItemEntityConverter : EntityConverter<Guid, ICartItemDomain, CartItemEntity>, ICartItemEntityConverter
     {
         /// <summary>
         /// Преобразовать позицию в корзине из модели базы данных

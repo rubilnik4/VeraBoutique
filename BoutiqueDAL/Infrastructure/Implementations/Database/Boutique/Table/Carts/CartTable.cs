@@ -14,7 +14,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Car
     /// <summary>
     /// Таблица базы данных корзин
     /// </summary>
-    public class CartTable : EntityDatabaseTable<string, ICartDomain, CartEntity>, ICartTable
+    public class CartTable : EntityDatabaseTable<Guid, ICartDomain, CartEntity>, ICartTable
     {
         public CartTable(DbSet<CartEntity> cartSet)
            : base(cartSet)
@@ -30,19 +30,19 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Car
         /// <summary>
         /// Выгрузка идентификатора
         /// </summary>
-        public override Expression<Func<CartEntity, string>> IdSelect() =>
+        public override Expression<Func<CartEntity, Guid>> IdSelect() =>
             entity => entity.Id;
 
         /// <summary>
         /// Функция поиска по идентификатору
         /// </summary>
-        public override Expression<Func<CartEntity, bool>> IdPredicate(string id) =>
+        public override Expression<Func<CartEntity, bool>> IdPredicate(Guid id) =>
             entity => entity.Id == id;
 
         /// <summary>
         /// Функция поиска по параметрам
         /// </summary>
-        public override Expression<Func<CartEntity, bool>> IdsPredicate(IEnumerable<string> ids) =>
+        public override Expression<Func<CartEntity, bool>> IdsPredicate(IEnumerable<Guid> ids) =>
             entity => ids.Contains(entity.Id);
 
         /// <summary>

@@ -31,7 +31,6 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping
         public static void ApplyConfiguration(ModelBuilder modelBuilder)
         {
             DatabaseSequence.ClothesSequence.ApplyGenerator(modelBuilder);
-            DatabaseSequence.ClothesImageSequence.ApplyGenerator(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new GenderConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());

@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
     /// </summary>
     public abstract class CartItemBase: ICartItemBase
     {
-        protected CartItemBase(string id, string name, decimal price, string cartId)
+        protected CartItemBase(Guid id, string name, decimal price, Guid cartId)
         {
             Id = id;
             Name = name;
@@ -20,7 +20,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id { get; }
+        public Guid Id { get; }
 
         /// <summary>
         /// Наименование
@@ -35,7 +35,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
         /// <summary>
         /// Корзина
         /// </summary>
-        public string CartId { get; }
+        public Guid CartId { get; }
 
         #region IEquatable
         public override bool Equals(object? obj) =>

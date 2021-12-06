@@ -9,7 +9,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Images
     /// </summary>
     public abstract class ClothesImageBase : IClothesImageBase
     {
-        protected ClothesImageBase(int id, byte[] image, bool isMain, int clothesId)
+        protected ClothesImageBase(Guid id, byte[] image, bool isMain, int clothesId)
         {
             Id = id;
             Image = image;
@@ -20,7 +20,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Images
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public int Id { get; }
+        public Guid Id { get; }
 
         /// <summary>
         /// Изображение

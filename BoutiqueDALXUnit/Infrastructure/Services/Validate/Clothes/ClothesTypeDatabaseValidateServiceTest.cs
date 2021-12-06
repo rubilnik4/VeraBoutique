@@ -15,6 +15,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Errors.CommonErrors;

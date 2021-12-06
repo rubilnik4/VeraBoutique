@@ -27,7 +27,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Carts.Validate
     /// <summary>
     /// Сервис проверки данных из базы корзин
     /// </summary>
-    public class CartDatabaseValidateService : DatabaseValidateService<string, ICartMainDomain, CartEntity>,
+    public class CartDatabaseValidateService : DatabaseValidateService<Guid, ICartMainDomain, CartEntity>,
                                                ICartDatabaseValidateService
     {
         public CartDatabaseValidateService(ICartTable cartTable)

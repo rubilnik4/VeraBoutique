@@ -1,4 +1,5 @@
-﻿using BoutiqueCommon.Models.Common.Implementations.Carts;
+﻿using System;
+using BoutiqueCommon.Models.Common.Implementations.Carts;
 using BoutiqueCommon.Models.Common.Implementations.Clothes;
 using BoutiqueCommon.Models.Common.Interfaces.Carts;
 using BoutiqueCommon.Models.Common.Interfaces.Clothes;
@@ -16,7 +17,7 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Carts
             : this(cartItem.Id, cartItem.Name, cartItem.Price, cartItem.CartId)
         { }
 
-        public CartItemDomain(string id, string name, decimal price, string cartId) 
+        public CartItemDomain(Guid id, string name, decimal price, Guid cartId) 
             : base(id, name, price, cartId)
         { }
     }

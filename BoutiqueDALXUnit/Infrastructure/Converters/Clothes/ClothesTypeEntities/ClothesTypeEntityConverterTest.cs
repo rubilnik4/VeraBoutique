@@ -10,7 +10,9 @@ using BoutiqueDAL.Infrastructure.Interfaces.Converters.Clothes.ClothesTypeEntiti
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes.Composite;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Converters;
+using BoutiqueDALXUnit.Infrastructure.Mocks.Converters.Clothes;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Interfaces.Errors.CommonErrors;
 using Xunit;

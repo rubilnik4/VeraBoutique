@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BoutiqueDTO.Infrastructure.Interfaces.Converters.Carts;
 using BoutiqueDTO.Models.Implementations.Carts;
@@ -48,12 +49,12 @@ namespace BoutiqueMVC.Controllers.Carts
         /// <summary>
         /// Получить пользователей с ролями
         /// </summary>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<CartTransfer>> CreateCart() =>
             await _cartService.CreateCart().
             ResultValueOkTaskAsync(cart => _cartTransferConverter.ToTransfer(cart)).
-            ToActionResultValueTaskAsync<string, CartTransfer>();
+            ToActionResultValueTaskAsync<Guid, CartTransfer>();
     }
 }

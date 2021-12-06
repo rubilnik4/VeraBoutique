@@ -22,7 +22,7 @@ namespace BoutiqueDTO.Infrastructure.Implementations.Converters.Carts
     /// <summary>
     /// Конвертер корзины в трансферную модель
     /// </summary>
-    public class CartMainTransferConverter : TransferConverter<string, ICartMainDomain, CartMainTransfer>,
+    public class CartMainTransferConverter : TransferConverter<Guid, ICartMainDomain, CartMainTransfer>,
                                              ICartMainTransferConverter
     {
         public CartMainTransferConverter(ICartItemTransferConverter cartItemTransferConverter)

@@ -17,6 +17,7 @@ using BoutiqueDAL.Infrastructure.Implementations.Services.Clothes.Validate;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDALXUnit.Data.Entities;
+using BoutiqueDALXUnit.Data.Entities.Clothes;
 using BoutiqueDALXUnit.Infrastructure.Mocks.Services.Validate;
 using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors.CommonErrors;
@@ -130,7 +131,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesImage = ClothesImageData.ClothesImageDomains.First();
             var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price,
-                                                           clothes.Images.Append(new ClothesImageDomain(0, clothesImage.Image, true, clothes.Id)),
+                                                           clothes.Images.Append(new ClothesImageDomain(Guid.Empty, clothesImage.Image, true, clothes.Id)),
                                                            clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = ValidateModel(clothesEmptyImages);
@@ -147,7 +148,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         {
             var clothes = ClothesData.ClothesMainDomains.First();
             var clothesEmptyImages = new ClothesMainDomain(clothes.Id, clothes.Name, clothes.Description, clothes.Price,
-                                                           clothes.Images.Append(new ClothesImageDomain(0, null!, false, clothes.Id)),
+                                                           clothes.Images.Append(new ClothesImageDomain(Guid.Empty, null!, false, clothes.Id)),
                                                            clothes.Gender, clothes.ClothesType, clothes.Colors, clothes.SizeGroups);
 
             var result = ValidateModel(clothesEmptyImages);
