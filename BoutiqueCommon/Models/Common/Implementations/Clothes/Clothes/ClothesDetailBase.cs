@@ -40,20 +40,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         /// Размеры
         /// </summary>
         public IReadOnlyCollection<TSizeGroup> SizeGroups { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) =>
-            obj is IClothesDetailBase<TColor, TSizeGroup, TSize> clothes &&
-            Equals(clothes);
-
-        public bool Equals(IClothesDetailBase<TColor, TSizeGroup, TSize>? other) =>
-            base.Equals(other) &&
-            other?.Colors.SequenceEqual(Colors) == true &&
-            other?.SizeGroups.SequenceEqual(SizeGroups) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description, GenderType, ClothesTypeName),
-                             Colors.GetHashCodes(), SizeGroups.GetHashCodes());
-        #endregion
     }
 }

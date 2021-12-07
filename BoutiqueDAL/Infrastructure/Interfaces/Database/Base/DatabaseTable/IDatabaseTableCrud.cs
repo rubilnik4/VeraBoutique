@@ -15,12 +15,12 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Database.Base.DatabaseTable
         /// <summary>
         /// Добавить запись в таблицу
         /// </summary>
-        Task<IResultValue<TId>> AddAsync(TEntity entity);
+        Task<IResultValue<TEntity>> AddAsync(TEntity entity);
 
         /// <summary>
         /// Добавить список в таблицу
         /// </summary>
-        Task<IResultCollection<TId>> AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<IResultCollection<TEntity>> AddRangeAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
         /// Добавить элемент в таблице

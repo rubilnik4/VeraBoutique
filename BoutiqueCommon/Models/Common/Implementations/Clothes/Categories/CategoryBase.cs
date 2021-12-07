@@ -18,7 +18,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => Name;
+        public string Id =>
+            Name;
 
         /// <summary>
         /// Наименование
@@ -33,7 +34,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
             other?.Id == Id;
 
         public override int GetHashCode() => 
-            HashCode.Combine(Name);
+            HashCode.Combine(Id);
         #endregion
     }
 }

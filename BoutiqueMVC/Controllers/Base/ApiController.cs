@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Base;
@@ -80,6 +81,7 @@ namespace BoutiqueMVC.Controllers.Base
         public async Task<ActionResult<TId>> Post(TTransfer transfer) =>
             await _transferConverter.FromTransfer(transfer).
             ResultValueBindOkAsync(domain => _databaseDatabaseService.Post(domain)).
+            ResultValueOkTaskAsync(domain => domain.Id).
             ToActionResultValueTaskAsync();
 
         /// <summary>
@@ -92,6 +94,7 @@ namespace BoutiqueMVC.Controllers.Base
         public async Task<ActionResult<IReadOnlyCollection<TId>>> Post(IList<TTransfer> transfers) =>
             await _transferConverter.FromTransfers(transfers).
             ResultCollectionBindOkAsync(domains => _databaseDatabaseService.Post(domains)).
+            ResultCollectionOkTaskAsync(domains => domains.Select(domain => domain.Id)).
             ToActionResultCollectionTaskAsync();
 
         /// <summary>

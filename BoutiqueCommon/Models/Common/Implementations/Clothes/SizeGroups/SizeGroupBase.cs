@@ -17,7 +17,6 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
     {
         protected SizeGroupBase(ClothesSizeType clothesSizeType, int sizeNormalize)
         {
-            Id = GetIdHashCode(clothesSizeType, sizeNormalize);
             ClothesSizeType = clothesSizeType;
             SizeNormalize = sizeNormalize;
         }
@@ -35,7 +34,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public int Id { get; }
+        public int Id =>
+            GetHashCode();
 
         /// <summary>
         /// Тип одежды для определения размера
@@ -55,13 +55,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
             other?.Id.Equals(Id) == true;
 
         public override int GetHashCode() =>
-            GetIdHashCode(ClothesSizeType, SizeNormalize);
+             HashCode.Combine(ClothesSizeType, SizeNormalize);
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код идентификатора
-        /// </summary>
-        public static int GetIdHashCode(ClothesSizeType clothesSizeType, int sizeNormalize) =>
-            HashCode.Combine(clothesSizeType, sizeNormalize);
     }
 }

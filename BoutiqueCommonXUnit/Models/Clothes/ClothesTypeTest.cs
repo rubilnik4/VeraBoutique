@@ -30,23 +30,8 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string categoryName = "Нательное";
             var clothesTypeDomain = new ClothesTypeDomain(name, sizeTypeDefault, categoryName);
 
-            int clothesTypeHash = HashCode.Combine(name, categoryName);
+            int clothesTypeHash = HashCode.Combine(name);
             Assert.Equal(clothesTypeHash, clothesTypeDomain.GetHashCode());
-        }
-
-        /// <summary>
-        /// Проверка идентичности поной информации вида одежды
-        /// </summary>
-        [Fact]
-        public void ClothesTypeMain_Equal_Ok()
-        {
-            const string name = "Свитер";
-            const SizeType sizeTypeDefault = SizeType.American;
-            var categoryDomain = new CategoryDomain("Верхушка");
-            var clothesTypeMainDomain = new ClothesTypeMainDomain(name, sizeTypeDefault, categoryDomain);
-
-            int clothesTypeHash = HashCode.Combine(name, categoryDomain.GetHashCode());
-            Assert.Equal(clothesTypeHash, clothesTypeMainDomain.GetHashCode());
         }
 
         /// <summary>

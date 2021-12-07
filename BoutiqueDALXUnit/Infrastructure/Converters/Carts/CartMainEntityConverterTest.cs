@@ -42,10 +42,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Converters.Carts
             var carEntity = CartEntitiesData.CartEntities.First();
             var cartEntityConverter = CartEntityConverterMock.CartMainEntityConverter;
 
-            var clothesDomain = cartEntityConverter.FromEntity(carEntity);
+            var cartDomain = cartEntityConverter.FromEntity(carEntity);
 
-            Assert.True(clothesDomain.OkStatus);
-            Assert.True(CartData.CartMainDomains.First().Equals(clothesDomain.Value));
+            Assert.True(cartDomain.OkStatus);
+            Assert.True(CartData.CartMainDomains.First().Equals(cartDomain.Value));
         }
 
         /// <summary>

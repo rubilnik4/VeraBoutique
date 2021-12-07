@@ -34,7 +34,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public bool Equals(IColorBase? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(Id);
+        public override int GetHashCode() => 
+            HashCode.Combine(Id);
         #endregion
 
         #region IFormattable Support

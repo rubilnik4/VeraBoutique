@@ -36,22 +36,6 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         }
 
         /// <summary>
-        /// Проверка идентичности
-        /// </summary>
-        [Fact]
-        public void SizeGroupMain_Equal_Ok()
-        {
-            const ClothesSizeType clothesSizeType = ClothesSizeType.Pants;
-            const int sizeNormalize = 72;
-            var sizes = SizeData.SizeDomains;
-
-            var sizeGroupMainDomain = new SizeGroupMainDomain(clothesSizeType, sizeNormalize, sizes);
-
-            int sizeGroupHash = HashCode.Combine(clothesSizeType, sizeNormalize, sizes.GetHashCodes());
-            Assert.Equal(sizeGroupHash, sizeGroupMainDomain.GetHashCode());
-        }
-
-        /// <summary>
         /// Проверка идентичности по внутренним коллекциям
         /// </summary>
         [Fact]

@@ -29,17 +29,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
         /// Типы пола
         /// </summary>
         public IReadOnlyCollection<TGender> Genders { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) => 
-            obj is ICategoryMainBase<TGender> category && Equals(category);
-
-        public bool Equals(ICategoryMainBase<TGender>? other) =>
-            other?.Id == Id &&
-            other?.Genders.Cast<IGenderBase>().SequenceEqual(Genders.Cast<IGenderBase>()) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(Name, Genders.GetHashCodes());
-        #endregion
     }
 }

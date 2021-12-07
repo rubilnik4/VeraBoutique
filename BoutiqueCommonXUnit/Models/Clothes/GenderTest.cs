@@ -33,22 +33,6 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void GenderCategory_Equal_Ok()
-        {
-            const GenderType genderType = GenderType.Male;
-            const string genderName = "Мужик";
-            var categoryClothesTypeDomains = CategoryData.CategoryClothesTypeDomains;
-
-            var genderCategoryDomain = new GenderCategoryDomain(genderType, genderName, categoryClothesTypeDomains);
-
-            int genderCategoryHash = HashCode.Combine(genderType, categoryClothesTypeDomains.Average(categoryDomain => categoryDomain.GetHashCode()));
-            Assert.Equal(genderCategoryHash, genderCategoryDomain.GetHashCode());
-        }
-
-        /// <summary>
-        /// Проверка идентичности
-        /// </summary>
-        [Fact]
         public void Gender_Equal_Gender()
         {
             var first = GenderData.GenderDomains.First();

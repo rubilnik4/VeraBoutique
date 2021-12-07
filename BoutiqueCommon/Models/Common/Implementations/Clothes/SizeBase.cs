@@ -27,7 +27,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public abstract int Id { get; }
+        public int Id =>
+            GetHashCode();
 
         /// <summary>
         /// Тип размера одежды
@@ -42,7 +43,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         /// <summary>
         /// Укороченное наименование размера
         /// </summary>
-        public string SizeNameShort => SizeNaming.GetSizeNameShort(SizeType, Name);
+        public string SizeNameShort =>
+            SizeNaming.GetSizeNameShort(SizeType, Name);
 
         #region IEquatable
         public override bool Equals(object? obj) =>
@@ -51,8 +53,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
         public bool Equals(ISizeBase? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => 
-            GetIdHashCode(SizeType, Name);
+        public override int GetHashCode() =>
+            HashCode.Combine(SizeType, Name);
         #endregion
 
         #region IFormattable Support
@@ -60,11 +62,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes
 
         public string ToString(string? format, IFormatProvider? formatProvider) => SizeNameShort;
         #endregion
-
-        /// <summary>
-        /// Получить хэш-код идентификатора
-        /// </summary>
-        public static int GetIdHashCode(SizeType sizeType, string name) =>
-            HashCode.Combine(sizeType, name);
     }
 }

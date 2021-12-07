@@ -7,7 +7,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Categories
     /// <summary>
     /// Категория одежды. Основная модель
     /// </summary>
-    public interface ICategoryMainBase<TGender>: ICategoryBase, IEquatable<ICategoryMainBase<TGender>>
+    public interface ICategoryMainBase<out TGender>: ICategoryBase
         where  TGender: IGenderBase
     {
         /// <summary>

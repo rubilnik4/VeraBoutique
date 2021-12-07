@@ -28,14 +28,14 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
         public static Mock<ITestDatabaseService> GetTestDatabaseTable(IResultCollection<ITestDomain> testDomains,
-                                                                      Func<ITestDomain, IResultValue<TestEnum>> postValueFunc) =>
+                                                                      Func<ITestDomain, IResultValue<ITestDomain>> postValueFunc) =>
             GetTestDatabaseTable(postValueFunc, PostCollectionOkFunc(testDomains));
 
         /// <summary>
         /// Получить тестовый сервис работы с базой данных
         /// </summary>
-        public static Mock<ITestDatabaseService> GetTestDatabaseTable(Func<ITestDomain, IResultValue<TestEnum>> postValueFunc,
-                                                                      Func<IResultCollection<TestEnum>> postCollectionFunc) =>
+        public static Mock<ITestDatabaseService> GetTestDatabaseTable(Func<ITestDomain, IResultValue<ITestDomain>> postValueFunc,
+                                                                      Func<IResultCollection<ITestDomain>> postCollectionFunc) =>
             new Mock<ITestDatabaseService>().
             Void(serviceMock => serviceMock.Setup(service => service.Post(It.IsAny<ITestDomain>())).
                                             ReturnsAsync(postValueFunc)).
@@ -45,19 +45,19 @@ namespace BoutiqueMVCXUnit.Controllers.Base.Mocks
         /// <summary>
         /// Функция записи значения
         /// </summary>
-        public static Func<ITestDomain, IResultValue<TestEnum>> PostValueOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            domain => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, domain.Id).Id);
+        public static Func<ITestDomain, IResultValue<ITestDomain>> PostValueOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            domain => testDomains.ResultValueOk(tests => SearchInDomains.FirstDomain(tests, domain.Id));
 
         /// <summary>
         /// Функция записи значения. Элемент не найден
         /// </summary>
-        public static Func<ITestDomain, IResultValue<TestEnum>> PostValueFoundFunc() =>
-            _ => ErrorData.ErrorNotFound.ToResultValue<TestEnum>();
+        public static Func<ITestDomain, IResultValue<ITestDomain>> PostValueFoundFunc() =>
+            _ => ErrorData.ErrorNotFound.ToResultValue<ITestDomain>();
 
         /// <summary>
         /// Функция записи коллекции
         /// </summary>
-        public static Func<IResultCollection<TestEnum>> PostCollectionOkFunc(IResultCollection<ITestDomain> testDomains) =>
-            () => testDomains.ResultCollectionOk(TestData.GetTestIds);
+        public static Func<IResultCollection<ITestDomain>> PostCollectionOkFunc(IResultCollection<ITestDomain> testDomains) =>
+            () => testDomains;
     }
 }

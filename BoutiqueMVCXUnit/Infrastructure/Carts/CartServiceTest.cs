@@ -61,8 +61,6 @@ namespace BoutiqueMVCXUnit.Infrastructure.Carts
         private static Mock<ICartDatabaseService> GetCartDatabaseService(IResultValue<ICartMainDomain> cartResult) =>
             new Mock<ICartDatabaseService>().
             Void(mock => mock.Setup(service => service.Post(It.IsAny<ICartMainDomain>())).
-                              ReturnsAsync(cartResult.ResultValueOk(cart => cart.Id))).
-            Void(mock => mock.Setup(service => service.Get(It.IsAny<Guid>())).
-                              ReturnsAsync(cartResult));
+                              ReturnsAsync(cartResult.ResultValueOk(cart => cart)));
     }
 }

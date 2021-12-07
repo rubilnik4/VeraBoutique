@@ -33,7 +33,7 @@ namespace BoutiqueLoader.Factories.DatabaseInitialize.Boutique
                 new ClothesMainDomain(0, $"Футболка {index}", $"Футболка тестовая шерстяная {index}",
                                       index * 100,
                                       Enumerable.Range(1, RandomNumbers.GetRandom(1, 3)).
-                                                 Select(indexImage => new ClothesImageDomain(0, ImageResource, indexImage == 1, 0)),
+                                                 Select(indexImage => new ClothesImageDomain(Guid.Empty, ImageResource, indexImage == 1, 0)),
                                       GenderInitialize.Male, ClothesTypeInitialize.TshirtClothesType, Colors, Sizes));
 
         /// <summary>

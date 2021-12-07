@@ -34,10 +34,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
-            var resultId = await testService.Post(testDomain);
+            var result = await testService.Post(testDomain);
 
-            Assert.True(resultId.OkStatus);
-            Assert.True(resultId.Value.Equals(testDomain.Id));
+            Assert.True(result.OkStatus);
+            Assert.True(result.Value.Equals(testDomain));
         }
 
         /// <summary>
@@ -54,10 +54,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
-            var resultId = await testService.Post(testDomain);
+            var result = await testService.Post(testDomain);
 
-            Assert.True(resultId.HasErrors);
-            Assert.IsAssignableFrom<IDatabaseValueDuplicatedErrorResult>(resultId.Errors.First());
+            Assert.True(result.HasErrors);
+            Assert.IsAssignableFrom<IDatabaseValueDuplicatedErrorResult>(result.Errors.First());
         }
 
         /// <summary>
@@ -94,10 +94,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock,
                                                                          validateService.Object, testConverter);
 
-            var resultIds = await testService.Post(testDomains);
+            var results = await testService.Post(testDomains);
 
-            Assert.True(resultIds.OkStatus);
-            Assert.True(resultIds.Value.SequenceEqual(TestData.GetTestIds(testDomains)));
+            Assert.True(results.OkStatus);
+            Assert.True(results.Value.SequenceEqual(testDomains));
         }
 
         /// <summary>
@@ -134,10 +134,10 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var testService = DatabaseServiceMock.GetTestDatabaseService(testDatabaseMock.Object, testTableMock.Object,
                                                                          validateService.Object, testConverter);
 
-            var resultIds = await testService.Post(testDomains);
+            var results = await testService.Post(testDomains);
 
-            Assert.True(resultIds.HasErrors);
-            Assert.IsType<DatabaseAccessErrorResult>(resultIds.Errors.First());
+            Assert.True(results.HasErrors);
+            Assert.IsType<DatabaseAccessErrorResult>(results.Errors.First());
         }
     }
 }

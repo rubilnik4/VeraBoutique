@@ -42,8 +42,8 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables
         /// </summary>
         public static Mock<IClothesTable> GetClothesTable(IResultValue<ClothesImageEntity> clothesImageEntity) =>
             new Mock<IClothesTable>().
-            Void(tableMock => tableMock.Setup(table => table.FindExpressionAsync(It.IsAny<Func<IQueryable<ClothesEntity>, Task<ClothesImageEntity?>>>(),
-                                                                                 It.IsAny<int>())).
+            Void(tableMock => tableMock.Setup(table => table.FindExpressionValueAsync(It.IsAny<Func<IQueryable<ClothesEntity>, Task<ClothesImageEntity>>>(),
+                                                                                      It.IsAny<int>())).
                               ReturnsAsync(clothesImageEntity));
     }
 }

@@ -20,8 +20,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
     /// <summary>
     /// Таблица базы данных EntityFramework
     /// </summary>
-    public abstract partial class EntityDatabaseTable<TId, TDomain, TEntity> : 
-        DbSet<TEntity>, IDatabaseTable<TId, TDomain, TEntity>
+    public abstract partial class EntityDatabaseTable<TId, TDomain, TEntity> : DbSet<TEntity>, IDatabaseTable<TId, TDomain, TEntity>
         where TDomain : IDomainModel<TId>
         where TEntity : class, IEntityModel<TId>
         where TId : notnull
@@ -39,7 +38,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Имя таблицы
         /// </summary>
-        public string TableName => GetType().Name;
+        public string TableName =>
+            GetType().Name;
 
         /// <summary>
         /// Выгрузка идентификатора
@@ -59,6 +59,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Base.EntityDatabas
         /// <summary>
         /// Ошибка доступа к таблице базы данных
         /// </summary>
-        private IErrorResult TableAccessErrorType => DatabaseErrors.AccessError(TableName);
+        private IErrorResult TableAccessErrorType =>
+            DatabaseErrors.AccessError(TableName);
     }
 }

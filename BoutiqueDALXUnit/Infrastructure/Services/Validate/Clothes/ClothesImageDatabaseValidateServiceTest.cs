@@ -47,7 +47,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         [Fact]
         public void ValidateModel_ImageError()
         {
-            var imageEmptyImage = new ClothesImageDomain(0, null!, false, 0);
+            var imageEmptyImage = new ClothesImageDomain(Guid.Empty, null!, false, 0);
 
             var result = ValidateModel(imageEmptyImage);
 
@@ -89,7 +89,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Validate.Clothes
         public void ValidateByMain_Multiple()
         {
             var imageDomains = ClothesImageData.ClothesImageDomains.
-                               Append(new ClothesImageDomain(0, ClothesImageData.ClothesImageDomains.First().Image, true, 0));
+                               Append(new ClothesImageDomain(Guid.Empty, ClothesImageData.ClothesImageDomains.First().Image, true, 0));
 
             var result = ValidateByMain(imageDomains);
 

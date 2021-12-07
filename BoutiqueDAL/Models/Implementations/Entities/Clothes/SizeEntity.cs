@@ -25,14 +25,8 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
         public SizeEntity(SizeType sizeType, string name, IEnumerable<SizeGroupCompositeEntity>? sizeGroupComposites)
             : base(sizeType, name)
         {
-            Id = GetIdHashCode(sizeType, name);
             SizeGroupComposites = sizeGroupComposites?.ToList();
         }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public override int Id { get; }
 
         /// <summary>
         /// Связующая сущность размера одежды

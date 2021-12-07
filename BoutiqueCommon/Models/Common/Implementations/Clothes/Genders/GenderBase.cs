@@ -20,7 +20,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Genders
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public GenderType Id => GenderType;
+        public GenderType Id =>
+            GenderType;
 
         /// <summary>
         /// Тип пола
@@ -33,12 +34,14 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Genders
         public virtual string Name { get; }
 
         #region IEquatable
-        public override bool Equals(object? obj) => obj is IGenderBase gender && Equals(gender);
+        public override bool Equals(object? obj) =>
+            obj is IGenderBase gender && Equals(gender);
 
         public bool Equals(IGenderBase? other) =>
             other?.Id == Id;
 
-        public override int GetHashCode() => HashCode.Combine(GenderType);
+        public override int GetHashCode() =>
+            HashCode.Combine(Id);
         #endregion
     }
 }

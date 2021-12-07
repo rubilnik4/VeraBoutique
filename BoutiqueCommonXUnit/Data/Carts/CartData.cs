@@ -20,7 +20,7 @@ namespace BoutiqueCommonXUnit.Data.Carts
         /// <summary>
         /// Корзина
         /// </summary>
-        public static IReadOnlyCollection<ICartMainDomain> CartMainDomains =>
+        public static IReadOnlyCollection<ICartMainDomain> CartMainDomains { get; } =
             new List<ICartMainDomain>
             {
                 new CartMainDomain(Guid.NewGuid(), CartItemData.CartItems.Take(1)),

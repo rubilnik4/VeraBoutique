@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.SizeGroups
     /// <summary>
     /// Группа размеров одежды с размером по умолчанию. Базовые данные
     /// </summary>
-    public interface ISizeGroupDefaultBase<TSize> : ISizeGroupMainBase<TSize>, IFormattable
+    public interface ISizeGroupDefaultBase<out TSize> : ISizeGroupMainBase<TSize>, IFormattable
         where TSize : ISizeBase
     {
         /// <summary>

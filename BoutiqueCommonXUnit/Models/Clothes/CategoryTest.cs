@@ -44,24 +44,10 @@ namespace BoutiqueCommonXUnit.Models.Clothes
         /// Проверка идентичности
         /// </summary>
         [Fact]
-        public void CategoryMain_Equal_Ok()
-        {
-            const string category = "обувь";
-            var genders = GenderData.GenderDomains;
-            var categoryMainDomain = new CategoryMainDomain(category, genders);
-
-            int categoryMainHash = HashCode.Combine(category, genders.Average(gender => gender.GetHashCode()));
-            Assert.Equal(categoryMainHash, categoryMainDomain.GetHashCode());
-        }
-
-        /// <summary>
-        /// Проверка идентичности
-        /// </summary>
-        [Fact]
         public void CategoryMain_Equal_CategoryMain()
         {
             var first = CategoryData.CategoryMainDomains.First();
-            var second =new CategoryMainDomain(first, first.Genders);
+            var second = new CategoryMainDomain(first, first.Genders);
 
             Assert.True(first.Equals(second));
         }
@@ -90,20 +76,6 @@ namespace BoutiqueCommonXUnit.Models.Clothes
 
             Assert.True(first.Equals(second));
             Assert.True(second.Equals(first));
-        }
-
-        /// <summary>
-        /// Проверка идентичности
-        /// </summary>
-        [Fact]
-        public void CategoryClothesType_Equal_Ok()
-        {
-            const string category = "обувь";
-            var clothesTypes = ClothesTypeData.ClothesTypeDomains;
-            var categoryClothesTypeDomain = new CategoryClothesTypeDomain(category, clothesTypes);
-
-            int categoryClothesTypeHash = HashCode.Combine(category, clothesTypes.Average(clothesType => clothesType.GetHashCode()));
-            Assert.Equal(categoryClothesTypeHash, categoryClothesTypeDomain.GetHashCode());
         }
 
         /// <summary>

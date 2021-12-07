@@ -22,7 +22,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public string Id => Name;
+        public string Id =>
+            Name;
 
         /// <summary>
         /// Наименование
@@ -44,11 +45,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.ClothesTypes
             obj is IClothesTypeBase clothesType && Equals(clothesType);
 
         public bool Equals(IClothesTypeBase? other) =>
-            other?.Id == Id &&
-            other?.CategoryName.Equals(CategoryName) == true;
+            other?.Id == Id;
 
         public override int GetHashCode() => 
-            HashCode.Combine(Name, CategoryName);
+            HashCode.Combine(Id);
         #endregion
     }
 }

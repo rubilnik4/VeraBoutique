@@ -57,15 +57,10 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
             obj is IClothesBase clothes && Equals(clothes);
 
         public bool Equals(IClothesBase? other) =>
-            other?.Id == Id && 
-            other?.Name == Name && 
-            other?.Description == Description && 
-            other?.Price == Price &&
-            GenderType == other.GenderType &&
-            ClothesTypeName == other.ClothesTypeName;
+            other?.Id == Id;
 
         public override int GetHashCode() =>
-            HashCode.Combine(Id, Name, Description, Price, GenderType, ClothesTypeName);
+            HashCode.Combine(Id);
         #endregion
     }
 }

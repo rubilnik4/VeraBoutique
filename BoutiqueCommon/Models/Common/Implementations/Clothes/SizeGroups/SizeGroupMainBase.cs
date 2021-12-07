@@ -35,17 +35,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
         /// </summary>
         public string GetBaseGroupName(SizeType sizeType) =>
             SizeNaming.GetGroupName(sizeType, Sizes);
-
-        #region IEquatable
-        public override bool Equals(object? obj) =>
-            obj is ISizeGroupMainBase<TSize> sizeGroup && Equals(sizeGroup);
-
-        public bool Equals(ISizeGroupMainBase<TSize>? other) =>
-            base.Equals(other) &&
-            other?.Sizes.SequenceEqual(Sizes) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(ClothesSizeType, SizeNormalize, Sizes.GetHashCodes());
-        #endregion
     }
 }

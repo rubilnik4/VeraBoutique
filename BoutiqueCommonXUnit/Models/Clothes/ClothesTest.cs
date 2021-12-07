@@ -38,54 +38,7 @@ namespace BoutiqueCommonXUnit.Models.Clothes
             const string clothesTypeName = "Одежа";
             var clothes = new ClothesDomain(id, name, description, price, genderType, clothesTypeName);
 
-            int clothesHash = HashCode.Combine(id, name, description, price, genderType, clothesTypeName);
-            Assert.Equal(clothesHash, clothes.GetHashCode());
-        }
-
-        /// <summary>
-        /// Проверка идентичности полной информации об одежде
-        /// </summary>
-        [Fact]
-        public void ClothesDetail_Equal_Ok()
-        {
-            const int id = 1;
-            const string name = "Полушубок";
-            const string description = "Полушубок красивый";
-            const decimal price = (decimal)0.55;
-            const GenderType genderType = GenderType.Child;
-            const string clothesTypeName = "Одежа";
-            var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
-            var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
-            var sizeGroups = new List<ISizeGroupMainDomain> { new SizeGroupMainDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothes = new ClothesDetailDomain(id, name, description, price, genderType, clothesTypeName, colors, sizeGroups);
-
-            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description, genderType, clothesTypeName),
-                                               colors.GetHashCodes(), sizeGroups.GetHashCodes());
-            Assert.Equal(clothesHash, clothes.GetHashCode());
-        }
-
-        /// <summary>
-        /// Проверка идентичности полной информации об одежде
-        /// </summary>
-        [Fact]
-        public void ClothesMain_Equal_Ok()
-        {
-            const int id = 1;
-            const string name = "Полушубок";
-            const string description = "Полушубок красивый";
-            const decimal price = (decimal)0.55;
-            var images = new List<IClothesImageDomain> { new ClothesImageDomain(Guid.NewGuid(), Resources.TestImage, true, 0) };
-            var gender = new GenderDomain(GenderType.Male, "Мужик");
-            var clothesType = new ClothesTypeDomain("Тряпье нательное", SizeType.American, "Тряпье");
-            var colors = new List<IColorDomain> { new ColorDomain("Бежевый") };
-            var sizes = new List<ISizeDomain> { new SizeDomain(SizeType.American, "1") };
-            var sizeGroups = new List<ISizeGroupMainDomain> { new SizeGroupMainDomain(ClothesSizeType.Shirt, 1, sizes) };
-            var clothes = new ClothesMainDomain(id, name, description, price, images, gender, clothesType, colors, sizeGroups);
-
-            int clothesHash = HashCode.Combine(HashCode.Combine(id, name, price, description), 
-                                               images.GetHashCodes(),
-                                               gender.GetHashCode(), clothesType.GetHashCode(),
-                                               colors.GetHashCodes(), sizeGroups.GetHashCodes());
+            int clothesHash = HashCode.Combine(id);
             Assert.Equal(clothesHash, clothes.GetHashCode());
         }
 

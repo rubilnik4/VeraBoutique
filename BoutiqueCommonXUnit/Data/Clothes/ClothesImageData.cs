@@ -16,7 +16,7 @@ namespace BoutiqueCommonXUnit.Data.Clothes
         /// <summary>
         /// Получить информацию об одежде
         /// </summary>
-        public static IReadOnlyCollection<IClothesImageDomain> ClothesImageDomains =>
+        public static IReadOnlyCollection<IClothesImageDomain> ClothesImageDomains { get; }=
             new List<IClothesImageDomain>
             {
                 new ClothesImageDomain(Guid.NewGuid(), Properties.Resources.TestImage, true, 0),

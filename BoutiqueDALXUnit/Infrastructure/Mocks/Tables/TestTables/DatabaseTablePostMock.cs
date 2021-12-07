@@ -29,49 +29,48 @@ namespace BoutiqueDALXUnit.Infrastructure.Mocks.Tables.TestTables
         /// <summary>
         /// Получить тестовую таблицу
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(Func<TestEntity, IResultValue<TestEnum>> addIdFunc) =>
-            GetTestDatabaseTable(addIdFunc, AddRangeIdOk());
+        public static Mock<ITestTable> GetTestDatabaseTable(Func<TestEntity, IResultValue<TestEntity>> addFunc) =>
+            GetTestDatabaseTable(addFunc, AddRangeIdOk());
 
         /// <summary>
         /// Получить тестовую таблицу
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> addRangeIdFunc) =>
-            GetTestDatabaseTable(AddIdOk(), addRangeIdFunc);
+        public static Mock<ITestTable> GetTestDatabaseTable(Func<IEnumerable<TestEntity>, IResultCollection<TestEntity>> addRangeFunc) =>
+            GetTestDatabaseTable(AddIdOk(), addRangeFunc);
 
         /// <summary>
         /// Получить тестовую таблицу
         /// </summary>
-        public static Mock<ITestTable> GetTestDatabaseTable(Func<TestEntity, IResultValue<TestEnum>> addIdFunc,
-                                                            Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> addRangeIdFunc) =>
+        public static Mock<ITestTable> GetTestDatabaseTable(Func<TestEntity, IResultValue<TestEntity>> addFunc,
+                                                            Func<IEnumerable<TestEntity>, IResultCollection<TestEntity>> addRangeFunc) =>
             new Mock<ITestTable>().
             Void(tableMock => tableMock.Setup(table => table.AddAsync(It.IsAny<TestEntity>())).
-                                        ReturnsAsync(addIdFunc)).
+                                        ReturnsAsync(addFunc)).
             Void(tableMock => tableMock.Setup(table => table.AddRangeAsync(It.IsAny<IEnumerable<TestEntity>>())).
-                                        ReturnsAsync(addRangeIdFunc));
+                                        ReturnsAsync(addRangeFunc));
 
         /// <summary>
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
-        public static Func<TestEntity, IResultValue<TestEnum>> AddIdOk() =>
-           entity => new ResultValue<TestEnum>(entity.Id);
+        public static Func<TestEntity, IResultValue<TestEntity>> AddIdOk() =>
+           entity => new ResultValue<TestEntity>(entity);
 
         /// <summary>
         /// Получить идентификаторы по добавляемым сущностям
         /// </summary>
-        public static Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> AddRangeIdOk() =>
-            entities => entities.Select(entity => entity.Id).
-                        Map(ids => new ResultCollection<TestEnum>(ids));
+        public static Func<IEnumerable<TestEntity>, IResultCollection<TestEntity>> AddRangeIdOk() =>
+            entities => new ResultCollection<TestEntity>(entities);
 
         /// <summary>
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
-        public static Func<TestEntity, IResultValue<TestEnum>> AddIdError() =>
-           _ => new ResultValue<TestEnum>(DatabaseErrorData.TableError);
+        public static Func<TestEntity, IResultValue<TestEntity>> AddIdError() =>
+           _ => new ResultValue<TestEntity>(DatabaseErrorData.TableError);
 
         /// <summary>
         /// Получить идентификатор по добавляемым сущностям
         /// </summary>
-        public static Func<IEnumerable<TestEntity>, IResultCollection<TestEnum>> AddRangeIdError() =>
-           _ => new ResultCollection<TestEnum>(DatabaseErrorData.TableError);
+        public static Func<IEnumerable<TestEntity>, IResultCollection<TestEntity>> AddRangeIdError() =>
+           _ => new ResultCollection<TestEntity>(DatabaseErrorData.TableError);
     }
 }

@@ -50,23 +50,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Clothes
         /// Вид одежды
         /// </summary>
         public TClothesType ClothesType { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) =>
-            obj is IClothesMainBase<TImage, TGender, TClothesType, TColor, TSizeGroup, TSize> clothes &&
-            Equals(clothes);
-
-        public bool Equals(IClothesMainBase<TImage, TGender, TClothesType, TColor, TSizeGroup, TSize>? other) =>
-            base.Equals(other) &&
-            other?.Images.SequenceEqual(Images) == true &&
-            other?.Gender.Equals(Gender) == true &&
-            other?.ClothesType.Equals(ClothesType) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(HashCode.Combine(Id, Name, Price, Description),
-                             Images.GetHashCodes(),
-                             Gender.GetHashCode(), ClothesType.GetHashCode(),
-                             Colors.GetHashCodes(), SizeGroups.GetHashCodes());
-        #endregion
     }
 }

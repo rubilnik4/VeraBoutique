@@ -12,9 +12,8 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.Clothes
     /// <summary>
     /// Одежда. Полная информация
     /// </summary>
-    public interface IClothesMainBase<TImage, TGender, TClothesType, TColor, TSizeGroup, TSize> :
-        IClothesDetailBase<TColor, TSizeGroup, TSize>,
-        IEquatable<IClothesMainBase<TImage, TGender, TClothesType, TColor, TSizeGroup, TSize>>
+    public interface IClothesMainBase<out TImage, out TGender, out TClothesType, out TColor, out TSizeGroup, TSize> :
+        IClothesDetailBase<TColor, TSizeGroup, TSize>
         where TImage : IClothesImageBase
         where TGender : IGenderBase
         where TClothesType : IClothesTypeBase

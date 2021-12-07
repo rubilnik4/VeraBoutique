@@ -32,8 +32,7 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
        where TEntity : class, IEntityModel<TId>
        where TId : notnull
     {
-        protected DatabaseService(IDatabase database,
-                                  IDatabaseTable<TId, TDomain, TEntity> dataTable,
+        protected DatabaseService(IDatabase database, IDatabaseTable<TId, TDomain, TEntity> dataTable,
                                   IDatabaseValidateService<TId, TDomain> databaseValidateService,
                                   IEntityConverter<TId, TDomain, TEntity> mainMainEntityConverter)
         {
@@ -80,24 +79,26 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Загрузить модель в базу
         /// </summary>
-        public async Task<IResultValue<TId>> Post(TDomain domain) =>
+        public async Task<IResultValue<TDomain>> Post(TDomain domain) =>
             await new ResultValue<TDomain>(domain).
             ResultValueBindErrorsOkAsync(_ => _databaseValidateService.ValidatePost(domain)).
-            ResultValueBindOkBindAsync(_ => AddWithSaving(domain));
+            ResultValueBindOkBindAsync(_ => AddWithSaving(domain)).
+            ResultValueBindOkTaskAsync(_mainMainEntityConverter.FromEntity);
 
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        public async Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models) =>
+        public async Task<IResultCollection<TDomain>> Post(IEnumerable<TDomain> models) =>
             await PostCollection(models.ToList());
 
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        private async Task<IResultCollection<TId>> PostCollection(IReadOnlyCollection<TDomain> domains) =>
+        private async Task<IResultCollection<TDomain>> PostCollection(IReadOnlyCollection<TDomain> domains) =>
             await new ResultCollection<TDomain>(domains).
             ResultCollectionBindErrorsOkAsync(_ => _databaseValidateService.ValidatePost(domains)).
-            ResultCollectionBindOkBindAsync(_ => AddRangeWithSaving(_dataTable, domains));
+            ResultCollectionBindOkBindAsync(_ => AddRangeWithSaving(_dataTable, domains)).
+            ResultCollectionBindOkTaskAsync(_mainMainEntityConverter.FromEntities);
 
         /// <summary>
         /// Заменить модель в базе по идентификатору
@@ -125,15 +126,15 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Services.Base
         /// <summary>
         /// Добавить модель в базу и сохранить
         /// </summary>
-        private async Task<IResultValue<TId>> AddWithSaving(TDomain model) =>
+        private async Task<IResultValue<TEntity>> AddWithSaving(TDomain model) =>
             await _dataTable.AddAsync(_mainMainEntityConverter.ToEntity(model)).
             ResultValueBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 
         /// <summary>
         /// Добавить модели в базу и сохранить
         /// </summary>
-        private async Task<IResultCollection<TId>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntity> dataTable,
-                                                                      IEnumerable<TDomain> models) =>
+        private async Task<IResultCollection<TEntity>> AddRangeWithSaving(IDatabaseTable<TId, TDomain, TEntity> dataTable,
+                                                                          IEnumerable<TDomain> models) =>
             await dataTable.AddRangeAsync(_mainMainEntityConverter.ToEntities(models)).
             ResultCollectionBindErrorsOkBindAsync(_ => DatabaseSaveChanges());
 

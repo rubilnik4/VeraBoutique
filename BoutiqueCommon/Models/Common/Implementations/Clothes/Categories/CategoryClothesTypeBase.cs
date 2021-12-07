@@ -30,18 +30,5 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.Categories
         /// Типы одежды
         /// </summary>
         public IReadOnlyCollection<TClothesType> ClothesTypes { get; }
-
-        #region IEquatable
-        public override bool Equals(object? obj) =>
-            obj is ICategoryClothesTypeBase<TClothesType> categoryClothesType &&
-            Equals(categoryClothesType);
-
-        public bool Equals(ICategoryClothesTypeBase<TClothesType>? other) =>
-            other?.Id == Id &&
-            other?.ClothesTypes.Cast<IClothesTypeBase>().SequenceEqual(ClothesTypes.Cast<IClothesTypeBase>()) == true;
-
-        public override int GetHashCode() =>
-            HashCode.Combine(Name, ClothesTypes.GetHashCodes());
-        #endregion
     }
 }

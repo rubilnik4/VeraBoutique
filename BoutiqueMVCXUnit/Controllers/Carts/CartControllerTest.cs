@@ -77,7 +77,6 @@ namespace BoutiqueMVCXUnit.Controllers.Carts
         /// </summary>
         private static CartController GetCartController(ICartService cartService) =>
             new(cartService,
-                CartTransferConverterMock.CartTransferConverter,
-                CartTransferConverterMock.CartMainTransferConverter);
+                CartTransferConverterMock.CartTransferConverter);
     }
 }

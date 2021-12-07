@@ -26,12 +26,12 @@ namespace BoutiqueDAL.Infrastructure.Interfaces.Services.Base
         /// <summary>
         /// Загрузить модель в базу
         /// </summary>
-        Task<IResultValue<TId>> Post(TDomain cart);
+        Task<IResultValue<TDomain>> Post(TDomain cart);
 
         /// <summary>
         /// Загрузить модели в базу
         /// </summary>
-        Task<IResultCollection<TId>> Post(IEnumerable<TDomain> models);
+        Task<IResultCollection<TDomain>> Post(IEnumerable<TDomain> models);
 
         /// <summary>
         /// Заменить модель в базе по идентификатору

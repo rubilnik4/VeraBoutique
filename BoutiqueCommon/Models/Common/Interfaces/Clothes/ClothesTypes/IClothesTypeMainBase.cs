@@ -6,7 +6,7 @@ namespace BoutiqueCommon.Models.Common.Interfaces.Clothes.ClothesTypes
     /// <summary>
     /// Вид одежды. Основная модель
     /// </summary>
-    public interface IClothesTypeMainBase<TCategory>: IClothesTypeBase, IEquatable<IClothesTypeMainBase<TCategory>>
+    public interface IClothesTypeMainBase<out TCategory>: IClothesTypeBase
         where TCategory: ICategoryBase
     {
         /// <summary>

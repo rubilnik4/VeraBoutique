@@ -23,12 +23,10 @@ namespace BoutiqueMVC.Controllers.Carts
     [ApiController]
     public class CartController: ControllerBase
     {
-        public CartController(ICartService cartService, ICartTransferConverter cartTransferConverter,
-                              ICartMainTransferConverter cartMainTransferConverter)
+        public CartController(ICartService cartService, ICartTransferConverter cartTransferConverter)
         {
             _cartService = cartService;
             _cartTransferConverter = cartTransferConverter;
-            _cartMainTransferConverter = cartMainTransferConverter;
         }
 
         /// <summary>
@@ -40,11 +38,6 @@ namespace BoutiqueMVC.Controllers.Carts
         /// Конвертер корзины в трансферную модель
         /// </summary>
         private readonly ICartTransferConverter _cartTransferConverter;
-
-        /// <summary>
-        /// Конвертер корзины в трансферную модель
-        /// </summary>
-        private readonly ICartMainTransferConverter _cartMainTransferConverter;
 
         /// <summary>
         /// Получить пользователей с ролями

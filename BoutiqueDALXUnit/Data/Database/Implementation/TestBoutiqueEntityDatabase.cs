@@ -8,13 +8,16 @@ using BoutiqueDAL.Infrastructure.Implementations.Database.Base;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Mapping;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Carts;
 using BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Implementations.Identities;
 using BoutiqueDAL.Infrastructure.Implementations.Services.Identities;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table;
+using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Carts;
 using BoutiqueDAL.Infrastructure.Interfaces.Database.Boutique.Table.Clothes;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
+using BoutiqueDAL.Models.Implementations.Entities.Carts;
 using BoutiqueDAL.Models.Implementations.Entities.Clothes;
 using BoutiqueDAL.Models.Implementations.Identities;
 using ResultFunctional.FunctionalExtensions.Async;
@@ -62,14 +65,24 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         public DbSet<SizeGroupEntity> SizeGroups { get; set; } = null!;
 
         /// <summary>
-        /// Таблица базы данных  одежды
+        /// Таблица базы данных одежды
         /// </summary>
         public DbSet<ClothesImageEntity> ClothesImage { get; set; } = null!;
 
         /// <summary>
-        /// Таблица базы данных  одежды
+        /// Таблица базы данных одежды
         /// </summary>
         public DbSet<ClothesEntity> Clothes { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных корзин
+        /// </summary>
+        public DbSet<CartEntity> Carts { get; set; } = null!;
+
+        /// <summary>
+        /// Таблица базы данных позиций корзин
+        /// </summary>
+        public DbSet<CartItemEntity> CartItems { get; set; } = null!;
 
         /// <summary>
         /// Таблица базы данных размеров одежды
@@ -110,6 +123,16 @@ namespace BoutiqueDALXUnit.Data.Database.Implementation
         /// Таблица базы данных одежды
         /// </summary>
         public IClothesTable ClothesTable => new ClothesTable(Clothes);
+
+        /// <summary>
+        /// Таблица базы данных корзин
+        /// </summary>
+        public ICartTable CartTable => new CartTable(Carts);
+
+        /// <summary>
+        /// Таблица базы данных позиций корзин
+        /// </summary>
+        public ICartItemTable CartItemTable => new CartItemTable(CartItems);
 
         /// <summary>
         /// Обновить схемы базы данных
