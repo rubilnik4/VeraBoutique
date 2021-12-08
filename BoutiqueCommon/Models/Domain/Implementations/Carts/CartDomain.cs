@@ -12,11 +12,11 @@ namespace BoutiqueCommon.Models.Domain.Implementations.Carts
     public class CartDomain : CartBase, ICartDomain
     {
         public CartDomain(ICartBase cart)
-         : base(cart.Id)
+            : this(cart.Id, cart.CreationDate, cart.AuthorId)
         { }
 
-        public CartDomain(Guid id)
-            : base(id)
+        public CartDomain(Guid id, DateTime creationDate, string authorId)
+            : base(id, creationDate, authorId)
         { }
     }
 }

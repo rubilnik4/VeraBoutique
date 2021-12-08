@@ -7,23 +7,20 @@ using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDAL.Models.Implementations.Identities;
 using BoutiqueDALXUnit.Data.Identity;
-using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Identity;
-using BoutiqueMVC.Models.Implementations.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Implementations.Results;
 using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Controllers.Authorization
+namespace BoutiqueMVCXUnit.Controllers.Identity
 {
     /// <summary>
     /// Контроллер пользователей. Тесты

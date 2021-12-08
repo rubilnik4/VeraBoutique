@@ -5,6 +5,7 @@ using BoutiqueDTO.Infrastructure.Interfaces.Converters.Carts;
 using BoutiqueDTO.Models.Implementations.Carts;
 using BoutiqueDTO.Models.Implementations.Identities;
 using BoutiqueMVC.Extensions.Controllers.Async;
+using BoutiqueMVC.Infrastructure.Implementation.Identities;
 using BoutiqueMVC.Infrastructure.Interfaces.Carts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -46,7 +47,8 @@ namespace BoutiqueMVC.Controllers.Carts
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<CartTransfer>> CreateCart() =>
-            await _cartService.CreateCart().
+            await ClaimsInformation.GetEmail(User).
+            ResultValueBindOkAsync(email => _cartService.CreateCart(email)).
             ResultValueOkTaskAsync(cart => _cartTransferConverter.ToTransfer(cart)).
             ToActionResultValueTaskAsync<Guid, CartTransfer>();
     }

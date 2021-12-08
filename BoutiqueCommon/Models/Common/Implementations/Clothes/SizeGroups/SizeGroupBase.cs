@@ -34,7 +34,7 @@ namespace BoutiqueCommon.Models.Common.Implementations.Clothes.SizeGroups
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public int Id =>
+        public virtual int Id =>
             GetHashCode();
 
         /// <summary>

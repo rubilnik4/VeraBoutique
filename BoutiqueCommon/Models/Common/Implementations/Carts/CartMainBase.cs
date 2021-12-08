@@ -8,8 +8,8 @@ namespace BoutiqueCommon.Models.Common.Implementations.Carts
     public abstract class CartMainBase<TCartItem> : CartBase, ICartMainBase<TCartItem>
         where TCartItem : ICartItemBase
     {
-        protected CartMainBase(Guid id, IEnumerable<TCartItem> cartItems)
-            :base(id)
+        protected CartMainBase(Guid id, DateTime creationDate, string authorId, IEnumerable<TCartItem> cartItems)
+            :base(id, creationDate, authorId)
         {
             CartItems = cartItems.ToList();
         }

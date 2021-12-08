@@ -1,36 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using BoutiqueCommon.Models.Domain.Interfaces.Identities;
 using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
-using BoutiqueDAL.Models.Enums.Identity;
-using BoutiqueDAL.Models.Implementations.Identities;
-using BoutiqueDALXUnit.Data.Identity;
 using BoutiqueDTOXUnit.Data.Transfers.Authorize;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Identity;
 using BoutiqueMVC.Infrastructure.Interfaces.Identities;
-using BoutiqueMVC.Models.Implementations.Identity;
-using BoutiqueMVCXUnit.Data.Controllers.Implementations;
 using Microsoft.AspNetCore.Http;
-using ResultFunctional.FunctionalExtensions.Sync;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MockQueryable.Moq;
 using Moq;
+using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
-namespace BoutiqueMVCXUnit.Controllers.Authorization
+namespace BoutiqueMVCXUnit.Controllers.Identity
 {
     /// <summary>
     /// Контроллер авторизации. Тесты

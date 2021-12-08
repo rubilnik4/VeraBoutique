@@ -12,15 +12,15 @@ namespace BoutiqueDTO.Models.Implementations.Carts
     /// <summary>
     /// Корзина. Трансферная модель
     /// </summary>
-    public class CartMainTransfer: CartMainBase<CartItemTransfer>, ICartMainTransfer
+    public class CartMainTransfer : CartMainBase<CartItemTransfer>, ICartMainTransfer
     {
         public CartMainTransfer(ICartBase cart, IEnumerable<CartItemTransfer> cartItems)
-           : this(cart.Id, cartItems.ToList())
+           : this(cart.Id, cart.CreationDate, cart.AuthorId, cartItems.ToList())
         { }
 
         [JsonConstructor]
-        public CartMainTransfer(Guid id, IReadOnlyCollection<CartItemTransfer> cartItems)
-           : base(id, cartItems)
+        public CartMainTransfer(Guid id, DateTime creationDate, string authorId, IReadOnlyCollection<CartItemTransfer> cartItems)
+           : base(id, creationDate, authorId, cartItems)
         { }
     }
 }

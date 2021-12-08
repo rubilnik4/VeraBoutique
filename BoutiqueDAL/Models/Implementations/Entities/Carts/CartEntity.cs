@@ -17,15 +17,15 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Carts
         { }
 
         public CartEntity(ICartBase cart, IEnumerable<CartItemEntity>? cartItems)
-           : this(cart.Id, cartItems)
+           : this(cart.Id, cart.CreationDate, cart.AuthorId, cartItems)
         { }
 
-        public CartEntity(Guid id)
-          : this(id, null)
+        public CartEntity(Guid id, DateTime creationDate, string authorId)
+          : this(id, creationDate, authorId, null)
         { }
 
-        public CartEntity(Guid id, IEnumerable<CartItemEntity>? cartItems)
-            : base(id)
+        public CartEntity(Guid id, DateTime creationDate, string authorId, IEnumerable<CartItemEntity>? cartItems)
+            : base(id, creationDate, authorId)
         {
             CartItems = cartItems?.ToList();
         }

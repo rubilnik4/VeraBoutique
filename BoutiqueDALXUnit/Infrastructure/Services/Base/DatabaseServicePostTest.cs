@@ -37,7 +37,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var result = await testService.Post(testDomain);
 
             Assert.True(result.OkStatus);
-            Assert.True(result.Value.Equals(testDomain));
+            Assert.True(result.Value.Equals(testDomain.Id));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace BoutiqueDALXUnit.Infrastructure.Services.Base
             var results = await testService.Post(testDomains);
 
             Assert.True(results.OkStatus);
-            Assert.True(results.Value.SequenceEqual(testDomains));
+            Assert.True(results.Value.SequenceEqual(testDomains.Select(test => test.Id)));
         }
 
         /// <summary>

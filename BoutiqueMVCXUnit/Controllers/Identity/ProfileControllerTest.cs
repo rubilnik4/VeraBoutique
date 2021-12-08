@@ -7,17 +7,17 @@ using BoutiqueCommonXUnit.Data.Authorize;
 using BoutiqueDAL.Infrastructure.Interfaces.Services.Identities;
 using BoutiqueDTOXUnit.Infrastructure.Mocks.Converters.Identity;
 using BoutiqueMVC.Controllers.Identity;
+using BoutiqueMVCXUnit.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ResultFunctional.FunctionalExtensions.Sync;
 using ResultFunctional.FunctionalExtensions.Sync.ResultExtension.ResultValues;
-using ResultFunctional.Models.Enums;
 using ResultFunctional.Models.Implementations.Errors;
 using ResultFunctional.Models.Interfaces.Results;
 using Xunit;
 
-namespace BoutiqueMVCXUnit.Controllers.Authorization
+namespace BoutiqueMVCXUnit.Controllers.Identity
 {
     /// <summary>
     /// Контроллер профиля. Тесты
@@ -33,7 +33,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueUsers.First();
             var resultUser = user.ToResultValue();
             var userManager = GetUserManager(resultUser);
-            var claimUser = GetClaimsIdentity(user.Email);
+            var claimUser = ClaimsData.GetClaimsIdentity(user.Email);
             var httpContext = new DefaultHttpContext { User = claimUser };
             var profileController = new ProfileController(userManager.Object, BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter)
             {
@@ -74,7 +74,7 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
             var user = IdentityData.BoutiqueUsers.First();
             var resultUser = ErrorResultFactory.ValueNotValidError(user,GetType(), "ValueNotValidError").ToResultValue<IBoutiqueUserDomain>();
             var userManager = GetUserManager(resultUser);
-            var claimUser = GetClaimsIdentity(user.Email);
+            var claimUser = ClaimsData.GetClaimsIdentity(user.Email);
             var httpContext = new DefaultHttpContext { User = claimUser };
             var profileController = new ProfileController(userManager.Object, BoutiqueUserTransferConverterMock.BoutiqueUserTransferConverter)
             {
@@ -85,15 +85,6 @@ namespace BoutiqueMVCXUnit.Controllers.Authorization
 
             Assert.IsType<UnauthorizedResult>(profileResult.Result);
         }
-
-        /// <summary>
-        /// Пользователь в контроллере
-        /// </summary>
-        private static ClaimsPrincipal GetClaimsIdentity(string email) =>
-             new Claim(ClaimTypes.NameIdentifier, email).
-             Map(claim => new List<Claim> { claim }).
-             Map(claims => new ClaimsIdentity(claims)).
-             Map(claimIdentity => new ClaimsPrincipal(claimIdentity));
 
         /// <summary>
         /// Менеджер авторизации

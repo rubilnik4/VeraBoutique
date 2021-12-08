@@ -49,8 +49,7 @@ namespace BoutiqueMVC.Controllers.Identity
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<BoutiqueUserTransfer>> GetProfile() =>
-            await ClaimsInformation.GetEmail(User).
-            ToResultValueNullCheck(ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден")).
+            await ClaimsInformation.GetEmail(User).           
             ResultValueBindOkAsync(email => _userManager.FindRoleUserByEmail(email)).
             ResultValueBindBadTaskAsync(_ => ErrorResultFactory.AuthorizeError(AuthorizeErrorType.Email, "Пользователь не найден").
                                                                 ToResultValue<IBoutiqueUserDomain>()).

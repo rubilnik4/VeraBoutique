@@ -12,6 +12,6 @@ namespace BoutiqueMVC.Infrastructure.Interfaces.Carts
         /// <summary>
         /// Создать корзину
         /// </summary>
-        Task<IResultValue<ICartDomain>> CreateCart();
+        Task<IResultValue<ICartDomain>> CreateCart(string email);
     }
 }

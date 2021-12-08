@@ -13,6 +13,8 @@ namespace BoutiqueDAL.Infrastructure.Implementations.Database.Boutique.Configura
         {
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Id).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(t => t.CreationDate).IsRequired();
+            builder.Property(t => t.AuthorId).IsRequired();
         }
     }
 }

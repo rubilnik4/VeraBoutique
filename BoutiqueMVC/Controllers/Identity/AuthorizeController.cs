@@ -55,14 +55,6 @@ namespace BoutiqueMVC.Controllers.Identity
         private readonly IAuthorizeTransferConverter _authorizeTransferConverter;
 
         /// <summary>
-        /// Проверка токена
-        /// </summary>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public bool IsTokenValid() =>
-            true;
-
-        /// <summary>
         /// Авторизоваться через JWT токен
         /// </summary>
         [HttpPost]

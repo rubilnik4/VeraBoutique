@@ -14,30 +14,36 @@ namespace BoutiqueDAL.Models.Implementations.Entities.Clothes
     public class SizeGroupEntity : SizeGroupBase, ISizeGroupEntity
     {
         public SizeGroupEntity(ISizeGroupBase sizeGroup)
-          : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
+          : this(sizeGroup.Id ,sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize)
         { }
         
-        public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize)
-            : this(clothesSizeType, sizeNormalize, null, null)
+        public SizeGroupEntity(int id, ClothesSizeType clothesSizeType, int sizeNormalize)
+            : this(id, clothesSizeType, sizeNormalize, null, null)
         { }
 
         public SizeGroupEntity(ISizeGroupBase sizeGroup, IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-            : this(sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities)
+            : this(sizeGroup.Id, sizeGroup.ClothesSizeType, sizeGroup.SizeNormalize, sizeGroupCompositeEntities)
         { }
 
-        public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,
+        public SizeGroupEntity(int id, ClothesSizeType clothesSizeType, int sizeNormalize,
                                IEnumerable<SizeGroupCompositeEntity> sizeGroupCompositeEntities)
-            : this(clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, null)
+            : this(id, clothesSizeType, sizeNormalize, sizeGroupCompositeEntities, null)
         { }
 
-        public SizeGroupEntity(ClothesSizeType clothesSizeType, int sizeNormalize,
+        public SizeGroupEntity(int id, ClothesSizeType clothesSizeType, int sizeNormalize,
                                IEnumerable<SizeGroupCompositeEntity>? sizeGroupCompositeEntities,
                                IEnumerable<ClothesSizeGroupCompositeEntity>? clothesSizeGroupCompositeEntity)
             : base(clothesSizeType, sizeNormalize)
         {
+            Id = id;
             SizeGroupComposites = sizeGroupCompositeEntities?.ToList();
             ClothesSizeGroupComposites = clothesSizeGroupCompositeEntity?.ToList();
         }
+
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public override int Id { get; }
 
         /// <summary>
         /// Связующая сущность размера одежды
